@@ -7,10 +7,8 @@ using System.Text;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.UI.CustomControls;
-using static taskt.Core.Automation.Commands.PropertyControls;
 using Markdig;
-using Microsoft.Office.Core;
-using taskt.Core.Automation.Engine;
+using static taskt.Core.Automation.Commands.PropertyControls;
 
 namespace taskt.Core
 {
@@ -52,12 +50,17 @@ namespace taskt.Core
             }
 
             //get all commands
-            var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
-                        .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
-                        .Where(t => t.Name != "ScriptCommand")
-                        .Where(t => t.IsAbstract == false)
-                        .Where(t => t.BaseType.Name == "ScriptCommand")
-                        .ToList();
+            //var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
+            //            .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
+            //            .Where(t => t.Name != "ScriptCommand")
+            //            .Where(t => t.IsAbstract == false)
+            //            .Where(t => t.BaseType.Name == "ScriptCommand")
+            //            .ToList();
+            var commandClasses = Assembly.GetAssembly(typeof(ScriptCommand)).GetTypes()
+                .Where(t =>
+                {
+                    return t.IsSubclassOf(typeof(ScriptCommand)) && !t.IsAbstract;
+                }).ToList();
 
             // load settings
             var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
@@ -172,7 +175,8 @@ namespace taskt.Core
             sb.AppendLine("## Command Parameters");
 
             // get propertyLists
-            List<PropertyInfo> propInfos = commandClass.GetProperties().Where(f => f.Name.StartsWith("v_")).ToList();
+            //List<PropertyInfo> propInfos = commandClass.GetProperties().Where(f => f.Name.StartsWith("v_")).ToList();
+            var propInfos = PropertyControls.GetParameterProperties(command, true);
 
             // create Parameters List
             int maxCount = 0;
@@ -335,7 +339,16 @@ namespace taskt.Core
                     
                     foreach(var s in sampleUsages)
                     {
-                        sb.AppendLine("| " + ConvertMDToHTML(settings.replaceApplicationKeyword(s.sampleUsage)) + " | " + GetSampleUsageMeansText(s, settings) + " |");
+                        var smp = s.sampleUsage.Replace(WindowControls.INTERNAL_CURRENT_WINDOW_KEYWORD, VariableNameControls.GetWrappedVariableName(Automation.Engine.SystemVariables.Window_CurrentWindowName.VariableName, settings))
+                            .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Automation.Engine.SystemVariables.Window_CurrentPosition.VariableName, settings))
+                            .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_X_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Automation.Engine.SystemVariables.Window_CurrentXPosition.VariableName, settings))
+                            .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_Y_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Automation.Engine.SystemVariables.Window_CurrentYPosition.VariableName, settings))
+                            .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_SIZE_KEYWORD, VariableNameControls.GetWrappedVariableName(Automation.Engine.SystemVariables.Window_CurrentSize.VariableName, settings))
+                            .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_WIDTH_KEYWORD, VariableNameControls.GetWrappedVariableName(Automation.Engine.SystemVariables.Window_CurrentWidth.VariableName, settings))
+                            .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_HEIGHT_KEYWORD, VariableNameControls.GetWrappedVariableName(Automation.Engine.SystemVariables.Window_CurrentHeight.VariableName, settings))
+                            .Replace(ExcelControls.INTERNAL_EXCEL_CURRENT_WORKSHEET_KEYWORD, VariableNameControls.GetWrappedVariableName(Automation.Engine.SystemVariables.Excel_CurrentWorkSheet.VariableName, settings));
+
+                        sb.AppendLine("| " + ConvertMDToHTML(settings.replaceApplicationKeyword(smp)) + " | " + GetSampleUsageMeansText(s, settings) + " |");
                         //sampleUsageTabe += "| " + ConvertMDToHTML(settings.replaceApplicationKeyword(s.sampleUsage)) + " | " + GetSampleUsageMeansText(s, settings) + " |\n";
                     }
                     //sb.AppendLine(ConvertMDToHTML(sampleUsageTabe));

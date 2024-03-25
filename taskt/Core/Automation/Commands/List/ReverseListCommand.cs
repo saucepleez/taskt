@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to reverse list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to reverse list.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ReverseListCommand : ScriptCommand
@@ -35,11 +36,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            List<string> targetList = v_InputList.GetListVariable(engine);
+            List<string> targetList = v_InputList.ExpandUserVariableAsList(engine);
 
             List<string> newList = new List<string>(targetList);
             newList.Reverse();

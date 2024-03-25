@@ -117,8 +117,8 @@ namespace taskt.UI.Forms.Supplemental
 
                         var moveWindow = new Core.Automation.Commands.MoveWindowCommand();
                         moveWindow.v_WindowName = cboIEWindow.Text + " - Internet Explorer";
-                        moveWindow.v_XWindowPosition = "0";
-                        moveWindow.v_YWindowPosition = "0";
+                        moveWindow.v_XPosition = "0";
+                        moveWindow.v_YPosition = "0";
                         moveWindow.RunCommand(null);
 
                         MoveFormToBottomRight(this);

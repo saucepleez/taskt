@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using System.Data;
-using System.Text;
 using System.Linq;
 
 namespace taskt.Core.Automation.Commands
@@ -17,6 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Range and put it into a DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific range.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     public class ExcelGetRangeCommandAsDT : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel)]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the First Cell Location (ex. A1 or B2)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -35,6 +35,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("A1, B10, {vAddress}")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_ExcelCellAddress1 { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select output Option")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Datatable")]
@@ -43,6 +44,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("Select from **Datatable** or **Delimited String**")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_Output { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Second Cell Location (ex. A1 or B2, Leave Blank for All)")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -78,15 +80,12 @@ namespace taskt.Core.Automation.Commands
             this.v_InstanceName = "";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-
-           
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
             var excelObject = engine.GetAppInstance(vInstance);
-            var targetAddress1 = v_ExcelCellAddress1.ConvertToUserVariable(sender);
-            var targetAddress2 = v_ExcelCellAddress2.ConvertToUserVariable(sender);
+            var targetAddress1 = v_ExcelCellAddress1.ExpandValueOrUserVariable(engine);
+            var targetAddress2 = v_ExcelCellAddress2.ExpandValueOrUserVariable(engine);
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
@@ -183,11 +182,11 @@ namespace taskt.Core.Automation.Commands
                 string output = String.Join(",", lst);
 
                 //Store Strings of comma seperated values into user variable
-                output.StoreInUserVariable(sender, v_userVariableName);
+                output.StoreInUserVariable(engine, v_userVariableName);
             }
-
         }
-        public override List<Control> Render(frmCommandEditor editor)
+
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -206,7 +205,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Output", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_AddHeaders", this, editor));
 
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            if (editor.creationMode == UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Add)
             {
                 this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
             }

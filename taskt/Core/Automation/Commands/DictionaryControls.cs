@@ -28,6 +28,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputDictionaryName { get; }
 
         /// <summary>
@@ -45,6 +46,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("New Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New Dictionary")]
+        [PropertyParameterOrder(5000)]
         public static string v_NewOutputDictionaryName { get; }
 
         /// <summary>
@@ -62,6 +64,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputDictionaryName { get; }
 
         /// <summary>
@@ -79,6 +82,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary")]
+        [PropertyParameterOrder(5000)]
         public static string v_BothDictionaryName { get; }
 
         /// <summary>
@@ -94,6 +98,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Key", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Key")]
+        [PropertyParameterOrder(5000)]
         public static string v_Key { get; }
 
         /// <summary>
@@ -121,6 +126,7 @@ namespace taskt.Core.Automation.Commands
 | Keys | Values |
 |---|---|
 | **{{{vKey}}}** | **{{{vValue}}}** |", "Add an item whose key is Value of Variable **vKey** and value is Value of Variable **vValue**")]
+        [PropertyParameterOrder(5000)]
         public static string v_KeyAndValue { get; }
 
         /// <summary>
@@ -133,6 +139,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Error")]
         [PropertyIsOptional(true, "Error")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyParameterOrder(5000)]
         public static string v_WhenKeyDoesNotExists { get; }
 
         /// <summary>
@@ -147,16 +154,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
         [PropertyDisplayText(true, "Value")]
+        [PropertyParameterOrder(5000)]
         public static string v_Value { get; }
 
         /// <summary>
-        /// get Dictionary&lt;string, string&gt; Variable from variable name
+        /// Expand user variable as Dictionary&lt;string, string&gt;
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static Dictionary<string, string> GetDictionaryVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">Value is not Dictionary</exception>
+        public static Dictionary<string, string> ExpandUserVariableAsDictinary(this string variableName, Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
             if (v.VariableValue is Dictionary<string, string> dictionary)
@@ -170,7 +178,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get Dictionary&lt;string, string&gt; and key name from property names. It supports current position to key.
+        /// expand user variables as Dictionary&lt;string, string&gt; and key name from property names. It supports current position to key.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="dictionaryName"></param>
@@ -178,42 +186,64 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (Dictionary<string, string>, string) GetDictionaryVariableAndKey(this ScriptCommand command, string dictionaryName, string keyName, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static (Dictionary<string, string>, string) ExpandUserVariablesAsDictionaryAndKey(this ScriptCommand command, string dictionaryName, string keyName, Engine.AutomationEngineInstance engine)
         {
-            string dicVariable = command.ConvertToUserVariable(dictionaryName, "Dictionary", engine);
+            string dicVariable = command.ExpandValueOrUserVariable(dictionaryName, "Dictionary", engine);
+            //var v = dicVariable.GetRawVariable(engine);
+            //if (v.VariableValue is Dictionary<string, string> dictionary)
+            //{
+            //    string keyVariable = command.ConvertToUserVariable(keyName, "Key", engine);
+            //    string key;
+            //    if (String.IsNullOrEmpty(keyVariable))
+            //    {
+            //        int pos = v.CurrentPosition;
+            //        string[] keys = dictionary.Keys.ToArray();
+            //        if ((pos >= 0) && (pos < keys.Length))
+            //        {
+            //            key = keys[pos];
+            //        }
+            //        else
+            //        {
+            //            throw new Exception("Strange Current Position in Dictionary " + pos);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        key = keyVariable.ConvertToUserVariable(engine);
+            //    }
+            //    return (dictionary, key);
+            //}
+            //else
+            //{
+            //    throw new Exception("Variable " + dicVariable + " is not Dictionary");
+            //}
+            var dictionary = dicVariable.ExpandUserVariableAsDictinary(engine);
             var v = dicVariable.GetRawVariable(engine);
-            if (v.VariableValue is Dictionary<string, string> dictionary)
+            string keyVariable = command.ExpandValueOrUserVariable(keyName, "Key", engine);
+            string key;
+            if (string.IsNullOrEmpty(keyVariable))
             {
-                string keyVariable = command.ConvertToUserVariable(keyName, "Key", engine);
-                string key;
-                if (String.IsNullOrEmpty(keyVariable))
+                int pos = v.CurrentPosition;
+                string[] keys = dictionary.Keys.ToArray();
+                if ((pos >= 0) && (pos < keys.Length))
                 {
-                    int pos = v.CurrentPosition;
-                    string[] keys = dictionary.Keys.ToArray();
-                    if ((pos >= 0) && (pos < keys.Length))
-                    {
-                        key = keys[pos];
-                    }
-                    else
-                    {
-                        throw new Exception("Strange Current Position in Dictionary " + pos);
-                    }
+                    key = keys[pos];
                 }
                 else
                 {
-                    key = keyVariable.ConvertToUserVariable(engine);
+                    throw new Exception("Strange Current Position in Dictionary " + pos);
                 }
-                return (dictionary, key);
             }
             else
             {
-                throw new Exception("Variable " + dicVariable + " is not Dictionary");
+                key = keyVariable.ExpandValueOrUserVariable(engine);
             }
+            return (dictionary, key);
         }
 
-        public static void StoreInUserVariable(this Dictionary<string, string> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        public static void StoreInUserVariable(this Dictionary<string, string> value, Engine.AutomationEngineInstance engine, string targetVariable)
         {
-            ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
+            ExtensionMethods.StoreInUserVariable(targetVariable, value, engine, false);
         }
 
         /// <summary>
@@ -223,33 +253,23 @@ namespace taskt.Core.Automation.Commands
         /// <param name="table"></param>
         /// <param name="engine"></param>
         /// <exception cref="Exception"></exception>
-        public static void AddDataAndValueFromDataTable(this Dictionary<string, string> dic, DataTable table, Automation.Engine.AutomationEngineInstance engine)
+        public static void AddDataAndValueFromDataTable(this Dictionary<string, string> dic, DataTable table, Engine.AutomationEngineInstance engine)
         {
-            //var keys = new List<string>();
-
             // Check Items
             foreach (DataRow row in table.Rows)
             {
-                string k = (row.Field<string>("Keys") ?? "").ConvertToUserVariable(engine);
+                string k = (row.Field<string>("Keys") ?? "").ExpandValueOrUserVariable(engine);
                 if (k == "")
                 {
                     throw new Exception("Key value is empty.");
                 }
-                //if (keys.Contains(k))
-                //{
-                //    throw new Exception("Duplicate Key. Name: '" + k + "'");
-                //}
-                //else
-                //{
-                //    keys.Add(k);
-                //}
             }
 
             // Add Items
             foreach (DataRow row in table.Rows)
             {
-                var key = row.Field<string>("Keys").ConvertToUserVariable(engine);
-                var value = (row.Field<string>("Values") ?? "").ConvertToUserVariable(engine);
+                var key = row.Field<string>("Keys").ExpandValueOrUserVariable(engine);
+                var value = (row.Field<string>("Values") ?? "").ExpandValueOrUserVariable(engine);
                 dic.Add(key, value);
             }
         }

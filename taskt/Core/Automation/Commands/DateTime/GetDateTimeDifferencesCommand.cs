@@ -11,9 +11,10 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Get 2 DateTime Differences.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get 2 DateTime Differences.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class GetDateTimeDifferencesCommand : ScriptCommand
+    public class GetDateTimeDifferencesCommand : ScriptCommand, ICanHandleDateTime
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_InputDateTime))]
@@ -62,15 +63,14 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
+            //var myDT1 = v_DateTime1.ExpandUserVariableAsDateTime(engine);
+            //var myDT2 = v_DateTime2.ExpandUserVariableAsDateTime(engine);
+            var myDT1 = this.ExpandValueOrVariableAsDateTime(nameof(v_DateTime1), engine);
+            var myDT2 = this.ExpandValueOrVariableAsDateTime(nameof(v_DateTime2), engine);
 
-            var myDT1 = v_DateTime1.GetDateTimeVariable(engine);
-            var myDT2 = v_DateTime2.GetDateTimeVariable(engine);
-
-            string format = this.GetUISelectionValue(nameof(v_Format), engine);
+            string format = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_Format), engine);
 
             TimeSpan diff = myDT2 - myDT1;
 
@@ -106,16 +106,21 @@ namespace taskt.Core.Automation.Commands
                     break;
                 case "datetime":
                     // return here
+                    DateTime res;
                     if (diff.Ticks >= 0)
                     {
-                        new DateTime(0).Add(diff).StoreInUserVariable(engine, v_Result);
+                        //new DateTime(0).Add(diff).StoreInUserVariable(engine, v_Result);
+                        res = new DateTime(0).Add(diff);
                     }
                     else
                     {
-                        new DateTime(0).Subtract(diff).StoreInUserVariable(engine, v_Result);
+                        //new DateTime(0).Subtract(diff).StoreInUserVariable(engine, v_Result);
+                        res = new DateTime(0).Subtract(diff);
                     }
+                    this.StoreDateTimeInUserVariable(res, nameof(v_Result), engine);
                     return;
             }
+            
             result.StoreInUserVariable(engine, v_Result);
         }
 

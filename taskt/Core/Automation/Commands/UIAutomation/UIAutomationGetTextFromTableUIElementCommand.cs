@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Get Text From Table UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to get Text Value from Table UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Text Value from Table UIElement.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationGetTextFromTableUIElementCommand : ScriptCommand
@@ -54,13 +55,11 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var targetElement = v_TargetElement.GetUIElementVariable(engine);
-            int row = v_Row.ConvertToUserVariableAsInteger("v_Row", engine);
-            int column = v_Column.ConvertToUserVariableAsInteger("v_Column", engine);
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
+            int row = v_Row.ExpandValueOrUserVariableAsInteger("v_Row", engine);
+            int column = v_Column.ExpandValueOrUserVariableAsInteger("v_Column", engine);
 
             AutomationElement cellElem = UIElementControls.GetTableUIElement(targetElement, row, column);
 

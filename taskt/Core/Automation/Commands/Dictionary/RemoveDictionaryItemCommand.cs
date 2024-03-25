@@ -11,13 +11,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to remove item in Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to remove item in Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class RemoveDictionaryItemCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_BothDictionaryName))]
-        public string v_InputData { get; set; }
+        public string v_Dictionary { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_Key))]
@@ -27,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_WhenKeyDoesNotExists))]
         [PropertyUISelectionOption("Ignore")]
         [PropertyDetailSampleUsage("**Ignore**", "Don't Remove the Dictionary Item")]
-        public string v_IfKeyDoesNotExists { get; set; }
+        public string v_WhenKeyDoesNotExists { get; set; }
 
         public RemoveDictionaryItemCommand()
         {
@@ -37,15 +38,13 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            (var dic, var vKey) = this.GetDictionaryVariableAndKey(nameof(v_InputData), nameof(v_Key), engine);
+            (var dic, var vKey) = this.ExpandUserVariablesAsDictionaryAndKey(nameof(v_Dictionary), nameof(v_Key), engine);
 
             if (!dic.Remove(vKey))
             {
-                string ifNotExists = this.GetUISelectionValue(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
+                string ifNotExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenKeyDoesNotExists), "Key Not Exists", engine);
                 switch (ifNotExists)
                 {
                     case "error":

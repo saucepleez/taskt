@@ -42,6 +42,9 @@
             this.Size = new System.Drawing.Size(258, 18);
             this.Load += new System.EventHandler(this.CommandItemControl_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.CommandItemControl_Paint);
+            this.Enter += new System.EventHandler(this.CommandItemControl_Enter);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CommandItemControl_KeyPress);
+            this.Leave += new System.EventHandler(this.CommandItemControl_Leave);
             this.MouseEnter += new System.EventHandler(this.CommandItemControl_MouseEnter);
             this.MouseLeave += new System.EventHandler(this.CommandItemControl_MouseLeave);
             this.ResumeLayout(false);

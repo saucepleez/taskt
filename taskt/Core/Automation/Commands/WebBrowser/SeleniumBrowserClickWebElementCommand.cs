@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Click WebElement")]
     [Attributes.ClassAttributes.Description("This command allows you to Click to WebElement.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Click to WebElement.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
@@ -63,11 +64,9 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            if (this.GetYesNoSelectionValue(nameof(v_ScrollToElement), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToElement), engine))
             {
                 var scrollCommand = new SeleniumBrowserScrollToWebElementCommand()
                 {
@@ -78,8 +77,8 @@ namespace taskt.Core.Automation.Commands
                 scrollCommand.RunCommand(engine);
             }
 
-            var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
-            var clickType = this.GetUISelectionValue(nameof(v_ClickType), engine);
+            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
+            var clickType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ClickType), engine);
 
             Action clickAction;
             switch (clickType)
@@ -93,7 +92,7 @@ namespace taskt.Core.Automation.Commands
                 default:
                     clickAction = new Action(() =>
                     {
-                        var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
+                        var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
                         
                         var scrollJson = JObject.Parse(SeleniumBrowserControls.ExcecuteScript(seleniumInstance, 
                                             "return JSON.stringify({x: window.scrollX, y: window.scrollY})").ToString());
@@ -116,8 +115,8 @@ namespace taskt.Core.Automation.Commands
                         //Console.WriteLine($"Brow x:{screenX}, y:{screenY}");
                         //Console.WriteLine($"Scroll x:{scrollX}, y:{scrollY}");
 
-                        var offsetX = this.ConvertToUserVariableAsInteger(nameof(v_XOffset), engine);
-                        var offsetY = this.ConvertToUserVariableAsInteger(nameof(v_YOffset), engine);
+                        var offsetX = this.ExpandValueOrUserVariableAsInteger(nameof(v_XOffset), engine);
+                        var offsetY = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffset), engine);
 
                         var clickX = elementLocation.X - scrollX + screenX + offsetX;
                         var clickY = elementLocation.Y - scrollY + screenY + offsetY;
@@ -142,7 +141,7 @@ namespace taskt.Core.Automation.Commands
             }
             catch
             {
-                if (this.GetUISelectionValue(nameof(v_WhenFailClick), engine) == "error")
+                if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFailClick), engine) == "error")
                 {
                     throw new Exception("Fail Click WebElement. Click Type: '" + clickType + "', Location: (" + elem.Location.X + ", " + elem.Location.Y + ")");
                 }
@@ -157,18 +156,18 @@ namespace taskt.Core.Automation.Commands
             var inst = ControlsList.GetPropertyControl<ComboBox>(nameof(v_InstanceName));
             useInstance = useInstance && ((inst.SelectedItem?.ToString().ToLower() ?? "") != "invoke click");
 
-            GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_InstanceName), useInstance);
+            FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_InstanceName), useInstance);
         }
 
         private void cmdClickType_SelectinChange(object sender, EventArgs e)
         {
             var useOffset = (((ComboBox)sender).SelectedItem?.ToString().ToLower() ?? "") != "invoke click";
-            GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_XOffset), useOffset); ;
-            GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_YOffset), useOffset); ;
+            FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_XOffset), useOffset); ;
+            FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_YOffset), useOffset); ;
 
             var scroll = ControlsList.GetPropertyControl<ComboBox>(nameof(v_ScrollToElement));
             var useInstance = useOffset || ((scroll.SelectedItem?.ToString().ToLower() ?? "") != "no");
-            GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_InstanceName), useInstance);
+            FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_InstanceName), useInstance);
         }
     }
 }

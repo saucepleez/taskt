@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to check a Text")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check a Text")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CheckTextCommand : ScriptCommand
@@ -77,21 +78,19 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var targetValue = v_userVariableName.ExpandValueOrUserVariable(engine);
+            var checkValue = v_CheckParameter.ExpandValueOrUserVariable(engine);
 
-            var targetValue = v_userVariableName.ConvertToUserVariable(engine);
-            var checkValue = v_CheckParameter.ConvertToUserVariable(engine);
-
-            var caseSensitive = this.GetUISelectionValue(nameof(v_CaseSensitive), engine);
+            var caseSensitive = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CaseSensitive), engine);
             if (caseSensitive == "no")
             {
                 targetValue = targetValue.ToLower();
                 checkValue = checkValue.ToLower();
             }
 
-            var checkMethod = this.GetUISelectionValue(nameof(v_CheckMethod), engine);
+            var checkMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CheckMethod), engine);
             bool resultValue = false;
             switch (checkMethod)
             {

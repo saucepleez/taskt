@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Get Options Value from WebElement.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get Options Value from WebElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SeleniumBrowserGetOptionsFromWebElementCommand : ScriptCommand
@@ -59,13 +60,11 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
-            var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
-
-            if (this.GetYesNoSelectionValue(nameof(v_ScrollToElement), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToElement), engine))
             {
                 var scrollCommand = new SeleniumBrowserScrollToWebElementCommand()
                 {
@@ -84,9 +83,9 @@ namespace taskt.Core.Automation.Commands
             var sel = new SelectElement(elem);
             var options = sel.Options;
 
-            var attributeName = v_AttributeName.ConvertToUserVariable(engine);
+            var attributeName = v_AttributeName.ExpandValueOrUserVariable(engine);
 
-            var throwError = (this.GetUISelectionValue(nameof(v_WhenNoAttribute), engine) == "error");
+            var throwError = (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenNoAttribute), engine) == "error");
 
             var lst = new List<string>();
             foreach(var opt in options)

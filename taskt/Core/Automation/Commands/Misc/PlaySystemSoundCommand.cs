@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Play System Sound.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Play System Sound.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class PlaySystemSoundCommand : ScriptCommand
@@ -39,10 +40,10 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (taskt.Core.Automation.Engine.AutomationEngineInstance)sender;
-            string sound = v_SoundType.GetUISelectionValue("v_SoundType", this, engine);
+            //string sound = v_SoundType.ExpandValueOrUserVariableAsSelectionItem("v_SoundType", this, engine);
+            var sound = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SoundType), engine);
             switch (sound)
             {
                 case "asterisk":

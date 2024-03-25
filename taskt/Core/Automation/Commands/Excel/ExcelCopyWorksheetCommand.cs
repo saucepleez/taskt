@@ -6,33 +6,38 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.SubGruop("Sheet")]
+    [Attributes.ClassAttributes.SubGruop("Worksheet")]
     [Attributes.ClassAttributes.CommandSettings("Copy Worksheet")]
     [Attributes.ClassAttributes.Description("This command copy a Excel Worksheet.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to copy a new worksheet to an Excel Instance")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelCopyWorksheetCommand : ScriptCommand
+    public class ExcelCopyWorksheetCommand : AExcelInstanceCommands, IExcelWorksheetCopyRenameProperties
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
         [PropertyDescription("Sheet Name to Copy")]
         [PropertyValidationRule("Sheet Name to Copy", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Sheet Name to Copy")]
-        public string v_sourceSheet { get; set; }
+        [PropertyAvailableSystemVariable(Engine.SystemVariables.LimitedSystemVariableNames.Excel_Worksheet)]
+        [PropertyParameterOrder(6000)]
+        public string v_TargetSheetName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
         [PropertyDescription("New Sheet Name")]
         [PropertyDisplayText(true, "New Sheet Name")]
         [PropertyIsOptional(true)]
+        [PropertyValidationRule("New Sheet Name", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyIntermediateConvert("", "")]
-        public string v_newSheetName { get; set; }
+        [PropertyParameterOrder(7000)]
+        public string v_NewSheetName { get; set; }
 
         public ExcelCopyWorksheetCommand()
         {
@@ -41,19 +46,32 @@ namespace taskt.Core.Automation.Commands
             //this.CommandEnabled = true;
             //this.CustomRendering = true;
         }
-        public override void RunCommand(object sender)
-        {
-            var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var excelInstance, var targetSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
+        {
+            //(var excelInstance, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            (var excelInstance, var targetSheet) = this.ExpandValueOrVariableAsExcelInstanceAndTargetWorksheet(engine);
 
             targetSheet.Copy(Before: excelInstance.Worksheets[1]);
 
-            var newName = v_newSheetName.ConvertToUserVariable(sender);
-            if (!String.IsNullOrEmpty(newName))
+            try
             {
+                var newName = this.ExpandValueOrVariableAsExcelWorksheetName(v_NewSheetName, engine);
                 ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = newName;
             }
+            catch (Exception ex)
+            {
+                if (ex.Message != "Worksheet name is Empty.")
+                {
+                    throw ex;
+                }
+            }
+
+            //var newName = v_NewSheetName.ExpandValueOrUserVariable(engine);
+            //if (!string.IsNullOrEmpty(newName))
+            //{
+            //    ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = newName;
+            //}
         }
     }
 }

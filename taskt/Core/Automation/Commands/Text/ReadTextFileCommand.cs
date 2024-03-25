@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to read text file into a variable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to read data from text files.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ReadTextFileCommand : ScriptCommand
@@ -47,10 +48,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_ReadOption = "Content";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //bool isURL = FilePathControls.IsURL(v_FilePath.ConvertToUserVariable(engine));
 
             //string result;
@@ -82,7 +81,7 @@ namespace taskt.Core.Automation.Commands
                 WebClient webClient = new WebClient();
                 webClient.Encoding = System.Text.Encoding.UTF8;
                 webClient.Headers.Add("user-agent", "request");
-                result = webClient.DownloadString(v_FilePath.ConvertToUserVariable(engine));
+                result = webClient.DownloadString(v_FilePath.ExpandValueOrUserVariable(engine));
             }
             else
             {
@@ -90,7 +89,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //var readPreference = v_ReadOption.GetUISelectionValue("v_ReadOption", this, engine);
-            var readPreference = this.GetUISelectionValue(nameof(v_ReadOption), engine);
+            var readPreference = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReadOption), engine);
             if (readPreference == "line count")
             {
                 result = result.Replace("\r\n", "\n");  // \n\n -> \n

@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command returns existence of folder paths from a specified location")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to return a existence of file paths from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CheckFolderExistsCommand : ScriptCommand
@@ -42,9 +43,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
             //try
             //{
             //    FolderPathControls.WaitForFolder(this, nameof(v_TargetFolderName), nameof(v_WaitForFolder), engine);

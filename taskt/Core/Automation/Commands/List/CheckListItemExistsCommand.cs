@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you want to check list has a value you specify")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check list has a value you specify")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CheckListItemExistsCommand : ScriptCommand
@@ -37,13 +38,11 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            List<string> targetList = v_ListName.ExpandUserVariableAsList(engine);
 
-            List<string> targetList = v_ListName.GetListVariable(engine);
-
-            var searchedValue = v_SearchItem.ConvertToUserVariable(sender);
+            var searchedValue = v_SearchItem.ExpandValueOrUserVariable(engine);
 
             targetList.Contains(searchedValue).StoreInUserVariable(engine, v_Result);
         }

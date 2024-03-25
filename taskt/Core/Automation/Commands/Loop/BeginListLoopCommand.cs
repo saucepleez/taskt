@@ -6,6 +6,7 @@ using System.Data;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,6 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to repeat actions several times (loop).  Any 'Begin Loop' command must have a following 'End Loop' command.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to iterate over each item in a list, or a series of items.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command recursively calls the underlying 'BeginLoop' Command to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_startloop))]
     public class BeginListLoopCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -32,21 +34,19 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(Engine.AutomationEngineInstance engine, Core.Script.ScriptAction parentCommand)
         {
             Core.Automation.Commands.BeginListLoopCommand loopCommand = (Core.Automation.Commands.BeginListLoopCommand)parentCommand.ScriptCommand;
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             Script.ScriptVariable complexVariable = null;
 
             //get variable by regular name
             complexVariable = engine.VariableList.Where(x => x.VariableName == v_LoopParameter).FirstOrDefault();
 
 
-            if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
-            {
-                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
-            }
+            //if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
+            //{
+            //    engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
+            //}
 
             //user may potentially include brackets []
             if (complexVariable == null)
@@ -123,7 +123,8 @@ namespace taskt.Core.Automation.Commands
                         return;
                     }
 
-                    (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
+                    //(i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
+                    SystemVariables.Update_LoopCurrentIndex(i + 1);
 
                     engine.ExecuteCommand(cmd);
 
@@ -145,7 +146,7 @@ namespace taskt.Core.Automation.Commands
                 engine.ReportProgress("Finished Loop From Line " + loopCommand.LineNumber);
             }
         }
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -159,7 +160,7 @@ namespace taskt.Core.Automation.Commands
             return "Loop List Variable '" + v_LoopParameter + "'";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
+        public override bool IsValidate(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.IsValidate(editor);
 

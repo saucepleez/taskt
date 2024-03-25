@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to delete emails with outlook")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to delete emails with your currenty logged in outlook account")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_smtp))]
 
     public class OutlookDeleteEmailsCommand : ScriptCommand
     {
@@ -51,11 +52,10 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-            var vSourceFolder = v_SourceFolder.ConvertToUserVariable(sender);
-            var vFilter = v_Filter.ConvertToUserVariable(sender);
+            var vSourceFolder = v_SourceFolder.ExpandValueOrUserVariable(engine);
+            var vFilter = v_Filter.ExpandValueOrUserVariable(engine);
 
             Application outlookApp = new Application();
             AddressEntry currentUser = outlookApp.Session.CurrentUser.AddressEntry;
@@ -104,7 +104,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolder", this, editor));

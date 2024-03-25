@@ -11,13 +11,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to start a program or a process.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to start applications by entering their name such as 'chrome.exe' or a fully qualified path to a file 'c:/some.exe'")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start'.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_script))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class StartApplicationCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Path to the Application")]
+        [PropertyDescription("Path to the Application or Application Name")]
         [InputSpecification("Path", true)]
         [PropertyDetailSampleUsage("**notepad**", "Run Notepad")]
         [PropertyDetailSampleUsage("**C:\\Apps\\myapp.exe**", PropertyDetailSampleUsage.ValueType.Value, "Path")]
@@ -54,9 +55,38 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store Application Process Name")]
         [PropertyIsOptional(true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyValidationRule("Process Name", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
         public string v_StartedProcessName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Store Window Name")]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.None)]
+        public string v_WindowName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
+        public string v_WindowHandle { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
+        [PropertyDescription("Wait Time until Application Starts (ms)")]
+        [PropertyIsOptional(true, "2000")]
+        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyFirstValue("2000")]
+        [PropertyDisplayText(false, "")]
+        public string v_WaitTimeForExecute { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
+        [PropertyDescription("Wait Time before Executing Next Command (ms)")]
+        [PropertyIsOptional(true, "2000")]
+        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyFirstValue("2000")]
+        [PropertyDisplayText(false, "")]
+        public string v_WaitTimeBeforeNext { get; set; }
 
         public StartApplicationCommand()
         {
@@ -66,15 +96,13 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-            
-            var vProgramName = v_ProgramName.ConvertToUserVariable(engine);
-            var vProgramArgs = v_ProgramArgs.ConvertToUserVariable(engine);
+            var vProgramName = v_ProgramName.ExpandValueOrUserVariable(engine);
+            var vProgramArgs = v_ProgramArgs.ExpandValueOrUserVariable(engine);
 
             System.Diagnostics.Process p;
-            if (String.IsNullOrEmpty(vProgramArgs))
+            if (string.IsNullOrEmpty(vProgramArgs))
             {
                 p = System.Diagnostics.Process.Start(vProgramName);
             }
@@ -83,19 +111,35 @@ namespace taskt.Core.Automation.Commands
                 p = System.Diagnostics.Process.Start(vProgramName, vProgramArgs);
             }
 
-            if (!String.IsNullOrEmpty(v_StartedProcessName))
+            var waitTimeUntil = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeForExecute), engine);
+            System.Threading.Thread.Sleep(waitTimeUntil);
+
+            // process name
+            if (!string.IsNullOrEmpty(v_StartedProcessName))
             {
                 p.ProcessName.StoreInUserVariable(engine, v_StartedProcessName);
             }
+            // window name
+            if (!string.IsNullOrEmpty(v_WindowName))
+            {
+                p.MainWindowTitle.StoreInUserVariable(engine, v_WindowName);
+            }
+            // window handle
+            if (!string.IsNullOrEmpty(v_WindowHandle))
+            {
+                p.MainWindowHandle.StoreInUserVariable(engine, v_WindowHandle);
+            }
 
-            var waitForExit = this.GetUISelectionValue(nameof(v_WaitForExit), engine);
+            var waitForExit = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WaitForExit), engine);
 
             if (waitForExit == "yes")
             {
                 p.WaitForExit();
             }
 
-            System.Threading.Thread.Sleep(2000);
+            //System.Threading.Thread.Sleep(2000);
+            var waitTimeBeforeNext = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeBeforeNext), engine);
+            System.Threading.Thread.Sleep(waitTimeBeforeNext);
         }
     }
 }

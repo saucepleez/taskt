@@ -13,13 +13,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Replace Column values.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Replace Column values.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ReplaceDataTableColumnValueCommand : ScriptCommand
+    public class ReplaceDataTableColumnValueCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
-        public string v_InputDataTable { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
@@ -54,16 +55,14 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            (var targetDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_InputDataTable), nameof(v_ColumnType), nameof(v_TargetColumnIndex), engine);
+            (var targetDT, var colIndex) = this.ExpandUserVariablesAsDataTableAndColumnIndex(nameof(v_DataTable), nameof(v_ColumnType), nameof(v_TargetColumnIndex), engine);
 
             var parameters = DataTableControls.GetFieldValues(v_ReplaceActionParameterTable, "ParameterName", "ParameterValue", engine);
             var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_ReplaceAction), parameters, engine, this);
 
-            string newValue = v_NewValue.ConvertToUserVariable(engine);
+            string newValue = v_NewValue.ExpandValueOrUserVariable(engine);
 
             int rows = targetDT.Rows.Count;
             for (int i = 0; i < rows; i++)
@@ -91,13 +90,21 @@ namespace taskt.Core.Automation.Commands
             ConditionControls.RenderFilter(v_ReplaceActionParameterTable, ReplaceParametersGridViewHelper, ReplaceActionComboboxHelper, TargetTypeComboboxHelper);
         }
 
-        public override void AfterShown()
+        public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             var ReplaceParametersGridViewHelper = (DataGridView)ControlsList[nameof(v_ReplaceActionParameterTable)];
             var TargetTypeComboboxHelper = (ComboBox)ControlsList[nameof(v_TargetType)];
             var ReplaceActionComboboxHelper = (ComboBox)ControlsList[nameof(v_ReplaceAction)];
             ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, ReplaceActionComboboxHelper);
             ConditionControls.RenderFilter(v_ReplaceActionParameterTable, ReplaceParametersGridViewHelper, ReplaceActionComboboxHelper, TargetTypeComboboxHelper);
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+
+            var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_ReplaceActionParameterTable));
+            DataTableControls.BeforeValidate_NoRowAdding(dgv, v_ReplaceActionParameterTable);
         }
     }
 }

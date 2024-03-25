@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command specifies what to do  after an error is encountered.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to define how your script should behave when an error is encountered.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_error))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ErrorHandlingCommand : ScriptCommand
@@ -35,11 +36,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var act = this.GetUISelectionValue(nameof(v_ErrorHandlingAction), engine);
+            var act = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorHandlingAction), engine);
             switch (act)
             {
                 case "stop processing":

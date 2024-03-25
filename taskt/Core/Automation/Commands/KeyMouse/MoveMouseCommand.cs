@@ -5,7 +5,6 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Key/Mouse Commands")]
     [Attributes.ClassAttributes.SubGruop("Mouse")]
@@ -13,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("Simulates mouse movements")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to simulate the movement of the mouse, additionally, this command also allows you to perform a click after movement has completed.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'SetCursorPos' function from user32.dll to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_input))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class MoveMouseCommand : ScriptCommand
@@ -51,6 +51,13 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterMouseClick))]
         public string v_WaitTimeAfterClick { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Ignore Wait Time When Click Type is 'None'")]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyFirstValue("Yes")]
+        public string v_IgnoreWaitTime { get; set; }
+
         public MoveMouseCommand()
         {
             //this.CommandName = "SendMouseMoveCommand";
@@ -59,28 +66,25 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;  
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var mouseX = this.ConvertToUserVariableAsInteger(nameof(v_XMousePosition), engine);
-            var mouseY = this.ConvertToUserVariableAsInteger(nameof(v_YMousePosition), engine);
+            var mouseX = this.ExpandValueOrUserVariableAsInteger(nameof(v_XMousePosition), engine);
+            var mouseY = this.ExpandValueOrUserVariableAsInteger(nameof(v_YMousePosition), engine);
 
             try
             {
-                //var xLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseX)));
-                //var yLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseY)));
-
-                //User32Functions.SetCursorPosition(xLocation, yLocation);
-                //User32Functions.SetCursorPosition(mouseX, mouseY);
                 KeyMouseControls.SetCursorPosition(mouseX, mouseY);
 
                 if (!String.IsNullOrEmpty(v_MouseClick))
                 {
+                    // because default value is different from Click Mouse
+                    var ignoreWaitTime = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IgnoreWaitTime), engine);
+
                     var clickCommand = new ClickMouseCommand
                     {
                         v_MouseClick = v_MouseClick,
-                        v_WaitTimeAfterClick = v_WaitTimeAfterClick
+                        v_WaitTimeAfterClick = v_WaitTimeAfterClick,
+                        v_IgnoreWaitTime = ignoreWaitTime,
                     };
                     clickCommand.RunCommand(engine);
                 }
@@ -93,7 +97,7 @@ namespace taskt.Core.Automation.Commands
 
         private void lnkMouseCapture_Clicked(object sender, EventArgs e)
         {
-            using (UI.Forms.Supplemental.frmShowCursorPosition frmShowCursorPos = new UI.Forms.Supplemental.frmShowCursorPosition())
+            using (var frmShowCursorPos = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmShowCursorPosition())
             {
                 if (frmShowCursorPos.ShowDialog() == DialogResult.OK)
                 {

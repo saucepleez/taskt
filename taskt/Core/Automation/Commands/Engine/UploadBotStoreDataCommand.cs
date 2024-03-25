@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to upload data to a local tasktServer bot store")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to upload or share data across bots.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_server))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UploadBotStoreDataCommand : ScriptCommand
@@ -45,12 +46,10 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var keyName = v_KeyName.ConvertToUserVariable(engine);
-            var keyValue = v_InputValue.ConvertToUserVariable(engine);
+            var keyName = v_KeyName.ExpandValueOrUserVariable(engine);
+            var keyValue = v_InputValue.ExpandValueOrUserVariable(engine);
 
             try
             {

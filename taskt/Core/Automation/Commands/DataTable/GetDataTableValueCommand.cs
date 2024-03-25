@@ -11,13 +11,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get the DataTable value")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get the DataTable value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetDataTableValueCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
@@ -33,7 +34,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_UserVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public GetDataTableValueCommand()
         {
@@ -43,15 +44,13 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            (var myDT, var rowIndex, var columnIndex) = this.GetDataTableVariableAndRowColumnIndeies(nameof(v_DataTableName), nameof(v_RowIndex), nameof(v_ColumnType), nameof(v_ColumnIndex), engine);
+            (var myDT, var rowIndex, var columnIndex) = this.ExpandUserVariablesAsDataTableAndRowColumnIndices(nameof(v_DataTable), nameof(v_RowIndex), nameof(v_ColumnType), nameof(v_ColumnIndex), engine);
 
             string v = myDT.Rows[rowIndex][columnIndex]?.ToString() ?? "";
 
-            v.StoreInUserVariable(engine, v_UserVariableName);
+            v.StoreInUserVariable(engine, v_Result);
         }
     }
 }

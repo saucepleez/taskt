@@ -11,13 +11,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to set the DataTable value")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set the DataTable value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SetDataTableValueCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
@@ -50,13 +51,11 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            (var myDT, var rowIndex, var columnIndex) = this.ExpandUserVariablesAsDataTableAndRowColumnIndices(nameof(v_DataTable), nameof(v_RowIndex), nameof(v_ColumnType), nameof(v_ColumnIndex), engine);
 
-            (var myDT, var rowIndex, var columnIndex) = this.GetDataTableVariableAndRowColumnIndeies(nameof(v_DataTableName), nameof(v_RowIndex), nameof(v_ColumnType), nameof(v_ColumnIndex), engine);
-
-            string newValue = v_NewValue.ConvertToUserVariable(engine);
+            string newValue = v_NewValue.ExpandValueOrUserVariable(engine);
 
             myDT.Rows[rowIndex][columnIndex] = newValue;
         }

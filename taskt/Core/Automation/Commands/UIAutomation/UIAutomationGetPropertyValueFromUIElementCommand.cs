@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Get Property Value From UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to get Property Value from UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Property Value from UIElement.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationGetPropertyValueFromUIElementCommand : ScriptCommand
@@ -56,13 +57,11 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
-            var targetElement = v_TargetElement.GetUIElementVariable(engine);
-
-            var propName = this.GetUISelectionValue(nameof(v_PropertyName), engine);
+            var propName = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PropertyName), engine);
             switch (propName)
             {
                 case "name":

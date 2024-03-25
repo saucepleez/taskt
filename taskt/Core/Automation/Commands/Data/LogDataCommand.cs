@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command logs data to files.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to log custom data to a file for debugging or analytical purposes.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     public class LogDataCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -41,17 +42,16 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //get text to log and log file name       
-            var textToLog = v_LogText.ConvertToUserVariable(sender);
-            var logFile = v_LogFile.ConvertToUserVariable(sender);
+            var textToLog = v_LogText.ExpandValueOrUserVariable(engine);
+            var logFile = v_LogFile.ExpandValueOrUserVariable(engine);
 
             //determine log file
             if (v_LogFile == "Engine Logs")
             {
                 //log to the standard engine logs
-                var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
                 //engine.engineLogger.Information(textToLog);
                 engine.WriteLog(textToLog);
             }
@@ -63,10 +63,9 @@ namespace taskt.Core.Automation.Commands
                     logger.Information(textToLog);
                 }
             }
-
-
         }
-        public override List<Control> Render(frmCommandEditor editor)
+
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -95,7 +94,7 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [Write Log to 'taskt\\Logs\\" + logFileName + "']";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
+        public override bool IsValidate(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.IsValidate(editor);
 

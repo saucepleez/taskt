@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using taskt.Core.Automation.Commands;
 
 namespace taskt.Core
@@ -63,7 +62,15 @@ namespace taskt.Core
             '\n', '\r', '\t'
         };
 
-        public static string GetRawPropertyString(this ScriptCommand command, string propertyName, string propertyDescription)
+        /// <summary>
+        /// get raw property value as string
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="propertyDescription"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception">value is not string</exception>
+        public static string GetRawPropertyValueAsString(this ScriptCommand command, string propertyName, string propertyDescription)
         {
             var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception(propertyDescription + " (name: '" + propertyName + "') does not exists.");
             object propValue = propInfo.GetValue(command);
@@ -78,44 +85,60 @@ namespace taskt.Core
             }
         }
 
-        public static string ConvertToUserVariable(this ScriptCommand command, string propertyName, string propertyDescription, Automation.Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// expand value or user variable as string
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="propertyDescription"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static string ExpandValueOrUserVariable(this ScriptCommand command, string propertyName, string propertyDescription, Automation.Engine.AutomationEngineInstance engine)
         {
-            return GetRawPropertyString(command, propertyName, propertyDescription).ConvertToUserVariable(engine);
+            return GetRawPropertyValueAsString(command, propertyName, propertyDescription).ExpandValueOrUserVariable(engine);
         }
 
         /// <summary>
-        /// Replaces variable placeholders ([variable]) with variable text.
+        /// expand value or user variable as string
         /// </summary>
-        /// <param name="sender">The script engine instance (frmScriptEngine) which contains session variables.</param>
-        public static string ConvertToUserVariable(this String str, object sender)
+        /// <param name="str"></param>
+        /// <param name="sender"></param>
+        /// <returns></returns>
+        public static string ExpandValueOrUserVariable(this string str, Automation.Engine.AutomationEngineInstance engine)
         {
-            if (((Core.Automation.Engine.AutomationEngineInstance)sender).engineSettings.UseNewParser)
+            if (engine.engineSettings.UseNewParser)
             {
-                return str.ConvertToUserVariable_Unofficial(sender);
+                return str.ExpandValueOrUserVariable_new2022(engine);
             }
             else
             {
-                return str.ConvertToUserVariable_Official(sender);
+                return str.ExpandValueOrUserVariable_Official(engine);
             }
         }
 
-        public static string ConvertToUserVariable_Unofficial(this String str, object sender)
+        /// <summary>
+        /// new expand method 2022
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="sender"></param>
+        /// <returns></returns>
+        public static string ExpandValueOrUserVariable_new2022(this string str, Automation.Engine.AutomationEngineInstance engine)
         {
             if (str == null)
             {
                 return string.Empty;
             }
                 
-            if (sender == null)
+            if (engine == null)
             {
                 return str;
             }
 
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var variableList = engine.VariableList;
-            var systemVariables = Core.Common.GenerateSystemVariables();
+            //var systemVariables = Core.Common.GenerateSystemVariables();
+            var systemVariables = Automation.Engine.SystemVariables.GetSystemVariables(engine);
 
-            var searchList = new List<Core.Script.ScriptVariable>();
+            var searchList = new List<Script.ScriptVariable>();
             searchList.AddRange(variableList);
             searchList.AddRange(systemVariables);
 
@@ -143,11 +166,6 @@ namespace taskt.Core
                     str = "";
                 }
             }
-
-            //if ((searchVariableCount == 0) && (convertedStr == "") && (str != convertedStr))
-            //{
-            //    // not converted variable, result is empty string, but 'str' is not equals result
-            //}
 
             if (!engine.AutoCalculateVariables)
             {
@@ -182,14 +200,14 @@ namespace taskt.Core
         }
 
         /// <summary>
-        /// 
+        /// search user variable
         /// </summary>
         /// <param name="str"></param>
         /// <param name="variables"></param>
         /// <param name="startMarker"></param>
         /// <param name="endMarker"></param>
         /// <returns>ret[0]: expands variable value, ret[1]: left string</returns>
-        private static string[] SearchVariable(string str, List<Core.Script.ScriptVariable> variables, Core.Automation.Engine.AutomationEngineInstance engine)
+        private static string[] SearchVariable(string str, List<Script.ScriptVariable> variables, Automation.Engine.AutomationEngineInstance engine)
         {
             int state = 1;
             string variableName = "";
@@ -282,11 +300,19 @@ namespace taskt.Core
             return new string[] { ret, str };
         }
 
-        private static bool ExpandVariable(string variableName, List<Core.Script.ScriptVariable> variables, Core.Automation.Engine.AutomationEngineInstance engine, out string result)
+        /// <summary>
+        /// expand user variable
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="variables"></param>
+        /// <param name="engine"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        private static bool ExpandVariable(string variableName, List<Script.ScriptVariable> variables, Automation.Engine.AutomationEngineInstance engine, out string result)
         {
             variableName = variableName.Trim();
             result = null;
-            if (isExpandJSON(variableName, engine)) // =>
+            if (IsExpandJSON(variableName, engine)) // =>
             {
                 bool ret = ExpandVariableJSON(variableName, variables, engine, out result);
                 if (ret)
@@ -294,7 +320,7 @@ namespace taskt.Core
                     return true;
                 }
             }
-            if (isExpandListIndex(variableName, engine))    // var[index]
+            if (IsExpandListIndex(variableName, engine))    // var[index]
             {
                 bool ret = ExpandVariableListIndex(variableName, variables, engine, out result);
                 if (ret)
@@ -302,7 +328,7 @@ namespace taskt.Core
                     return true;
                 }
             }
-            if (isExpandDotProperty(variableName, engine))  // var.prop
+            if (IsExpandDotProperty(variableName, engine))  // var.prop
             {
                 bool ret = ExpandVariableDotProperty(variableName, variables, engine, out result);
                 if (ret)
@@ -313,7 +339,7 @@ namespace taskt.Core
             return ExpandVariableNormal(variableName, variables, out result);
         }
 
-        private static bool ExpandVariableNormal(string variableName, List<Core.Script.ScriptVariable> variables, out string result)
+        private static bool ExpandVariableNormal(string variableName, List<Script.ScriptVariable> variables, out string result)
         {
             foreach(var trg in variables)
             {
@@ -327,7 +353,7 @@ namespace taskt.Core
             return false;
         }
 
-        private static bool ExpandVariableScriptVariable(string variableName, List<Core.Script.ScriptVariable> variables, out Core.Script.ScriptVariable result)
+        private static bool ExpandVariableScriptVariable(string variableName, List<Script.ScriptVariable> variables, out Script.ScriptVariable result)
         {
             foreach (var trg in variables)
             {
@@ -341,13 +367,13 @@ namespace taskt.Core
             return false;
         }
 
-        private static bool isExpandJSON(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        private static bool IsExpandJSON(string variableName, Automation.Engine.AutomationEngineInstance engine)
         {
             // TODO: '=>' is engine settings
             return (variableName.Split(new string[] { "=>" }, StringSplitOptions.None).Length >= 2);
         }
 
-        public static bool ExpandVariableJSON(string variableName, List<Core.Script.ScriptVariable> variables, Core.Automation.Engine.AutomationEngineInstance engine, out string result)
+        public static bool ExpandVariableJSON(string variableName, List<Script.ScriptVariable> variables, Automation.Engine.AutomationEngineInstance engine, out string result)
         {
             var elements = variableName.Split(new string[] { "=>" }, StringSplitOptions.None);
             var newVariableName = elements[0].Trim();
@@ -388,13 +414,13 @@ namespace taskt.Core
             }
         }
 
-        private static bool isExpandListIndex(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        private static bool IsExpandListIndex(string variableName, Automation.Engine.AutomationEngineInstance engine)
         {
             // TODO: [ ] is engine settings
             return (variableName.Contains('[') && variableName.EndsWith("]"));
         }
 
-        private static bool ExpandVariableListIndex(string variableName, List<Core.Script.ScriptVariable> variables, Core.Automation.Engine.AutomationEngineInstance engine, out string result)
+        private static bool ExpandVariableListIndex(string variableName, List<Script.ScriptVariable> variables, Automation.Engine.AutomationEngineInstance engine, out string result)
         {
             int startPos = variableName.IndexOf('[');
             string newVariableName = variableName.Substring(0, startPos).Trim();
@@ -407,7 +433,7 @@ namespace taskt.Core
                 return false;
             }
 
-            Core.Script.ScriptVariable targetVariable;
+            Script.ScriptVariable targetVariable;
             if (ExpandVariableScriptVariable(newVariableName, variables, out targetVariable))
             {
                 try
@@ -432,13 +458,13 @@ namespace taskt.Core
             }
         }
 
-        private static bool isExpandDotProperty(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        private static bool IsExpandDotProperty(string variableName, Automation.Engine.AutomationEngineInstance engine)
         {
             // TODO: . is engine settings
             return (variableName.Split('.').Length == 2);
         }
 
-        private static bool ExpandVariableDotProperty(string variableName, List<Core.Script.ScriptVariable> variables, Core.Automation.Engine.AutomationEngineInstance engine, out string result)
+        private static bool ExpandVariableDotProperty(string variableName, List<Script.ScriptVariable> variables, Automation.Engine.AutomationEngineInstance engine, out string result)
         {
             //if (variableName == "taskt.EngineContext")
             //{
@@ -452,9 +478,9 @@ namespace taskt.Core
                     result = engine.GetEngineContext();
                     return true;
 
-                case "File.CurrentScriptFile":
-                    result = engine.FileName;
-                    return true;
+                //    case "File.CurrentScriptFile":
+                //        result = engine.FileName;
+                //        return true;
 
                 default:
                     break;
@@ -470,7 +496,7 @@ namespace taskt.Core
             string newVariableName = sptVar[0].Trim();
             string variableProperty = sptVar[1].Trim();
 
-            Core.Script.ScriptVariable targetVariable;
+            Script.ScriptVariable targetVariable;
             if (ExpandVariableScriptVariable(newVariableName, variables, out targetVariable))
             {
                 try
@@ -492,7 +518,13 @@ namespace taskt.Core
             }
         }
 
-        public static string ConvertToUserVariable_Intermediate(this String str, Core.Automation.Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// convert user variable to Intermediate Notation (change wrap marker)
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static string ConvertUserVariableToIntermediateNotation(this string str, Automation.Engine.AutomationEngineInstance engine)
         {
             if (str == null)
             {
@@ -505,9 +537,10 @@ namespace taskt.Core
             }
 
             var variableList = engine.VariableList;
-            var systemVariables = Core.Common.GenerateSystemVariables();
+            //var systemVariables = Core.Common.GenerateSystemVariables();
+            var systemVariables = Automation.Engine.SystemVariables.GetSystemVariables(engine);
 
-            var searchList = new List<Core.Script.ScriptVariable>();
+            var searchList = new List<Script.ScriptVariable>();
             searchList.AddRange(variableList);
             searchList.AddRange(systemVariables);
 
@@ -535,7 +568,7 @@ namespace taskt.Core
             return convertedStr;
         }
 
-        private static string[] SearchVariable_Intermediate(string str, List<Core.Script.ScriptVariable> variables, Core.Automation.Engine.AutomationEngineInstance engine)
+        private static string[] SearchVariable_Intermediate(string str, List<Script.ScriptVariable> variables, Automation.Engine.AutomationEngineInstance engine)
         {
             int state = 1;
             string variableName = "";
@@ -573,7 +606,8 @@ namespace taskt.Core
                                 string variableValue;
                                 if (ExpandVariable(variableName, variables, engine, out variableValue))
                                 {
-                                    ret = engine.engineSettings.wrapIntermediateVariableMaker(variableName);
+                                    //ret = engine.engineSettings.wrapIntermediateVariableMaker(variableName);
+                                    ret = IntermediateControls.GetWrappedIntermediateVariable(variableName);
                                     state = 2;
                                 }
                                 else
@@ -592,7 +626,8 @@ namespace taskt.Core
                             string variableValue;
                             if (ExpandVariable(variableName, variables, engine, out variableValue))
                             {
-                                ret = engine.engineSettings.wrapIntermediateVariableMaker(variableName);
+                                //ret = engine.engineSettings.wrapIntermediateVariableMaker(variableName);
+                                ret = IntermediateControls.GetWrappedIntermediateVariable(variableName);
                                 state = 2;
                             }
                             else
@@ -629,12 +664,12 @@ namespace taskt.Core
         }
 
         // official parser
-        public static string ConvertToUserVariable_Official(this String str, object sender)
+        public static string ExpandValueOrUserVariable_Official(this string str, Automation.Engine.AutomationEngineInstance engine)
         {
             if (str == null)
                 return string.Empty;
 
-            if (sender == null)
+            if (engine == null)
                 return str;
 
             if (str.Length < 2)
@@ -642,12 +677,11 @@ namespace taskt.Core
                 return str;
             }
 
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             var variableList = engine.VariableList;
-            var systemVariables = Core.Common.GenerateSystemVariables();
+            //var systemVariables = Core.Common.GenerateSystemVariables();
+            var systemVariables = Automation.Engine.SystemVariables.GetSystemVariables(engine);
 
-            var searchList = new List<Core.Script.ScriptVariable>();
+            var searchList = new List<Script.ScriptVariable>();
             searchList.AddRange(variableList);
             searchList.AddRange(systemVariables);
 
@@ -777,8 +811,10 @@ namespace taskt.Core
                         varCheck.VariableValue = engine.GetEngineContext();
                         break;
 
-                    case "File.CurrentScriptFile":
-                        varCheck.VariableValue = engine.FileName;
+                    //case "File.CurrentScriptFile":
+                    //    varCheck.VariableValue = engine.FileName;
+                    //    break;
+                    default:
                         break;
                 }
 
@@ -881,15 +917,17 @@ namespace taskt.Core
             else
             {
                 //track math chars
-                var mathChars = new List<Char>();
-                mathChars.Add('*');
-                mathChars.Add('+');
-                mathChars.Add('-');
-                mathChars.Add('=');
-                mathChars.Add('/');
-                mathChars.Add('\r');
-                mathChars.Add('\n');
-                mathChars.Add('\t');
+                var mathChars = new List<Char>
+                {
+                    '*',
+                    '+',
+                    '-',
+                    '=',
+                    '/',
+                    '\r',
+                    '\n',
+                    '\t'
+                };
 
                 //if the string matches the char then return
                 //as the user does not want to do math
@@ -924,9 +962,9 @@ namespace taskt.Core
         /// </summary>
         /// <param name="sender">The script engine instance (frmScriptEngine) which contains session variables.</param>
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
-        public static void StoreInUserVariable(this String str, object sender, string targetVariable)
+        public static void StoreInUserVariable(this string str, Automation.Engine.AutomationEngineInstance engine, string targetVariable)
         {
-            StoreInUserVariable(targetVariable, str, (Core.Automation.Engine.AutomationEngineInstance)sender, true);
+            StoreInUserVariable(targetVariable, str, engine, true);
         }
 
         /// <summary>
@@ -934,39 +972,42 @@ namespace taskt.Core
         /// </summary>
         /// <param name="sender">The script engine instance (frmScriptEngine) which contains session variables.</param>
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
-        public static void StoreRawDataInUserVariable(this String str, object sender, string targetVariable)
+        public static void StoreRawDataInUserVariable(this string str, Automation.Engine.AutomationEngineInstance engine, string targetVariable)
         {
-            StoreInUserVariable(targetVariable, str, (Core.Automation.Engine.AutomationEngineInstance)sender, false);
+            StoreInUserVariable(targetVariable, str, engine, false);
         }
 
-        public static void StoreInUserVariable(this DataRow value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value, sender, false);
-        }
+        //public static void StoreInUserVariable(this DataRow value, Automation.Engine.AutomationEngineInstance engine, string targetVariable)
+        //{
+        //    StoreInUserVariable(targetVariable, value, engine, false);
+        //}
 
         /// <summary>
         /// Formats item as a variable (enclosing brackets)s
         /// </summary>
         /// <param name="str">The string to be wrapped as a variable</param>
-        public static string ApplyVariableFormatting(this String str, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static string ApplyVariableFormatting(this string str, Automation.Engine.AutomationEngineInstance engine)
         {
             //var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
 
             //return str.Insert(0, settings.EngineSettings.VariableStartMarker).Insert(str.Length + 1, settings.EngineSettings.VariableEndMarker);
-            return engine.engineSettings.wrapVariableMarker(str);
+            //return engine.engineSettings.wrapVariableMarker(str);
+
+            return VariableNameControls.GetWrappedVariableName(str, engine);
         }
 
-        public static void StoreInUserVariable(string userVariable, object variableValue, Core.Automation.Engine.AutomationEngineInstance engine, bool parseValue = true)
+        public static void StoreInUserVariable(string userVariable, object variableValue, Automation.Engine.AutomationEngineInstance engine, bool parseValue = true)
         {
-            userVariable = parseVariableName(userVariable, engine);
+            //userVariable = parseVariableName(userVariable, engine);
+            userVariable = VariableNameControls.GetVariableName(userVariable, engine);
 
-            var requiredVariable = lookupVariable(userVariable, engine);
+            var requiredVariable = LookupVariable(userVariable, engine);
 
             //if still not found and user has elected option, create variable at runtime
             if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
             {
                 engine.VariableList.Add(new Script.ScriptVariable() { VariableName = userVariable });
-                requiredVariable = lookupVariable(userVariable, engine);
+                requiredVariable = LookupVariable(userVariable, engine);
             }
 
             if (requiredVariable == null)
@@ -975,9 +1016,9 @@ namespace taskt.Core
             }
             else
             {
-                if (parseValue && (variableValue is string))
+                if (parseValue && (variableValue is string str))
                 {
-                    requiredVariable.VariableValue = ((string)variableValue).ConvertToUserVariable(engine);
+                    requiredVariable.VariableValue = str.ExpandValueOrUserVariable(engine);
                 }
                 else
                 {
@@ -987,11 +1028,22 @@ namespace taskt.Core
             }
         }
 
-        public static Script.ScriptVariable GetRawVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// get raw user variable value
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static Script.ScriptVariable GetRawVariable(this string variableName, Automation.Engine.AutomationEngineInstance engine)
         {
-            string newName = parseVariableName(variableName, engine);
-            newName = newName.ConvertToUserVariable(engine);
-            Script.ScriptVariable searchedVaiable = lookupVariable(newName, engine);
+            //string newName = parseVariableName(variableName, engine);
+            var newName = VariableNameControls.GetVariableName(variableName, engine);
+            if (newName != variableName)
+            {
+                newName = newName.ExpandValueOrUserVariable(engine);
+            }
+            Script.ScriptVariable searchedVaiable = LookupVariable(newName, engine);
             if (searchedVaiable == null)
             {
                 throw new Exception("Variable " + variableName + " does not exists.");
@@ -1002,7 +1054,13 @@ namespace taskt.Core
             }
         }
 
-        private static Script.ScriptVariable lookupVariable(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// search and return variable that specified name
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static Script.ScriptVariable LookupVariable(string variableName, Automation.Engine.AutomationEngineInstance engine)
         {
             //search for the variable
             var requiredVariable = engine.VariableList.Where(var => var.VariableName == variableName).FirstOrDefault();
@@ -1010,60 +1068,60 @@ namespace taskt.Core
             return requiredVariable;
         }
 
-        public static string parseVariableName(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            var settings = engine.engineSettings;
-            if (variableName.StartsWith(settings.VariableStartMarker) && variableName.EndsWith(settings.VariableEndMarker))
-            {
-                if (engine.engineSettings.IgnoreFirstVariableMarkerInOutputParameter)
-                {
-                    variableName = variableName.Substring(settings.VariableStartMarker.Length, variableName.Length - settings.VariableStartMarker.Length - settings.VariableEndMarker.Length);
-                }
-            }
-            if (variableName.Contains(settings.VariableStartMarker) && variableName.Contains(settings.VariableEndMarker))
-            {
-                variableName = variableName.ConvertToUserVariable(engine);
-            }
+        //public static string parseVariableName(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    var settings = engine.engineSettings;
+        //    if (variableName.StartsWith(settings.VariableStartMarker) && variableName.EndsWith(settings.VariableEndMarker))
+        //    {
+        //        if (engine.engineSettings.IgnoreFirstVariableMarkerInOutputParameter)
+        //        {
+        //            variableName = variableName.Substring(settings.VariableStartMarker.Length, variableName.Length - settings.VariableStartMarker.Length - settings.VariableEndMarker.Length);
+        //        }
+        //    }
+        //    if (variableName.Contains(settings.VariableStartMarker) && variableName.Contains(settings.VariableEndMarker))
+        //    {
+        //        variableName = variableName.ExpandValueOrUserVariable(engine);
+        //    }
 
-            return variableName;
-        }
+        //    return variableName;
+        //}
 
-        public static string ToBase64(this string text)
-        {
-            return ToBase64(text, Encoding.UTF8);
-        }
+        //public static string ToBase64(this string text)
+        //{
+        //    return ToBase64(text, Encoding.UTF8);
+        //}
 
-        public static string ToBase64(this string text, Encoding encoding)
-        {
-            byte[] textAsBytes = encoding.GetBytes(text);
-            return Convert.ToBase64String(textAsBytes);
-        }
+        //public static string ToBase64(this string text, Encoding encoding)
+        //{
+        //    byte[] textAsBytes = encoding.GetBytes(text);
+        //    return Convert.ToBase64String(textAsBytes);
+        //}
 
-        public static bool TryParseBase64(this string text, out string decodedText)
-        {
-            return TryParseBase64(text, Encoding.UTF8, out decodedText);
-        }
+        //public static bool TryParseBase64(this string text, out string decodedText)
+        //{
+        //    return TryParseBase64(text, Encoding.UTF8, out decodedText);
+        //}
 
-        public static bool TryParseBase64(this string text, Encoding encoding, out string decodedText)
-        {
-            if (string.IsNullOrEmpty(text))
-            {
-                decodedText = text;
-                return false;
-            }
+        //public static bool TryParseBase64(this string text, Encoding encoding, out string decodedText)
+        //{
+        //    if (string.IsNullOrEmpty(text))
+        //    {
+        //        decodedText = text;
+        //        return false;
+        //    }
 
-            try
-            {
-                byte[] textAsBytes = Convert.FromBase64String(text);
-                decodedText = encoding.GetString(textAsBytes);
-                return true;
-            }
-            catch (Exception)
-            {
-                decodedText = null;
-                return false;
-            }
-        }
+        //    try
+        //    {
+        //        byte[] textAsBytes = Convert.FromBase64String(text);
+        //        decodedText = encoding.GetString(textAsBytes);
+        //        return true;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        decodedText = null;
+        //        return false;
+        //    }
+        //}
     }
 }
 

@@ -12,9 +12,10 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Check UIElement Exist")]
     [Attributes.ClassAttributes.Description("This command allows you to to check UIElement existence.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to check UIElement existence")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationCheckUIElementExistCommand : ScriptCommand
+    public class UIAutomationCheckUIElementExistCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -31,8 +32,8 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
-        [PropertyIsOptional(true, "0")]
-        [PropertyFirstValue("0")]
+        //[PropertyIsOptional(true, "0")]
+        //[PropertyFirstValue("0")]
         public string v_WaitTime { get; set; }
 
         public UIAutomationCheckUIElementExistCommand()
@@ -43,10 +44,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             try
             {
                 UIElementControls.SearchGUIElement(this, engine);
@@ -58,10 +57,18 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override void AfterShown()
+        public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
             UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+
+            var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_SearchParameters));
+            DataTableControls.BeforeValidate_NoRowAdding(dgv, v_SearchParameters);
         }
     }
 }

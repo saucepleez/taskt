@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command waits for a file to exist at a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to wait for a file to exist before proceeding.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class WaitForFileToExistCommand : ScriptCommand
@@ -37,10 +38,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             ////convert items to variables
             //var fileName = v_FileName.ConvertToUserVariable(sender);
 

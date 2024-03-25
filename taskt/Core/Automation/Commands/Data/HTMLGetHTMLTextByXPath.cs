@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command processes an HTML source object")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to parse and extract data from a successful **HTTP Request Command**")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class HTMLGetHTMLTextByXPath : ScriptCommand
@@ -48,15 +49,15 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-            doc.LoadHtml(v_userVariableName.ConvertToUserVariable(sender));
+            doc.LoadHtml(v_userVariableName.ExpandValueOrUserVariable(engine));
 
             var div = doc.DocumentNode.SelectSingleNode(v_xPathQuery);
             string divString = div.InnerText;
 
-            divString.StoreInUserVariable(sender, v_applyToVariableName);
+            divString.StoreInUserVariable(engine, v_applyToVariableName);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command convert a List to a DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertListToDataTableCommand : ScriptCommand
@@ -66,18 +67,16 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            List<string> targetList = v_InputList.GetListVariable(engine);
+            List<string> targetList = v_InputList.ExpandUserVariableAsList(engine);
 
             DataTable myDT = new DataTable();
 
             Action<List<string>> dtUseColumns = new Action<List<string>>((targetColumns) =>
             {
-                string columnsNotEnough = this.GetUISelectionValue(nameof(v_ColumnsNotEnough), "Columns Not Enough", engine);
-                string listItemNotEnough = this.GetUISelectionValue(nameof(v_ListItemNotEnough), "List Item Not Enough", engine);
+                string columnsNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ColumnsNotEnough), "Columns Not Enough", engine);
+                string listItemNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ListItemNotEnough), "List Item Not Enough", engine);
 
                 if ((columnsNotEnough == "error") && (targetList.Count > targetColumns.Count))
                 {
@@ -157,27 +156,27 @@ namespace taskt.Core.Automation.Commands
 
             List<string> columnsList;
 
-            string columnsType = this.GetUISelectionValue(nameof(v_ColumnType), "Columns Type", engine);
+            string columnsType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ColumnType), "Columns Type", engine);
             switch (columnsType)
             {
                 case "list":
-                    columnsList = v_Columns.GetListVariable(engine);
+                    columnsList = v_Columns.ExpandUserVariableAsList(engine);
                     dtUseColumns(columnsList);
                     break;
                 case "comma separated":
-                    columnsList = v_Columns.ConvertToUserVariable(engine).Split(',').ToList();
+                    columnsList = v_Columns.ExpandValueOrUserVariable(engine).Split(',').ToList();
                     dtUseColumns(columnsList);
                     break;
                 case "space separated":
-                    columnsList = v_Columns.ConvertToUserVariable(engine).Split(' ').ToList();
+                    columnsList = v_Columns.ExpandValueOrUserVariable(engine).Split(' ').ToList();
                     dtUseColumns(columnsList);
                     break;
                 case "tab separated":
-                    columnsList = v_Columns.ConvertToUserVariable(engine).Split('\t').ToList();
+                    columnsList = v_Columns.ExpandValueOrUserVariable(engine).Split('\t').ToList();
                     dtUseColumns(columnsList);
                     break;
                 case "newline separated":
-                    columnsList = v_Columns.ConvertToUserVariable(engine).Replace("\r\n", "\n").Replace("\r", "\n").Split('\n').ToList();
+                    columnsList = v_Columns.ExpandValueOrUserVariable(engine).Replace("\r\n", "\n").Replace("\r", "\n").Split('\n').ToList();
                     dtUseColumns(columnsList);
                     break;
                 case "column prefix":
@@ -188,7 +187,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        columnPrefix = v_Columns.ConvertToUserVariable(engine);
+                        columnPrefix = v_Columns.ExpandValueOrUserVariable(engine);
                     }
 
                     myDT.Rows.Add();

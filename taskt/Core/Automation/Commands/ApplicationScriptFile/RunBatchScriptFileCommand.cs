@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to run a script or program and wait for it to exit before proceeding.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run a script (such as vbScript, javascript, or executable) but wait for it to close before taskt continues executing.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start' and waits for the script/program to exit before proceeding.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_script))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class RunBatchScriptFileCommand : ScriptCommand
@@ -40,9 +41,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
 
             //string scriptPath = FilePathControls.FormatFilePath_NoFileCounter(v_ScriptPath, engine, new List<string>() { "bat", "vbs", "js", "wsf" }, true);
             string scriptPath = FilePathControls.WaitForFile(this, nameof(v_ScriptPath), nameof(v_WaitForFile), engine);

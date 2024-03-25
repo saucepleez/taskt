@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get an item from a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get an item from a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetListItemCommand : ScriptCommand
@@ -36,10 +37,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //var listVariable = v_ListName.GetRawVariable(engine);
             //if (listVariable == null)
             //{
@@ -124,7 +123,7 @@ namespace taskt.Core.Automation.Commands
             //    index = this.ConvertToUserVariableAsInteger(nameof(v_ItemIndex), engine);
             //}
 
-            (var list, var index) = this.GetListVariableAndIndex(nameof(v_ListName), nameof(v_ItemIndex), engine);
+            (var list, var index) = this.ExpandUserVariablesAsListAndIndex(nameof(v_ListName), nameof(v_ItemIndex), engine);
 
             if (index < 0)
             {

@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("Show OpenFileDialog or SaveFileDialog")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to select file to save or open.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_input))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ShowFileDialogCommand : ScriptCommand
@@ -77,17 +78,15 @@ namespace taskt.Core.Automation.Commands
             //this.v_InitialDirectory = "";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-            
-            var filter = v_Filter.ConvertToUserVariable(engine);
+            var filter = v_Filter.ExpandValueOrUserVariable(engine);
             if (!checkFileterProperty(filter))
             {
                 throw new Exception("Strange Filter Property. Value: '" + filter + "'");
             }
 
-            var index = this.ConvertToUserVariableAsInteger(nameof(v_FilterIndex), engine);
+            var index = this.ExpandValueOrUserVariableAsInteger(nameof(v_FilterIndex), engine);
             if (index < 1)
             {
                 throw new Exception("Strange FilterIndex Property: Value: " + index);
@@ -100,11 +99,11 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                directory = this.ConvertToUserVariableAsFolderPath(nameof(v_InitialDirectory), engine);
+                directory = this.ExpandValueOrUserVariableAsFolderPath(nameof(v_InitialDirectory), engine);
             }
 
             Type tp = null;
-            switch (this.GetUISelectionValue(nameof(v_DialogType), engine))
+            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_DialogType), engine))
             {
                 case "open":
                     //engine.tasktEngineUI.Invoke(new Action(() =>

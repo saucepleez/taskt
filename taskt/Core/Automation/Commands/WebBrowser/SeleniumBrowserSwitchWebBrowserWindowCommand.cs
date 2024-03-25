@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to create a new Selenium web browser session which enables automation for websites.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a browser that will eventually perform web automation such as checking an internal company intranet site to retrieve data")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SeleniumBrowserSwitchWebBrowserWindowCommand : ScriptCommand
@@ -80,20 +81,18 @@ namespace taskt.Core.Automation.Commands
             //this.v_CaseSensitiveMatch = "Yes";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
+            var matchType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WindowMatchType), engine);
 
-            var matchType = this.GetUISelectionValue(nameof(v_WindowMatchType), engine);
-
-            var exactMatchRequired = this.GetUISelectionValue(nameof(v_MatchSpecification), engine);
-            var caseSensitive = this.GetUISelectionValue(nameof(v_CaseSensitiveMatch), engine);
+            var exactMatchRequired = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_MatchSpecification), engine);
+            var caseSensitive = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CaseSensitiveMatch), engine);
 
             Func<IWebDriver, string, bool> matchFunc = getMatchFunc(matchType, exactMatchRequired, caseSensitive);
 
-            var matchParam = v_MatchParameter.ConvertToUserVariable(sender);
+            var matchParam = v_MatchParameter.ExpandValueOrUserVariable(engine);
             var handles = seleniumInstance.WindowHandles;
             var currentHandle = seleniumInstance.CurrentWindowHandle;
             var matchFound = false;

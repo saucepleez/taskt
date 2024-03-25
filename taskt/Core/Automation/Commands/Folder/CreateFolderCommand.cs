@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command creates a folder in a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to create a folder in a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateFolderCommand : ScriptCommand
@@ -31,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         public string v_DestinationDirectory { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Delete Folder When it already Exists")]
         [PropertyIsOptional(true, "No")]
         public string v_DeleteExisting { get; set; }
@@ -56,10 +57,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             ////apply variable logic
             //var destinationDirectory = FolderPathControls.WaitForFolder(this, nameof(v_DestinationDirectory), nameof(v_WaitForFolder), engine);
 
@@ -83,12 +82,12 @@ namespace taskt.Core.Automation.Commands
             FolderPathControls.FolderAction(this, engine,
                 new Action<string>(path =>
                 {
-                    var newFolder = v_NewFolderName.ConvertToUserVariableAsFolderName(engine);
+                    var newFolder = v_NewFolderName.ExpandValueOrUserVariableAsFolderName(engine);
 
                     var finalPath = System.IO.Path.Combine(path, newFolder);
                     if (System.IO.Directory.Exists(finalPath)) { }
                     {
-                        if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExisting), engine))
                         {
                             System.IO.Directory.Delete(finalPath, true);
                         }

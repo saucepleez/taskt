@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command enables user to break and exit from the current loop")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to break from the current loop")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_nextloop))]
     public class NextLoopCommand : ScriptCommand
     {
         public NextLoopCommand()
@@ -22,13 +23,12 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
             engine.CurrentLoopContinuing = true;
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 

@@ -11,13 +11,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to set value in Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set value in Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SetDictionaryValueCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_BothDictionaryName))]
-        public string v_InputData { get; set; }
+        public string v_Dictionary { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_Key))]
@@ -33,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Add")]
         [PropertyDetailSampleUsage("**Ignore**", "Don't Set the Dictionary Item")]
         [PropertyDetailSampleUsage("**Add**", "Add New Dictionary Item")]
-        public string v_IfKeyDoesNotExists { get; set; }
+        public string v_WhenKeyDoesNotExists { get; set; }
 
         public SetDictionaryValueCommand()
         {
@@ -43,20 +44,18 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            (var dic, var vKey) = this.ExpandUserVariablesAsDictionaryAndKey(nameof(v_Dictionary), nameof(v_Key), engine);
 
-            (var dic, var vKey) = this.GetDictionaryVariableAndKey(nameof(v_InputData), nameof(v_Key), engine);
-
-            string valueToSet = v_Value.ConvertToUserVariable(engine);
+            string valueToSet = v_Value.ExpandValueOrUserVariable(engine);
             if (dic.ContainsKey(vKey))
             {
                 dic[vKey] = valueToSet;
             }
             else
             {
-                string ifNotExits = this.GetUISelectionValue(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
+                string ifNotExits = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenKeyDoesNotExists), "Key Not Exists", engine);
                 switch (ifNotExits)
                 {
                     case "error":

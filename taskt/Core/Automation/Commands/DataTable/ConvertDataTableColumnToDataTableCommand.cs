@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Column to DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Column to DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertDataTableColumnToDataTableCommand : ScriptCommand
@@ -19,7 +20,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
         [PropertyDescription("DataTable Variable Name to Converted")]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
@@ -31,7 +32,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_NewOutputDataTableName))]
-        public string v_OutputVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public ConvertDataTableColumnToDataTableCommand()
         {
@@ -41,11 +42,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;         
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            (var srcDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_DataColumnIndex), engine);
+            (var srcDT, var colIndex) = this.ExpandUserVariablesAsDataTableAndColumnIndex(nameof(v_DataTable), nameof(v_ColumnType), nameof(v_DataColumnIndex), engine);
             DataTable myDT = new DataTable();
             myDT.Columns.Add(srcDT.Columns[colIndex].ColumnName);
             for (int i = 0; i < srcDT.Rows.Count; i++)
@@ -54,7 +53,7 @@ namespace taskt.Core.Automation.Commands
                 myDT.Rows[i][0] = srcDT.Rows[i][colIndex]?.ToString() ?? "";
             }
 
-            myDT.StoreInUserVariable(engine, v_OutputVariableName);
+            myDT.StoreInUserVariable(engine, v_Result);
         }
     }
 }

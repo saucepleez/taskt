@@ -6,482 +6,46 @@ using System.Windows.Forms;
 using System.Reflection;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    //// API
-    //[XmlInclude(typeof(ExecuteDLLCommand))]
-    //[XmlInclude(typeof(RESTCommand))]
-    //[XmlInclude(typeof(HTTPRequestCommand))]
-    //[XmlInclude(typeof(HTTPQueryResultCommand))]
-
-    //// Color
-    //[XmlInclude(typeof(CreateColorCommand))]
-    //[XmlInclude(typeof(CreateColorFromExcelColorCommand))]
-    //[XmlInclude(typeof(CreateColorFromHexCommand))]
-    //[XmlInclude(typeof(FormatColorCommand))]
-
-    //// Data
-    //[XmlInclude(typeof(DateCalculationCommand))]
-    //[XmlInclude(typeof(FormatDataCommand))]
-    //[XmlInclude(typeof(LogDataCommand))]
-    //[XmlInclude(typeof(PDFTextExtractionCommand))]
-
-    //// Database
-    //[XmlInclude(typeof(DatabaseDefineConnectionCommand))]
-    //[XmlInclude(typeof(DatabaseExecuteQueryCommand))]
-
-    //// DataTable
-    //[XmlInclude(typeof(AddDataRowCommand))]
-    //[XmlInclude(typeof(AddDataTableColumnCommand))]
-    //[XmlInclude(typeof(AddDataTableRowByDictionaryCommand))]
-    //[XmlInclude(typeof(AddDataTableRowCommand))]
-    //[XmlInclude(typeof(AddDataTableRowsByDataTableCommand))]
-    //[XmlInclude(typeof(CheckDataTableColumnExistsCommand))]
-    //[XmlInclude(typeof(ConvertDataTableColumnToDataTableCommand))]
-    //[XmlInclude(typeof(ConvertDataTableColumnToDictionaryCommand))]
-    //[XmlInclude(typeof(ConvertDataTableColumnToJSONCommand))]
-    //[XmlInclude(typeof(ConvertDataTableColumnToListCommand))]
-    //[XmlInclude(typeof(ConvertDataTableRowToDataTableCommand))]
-    //[XmlInclude(typeof(ConvertDataTableRowToDictionaryCommand))]
-    //[XmlInclude(typeof(ConvertDataTableRowToJSONCommand))]
-    //[XmlInclude(typeof(ConvertDataTableRowToListCommand))]
-    //[XmlInclude(typeof(ConvertDataTableToJSONCommand))]
-    //[XmlInclude(typeof(CopyDataTableCommand))]
-    //[XmlInclude(typeof(CreateDataTableCommand))]
-    //[XmlInclude(typeof(DeleteDataTableColumnCommand))]
-    //[XmlInclude(typeof(DeleteDataTableRowCommand))]
-    //[XmlInclude(typeof(FilterDataTableColumnByRowValueCommand))]
-    //[XmlInclude(typeof(FilterDataTableCommand))]
-    //[XmlInclude(typeof(FilterDataTableRowByColumnValueCommand))]
-    //[XmlInclude(typeof(GetDataRowCommand))]
-    //[XmlInclude(typeof(GetDataRowCountCommand))]
-    //[XmlInclude(typeof(GetDataRowValueCommand))]
-    //[XmlInclude(typeof(GetDataTableColumnCountCommand))]
-    //[XmlInclude(typeof(GetDataTableColumnListCommand))]
-    //[XmlInclude(typeof(GetDataTableRowCountCommand))]
-    //[XmlInclude(typeof(GetDataTableValueCommand))]
-    //[XmlInclude(typeof(ReplaceDataTableColumnValueCommand))]
-    //[XmlInclude(typeof(ReplaceDataTableRowValueCommand))]
-    //[XmlInclude(typeof(ReplaceDataTableValueCommand))]
-    //[XmlInclude(typeof(ParseDatasetRowCommand))]
-    //[XmlInclude(typeof(RemoveDataRowCommand))]
-    //[XmlInclude(typeof(SetDataTableColumnValuesByDataTableCommand))]
-    //[XmlInclude(typeof(SetDataTableColumnValuesByListCommand))]
-    //[XmlInclude(typeof(SetDataTableRowValuesByDataTableCommand))]
-    //[XmlInclude(typeof(SetDataTableRowValuesByDictionaryCommand))]
-    //[XmlInclude(typeof(SetDataTableValueCommand))]
-    //[XmlInclude(typeof(WriteDataRowValueCommand))]
-    //[XmlInclude(typeof(LoadDataTableCommand))]
-
-    //// DateTime
-    //[XmlInclude(typeof(CalculateDateTimeCommand))]
-    //[XmlInclude(typeof(ConvertDateTimeToExcelSerialCommand))]
-    //[XmlInclude(typeof(CreateDateTimeCommand))]
-    //[XmlInclude(typeof(CreateDateTimeFromExcelSerialCommand))]
-    //[XmlInclude(typeof(CreateDateTimeFromTextCommand))]
-    //[XmlInclude(typeof(GetDateTimeDifferencesCommand))]
-    //[XmlInclude(typeof(FormatDateTimeCommand))]
-
-    //// Dictionary
-    //[XmlInclude(typeof(AddDictionaryCommand))]
-    //[XmlInclude(typeof(CheckDictionaryKeyExistsCommand))]
-    //[XmlInclude(typeof(CreateDictionaryCommand))]
-    //[XmlInclude(typeof(ConcatenateDictionaryCommand))]
-    //[XmlInclude(typeof(ConvertDictionaryToDataTableCommand))]
-    //[XmlInclude(typeof(ConvertDictionaryToJSONCommand))]
-    //[XmlInclude(typeof(ConvertDictionaryToListCommand))]
-    //[XmlInclude(typeof(CopyDictionaryCommand))]
-    //[XmlInclude(typeof(FilterDictionaryCommand))]
-    //[XmlInclude(typeof(GetDictionaryKeyFromValueCommand))]
-    //[XmlInclude(typeof(GetDictionaryKeysListCommand))]
-    //[XmlInclude(typeof(GetDictionaryValueCommand))]
-    //[XmlInclude(typeof(LoadDictionaryCommand))]
-    //[XmlInclude(typeof(RemoveDictionaryItemCommand))]
-    //[XmlInclude(typeof(ReplaceDictionaryCommand))]
-    //[XmlInclude(typeof(SetDictionaryValueCommand))]
-
-    //// EMail
-    //[XmlInclude(typeof(MailKitGetAddressesAsDataTableCommand))]
-    //[XmlInclude(typeof(MailKitGetAddressesAsDictionaryCommand))]
-    //[XmlInclude(typeof(MailKitGetAddressesAsListCommand))]
-    //[XmlInclude(typeof(MailKitGetEmailAttachmentsNameCommand))]
-    //[XmlInclude(typeof(MailKitGetEMailFromEMailListCommand))]
-    //[XmlInclude(typeof(MailKitGetEMailTextCommand))]
-    //[XmlInclude(typeof(MailKitLoadEmailCommand))]
-    //[XmlInclude(typeof(MailKitRecieveEmailListUsingIMAPCommand))]
-    //[XmlInclude(typeof(MailKitRecieveEmailListUsingPOPCommand))]
-    //[XmlInclude(typeof(MailKitSaveEmailCommand))]
-    //[XmlInclude(typeof(MailKitSaveEmailAttachmentsCommand))]
-    //[XmlInclude(typeof(MailKitSendEmailCommand))]
-
-    //// Engine
-    //[XmlInclude(typeof(ErrorHandlingCommand))]
-    //[XmlInclude(typeof(GetDataCommand))]
-    //[XmlInclude(typeof(PauseCommand))]
-    //[XmlInclude(typeof(SetEngineDelayCommand))]
-    //[XmlInclude(typeof(SetEnginePreferenceCommand))]
-    //[XmlInclude(typeof(ShowEngineContextCommand))]
-    //[XmlInclude(typeof(StopwatchCommand))]
-    //[XmlInclude(typeof(UploadDataCommand))]
-
-    //// Error
-    //[XmlInclude(typeof(CatchExceptionCommand))]
-    //[XmlInclude(typeof(EndTryCommand))]
-    //[XmlInclude(typeof(FinallyCommand))]
-    //[XmlInclude(typeof(ThrowExceptionCommand))]
-    //[XmlInclude(typeof(TryCommand))]
-
-    //// Excel
-    //[XmlInclude(typeof(ExcelActivateSheetCommand))]
-    //[XmlInclude(typeof(ExcelAddWorkbookCommand))]
-    //[XmlInclude(typeof(ExcelAddWorksheetCommand))]
-    //[XmlInclude(typeof(ExcelAppendCellCommand))]
-    //[XmlInclude(typeof(ExcelAppendRowCommand))]
-    //[XmlInclude(typeof(ExcelCheckCellValueExistsCommand))]
-    //[XmlInclude(typeof(ExcelCheckCellValueExistsRCCommand))]
-    //[XmlInclude(typeof(ExcelCheckExcelInstanceExistsCommand))]
-    //[XmlInclude(typeof(ExcelCheckWorksheetExistsCommand))]
-    //[XmlInclude(typeof(ExcelCloseApplicationCommand))]
-    //[XmlInclude(typeof(ExcelCopyWorksheetCommand))]
-    //[XmlInclude(typeof(ExcelCreateApplicationCommand))]
-    //[XmlInclude(typeof(ExcelDeleteCellCommand))]
-    //[XmlInclude(typeof(ExcelDeleteRowCommand))]
-    //[XmlInclude(typeof(ExcelDeleteWorksheetCommand))]
-    //[XmlInclude(typeof(ExcelGetCellCommand))]
-    //[XmlInclude(typeof(ExcelGetCellRCCommand))]
-    //[XmlInclude(typeof(ExcelGetColumnValuesAsDataTableCommand))]
-    //[XmlInclude(typeof(ExcelGetColumnValuesAsDictionaryCommand))]
-    //[XmlInclude(typeof(ExcelGetColumnValuesAsListCommand))]
-    //[XmlInclude(typeof(ExcelGetCurrentWorksheetCommand))]
-    //[XmlInclude(typeof(ExcelGetExcelInfoCommand))]
-    //[XmlInclude(typeof(ExcelGetLastRowCommand))]
-    //[XmlInclude(typeof(ExcelGetRangeCommand))]
-    //[XmlInclude(typeof(ExcelGetRangeCommandAsDT))]
-    //[XmlInclude(typeof(ExcelGetRangeValuesAsDataTableCommand))]
-    //[XmlInclude(typeof(ExcelGetRowValuesAsDataTableCommand))]
-    //[XmlInclude(typeof(ExcelGetRowValuesAsDictionaryCommand))]
-    //[XmlInclude(typeof(ExcelGetRowValuesAsListCommand))]
-    //[XmlInclude(typeof(ExcelGetWorksheetsCommand))]
-    //[XmlInclude(typeof(ExcelGetWorksheetInfoCommand))]
-    //[XmlInclude(typeof(ExcelGoToCellCommand))]
-    //[XmlInclude(typeof(ExcelOpenWorkbookCommand))]
-    //[XmlInclude(typeof(ExcelRenameWorksheetCommand))]
-    //[XmlInclude(typeof(ExcelRunMacroCommand))]
-    //[XmlInclude(typeof(ExcelSaveCommand))]
-    //[XmlInclude(typeof(ExcelSaveAsCommand))]
-    //[XmlInclude(typeof(ExcelSetCellCommand))]
-    //[XmlInclude(typeof(ExcelSetCellRCCommand))]
-    //[XmlInclude(typeof(ExcelSetColumnValuesFromDataTableCommand))]
-    //[XmlInclude(typeof(ExcelSetColumnValuesFromDictionaryCommand))]
-    //[XmlInclude(typeof(ExcelSetColumnValuesFromListCommand))]
-    //[XmlInclude(typeof(ExcelSetRowValuesFromDataTableCommand))]
-    //[XmlInclude(typeof(ExcelSetRowValuesFromDictionaryCommand))]
-    //[XmlInclude(typeof(ExcelSetRowValuesFromListCommand))]
-    //[XmlInclude(typeof(ExcelSplitRangeByColumnCommand))]
-    //[XmlInclude(typeof(ExcelWriteRangeCommand))]
-    //[XmlInclude(typeof(ExcelWriteRowCommand))]
-
-    //// File
-    //[XmlInclude(typeof(CheckFileExistsCommand))]
-    //[XmlInclude(typeof(DeleteFileCommand))]
-    //[XmlInclude(typeof(ExtractFileCommand))]
-    //[XmlInclude(typeof(FormatFilePathCommnad))]
-    //[XmlInclude(typeof(GetFileInfoCommand))]
-    //[XmlInclude(typeof(GetFilesCommand))]
-    //[XmlInclude(typeof(MoveFileCommand))]
-    //[XmlInclude(typeof(RenameFileCommand))]
-    //[XmlInclude(typeof(WaitForFileToExistCommand))]
-
-    //// Folder
-    //[XmlInclude(typeof(CheckFolderExistsCommand))]
-    //[XmlInclude(typeof(CreateFolderCommand))]
-    //[XmlInclude(typeof(DeleteFolderCommand))]
-    //[XmlInclude(typeof(FormatFolderPathCommnad))]
-    //[XmlInclude(typeof(GetFoldersCommand))]
-    //[XmlInclude(typeof(MoveFolderCommand))]
-    //[XmlInclude(typeof(RenameFolderCommand))]
-    //[XmlInclude(typeof(WaitForFolderToExistCommand))]
-
-    //// IE
-    //[XmlInclude(typeof(IEBrowserCloseCommand))]
-    //[XmlInclude(typeof(IEBrowserCreateCommand))]
-    //[XmlInclude(typeof(IEBrowserElementActionCommand))]
-    //[XmlInclude(typeof(IEBrowserFindBrowserCommand))]
-    //[XmlInclude(typeof(IEBrowserNavigateURLCommand))]
-
-    //// If
-    //[XmlInclude(typeof(BeginIfCommand))]
-    //[XmlInclude(typeof(BeginMultiIfCommand))]
-    //[XmlInclude(typeof(ElseCommand))]
-    //[XmlInclude(typeof(EndIfCommand))]
-
-    //// Image
-    //[XmlInclude(typeof(OCRCommand))]
-    //[XmlInclude(typeof(ImageRecognitionCommand))]
-    //[XmlInclude(typeof(ScreenshotCommand))]
-
-    //// Input
-    //[XmlInclude(typeof(FileDialogCommand))]
-    //[XmlInclude(typeof(FolderDialogCommand))]
-    //[XmlInclude(typeof(HTMLInputCommand))]
-    //[XmlInclude(typeof(UserInputCommand))]
-    //[XmlInclude(typeof(SendAdvancedKeyStrokesCommand))]
-    //[XmlInclude(typeof(SendHotkeyCommand))]
-    //[XmlInclude(typeof(SendKeysCommand))]
-    //[XmlInclude(typeof(SendMouseClickCommand))]
-    //[XmlInclude(typeof(SendMouseMoveCommand))]
-    //[XmlInclude(typeof(UIAutomationCommand))]
-
-    //// JSON
-    //[XmlInclude(typeof(AddJSONArrayItemCommand))]
-    //[XmlInclude(typeof(AddJSONObjectPropertyCommand))]
-    //[XmlInclude(typeof(ConvertJSONToDataTableCommand))]
-    //[XmlInclude(typeof(ConvertJSONToDictionaryCommand))]
-    //[XmlInclude(typeof(ConvertJSONToListCommand))]
-    //[XmlInclude(typeof(CreateJSONVariableCommand))]
-    //[XmlInclude(typeof(GetJSONValueListCommand))]
-    //[XmlInclude(typeof(GetMultiJSONValueListCommand))]
-    //[XmlInclude(typeof(InsertJSONArrayItemCommand))]
-    //[XmlInclude(typeof(InsertJSONObjectPropertyCommand))]
-    //[XmlInclude(typeof(ParseJSONArrayCommand))]
-    //[XmlInclude(typeof(ReadJSONFileCommand))]
-    //[XmlInclude(typeof(RemoveJSONArrayItemCommand))]
-    //[XmlInclude(typeof(RemoveJSONPropertyCommand))]
-    //[XmlInclude(typeof(SetJSONValueCommand))]
-
-    //// List
-    //[XmlInclude(typeof(AddListItemCommand))]
-    //[XmlInclude(typeof(CheckListItemExistsCommand))]
-    //[XmlInclude(typeof(ConcatenateListsCommand))]
-    //[XmlInclude(typeof(ConvertListToDataTableCommand))]
-    //[XmlInclude(typeof(ConvertListToDictionaryCommand))]
-    //[XmlInclude(typeof(ConvertListToJSONCommand))]
-    //[XmlInclude(typeof(CopyListCommand))]
-    //[XmlInclude(typeof(CreateListCommand))]
-    //[XmlInclude(typeof(FilterListCommand))]
-    //[XmlInclude(typeof(GetAverageFromListCommand))]
-    //[XmlInclude(typeof(GetListCountCommand))]
-    //[XmlInclude(typeof(GetListIndexFromValueCommand))]
-    //[XmlInclude(typeof(GetListItemCommand))]
-    //[XmlInclude(typeof(GetMaxFromListCommand))]
-    //[XmlInclude(typeof(GetMedianFromListCommand))]
-    //[XmlInclude(typeof(GetMinFromListCommand))]
-    //[XmlInclude(typeof(GetSumFromListCommand))]
-    //[XmlInclude(typeof(GetVarianceFromListCommand))]
-    //[XmlInclude(typeof(ReplaceListCommand))]
-    //[XmlInclude(typeof(ReverseListCommand))]
-    //[XmlInclude(typeof(SetListIndexCommand))]
-    //[XmlInclude(typeof(SetListItemCommand))]
-    //[XmlInclude(typeof(SortListCommand))]
-
-    //// Loop
-    //[XmlInclude(typeof(BeginLoopCommand))]
-    //[XmlInclude(typeof(BeginMultiLoopCommand))]
-    //[XmlInclude(typeof(EndLoopCommand))]
-    //[XmlInclude(typeof(ExitLoopCommand))]
-    //[XmlInclude(typeof(BeginContinousLoopCommand))]
-    //[XmlInclude(typeof(BeginListLoopCommand))]
-    //[XmlInclude(typeof(BeginNumberOfTimesLoopCommand))]
-    //[XmlInclude(typeof(NextLoopCommand))]
-
-    //// Misc
-    //[XmlInclude(typeof(ClipboardClearTextCommand))]
-    //[XmlInclude(typeof(ClipboardGetTextCommand))]
-    //[XmlInclude(typeof(ClipboardSetTextCommand))]
-    //[XmlInclude(typeof(CommentCommand))]
-    //[XmlInclude(typeof(CreateShortcutCommand))]
-    //[XmlInclude(typeof(EncryptionCommand))]
-    //[XmlInclude(typeof(MessageBoxCommand))]
-    //[XmlInclude(typeof(PingCommand))]
-    //[XmlInclude(typeof(PlaySystemSoundCommand))]
-    //[XmlInclude(typeof(SequenceCommand))]
-    //[XmlInclude(typeof(SMTPSendEmailCommand))]
-
-    //// NLG
-    //[XmlInclude(typeof(NLGCreateInstanceCommand))]
-    //[XmlInclude(typeof(NLGGeneratePhraseCommand))]
-    //[XmlInclude(typeof(NLGSetParameterCommand))]
-
-    //// Numeric
-    //[XmlInclude(typeof(CreateNumberVariableCommand))]
-    //[XmlInclude(typeof(DecreaseNumericalVariableCommand))]
-    //[XmlInclude(typeof(FormatNumberCommand))]
-    //[XmlInclude(typeof(IncreaseNumericalVariableCommand))]
-    //[XmlInclude(typeof(MathCalculationCommand))]
-    //[XmlInclude(typeof(RandomNumberCommand))]
-    //[XmlInclude(typeof(RoundNumberCommand))]
-
-    //// Outlook
-    //[XmlInclude(typeof(OutlookDeleteEmailsCommand))]
-    //[XmlInclude(typeof(OutlookForwardEmailsCommand))]
-    //[XmlInclude(typeof(OutlookGetEmailsCommand))]
-    //[XmlInclude(typeof(OutlookMoveEmailsCommand))]
-    //[XmlInclude(typeof(OutlookReplyToEmailsCommand))]
-    //[XmlInclude(typeof(OutlookEmailCommand))]
-
-    //// Program
-    //[XmlInclude(typeof(RunCustomCodeCommand))]
-    //[XmlInclude(typeof(RunScriptCommand))]
-    //[XmlInclude(typeof(StartProcessCommand))]
-    //[XmlInclude(typeof(StopProcessCommand))]
-    //[XmlInclude(typeof(RunPowershellCommand))]
-
-    //// Regex
-    //[XmlInclude(typeof(GetRegexMatchesCommand))]
-
-    //// Remote
-    //[XmlInclude(typeof(RemoteAPICommand))]
-    //[XmlInclude(typeof(RemoteTaskCommand))]
-
-    //// System
-    //[XmlInclude(typeof(EnvironmentVariableCommand))]
-    //[XmlInclude(typeof(RemoteDesktopCommand))]
-    //[XmlInclude(typeof(OSVariableCommand))]
-    //[XmlInclude(typeof(SystemActionCommand))]
-
-    //// Task
-    //[XmlInclude(typeof(LoadTaskCommand))]
-    //[XmlInclude(typeof(RunTaskCommand))]
-    //[XmlInclude(typeof(StopTaskCommand))]
-    //[XmlInclude(typeof(UnloadTaskCommand))]
-
-    //// Text
-    //[XmlInclude(typeof(CheckTextCommand))]
-    //[XmlInclude(typeof(ConcatenateTextVariableCommand))]
-    //[XmlInclude(typeof(CreateTextVariableCommand))]
-    //[XmlInclude(typeof(ExtractionTextCommand))]
-    //[XmlInclude(typeof(GetWordCountCommand))]
-    //[XmlInclude(typeof(GetWordLengthCommand))]
-    //[XmlInclude(typeof(ModifyTextCommand))]
-    //[XmlInclude(typeof(ReadTextFileCommand))]
-    //[XmlInclude(typeof(RegExExtractionTextCommand))]
-    //[XmlInclude(typeof(ReplaceTextCommand))]
-    //[XmlInclude(typeof(SplitTextCommand))]
-    //[XmlInclude(typeof(SubstringTextCommand))]
-    //[XmlInclude(typeof(WriteTextFileCommand))]
-
-    //// UIAutomation
-    //[XmlInclude(typeof(UIAutomationCheckElementExistByXPathCommand))]
-    //[XmlInclude(typeof(UIAutomationCheckElementExistCommand))]
-    //[XmlInclude(typeof(UIAutomationClickElementCommand))]
-    //[XmlInclude(typeof(UIAutomationExpandCollapseItemsInElementCommand))]
-    //[XmlInclude(typeof(UIAutomationGetChildElementCommand))]
-    //[XmlInclude(typeof(UIAutomationGetChildrenElementsInformationCommand))]
-    //[XmlInclude(typeof(UIAutomationGetElementFromElementCommand))]
-    //[XmlInclude(typeof(UIAutomationGetElementFromElementByXPathCommand))]
-    //[XmlInclude(typeof(UIAutomationGetElementFromTableElementCommand))]
-    //[XmlInclude(typeof(UIAutomationGetElementFromWindowCommand))]
-    //[XmlInclude(typeof(UIAutomationGetElementFromWindowByXPathCommand))]
-    //[XmlInclude(typeof(UIAutomationGetElementTreeXMLFromElementCommand))]
-    //[XmlInclude(typeof(UIAutomationGetParentElementCommand))]
-    //[XmlInclude(typeof(UIAutomationGetSelectedStateFromElementCommand))]
-    //[XmlInclude(typeof(UIAutomationGetSelectionItemsFromElementCommand))]
-    //[XmlInclude(typeof(UIAutomationGetTextFromElementCommand))]
-    //[XmlInclude(typeof(UIAutomationGetTextFromTableElementCommand))]
-    //[XmlInclude(typeof(UIAutomationSelectElementCommand))]
-    //[XmlInclude(typeof(UIAutomationSelectItemInElementCommand))]
-    //[XmlInclude(typeof(UIAutomationSetTextToElementCommand))]
-    //[XmlInclude(typeof(UIAutomationScrollElementCommand))]
-    //[XmlInclude(typeof(UIAutomationWaitForElementExistByXPathCommand))]
-    //[XmlInclude(typeof(UIAutomationWaitForElementExistCommand))]
-
-    //// Variable
-    //[XmlInclude(typeof(VariableCommand))]
-    //[XmlInclude(typeof(AddVariableCommand))]
-    //[XmlInclude(typeof(CheckVariableExistsCommand))]
-    //[XmlInclude(typeof(GetVariableTypeCommand))]
-    //[XmlInclude(typeof(SetVariableIndexCommand))]
-
-    //// Web
-    //[XmlInclude(typeof(SeleniumBrowserCheckBrowserInstanceExistsCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserCloseCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserCreateCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserElementActionCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserExecuteScriptCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserGetAnElementValuesAsDataTableCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserGetAnElementValuesAsDictionaryCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserGetAnElementValuesAsListCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserGetElementsValueAsDataTableCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserGetElementsValueAsDictionaryCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserGetElementsValueAsListCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserGetElementsValuesAsDataTableCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserGetTableValueAsDataTableCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserInfoCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserNavigateBackCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserNavigateForwardCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserNavigateURLCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserRefreshCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserResizeBrowser))]
-    //[XmlInclude(typeof(SeleniumBrowserSwitchFrameCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserSwitchWindowCommand))]
-    //[XmlInclude(typeof(SeleniumBrowserTakeScreenshotCommand))]
-
-    //// Window
-    //[XmlInclude(typeof(ActivateWindowCommand))]
-    //[XmlInclude(typeof(CheckWindowNameExistsCommand))]
-    //[XmlInclude(typeof(CloseWindowCommand))]
-    //[XmlInclude(typeof(GetWindowNamesCommand))]
-    //[XmlInclude(typeof(GetWindowPositionCommand))]
-    //[XmlInclude(typeof(GetWindowStateCommand))]
-    //[XmlInclude(typeof(MoveWindowCommand))]
-    //[XmlInclude(typeof(ResizeWindowCommand))]
-    //[XmlInclude(typeof(SetWindowStateCommand))]
-    //[XmlInclude(typeof(WaitForWindowCommand))]
-
-    //// Word
-    //[XmlInclude(typeof(WordAddDocumentCommand))]
-    //[XmlInclude(typeof(WordAppendDataTableCommand))]
-    //[XmlInclude(typeof(WordAppendImageCommand))]
-    //[XmlInclude(typeof(WordAppendTextCommand))]
-    //[XmlInclude(typeof(WordCheckWordInstanceExistsCommand))]
-    //[XmlInclude(typeof(WordCloseApplicationCommand))]
-    //[XmlInclude(typeof(WordCreateApplicationCommand))]
-    //[XmlInclude(typeof(WordExportToPDFCommand))]
-    //[XmlInclude(typeof(WordOpenDocumentCommand))]
-    //[XmlInclude(typeof(WordReadDocumentCommand))]
-    //[XmlInclude(typeof(WordReplaceTextCommand))]
-    //[XmlInclude(typeof(WordSaveCommand))]
-    //[XmlInclude(typeof(WordSaveAsCommand))]
-
-
-    // ?
-    //[XmlInclude(typeof(ThickAppClickItemCommand))]
-    //[XmlInclude(typeof(ThickAppGetTextCommand))]
-    //[XmlInclude(typeof(BeginExcelDatasetLoopCommand))]
-    //[XmlInclude(typeof(DatabaseRunQueryCommand))]
-    //[XmlInclude(typeof(AddDataTableColumnAndFillValuesByListCommand))]
-    //[XmlInclude(typeof(AddDataTableColumnsAndFillValuesByDataTableCommand))]
-   
-
-    public abstract class ScriptCommand
+    public abstract class ScriptCommand : ILUIParameterProperties
     {
         [XmlAttribute]
         public string CommandID { get; set; }
+
         [XmlAttribute]
         public string CommandName { get; set; }
+
         [XmlAttribute]
         public bool IsCommented { get; set; }
+
         [XmlAttribute]
         public string SelectionName { get; set; }
+
         [XmlAttribute]
         public int DefaultPause { get; set; }
+
         [XmlAttribute]
         public int LineNumber { get; set; }
+
         [XmlAttribute]
         public bool PauseBeforeExeucution { get; set; }
+
         [XmlIgnore]
         public Color DisplayForeColor { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Comment Field")]
-        [Attributes.PropertyAttributes.InputSpecification("Optional field to enter a custom comment which could potentially describe this command or the need for this command, if required")]
-        [Attributes.PropertyAttributes.SampleUsage("I am using this command to ...")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(3, true)]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [PropertyDescription("Comment Field")]
+        [InputSpecification("Optional field to enter a custom comment which could potentially describe this command or the need for this command, if required")]
+        [SampleUsage("I am using this command to ...")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
+        [PropertyTextBoxSetting(3, true)]
+        [PropertyIsOptional(true)]
+        [PropertyParameterOrder(int.MaxValue)]
         public string v_Comment { get; set; }
         
         [XmlAttribute]
@@ -514,11 +78,20 @@ namespace taskt.Core.Automation.Commands
 
         [XmlIgnore]
         [NonSerialized]
-        protected Dictionary<string, Control> ControlsList;
+        protected Dictionary<string, Control> _ControlsList;
+
+        [XmlIgnore]
+        public Dictionary<string, Control> ControlsList 
+        {
+            get
+            {
+                return this._ControlsList;
+            }
+        }
 
         public ScriptCommand()
         {
-            this.DisplayForeColor = System.Drawing.Color.SteelBlue;
+            this.DisplayForeColor = Color.SteelBlue;
             this.CommandEnabled = false;
             this.DefaultPause = 0;
             this.IsCommented = false;
@@ -546,19 +119,15 @@ namespace taskt.Core.Automation.Commands
         }
 
         #region RunCommand
-        public virtual void RunCommand(object sender)
-        {
-            //RunCommand((AutomationEngineInstance)sender);
-            System.Threading.Thread.Sleep(DefaultPause);
-        }
-        public virtual void RunCommand(object sender, Script.ScriptAction command)
+
+        public virtual void RunCommand(Engine.AutomationEngineInstance engine)
         {
             System.Threading.Thread.Sleep(DefaultPause);
         }
-        //public virtual void RunCommand(AutomationEngineInstance engine)
-        //{
-        //    System.Threading.Thread.Sleep(DefaultPause);
-        //}
+        public virtual void RunCommand(Engine.AutomationEngineInstance engine, Script.ScriptAction command)
+        {
+            System.Threading.Thread.Sleep(DefaultPause);
+        }
         #endregion
 
         #region GetDisplayValue
@@ -569,13 +138,8 @@ namespace taskt.Core.Automation.Commands
         #endregion
 
         #region Render, Refresh, etc
-        //public virtual List<Control> Render(UI.Forms.frmCommandEditor editor, object sender)
-        //{
-        //    RenderedControls = new List<Control>();
-        //    return RenderedControls;
-        //}
 
-        public virtual List<Control> Render(UI.Forms.frmCommandEditor editor)
+        public virtual List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             RenderedControls = new List<Control>();
 
@@ -584,15 +148,15 @@ namespace taskt.Core.Automation.Commands
             {
                 RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor, attrAutoRender.forceRenderComment));
 
-                ControlsList = new Dictionary<string, Control>();
+                this._ControlsList = new Dictionary<string, Control>();
                 foreach (Control control in RenderedControls)
                 {
-                    ControlsList.Add(control.Name, control);
+                    this._ControlsList.Add(control.Name, control);
                     if (control is FlowLayoutPanel flp)
                     {
                         foreach (Control c in flp.Controls)
                         {
-                            ControlsList.Add(c.Name, c);
+                            this._ControlsList.Add(c.Name, c);
                         }
                     }
                 }
@@ -610,12 +174,12 @@ namespace taskt.Core.Automation.Commands
             RenderedControls = new List<Control>();
             return RenderedControls;
         }
-        public virtual void AfterShown()
+        public virtual void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
 
         }
 
-        public virtual void Refresh(UI.Forms.frmCommandEditor editor = null)
+        public virtual void Refresh(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
 
         }
@@ -626,7 +190,7 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public virtual bool IsValidate(UI.Forms.frmCommandEditor editor)
+        public virtual bool IsValidate(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             (this.IsValid, this.IsWarning, this.validationResult) = ValidationControls.CheckValidation(this);
 
@@ -648,7 +212,7 @@ namespace taskt.Core.Automation.Commands
             foreach(var prop in props)
             {
                 var virtualProp = prop.GetVirtualProperty();
-                var methods = PropertyControls.GetCustomAttributeWithVirtual<taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIntermediateConvert>(prop, virtualProp) ?? new Attributes.PropertyAttributes.PropertyIntermediateConvert();
+                var methods = PropertyControls.GetCustomAttributeWithVirtual<PropertyIntermediateConvert>(prop, virtualProp) ?? new PropertyIntermediateConvert();
 
                 if (methods.intermediateMethod.Length > 0)
                 {
@@ -689,7 +253,7 @@ namespace taskt.Core.Automation.Commands
             foreach (var prop in props)
             {
                 var virtualProp = prop.GetVirtualProperty();
-                var methods = PropertyControls.GetCustomAttributeWithVirtual<taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIntermediateConvert>(prop, virtualProp) ?? new Attributes.PropertyAttributes.PropertyIntermediateConvert();
+                var methods = PropertyControls.GetCustomAttributeWithVirtual<PropertyIntermediateConvert>(prop, virtualProp) ?? new PropertyIntermediateConvert();
                 
                 if (methods.rawMethod.Length > 0)
                 {
@@ -720,7 +284,22 @@ namespace taskt.Core.Automation.Commands
 
         public ScriptCommand Clone()
         {
-            return (ScriptCommand)MemberwiseClone();
+            var newCommand = (ScriptCommand)MemberwiseClone();
+            var currentProps = this.GetParameterProperties();
+
+            var newProps = newCommand.GetParameterProperties();
+
+            for (int i = currentProps.Count - 1; i >=0 ; i--)
+            {
+                var v = currentProps[i].GetValue(this);
+                if (v is System.Data.DataTable table)
+                {
+                    newProps[i].SetValue(newCommand, table.Copy());
+                }
+            }
+
+            //return (ScriptCommand)MemberwiseClone();
+            return newCommand;
         }
 
         #region Math Replace
@@ -775,7 +354,6 @@ namespace taskt.Core.Automation.Commands
         /// <param name="counter"></param>
         public virtual void RemoveInstance(InstanceCounter counter)
         {
-
             InstanceCounterControls.RemoveInstance(this, counter);
         }
         #endregion

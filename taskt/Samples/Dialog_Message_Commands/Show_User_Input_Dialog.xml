@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="14e90be9-2add-414a-b7a0-c964c03af0e8" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="User Input Sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="14e90be9-2add-414a-b7a0-c964c03af0e8" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Input name, age, dominant hand, check" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowUserInputDialogCommand" CommandID="d1e6cf30-fda6-4f41-bad3-cb4e2901e7e5" CommandName="ShowUserInputDialogCommand" IsCommented="false" SelectionName="Show User Input Dialog" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InputHeader="Please Provide Input for 4 fields" v_InputDirections="Directions: Please fill in the following fields">
+        <v_UserInputConfig>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="U8erInpuPPara6Table120118.070608" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="U8erInpuPPara6Table120118.070608">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Type" type="xs:string" minOccurs="0" />
+                        <xs:element name="Label" type="xs:string" minOccurs="0" />
+                        <xs:element name="Size" type="xs:string" minOccurs="0" />
+                        <xs:element name="DefaultValue" type="xs:string" minOccurs="0" />
+                        <xs:element name="UserInput" type="xs:string" minOccurs="0" />
+                        <xs:element name="ApplyToVariable" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <U8erInpuPPara6Table120118.070608 diffgr:id="U8erInpuPPara6Table120118.0706081" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Type>TextBox</Type>
+                <Label>Enter your age</Label>
+                <Size>500,30</Size>
+                <DefaultValue></DefaultValue>
+                <UserInput></UserInput>
+                <ApplyToVariable>⦃vAge⦄</ApplyToVariable>
+              </U8erInpuPPara6Table120118.070608>
+              <U8erInpuPPara6Table120118.070608 diffgr:id="U8erInpuPPara6Table120118.0706082" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Type>TextBox</Type>
+                <Label>Enter your name</Label>
+                <Size>500,30</Size>
+                <DefaultValue></DefaultValue>
+                <UserInput></UserInput>
+                <ApplyToVariable>⦃vName⦄</ApplyToVariable>
+              </U8erInpuPPara6Table120118.070608>
+              <U8erInpuPPara6Table120118.070608 diffgr:id="U8erInpuPPara6Table120118.0706083" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Type>ComboBox</Type>
+                <Label>Enter your dominant hand</Label>
+                <Size>500,30</Size>
+                <DefaultValue>Right,Left,Both</DefaultValue>
+                <UserInput></UserInput>
+                <ApplyToVariable>⦃vHand⦄</ApplyToVariable>
+              </U8erInpuPPara6Table120118.070608>
+              <U8erInpuPPara6Table120118.070608 diffgr:id="U8erInpuPPara6Table120118.0706084" msdata:rowOrder="3" diffgr:hasChanges="modified">
+                <Type>CheckBox</Type>
+                <Label>If you want, check it</Label>
+                <Size>500,30</Size>
+                <DefaultValue></DefaultValue>
+                <UserInput></UserInput>
+                <ApplyToVariable>⦃vCheck⦄</ApplyToVariable>
+              </U8erInpuPPara6Table120118.070608>
+            </DocumentElement>
+            <diffgr:before>
+              <U8erInpuPPara6Table120118.070608 diffgr:id="U8erInpuPPara6Table120118.0706081" msdata:rowOrder="0">
+                <Type>TextBox</Type>
+                <Label>Enter your age</Label>
+                <Size>500,30</Size>
+                <DefaultValue></DefaultValue>
+                <UserInput></UserInput>
+                <ApplyToVariable>{vAge}</ApplyToVariable>
+              </U8erInpuPPara6Table120118.070608>
+              <U8erInpuPPara6Table120118.070608 diffgr:id="U8erInpuPPara6Table120118.0706082" msdata:rowOrder="1">
+                <Type>TextBox</Type>
+                <Label>Enter your name</Label>
+                <Size>500,30</Size>
+                <DefaultValue></DefaultValue>
+                <UserInput></UserInput>
+                <ApplyToVariable>{vName}</ApplyToVariable>
+              </U8erInpuPPara6Table120118.070608>
+              <U8erInpuPPara6Table120118.070608 diffgr:id="U8erInpuPPara6Table120118.0706083" msdata:rowOrder="2">
+                <Type>ComboBox</Type>
+                <Label>Enter your dominant hand</Label>
+                <Size>500,30</Size>
+                <DefaultValue>Right,Left,Both</DefaultValue>
+                <UserInput></UserInput>
+                <ApplyToVariable>{vHand}</ApplyToVariable>
+              </U8erInpuPPara6Table120118.070608>
+              <U8erInpuPPara6Table120118.070608 diffgr:id="U8erInpuPPara6Table120118.0706084" msdata:rowOrder="3">
+                <Type>CheckBox</Type>
+                <Label>If you want, check it</Label>
+                <Size>500,30</Size>
+                <DefaultValue></DefaultValue>
+                <UserInput></UserInput>
+                <ApplyToVariable>{vCheck}</ApplyToVariable>
+              </U8erInpuPPara6Table120118.070608>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_UserInputConfig>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="14e90be9-2add-414a-b7a0-c964c03af0e8" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Show input results" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="f7c1e901-9d84-47b9-91b7-f1389ad1a6ef" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Name Entered: ⦃vName⦄; Age Entered: ⦃vAge⦄&#xD;&#xA;Dominant Hand: ⦃vHand⦄&#xD;&#xA;Check state: ⦃vCheck⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.1.57</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-04T22:28:26.7470058+09:00</LastRunTime>
+    <RunTimes>4</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vAge</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vCheck</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vHand</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vName</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Click Button Sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Get UIAutomationTester path" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExtractionFilePathCommand" CommandID="a9b35c29-90a1-4201-a6ec-c3c670c148ef" CommandName="ExtractionFilePathCommand" IsCommented="false" SelectionName="Extraction File Path" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_SourceFilePath="⦃taskt.Location⦄" v_Format="Folder" v_Result="vPath" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a7cdfa43-c3e0-4681-8598-3547bb4f31b4" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="⦃vPath⦄\Samples\Resources\UIAutomationTester.exe" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Search button and Click" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationUIElementActionCommand" CommandID="44db583f-04fb-47b9-8680-b1c6028b8b6e" CommandName="UIAutomationUIElementActionCommand" IsCommented="false" SelectionName="UIElement Action" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_AutomationType="Click UIElement" v_SearchMethod="" v_MatchMethod="First" v_TargetWindowIndex="0" v_WindowWaitTime="60" v_ElementWaitTime="10">
+        <v_UIASearchParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="UIASearchParameters082323.120758">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Enabled" type="xs:string" minOccurs="0" />
+                  <xs:element name="ParameterName" type="xs:string" minOccurs="0" />
+                  <xs:element name="ParameterValue" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="UIASearchParameters082323.120758" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="UIASearchParameters082323.120758" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207581" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>AcceleratorKey</ParameterName>
+                <ParameterValue></ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207582" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>AccessKey</ParameterName>
+                <ParameterValue></ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207583" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Enabled>True</Enabled>
+                <ParameterName>AutomationId</ParameterName>
+                <ParameterValue>button1</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207584" msdata:rowOrder="3" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ClassName</ParameterName>
+                <ParameterValue>WindowsForms10.BUTTON.app.0.141b42a_r11_ad1</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207585" msdata:rowOrder="4" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ControlType</ParameterName>
+                <ParameterValue>Button</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207586" msdata:rowOrder="5" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>FrameworkId</ParameterName>
+                <ParameterValue>WinForm</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207587" msdata:rowOrder="6" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>HasKeyboardFocus</ParameterName>
+                <ParameterValue></ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207588" msdata:rowOrder="7" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>HelpText</ParameterName>
+                <ParameterValue></ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207589" msdata:rowOrder="8" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsContentElement</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075810" msdata:rowOrder="9" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsControlElement</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075811" msdata:rowOrder="10" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsEnabled</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075812" msdata:rowOrder="11" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsKeyboardFocusable</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075813" msdata:rowOrder="12" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsOffscreen</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075814" msdata:rowOrder="13" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsPassword</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075815" msdata:rowOrder="14" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsRequiredForForm</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075816" msdata:rowOrder="15" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ItemStatus</ParameterName>
+                <ParameterValue></ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075817" msdata:rowOrder="16" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ItemType</ParameterName>
+                <ParameterValue></ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075818" msdata:rowOrder="17" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>LocalizedControlType</ParameterName>
+                <ParameterValue>ボタン</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075819" msdata:rowOrder="18" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>Name</ParameterName>
+                <ParameterValue>button1</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075820" msdata:rowOrder="19" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>NativeWindowHandle</ParameterName>
+                <ParameterValue>199400</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075821" msdata:rowOrder="20" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ProcessID</ParameterName>
+                <ParameterValue></ParameterValue>
+              </UIASearchParameters082323.120758>
+            </DocumentElement>
+            <diffgr:before>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207581" msdata:rowOrder="0">
+                <Enabled>False</Enabled>
+                <ParameterName>AcceleratorKey</ParameterName>
+                <ParameterValue></ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207582" msdata:rowOrder="1">
+                <Enabled>False</Enabled>
+                <ParameterName>AccessKey</ParameterName>
+                <ParameterValue></ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207583" msdata:rowOrder="2">
+                <Enabled>True</Enabled>
+                <ParameterName>AutomationId</ParameterName>
+                <ParameterValue>button1</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207584" msdata:rowOrder="3">
+                <Enabled>False</Enabled>
+                <ParameterName>ClassName</ParameterName>
+                <ParameterValue>WindowsForms10.BUTTON.app.0.141b42a_r11_ad1</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207585" msdata:rowOrder="4">
+                <Enabled>False</Enabled>
+                <ParameterName>ControlType</ParameterName>
+                <ParameterValue>Button</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207586" msdata:rowOrder="5">
+                <Enabled>False</Enabled>
+                <ParameterName>FrameworkId</ParameterName>
+                <ParameterValue>WinForm</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207587" msdata:rowOrder="6">
+                <Enabled>False</Enabled>
+                <ParameterName>HasKeyboardFocus</ParameterName>
+                <ParameterValue></ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207588" msdata:rowOrder="7">
+                <Enabled>False</Enabled>
+                <ParameterName>HelpText</ParameterName>
+                <ParameterValue></ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.1207589" msdata:rowOrder="8">
+                <Enabled>False</Enabled>
+                <ParameterName>IsContentElement</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075810" msdata:rowOrder="9">
+                <Enabled>False</Enabled>
+                <ParameterName>IsControlElement</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075811" msdata:rowOrder="10">
+                <Enabled>False</Enabled>
+                <ParameterName>IsEnabled</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075812" msdata:rowOrder="11">
+                <Enabled>False</Enabled>
+                <ParameterName>IsKeyboardFocusable</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075813" msdata:rowOrder="12">
+                <Enabled>False</Enabled>
+                <ParameterName>IsOffscreen</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075814" msdata:rowOrder="13">
+                <Enabled>False</Enabled>
+                <ParameterName>IsPassword</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075815" msdata:rowOrder="14">
+                <Enabled>False</Enabled>
+                <ParameterName>IsRequiredForForm</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075816" msdata:rowOrder="15">
+                <Enabled>False</Enabled>
+                <ParameterName>ItemStatus</ParameterName>
+                <ParameterValue></ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075817" msdata:rowOrder="16">
+                <Enabled>False</Enabled>
+                <ParameterName>ItemType</ParameterName>
+                <ParameterValue></ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075818" msdata:rowOrder="17">
+                <Enabled>False</Enabled>
+                <ParameterName>LocalizedControlType</ParameterName>
+                <ParameterValue>ボタン</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075819" msdata:rowOrder="18">
+                <Enabled>False</Enabled>
+                <ParameterName>Name</ParameterName>
+                <ParameterValue>button1</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075820" msdata:rowOrder="19">
+                <Enabled>False</Enabled>
+                <ParameterName>NativeWindowHandle</ParameterName>
+                <ParameterValue>199400</ParameterValue>
+              </UIASearchParameters082323.120758>
+              <UIASearchParameters082323.120758 diffgr:id="UIASearchParameters082323.12075821" msdata:rowOrder="20">
+                <Enabled>False</Enabled>
+                <ParameterName>ProcessID</ParameterName>
+                <ParameterValue></ParameterValue>
+              </UIASearchParameters082323.120758>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_UIASearchParameters>
+        <v_UIAActionParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="UIAActionParameters082323.120758">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="UIAActionParameters082323.120758" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="UIAActionParameters082323.120758" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207581" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Click Type</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Left Click</Parameter_x0020_Value>
+              </UIAActionParameters082323.120758>
+              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207582" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>X Offset</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIAActionParameters082323.120758>
+              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207583" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Y Offset</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIAActionParameters082323.120758>
+            </DocumentElement>
+            <diffgr:before>
+              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207581" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Click Type</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Left Click</Parameter_x0020_Value>
+              </UIAActionParameters082323.120758>
+              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207582" msdata:rowOrder="1">
+                <Parameter_x0020_Name>X Offset</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIAActionParameters082323.120758>
+              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207583" msdata:rowOrder="2">
+                <Parameter_x0020_Name>Y Offset</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIAActionParameters082323.120758>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_UIAActionParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Please exit UIAutomationTester after execution" CommandEnabled="true" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.1.58</TasktVersion>
+    <Author />
+    <LastRunTime>2023-08-23T00:09:03.2676925+09:00</LastRunTime>
+    <RunTimes>7</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vPath</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

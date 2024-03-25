@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class NumberControls
     {
+        #region Virtual Property
         /// <summary>
         /// for both numerical variable name
         /// </summary>
@@ -24,7 +25,42 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Numerical Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Numerical Name")]
+        [PropertyParameterOrder(5000)]
         public static string v_BothNumericalVariableName { get; }
+
+        /// <summary>
+        /// for both numerical variable name
+        /// </summary>
+        [PropertyDescription("Numerical Variable Name")]
+        [InputSpecification("")]
+        [Remarks("")]
+        [PropertyDetailSampleUsage("**vNum**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vNum}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyIsVariablesList(true)]
+        [PropertyValidationRule("Numerical Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Numerical Name")]
+        [PropertyParameterOrder(5000)]
+        public static string v_InputNumericalVariableName { get; }
+
+        /// <summary>
+        /// for output numerical variable name
+        /// </summary>
+        [PropertyDescription("Numerical Variable Name to Store Result")]
+        [InputSpecification("")]
+        [Remarks("")]
+        [PropertyDetailSampleUsage("**vNum**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vNum}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyIsVariablesList(true)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Result")]
+        [PropertyParameterOrder(5000)]
+        public static string v_OutputNumericalVariableName { get; }
 
         /// <summary>
         /// for numerical value
@@ -39,24 +75,82 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("Value", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Value")]
+        [PropertyParameterOrder(5000)]
         public static string v_Value { get; }
+        #endregion
 
+        ///// <summary>
+        ///// expand value or variable as Integer
+        ///// </summary>
+        ///// <param name="value"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public static int ExpandValueOrVariableAsInteger(string value, Engine.AutomationEngineInstance engine)
+        //{
+        //    if (int.TryParse(value.ExpandValueOrUserVariable(engine), out int r))
+        //    {
+        //        return r;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception($"'{value}' is not Integer (Numerical) value.");
+        //    }
+        //}
+
+        ///// <summary>
+        ///// expand value or variable as Double
+        ///// </summary>
+        ///// <param name="value"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public static decimal ExpandValueOrVariableAsDecimal(string value, Engine.AutomationEngineInstance engine)
+        //{
+        //    if (decimal.TryParse(value.ExpandValueOrUserVariable(engine), out decimal r))
+        //    {
+        //        return r;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception($"'{value}' is not Decimal (Numerical) value.");
+        //    }
+        //}
+
+        ///// <summary>
+        ///// expand value or variable as Decimal
+        ///// </summary>
+        ///// <param name="value"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public static double ExpandValueOrVariableAsDouble(string value, Engine.AutomationEngineInstance engine)
+        //{
+        //    if (double.TryParse(value.ExpandValueOrUserVariable(engine), out double r))
+        //    {
+        //        return r;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception($"'{value}' is not Double (Numerical) value.");
+        //    }
+        //}
 
         /// <summary>
-        /// Convert property value to integer from property name. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.
+        /// expand value or user variable as Integer specified by parameterName. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="propertyName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref=""></exception>
-        public static int ConvertToUserVariableAsInteger(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
+        public static int ExpandValueOrUserVariableAsInteger(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
         {
-            return ConvertToUserVariableAsInteger(command, propertyName, "", engine);
+            return ExpandValueOrUserVariableAsInteger(command, propertyName, "", engine);
         }
 
         /// <summary>
-        /// Convert property value to integer from property name. This method supports validate, first value.
+        /// expand value or user variable as integer specified by parameter name. This method supports validate, first value.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="propertyName"></param>
@@ -64,9 +158,9 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static int ConvertToUserVariableAsInteger(this ScriptCommand command, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine)
+        public static int ExpandValueOrUserVariableAsInteger(this ScriptCommand command, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine)
         {
-            decimal decValue = command.ConvertToUserVariableAsDecimal(propertyName, propertyDescription, engine);
+            decimal decValue = command.ExpandValueOrUserVariableAsDecimal(propertyName, propertyDescription, engine);
             try
             {
                 int value = (int)decValue;
@@ -79,20 +173,20 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// Convert property value to decimal from property name. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.
+        /// expand value or user variable as Decimal specified by parameter name. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="propertyName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref=""></exception>
-        public static decimal ConvertToUserVariableAsDecimal(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
+        public static decimal ExpandValueOrUserVariableAsDecimal(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
         {
-            return ConvertToUserVariableAsDecimal(command, propertyName, "", engine);
+            return ExpandValueOrUserVariableAsDecimal(command, propertyName, "", engine);
         }
 
         /// <summary>
-        /// convert property value to decimal from property name. This method supports validate, first value.
+        /// expand value or user variable as Decimal specified by parameter name. This method supports validate, first value.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="propertyName"></param>
@@ -100,24 +194,24 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static decimal ConvertToUserVariableAsDecimal(this ScriptCommand command, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine)
+        public static decimal ExpandValueOrUserVariableAsDecimal(this ScriptCommand command, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine)
         {
             var propInfo = command.GetProperty(propertyName);
             string valueStr = propInfo.GetValue(command)?.ToString() ?? "";
 
-            return new PropertyConvertTag(valueStr, propertyName, propertyDescription).ConvertToUserVariableAsDecimal(propInfo, engine);
+            return new PropertyConvertTag(valueStr, propertyName, propertyDescription).ExpandValueOrUserVariableAsDecimal(propInfo, engine);
         }
 
         /// <summary>
-        /// convert specified value to int from PropertyConvertTag that specified value, description.
+        /// expand value or user variable as specified by PropertyConvertTag that specified value, description.
         /// </summary>
         /// <param name="prop"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static int ConvertToUserVariableAsInteger(this PropertyConvertTag prop, Engine.AutomationEngineInstance engine)
+        public static int ExpandValueOrUserVariableAsInteger(this PropertyConvertTag prop, Engine.AutomationEngineInstance engine)
         {
-            string convertedText = prop.Value.ConvertToUserVariable(engine);
+            string convertedText = prop.Value.ExpandValueOrUserVariable(engine);
             if (int.TryParse(convertedText, out int v))
             {
                 return v;
@@ -129,27 +223,27 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// convert specified value to integer.
+        /// expand value or user variable as integer
         /// </summary>
         /// <param name="propertyValue"></param>
         /// <param name="propertyDescription"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static int ConvertToUserVariableAsInteger(this string propertyValue, string propertyDescription, Engine.AutomationEngineInstance engine)
+        public static int ExpandValueOrUserVariableAsInteger(this string propertyValue, string propertyDescription, Engine.AutomationEngineInstance engine)
         {
-            return new PropertyConvertTag(propertyValue, propertyDescription).ConvertToUserVariableAsInteger(engine);
+            return new PropertyConvertTag(propertyValue, propertyDescription).ExpandValueOrUserVariableAsInteger(engine);
         }
 
         /// <summary>
-        /// convert specified value to decimal from PropertyConvertTag that specified value, description.
+        /// expand value or user variable as decimal specified by PropertyConvertTag that specified value, description.
         /// </summary>
         /// <param name="prop"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static decimal ConvertToUserVariableAsDecimal(this PropertyConvertTag prop, Engine.AutomationEngineInstance engine)
+        public static decimal ExpandValueOrUserVariableAsDecimal(this PropertyConvertTag prop, Engine.AutomationEngineInstance engine)
         {
-            string convertedText = prop.Value.ConvertToUserVariable(engine);
+            string convertedText = prop.Value.ExpandValueOrUserVariable(engine);
             if (decimal.TryParse(convertedText, out decimal v))
             {
                 return v;
@@ -161,14 +255,14 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// convert property value to decimal from PropertyConvertTag that specified property name, etc. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.
+        /// expand value or user variable as Decimal specified by PropertyConvertTag that specified property name, etc. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.
         /// </summary>
         /// <param name="prop"></param>
         /// <param name="propInfo"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static decimal ConvertToUserVariableAsDecimal(this PropertyConvertTag prop, PropertyInfo propInfo, Engine.AutomationEngineInstance engine)
+        public static decimal ExpandValueOrUserVariableAsDecimal(this PropertyConvertTag prop, PropertyInfo propInfo, Engine.AutomationEngineInstance engine)
         {
             var virtualPropInfo = propInfo.GetVirtualProperty();
 
@@ -203,7 +297,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            decimal v = prop.ConvertToUserVariableAsDecimal(engine);
+            decimal v = prop.ExpandValueOrUserVariableAsDecimal(engine);
 
             var validateAttr = GetCustomAttributeWithVirtual<PropertyValidationRule>(propInfo, virtualPropInfo);
             var rangeAttr = GetCustomAttributeWithVirtual<PropertyValueRange>(propInfo, virtualPropInfo);
@@ -292,6 +386,21 @@ namespace taskt.Core.Automation.Commands
                 }
             }
             return true;
+        }
+
+        public static void StoreInUserVariable(this int value, Engine.AutomationEngineInstance engine, string targetVariable)
+        {
+            ExtensionMethods.StoreInUserVariable(targetVariable, value.ToString(), engine, false);
+        }
+
+        public static void StoreInUserVariable(this double value, Engine.AutomationEngineInstance engine, string targetVariable)
+        {
+            ExtensionMethods.StoreInUserVariable(targetVariable, value.ToString(), engine, false);
+        }
+
+        public static void StoreInUserVariable(this decimal value, Engine.AutomationEngineInstance engine, string targetVariable)
+        {
+            ExtensionMethods.StoreInUserVariable(targetVariable, value.ToString(), engine, false);
         }
     }
 }

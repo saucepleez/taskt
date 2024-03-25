@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
 {
     static internal class JSONControls
     {
+        #region Virtual Property
         /// <summary>
         /// input JSON Variable or Value
         /// </summary>
@@ -23,6 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputJSONName { get; }
 
         /// <summary>
@@ -38,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputJSONVariableName { get; }
 
         /// <summary>
@@ -55,6 +58,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputJSONName { get; }
 
         /// <summary>
@@ -72,6 +76,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
+        [PropertyParameterOrder(5000)]
         public static string v_BothJSONName { get; }
 
         /// <summary>
@@ -87,6 +92,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyCustomUIHelper("JSONPath Helper", nameof(JSONControls) + "+" + nameof(lnkJsonPathHelper_Click))]
         [PropertyValidationRule("JSON Extractor", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Extractor")]
+        [PropertyParameterOrder(5000)]
         public static string v_JSONPath { get; }
 
         /// <summary>
@@ -111,6 +117,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Array**", "Specify Array Object for Value Type")]
         [PropertyIsOptional(true, "Auto")]
         [PropertyDisplayText(true, "Value Type")]
+        [PropertyParameterOrder(5000)]
         public static string v_ValueType { get; }
 
         /// <summary>
@@ -127,6 +134,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Value")]
+        [PropertyParameterOrder(5000)]
         public static string v_ValueToAdd { get; }
 
         /// <summary>
@@ -141,6 +149,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Property Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Property Name")]
+        [PropertyParameterOrder(5000)]
         public static string v_PropertyName { get; }
 
         /// <summary>
@@ -156,18 +165,20 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Last Item")]
         [PropertyDisplayText(true, "Index")]
+        [PropertyParameterOrder(5000)]
         public static string v_ArrayIndex { get; }
+        #endregion
 
         /// <summary>
-        /// get JSON text from text value or variable contains text. this method returns root type "object" or "array".
+        /// expand value or user variable as JSON. this method returns root type "object" or "array".
         /// </summary>
         /// <param name="jsonValue"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (string json, string rootType) ConvertToUserVariableAsJSON(this string jsonValue, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static (string json, string rootType) ExpandValueOrUserVariableAsJSON(this string jsonValue, Core.Automation.Engine.AutomationEngineInstance engine)
         {
-            var jsonText = jsonValue.ConvertToUserVariable(engine).Trim();
+            var jsonText = jsonValue.ExpandValueOrUserVariable(engine).Trim();
             if (jsonText.StartsWith("{") && jsonText.EndsWith("}"))
             {
                 try
@@ -240,13 +251,15 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static void JSONModifyByJSONPath(this ScriptCommand command, string jsonName, string extractorName, Action<JToken> objectAction, Action<JToken> arrayAction, Engine.AutomationEngineInstance engine)
         {
-            string jsonVariableName = command.ConvertToUserVariable(jsonName, "JSON", engine);
-            if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
+            string jsonVariableName = command.ExpandValueOrUserVariable(jsonName, "JSON", engine);
+            //if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
+            if (!VariableNameControls.IsWrappedVariableMarker(jsonVariableName, engine))
             {
-                jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
+                //jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
+                jsonVariableName = VariableNameControls.GetWrappedVariableName(jsonVariableName, engine);
             }
-            string extractor = command.ConvertToUserVariable(extractorName, "Extractor", engine);
-            (var jsonText, var rootType) = jsonVariableName.ConvertToUserVariableAsJSON(engine);
+            string extractor = command.ExpandValueOrUserVariable(extractorName, "Extractor", engine);
+            (var jsonText, var rootType) = jsonVariableName.ExpandValueOrUserVariableAsJSON(engine);
             switch(rootType)
             {
                 case "object":
@@ -282,15 +295,17 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         public static void JSONProcess(this ScriptCommand command, string jsonName, Action<JObject> objectAction, Action<JArray> arrayAction, Engine.AutomationEngineInstance engine, bool forceJSONVariable = false)
         {
-            string jsonVariableName = command.ConvertToUserVariable(jsonName, "JSON", engine);
+            string jsonVariableName = command.ExpandValueOrUserVariable(jsonName, "JSON", engine);
             if (forceJSONVariable)
             {
-                if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
+                //if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
+                if (!VariableNameControls.IsWrappedVariableMarker(jsonVariableName, engine))
                 {
-                    jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
+                    //jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
+                    jsonVariableName = VariableNameControls.GetWrappedVariableName(jsonVariableName, engine);
                 }
             }
-            (var jsonText, var rootType) = jsonVariableName.ConvertToUserVariableAsJSON(engine);
+            (var jsonText, var rootType) = jsonVariableName.ExpandValueOrUserVariableAsJSON(engine);
             switch (rootType)
             {
                 case "object":
@@ -314,8 +329,8 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static object GetJSONValue(this ScriptCommand command, string jsonValueName, string valueTypeName, string purpose, Engine.AutomationEngineInstance engine)
         {
-            string jsonValue = command.ConvertToUserVariable(jsonValueName, "Value to " + purpose, engine);
-            string valueType = command.GetUISelectionValue(valueTypeName, "Value Type", engine);
+            string jsonValue = command.ExpandValueOrUserVariable(jsonValueName, "Value to " + purpose, engine);
+            string valueType = command.ExpandValueOrUserVariableAsSelectionItem(valueTypeName, "Value Type", engine);
             if (valueType == "auto")
             {
                 valueType = GetJSONType(jsonValue).ToLower();
@@ -329,7 +344,7 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "number":
-                    ret =  new PropertyConvertTag(jsonValue, "Value to " + purpose).ConvertToUserVariableAsDecimal(engine);
+                    ret =  new PropertyConvertTag(jsonValue, "Value to " + purpose).ExpandValueOrUserVariableAsDecimal(engine);
                     break;
 
                 case "bool":
@@ -371,11 +386,12 @@ namespace taskt.Core.Automation.Commands
 
         public static void lnkJsonPathHelper_Click(object sender, EventArgs e)
         {
-            using (var fm = new UI.Forms.Supplement_Forms.frmJSONPathHelper())
+            using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmJSONPathHelper())
             {
-                if (fm.ShowDialog() == DialogResult.OK)
+                var item = (CommandItemControl)sender;
+                if (fm.ShowDialog(item.FindForm()) == DialogResult.OK)
                 {
-                    var ctrl = ((CommandItemControl)sender).Tag;
+                    var ctrl = item.Tag;
                     if (ctrl is TextBox txt)
                     {
                         txt.Text = fm.JSONPath;

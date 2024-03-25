@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allow to create shortcut file")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create shortcut file")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateShortcutCommand : ScriptCommand
@@ -61,11 +62,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            string targetPath = v_TargetPath.ConvertToUserVariable(engine);
+            string targetPath = v_TargetPath.ExpandValueOrUserVariable(engine);
             //bool isURL = (targetPath.StartsWith("http:") || (targetPath.StartsWith("https:")));
 
             if (!FilePathControls.IsURL(targetPath))
@@ -78,9 +77,9 @@ namespace taskt.Core.Automation.Commands
                 //{
                 //    savePath = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "lnk");
                 //}
-                var savePath = v_SavePath.ConvertToUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "lnk"), engine);
+                var savePath = v_SavePath.ExpandValueOrUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "lnk"), engine);
 
-                string description = v_Description.ConvertToUserVariable(engine);
+                string description = v_Description.ExpandValueOrUserVariable(engine);
 
                 // WshShell
                 Type t = Type.GetTypeFromCLSID(new Guid("72C24DD5-D70A-438B-8A42-98424B88AFB8"));
@@ -104,7 +103,7 @@ namespace taskt.Core.Automation.Commands
                 //{
                 //    savePath = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "url");
                 //}
-                var savePath = v_SavePath.ConvertToUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "url"), engine);
+                var savePath = v_SavePath.ExpandValueOrUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "url"), engine);
 
                 string outputText = "[InternetShortcut]\nURL=" + targetPath;
                 WriteTextFileCommand writeText = new WriteTextFileCommand

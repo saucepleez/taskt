@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to copy a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to copy a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CopyDataTableCommand : ScriptCommand
@@ -21,11 +22,11 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("DataTable Variable Name to Copy")]
         [PropertyValidationRule("DataTable to Copy", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "DataTable to Copy")]
-        public string v_DataTableName { get; set; }
+        public string v_TargetDataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_NewOutputDataTableName))]
-        public string v_OutputVariableName { get; set; }
+        public string v_NewDataTable { get; set; }
 
         public CopyDataTableCommand()
         {
@@ -35,11 +36,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+            DataTable myDT = v_TargetDataTable.ExpandUserVariableAsDataTable(engine);
 
             DataTable newDT = new DataTable();
             foreach(DataColumn col in myDT.Columns)
@@ -57,7 +56,7 @@ namespace taskt.Core.Automation.Commands
                 newDT.Rows.Add(newRow);
             }
 
-            newDT.StoreInUserVariable(engine, v_OutputVariableName);
+            newDT.StoreInUserVariable(engine, v_NewDataTable);
         }
     }
 }

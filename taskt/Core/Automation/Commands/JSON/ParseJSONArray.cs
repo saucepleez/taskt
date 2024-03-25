@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to parse a JSON Array into a list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract data from a JSON object")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ParseJSONArrayCommand : ScriptCommand
@@ -46,12 +47,10 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true; 
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //get variablized input
-            var variableInput = v_InputValue.ConvertToUserVariable(sender);
+            var variableInput = v_InputValue.ExpandValueOrUserVariable(engine);
 
             //create objects
             Newtonsoft.Json.Linq.JArray arr;

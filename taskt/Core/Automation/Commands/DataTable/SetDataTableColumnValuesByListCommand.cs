@@ -13,13 +13,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to set a column to a DataTable by a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a column to a DataTable by a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SetDataTableColumnValuesByListCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
@@ -50,16 +51,14 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            (var myDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
+            (var myDT, var colIndex) = this.ExpandUserVariablesAsDataTableAndColumnIndex(nameof(v_DataTable), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
             string trgColumnName = myDT.Columns[colIndex].ColumnName;
 
-            List<string> myList = v_SetListName.GetListVariable(engine);
+            List<string> myList = v_SetListName.ExpandUserVariableAsList(engine);
 
-            string ifRowNotEnough = this.GetUISelectionValue(nameof(v_IfRowNotEnough), "Row Not Enough", engine);
+            string ifRowNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfRowNotEnough), "Row Not Enough", engine);
             // rows check
             if (myDT.Rows.Count < myList.Count)
             {
@@ -73,7 +72,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            string ifListNotEnough = this.GetUISelectionValue(nameof(v_IfListNotEnough), "List Not Enough", engine);
+            string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfListNotEnough), "List Not Enough", engine);
             if ((myDT.Rows.Count > myList.Count) && (ifListNotEnough == "error"))
             {
                 throw new Exception("The number of List items is less than the rows");

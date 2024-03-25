@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Web.UI.HtmlControls;
 
 namespace taskt.Core.Automation.Attributes.PropertyAttributes
 {
@@ -10,6 +9,25 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         Merge = 0,
         Overwrite,
     }
+    #endregion
+
+    #region Parameter Order
+    [AttributeUsage(AttributeTargets.Property)]
+    public class PropertyParameterOrder : Attribute
+    {
+        public int order = 3000;
+        public PropertyParameterOrder()
+        {
+        }
+        public PropertyParameterOrder(int order)
+        {
+            this.order = order;
+        }
+    }
+    #endregion
+
+    #region Replace pattern
+    // TODO: make sometime
     #endregion
 
     #region Virtual Property
@@ -269,6 +287,35 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.behavior = behavior;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public class PropertyAvailableSystemVariableBehavior : Attribute
+    {
+        public MultiAttributesBehavior behavior = MultiAttributesBehavior.Merge;
+        
+        public PropertyAvailableSystemVariableBehavior()
+        {
+
+        }
+        public PropertyAvailableSystemVariableBehavior(MultiAttributesBehavior behavior)
+        {
+            this.behavior = behavior;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public class PropertyAvailableSystemVariable : Attribute
+    {
+        public Engine.SystemVariables.LimitedSystemVariableNames variable = Engine.SystemVariables.LimitedSystemVariableNames.None;
+        public PropertyAvailableSystemVariable()
+        {
+
+        }
+        public PropertyAvailableSystemVariable(Engine.SystemVariables.LimitedSystemVariableNames variable)
+        {
+            this.variable = variable;
+        }
+    }
     #endregion
 
     #region for All Controls
@@ -329,7 +376,9 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             Color,
             MailKitEMail,
             MailKitEMailList,
-            WebElement
+            WebElement,
+            WindowHandle,
+            Numeric,
         }
     }
 

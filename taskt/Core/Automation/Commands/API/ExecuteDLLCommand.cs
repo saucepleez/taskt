@@ -16,9 +16,10 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command processes an HTML source object")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to parse and extract data from a successful **HTTP Request Command**")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_run_code))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExecuteDLLCommand : ScriptCommand
+    public class ExecuteDLLCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
@@ -92,12 +93,12 @@ namespace taskt.Core.Automation.Commands
             //ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_MethodParameters", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //get file path
-            var filePath = v_FilePath.ConvertToUserVariable(sender);
-            var className = v_ClassName.ConvertToUserVariable(sender);
-            var methodName = v_MethodName.ConvertToUserVariable(sender);
+            var filePath = v_FilePath.ExpandValueOrUserVariable(engine);
+            var className = v_ClassName.ExpandValueOrUserVariable(engine);
+            var methodName = v_MethodName.ExpandValueOrUserVariable(engine);
 
             //if file path does not exist
             if (!System.IO.File.Exists(filePath))
@@ -141,7 +142,7 @@ namespace taskt.Core.Automation.Commands
                     //get parameter value
                     var requiredParameterValue = (from rws in v_MethodParameters.AsEnumerable()
                                                  where rws.Field<string>("Parameter Name") == paramName
-                                                 select rws.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
+                                                 select rws.Field<string>("Parameter Value")).FirstOrDefault().ExpandValueOrUserVariable(engine);
 
               
                     //get type of parameter
@@ -236,7 +237,7 @@ namespace taskt.Core.Automation.Commands
             }
     
             //store result in variable
-            result.ToString().StoreInUserVariable(sender, v_applyToVariableName);
+            result.ToString().StoreInUserVariable(engine, v_applyToVariableName);
         }
 
         public override void BeforeValidate()
@@ -314,10 +315,10 @@ namespace taskt.Core.Automation.Commands
         private void lnkShowDLLExplorer_Clicked(object sender, EventArgs e)
         {
             //create form
-            using (UI.Forms.Supplemental.frmDLLExplorer dllExplorer = new UI.Forms.Supplemental.frmDLLExplorer())
+            using (var dllExplorer = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmDLLExplorer())
             {
                 //show dialog
-                if (dllExplorer.ShowDialog() == DialogResult.OK)
+                if (dllExplorer.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {
                     //user accepted the selections
                     //declare command

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -13,12 +12,13 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("Sends keystrokes to a targeted window")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send keystroke inputs to a window.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows.Forms.SendKeys' method to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_input))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class EnterShortcutKeyCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
@@ -67,25 +67,33 @@ namespace taskt.Core.Automation.Commands
         public string v_Hotkey { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
-        public string v_SearchMethod { get; set; }
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CompareMethod))]
+        public string v_CompareMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod_Single))]
         [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
         public string v_MatchMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
         public string v_TargetWindowIndex { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
-        public string v_WaitForWindow { get; set; }
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
+        public string v_WaitTimeForWindow { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterKeyEnter))]
         public string v_WaitAfterKeyEnter { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
+        public string v_NameResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
+        public string v_HandleResult { get; set; }
 
         public EnterShortcutKeyCommand()
         {
@@ -95,12 +103,10 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             string sendKey = "";
-            switch (this.GetUISelectionValue(nameof(v_Hotkey), engine))
+            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_Hotkey), engine))
             {
                 case "new":
                     sendKey = "^n";
@@ -160,31 +166,27 @@ namespace taskt.Core.Automation.Commands
 
             var enterKeysCommand = new EnterKeysCommand
             {
-                v_WindowName = v_WindowName,
-                v_SearchMethod = v_SearchMethod,
+                v_WindowName = this.v_WindowName,
+                v_CompareMethod = this.v_CompareMethod,
                 v_TextToSend = sendKey,
-                v_MatchMethod = v_MatchMethod,
-                v_TargetWindowIndex = v_TargetWindowIndex,
-                v_WaitForWindow = v_WaitForWindow,
-                v_WaitTime = v_WaitAfterKeyEnter
+                v_MatchMethod = this.v_MatchMethod,
+                v_TargetWindowIndex = this.v_TargetWindowIndex,
+                v_WaitTimeForWindow = this.v_WaitTimeForWindow,
+                v_WaitTime = this.v_WaitAfterKeyEnter,
+                v_NameResult = this.v_NameResult,
+                v_HandleResult = this.v_HandleResult,
             };
             enterKeysCommand.RunCommand(engine);
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
+            WindowControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
         }
 
         private void cmbHotkey_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //var searchedKey = parameterHotkey.Text;
             var searchedKey = ((ComboBox)sender).SelectedItem?.ToString() ?? "";
-
-            //var dic = (Dictionary<string, string>)((Label)ControlsList["lbl_" + nameof(v_Hotkey)]).Tag;
-
-            //var hotkey2ndLabel = (Label)ControlsList["lbl2_" + nameof(v_Hotkey)];
-            //hotkey2ndLabel.Text = dic.ContainsKey(searchedKey) ? dic[searchedKey] : "";
 
             ControlsList.SecondLabelProcess(nameof(v_Hotkey), nameof(v_Hotkey), searchedKey);
         }

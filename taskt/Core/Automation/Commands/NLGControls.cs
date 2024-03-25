@@ -17,6 +17,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("NLG Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Instance")]
         [PropertyFirstValue("%kwd_default_nlg_instance%")]
+        [PropertyParameterOrder(5000)]
         public static string v_InstanceName { get; }
     }
 }

@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command moves a folder to a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to move a folder to a new destination.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class MoveFolderCommand : ScriptCommand
@@ -39,13 +40,13 @@ namespace taskt.Core.Automation.Commands
         public string v_DestinationDirectory { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Create Folder when the Destination Folder does not Exists")]
         [PropertyIsOptional(true, "No")]
         public string v_CreateDirectory { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Delete Folder when it already Exists")]
         [PropertyIsOptional(true, "No")]
         public string v_DeleteExisting { get; set; }
@@ -74,10 +75,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             ////apply variable logic
             //var sourceFolder = FolderPathControls.WaitForFolder(this, nameof(v_SourceFolderPath), nameof(v_WaitForTargetFolder), engine);
 
@@ -116,11 +115,11 @@ namespace taskt.Core.Automation.Commands
             FolderPathControls.FolderAction(this, engine,
                 new Action<string>(path =>
                 {
-                    var destinationFolder = v_DestinationDirectory.ConvertToUserVariableAsFolderPath(engine);
+                    var destinationFolder = v_DestinationDirectory.ExpandValueOrUserVariableAsFolderPath(engine);
 
                     if (!Directory.Exists(destinationFolder))
                     {
-                        if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CreateDirectory), engine))
                         {
                             Directory.CreateDirectory(destinationFolder);
                         }
@@ -135,7 +134,7 @@ namespace taskt.Core.Automation.Commands
                     //delete if it already exists per user
                     if (Directory.Exists(finalPath))
                     {
-                        if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExisting), engine))
                         {
                             Directory.Delete(finalPath, true);
                         }

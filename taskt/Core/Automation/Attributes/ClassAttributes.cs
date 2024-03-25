@@ -97,4 +97,17 @@ namespace taskt.Core.Automation.Attributes.ClassAttributes
             this.customeRender = customeRender;
         }
     }
+    [System.AttributeUsage(System.AttributeTargets.Class)]
+    public class CommandIcon : System.Attribute
+    {
+        public string iconName = nameof(Properties.Resources.command_files);
+        
+        public CommandIcon()
+        {
+        }
+        public CommandIcon(string iconName)
+        {
+            this.iconName = iconName;
+        }
+    }
 }

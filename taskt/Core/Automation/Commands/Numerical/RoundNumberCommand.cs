@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Round up, down, or round off numbers.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Round up, down, or round off numbers.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class RoundNumberCommand : ScriptCommand
@@ -29,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         public string v_RoundType { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_OutputNumericalVariableName))]
         public string v_Result { get; set; }
 
         public RoundNumberCommand()
@@ -40,17 +41,15 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //decimal num = new PropertyConvertTag(v_Numeric, "Number").ConvertToUserVariableAsDecimal(engine);
             //var num = this.ConvertToUserVariableAsDecimal(nameof(v_Numeric), "Number", engine);
-            var num = this.ConvertToUserVariableAsDecimal(nameof(v_Numeric), engine);
+            var num = this.ExpandValueOrUserVariableAsDecimal(nameof(v_Numeric), engine);
 
             //var round = v_RoundType.GetUISelectionValue("v_RoundType", this, engine);
             //var round = this.GetUISelectionValue(nameof(v_RoundType), "Round Type", engine);
-            var round = this.GetUISelectionValue(nameof(v_RoundType), engine);
+            var round = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_RoundType), engine);
 
             decimal res = 0;
             switch (round)

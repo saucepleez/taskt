@@ -6,22 +6,23 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.SubGruop("Sheet")]
+    [Attributes.ClassAttributes.SubGruop("Worksheet")]
     [Attributes.ClassAttributes.CommandSettings("Get Worksheet Info")]
     [Attributes.ClassAttributes.Description("This command allows you to get a sheet info.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to launch a new instance of Excel.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelGetWorksheetInfoCommand : ScriptCommand
+    public class ExcelGetWorksheetInfoCommand : AExcelSheetCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
-        public string v_SheetName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
+        //public string v_SheetName { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Information Type")]
@@ -38,11 +39,13 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Information Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
+        [PropertyParameterOrder(7000)]
         public string v_InfoType { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_applyToVariable { get; set; }
+        [PropertyParameterOrder(7001)]
+        public string v_Result { get; set; }
 
         public ExcelGetWorksheetInfoCommand()
         {
@@ -52,17 +55,13 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            (var excelInstance, var targetSheet) = (v_InstanceName, v_SheetName).GetExcelInstanceAndWorksheet(engine);
+            //(var excelInstance, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(v_SheetName, engine);
+            (var excelInstance, var targetSheet) = this.ExpandValueOrVariableAsExcelInstanceAndWorksheet(engine);
 
             string ret = "";
-            int idx = 1;
-
-            var infoType = this.GetUISelectionValue(nameof(v_InfoType), "Info Type", engine);
-            switch (infoType)
+            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), "Info Type", engine))
             {
                 case "name":
                     ret = targetSheet.Name;
@@ -77,14 +76,33 @@ namespace taskt.Core.Automation.Commands
                     ret = (((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name == targetSheet.Name) ? "TRUE" : "FALSE";
                     break;
                 case "next sheet":
-                    var nextSheet = engine.engineSettings.NextWorksheetKeyword.GetExcelWorksheet(engine, excelInstance, true);
-                    ret = (nextSheet == null) ? "" : nextSheet.Name;
+                    //var nextSheet = engine.engineSettings.NextWorksheetKeyword.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance, true);
+                    //ret = (nextSheet == null) ? "" : nextSheet.Name;
+                    try
+                    {
+                        var nextSheet = this.ExpandValueOrVariableAsExcelWorksheet(VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Excel_NextWorkSheet.VariableName, engine), engine);
+                        ret = nextSheet.Name;
+                    }
+                    catch
+                    {
+                        ret = "";
+                    }
                     break;
                 case "previous sheet":
-                    var prevSheet = engine.engineSettings.PreviousWorksheetKeyword.GetExcelWorksheet(engine, excelInstance, true);
-                    ret = (prevSheet == null) ? "" : prevSheet.Name;
+                    //var prevSheet = engine.engineSettings.PreviousWorksheetKeyword.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance, true);
+                    //ret = (prevSheet == null) ? "" : prevSheet.Name;
+                    try
+                    {
+                        var nextSheet = this.ExpandValueOrVariableAsExcelWorksheet(VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Excel_PreviousWorkSheet.VariableName, engine), engine);
+                        ret = nextSheet.Name;
+                    }
+                    catch
+                    {
+                        ret = "";
+                    }
                     break;
                 case "sheet index":
+                    int idx = 1;
                     foreach (Microsoft.Office.Interop.Excel.Worksheet sht in excelInstance.Worksheets)
                     {
                         if (sht.Name == targetSheet.Name)
@@ -97,7 +115,7 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            ret.StoreInUserVariable(sender, v_applyToVariable);
+            ret.StoreInUserVariable(engine, v_Result);
         }
     }
 }

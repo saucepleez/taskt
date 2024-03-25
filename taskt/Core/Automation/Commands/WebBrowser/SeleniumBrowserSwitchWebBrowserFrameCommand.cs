@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to create a new Selenium web browser session which enables automation for websites.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a browser that will eventually perform web automation such as checking an internal company intranet site to retrieve data")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SeleniumBrowserSwitchWebBrowserFrameCommand : ScriptCommand
@@ -58,13 +59,11 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
-
-            var selectionType = this.GetUISelectionValue(nameof(v_SelectionType), engine);
+            var selectionType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SelectionType), engine);
             switch (selectionType)
             {
                 case "index":
@@ -72,12 +71,12 @@ namespace taskt.Core.Automation.Commands
                     {
                         v_FrameParameter = "0";
                     }
-                    var frameIndex = this.ConvertToUserVariableAsInteger(nameof(v_FrameParameter), engine);
+                    var frameIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_FrameParameter), engine);
                     seleniumInstance.SwitchTo().Frame(frameIndex);
                     break;
 
                 case "name or id":
-                    var frameName = v_FrameParameter.ConvertToUserVariable(engine);
+                    var frameName = v_FrameParameter.ExpandValueOrUserVariable(engine);
                     seleniumInstance.SwitchTo().Frame(frameName);
                     break;
 

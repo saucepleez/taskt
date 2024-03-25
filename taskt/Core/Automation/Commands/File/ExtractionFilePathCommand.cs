@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to extract from file path.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract from file path.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ExtractionFilePathCommand : ScriptCommand
@@ -47,12 +48,10 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var filePath = this.ConvertToUserVariableAsFilePath(nameof(v_SourceFilePath), engine);
-            string format = v_Format.ConvertToUserVariable(engine);
+            var filePath = this.ExpandValueOrUserVariableAsFilePath(nameof(v_SourceFilePath), engine);
+            string format = v_Format.ExpandValueOrUserVariable(engine);
 
             string result = FilePathControls.FormatFileFolderPath(filePath, format);
             result.StoreInUserVariable(engine, v_Result);
@@ -61,7 +60,7 @@ namespace taskt.Core.Automation.Commands
         private void lnkFormatChecker_Click(object sender, EventArgs e)
         {
             ComboBox cmb = (ComboBox)((CommandItemControl)sender).Tag;
-            UI.Forms.Supplement_Forms.frmFormatChecker.ShowFormatCheckerFormLinkClicked(cmb, "File Folder");
+            UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker.ShowFormatCheckerFormLinkClicked(cmb, "File Folder");
         }
     }
 }

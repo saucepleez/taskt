@@ -90,16 +90,16 @@ namespace taskt
 
                 if (type == "run")
                 {
-                    Application.Run(new UI.Forms.frmScriptEngine(filePath, null, null, true));
+                    Application.Run(new UI.Forms.ScriptEngine.frmScriptEngine(filePath, null, null, true));
                 }
                 else
                 {
-                    SplashForm = new UI.Forms.Supplemental.frmSplash();
+                    SplashForm = new UI.Forms.Splash.frmSplash();
                     SplashForm.Show();
 
                     Application.DoEvents();
 
-                    Application.Run(new UI.Forms.frmScriptBuilder(filePath));
+                    Application.Run(new UI.Forms.ScriptBuilder.frmScriptBuilder(filePath));
                 }
             }
             else
@@ -112,12 +112,12 @@ namespace taskt
                     System.IO.File.Delete(updaterExecutableDestination);
                 }
 
-                SplashForm = new UI.Forms.Supplemental.frmSplash();
+                SplashForm = new UI.Forms.Splash.frmSplash();
                 SplashForm.Show();
 
                 Application.DoEvents();
 
-                Application.Run(new UI.Forms.frmScriptBuilder());
+                Application.Run(new UI.Forms.ScriptBuilder.frmScriptBuilder());
             }
         }
         [System.Runtime.InteropServices.DllImport("user32.dll")]
@@ -128,8 +128,6 @@ namespace taskt
             MessageBox.Show("An unhandled exception occured: " + (e.ExceptionObject as Exception).ToString(), "Oops");
         }
 
-        public static UI.Forms.Supplemental.frmSplash SplashForm { get; set; }
-
-
+        public static UI.Forms.Splash.frmSplash SplashForm { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to concatenate 2 lists.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to concatenate 2 lists.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConcatenateListsCommand : ScriptCommand
@@ -47,12 +48,10 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            List<string> listA = v_InputListA.GetListVariable(engine);
-            List<string> listB = v_InputListB.GetListVariable(engine);
+            List<string> listA = v_InputListA.ExpandUserVariableAsList(engine);
+            List<string> listB = v_InputListB.ExpandUserVariableAsList(engine);
 
             List<string> newList = new List<string>();
             newList.AddRange(listA);

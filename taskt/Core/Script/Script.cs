@@ -19,7 +19,11 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using System.Data;
+using System.IO;
 using taskt.Core.Automation.Commands;
+using System.Reflection;
+using taskt.Core.Automation.Engine;
+using System.Text.RegularExpressions;
 
 namespace taskt.Core.Script
 {
@@ -146,7 +150,7 @@ namespace taskt.Core.Script
             if (scriptFilePath != "")
             {
                 //write to file
-                using (System.IO.FileStream fs = System.IO.File.Create(scriptFilePath))
+                using (System.IO.FileStream fs = File.Create(scriptFilePath))
                 {
                     using (XmlWriter writer = XmlWriter.Create(fs, settings))
                     {
@@ -163,10 +167,16 @@ namespace taskt.Core.Script
         /// </summary>
         public static Script DeserializeFile(string scriptFilePath, EngineSettings engineSettings, XmlSerializer serializer = null)
         {
+            // backup before converted
+            var fileName = $"bc-{Path.GetFileNameWithoutExtension(scriptFilePath)}-{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.xml";
+            //var bkFile = Path.Combine(GetBeforeConvertedFolderPath(), fileName);
+            var bkFile = Path.Combine(IO.Folders.GetBeforeConvertedFolderPath(), fileName);
+            File.Copy(scriptFilePath, bkFile);
+
             XDocument xmlScript = XDocument.Load(scriptFilePath);
 
             // pre-convert
-            convertOldScript(xmlScript);
+            convertOldScript(xmlScript, engineSettings);
 
             using (var reader = xmlScript.Root.CreateReader())
             {
@@ -251,12 +261,95 @@ namespace taskt.Core.Script
         /// <returns></returns>
         public static XmlSerializer CreateSerializer()
         {
-            var subClasses = System.Reflection.Assembly.GetAssembly(typeof(ScriptCommand))
+            var subClasses = Assembly.GetAssembly(typeof(ScriptCommand))
                                 .GetTypes()
                                 .Where(x => x.IsSubclassOf(typeof(ScriptCommand)) && !x.IsAbstract)
+                                //.Where(x => x.IsSubclassOf(typeof(ScriptCommand)))
                                 .ToArray();
 
             return new XmlSerializer(typeof(Script), subClasses);
+        }
+
+        ///// <summary>
+        ///// get AutoSave Folder Path
+        ///// </summary>
+        ///// <returns></returns>
+        //public static string GetAutoSaveFolderPath()
+        //{
+        //    var tasktExePath = Assembly.GetEntryAssembly().Location;
+        //    return Path.Combine(Path.GetDirectoryName(tasktExePath), "AutoSave");
+        //}
+
+        /// <summary>
+        /// get autosave script file path
+        /// </summary>
+        /// <returns></returns>
+        public static (string path, string timeStump) GetAutoSaveScriptFilePath()
+        {
+            //var savePath = GetAutoSaveFolderPath();
+            var savePath = IO.Folders.GetAutoSaveFolderPath();
+            var saveTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+
+            return (Path.Combine(savePath, "autosave-") + saveTime + ".xml", saveTime);
+        }
+
+        ///// <summary>
+        ///// get RunWithoutSaving Folder Path
+        ///// </summary>
+        ///// <returns></returns>
+        //public static string GetRunWithoutSavingFolderPath()
+        //{
+        //    var tasktExePath = Assembly.GetEntryAssembly().Location;
+        //    return Path.Combine(Path.GetDirectoryName(tasktExePath), "RunWithoutSaving");
+        //}
+
+        ///// <summary>
+        ///// get BeforeConverted Folder Path
+        ///// </summary>
+        ///// <returns></returns>
+        //public static string GetBeforeConvertedFolderPath()
+        //{
+        //    var tasktExePath = Assembly.GetEntryAssembly().Location;
+        //    return Path.Combine(Path.GetDirectoryName(tasktExePath), "BeforeConverted");
+        //}
+
+        /// <summary>
+        /// get file path when use 'Run Without Saving'
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRunWithoutSavingScriptFilePath()
+        {
+            //var runPath = GetRunWithoutSavingFolderPath();
+            var runPath = IO.Folders.GetRunWithoutSavingFolderPath();
+            var saveTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+            return Path.Combine(runPath, "run-") + saveTime + ".xml";
+        }
+
+        /// <summary>
+        /// ReGenerate all commandID
+        /// </summary>
+        public void ReGenerateCommandID()
+        {
+            foreach(var command in this.Commands)
+            {
+                ReGenerateCommandIDProcess(command);
+            }
+        }
+
+        /// <summary>
+        /// ReGenerate commands ID process
+        /// </summary>
+        /// <param name="script"></param>
+        public static void ReGenerateCommandIDProcess(ScriptAction script)
+        {
+            script.ScriptCommand.GenerateID();
+            if ((script.AdditionalScriptCommands?.Count ?? 0) > 0)
+            {
+                foreach(var command in script.AdditionalScriptCommands)
+                {
+                    ReGenerateCommandIDProcess(command);
+                }
+            }
         }
 
         /// <summary>
@@ -264,10 +357,14 @@ namespace taskt.Core.Script
         /// </summary>
         /// <param name="doc"></param>
         /// <returns></returns>
-        private static XDocument convertOldScript(XDocument doc)
+        private static XDocument convertOldScript(XDocument doc, EngineSettings engine)
         {
             // very important!
             // ** DO NOT USE nameof to change command name **
+
+            fixDataTableSchemaPosition(doc);
+            fixToSameCommandNames(doc);
+
             convertTo3_5_0_45(doc);
             convertTo3_5_0_46(doc);
             convertTo3_5_0_47(doc);
@@ -280,7 +377,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_73(doc);
             convertTo3_5_0_74(doc);
             convertTo3_5_0_78(doc);
-            fixUIAutomationGroupEnableParameterValue(doc);
+            fixUIAutomationSearchEnableParameterValue(doc);
             convertTo3_5_0_83(doc);
             convertTo3_5_1_16(doc);
             convertTo3_5_1_30(doc);
@@ -291,7 +388,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_36(doc);
             convertTo3_5_1_38(doc);
             convertTo3_5_1_39(doc);
-            fixUIAutomationGroupEnableParameterValue_3_5_1_39(doc);
+            fixUIAutomationSearchEnableParameterValue_3_5_1_39(doc);
             convertTo3_5_1_40(doc);
             convertTo3_5_1_41(doc);
             convertTo3_5_1_42(doc);
@@ -304,15 +401,112 @@ namespace taskt.Core.Script
             convertTo3_5_1_51(doc);
             convertTo3_5_1_52(doc);
             convertTo3_5_1_54(doc);
+            fixUIAutomationSearchEnableParameterValue_v3_5_1_56(doc);
+            convertTo3_5_1_56(doc);
+            convertTo3_5_1_58(doc);
+            convertTo3_5_1_62(doc);
+            convertTo3_5_1_72(doc);
+            convertTo3_5_1_74(doc);
+            convertTo3_5_1_75(doc, engine);
+            convertTo3_5_1_77(doc, engine);
+            convertTo3_5_1_79(doc, engine);
+            convertTo3_5_1_80(doc);
+            convertTo3_5_1_81(doc, engine);
+            convertTo3_5_1_83(doc);
+            convertTo3_5_1_84(doc);
+            convertTo3_5_1_86(doc);
+            convertTo3_5_1_87(doc);
+            convertTo3_5_1_88(doc);
 
             return doc;
         }
 
-        private static XDocument convertTo3_5_0_45(XDocument doc)
+
+        private static void fixDataTableSchemaPosition(XDocument doc)
+        {
+            // add v3.5.1.55
+
+            /* before
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="mytable">
+	<xs:complexType>
+	  <xs:sequence>
+		<xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+		<xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+	  </xs:sequence>
+	</xs:complexType>
+  </xs:element>
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="mytable" msdata:UseCurrentLocale="true">
+	<xs:complexType>
+	  <xs:choice minOccurs="0" maxOccurs="unbounded">
+		<xs:element ref="mytable" />
+	  </xs:choice>
+	</xs:complexType>
+  </xs:element>
+</xs:schema>
+             */
+            /* after
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+	<xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="mytable" msdata:UseCurrentLocale="true">
+	  <xs:complexType>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+		  <xs:element name="mytable">
+			<xs:complexType>
+			  <xs:sequence>
+				<xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+				<xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+			  </xs:sequence>
+			</xs:complexType>
+		  </xs:element>
+		</xs:choice>
+	  </xs:complexType>
+	</xs:element>
+  </xs:schema>
+             */
+
+            XNamespace nsXs = "http://www.w3.org/2001/XMLSchema";
+            var schemas = doc.Descendants(nsXs + "schema"); // get all datatable schema elements (<xs:schema>)
+            foreach (var schema in schemas)
+            {
+                var elements = schema.Elements(nsXs + "element").ToList();
+                // target datatable has two child <xs:element> elements in <xs:schema>
+                if (elements.Count() != 2)
+                {
+                    continue;
+                }
+                var fe = elements[0];   // first <xs:element> remove from parent
+                fe.Remove();
+
+                var se = elements[1];
+                var choice = se.Element(nsXs + "complexType").Element(nsXs + "choice");
+                choice.Element(nsXs + "element").Remove();  // second <xs:element> has <xs:element>. this node is removed
+                choice.Add(fe); // insert first <xs:element>
+            }
+        }
+
+        private static void fixToSameCommandNames(XDocument doc)
+        {
+            // add v3.5.1.56
+
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+
+            var commands = doc.Descendants("ScriptCommand");
+            foreach(var cmd in commands)
+            {
+                var commandName = cmd.Attribute("CommandName");
+                var xsiType = cmd.Attribute(ns + "type");
+                if (commandName.Value != xsiType.Value)
+                {
+                    xsiType.SetValue(commandName.Value);
+                }
+            }
+        }
+
+        private static void convertTo3_5_0_45(XDocument doc)
         {
             // change "Start with" -> "Starts with", "End with" -> "Ends with"
             ChangeAttributeValue(doc, new Func<XElement, bool>( el => {
-                switch (el.Attribute("CommandName").Value)
+                switch (GetCommandName(el))
                 {
                     case "ActivateWindowCommand":
                     case "CheckWindowNameExistsCommand":
@@ -346,11 +540,9 @@ namespace taskt.Core.Script
 
             // ExcelCreateDataset -> LoadDataTable
             ChangeCommandName(doc, "ExcelCreateDatasetCommand", "LoadDataTableCommand", "Load DataTable");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_0_46(XDocument doc)
+        private static void convertTo3_5_0_46(XDocument doc)
         {
             // AddToVariable -> AddListItem
             ChangeCommandName(doc, "AddToVariableCommand", "AddListItemCommand", "Add List Item");
@@ -358,15 +550,14 @@ namespace taskt.Core.Script
             // SetVariableIndex -> SetListIndex
             // stop v3.5.1.40
             //ChangeCommandName(doc, "SetVariableIndexCommand", "SetListIndexCommand", "Set List Index");
-
-            return doc;
         }
-        private static XDocument convertTo3_5_0_47(XDocument doc)
+
+        private static void convertTo3_5_0_47(XDocument doc)
         {
             // AddListItem.v_userVariableName, SetListIndex.v_userVariableName -> *.v_ListName
             ChangeAttributeName(doc, new Func<XElement, bool>(el =>
             {
-                switch (el.Attribute("CommandName").Value)
+                switch (GetCommandName(el))
                 {
                     case "AddListItemCommand":
                     case "SetListIndexCommand":
@@ -375,31 +566,29 @@ namespace taskt.Core.Script
                         return false;
                 }
             }), "v_userVariableName", "v_ListName");
-
-            return doc;
         }
-        private static XDocument convertTo3_5_0_50(XDocument doc)
+
+        private static void convertTo3_5_0_50(XDocument doc)
         {
             // ParseJSONArray -> ConvertJSONToList
             ChangeCommandName(doc, "ParseJSONArrayCommand", "ConvertJSONToListCommand", "Convert JSON To List");
-            return doc;
         }
-        private static XDocument convertTo3_5_0_51(XDocument doc)
+
+        private static void convertTo3_5_0_51(XDocument doc)
         {
             // GetDataCountRowCommand -> GetDataTableRowCountCommand
             ChangeCommandName(doc, "GetDataRowCountCommand", "GetDataTableRowCountCommand", "Get DataTable Row Count");
 
             // AddDataRow -> AddDataTableRow
             ChangeCommandName(doc, "AddDataRowCommand", "AddDataTableRowCommand", "Add DataTable Row");
-
-            return doc;
         }
-        private static XDocument convertTo3_5_0_52(XDocument doc)
+
+        private static void convertTo3_5_0_52(XDocument doc)
         {
             // change "Start with" -> "Starts with", "End with" -> "Ends with"
             ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
             {
-                switch(el.Attribute("CommandName").Value)
+                switch(GetCommandName(el))
                 {
                     case "GetFilesCommand":
                     case "GetFoldersCommand":
@@ -419,9 +608,9 @@ namespace taskt.Core.Script
                         break;
                 }
             }));
-            return doc;
         }
-        private static XDocument convertTo3_5_0_57(XDocument doc)
+
+        private static void convertTo3_5_0_57(XDocument doc)
         {
             // StringCheckTextCommand -> CheckTextCommand
             ChangeCommandName(doc, "CheckStringCommand", "CheckTextCommand", "Check Text");
@@ -429,7 +618,7 @@ namespace taskt.Core.Script
             // ModifyVariableCommand -> ModifyTextCommand
             ChangeCommandName(doc, new Func<XElement, bool>( el => 
             {
-                switch (el.Attribute("CommandName").Value)
+                switch (GetCommandName(el))
                 {
                     case "ModifyVariableCommand":
                     case "StringCaseCommand":
@@ -453,11 +642,9 @@ namespace taskt.Core.Script
 
             // TextExtractorCommand -> ExtractionTextCommand
             ChangeCommandName(doc, "TextExtractorCommand", "ExtractionTextCommand", "Extraction Text");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_0_67(XDocument doc)
+        private static void convertTo3_5_0_67(XDocument doc)
         {
             // GetAElement -> GetAnElement
             ChangeCommandName(doc, "SeleniumBrowserGetAElementValuesAsListCommand", "SeleniumBrowserGetAnElementValuesAsListCommand", "Get An Element Values As List");
@@ -465,16 +652,14 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "SeleniumBrowserGetAElementValuesAsDictionaryCommand", "SeleniumBrowserGetAnElementValuesAsDictionaryCommand", "Get An Element Values As Dictionary");
 
             ChangeCommandName(doc, "SeleniumBrowserGetAElementValuesAsDataTableCommand", "SeleniumBrowserGetAnElementValuesAsDataTableCommand", "Get An Element Values As DataTable");
-
-            return doc;
         }
 
-        private static XDocument fixUIAutomationCommandEnableParameterValue(XDocument doc)
+        private static void fixUIAutomationCommandEnableParameterValue(XDocument doc)
         {
             // UI Automation Boolean Fix
             ChangeTableCellValue(doc, "UIAutomationCommand", "v_UIASearchParameters", "Enabled", new Action<XElement>(c =>
             {
-                switch(c.Value.ToLower() ?? "")
+                switch (c.Value.ToLower())
                 {
                     case "true":
                     case "false":
@@ -483,12 +668,10 @@ namespace taskt.Core.Script
                         c.SetValue("False");
                         break;
                 }
-            }));
-
-            return doc;
+            }), "False");
         }
 
-        private static XDocument convertTo3_5_0_73(XDocument doc)
+        private static void convertTo3_5_0_73(XDocument doc)
         {
             var changeFunc = new Action<XElement>(c =>
             {
@@ -502,24 +685,22 @@ namespace taskt.Core.Script
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
                 return (
-                        (el.Attribute("CommandName").Value == "BeginIfCommand") &&
+                        (GetCommandName(el) == "BeginIfCommand") &&
                         ((el.Attribute("v_IfActionType")?.Value ?? "") == "Web Element Exists")
                     );
-            }), "v_IfActionParameterTable", "Parameter_x0020_Name", changeFunc);
+            }), "v_IfActionParameterTable", "Parameter_x0020_Name", changeFunc, "WebBrowser Instance Name");
 
             // BeginLoop Selenium -> WebBrowser
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
                 return (
-                    (el.Attribute("CommandName").Value == "BeginLoopCommand") &&
+                    (GetCommandName(el) == "BeginLoopCommand") &&
                     ((el.Attribute("v_LoopActionType")?.Value ?? "") == "Web Element Exists")
                 );
-            }), "v_LoopActionParameterTable", "Parameter_x0020_Name", changeFunc);
-
-            return doc;
+            }), "v_LoopActionParameterTable", "Parameter_x0020_Name", changeFunc, "WebBrowser Instance Name");
         }
 
-        private static XDocument convertTo3_5_0_74(XDocument doc)
+        private static void convertTo3_5_0_74(XDocument doc)
         {
             var changeFunc = new Action<XAttribute>(attr =>
             {
@@ -539,10 +720,9 @@ namespace taskt.Core.Script
 
             // BeginLoop Value, Variable Compare -> Numeric Compare, Text Compare
             ChangeAttributeValue(doc, "BeginLoopCommand", "v_LoopActionType", changeFunc);
-
-            return doc;
         }
-        private static XDocument convertTo3_5_0_78(XDocument doc)
+
+        private static void convertTo3_5_0_78(XDocument doc)
         {
             var modFunc = new Action<XElement, XElement, List<XElement>, string>((table, before, rows, rowName) =>
             {
@@ -562,7 +742,7 @@ namespace taskt.Core.Script
             // BeginIf add Window Search Method cell parameter
             ModifyTable(doc, new Func<XElement, bool>(el =>
             {
-                if (el.Attribute("CommandName").Value == "BeginIfCommand")
+                if (GetCommandName(el) == "BeginIfCommand")
                 {
                     switch (el.Attribute("v_IfActionType")?.Value.ToLower() ?? "")
                     {
@@ -582,7 +762,7 @@ namespace taskt.Core.Script
             // BeginLoop add Window Search Method parameter
             ModifyTable(doc, new Func<XElement, bool>(el =>
             {
-                if (el.Attribute("CommandName").Value == "BeginLoopCommand")
+                if (GetCommandName(el) == "BeginLoopCommand")
                 {
                     switch (el.Attribute("v_LoopActionType")?.Value.ToLower() ?? "")
                     {
@@ -598,16 +778,14 @@ namespace taskt.Core.Script
                     return false;
                 }
             }), "v_LoopActionParameterTable", modFunc);
-
-
-            return doc;
         }
-        private static XDocument fixUIAutomationGroupEnableParameterValue(XDocument doc)
+
+        private static void fixUIAutomationSearchEnableParameterValue(XDocument doc)
         {
             // UI Automation Boolean Fix
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
-                switch (el.Attribute("CommandName").Value)
+                switch (GetCommandName(el))
                 {
                     case "UIAutomationGetChidrenElementsInformationCommand":
                     case "UIAutomationGetChildElementCommand":
@@ -618,7 +796,7 @@ namespace taskt.Core.Script
                 }
             }), "v_SearchParameters", "Enabled", new Action<XElement>(c =>
             {
-                switch (c.Value.ToLower())
+                switch (c.Value?.ToLower() ?? "")
                 {
                     case "true":
                     case "false":
@@ -627,31 +805,25 @@ namespace taskt.Core.Script
                         c.SetValue("False");
                         break;
                 }
-            }));
-
-            return doc;
+            }), "False");
         }
 
-        private static XDocument convertTo3_5_0_83(XDocument doc)
+        private static void convertTo3_5_0_83(XDocument doc)
         {
             // SMTPSendEmail -> MailKitSendEmail
             ChangeCommandName(doc, "SMTPCommand", "MailKitSendEmailCommand", "Send Email");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_16(XDocument doc)
+        private static void convertTo3_5_1_16(XDocument doc)
         {
             // Parse Json -> Get JSON Value List
             ChangeCommandName(doc, "ParseJsonCommand", "GetJSONValueListCommand", "Get JSON Value List");
 
             // Parse Json Model -> Get Multi JSON Value List
             ChangeCommandName(doc, "ParseJsonModelCommand", "GetMultiJSONValueListCommand", "Get Multi JSON Value List");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_30(XDocument doc)
+        private static void convertTo3_5_1_30(XDocument doc)
         {
             // AddDataTableRowByDataTableCommand -> AddDataTableRowsByDataTableCommand
             ChangeCommandName(doc, "AddDataTableRowByDataTableCommand", "AddDataTableRowsByDataTableCommand", "Add DataTable Rows By DataTable");
@@ -673,11 +845,9 @@ namespace taskt.Core.Script
 
             // MailKitGetEMailFromMailListCommand -> MailKitGetEMailFromEMailListCommand
             ChangeCommandName(doc, "MailKitGetEMailFromMailListCommand", "MailKitGetEMailFromEMailListCommand", "Get EMail From EMailList");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_31(XDocument doc)
+        private static void convertTo3_5_1_31(XDocument doc)
         {
             // AddJSONArrayItem -> AddJSONArrayItemCommand
             ChangeCommandName(doc, "AddJSONArrayItem", "AddJSONArrayItemCommand", "Add JSON Array Item");
@@ -723,33 +893,27 @@ namespace taskt.Core.Script
 
             // ExcelWorksheetInfoCommand -> ExcelGetWorksheetInfoCommand
             ChangeCommandName(doc, "ExcelWorksheetInfoCommand", "ExcelGetWorksheetInfoCommand", "Get Worksheet Info");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_33(XDocument doc)
+        private static void convertTo3_5_1_33(XDocument doc)
         {
             // AddVariableCommand -> NewVariableCommand
             ChangeCommandName(doc, "AddVariableCommand", "NewVariableCommand", "New Variable");
 
             // VariableCommand -> SetVariableValueCommand
             ChangeCommandName(doc, "VariableCommand", "SetVariableValueCommand", "Set Variable Value");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_34(XDocument doc)
+        private static void convertTo3_5_1_34(XDocument doc)
         {
             // GetLengthCommand -> GetWordLengthCommand
             ChangeCommandName(doc, "GetLengthCommand", "GetWordLengthCommand", "Get Word Length");
 
             // CreateNumberVariableCommand -> CreateNumericalVariableCommand
             ChangeCommandName(doc, "CreateNumberVariableCommand", "CreateNumericalVariableCommand", "Create Numerical Variable");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_35(XDocument doc)
+        private static void convertTo3_5_1_35(XDocument doc)
         {
             // EnvironmentVariableCommand -> GetEnvironmentVariableCommand
             ChangeCommandName(doc, "EnvironmentVariableCommand", "GetEnvironmentVariableCommand", "Get Environment Variable");
@@ -785,11 +949,9 @@ namespace taskt.Core.Script
 
             // UnloadTaskCommand -> UnloadScriptFileCommand
             ChangeCommandName(doc, "UnloadTaskCommand", "UnloadScriptFileCommand", "Unload Script File");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_36(XDocument doc)
+        private static void convertTo3_5_1_36(XDocument doc)
         {
             // RunCustomCodeCommand -> RunCSharpCodeCommand
             ChangeCommandName(doc, "RunCustomCodeCommand", "RunCSharpCodeCommand", "Run CSharp Code");
@@ -829,11 +991,9 @@ namespace taskt.Core.Script
 
             // SequenceCommand (Display text only)
             ChangeCommandName(doc, "SequenceCommand", "SequenceCommand", "Sequence");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_38(XDocument doc)
+        private static void convertTo3_5_1_38(XDocument doc)
         {
             // GetDataCommand -> GetBotStoreDataCommand
             ChangeCommandName(doc, "GetDataCommand", "GetBotStoreDataCommand", "Get BotStore Data");
@@ -849,23 +1009,19 @@ namespace taskt.Core.Script
 
             // ExtractFileCommand -> ExtractZipFileCommand
             ChangeCommandName(doc, "ExtractFileCommand", "ExtractZipFileCommand", "Extract Zip File");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_39(XDocument doc)
+        private static void convertTo3_5_1_39(XDocument doc)
         {
             // Format Folder PathCommand -> FormatFolderPathCommand
             ChangeCommandName(doc, "Format Folder PathCommand", "FormatFolderPathCommand", "Format Folder Path");
-
-            return doc;
         }
 
-        private static XDocument fixUIAutomationGroupEnableParameterValue_3_5_1_39(XDocument doc)
+        private static void fixUIAutomationSearchEnableParameterValue_3_5_1_39(XDocument doc)
         {
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
-                switch (el.Attribute("CommandName").Value)
+                switch (GetCommandName(el))
                 {
                     case "UIAutomationCheckElementExistCommand":
                     case "UIAutomationWaitForElementExistCommand":
@@ -884,11 +1040,10 @@ namespace taskt.Core.Script
                         c.SetValue("False");
                         break;
                 }
-            }));
-            return doc;
+            }), "False");
         }
 
-        private static XDocument convertTo3_5_1_40(XDocument doc)
+        private static void convertTo3_5_1_40(XDocument doc)
         {
             // OCRCommand -> ExecuteOCR
             ChangeCommandName(doc, "OCRCommand", "ExecuteOCRCommand", "Execute OCR");
@@ -916,11 +1071,9 @@ namespace taskt.Core.Script
 
             // SendMouseMoveCommand -> MoveMouseCommand
             ChangeCommandName(doc, "SendMouseMoveCommand", "MoveMouseCommand", "Move Mouse");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_41(XDocument doc)
+        private static void convertTo3_5_1_41(XDocument doc)
         {
             // UserInputCommand -> ShowUserInputDialogCommand
             ChangeCommandName(doc, "UserInputCommand", "ShowUserInputDialogCommand", "Show User Input Dialog");
@@ -954,11 +1107,9 @@ namespace taskt.Core.Script
 
             // NLGSetParameterCommand -> NLGSetNLGParameterCommand
             ChangeCommandName(doc, "NLGSetParameterCommand", "NLGSetNLGParameterCommand", "Set NLG Parameter");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_42(XDocument doc)
+        private static void convertTo3_5_1_42(XDocument doc)
         {
             // HTTPRequestQueryCommand -> HTMLGetHTMLTextByXPath
             ChangeCommandName(doc, "HTTPRequestQueryCommand", "HTMLGetHTMLTextByXPath", "Get HTML Text By XPath");
@@ -968,11 +1119,9 @@ namespace taskt.Core.Script
 
             // RESTCommand -> HTTPExecuteRESTAPICommand
             ChangeCommandName(doc, "RESTCommand", "HTTPExecuteRESTAPICommand", "Execute REST API");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_44(XDocument doc)
+        private static void convertTo3_5_1_44(XDocument doc)
         {
             // Move/Copy File command -> Move File, Copy File command
             //var commands = doc.Descendants("ScriptCommand").Where(el => {
@@ -981,13 +1130,13 @@ namespace taskt.Core.Script
             //});
             var commands = GetCommands(doc, new Func<XElement, bool>(el =>
             {
-                return (el.Attribute("CommandName").Value == "MoveFileCommand") &&
+                return (GetCommandName(el) == "MoveFileCommand") &&
                     (el.Attribute("v_OperationType") != null);
             }));
             var moveCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() != "copy file")).ToList();
             var copyCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() == "copy file")).ToList();
-            ChangeCommandName(moveCommands, "MoveFileCommand", "Move File");
-            ChangeCommandName(copyCommands, "CopyFileCommand", "Copy File");
+            ChangeCommandNameProcess(moveCommands, "MoveFileCommand", "Move File");
+            ChangeCommandNameProcess(copyCommands, "CopyFileCommand", "Copy File");
             foreach(var cmd in commands)
             {
                 cmd.Attribute("v_OperationType").Remove();
@@ -1005,13 +1154,13 @@ namespace taskt.Core.Script
             //});
             commands = GetCommands(doc, new Func<XElement, bool>(el =>
             {
-                return (el.Attribute("CommandName").Value == "MoveFolderCommand") &&
+                return (GetCommandName(el) == "MoveFolderCommand") &&
                     (el.Attribute("v_OperationType") != null);
             }));
             moveCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() != "copy folder")).ToList();
             copyCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() == "copy folder")).ToList();
-            ChangeCommandName(moveCommands, "MoveFolderCommand", "Move Folder");
-            ChangeCommandName(copyCommands, "CopyFolderCommand", "Copy Folder");
+            ChangeCommandNameProcess(moveCommands, "MoveFolderCommand", "Move Folder");
+            ChangeCommandNameProcess(copyCommands, "CopyFolderCommand", "Copy Folder");
             foreach (var cmd in commands)
             {
                 cmd.Attribute("v_OperationType").Remove();
@@ -1019,17 +1168,15 @@ namespace taskt.Core.Script
 
             // UIAutomationSearchElementFromWindowByXPathCommand -> UIAutomationSearchElementAndWindowByXPathCommand
             ChangeCommandName(doc, "UIAutomationSearchElementFromWindowByXPathCommand", "UIAutomationSearchElementAndWindowByXPathCommand", "Search Element And Window By XPath");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_45(XDocument doc)
+        private static void convertTo3_5_1_45(XDocument doc)
         {
             // FormatFilePathCommand -> ExtractionFilePathCommand
             ChangeCommandName(doc, "FormatFilePathCommand", "ExtractionFilePathCommand", "Extraction File Path");
 
-            // FormatFolderPathCommnad -> ExtractionFolderPathCommand
-            ChangeCommandName(doc, "FormatFolderPathCommnad", "ExtractionFolderPathCommand", "Extraction Folder Path");
+            // FormatFolderPathCommand -> ExtractionFolderPathCommand
+            ChangeCommandName(doc, "FormatFolderPathCommand", "ExtractionFolderPathCommand", "Extraction Folder Path");
 
             // FormatColorCommand -> ConvertColorCommand
             ChangeCommandName(doc, "FormatColorCommand", "ConvertColorCommand", "Convert Color");
@@ -1042,7 +1189,7 @@ namespace taskt.Core.Script
             //});
             var commands = GetCommands(doc, new Func<XElement, bool>(el =>
             {
-                return ((el.Attribute("CommandName").Value == "UIAutomationClickElementCommand") &&
+                return ((GetCommandName(el) == "UIAutomationClickElementCommand") &&
                             (el.Attribute("v_ClickType") == null));
             }));
             XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
@@ -1090,19 +1237,15 @@ namespace taskt.Core.Script
                     xpath.Remove();
                 }
             }
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_46(XDocument doc)
+        private static void convertTo3_5_1_46(XDocument doc)
         {
             // MoveFolderCommand change dipslay command name
             ChangeCommandName(doc, "MoveFolderCommand", "MoveFolderCommand", "Move Folder");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_48(XDocument doc)
+        private static void convertTo3_5_1_48(XDocument doc)
         {
             // SeleniumBrowserGetAnElementValuesAsDataTableCommand -> SeleniumBrowserGetAnWebElementValuesAsDataTableCommand
             ChangeCommandName(doc, "SeleniumBrowserGetAnElementValuesAsDataTableCommand", "SeleniumBrowserGetAnWebElementValuesAsDataTableCommand", "Get An WebElement Values As DataTable");
@@ -1124,11 +1267,9 @@ namespace taskt.Core.Script
 
             // SeleniumBrowserGetElementsValuesAsDataTableCommand -> SeleniumBrowserGetWebElementsValuesAsDataTableCommand
             ChangeCommandName(doc, "SeleniumBrowserGetElementsValuesAsDataTableCommand", "SeleniumBrowserGetWebElementsValuesAsDataTableCommand", "Get WebElements Values As DataTable");
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_49(XDocument doc)
+        private static void convertTo3_5_1_49(XDocument doc)
         {
             // SeleniumBrowserElementActionCommand -> SeleniumBrowserWebElementActionCommand
             ChangeCommandName(doc, "SeleniumBrowserElementActionCommand", "SeleniumBrowserWebElementActionCommand", "WebElement Action");
@@ -1198,7 +1339,10 @@ namespace taskt.Core.Script
                                 y = rows[i].Element("Parameter_x0020_Value").Value;
                             }
                             rows[i].Remove();
-                            beforeRows[i].Remove();
+                            if (i < beforeRows.Count)   // rare case diffgram:before is null
+                            {
+                                beforeRows[i].Remove();
+                            }
                         }
                         string click = "";
                         switch (act)
@@ -1253,7 +1397,10 @@ namespace taskt.Core.Script
                             {
                                 cmd.SetAttributeValue("v_WaitTime", rows[i].Element("Parameter_x0020_Value").Value);
                                 rows[i].Remove();
-                                beforeRows[i].Remove();
+                                if (i < beforeRows.Count)   // rare case diffgram:before is null
+                                {
+                                    beforeRows[i].Remove();
+                                }
                                 break;
                             }
                         }
@@ -1262,17 +1409,15 @@ namespace taskt.Core.Script
                         if (currentRows == 0)
                         {
                             table.Remove();
-                            before.Remove();
+                            before?.Remove();   // rare case diffgram:before is null
                         }
 
                         break;
                 }
             }
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_50(XDocument doc) 
+        private static void convertTo3_5_1_50(XDocument doc) 
         {
             // WebElement Action: Wait For WebElement To Exists
             // WebElement Action: fix parameter table
@@ -1293,11 +1438,9 @@ namespace taskt.Core.Script
                     before.Remove();
                 }
             }
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_51(XDocument doc)
+        private static void convertTo3_5_1_51(XDocument doc)
         {
             // UIAutomationCheckElementExistByXPathCommand -> UIAutomationCheckUIElementExistByXPathCommand
             ChangeCommandName(doc, "UIAutomationCheckElementExistByXPathCommand", "UIAutomationCheckUIElementExistByXPathCommand", "Check UIElement Exist By XPath");
@@ -1374,7 +1517,7 @@ namespace taskt.Core.Script
             // UIAutomationCommand -> UIAutomationUIElementActionCommand
             ChangeCommandName(doc, "UIAutomationCommand", "UIAutomationUIElementActionCommand", "UIElement Action");
 
-            // UIAutomationUIElementActionCommand : UIElement Action name
+            // UIAutomationUIElementActionCommand : UIElement Action name, v_WindowName to Attribute
             var cmds = GetCommands(doc, "UIAutomationUIElementActionCommand");
             foreach(var cmd in cmds)
             {
@@ -1423,12 +1566,19 @@ namespace taskt.Core.Script
                 {
                     cmd.SetAttributeValue("v_AutomationType", newAct);
                 }
+
+                var winNameElem = cmd.Element("v_WindowName");
+                if (winNameElem != null)
+                {
+                    cmd.SetAttributeValue("v_WindowName", winNameElem.Value);
+                    winNameElem.Remove();
+                }
             }
 
             // WebElementAction: Set Text (Encrypted Text param)
             cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
             {
-                return (el.Attribute("CommandName").Value == "SeleniumBrowserWebElementActionCommand") &&
+                return (GetCommandName(el) == "SeleniumBrowserWebElementActionCommand") &&
                         (el.Attribute("v_SeleniumElementAction").Value.ToLower() == "set text");
             }));
             foreach(var cmd in cmds)
@@ -1456,11 +1606,9 @@ namespace taskt.Core.Script
                     }
                 }
             }
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_52(XDocument doc)
+        private static void convertTo3_5_1_52(XDocument doc)
         {
             // SeleniumBrowserWaitForWebElementExistCommand -> SeleniumBrowserWaitForWebElementToExistsCommand
             ChangeCommandName(doc, "SeleniumBrowserWaitForWebElementExistCommand", "SeleniumBrowserWaitForWebElementToExistsCommand", "Wait For WebElement To Exists");
@@ -1481,7 +1629,7 @@ namespace taskt.Core.Script
             //ChangeCommandName(doc, "ExcelCreateApplicationCommand", "ExcelCreateExcelInstanceCommand", "Create Excel Instance");
             ChangeCommandName(doc, new Func<XElement, bool>((el) =>
             {
-                switch (el.Attribute("CommandName").Value)
+                switch (GetCommandName(el))
                 {
                     case "ExcelCreateApplicationCommand":
                     case "ExcelOpenApplicationCommand":
@@ -1530,7 +1678,7 @@ namespace taskt.Core.Script
             // UIAutomationUIElementAction: Get Value From UIElement -> Get Property Value From UIElement
             ChangeAttributeValue(doc, new Func<XElement, bool>((el) =>
                 {
-                    return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
+                    return (GetCommandName(el) == "UIAutomationUIElementActionCommand") &&
                             (el.Attribute("v_AutomationType").Value.ToLower() == "get value from uielement");
                 }), "v_AutomationType", new Action<XAttribute>((attr) =>
                 {
@@ -1541,7 +1689,7 @@ namespace taskt.Core.Script
             // UIAutomationUIElementAction: Get Property Value From UIElement parameter
             var cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
             {
-                return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
+                return (GetCommandName(el) == "UIAutomationUIElementActionCommand") &&
                         (el.Attribute("v_AutomationType").Value.ToLower() == "get property value from uielement");
             }));
             foreach (var cmd in cmds)
@@ -1561,7 +1709,7 @@ namespace taskt.Core.Script
             // UIAutomationUIElementAction: Click UIElement
             cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
             {
-                return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
+                return (GetCommandName(el) == "UIAutomationUIElementActionCommand") &&
                         (el.Attribute("v_AutomationType").Value.ToLower() == "click uielement");
             }));
             foreach (var cmd in cmds)
@@ -1580,11 +1728,9 @@ namespace taskt.Core.Script
                     }
                 }
             }
-
-            return doc;
         }
 
-        private static XDocument convertTo3_5_1_54(XDocument doc)
+        private static void convertTo3_5_1_54(XDocument doc)
         {
             // UIAutomationUIElementActionCommand : tablename
             ChangeTableColumnNames(doc, "UIAutomationUIElementActionCommand", "v_UIASearchParameters",
@@ -1592,11 +1738,1220 @@ namespace taskt.Core.Script
                 {
                     ("Parameter_x0020_Name", "ParameterName"),
                     ("Parameter_x0020_Value", "ParameterValue"),
-                });
-
-            return doc;
+                }
+            );
         }
 
+        private static void fixUIAutomationSearchEnableParameterValue_v3_5_1_56(XDocument doc)
+        {
+            var changeFunc = new Action<XElement>(e =>
+            {
+                switch (e.Value.ToLower())
+                {
+                    case "true":
+                    case "false":
+                        break;
+                    default:
+                        e.SetValue("False");
+                        break;
+                }
+            });
+
+            ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationCheckUIElementExistCommand":
+                    case "UIAutomationGetChildrenUIElementsInformationCommand":
+                    case "UIAutomationSearchChildUIElementCommand":
+                    case "UIAutomationSearchUIElementAndWindowCommand":
+                    case "UIAutomationSearchUIElementFromUIElementCommand":
+                    case "UIAutomationWaitForUIElementToExistsCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_SearchParameters", "Enabled", changeFunc, "False");
+
+            ChangeTableCellValue(doc, "UIAutomationUIElementActionCommand", "v_UIASearchParameters", "Enabled", changeFunc, "False");
+        }
+
+        private static void convertTo3_5_1_56(XDocument doc)
+        {
+            // WordOpenApplicationCommand -> WordCreateWordInstanceCommand
+            ChangeCommandName(doc, "WordOpenApplicationCommand", "WordCreateWordInstanceCommand", "Create Word Insntance");
+        }
+
+        private static void convertTo3_5_1_58(XDocument doc)
+        {
+            // MailKitGetEmailAttachmentsNameCommand -> MailKitGetEMailAttachmentsNameCommand
+            ChangeCommandName(doc, "MailKitGetEmailAttachmentsNameCommand", "MailKitGetEMailAttachmentsNameCommand", "Get EMail Attachments Name");
+
+            // MailKitLoadEmailCommand -> MailKitLoadEMailCommand
+            ChangeCommandName(doc, "MailKitLoadEmailCommand", "MailKitLoadEMailCommand", "Load EMail");
+
+            // MailKitRecieveEmailListUsingIMAPCommand -> MailKitRecieveEMailListUsingIMAPCommand
+            ChangeCommandName(doc, "MailKitRecieveEmailListUsingIMAPCommand", "MailKitRecieveEMailListUsingIMAPCommand", "Recieve EMailList Using IMAP");
+
+            // MailKitRecieveEmailListUsingPOPCommand -> MailKitRecieveEMailListUsingPOPCommand
+            ChangeCommandName(doc, "MailKitRecieveEmailListUsingPOPCommand", "MailKitRecieveEMailListUsingPOPCommand", "Recieve EMailList Using POP");
+
+            // MailKitSaveEmailAttachmentsCommand -> MailKitSaveEMailAttachmentsCommand
+            ChangeCommandName(doc, "MailKitSaveEmailAttachmentsCommand", "MailKitSaveEMailAttachmentsCommand", "Save EMail Attachments");
+
+            // MailKitSaveEmailCommand -> MailKitSaveEMailCommand
+            ChangeCommandName(doc, "MailKitSaveEmailCommand", "MailKitSaveEMailCommand", "Save EMail");
+
+            // MailKitSendEmailCommand -> MailKitSendEMailCommand
+            ChangeCommandName(doc, "MailKitSendEmailCommand", "MailKitSendEMailCommand", "Send EMail");
+        }
+
+        private static void convertTo3_5_1_62(XDocument doc)
+        {
+            // CreateTextVariable -> CreateTextVariableCommand
+            ChangeCommandName(doc, "CreateTextVariable", "CreateTextVariableCommand", "Create Text Variable");
+        }
+
+        private static void convertTo3_5_1_72(XDocument doc)
+        {
+            var macroCommands = new List<XElement>();
+            var cmds = GetCommands(doc, "ExcelAddWorkbookCommand");
+            foreach (var cmd in cmds)
+            {
+                var vMacro = cmd.Attribute("v_MacroName");
+                if (vMacro != null)
+                {
+                    macroCommands.Add(cmd);
+                }
+            }
+
+            if (cmds.Count() > 0)
+            {
+                ChangeCommandNameProcess(macroCommands, "ExcelRunMacroCommand", "Run Macro");
+            }
+        }
+
+        private static void convertTo3_5_1_74(XDocument doc)
+        {
+            ChangeAttributeName(doc, "WaitForWindowToExistsCommand", "v_LengthToWait", "v_WaitTime");
+            ChangeAttributeName(doc, "GetWindowHandleFromWindowNameCommand", "v_WindowHandle", "v_HandleResult");
+
+            //var getWinPositionCommandsSearch = new Func<XElement, bool>(el =>
+            //{
+            //    switch (el.Attribute("CommandName").Value)
+            //    {
+            //        case "GetWindowPositionCommand":
+            //        case "GetWindowPositionFromWindowHandleCommand":
+            //            return true;
+            //        default:
+            //            return false;
+            //    }
+            //});
+            //ChangeAttributeName(doc, getWinPositionCommandsSearch, "v_VariablePositionX", "v_XPosition");
+            //ChangeAttributeName(doc, getWinPositionCommandsSearch, "v_VariablePositionY", "v_YPosition");
+
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "GetWindowPositionCommand":
+                        case "GetWindowPositionFromWindowHandleCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_VariablePositionX", "v_XPosition"),
+                    ("v_VariablePositionY", "v_YPosition"),
+                }
+            );
+
+            ChangeAttributeName(doc, "GetWindowSizeCommand", "v_With", "v_Width");
+
+            //var moveWinPositionCommandsSearch = new Func<XElement, bool>(el =>
+            //{
+            //    switch (el.Attribute("CommandName").Value)
+            //    {
+            //        case "MoveWindowCommand":
+            //        case "MoveWindowByWindowHandleCommand":
+            //            return true;
+            //        default:
+            //            return false;
+            //    }
+            //});
+            //ChangeAttributeName(doc, moveWinPositionCommandsSearch, "v_XWindowPosition", "v_XPosition");
+            //ChangeAttributeName(doc, moveWinPositionCommandsSearch, "v_YWindowPosition", "v_YPosition");
+
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "MoveWindowCommand":
+                        case "MoveWindowByWindowHandleCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_XWindowPosition", "v_XPosition"),
+                    ("v_YWindowPosition", "v_YPosition"),
+                }
+            );
+
+            //var resizeWinPositionCommandsSearch = new Func<XElement, bool>(el =>
+            //{
+            //    switch (el.Attribute("CommandName").Value)
+            //    {
+            //        case "ResizeWindowCommand":
+            //        case "ResizeWindowByWindowHandleCommand":
+            //            return true;
+            //        default:
+            //            return false;
+            //    }
+            //});
+            //ChangeAttributeName(doc, resizeWinPositionCommandsSearch, "v_XWindowSize", "v_Width");
+            //ChangeAttributeName(doc, resizeWinPositionCommandsSearch, "v_YWindowSize", "v_Height");
+
+            ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "ResizeWindowCommand":
+                        case "ResizeWindowByWindowHandleCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_XWindowSize", "v_Width"),
+                    ("v_YWindowSize", "v_Height"),
+                }
+            );
+
+            ChangeAttributeName(doc, "GetWindowStateCommand", "v_UserVariableName", "v_WindowState");
+            ChangeAttributeName(doc, "GetWindowStateFromWindowHandleCommand", "v_Result", "v_WindowState");
+        }
+
+        private static void convertTo3_5_1_75(XDocument doc, EngineSettings engine)
+        {
+            //string oldKW;
+            //string newKW;
+            //if (engine.ExportIntermediateXML)
+            //{
+            //    oldKW = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_window%");
+            //    newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentWindowName.VariableName);
+            //}
+            //else
+            //{
+            //    oldKW = engine.CurrentWindowKeyword;
+            //    newKW = string.Concat(engine.VariableStartMarker, SystemVariables.Window_CurrentWindowName.VariableValue, engine.VariableEndMarker);
+            //}
+            (var oldKW, var newKW) = GetOldNewCurrentWindow(engine);
+
+            // keyword "Current Window" -> {Window.CurrentWindowName}
+            ChangeAttributeValue(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "ActivateWindowCommand":
+                        case "CheckWindowNameExistsCommand":
+                        case "CloseWindowCommand":
+                        case "GetProcessNameFromWindowNameCommand":
+                        case "GetWindowNamesCommand":
+                        case "GetWindowPositionCommand":
+                        case "GetWindowSizeCommand":
+                        case "GetWindowStateCommand":
+                        case "MoveWindowCommand":
+                        case "ResizeWindowCommand":
+                        case "SetWindowStateCommand":
+                        case "WaitForWindowToExistsCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_WindowName",
+                new Action<XAttribute>(attr =>
+                {
+                    if (attr.Value == oldKW)
+                    {
+                        attr.SetValue(newKW);
+                    }
+                })
+            );
+
+            // SendAdvancedKeyStrokesCommand strange element "v_KeyUpDefault"
+            var cmds = GetCommands(doc, "SendAdvancedKeyStrokesCommand");
+            foreach(var cmd in cmds)
+            {
+                var elem = cmd.Element("v_KeyUpDefault");
+                var attr = cmd.Attribute("v_KeyUpDefault");
+
+                // attribute v_KeyUpDefault not exists
+                if (attr == null)
+                {
+                    //if (elem != null)
+                    //{
+                    //    cmd.SetAttributeValue("v_KeyUpDefault", elem.Value ?? "");
+                    //}
+                    //else
+                    //{
+                    //    cmd.SetAttributeValue("v_KeyUpDefault", "");
+                    //}
+                    cmd.SetAttributeValue("v_KeyUpDefault", elem?.Value ?? "");
+                }
+
+                elem?.Remove();
+            }
+
+            // TakeScreenShot attr v_ScreenshotWindowName -> v_WindowName
+            ChangeAttributeName(doc, "TakeScreenshotCommand", "v_ScreenshotWindowName", "v_WindowName");
+        }
+
+        private static void convertTo3_5_1_77(XDocument doc, EngineSettings engine)
+        {
+            //var oldKW = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_window%");
+            //var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentWindowName.VariableName);
+            (var oldKW, var newKW) = GetOldNewCurrentWindow(engine);
+
+            // keyword "Current Window" -> {Window.CurrentWindowName}
+            ChangeAttributeValue(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "TakeScreenshotCommand":
+                        case "EnterKeysCommand":
+                        case "EnterShortcutKeyCommand":
+                        case "SendAdvancedKeyStrokesCommand":
+                        case "UIAutomationSearchUIElementAndWindowByXPathCommand":
+                        case "UIAutomationSearchUIElementAndWindowCommand":
+                        case "UIAutomationSearchUIElementFromWindowCommand":
+                        case "UIAutomationUIElementActionByXPathCommand":
+                        case "UIAutomationUIElementActionCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_WindowName",
+                new Action<XAttribute>(attr =>
+                {
+                    if (attr.Value == oldKW)
+                    {
+                        attr.SetValue(newKW);
+                    }
+                })
+            );
+
+            // v_WaitTime -> v_WaitTimeForWindow (Window Commands group)
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "ActivateWindowByWindowHandleCommand":
+                        case "ActivateWindowCommand":
+                        case "CheckWindowHandleExistsCommand":
+                        case "CheckWindowNameExistsCommand":
+                        case "CloseWindowByWindowHandle":
+                        case "CloseWindowCommand":
+                        case "GetProcessNameFromWindowHandleCommand":
+                        case "GetProcessNameFromWindowNameCommand":
+                        case "GetWindowHandleFromWindowNameCommand":
+                        case "GetWindowNameFromWindowHandleCommand":
+                        case "GetWindowNamesCommand":
+                        case "GetWindowPositionCommand":
+                        case "GetWindowPositionFromWindowHandleCommand":
+                        case "GetWindowSizeCommand":
+                        case "GetWindowSizeFromWindowHandleCommand":
+                        case "GetWindowStateCommand":
+                        case "GetWindowStateFromWindowHandleCommand":
+                        case "MoveWindowByWindowHandleCommand":
+                        case "MoveWindowCommand":
+                        case "ResizeWindowByWindowHandleCommand":
+                        case "ResizeWindowCommand":
+                        case "SetWindowStateByWindowHandleCommand":
+                        case "SetWindowStateCommand":
+                        case "WaitForWindowToExistsCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_WaitTime", "v_WaitTimeForWindow"
+            );
+
+            // v_WaitForWindow -> v_WaitTimeForWindow (KeyMouse, Image)
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        // Image
+                        case "TakeScreenshotCommand":
+                        // KeyMouse
+                        case "EnterKeysCommand":
+                        case "EnterShortcutKeyCommand":
+                        case "SendAdvancedKeyStrokesCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_WaitForWindow", "v_WaitTimeForWindow"
+            );
+
+            // v_WindowWaitTime -> v_WaitForWindow (UIAutomation)
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "UIAutomationSearchUIElementAndWindowByXPathCommand":
+                        case "UIAutomationSearchUIElementAndWindowCommand":
+                        case "UIAutomationSearchUIElementFromWindowCommand":
+                        case "UIAutomationUIElementActionByXPathCommand":
+                        case "UIAutomationUIElementActionCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_WindowWaitTime", "v_WaitTimeForWindow"
+            );
+
+            // v_SearchMethod -> v_CompareMethod (Window, Image, KeyMouse, UIAutomation)
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        // Window
+                        case "ActivateWindowCommand":
+                        case "CheckWindowNameExistsCommand":
+                        case "CloseWindowCommand":
+                        case "GetProcessNameFromWindowNameCommand":
+                        case "GetWindowHandleFromWindowNameCommand":
+                        case "GetWindowNamesCommand":
+                        case "GetWindowPositionCommand":
+                        case "GetWindowSizeCommand":
+                        case "GetWindowStateCommand":
+                        case "MoveWindowCommand":
+                        case "ResizeWindowCommand":
+                        case "SetWindowStateCommand":
+                        case "WaitForWindowToExistsCommand":
+                        // Image
+                        case "TakeScreenshotCommand":
+                        // KeyMouse
+                        case "EnterKeysCommand":
+                        case "EnterShortcutKeyCommand":
+                        case "SendAdvancedKeyStrokesCommand":
+                        // UIAutomation
+                        case "UIAutomationSearchUIElementAndWindowByXPathCommand":
+                        case "UIAutomationSearchUIElementAndWindowCommand":
+                        case "UIAutomationSearchUIElementFromWindowCommand":
+                        case "UIAutomationUIElementActionByXPathCommand":
+                        case "UIAutomationUIElementActionCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_SearchMethod", "v_CompareMethod"
+            );
+        }
+
+        private static void convertTo3_5_1_79(XDocument doc, EngineSettings engine)
+        {
+            // change v_XPosition, v_YPosition keyword
+            //var oldPosition = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_position%");
+            //var newPosition = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentPosition.VariableName);
+            (var oldPosition, var newPosition) = GetOldNewKeyword("%kwd_current_position%", engine.CurrentWindowPositionKeyword, SystemVariables.Window_CurrentPosition, engine);
+
+            //var oldXPosition = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_xposition%");
+            //var newXPosition = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentXPosition.VariableName);
+            (var oldXPosition, var newXPosition) = GetOldNewKeyword("%kwd_current_xposition%", engine.CurrentWindowXPositionKeyword, SystemVariables.Window_CurrentXPosition, engine);
+
+            //var oldYPosition = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_yposition%");
+            //var newYPosition = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentYPosition.VariableName);
+            (var oldYPosition, var newYPosition) = GetOldNewKeyword("%kwd_current_yposition%", engine.CurrentWindowYPositionKeyword, SystemVariables.Window_CurrentYPosition, engine);
+
+            var changeAction = new Action<XAttribute>(attr =>
+            {
+                var v = attr.Value;
+                if (v == oldPosition)
+                {
+                    attr.SetValue(newPosition);
+                }
+                else if (v == oldXPosition)
+                {
+                    attr.SetValue(newXPosition);
+                }
+                else if (v == oldYPosition)
+                {
+                    attr.SetValue(newYPosition);
+                }
+            });
+
+            ChangeAttributeValue(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "MoveWindowCommand":
+                        case "MoveWindowByWindowHandleCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_XPosition", changeAction
+            );
+
+            ChangeAttributeValue(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "MoveWindowCommand":
+                        case "MoveWindowByWindowHandleCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_YPosition", changeAction
+            );
+        }
+
+        private static void convertTo3_5_1_80(XDocument doc)
+        {
+            // Copy Worksheet
+            //ChangeAttributeName(doc, "ExcelCopyWorksheetCommand", "v_sourceSheet", "v_TargetSheetName");
+            //ChangeAttributeName(doc, "ExcelCopyWorksheetCommand", "v_newSheetName", "v_NewSheetName");
+            ChangeMultiAttributeNames(doc, "ExcelCopyWorksheetCommand",
+                new List<(string, string)>()
+                {
+                    ("v_sourceSheet", "v_TargetSheetName"),
+                    ("v_newSheetName", "v_NewSheetName"),
+                }
+            );
+
+            // Rename Worksheet
+            //ChangeAttributeName(doc, "ExcelRenameWorksheetCommand", "v_sourceSheet", "v_TargetSheetName");
+            //ChangeAttributeName(doc, "ExcelRenameWorksheetCommand", "v_newName", "v_NewSheetName");
+            ChangeMultiAttributeNames(doc, "ExcelRenameWorksheetCommand",
+                new List<(string, string)>()
+                {
+                    ("v_sourceSheet", "v_TargetSheetName"),
+                    ("v_newName", "v_NewSheetName"),
+                }
+            );
+
+            // Activate Sheet -> Activate Worksheet
+            ChangeCommandName(doc, "ExcelActivateSheetCommand", "ExcelActivateWorksheetCommand", "Activate Worksheet");
+
+            // ExcelGetWorksheetsCommand  v_SearchMethod -> v_CompareMethod
+            ChangeAttributeName(doc, "ExcelGetWorksheetsCommand", "v_SearchMethod", "v_CompareMethod");
+            // change v_CompareMethod value
+            ChangeAttributeValue(doc, "ExcelGetWorksheetsCommand", "v_CompareMethod",
+                new Action<XAttribute>(attr =>
+                {
+                    var v = attr.Value.ToLower();
+                    switch (v)
+                    {
+                        case "start with":
+                            attr.SetValue("Starts with");
+                            break;
+                        case "end with":
+                            attr.SetValue("Ends with");
+                            break;
+                    }
+                })
+            );
+        }
+
+        private static void convertTo3_5_1_81(XDocument doc, EngineSettings engine)
+        {
+            //var oldCurrent = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_worksheet%");
+            //var newCurrent = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Excel_CurrentWorkSheet.VariableName);
+            (var oldCurrent, var newCurrent) = GetOldNewKeyword("%kwd_current_worksheet%", engine.CurrentWorksheetKeyword, SystemVariables.Excel_CurrentWorkSheet, engine);
+
+            //var oldNext = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_next_worksheet%");
+            //var newNext = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Excel_NextWorkSheet.VariableName);
+            (var oldNext, var newNext) = GetOldNewKeyword("%kwd_next_worksheet%", engine.NextWorksheetKeyword, SystemVariables.Excel_NextWorkSheet, engine);
+
+            //var oldPrevious = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_previous_worksheet%");
+            //var newPrevious = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Excel_PreviousWorkSheet.VariableName);
+            (var oldPrevious, var newPrevious) = GetOldNewKeyword("%kwd_previous_worksheet%", engine.PreviousWorksheetKeyword, SystemVariables.Excel_PreviousWorkSheet, engine);
+
+            var changeAction = new Action<XAttribute>(attr =>
+            {
+                var v = attr.Value;
+                if (v == oldCurrent)
+                {
+                    attr.SetValue(newCurrent);
+                }
+                else if (v == oldNext)
+                {
+                    attr.SetValue(newNext);
+                }
+                else if (v == oldPrevious)
+                {
+                    attr.SetValue(newPrevious);
+                }
+            });
+
+            // ExcelActivateWorksheetCommand
+            ChangeAttributeValue(doc, "ExcelActivateWorksheetCommand", "v_SheetName", changeAction);
+
+            ChangeAttributeValue(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "ExcelCopyWorksheetCommand":
+                        case "ExcelRenameWorksheetCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_TargetSheetName", changeAction
+            );
+
+            // Add Worksheet command v_SheetName
+            ChangeAttributeName(doc, "ExcelAddWorksheetCommand", "v_NewSheetName", "v_SheetName");
+
+            // change attribute v_applyToVariable -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "ExcelCheckWorksheetExistsCommand":
+                        case "ExcelGetCurrentWorksheetCommand":
+                        case "ExcelGetExcelInfoCommand":
+                        case "ExcelGetWorksheetInfoCommand":
+                        case "ExcelGetWorksheetsCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                "v_applyToVariable", "v_Result"
+            );
+
+            // change attribute v_applyToVariableName -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "ExcelCheckExcelInstanceExistsCommand":
+                        case "ExcelGetLastRowCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                "v_applyToVariableName", "v_Result"
+            );
+
+            // change attribute v_userVariableName -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "ExcelCheckCellValueExistsCommand":
+                        case "ExcelCheckCellValueExistsRCCommand":
+                        case "ExcelGetCellCommand":
+                        case "ExcelGetCellRCCommand":
+                        case "ExcelGetColumnValuesAsDataTableCommand":
+                        case "ExcelGetColumnValuesAsDictionaryCommand":
+                        case "ExcelGetColumnValuesAsListCommand":
+                        case "ExcelGetRangeValuesAsDataTableCommand":
+                        case "ExcelGetRowValuesAsDataTableCommand":
+                        case "ExcelGetRowValuesAsDictionaryCommand":
+                        case "ExcelGetRowValuesAsListCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                "v_userVariableName", "v_Result"
+            );
+
+            // change attribute v_ExcelCellAddress -> v_CellLocation
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "ExcelCheckCellValueExistsCommand":
+                        case "ExcelGetCellCommand":
+                        case "ExcelSetCellCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                "v_ExcelCellAddress", "v_CellLocation"
+            );
+
+            // ExcelGetCellRCCommand, ExcelSetCellRCCommand attributes v_CellRow, v_CellColumn
+            //var searchFunc = new Func<XElement, bool>(el =>
+            //{
+            //    switch (el.Attribute("CommandName").Value)
+            //    {
+            //        case "ExcelGetCellRCCommand":
+            //        case "ExcelSetCellRCCommand":
+            //            return true;
+            //        default:
+            //            return false;
+            //    }
+            //});
+            //ChangeAttributeName(doc, searchFunc, "v_ExcelCellRow", "v_CellRow");
+            //ChangeAttributeName(doc, searchFunc, "v_ExcelCellColumn", "v_CellColumn");
+            ChangeMultiAttributeNames(doc,
+                 new Func<XElement, bool>(el =>
+                 {
+                     switch (GetCommandName(el))
+                     {
+                         case "ExcelGetCellRCCommand":
+                         case "ExcelSetCellRCCommand":
+                             return true;
+                         default:
+                             return false;
+                     }
+                 }),
+                 new List<(string, string)>()
+                 {
+                     ("v_ExcelCellRow", "v_CellRow"),
+                     ("v_ExcelCellColumn", "v_CellColumn"),
+                 }
+            );
+        }
+
+        private static void convertTo3_5_1_83(XDocument doc)
+        {
+            // ExcelSetRowValuesFromDataTableCommand, ExcelSetColumnValuesFromDataTableCommand v_WhenItemNotEnough
+            ChangeAttributeName(doc, 
+                new Func<XElement, bool>(el => {
+                    switch (GetCommandName(el))
+                    {
+                        case "ExcelSetRowValuesFromDataTableCommand":
+                        case "ExcelSetColumnValuesFromDataTableCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                    
+                }), "v_IfDataTableNotEnough", "v_WhenItemNotEnough");
+
+            // ExcelSetRowValuesFromDictionaryCommand, ExcelSetColumnValuesFromDictionaryCommand v_WhenItemNotEnough
+            ChangeAttributeName(doc, 
+                new Func<XElement, bool>(el => {
+                    switch (GetCommandName(el))
+                    {
+                        case "ExcelSetRowValuesFromDictionaryCommand":
+                        case "ExcelSetColumnValuesFromDictionaryCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_IfDictionaryNotEnough", "v_WhenItemNotEnough");
+
+            // ExcelSetRowValuesFromListCommand, ExcelSetColumnValuesFromListCommand v_WhenItemNotEnough
+            ChangeAttributeName(doc, 
+                new Func<XElement, bool>(el => {
+                    switch (GetCommandName(el))
+                    {
+                        case "ExcelSetRowValuesFromListCommand":
+                        case "ExcelSetColumnValuesFromListCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_IfListNotEnough", "v_WhenItemNotEnough");
+
+            // ExcelSetRowValuesFromDataTableCommand v_RowIndex
+            ChangeAttributeName(doc, "ExcelSetRowValuesFromDataTableCommand", "v_ExcelRowIndex", "v_RowIndex");
+
+            // ExcelSetColumnValuesFromDataTableCommand v_ColumnIndex
+            ChangeAttributeName(doc, "ExcelSetColumnValuesFromDataTableCommand", "v_ExcelColumnIndex", "v_ColumnIndex");
+
+            // ExcelDeleteCellCommand v_CellLocation
+            ChangeAttributeName(doc, "ExcelDeleteCellCommand", "v_Range", "v_CellLocation");
+
+            // ExcelDeleteRowCommand v_RowIndex
+            ChangeAttributeName(doc, "ExcelDeleteRowCommand", "v_RowNumber", "v_RowIndex");
+
+            // ExcelDeleteCellCommand, ExcelDeleteRowCommand v_Shift
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "ExcelDeleteCellCommand":
+                        case "ExcelDeleteRowCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_ShiftUp", "v_Shift");
+
+            // ExcelGetLastRowCommand v_ColumnIndex
+            ChangeAttributeName(doc, "ExcelGetLastRowCommand", "v_ColumnLetter", "v_ColumnIndex");
+        }
+
+        private static void convertTo3_5_1_84(XDocument doc)
+        {
+            // ConvertDateTimeToExcelSerialCommand v_Result
+            ChangeAttributeName(doc, "ConvertDateTimeToExcelSerialCommand", "v_Serial", "v_Result");
+
+            // GetDataRowCommand -> ConvertDataTableRowToDictioanryCommand
+            ChangeToOtherCommand(doc, "GetDataRowCommand", "ConvertDataTableRowToDictionaryCommand", "Convert DataTable Row To Dictionary",
+                new List<(string, string)>()
+                {
+                    ("v_UserVariableName", "v_OutputVariableName"),
+                }
+            );
+
+            // GetDataRowValueCommand
+            // GetDataRowValueCommand attribute v_Option value
+            // GetDataRowValueCommand -> GetDictionaryValueCommand
+            ChangeToOtherCommand(doc, "GetDataRowValueCommand", "GetDictionaryValueCommand", "Get Dictionary Value",
+                new List<(string, string)>()
+                {
+                    ("v_DataRowName", "v_InputData"),
+                    ("v_Option", "v_KeyType"),
+                    ("v_DataValueIndex", "v_Key"),
+                    ("v_UserVariableName", "v_OutputVariable"),
+                },
+                new List<(string, Action<XAttribute>)>()
+                {
+                    (
+                        "v_Option", 
+                        new Action<XAttribute>(attr =>
+                        {
+                            if (attr.Value.ToLower() == "column name")
+                            {
+                                attr.SetValue("Key");
+                            }
+                        })
+                    )
+                }
+            );
+
+            // RemoveDataRowCommand -> SearchAndDeleteDataTableRowsCommand
+            ChangeCommandName(doc, "RemoveDataRowCommand", "SearchAndDeleteDataTableRowsCommand", "Search And Delete DataTable Rows");
+
+            // WriteDataRowValueCommand -> SetDataTableValueCommand
+            ChangeToOtherCommand(doc, "WriteDataRowValueCommand", "SetDataTableValueCommand", "Set DataTable Value",
+                new List<(string, string)>()
+                {
+                    ("v_DataRowName", "v_DataTableName"),
+                    ("v_Option", "v_ColumnType"),
+                    ("v_DataValueIndex", "v_ColumnIndex"),
+                    ("v_DataRowValue", "v_NewValue"),
+                },
+                new List<(string, Action<XAttribute>)>()
+                {
+                    (
+                        "v_Comment",
+                        new Action<XAttribute>(attr =>
+                        {
+                            if (!attr.Value.StartsWith("Please specify Row Index. Converted by taskt."))
+                            {
+                                string c = attr.Value;
+                                attr.SetValue($"Please specify Row Index. Converted by taskt. {c}");
+                            }
+                        })
+                    )
+                }
+            );
+
+            // ExcelWriteRowCommand -> ExcelSetRowValuesFromDictionaryCommand
+            ChangeToOtherCommand(doc, "ExcelWriteRowCommand", "ExcelSetRowValuesFromDictionaryCommand", "Set Row Values From Dictionary",
+                new List<(string, string)>()
+                {
+                    ("v_DataRowToSet", "v_DictionaryVariable"),
+                },
+                new List<(string, Action<XAttribute>)>()
+                {
+                    (
+                        "v_ExcelCellAddress",
+                        new Action<XAttribute>(attr =>
+                        {
+                            var rg = attr.Value;
+                            var rowIndex = Regex.Match(rg, @"\d+").Value;
+                            var columnName = Regex.Replace(rg, @"[\d-]", string.Empty);
+
+                            var elem = attr.Parent;
+                            elem.SetAttributeValue("v_RowIndex", rowIndex);
+                            elem.SetAttributeValue("v_ColumnStart", columnName);
+                            attr.Remove();
+                        })
+                    )
+                }
+            );
+
+            // ParseDatasetRowCommand (ParseRowCommand) -> GetDataTableValueCommand
+            ChangeToOtherCommand(doc, "ParseRowCommand", "GetDataTableValueCommand", "Get DataTable Value",
+                new List<(string, string)>()
+                {
+                    ("v_DatasetName", "v_DataTableName"),
+                    ("v_ColumnParseType", "v_ColumnType"),
+                    ("v_ColumnParameter", "v_ColumnIndex"),
+                    ("v_applyToVariableName", "v_UserVariableName"),
+                    ("v_SpecifiedRow", "v_RowIndex"),
+                },
+                new List<(string, Action<XAttribute>)>()
+                {
+                    (
+                        "v_ColumnParseType",
+                        new Action<XAttribute>(attr =>
+                        {
+                            switch (attr.Value.ToLower())
+                            {
+                                case "by column name":
+                                    attr.SetValue("Column Name");
+                                    break;
+                                case "by column index":
+                                    attr.SetValue("Index");
+                                    break;
+                            }
+                        })
+                    ),
+                }
+            );
+        }
+
+        private static void convertTo3_5_1_86(XDocument doc)
+        {
+            // LoadDataTableCommand -> ExcelCreateDataTableFromExcelFile
+            ChangeToOtherCommand(doc, "LoadDataTableCommand", "ExcelCreateDataTableFromExcelFile", "Create DataTable From Excel File",
+                new List<(string, string)>()
+                {
+                    ("v_DataSetName", "v_DataTableName"),
+                    ("v_ContainsHeaderRow", "v_FirstRowAsColumnName"),
+                }
+            );
+
+            // LoadDictionaryCommand -> CreateDictionaryFromExcelFile
+            ChangeCommandName(doc, "LoadDictionaryCommand", "CreateDictionaryFromExcelFile", "Create Dictionary From Excel File");
+
+            // SetEnginePreferenceCommand
+            ChangeAttributeValue(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    return (GetCommandName(el) == "SetEnginePreferenceCommand") &&
+                            (el.Attribute("v_PreferenceType").Value.ToLower() == "current window keyword");
+                }),
+                "v_Comment",
+                new Action<XAttribute>(attr =>
+                {
+                    var v = attr.Value;
+                    if (!v.StartsWith("'Current Window Keyword' will eventually become unavailable."))
+                    {
+                        attr.SetValue($"'Current Window Keyword' will eventually become unavailable. {v}");
+                    }
+                })
+            );
+        }
+
+        private static void convertTo3_5_1_87(XDocument doc)
+        {
+            // Dictionary commands v_InputData -> v_Dictionary
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "CheckDictionaryKeyExistsCommand":
+                        case "ConvertDictionaryToDataTableCommand":
+                        case "ConvertDictionaryToJSONCommand":
+                        case "ConvertDictionaryToListCommand":
+                        case "CreateDictionaryCommand":
+                        case "GetDictionaryKeyFromValueCommand":
+                        case "GetDictionaryKeysListCommand":
+                        case "GetDictionaryValueCommand":
+                        case "RemoveDictionaryItemCommand":
+                        case "ReplaceDictionaryCommand":
+                        case "SetDictionaryValueCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_InputData", "v_Dictionary");
+
+            // AddDictionaryItemCommand, CreateDictionaryCommand v_DictionaryName -> v_Dictionary
+            ChangeAttributeName(doc, 
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "AddDictionaryItemCommand":
+                        case "CreateDictionaryCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_DictionaryName", "v_Dictionary");
+
+            // CopyDictionaryCommand v_InputData -> v_TargetDictionary
+            ChangeAttributeName(doc, "CopyDictionaryCommand", "v_InputData", "v_TargetDictionary");
+
+            // FilterDictionaryCommand v_InputDictionary -> v_TargetDictionary
+            ChangeAttributeName(doc, "FilterDictionaryCommand", "v_InputDictionary", "v_TargetDictionary");
+
+            // ReplaceDictionaryCommand v_TargetDictionary -> v_Dictionary
+            ChangeAttributeName(doc, "ReplaceDictionaryCommand", "v_TargetDictionary", "v_Dictionary");
+
+            // CheckDictionaryKeyExistsCommand v_applyToVariable -> v_Result
+            ChangeAttributeName(doc, "CheckDictionaryKeyExistsCommand", "v_applyToVariable", "v_Result");
+
+            // ConcatenateDictionaryCommand attributes
+            ChangeMultiAttributeNames(doc, "ConcatenateDictionaryCommand",
+                new List<(string, string)>()
+                {
+                    ("v_InputDataA", "v_DictionaryA"),
+                    ("v_InputDataB", "v_DictionaryB"),
+                    ("v_OutputName", "v_NewDictionary"),
+                }
+            );
+
+            // Dictioanry commands v_OutputVariable -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "ConvertDictionaryToDataTableCommand":
+                        case "ConvertDictionaryToJSONCommand":
+                        case "ConvertDictionaryToListCommand":
+                        case "GetDictionaryKeyFromValueCommand":
+                        case "GetDictionaryKeysListCommand":
+                        case "GetDictionaryValueCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                "v_OutputVariable", "v_Result"
+            );
+
+            // CopyDictionaryCommand v_OutputName -> v_NewDictionary
+            ChangeAttributeName(doc, "CopyDictionaryCommand", "v_OutputName", "v_NewDictionary");
+
+            // FilterDictionaryCommand v_OutputDictionary -> v_NewDictionary
+            ChangeAttributeName(doc, "FilterDictionaryCommand", "v_OutputDictionary", "v_NewDictionary");
+
+            // CreateDictionaryFromExcelFile -> ExcelCreateDictionaryFromExcelFile
+            ChangeCommandName(doc, "CreateDictionaryFromExcelFile", "ExcelCreateDictionaryFromExcelFile", "Create Dictionary From Excel File");
+        }
+
+        private static void convertTo3_5_1_88(XDocument doc)
+        {
+            // GetDictionaryValueCommand, RemoveDictionaryItemCommand, SetDictionaryValueCommand v_WhenKeyDoesNotExists
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "GetDictionaryValueCommand":
+                        case "RemoveDictionaryItemCommand":
+                        case "SetDictionaryValueCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_IfKeyDoesNotExists", "v_WhenKeyDoesNotExists"
+            );
+
+            // DataTableCommand v_DataTableName -> v_DataTable
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "AddDataTableColumnCommand":
+                        case "AddDataTableRowByDictionaryCommand":
+                        case "AddDataTableRowCommand":
+                        case "AddDataTableRowsByDataTableCommand":
+                        case "CheckDataTableColumnExistsCommand":
+                        case "ConvertDataTableColumnToDataTableCommand":
+                        case "ConvertDataTableColumnToDictionaryCommand":
+                        case "ConvertDataTableColumnToJSONCommand":
+                        case "ConvertDataTableColumnToListCommand":
+                        case "ConvertDataTableRowToDataTableCommand":
+                        case "ConvertDataTableRowToDictionaryCommand":
+                        case "ConvertDataTableRowToJSONCommand":
+                        case "ConvertDataTableRowToListCommand":
+                        case "ConvertDataTableToJSONCommand":
+                        case "CreateDataTableCommand":
+                        case "DeleteDataTableColumnCommand":
+                        case "DeleteDataTableRowCommand":
+                        case "GetDataTableColumnCountCommand":
+                        case "GetDataTableColumnListCommand":
+                        case "GetDataTableRowCountCommand":
+                        case "GetDataTableValueCommand":
+                        case "SearchAndDeleteDataTableRowsCommand":
+                        case "SetDataTableColumnValuesByDataTableCommand":
+                        case "SetDataTableColumnValuesByListCommand":
+                        case "SetDataTableRowValuesByDataTableCommand":
+                        case "SetDataTableRowValuesByDictionaryCommand":
+                        case "SetDataTableValueCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_DataTableName", "v_DataTable"
+            );
+
+            // FilterDataTable commands v_InputDataTable -> v_TargetDataTable
+            // v_OutputDataTable -> v_NewDataTable
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "FilterDataTableColumnByRowValueCommand":
+                        case "FilterDataTableRowByColumnValueCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_InputDataTable", "v_TargetDataTable"),
+                    ("v_OutputDataTable", "v_NewDataTable"),
+                }
+            );
+            ChangeMultiAttributeNames(doc, "FilterDataTableCommand",
+                new List<(string, string)>()
+                {
+                    ("v_DataTableName", "v_TargetDataTable"),
+                    ("v_OutputDTName", "v_NewDataTable"),
+                }
+            );
+
+            // ReplaceDataTable commands v_InputDataTable -> v_DataTable
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "ReplaceDataTableColumnValueCommand":
+                        case "ReplaceDataTableRowValueCommand":
+                        case "ReplaceDataTableValueCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_InputDataTable", "v_DataTable"
+            );
+
+            // DataTableCommands v_OutputVariableName -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "CheckDataTableColumnExistsCommand":
+                        case "ConvertDataTableColumnToDataTableCommand":
+                        case "ConvertDataTableColumnToDictionaryCommand":
+                        case "ConvertDataTableColumnToJSONCommand":
+                        case "ConvertDataTableColumnToListCommand":
+                        case "ConvertDataTableRowToDataTableCommand":
+                        case "ConvertDataTableRowToDictionaryCommand":
+                        case "ConvertDataTableRowToJSONCommand":
+                        case "ConvertDataTableRowToListCommand":
+                        case "ConvertDataTableToJSONCommand":
+                        case "GetDataTableColumnCountCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_OutputVariableName", "v_Result"
+            );
+
+            // DataTableCommands v_UserVariableName -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "GetDataTableRowCountCommand":
+                        case "GetDataTableValueCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_UserVariableName", "v_Result"
+            );
+
+            // GetDataTableColumnListCommand v_OutputList -> v_Result
+            ChangeAttributeName(doc, "GetDataTableColumnListCommand", "v_OutputList", "v_Result");
+
+            // CopyDataTableCommand v_DatTableName -> v_TargetDataTable
+            ChangeMultiAttributeNames(doc, "CopyDataTableCommand",
+                new List<(string, string)>()
+                {
+                    ("v_DataTableName", "v_TargetDataTable"),
+                    ("v_OutputVariableName", "v_NewDataTable"),
+                }
+            );
+        }
+
+        /// <summary>
+        /// get old, new current window keyword
+        /// </summary>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static (string oldKeyword, string newKeyword) GetOldNewCurrentWindow(EngineSettings engine)
+        {
+            return GetOldNewKeyword("%kwd_current_window%", engine.CurrentWindowKeyword, SystemVariables.Window_CurrentWindowName, engine);
+        }
+
+        /// <summary>
+        /// get old new keyword
+        /// </summary>
+        /// <param name="intermediateKeyword"></param>
+        /// <param name="rawKeyword"></param>
+        /// <param name="systemVariable"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static (string oldKeyword, string newKeyword) GetOldNewKeyword(string intermediateKeyword, string rawKeyword, ScriptVariable systemVariable, EngineSettings engine)
+        {
+            string oldKW;
+            string newKW;
+            if (engine.ExportIntermediateXML)
+            {
+                oldKW = IntermediateControls.GetWrappedIntermediateKeyword(intermediateKeyword);
+                newKW = IntermediateControls.GetWrappedIntermediateVariable(systemVariable.VariableName);
+            }
+            else
+            {
+                oldKW = rawKeyword;
+                newKW = string.Concat(engine.VariableStartMarker, systemVariable.VariableName, engine.VariableEndMarker);
+            }
+            return (oldKW, newKW);
+        }
+
+        /// <summary>
+        /// get command name
+        /// </summary>
+        /// <param name="elem"></param>
+        /// <returns></returns>
+        private static string GetCommandName(XElement elem)
+        {
+            return elem.Attribute("CommandName").Value;
+        }
 
         /// <summary>
         /// get specfied commands
@@ -1610,6 +2965,19 @@ namespace taskt.Core.Script
         }
 
         /// <summary>
+        /// get command search Func. targetCommand is string (command name)
+        /// </summary>
+        /// <param name="targetCommand"></param>
+        /// <returns></returns>
+        private static Func<XElement, bool> GetSearchCommandsFunc(string targetCommand)
+        {
+            return new Func<XElement, bool>(el =>
+            {
+                return (GetCommandName(el) == targetCommand);
+            });
+        }
+
+        /// <summary>
         /// get specified commands
         /// </summary>
         /// <param name="doc"></param>
@@ -1617,7 +2985,7 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static IEnumerable<XElement> GetCommands(XDocument doc, string commandName)
         {
-            return GetCommands(doc, new Func<XElement, bool>(el => el.Attribute("CommandName").Value == commandName));
+            return GetCommands(doc, new Func<XElement, bool>(el => GetCommandName(el) == commandName));
         }
 
         /// <summary>
@@ -1626,7 +2994,7 @@ namespace taskt.Core.Script
         /// <param name="commands"></param>
         /// <param name="newName"></param>
         /// <param name="newSelectioName"></param>
-        private static void ChangeCommandName(IEnumerable<XElement> commands, string newName, string newSelectioName)
+        private static void ChangeCommandNameProcess(List<XElement> commands, string newName, string newSelectioName)
         {
             XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
             foreach (var cmd in commands)
@@ -1647,15 +3015,8 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeCommandName(XDocument doc, Func<XElement, bool> searchFunc, string newName, string newSelectioName)
         {
-            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
-            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            //foreach (var cmd in commands)
-            //{
-            //    cmd.SetAttributeValue("CommandName", newName);
-            //    cmd.SetAttributeValue(ns + "type", newName);
-            //    cmd.SetAttributeValue("SelectionName", newSelectioName);
-            //}
-            ChangeCommandName(commands, newName, newSelectioName);
+            var commands = doc.Descendants("ScriptCommand").Where(searchFunc).ToList();
+            ChangeCommandNameProcess(commands, newName, newSelectioName);
             return doc;
         }
 
@@ -1669,10 +3030,27 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
         {
-            return ChangeCommandName(doc, new Func<XElement, bool>(el =>
+            return ChangeCommandName(doc, GetSearchCommandsFunc(targetName), newName, newSelectioName);
+        }
+
+        /// <summary>
+        /// change attribute value process
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="targetAttribute"></param>
+        /// <param name="changeFunc"></param>
+        private static void ChangeAttributeValueProcess(List<XElement> commands, string targetAttribute, Action<XAttribute> changeFunc)
+        {
+            foreach (var cmd in commands)
             {
-                return (el.Attribute("CommandName").Value == targetName);
-            }), newName, newSelectioName);
+                var attr = cmd.Attribute(targetAttribute);
+                if (attr == null)
+                {
+                    cmd.SetAttributeValue(targetAttribute, "");
+                    attr = cmd.Attribute(targetAttribute);
+                }
+                changeFunc(attr);
+            }
         }
 
         /// <summary>
@@ -1685,12 +3063,9 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeAttributeValue(XDocument doc, Func<XElement, bool> searchFunc, string targetAttribute, Action<XAttribute> changeFunc)
         {
-            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand")
-                .Where(searchFunc);
-            foreach(var cmd in commands)
-            {
-                changeFunc(cmd.Attribute(targetAttribute));
-            }
+            var commands = doc.Descendants("ScriptCommand")
+                            .Where(searchFunc).ToList();
+            ChangeAttributeValueProcess(commands, targetAttribute, changeFunc);
             return doc;
         }
 
@@ -1704,10 +3079,7 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeAttributeValue(XDocument doc, string targetCommand, string targetAttribute, Action<XAttribute> changeFunc)
         {
-            return ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
-            {
-                return (el.Attribute("CommandName").Value == targetCommand);
-            }), targetAttribute, changeFunc);
+            return ChangeAttributeValue(doc, GetSearchCommandsFunc(targetCommand), targetAttribute, changeFunc);
         }
 
         /// <summary>
@@ -1718,10 +3090,11 @@ namespace taskt.Core.Script
         /// <param name="tableParameterName"></param>
         /// <param name="tableCellName"></param>
         /// <param name="changeFunc"></param>
+        /// <param name="defaultCellValue"></param>
         /// <returns></returns>
-        private static XDocument ChangeTableCellValue(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, string tableCellName, Action<XElement> changeFunc)
+        private static XDocument ChangeTableCellValue(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, string tableCellName, Action<XElement> changeFunc, string defaultCellValue)
         {
-            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
+            var commands = doc.Descendants("ScriptCommand").Where(searchFunc).ToList();
 
             XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
             foreach (var cmd in commands)
@@ -1731,7 +3104,14 @@ namespace taskt.Core.Script
                 foreach (XElement row in table)
                 {
                     XElement targetCell = row.Element(tableCellName);
-                    changeFunc(targetCell);
+                    if (targetCell != null)
+                    {
+                        changeFunc(targetCell);
+                    }
+                    else
+                    {
+                        row.Add(new XElement(tableCellName, defaultCellValue));
+                    }
                 }
             }
             return doc;
@@ -1745,14 +3125,11 @@ namespace taskt.Core.Script
         /// <param name="tableParameterName"></param>
         /// <param name="tableCellName"></param>
         /// <param name="changeFunc"></param>
+        /// <param name="defaultCellValue"></param>
         /// <returns></returns>
-        private static XDocument ChangeTableCellValue(XDocument doc, string commandName, string tableParameterName, string tableCellName, Action<XElement> changeFunc)
+        private static XDocument ChangeTableCellValue(XDocument doc, string commandName, string tableParameterName, string tableCellName, Action<XElement> changeFunc, string defaultCellValue)
         {
-            ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
-            {
-                return el.Attribute("CommandName").Value == commandName;
-            }), tableParameterName, tableCellName, changeFunc);
-            return doc;
+            return ChangeTableCellValue(doc, GetSearchCommandsFunc(commandName), tableParameterName, tableCellName, changeFunc, defaultCellValue);
         }
 
         /// <summary>
@@ -1802,9 +3179,9 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ModifyTable(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, Action<XElement, XElement, List<XElement>, string> modifyFunc)
         {
-            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
+            var commands = doc.Descendants("ScriptCommand").Where(searchFunc).ToList();
 
-            XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            //XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
             foreach (var cmd in commands)
             {
                 //XElement tableParams = cmd.Element(tableParameterName).Element(ns + "diffgram").Element("DocumentElement");
@@ -1828,11 +3205,7 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ModifyTable(XDocument doc, string targetCommand, string tableParameterName, Action<XElement, XElement, List<XElement>, string> modifyFunc)
         {
-            ModifyTable(doc, new Func<XElement, bool>(el =>
-            {
-                return el.Attribute("CommandName").Value == targetCommand;
-            }), tableParameterName, modifyFunc);
-            return doc;
+            return ModifyTable(doc, GetSearchCommandsFunc(targetCommand), tableParameterName, modifyFunc);
         }
 
         /// <summary>
@@ -1845,6 +3218,11 @@ namespace taskt.Core.Script
         /// <param name="addModified"></param>
         private static void AddTableRow(XElement table, Dictionary<string, string> cols, string rowName, int currentMaxRows, bool addModified = true)
         {
+            if (table == null)
+            {
+                return;
+            }
+
             XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
             XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
 
@@ -1877,6 +3255,11 @@ namespace taskt.Core.Script
         /// <param name="addModified"></param>
         private static void AddTableRows(XElement table, List<Dictionary<string, string>> cols, string rowName, int currentMaxRows, bool addModified = true)
         {
+            if (table == null)
+            {
+                return;
+            }
+
             XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
             XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
 
@@ -1966,19 +3349,14 @@ namespace taskt.Core.Script
         }
 
         /// <summary>
-        /// change attribute name. target command is specified Func<>
+        /// change attribute name process
         /// </summary>
-        /// <param name="doc"></param>
-        /// <param name="searchFunc"></param>
+        /// <param name="commands"></param>
         /// <param name="targetAttribute"></param>
         /// <param name="newAttribute"></param>
-        /// <returns></returns>
-        private static XDocument ChangeAttributeName(XDocument doc, Func<XElement, bool> searchFunc, string targetAttribute, string newAttribute)
+        private static void ChangeAttributeNameProcess(List<XElement> commands, string targetAttribute, string newAttribute)
         {
-            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand")
-                .Where(searchFunc);
-
-            foreach(var cmd in commands)
+            foreach (var cmd in commands)
             {
                 var trgAttr = cmd.Attribute(targetAttribute);
                 var newAttr = cmd.Attribute(newAttribute);
@@ -1991,6 +3369,22 @@ namespace taskt.Core.Script
                     trgAttr.Remove();
                 }
             }
+        }
+
+        /// <summary>
+        /// change attribute name. target command is specified Func<>
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="targetAttribute"></param>
+        /// <param name="newAttribute"></param>
+        /// <returns></returns>
+        private static XDocument ChangeAttributeName(XDocument doc, Func<XElement, bool> searchFunc, string targetAttribute, string newAttribute)
+        {
+            var commands = doc.Descendants("ScriptCommand")
+                            .Where(searchFunc).ToList();
+
+            ChangeAttributeNameProcess(commands, targetAttribute, newAttribute);
 
             return doc;
         }
@@ -2005,10 +3399,104 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeAttributeName(XDocument doc, string targetCommand, string targetAttribute, string newAttribute)
         {
-            return ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            return ChangeAttributeName(doc, GetSearchCommandsFunc(targetCommand), targetAttribute, newAttribute);
+        }
+
+        /// <summary>
+        /// Change multi attribute names process
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="attributePairs">(targetAttributeName, newAttributeName)</param>
+        private static void ChangeMultiAttributeNamesProcess(List<XElement> commands, List<(string, string)> attributePairs)
+        {
+            foreach((var targetAttribute, var newAttribute) in attributePairs)
             {
-                return el.Attribute("CommandName").Value == targetAttribute;
-            }), targetAttribute, newAttribute);
+                ChangeAttributeNameProcess(commands, targetAttribute, newAttribute);
+            }
+        }
+
+        /// <summary>
+        /// change multi attribute names
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="attributePairs">(targetAttributeName, newAttributeName)</param>
+        /// <returns></returns>
+        private static XDocument ChangeMultiAttributeNames(XDocument doc, Func<XElement, bool> searchFunc, List<(string, string)> attributePairs)
+        {
+            var commands = doc.Descendants("ScriptCommand")
+                            .Where(searchFunc).ToList();
+            ChangeMultiAttributeNamesProcess(commands, attributePairs);
+            return doc;
+        }
+
+        /// <summary>
+        /// change multi attribute name
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="targetCommand"></param>
+        /// <param name="attributePairs">(targetAttributeName, newAttributeName)</param>
+        /// <returns></returns>
+        private static XDocument ChangeMultiAttributeNames(XDocument doc, string targetCommand, List<(string, string)> attributePairs)
+        {
+            return ChangeMultiAttributeNames(doc, GetSearchCommandsFunc(targetCommand), attributePairs);
+        }
+
+        /// <summary>
+        /// change to other command
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="newCommand"></param>
+        /// <param name="newSelectionName"></param>
+        /// <param name="attributePairs">(targetAttribute, newAttributeName)</param>
+        /// <param name="preAttributeFunc">(attribute name, change action)</param>
+        private static void ChangeToOtherCommandProcess(List<XElement> commands, string newCommand, string newSelectionName, List<(string, string)> attributePairs, List<(string, Action<XAttribute>)> preAttributeFunc = null)
+        {
+            // attribute values
+            if (preAttributeFunc != null)
+            {
+                foreach((var attr, var func) in preAttributeFunc)
+                {
+                    ChangeAttributeValueProcess(commands, attr, func);
+                }
+            }
+            // command name
+            ChangeCommandNameProcess(commands, newCommand, newSelectionName);
+            // attribute names
+            ChangeMultiAttributeNamesProcess(commands, attributePairs);
+        }
+
+        /// <summary>
+        /// change to other command, specified commands search Func
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="newCommand"></param>
+        /// <param name="newSelectionName"></param>
+        /// <param name="attributePairs">(targetAttribute, newAttributeName)</param>
+        /// <param name="preAttributeFunc">(attribute name, change action)</param>
+        /// <returns></returns>
+        private static XDocument ChangeToOtherCommand(XDocument doc, Func<XElement, bool> searchFunc, string newCommand, string newSelectionName, List<(string, string)> attributePairs, List<(string, Action<XAttribute>)> preAttributeFunc = null)
+        {
+            var commands = doc.Descendants("ScriptCommand")
+                            .Where(searchFunc).ToList();
+            ChangeToOtherCommandProcess(commands, newCommand, newSelectionName, attributePairs, preAttributeFunc);
+            return doc;
+        }
+
+        /// <summary>
+        /// change to other command, specified command name
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="targetCommand"></param>
+        /// <param name="newCommand"></param>
+        /// <param name="newSelectionName"></param>
+        /// <param name="attributePairs">(targetAttribute, newAttributeName)</param>
+        /// <param name="preAttributeFunc">(attribute name, change action)</param>
+        /// <returns></returns>
+        private static XDocument ChangeToOtherCommand(XDocument doc, string targetCommand, string newCommand, string newSelectionName, List<(string, string)> attributePairs, List<(string, Action<XAttribute>)> preAttributeFunc = null)
+        {
+            return ChangeToOtherCommand(doc, GetSearchCommandsFunc(targetCommand), newCommand, newSelectionName, attributePairs, preAttributeFunc);
         }
     }
 }

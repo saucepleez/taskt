@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to stop a program or a process.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to close an application by its name such as 'chrome'. Alternatively, you may use the Close Window or Thick App Command instead.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.CloseMainWindow'.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class StopwatchCommand : ScriptCommand
@@ -72,12 +73,11 @@ namespace taskt.Core.Automation.Commands
             //this.v_StopwatchAction = "Start Stopwatch";
         }
 
-        public override void RunCommand(object sender)
-        {
-            var engine = (Engine.AutomationEngineInstance)sender;   
-            var instanceName = v_StopwatchName.ConvertToUserVariable(engine);
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
+        { 
+            var instanceName = v_StopwatchName.ExpandValueOrUserVariable(engine);
             
-            var action = this.GetUISelectionValue(nameof(v_StopwatchAction), engine);
+            var action = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_StopwatchAction), engine);
             System.Diagnostics.Stopwatch stopwatch;
             switch (action)
             {
@@ -116,7 +116,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        var format = v_ToStringFormat.ConvertToUserVariable(sender);
+                        var format = v_ToStringFormat.ExpandValueOrUserVariable(engine);
                         elapsedTime = stopwatch.Elapsed.ToString(format);
                     }
 
@@ -130,13 +130,13 @@ namespace taskt.Core.Automation.Commands
             var selectedAction = ((ComboBox)sender).SelectedItem?.ToString() ?? "";
             if (selectedAction == "Measure Stopwatch")
             {
-                GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_userVariableName), true);
-                GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ToStringFormat), true);
+                FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_userVariableName), true);
+                FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ToStringFormat), true);
             }
             else
             {
-                GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_userVariableName), false);
-                GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ToStringFormat), false);
+                FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_userVariableName), false);
+                FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ToStringFormat), false);
             }
         }
     }

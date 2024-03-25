@@ -18,6 +18,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to send email using SMTP protocol.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send an email and have access to SMTP server credentials to generate an email.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements the System.Net Namespace to achieve automation")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_smtp))]
     public class SMTPSendEmailCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -113,10 +114,10 @@ namespace taskt.Core.Automation.Commands
             this.v_EnableSSL = "Yes";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //bypass ssl validation if requested
-            if (v_SSLValidation.ConvertToUserVariable(sender) == "Bypass SSL Validation")
+            if (v_SSLValidation.ExpandValueOrUserVariable(engine) == "Bypass SSL Validation")
             {
                 ServicePointManager.ServerCertificateValidationCallback =
                                     (sndr, certificate, chain, sslPolicyErrors) => true;
@@ -124,18 +125,18 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                string varSMTPHost = v_SMTPHost.ConvertToUserVariable(sender);
-                string varSMTPPort = v_SMTPPort.ConvertToUserVariable(sender);
-                string varSMTPUserName = v_SMTPUserName.ConvertToUserVariable(sender);
-                string varSMTPPassword = v_SMTPPassword.ConvertToUserVariable(sender);
+                string varSMTPHost = v_SMTPHost.ExpandValueOrUserVariable(engine);
+                string varSMTPPort = v_SMTPPort.ExpandValueOrUserVariable(engine);
+                string varSMTPUserName = v_SMTPUserName.ExpandValueOrUserVariable(engine);
+                string varSMTPPassword = v_SMTPPassword.ExpandValueOrUserVariable(engine);
 
-                string varSMTPFromEmail = v_SMTPFromEmail.ConvertToUserVariable(sender);
-                string varSMTPToEmail = v_SMTPToEmail.ConvertToUserVariable(sender);
-                string varSMTPSubject = v_SMTPSubject.ConvertToUserVariable(sender);
-                string varSMTPBody = v_SMTPBody.ConvertToUserVariable(sender);
-                string varSMTPFilePath = v_SMTPAttachment.ConvertToUserVariable(sender);
+                string varSMTPFromEmail = v_SMTPFromEmail.ExpandValueOrUserVariable(engine);
+                string varSMTPToEmail = v_SMTPToEmail.ExpandValueOrUserVariable(engine);
+                string varSMTPSubject = v_SMTPSubject.ExpandValueOrUserVariable(engine);
+                string varSMTPBody = v_SMTPBody.ExpandValueOrUserVariable(engine);
+                string varSMTPFilePath = v_SMTPAttachment.ExpandValueOrUserVariable(engine);
 
-                string varEnableSSL = v_EnableSSL.ConvertToUserVariable(sender).ToUpperInvariant();
+                string varEnableSSL = v_EnableSSL.ExpandValueOrUserVariable(engine).ToUpperInvariant();
 
                 bool sslPreference = true;
                 if (varEnableSSL == "NO")
@@ -168,14 +169,14 @@ namespace taskt.Core.Automation.Commands
             finally
             {
                 //restore default validation
-                if (v_SSLValidation.ConvertToUserVariable(sender) == "Bypass SSL Validation")
+                if (v_SSLValidation.ExpandValueOrUserVariable(engine) == "Bypass SSL Validation")
                 {
                     ServicePointManager.ServerCertificateValidationCallback = null;
                 }
             }
             
         }
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -200,7 +201,7 @@ namespace taskt.Core.Automation.Commands
             return base.GetDisplayValue() + " [To Address: '" + v_SMTPToEmail + "']";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
+        public override bool IsValidate(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.IsValidate(editor);
 

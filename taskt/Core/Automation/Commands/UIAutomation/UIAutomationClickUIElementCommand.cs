@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Click UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to Click UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Click UIElement.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationClickUIElementCommand : ScriptCommand
@@ -32,7 +33,7 @@ namespace taskt.Core.Automation.Commands
         public string v_YOffset { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Activate Window before Click")]
         [PropertyIsOptional(true, "Yes")]
         public string v_ActivateWindow { get; set; }
@@ -45,20 +46,18 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var targetElement = v_TargetElement.GetUIElementVariable(engine);
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
             string windowName = UIElementControls.GetWindowName(targetElement);
-            if (this.GetYesNoSelectionValue(nameof(v_ActivateWindow), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindow), engine))
             {
                 var activateWindow = new ActivateWindowCommand()
                 {
                     v_WindowName = windowName
                 };
-                activateWindow.RunCommand(sender);
+                activateWindow.RunCommand(engine);
             }
 
             System.Windows.Point point;
@@ -69,10 +68,10 @@ namespace taskt.Core.Automation.Commands
                     var moveWindow = new MoveWindowCommand()
                     {
                         v_WindowName = windowName,
-                        v_XWindowPosition = "0",
-                        v_YWindowPosition = "0"
+                        v_XPosition = "0",
+                        v_YPosition = "0"
                     };
-                    moveWindow.RunCommand(sender);
+                    moveWindow.RunCommand(engine);
                     targetElement.TryGetClickablePoint(out point);
                 }
                 if ((point.X < 0.0) || (point.Y < 0.0))
@@ -80,10 +79,10 @@ namespace taskt.Core.Automation.Commands
                     var moveWindow = new MoveWindowCommand()
                     {
                         v_WindowName = windowName,
-                        v_XWindowPosition = "0",
-                        v_YWindowPosition = "0"
+                        v_XPosition = "0",
+                        v_YPosition = "0"
                     };
-                    moveWindow.RunCommand(sender);
+                    moveWindow.RunCommand(engine);
 
                     if (!targetElement.TryGetClickablePoint(out point))
                     {
@@ -96,9 +95,9 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("No Clickable Point in UIElement '" + v_TargetElement + "'");
             }
 
-            var click = this.GetUISelectionValue(nameof(v_ClickType), engine);
-            var xAd = this.ConvertToUserVariableAsInteger(nameof(v_XOffset), engine);
-            var yAd = this.ConvertToUserVariableAsInteger(nameof(v_YOffset), engine);
+            var click = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ClickType), engine);
+            var xAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_XOffset), engine);
+            var yAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffset), engine);
 
             var mouseClick = new MoveMouseCommand()
             {
@@ -106,7 +105,7 @@ namespace taskt.Core.Automation.Commands
                 v_XMousePosition = (point.X + xAd).ToString(),
                 v_YMousePosition = (point.Y + yAd).ToString()
             };
-            mouseClick.RunCommand(sender);
+            mouseClick.RunCommand(engine);
         }
     }
 }

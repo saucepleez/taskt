@@ -15,6 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get variable type.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get variable type.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetVariableTypeCommand : ScriptCommand
@@ -35,11 +36,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var rawValue = v_userVariableName.GetRawVariable(engine).VariableValue;
             string result;
             if (rawValue is List<string>)

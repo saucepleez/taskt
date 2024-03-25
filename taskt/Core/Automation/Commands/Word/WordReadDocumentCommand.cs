@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Read Document")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save changes to a document.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class WordReadDocumentCommand : ScriptCommand
@@ -30,12 +31,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get engine context
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            (var _, var wordDocument) = v_InstanceName.GetWordInstanceAndDocument(engine);
+            (var _, var wordDocument) = v_InstanceName.ExpandValueOrUserVariableAsWordInstanceAndDocument(engine);
 
             //store text in variable
             string textFromDocument = wordDocument.Content.Text;

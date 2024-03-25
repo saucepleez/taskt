@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to search WebElement from WebElement.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get WebElement from WebElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SeleniumBrowserSearchWebElementFromWebElementCommand : ScriptCommand
@@ -45,22 +46,20 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var targetElement = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
-            var targetElement = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
-
-            var searchMethod = this.GetUISelectionValue(nameof(v_SeleniumSearchType), engine);
+            var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SeleniumSearchType), engine);
             var searchFunc = GetWebElementSearchMethod(searchMethod);
 
-            var searchParameter = v_SeleniumSearchParameter.ConvertToUserVariable(engine);
-            var waitTime = v_WaitTime.ConvertToUserVariableAsInteger("Wait Time", engine);
+            var searchParameter = v_SeleniumSearchParameter.ExpandValueOrUserVariable(engine);
+            var waitTime = v_WaitTime.ExpandValueOrUserVariableAsInteger("Wait Time", engine);
 
             int index = 0;
             if (!string.IsNullOrEmpty(v_ElementIndex))
             {
-                index = v_ElementIndex.ConvertToUserVariableAsInteger("Index", engine);
+                index = v_ElementIndex.ExpandValueOrUserVariableAsInteger("Index", engine);
             }
 
             var ret = WaitControls.WaitProcess(waitTime, "WebElement", new Func<(bool, object)>(() => {

@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command signifies the current loop should exit and resume work past the point of the current loop.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to signify that looping should end and commands outside the loop should resume execution.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command is used by the engine to exit a loop")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_exitloop))]
     public class ExitLoopCommand : ScriptCommand
     {
         public ExitLoopCommand()
@@ -22,13 +23,12 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
             engine.CurrentLoopCancelled = true;
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 

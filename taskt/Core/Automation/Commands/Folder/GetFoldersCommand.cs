@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command returns a list of folder directories from a specified location")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to return a list of folder directories from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetFoldersCommand : ScriptCommand
@@ -58,20 +59,18 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //apply variable logic
             var sourceFolder = FolderPathControls.WaitForFolder(this, nameof(v_SourceFolderPath), nameof(v_WaitForFolder), engine);
 
             //delete folder
             var directoriesList = System.IO.Directory.GetDirectories(sourceFolder).ToList();
 
-            var searchFolder = v_SearchFolderName.ConvertToUserVariableAsFolderName(engine);
+            var searchFolder = v_SearchFolderName.ExpandValueOrUserVariableAsFolderName(engine);
             if (!String.IsNullOrEmpty(searchFolder))
             {
-                switch (this.GetUISelectionValue(nameof(v_SearchMethod), engine))
+                switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SearchMethod), engine))
                 {
                     case "contains":
                         directoriesList = directoriesList.Where(t => System.IO.Path.GetFileName(t).Contains(searchFolder)).ToList();

@@ -10,13 +10,13 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to create Number Variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create Number Variable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     public class CreateNumericalVariableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_BothNumericalVariableName))]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_OutputNumericalVariableName))]
         public string v_VariableName { get; set; }
 
         [XmlAttribute]
@@ -31,11 +31,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            string numString = v_NumberValue.ConvertToUserVariable(engine);
+            string numString = v_NumberValue.ExpandValueOrUserVariable(engine);
             if (decimal.TryParse(numString, out _))
             {
                 numString.StoreInUserVariable(engine, v_VariableName);

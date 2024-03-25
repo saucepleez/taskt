@@ -4,9 +4,10 @@ using System.Linq;
 using System.Xml.Serialization;
 using System.Drawing;
 using System.Windows.Forms;
-using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.UI.Forms.ScriptBuilder.CommandEditor;
+using System.IO;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -16,6 +17,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command attempts to find an existing image on screen.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to attempt to locate an image on screen.  You can subsequently take actions such as move the mouse to the location or perform a click.  This command generates a fingerprint from the comparison image and searches for it in on the desktop.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_camera))]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ImageRecognitionCommand : ScriptCommand
     {
@@ -106,14 +108,12 @@ namespace taskt.Core.Automation.Commands
             //v_TimeoutSeconds = "30";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             bool testMode = TestMode;
            
             //user image to bitmap
-            Bitmap userImage = new Bitmap(Common.Base64ToImage(v_ImageCapture));
+            Bitmap userImage = new Bitmap(ConvertBase64ToImage(v_ImageCapture));
 
             //take screenshot
             Size shotSize = Screen.PrimaryScreen.Bounds.Size;
@@ -167,7 +167,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //begin search
-            double timeoutSeconds = this.ConvertToUserVariableAsInteger(nameof(v_TimeoutSeconds), engine);
+            double timeoutSeconds = this.ExpandValueOrUserVariableAsInteger(nameof(v_TimeoutSeconds), engine);
             DateTime timeoutDue = DateTime.Now.AddSeconds(timeoutSeconds);
 
             bool imageFound = false;
@@ -247,9 +247,9 @@ namespace taskt.Core.Automation.Commands
                                     screenShotUpdate.FillRectangle(brush, Rectangle);
                                 }
 
-                                var xOffset = this.ConvertToUserVariableAsInteger(nameof(v_xOffsetAdjustment), engine);
-                                var yOffset = this.ConvertToUserVariableAsInteger(nameof(v_YOffsetAdjustment), engine);
-                                var mouseClick = this.GetUISelectionValue(nameof(v_MouseClick), engine);
+                                var xOffset = this.ExpandValueOrUserVariableAsInteger(nameof(v_xOffsetAdjustment), engine);
+                                var yOffset = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffsetAdjustment), engine);
+                                var mouseClick = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_MouseClick), engine);
 
                                 //move mouse to position
                                 var mouseMove = new MoveMouseCommand
@@ -289,7 +289,7 @@ namespace taskt.Core.Automation.Commands
 
                 //screenShotUpdate.DrawImage(sampleOut, desktopOutput.Width - sampleOut.Width, 0);
 
-                UI.Forms.Supplement_Forms.frmImageCapture captureOutput = new UI.Forms.Supplement_Forms.frmImageCapture();
+                var captureOutput = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmImageCapture();
                 captureOutput.pbTaggedImage.Image = sampleOut;
                 captureOutput.pbSearchResult.Image = desktopOutput;
                 captureOutput.Show();
@@ -319,18 +319,18 @@ namespace taskt.Core.Automation.Commands
             HideAllForms();
 
             //var userAcceptance = MessageBox.Show("The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.  You may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish. The image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", MessageBoxButtons.YesNo);
-            using (var fm = new UI.Forms.Supplemental.frmDialog("The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.\nYou may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish.\nThe image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", UI.Forms.Supplemental.frmDialog.DialogType.YesNo, 0))
+            using (var fm = new UI.Forms.General.frmDialog("The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.\nYou may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish.\nThe image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", UI.Forms.General.frmDialog.DialogType.YesNo, 0))
             {
                 if (fm.ShowDialog() == DialogResult.OK)
                 {
-                    using (UI.Forms.Supplement_Forms.frmImageCapture imageCaptureForm = new UI.Forms.Supplement_Forms.frmImageCapture())
+                    using (var imageCaptureForm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmImageCapture())
                     {
                         if (imageCaptureForm.ShowDialog() == DialogResult.OK)
                         {
                             var targetPictureBox = (UIPictureBox)((CommandItemControl)sender).Tag;
 
                             targetPictureBox.Image = imageCaptureForm.userSelectedBitmap;
-                            var convertedImage = Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
+                            var convertedImage = ConvertImageToBase64(imageCaptureForm.userSelectedBitmap);
                             var convertedLength = convertedImage.Length;
                             targetPictureBox.EncodedImage = convertedImage;
 
@@ -365,7 +365,7 @@ namespace taskt.Core.Automation.Commands
             // image is empty
             if (string.IsNullOrEmpty(imageSource))
             {
-                using (var fm = new UI.Forms.Supplemental.frmDialog("Please capture an image before attempting to test!", "Image Recognition", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var fm = new UI.Forms.General.frmDialog("Please capture an image before attempting to test!", "Image Recognition", UI.Forms.General.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                     return;
@@ -387,7 +387,7 @@ namespace taskt.Core.Automation.Commands
             }
             catch (Exception ex)
             {
-                using (var fm = new UI.Forms.Supplemental.frmDialog("Error: " + ex.Message, "Image Recognition", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var fm = new UI.Forms.General.frmDialog("Error: " + ex.Message, "Image Recognition", UI.Forms.General.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                 }
@@ -411,7 +411,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -432,6 +432,43 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(ctrls);
 
             return RenderedControls;
+        }
+
+        public override void AfterShown(frmCommandEditor editor)
+        {
+            if (!string.IsNullOrEmpty(v_ImageCapture))
+            {
+                //var pic = ControlsList.GetPropertyControl<UIPictureBox>(nameof(v_ImageCapture));
+                //pic.Image = Common.Base64ToImage(v_ImageCapture);
+                var ctrls = editor.flw_InputVariables.Controls;
+                foreach(var c in ctrls)
+                {
+                    if (c is UIPictureBox pic)
+                    {
+                        pic.Image = ConvertBase64ToImage(v_ImageCapture);
+                    }
+                }
+            }
+        }
+
+        private static string ConvertImageToBase64(Image image)
+        {
+            using (MemoryStream m = new MemoryStream())
+            {
+                image.Save(m, System.Drawing.Imaging.ImageFormat.Bmp);
+                byte[] imageBytes = m.ToArray();
+                var base64String = Convert.ToBase64String(imageBytes);
+                return base64String;
+            }
+        }
+
+        private static Image ConvertBase64ToImage(string base64String)
+        {
+            byte[] imageBytes = Convert.FromBase64String(base64String);
+            MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
+            ms.Write(imageBytes, 0, imageBytes.Length);
+            Image image = Image.FromStream(ms, true);
+            return image;
         }
     }
 }

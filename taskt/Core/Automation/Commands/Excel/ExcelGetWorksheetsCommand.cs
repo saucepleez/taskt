@@ -7,38 +7,43 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.SubGruop("Sheet")]
+    [Attributes.ClassAttributes.SubGruop("Worksheet")]
     [Attributes.ClassAttributes.CommandSettings("Get Worksheets")]
     [Attributes.ClassAttributes.Description("This command allows you to get a specific worksheet names")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to switch to a specific worksheet")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelGetWorksheetsCommand : ScriptCommand
+    public class ExcelGetWorksheetsCommand : AExcelSheetCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
-        public string v_SheetName { get; set; }
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("Worksheet", PropertyValidationRule.ValidationRuleFlags.None)]
+        public override string v_SheetName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Search Method")]
+        [PropertyDescription("Compare Method")]
         [InputSpecification("", true)]
-        [SampleUsage("**Contains** or **Start with** or **End with**")]
+        [SampleUsage("**Contains** or **Starts with** or **Ends with**")]
         [Remarks("")]
         [PropertyUISelectionOption("Contains")]
-        [PropertyUISelectionOption("Start with")]
-        [PropertyUISelectionOption("End with")]
+        [PropertyUISelectionOption("Starts with")]
+        [PropertyUISelectionOption("Ends with")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Contains")]
-        public string v_SearchMethod { get; set; }
+        [PropertyParameterOrder(7000)]
+        public string v_CompareMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        public string v_applyToVariable { get; set; }
+        [PropertyParameterOrder(7001)]
+        public string v_Result { get; set; }
 
         public ExcelGetWorksheetsCommand()
         {
@@ -48,17 +53,16 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            var sheetNames = new List<string>();
 
-            List<string> sheetNames = new List<string>();
-
-            var targetSheetName = v_SheetName.ConvertToUserVariable(sender);
+            var targetSheetName = v_SheetName.ExpandValueOrUserVariable(engine);
             
-            if (String.IsNullOrEmpty(targetSheetName))
+            if (string.IsNullOrEmpty(targetSheetName))
             {
                 foreach (Microsoft.Office.Interop.Excel.Worksheet sh in excelInstance.Worksheets)
                 {
@@ -69,17 +73,16 @@ namespace taskt.Core.Automation.Commands
             {
                 Func<string, string, bool> func = null;
 
-                var searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), "Search Method", engine);
-
-                switch (searchMethod)
+                var compareMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CompareMethod), "Compare Method", engine);
+                switch (compareMethod)
                 {
                     case "contains":
                         func = (sht, search) => { return sht.Contains(search); };
                         break;
-                    case "start with":
+                    case "starts with":
                         func = (sht, search) => { return sht.StartsWith(search); };
                         break;
-                    case "end with":
+                    case "ends with":
                         func = (sht, search) => { return sht.EndsWith(search); };
                         break;
                 }
@@ -93,7 +96,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            sheetNames.StoreInUserVariable(engine, v_applyToVariable);
+            sheetNames.StoreInUserVariable(engine, v_Result);
         }
     }
 }

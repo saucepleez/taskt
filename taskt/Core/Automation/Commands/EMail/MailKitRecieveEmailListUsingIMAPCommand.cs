@@ -12,9 +12,10 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get EMailList(Emails) using IMAP protocol.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get EMailList(Emails) using IMAP protocol. Result Variable Type is EMailList.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class MailKitRecieveEmailListUsingIMAPCommand : ScriptCommand
+    public class MailKitRecieveEMailListUsingIMAPCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Host))]
@@ -44,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_OutputMailListName))]
         public string v_MailListName { get; set; }
 
-        public MailKitRecieveEmailListUsingIMAPCommand()
+        public MailKitRecieveEMailListUsingIMAPCommand()
         {
             //this.CommandName = "MailKitRecieveEMailListUsingIMAPCommand";
             //this.SelectionName = "Recieve EMailList Using IMAP";
@@ -52,17 +53,15 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             // imap host
-            string pop = v_IMAPHost.ConvertToUserVariable(engine);
-            var port = this.ConvertToUserVariableAsInteger(nameof(v_IMAPPort), engine);
+            string pop = v_IMAPHost.ExpandValueOrUserVariable(engine);
+            var port = this.ExpandValueOrUserVariableAsInteger(nameof(v_IMAPPort), engine);
 
             // auth
-            string user = v_IMAPUserName.ConvertToUserVariable(engine);
-            string pass = v_IMAPPassword.ConvertToUserVariable(engine);
+            string user = v_IMAPUserName.ExpandValueOrUserVariable(engine);
+            string pass = v_IMAPPassword.ExpandValueOrUserVariable(engine);
 
             using (var client = new MailKit.Net.Imap.ImapClient())
             {

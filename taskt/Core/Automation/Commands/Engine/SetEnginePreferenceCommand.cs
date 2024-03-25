@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to set preferences for engine behavior.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change the engine behavior.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     public class SetEnginePreferenceCommand : ScriptCommand
     {
@@ -22,6 +23,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Start Variable Marker")]
         [PropertyUISelectionOption("End Variable Marker")]
         [PropertyUISelectionOption("Engine Delay")]
+        // TODO: remove this item
         [PropertyUISelectionOption("Current Window Keyword")]
         [PropertyValidationRule("Parameter Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Parameter Type")]
@@ -43,13 +45,11 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var preference = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PreferenceType), engine);
 
-            var preference = this.GetUISelectionValue(nameof(v_PreferenceType), engine);
-
-            var parameterValue = v_ParameterValue.ConvertToUserVariable(engine);
+            var parameterValue = v_ParameterValue.ExpandValueOrUserVariable(engine);
 
             switch (preference)
             {
@@ -98,11 +98,11 @@ namespace taskt.Core.Automation.Commands
             {
                 case "Enable Automatic Calculations":
                 case "Disable Automatic Calculations":
-                    GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ParameterValue), false);
+                    FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ParameterValue), false);
                     break;
 
                 default:
-                    GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ParameterValue), true);
+                    FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ParameterValue), true);
                     break;
             }
         }

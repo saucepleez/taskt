@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -12,12 +11,6 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class PropertyControls
     {
-        public const string LabelPrefix = "lbl_";
-        public const string Label2ndPrefix = "lbl2_";
-        public const string HelperInfix = "_helper_";
-        public const string CustomHelperInfix = "_customhelper_";
-        public const string GroupPrefix = "group_";
-
         #region Property methods
         /// <summary>
         /// get parameters property info
@@ -27,14 +20,16 @@ namespace taskt.Core.Automation.Commands
         public static List<PropertyInfo> GetParameterProperties(this ScriptCommand command, bool containsComment = false)
         {
             var props = command.GetType().GetProperties();
+            IEnumerable<PropertyInfo> ps;
             if (containsComment)
             {
-                return props.Where(p => (p.Name.StartsWith("v_"))).ToList();
+                ps = props.Where(p => (p.Name.StartsWith("v_")));
             }
             else
             {
-                return props.Where(p => (p.Name.StartsWith("v_") && (p.Name != "v_Comment"))).ToList();
+                ps = props.Where(p => (p.Name.StartsWith("v_") && (p.Name != "v_Comment")));
             }
+            return ps.OrderBy(p => p.GetCustomAttribute<PropertyParameterOrder>()?.order ?? new PropertyParameterOrder().order).ToList();
         }
 
 
@@ -160,6 +155,9 @@ namespace taskt.Core.Automation.Commands
                 case nameof(PropertyUISelectionOption):
                     behavior = GetCustomAttributeWithVirtual<PropertyUISelectionOptionBehavior>(propInfo, virtualPropInfo)?.behavior ?? MultiAttributesBehavior.Merge;
                     break;
+                case nameof(PropertyAvailableSystemVariable):
+                    behavior = GetCustomAttributeWithVirtual<PropertyAvailableSystemVariableBehavior>(propInfo, virtualPropInfo)?.behavior ?? MultiAttributesBehavior.Merge;
+                    break;
             }
 
             if (behavior == MultiAttributesBehavior.Merge)
@@ -189,132 +187,6 @@ namespace taskt.Core.Automation.Commands
                     return a;
                 }
             }
-        }
-        #endregion
-
-        #region control search method
-        public static List<Control> GetControlGroup(this List<Control> ctrls, string parameterName, string nextParameterName = "")
-        {
-            List<Control> ret = new List<Control>();
-
-            int index;
-            index = ctrls.FindIndex(t => (t.Name == GroupPrefix + parameterName));
-            if (index >= 0)
-            {
-                ret.Add(ctrls[index]);
-            }
-            else
-            {
-                index = ctrls.FindIndex(t => (t.Name == LabelPrefix + parameterName));
-                int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == LabelPrefix + nextParameterName));
-
-                for (int i = index; i < last; i++)
-                {
-                    ret.Add(ctrls[i]);
-                }
-            }
-
-            return ret;
-        }
-
-        public static T GetPropertyControl<T>(this Dictionary<string, Control> controls, string propertyName) where T : Control
-        {
-            if (controls.ContainsKey(propertyName))
-            {
-                return (T)controls[propertyName];
-            }
-            else
-            {
-                throw new Exception("Control '" + propertyName + "' does not exists.");
-            }
-        }
-
-        public static Label GetPropertyControlLabel(this Dictionary<string, Control> controls, string propertyName)
-        {
-            if (controls.ContainsKey(LabelPrefix + propertyName))
-            {
-                return (Label)controls[LabelPrefix + propertyName];
-            }
-            else
-            {
-                throw new Exception("Label '" + LabelPrefix + propertyName + "' does not exists.");
-            }
-        }
-
-        public static Label GetPropertyControl2ndLabel(this Dictionary<string, Control> controls, string propertyName)
-        {
-            if (controls.ContainsKey(Label2ndPrefix + propertyName))
-            {
-                return (Label)controls[Label2ndPrefix + propertyName];
-            }
-            else
-            {
-                throw new Exception("2nd Label '" + Label2ndPrefix + propertyName + "' does not exists.");
-            }
-        }
-
-        public static (T body, Label label, Label label2nd) GetAllPropertyControl<T>(this Dictionary<string, Control> controls, string propertyName, bool throwWhenLabelNotExists = true, bool throwWhen2ndLabelNotExists = false) where T : Control
-        {
-            T body = controls.GetPropertyControl<T>(propertyName);
-
-            Label label;
-            try
-            {
-                label = controls.GetPropertyControlLabel(propertyName);
-            }
-            catch (Exception ex)
-            {
-                if (throwWhenLabelNotExists)
-                {
-                    throw ex;
-                }
-                else
-                {
-                    label = null;
-                }
-            }
-            Label label2nd;
-            try
-            {
-                label2nd = controls.GetPropertyControl2ndLabel(propertyName);
-            }
-            catch (Exception ex)
-            {
-                if (throwWhen2ndLabelNotExists)
-                {
-                    throw ex;
-                }
-                else
-                {
-                    label2nd = null;
-                }
-            }
-            return (body, label, label2nd);
-        }
-
-        public static Dictionary<string, string> Get2ndLabelText(this Dictionary<string, Control> controls, string propertyName)
-        {
-            return controls.GetPropertyControlLabel(propertyName).Get2ndLabelTexts();
-        }
-
-        public static Dictionary<string, string> Get2ndLabelTexts(this Label lbl)
-        {
-            if (lbl.Tag is Dictionary<string, string> dic)
-            {
-                return dic;
-            }
-            else
-            {
-                throw new Exception(lbl.Name + " does not has Dictionary item for 2nd-Label");
-            }
-        }
-
-        public static void SecondLabelProcess(this Dictionary<string, Control> controls, string labelTextName, string label2ndName, string key)
-        {
-            var dic = controls.Get2ndLabelText(labelTextName);
-            var lbl = controls.GetPropertyControl2ndLabel(label2ndName);
-
-            lbl.Text = dic.ContainsKey(key) ? dic[key] : "";
         }
         #endregion
     }

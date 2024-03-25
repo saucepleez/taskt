@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Scroll to WebElement.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Scroll to WebElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SeleniumBrowserScrollToWebElementCommand : ScriptCommand
@@ -37,12 +38,10 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
-            var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
+            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
             try
             {
@@ -57,7 +56,7 @@ namespace taskt.Core.Automation.Commands
             }
             catch
             {
-                if (this.GetUISelectionValue(nameof(v_WhenFailScroll), engine) == "error")
+                if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFailScroll), engine) == "error")
                 {
                     throw new Exception("Failed to Scroll To WebElement");
                 }

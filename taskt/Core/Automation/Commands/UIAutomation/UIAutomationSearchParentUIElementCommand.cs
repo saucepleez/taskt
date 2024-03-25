@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Search Parent UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to get Parent UIElement from UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Parent UIElement from UIElement.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationSearchParentUIElementCommand : ScriptCommand
@@ -36,13 +37,11 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var rootElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
-            var rootElement = v_TargetElement.GetUIElementVariable(engine);
-
-            var waitTime = this.ConvertToUserVariableAsInteger(nameof(v_WaitTime), engine);
+            var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);
             object ret = WaitControls.WaitProcess(waitTime, "Parent Element",
                 new Func<(bool, object)>(() =>
                 {

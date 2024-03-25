@@ -13,31 +13,36 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command checks existance value from a specified Excel Cell.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelCheckCellValueExistsRCCommand : ScriptCommand
+    public class ExcelCheckCellValueExistsRCCommand : AExcelRCLocationActionCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]
-        public string v_CellRow { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]
+        //[PropertyParameterOrder(6001)]
+        //public string v_CellRow { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnLocation))]
-        public string v_CellColumn { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnLocation))]
+        //[PropertyParameterOrder(6002)]
+        //public string v_CellColumn { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the Value Exists, Result is **True**")]
-        public string v_userVariableName { get; set; }
+        [PropertyParameterOrder(8000)]
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_CheckableValueType))]
         [PropertySelectionChangeEvent(nameof(cmbValueType_SelectedIndexChanged))]
-        public string v_ValueType { get; set; }
+        //[PropertyParameterOrder(6004)]
+        public override string v_ValueType { get; set; }
 
         public ExcelCheckCellValueExistsRCCommand()
         {
@@ -47,19 +52,34 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            //var rg = this.GetExcelRange(nameof(v_CellRow), nameof(v_CellColumn), engine, excelInstance, excelSheet);
 
-            var rg = this.GetExcelRange(nameof(v_CellRow), nameof(v_CellColumn), engine, excelInstance, excelSheet);
+            ////var valueType = this.GetUISelectionValue(nameof(v_ValueType), engine);
 
-            var valueType = this.GetUISelectionValue(nameof(v_ValueType), engine);
+            ////var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(valueType);
 
-            var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(valueType);
+            //var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(nameof(v_ValueType), this, engine);
 
-            chkFunc(rg).StoreInUserVariable(engine, v_userVariableName);
+            //chkFunc(rg).StoreInUserVariable(engine, v_Result);
+
+            //var rg = this.ExpandValueOrVariableAsExcelCellLocation(engine);
+            //var chkFunc = this.ExpandValueOrVariableAsCheckRangeFunction(engine);
+            //chkFunc(rg).StoreInUserVariable(engine, v_Result);
+
+            //(_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            //(var row, var column) = this.ExpandValueOrVariableAsCellRowAndColumnIndex(engine);
+            //var chkFunc = this.ExpandValueOrVariableAsCheckValueFunction(engine);
+            //chkFunc(sheet, column, row).StoreInUserVariable(engine, v_Result);
+
+            this.RCLocationAction(new Action<Microsoft.Office.Interop.Excel.Worksheet, int, int>((sheet, column, row) =>
+            {
+                var chkFunc = this.ExpandValueOrVariableAsCheckValueFunction(engine);
+                chkFunc(sheet, column, row).StoreInUserVariable(engine, v_Result);
+            }), engine);
         }
 
         private void cmbValueType_SelectedIndexChanged(object sender, EventArgs e)

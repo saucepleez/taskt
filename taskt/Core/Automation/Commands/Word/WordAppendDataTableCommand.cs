@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Append DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to append a datatable to a specific document.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class WordAppendDataTableCommand : ScriptCommand
@@ -31,13 +32,11 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            (var _, var wordDocument) = v_InstanceName.ExpandValueOrUserVariableAsWordInstanceAndDocument(engine);
 
-            (var _, var wordDocument) = v_InstanceName.GetWordInstanceAndDocument(engine);
-
-            var dataTable = v_DataTableName.GetDataTableVariable(engine);
+            var dataTable = v_DataTableName.ExpandUserVariableAsDataTable(engine);
 
             //converting System DataTable to Word DataTable
             int RowCount = dataTable.Rows.Count; 

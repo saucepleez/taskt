@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to run a powershell script and wait for it to exit before proceeding.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run a powershell script and wait for it to close before taskt continues executing.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start' and waits for the script/program to exit before proceeding.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_script))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class RunPowerShellScriptFileCommand : ScriptCommand
@@ -73,10 +74,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_ReplaceScriptVariables = "No";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //define script path
             //string scriptPath = FilePathControls.FormatFilePath_NoFileCounter(v_ScriptPath, engine, new List<string>() { "ps1", "bat" }, true);
             var scriptPath = FilePathControls.WaitForFile(this, nameof(v_ScriptPath), nameof(v_WaitForFile), engine);
@@ -85,10 +84,10 @@ namespace taskt.Core.Automation.Commands
             var psCommand = File.ReadAllText(scriptPath);
 
             //if (v_ReplaceScriptVariables.ToUpperInvariant() == "YES")
-            if (this.GetUISelectionValue(nameof(v_ReplaceScriptVariables), engine) == "yes")
+            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReplaceScriptVariables), engine) == "yes")
             {
                 //convert variables
-                psCommand = psCommand.ConvertToUserVariable(sender);
+                psCommand = psCommand.ExpandValueOrUserVariable(engine);
             }
             
             //convert ps script
@@ -114,7 +113,7 @@ namespace taskt.Core.Automation.Commands
             if (!String.IsNullOrEmpty(v_applyToVariableName))
             {
                 string output = reader.ReadToEnd();
-                output.StoreRawDataInUserVariable(sender, v_applyToVariableName);
+                output.StoreRawDataInUserVariable(engine, v_applyToVariableName);
             }
         }
     }

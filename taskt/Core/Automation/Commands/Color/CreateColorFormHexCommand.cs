@@ -12,13 +12,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to create Color from HEX.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create Color from HEX.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class CreateColorFromHexCommand : ScriptCommand
+    public class CreateColorFromHexCommand : AColorCreateCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_InputColorVariableName))]
-        public string v_Color { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_InputColorVariableName))]
+        //public string v_Color { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Color HEX Value")]
@@ -32,6 +33,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Hex", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Hex")]
+        [PropertyParameterOrder(6000)]
         public string v_Hex { get; set; }
 
         public CreateColorFromHexCommand()
@@ -42,12 +44,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            string hex = v_Hex.ConvertToUserVariable(engine);
+            string hex = v_Hex.ExpandValueOrUserVariable(engine);
             if (hex.Length > 6)
             {
                 hex = hex.Substring(hex.Length - 6);
@@ -58,8 +57,9 @@ namespace taskt.Core.Automation.Commands
             hex = hex.Substring(0, hex.Length - 2);
             int r = Int32.Parse(hex.Substring(hex.Length - 2), System.Globalization.NumberStyles.HexNumber);
 
-            Color co = Color.FromArgb(255, r, g, b);
-            co.StoreInUserVariable(engine, v_Color);
+            var co = Color.FromArgb(255, r, g, b);
+            //co.StoreInUserVariable(engine, v_Color);
+            this.StoreColorInUserVariable(co, nameof(v_Color), engine);
         }
     }
 }

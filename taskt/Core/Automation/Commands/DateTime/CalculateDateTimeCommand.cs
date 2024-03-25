@@ -11,13 +11,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Calculate DateTime. Add Day, Minute, etc.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Calculate DateTime. Add Day, Minute, etc.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class CalculateDateTimeCommand : ScriptCommand
+    public class CalculateDateTimeCommand : ADateTimeConvertCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_InputDateTime))]
-        public string v_DateTime { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_InputDateTime))]
+        //public string v_DateTime { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Calculation Method")]
@@ -39,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Substract Seconds")]
         [PropertyValidationRule("Calculation Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Method")]
+        [PropertyParameterOrder(6000)]
         public string v_CalculationMethod { get; set; }
 
         [XmlAttribute]
@@ -52,12 +54,13 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Value", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Value")]
+        [PropertyParameterOrder(6001)]
         public string v_Value { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
-        public string v_Result { get; set; }
+        public override string v_Result { get; set; }
 
         public CalculateDateTimeCommand()
         {
@@ -67,16 +70,15 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
+            //var myDT = v_DateTime.ExpandUserVariableAsDateTime(engine);
+            //var myDT = this.ExpandValueOrVariableAsDateTime(nameof(v_DateTime), engine);
+            var myDT = this.ExpandValueOrVariableAsDateTime(engine);
 
-            var myDT = v_DateTime.GetDateTimeVariable(engine);
+            string meth = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CalculationMethod), engine);
 
-            string meth = this.GetUISelectionValue(nameof(v_CalculationMethod), engine);
-
-            int value = this.ConvertToUserVariableAsInteger(nameof(v_Value), engine);
+            int value = this.ExpandValueOrUserVariableAsInteger(nameof(v_Value), engine);
 
             string[] method = meth.Split(' ');
             if (method[0] == "substract")
@@ -106,7 +108,9 @@ namespace taskt.Core.Automation.Commands
                     calcDT = myDT.AddSeconds(value);
                     break;
             }
-            calcDT.StoreInUserVariable(engine, v_Result);
+
+            //calcDT.StoreInUserVariable(engine, v_Result);
+            this.StoreDateTimeInUserVariable(calcDT, nameof(v_Result), engine);
         }
     }
 }

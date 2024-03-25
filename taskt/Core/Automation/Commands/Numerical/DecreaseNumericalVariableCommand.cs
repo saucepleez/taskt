@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Decrease Value in Numerical Variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Decrease Value in Numerical Variable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class DecreaseNumericalVariableCommand : ScriptCommand
@@ -33,14 +34,12 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var variableName = VariableNameControls.GetWrappedVariableName(v_VariableName, engine);
-            var variableValue = new PropertyConvertTag(variableName, "Variable Name").ConvertToUserVariableAsDecimal(engine);
+            var variableValue = new PropertyConvertTag(variableName, "Variable Name").ExpandValueOrUserVariableAsDecimal(engine);
 
-            var add = this.ConvertToUserVariableAsDecimal(nameof(v_VariableName), engine);
+            var add = this.ExpandValueOrUserVariableAsDecimal(nameof(v_VariableName), engine);
 
             (variableValue - add).ToString().StoreInUserVariable(engine, variableName);
         }

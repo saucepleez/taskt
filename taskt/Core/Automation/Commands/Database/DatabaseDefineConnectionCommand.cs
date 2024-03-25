@@ -19,6 +19,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to define a connection to an OLEDB data source")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to create a new connection to a database.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'OLEDB' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_database))]
     public class DatabaseDefineConnectionCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -75,15 +76,14 @@ namespace taskt.Core.Automation.Commands
             this.v_TestConnection = "Yes";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //get engine and preference
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var instance = v_InstanceName.ConvertToUserVariable(sender);
-            var testPreference = v_TestConnection.ConvertToUserVariable(sender);
+            var instance = v_InstanceName.ExpandValueOrUserVariable(engine);
+            var testPreference = v_TestConnection.ExpandValueOrUserVariable(engine);
 
             //create connection
-            var oleDBConnection = CreateConnection(sender);
+            var oleDBConnection = CreateConnection(engine);
 
             //attempt to open and close connection
             if (testPreference == "Yes")
@@ -95,10 +95,10 @@ namespace taskt.Core.Automation.Commands
             engine.AddAppInstance(instance, oleDBConnection);
 
         }
-        private OleDbConnection CreateConnection(object sender)
+        private OleDbConnection CreateConnection(Engine.AutomationEngineInstance engine)
         {
-            var connection = v_ConnectionString.ConvertToUserVariable(sender);
-            var connectionPass = v_ConnectionStringPassword.ConvertToUserVariable(sender);
+            var connection = v_ConnectionString.ExpandValueOrUserVariable(engine);
+            var connectionPass = v_ConnectionStringPassword.ExpandValueOrUserVariable(engine);
 
             if (connectionPass.StartsWith("!"))
             {
@@ -110,7 +110,7 @@ namespace taskt.Core.Automation.Commands
 
             return new OleDbConnection(connection);
         }
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -194,7 +194,7 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TestConnection", this, editor));
 
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            if (editor.creationMode == UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Add)
             {
                 this.v_InstanceName = editor.appSettings.ClientSettings.DefaultDBInstanceName;
             }

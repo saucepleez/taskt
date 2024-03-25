@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to execute a task remotely on another taskt instance")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to execute a command on another client that has local listener enabled")]
     [Attributes.ClassAttributes.ImplementationDescription("This command interfaces against Core.Server.LocalTCPListener")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_remote))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class RemoteTaskCommand : ScriptCommand
@@ -80,18 +81,17 @@ namespace taskt.Core.Automation.Commands
             //this.v_RequestTimeout = "120000";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
             try
             {
-                var server = v_BaseURL.ConvertToUserVariable(engine);
+                var server = v_BaseURL.ExpandValueOrUserVariable(engine);
                 //var paramType = v_ParameterType.ConvertToUserVariable(engine);
-                var paramType = this.GetUISelectionValue(nameof(v_ParameterType), engine);
-                var parameter = v_Parameter.ConvertToUserVariable(engine);
+                var paramType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ParameterType), engine);
+                var parameter = v_Parameter.ExpandValueOrUserVariable(engine);
                 //var awaitPreference = v_ExecuteAwait.ConvertToUserVariable(engine);
-                var awaitPreference = this.GetUISelectionValue(nameof(v_ExecuteAwait), engine);
-                var timeout = v_RequestTimeout.ConvertToUserVariable(engine);
+                var awaitPreference = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ExecuteAwait), engine);
+                var timeout = v_RequestTimeout.ExpandValueOrUserVariable(engine);
 
                 var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, timeout, parameter, awaitPreference);
 

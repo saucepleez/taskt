@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to parse a JSON object into a list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract data from a JSON object")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetJSONValueListCommand : ScriptCommand
@@ -64,10 +65,8 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var forbiddenMarkers = new List<string> { "[", "]" };
 
             if (forbiddenMarkers.Any(f => f == engine.engineSettings.VariableStartMarker) || (forbiddenMarkers.Any(f => f == engine.engineSettings.VariableEndMarker)))
@@ -76,10 +75,10 @@ namespace taskt.Core.Automation.Commands
             }
 
             //get variablized input
-            var jsonText = v_InputValue.ConvertToUserVariable(sender).Trim();
+            var jsonText = v_InputValue.ExpandValueOrUserVariable(engine).Trim();
 
             //get variablized token
-            var jsonSearchToken = v_JsonExtractor.ConvertToUserVariable(sender);
+            var jsonSearchToken = v_JsonExtractor.ExpandValueOrUserVariable(engine);
 
             ////create objects
             //Newtonsoft.Json.Linq.JObject o;
@@ -163,12 +162,13 @@ namespace taskt.Core.Automation.Commands
 
         public void lnkJsonPathHelper_Click(object sender, EventArgs e)
         {
-            using (var fm = new UI.Forms.Supplement_Forms.frmJSONPathHelper())
+            using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmJSONPathHelper())
             {
-                if (fm.ShowDialog() == DialogResult.OK)
+                var item = (CommandItemControl)sender;
+                if (fm.ShowDialog(item.FindForm()) == DialogResult.OK)
                 {
                     //v_JsonExtractor = fm.JSONPath;
-                    ((TextBox)((CommandItemControl)sender).Tag).Text = fm.JSONPath;
+                    ((TextBox)(item.Tag)).Text = fm.JSONPath;
                 }
             }
         }

@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to retrieve the length of a Text or Variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to find the length of a Text or Variable")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetWordLengthCommand : ScriptCommand
@@ -31,13 +32,10 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get engine
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //get input value
-            var stringRequiringLength = v_InputValue.ConvertToUserVariable(engine);
+            var stringRequiringLength = v_InputValue.ExpandValueOrUserVariable(engine);
 
             ////count number of words
             //var stringLength = stringRequiringLength.Length;

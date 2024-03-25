@@ -21,6 +21,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("DateTime Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Variable")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputDateTime { get; }
 
         /// <summary>
@@ -38,39 +39,45 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("DateTime Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Variable")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputDateTime { get; }
 
-        /// <summary>
-        /// Get DateTime variable from Variable Name.
-        /// </summary>
-        /// <param name="variableName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception">Variable not DateTime</exception>
-        public static DateTime GetDateTimeVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is DateTime time)
-            {
-                return time;
-            }
-            else
-            {
-                throw new Exception("Variable " + variableName + " is not DateTime");
-            }
-        }
+        ///// <summary>
+        ///// Expand user variable As DateTime
+        ///// </summary>
+        ///// <param name="variableName"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception">Value is not DateTime</exception>
+        //public static DateTime ExpandUserVariableAsDateTime(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    Script.ScriptVariable v = variableName.GetRawVariable(engine);
+        //    if (v.VariableValue is DateTime time)
+        //    {
+        //        return time;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Variable " + variableName + " is not DateTime");
+        //    }
+        //}
+
+        //public static void StoreInUserVariable(this DateTime value, Core.Automation.Engine.AutomationEngineInstance engine, string targetVariable)
+        //{
+        //    ExtensionMethods.StoreInUserVariable(targetVariable, value, engine, false);
+        //}
 
         /// <summary>
-        /// expand user variable as DateTime
+        /// Convert value to DateTime
         /// </summary>
         /// <param name="str"></param>
         /// <param name="parameterName"></param>
         /// <param name="sender"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static DateTime ConvertToUserVariableAsDateTime(this string str, string parameterName, object sender)
-        {
-            string convertedText = str.ConvertToUserVariable(sender);
+        /// <exception cref="Exception">fail convert value to DateTime</exception>
+        public static DateTime ConvertValueToDateTime(this string str, string parameterName, Core.Automation.Engine.AutomationEngineInstance engine)
+        { 
+            string convertedText = str.ExpandValueOrUserVariable(engine);
             if (DateTime.TryParse(convertedText, out DateTime v))
             {
                 return v;
@@ -79,11 +86,6 @@ namespace taskt.Core.Automation.Commands
             {
                 throw new Exception(parameterName + " '" + str + "' is not a DateTime.");
             }
-        }
-
-        public static void StoreInUserVariable(this DateTime value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
         }
     }
 }

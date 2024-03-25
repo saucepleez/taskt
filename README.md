@@ -21,13 +21,13 @@ taskt allows you to automate the boring stuff and create efficienies by giving y
 ![Recorder](https://i.imgur.com/EpiwkPj.gif)
 
 ![How does taskt work?](https://i.imgur.com/TxrH6YH.png)
-taskt works by allowing a bot developer to design a bot configuration known as a script.  The bot configuration is then intepreted by a script engine at run-time and executes against the bot developer's selected parameter inputs.  Each command contains the definitions for the required inputs as well as the required logic at run-time.  Please check out the [Wiki](https://github.com/saucepleez/taskt/wiki) for basic documenation surrounding the application and the available commands
+taskt works by allowing a bot developer to design a bot configuration known as a script.  The bot configuration is then intepreted by a script engine at run-time and executes against the bot developer's selected parameter inputs.  Each command contains the definitions for the required inputs as well as the required logic at run-time.
 
 ![Configuring Tasks](https://i.imgur.com/ufvgfn2.gif)
 
 
 ![What can taskt do?](https://i.imgur.com/FTMRTi8.png)
-taskt can perform automation on both web and desktop applications, simulating the actions a person would do.  From swivel-chair data entry to report generation, taskt can handle your automation needs.  Prefer to write and implement code?  taskt can use your existing .NET DLLs and services additionally with the ability to compile code on the fly using the Custom Code command! taskt can start and stop processes, launch VB and PowerShell scripts, work directly with Excel workbooks, and perform OCR (OneNote installation required) among many other functions.  You can review all the automation commands by clicking [here](https://github.com/saucepleez/taskt/wiki/Automation-Commands).
+taskt can perform automation on both web and desktop applications, simulating the actions a person would do.  From swivel-chair data entry to report generation, taskt can handle your automation needs.  Prefer to write and implement code?  taskt can use your existing .NET DLLs and services additionally with the ability to compile code on the fly using the Custom Code command! taskt can start and stop processes, launch VB and PowerShell scripts, work directly with Excel workbooks, and perform OCR (OneNote installation required) among many other functions.  You can review all the automation commands by clicking [here](https://github.com/rcktrncn/taskt-wiki/blob/master/automation-commands.md).
 
 ![Manage Your Workforce](https://i.imgur.com/KQVqN9v.png)
 **CURRENTLY IN ALPHA** Manage and orchestrate your digital workforce with taskt's optional [server component](https://github.com/saucepleez/tasktServer) that allows you to publish and execute tasks remotely as well as monitor the overall health of your bots and discover metrics around your robot workers.
@@ -37,7 +37,7 @@ taskt can perform automation on both web and desktop applications, simulating th
 
 
 ![How can I get started?](https://i.imgur.com/CkESBRT.png)
-Find and download the latest signed release by clicking [HERE](https://github.com/saucepleez/taskt/releases/). Extract to any folder and double-click 'taskt.exe'.  taskt will ask if you want to create a scripts folder to store your scripts as well as copy and deploy sample files.  You can also build directly from source -- take the latest from the master branch!
+Find and download the latest signed release by clicking [HERE](https://github.com/rcktrncn/taskt/releases/). Extract to any folder and double-click 'taskt.exe'.  taskt will ask if you want to create a scripts folder to store your scripts as well as copy and deploy sample files.  You can also build directly from source -- take the latest from the master branch!
 
 
 ![What does taskt Cost?](https://i.imgur.com/fzliKyN.png)

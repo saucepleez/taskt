@@ -12,13 +12,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Column to Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Column to Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertDataTableColumnToDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
@@ -42,7 +43,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
-        public string v_OutputVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public ConvertDataTableColumnToDictionaryCommand()
         {
@@ -52,10 +53,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;         
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             string prefix;
             if (String.IsNullOrEmpty(v_KeyPrefix))
             {
@@ -63,16 +62,16 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                prefix = v_KeyPrefix.ConvertToUserVariable(engine);
+                prefix = v_KeyPrefix.ExpandValueOrUserVariable(engine);
             }
 
-            (var srcDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_DataColumnIndex), engine);
+            (var srcDT, var colIndex) = this.ExpandUserVariablesAsDataTableAndColumnIndex(nameof(v_DataTable), nameof(v_ColumnType), nameof(v_DataColumnIndex), engine);
             Dictionary<string, string> myDic = new Dictionary<string, string>();
             for (int i = 0; i < srcDT.Rows.Count; i++)
             {
                 myDic.Add(prefix + i.ToString(), srcDT.Rows[i][colIndex]?.ToString() ?? "");
             }
-            myDic.StoreInUserVariable(engine, v_OutputVariableName);
+            myDic.StoreInUserVariable(engine, v_Result);
         }
     }
 }

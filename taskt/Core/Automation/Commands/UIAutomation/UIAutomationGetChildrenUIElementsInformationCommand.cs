@@ -13,9 +13,10 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Get Children Elements Information")]
     [Attributes.ClassAttributes.Description("This command allows you to get Children UIElements Information from UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Children UIElements Information from UIElement.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetChildrenUIElementsInformationCommand : ScriptCommand
+    public class UIAutomationGetChildrenUIElementsInformationCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -37,11 +38,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var targetElement = v_RootElement.GetUIElementVariable(engine);
+            var targetElement = v_RootElement.ExpandUserVariableAsUIElement(engine);
 
             var elems = UIElementControls.GetChildrenUIElements(targetElement, v_SearchParameters, engine);
 
@@ -56,10 +55,18 @@ namespace taskt.Core.Automation.Commands
             result.Trim().StoreInUserVariable(engine, v_ResultVariable);
         }
 
-        public override void AfterShown()
+        public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
             UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+
+            var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_SearchParameters));
+            DataTableControls.BeforeValidate_NoRowAdding(dgv, v_SearchParameters);
         }
     }
 }

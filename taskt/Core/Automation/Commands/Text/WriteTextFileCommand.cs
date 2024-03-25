@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command writes specified data to a text file")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to write data to text files.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class WriteTextFileCommand : ScriptCommand
@@ -49,10 +50,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //convert variables
             //string filePath;
             //if (FilePathControls.ContainsFileCounter(v_FilePath, engine))
@@ -63,16 +62,16 @@ namespace taskt.Core.Automation.Commands
             //{
             //    filePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, "txt");
             //}
-            var filePath = this.ConvertToUserVariableAsFilePath(nameof(v_FilePath), engine);
+            var filePath = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FilePath), engine);
 
             //var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
-            var outputText = v_TextToWrite.ConvertToUserVariable(engine);
-            if (this.GetUISelectionValue(nameof(v_ReplaceToLineBreak), engine) == "yes")
+            var outputText = v_TextToWrite.ExpandValueOrUserVariable(engine);
+            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReplaceToLineBreak), engine) == "yes")
             {
                 outputText = outputText.Replace("[crLF]", Environment.NewLine);
             }
 
-            var isOverwrite = this.GetUISelectionValue(nameof(v_Overwrite), engine);
+            var isOverwrite = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_Overwrite), engine);
             //append or overwrite as necessary
             if (isOverwrite == "append")
             {

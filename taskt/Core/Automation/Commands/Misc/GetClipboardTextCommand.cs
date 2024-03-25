@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get text from the clipboard.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to copy the data from the clipboard and apply it to a variable.  You can then use the variable to extract the value.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against the VariableList from the scripting engine using System.Windows.Forms.Clipboard.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetClipboardTextCommand : ScriptCommand
@@ -28,10 +29,10 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //User32Functions.GetClipboardText().StoreInUserVariable(sender, v_userVariableName);
-            ClipboardControls.GetClipboardText().StoreInUserVariable(sender, v_userVariableName);
+            ClipboardControls.GetClipboardText().StoreInUserVariable(engine, v_userVariableName);
         }
     }
 }

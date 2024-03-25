@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using System.Windows.Automation;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -12,6 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Set Text To UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to set Text Value from UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to set Text Value from UIElement.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationSetTextToUIElementCommand : ScriptCommand
@@ -37,18 +39,31 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
-            var targetElement = v_TargetElement.GetUIElementVariable(engine);
-
-            string textValue = v_TextVariable.ConvertToUserVariable(sender);
-
-            // todo: support range value pattern
-            if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out object textPtn))
+            var ct = targetElement.GetCurrentPropertyValue(AutomationElement.ControlTypeProperty) as ControlType;
+            if (ct == ControlType.Spinner)
             {
-                ((ValuePattern)textPtn).SetValue(textValue);
+                //targetElement = UIElementControls.SearchGUIElementByXPath(targetElement, "/Edit[1]", 10, engine);
+                targetElement = targetElement.FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit));
+            }
+
+            string textValue = v_TextVariable.ExpandValueOrUserVariable(engine);
+
+            if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out object valPtn))
+            {
+                ((ValuePattern)valPtn).SetValue(textValue);
+            }
+            else if (targetElement.TryGetCurrentPattern(TextPattern.Pattern, out _))
+            {
+                targetElement.SetFocus();
+                System.Threading.Thread.Sleep(100);
+                SendKeys.SendWait("^{HOME}");
+                SendKeys.SendWait("^+{END}");
+                SendKeys.SendWait("{DEL}");
+                SendKeys.SendWait(textValue);
             }
             else
             {

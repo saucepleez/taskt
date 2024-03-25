@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to insert item to JSON Array.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class InsertJSONArrayItemCommand : ScriptCommand
@@ -57,10 +58,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             Action<JToken> addItemFunc = new Action<JToken>((searchResult) =>
             {
                 if (!(searchResult is JArray))
@@ -75,7 +74,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     v_InsertIndex = ary.Count.ToString();
                 }
-                var index = this.ConvertToUserVariableAsInteger(nameof(v_InsertIndex), engine);
+                var index = this.ExpandValueOrUserVariableAsInteger(nameof(v_InsertIndex), engine);
 
                 if ((index < 0) && (index > ary.Count))
                 {

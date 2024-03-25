@@ -1,20 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Compression;
 using System.IO;
+using System.Reflection;
 
 namespace taskt_updater
 {
     public partial class frmUpdating : Form
     {
-        private const string TASKT_WORK_DIR_NAME = "temp";
+        /// <summary>
+        /// update work folder name
+        /// </summary>
+        private const string TASKT_WORK_FOLDER_NAME = "temp";
+        /// <summary>
+        /// taskt Resouces name
+        /// </summary>
+        private const string TASKT_RESOUCES_FOLDER_NAME = "Resources";
+        /// <summary>
+        /// my name
+        /// </summary>
+        private const string TASKT_UPDATER_NAME = "taskt-updater.exe";
+        /// <summary>
+        /// taskt name
+        /// </summary>
+        private const string TASKT_NAME = "taskt.exe";
 
         string topLevelFolder = Application.StartupPath;
         string myPath = Application.ExecutablePath;
@@ -52,7 +63,8 @@ namespace taskt_updater
 
         private void frmUpdating_Load(object sender, EventArgs e)
         {
-
+            var asm = Assembly.GetExecutingAssembly();
+            this.Text += " v" + asm.GetName().Version;
         }
         #endregion
 
@@ -112,7 +124,7 @@ namespace taskt_updater
                         string tasktFolder = Directory.GetParent(topLevelFolder).FullName;
 
                         var copyProcess = new System.Diagnostics.Process();
-                        copyProcess.StartInfo.FileName = Path.Combine(tasktFolder, TASKT_WORK_DIR_NAME, zipFileName, "Resources", "taskt-updater.exe");
+                        copyProcess.StartInfo.FileName = Path.Combine(tasktFolder, TASKT_WORK_FOLDER_NAME, zipFileName, TASKT_RESOUCES_FOLDER_NAME, TASKT_UPDATER_NAME);
                         copyProcess.StartInfo.Arguments = "/c \"" + tasktFolder + "\"";
                         copyProcess.Start();
                         this.Close();
@@ -120,12 +132,18 @@ namespace taskt_updater
                     case "/c":
                         string newTasktFolder = Directory.GetParent(topLevelFolder).Parent.Parent.FullName;
                         var removeProcess = new System.Diagnostics.Process();
-                        removeProcess.StartInfo.FileName = Path.Combine(newTasktFolder, "Resources", "taskt-updater.exe");
+                        removeProcess.StartInfo.FileName = Path.Combine(newTasktFolder, TASKT_RESOUCES_FOLDER_NAME ,TASKT_UPDATER_NAME);
                         removeProcess.StartInfo.Arguments = "/r \"" + newTasktFolder + "\"";
                         removeProcess.Start();
                         this.Close();
                         break;
                     case "/r":
+                        string startTasktFolder = Directory.GetParent(topLevelFolder).FullName;
+                        //DBG
+                        //MessageBox.Show(startTasktFolder);
+                        var tasktProcess = new System.Diagnostics.Process();
+                        tasktProcess.StartInfo.FileName = Path.Combine(startTasktFolder, TASKT_NAME);
+                        tasktProcess.Start();
                         this.Close();
                         break;
                     default:
@@ -144,7 +162,7 @@ namespace taskt_updater
         private void DownloadExtractNewRelease(string packageURL)
         {
             //define update folder
-            var tempUpdateFolder = Path.Combine(Directory.GetParent(topLevelFolder).FullName, TASKT_WORK_DIR_NAME);
+            var tempUpdateFolder = Path.Combine(Directory.GetParent(topLevelFolder).FullName, TASKT_WORK_FOLDER_NAME);
 
             // DBG
             //MessageBox.Show("temp: " + tempUpdateFolder + "\r\nURL: " + packageURL);
@@ -211,7 +229,7 @@ namespace taskt_updater
         {
             bgwUpdate.ReportProgress(0, "Remove Downloaded Files...");
 
-            string tempFolder = Path.Combine(Directory.GetParent(topLevelFolder).FullName, TASKT_WORK_DIR_NAME);
+            string tempFolder = Path.Combine(Directory.GetParent(topLevelFolder).FullName, TASKT_WORK_FOLDER_NAME);
 
             // DBG
             //MessageBox.Show("temp: " + tempFolder);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core;
+using taskt.Core.Automation.Engine;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 
@@ -15,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to repeat actions several times (loop).  Any 'Begin Loop' command must have a following 'End Loop' command.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a series of commands a specified amount of times.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command recursively calls the underlying 'BeginLoop' Command to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_startloop))]
     public class BeginNumberOfTimesLoopCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -42,45 +44,48 @@ namespace taskt.Core.Automation.Commands
             this.v_LoopStart = "0";
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(Engine.AutomationEngineInstance engine, Core.Script.ScriptAction parentCommand)
         {
             Core.Automation.Commands.BeginNumberOfTimesLoopCommand loopCommand = (Core.Automation.Commands.BeginNumberOfTimesLoopCommand)parentCommand.ScriptCommand;
 
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
-            {
-                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
-            }
+            //if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
+            //{
+            //    engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
+            //}
 
 
             int loopTimes;
             Script.ScriptVariable complexVarible = null;
 
-            var loopParameter = loopCommand.v_LoopParameter.ConvertToUserVariable(sender);
+            var loopParameter = loopCommand.v_LoopParameter.ExpandValueOrUserVariable(engine);
 
             loopTimes = int.Parse(loopParameter);
 
 
             int startIndex = 0;
-            int.TryParse(v_LoopStart.ConvertToUserVariable(sender), out startIndex);
+            int.TryParse(v_LoopStart.ExpandValueOrUserVariable(engine), out startIndex);
 
 
             for (int i = startIndex; i < loopTimes; i++)
             {
                 if (complexVarible != null)
+                {
                     complexVarible.CurrentPosition = i;
+                }
 
-              //  (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
+                // (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
 
                 engine.ReportProgress("Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber);
 
                 foreach (var cmd in parentCommand.AdditionalScriptCommands)
                 {
                     if (engine.IsCancellationPending)
+                    {
                         return;
+                    }
 
-                    (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
+                    //(i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
+                    SystemVariables.Update_LoopCurrentIndex(i + 1);
 
                     engine.ExecuteCommand(cmd);
 
@@ -106,7 +111,7 @@ namespace taskt.Core.Automation.Commands
 
             }
         }
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -130,7 +135,7 @@ namespace taskt.Core.Automation.Commands
          
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
+        public override bool IsValidate(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.IsValidate(editor);
 

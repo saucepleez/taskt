@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -18,30 +17,35 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command writes a datatable to an excel sheet starting from the given cell address.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
-    public class ExcelWriteRangeCommand : ScriptCommand
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
+    public class ExcelWriteRangeCommand : AExcelInstanceCommands
     {
-        [XmlAttribute]
-        [PropertyDescription("Please Enter the instance name")]
-        [InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [SampleUsage("**myInstance** or **excelInstance**")]
-        [Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyDescription("Please Enter the instance name")]
+        //[InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        //[SampleUsage("**myInstance** or **excelInstance**")]
+        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //public string v_InstanceName { get; set; }
+
         [XmlAttribute]
         [PropertyDescription("Please Enter the Datatable Variable Name to Set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Enter the text value that will be set.")]
         [SampleUsage("Hello World or {vText}")]
         [Remarks("")]
+        [PropertyParameterOrder(6000)]
         public string v_DataTableToSet { get; set; }
+
         [XmlAttribute]
         [PropertyDescription("Please Enter the Cell Location to start from (ex. A1 or B2)")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Enter the actual location of the cell.")]
         [SampleUsage("A1, B10, {vAddress}")]
         [Remarks("")]
+        [PropertyParameterOrder(6001)]
         public string v_ExcelCellAddress { get; set; }
 
         [XmlAttribute]
@@ -51,7 +55,9 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("When selected, the column headers from the specified spreadsheet range are also written.")]
         [SampleUsage("Select from **Yes** or **No**")]
         [Remarks("")]
+        [PropertyParameterOrder(6002)]
         public string v_AddHeaders { get; set; }
+
         public ExcelWriteRangeCommand()
         {
             //this.CommandName = "ExcelWriteRangeCommand";
@@ -59,17 +65,17 @@ namespace taskt.Core.Automation.Commands
             //this.CommandEnabled = true;
             //this.CustomRendering = true;
 
-            this.v_InstanceName = "";
+            //this.v_InstanceName = "";
             this.v_AddHeaders = "Yes";
         }
-        public override void RunCommand(object sender)
-        {
-            var engine = (Engine.AutomationEngineInstance)sender;
 
-            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
+        {
+            //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
             var dataSetVariable = LookupVariable(engine);
-            var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
+            var targetAddress = v_ExcelCellAddress.ExpandValueOrUserVariable(engine);
 
             DataTable Dt = (DataTable)dataSetVariable.VariableValue;
             if (string.IsNullOrEmpty(targetAddress)) throw new ArgumentNullException("columnName");
@@ -144,7 +150,8 @@ namespace taskt.Core.Automation.Commands
 
             return requiredVariable;
         }
-        public override List<Control> Render(frmCommandEditor editor)
+
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -157,13 +164,14 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_AddHeaders", this, editor));
 
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            if (editor.creationMode == UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Add)
             {
                 this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
             }
 
             return RenderedControls;
         }
+
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Writing Cells starting from '" + v_ExcelCellAddress + "', Instance Name: '" + v_InstanceName + "']";

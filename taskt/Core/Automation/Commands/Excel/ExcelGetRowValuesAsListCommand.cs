@@ -12,37 +12,44 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command get Row values as List.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a Row values as List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelGetRowValuesAsListCommand : ScriptCommand
+    public class ExcelGetRowValuesAsListCommand : AExcelRowRangeGetCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]
-        public string v_RowIndex { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]
+        //[PropertyParameterOrder(6000)]
+        //public string v_RowIndex { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnType))]
-        public string v_ColumnType { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnType))]
+        //[PropertyParameterOrder(6001)]
+        //public string v_ColumnType { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnStart))]
-        public string v_ColumnStart { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnStart))]
+        //[PropertyParameterOrder(6002)]
+        //public string v_ColumnStart { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnEnd))]
-        public string v_ColumnEnd { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnEnd))]
+        //[PropertyParameterOrder(6003)]
+        //public string v_ColumnEnd { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        public string v_userVariableName { get; set; }
+        //[PropertyParameterOrder(6004)]
+        public override string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
-        public string v_ValueType { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
+        //[PropertyParameterOrder(6005)]
+        //public string v_ValueType { get; set; }
 
         public ExcelGetRowValuesAsListCommand()
         {
@@ -52,29 +59,43 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            //(int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) =
+            //    ExcelControls.GetRangeIndeiesRowDirection(
+            //        nameof(v_RowIndex),
+            //        nameof(v_ColumnType), nameof(v_ColumnStart), nameof(v_ColumnEnd),
+            //        nameof(v_ValueType), engine, excelSheet, this
+            //    );
 
-            (int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) =
-                ExcelControls.GetRangeIndeiesRowDirection(
-                    nameof(v_RowIndex),
-                    nameof(v_ColumnType), nameof(v_ColumnStart), nameof(v_ColumnEnd),
-                    nameof(v_ValueType), engine, excelSheet, this
-                );
+            //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
 
-            Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
+            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            //(var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine);
+            //var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
 
-            List<string> newList = new List<string>();
+            //List<string> newList = new List<string>();
 
-            for (int i = columnStartIndex; i <= columnEndIndex; i++)
-            {
-                newList.Add(getFunc(excelSheet, i, rowIndex));
-            }
+            //int max = columnEndIndex - columnStartIndex + 1;
+            //for (int i = 0; i < max; i++)
+            //{
+            //    newList.Add(getFunc(excelSheet, columnStartIndex + i, rowIndex));
+            //}
 
-            newList.StoreInUserVariable(engine, v_userVariableName);
+            //newList.StoreInUserVariable(engine, v_Result);
+
+            var newList = new List<string>();
+
+            this.RowRangeAction(
+                new Action<Microsoft.Office.Interop.Excel.Worksheet, string, int, int, int>((sheet, value, column, row, count) =>
+                {
+                    newList.Add(value);
+                }), engine
+            );
+
+            newList.StoreInUserVariable(engine, v_Result);
         }
     }
 }

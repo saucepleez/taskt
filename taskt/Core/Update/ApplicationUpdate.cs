@@ -61,7 +61,7 @@ namespace taskt.Core.Update
         /// <param name="silent"></param>
         public static void ShowUpdateResultSync(bool skipBeta, bool silent = true)
         {
-            ApplicationUpdate.SkipBeta = skipBeta;
+            SkipBeta = skipBeta;
 
             UpdateManifest manifest;
             try
@@ -74,7 +74,7 @@ namespace taskt.Core.Update
             {
                 if (!silent)
                 {
-                    using (var fm = new taskt.UI.Forms.Supplemental.frmDialog("Error getting manifest: " + ex.ToString(), "Error", taskt.UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    using (var fm = new UI.Forms.General.frmDialog("Error getting manifest: " + ex.ToString(), "Error", UI.Forms.General.frmDialog.DialogType.OkOnly, 0))
                     {
                         fm.ShowDialog();
                     }
@@ -92,7 +92,7 @@ namespace taskt.Core.Update
             {
                 if (!silent)
                 {
-                    using (var fm = new taskt.UI.Forms.Supplemental.frmDialog("taskt is currently up-to-date!", "No Updates Available", taskt.UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    using (var fm = new UI.Forms.General.frmDialog("taskt is currently up-to-date!", "No Updates Available", UI.Forms.General.frmDialog.DialogType.OkOnly, 0))
                     {
                         fm.ShowDialog();
                     }
@@ -105,7 +105,7 @@ namespace taskt.Core.Update
         /// </summary>
         public static void ShowUpdateResultAsync(bool skipBeta)
         {
-            ApplicationUpdate.SkipBeta = skipBeta;
+            SkipBeta = skipBeta;
 
             //get manifest
             try
@@ -158,7 +158,7 @@ namespace taskt.Core.Update
         /// <param name="manifestConfig"></param>
         private static void ShowUpdateForm(UpdateManifest manifestConfig)
         {
-            using (var frmUpdate = new taskt.UI.Forms.Supplement_Forms.frmUpdate(manifestConfig))
+            using (var frmUpdate = new UI.Forms.ScriptBuilder.Supplemental.frmUpdate(manifestConfig))
             {
                 if (frmUpdate.ShowDialog() == DialogResult.OK)
                 {
@@ -168,7 +168,7 @@ namespace taskt.Core.Update
 
                     if (!System.IO.File.Exists(updaterExecutionResources))
                     {
-                        using (var fm = new taskt.UI.Forms.Supplemental.frmDialog("taskt-updater.exe not found in Resources folder!", "Error", taskt.UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                        using (var fm = new UI.Forms.General.frmDialog("taskt-updater.exe not found in Resources folder!", "Error", UI.Forms.General.frmDialog.DialogType.OkOnly, 0))
                         {
                             fm.ShowDialog();
                         }

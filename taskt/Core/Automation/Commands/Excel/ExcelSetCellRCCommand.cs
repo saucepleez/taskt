@@ -11,35 +11,41 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command sets the value of a cell.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelSetCellRCCommand : ScriptCommand
+    public class ExcelSetCellRCCommand : AExcelRCLocationActionCommands, ILExcelValueSetProperties
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]
+        //[PropertyParameterOrder(6001)]
+        //public string v_CellRow { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnLocation))]
+        //[PropertyParameterOrder(6002)]
+        //public string v_CellColumn { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Text to Set")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Text to Set", true)]
-        [SampleUsage("**Hello World** or **{{{vText}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyDisplayText(true, "Text")]
+        //[PropertyDescription("Text to Set")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Text to Set", true)]
+        //[SampleUsage("**Hello World** or **{{{vText}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyDisplayText(true, "Text")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueToSet))]
+        [PropertyParameterOrder(8000)]
         public string v_TextToSet { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]
-        public string v_ExcelCellRow { get; set; }
-
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnLocation))]
-        public string v_ExcelCellColumn { get; set; }
-
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
-        public string v_ValueType { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
+        //[PropertyParameterOrder(6003)]
+        //public string v_ValueType { get; set; }
 
         public ExcelSetCellRCCommand()
         {
@@ -51,21 +57,37 @@ namespace taskt.Core.Automation.Commands
             //this.v_InstanceName = "";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            //var rg = this.GetExcelRange(nameof(v_CellRow), nameof(v_CellColumn), engine, excelInstance, excelSheet);
 
-            var rg = this.GetExcelRange(nameof(v_ExcelCellRow), nameof(v_ExcelCellColumn), engine, excelInstance, excelSheet);
+            //var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
 
-            var targetText = v_TextToSet.ConvertToUserVariable(sender);
+            //string valueType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), "Value Type", engine);
 
-            string valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
+            //var setFunc = ExcelControls.SetCellValueFunctionFromRange(valueType);
 
-            var setFunc = ExcelControls.SetCellValueFunctionFromRange(valueType);
+            //setFunc(targetText, excelSheet, rg);
 
-            setFunc(targetText, excelSheet, rg);
+            //var rg = this.ExpandValueOrVariableAsExcelCellLocation(engine);
+            //var setFunc = this.ExpandValueOrVariableAsSetRangeAction(engine);
+            //var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
+            //setFunc(rg, targetText);
+
+            //(_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            //(var row, var column) = this.ExpandValueOrVariableAsCellRowAndColumnIndex(engine);
+            //var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
+            //var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
+            //setFunc(targetText, sheet, column, row);
+
+            this.RCLocationAction(new Action<Microsoft.Office.Interop.Excel.Worksheet, int, int>((sheet, column, row) =>
+            {
+                var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
+                var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
+                setFunc(targetText, sheet, column, row);
+            }), engine);
         }
     }
 }

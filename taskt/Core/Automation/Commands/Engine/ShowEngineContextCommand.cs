@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to show a message to the user.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to present or display a value on screen to the user.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'MessageBox' and invokes VariableCommand to find variable data.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ShowEngineContextCommand : ScriptCommand
@@ -36,11 +37,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var closeValue = this.ConvertToUserVariableAsInteger(nameof(v_AutoCloseAfter), engine);
+            var closeValue = this.ExpandValueOrUserVariableAsInteger(nameof(v_AutoCloseAfter), engine);
 
             //automatically close messageboxes for server requests
             if (engine.serverExecution && closeValue <= 0)

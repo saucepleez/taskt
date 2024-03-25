@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to perform a math calculation and apply it to a variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a math calculation.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class MathCalculationCommand : ScriptCommand
@@ -53,7 +54,7 @@ namespace taskt.Core.Automation.Commands
         public string v_DecimalSeperator { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_OutputNumericalVariableName))]
         public string v_applyToVariableName { get; set; }
 
         public MathCalculationCommand()
@@ -64,15 +65,15 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //get variablized string
-            var variableMath = v_InputValue.ConvertToUserVariable(sender);
+            var variableMath = v_InputValue.ExpandValueOrUserVariable(engine);
 
             try
             {
-                var decimalSeperator = v_DecimalSeperator.ConvertToUserVariable(sender);
-                var thousandSeperator = v_ThousandSeperator.ConvertToUserVariable(sender);
+                var decimalSeperator = v_DecimalSeperator.ExpandValueOrUserVariable(engine);
+                var thousandSeperator = v_ThousandSeperator.ExpandValueOrUserVariable(engine);
 
                 //remove thousandths markers
                 if (thousandSeperator != "")
@@ -103,7 +104,7 @@ namespace taskt.Core.Automation.Commands
 
                
                 //store string in variable
-                result.ToString().StoreInUserVariable(sender, v_applyToVariableName);
+                result.ToString().StoreInUserVariable(engine, v_applyToVariableName);
             }
             catch (Exception ex)
             {

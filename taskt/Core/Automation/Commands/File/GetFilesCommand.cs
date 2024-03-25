@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command returns a list of file paths from a specified location")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to return a list of file paths from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetFilesCommand : ScriptCommand
@@ -80,16 +81,14 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //apply variable logic
             var sourceFolder = FolderPathControls.WaitForFolder(this, nameof(v_SourceFolderPath), nameof(v_WaitForFolder), engine);
 
-            var searchFile = v_SearchFileName.ConvertToUserVariableAsFileName(engine);
+            var searchFile = v_SearchFileName.ExpandValueOrUserVariableAsFileName(engine);
 
-            var ext = v_SearchExtension.ConvertToUserVariable(engine).ToLower();
+            var ext = v_SearchExtension.ExpandValueOrUserVariable(engine).ToLower();
 
             // get all files
             List<string> filesList;
@@ -97,7 +96,7 @@ namespace taskt.Core.Automation.Commands
 
             if (!String.IsNullOrEmpty(searchFile))
             {
-                var searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), engine);
+                var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SearchMethod), engine);
                 switch (searchMethod)
                 {
                     case "contains":

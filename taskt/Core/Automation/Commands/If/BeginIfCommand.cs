@@ -2,13 +2,9 @@
 using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using taskt.Core.Automation.User32;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using taskt.UI.Forms;
 using taskt.UI.CustomControls;
-using System.Drawing;
-using System.Text;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -17,7 +13,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to evaluate a logical statement to determine if the statement is true.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check if a statement is 'true' or 'false' and subsequently take an action based on either condition. Any 'BeginIf' command must have a following 'EndIf' command.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command evaluates supplied arguments and if evaluated to true runs sub elements")]
-    public class BeginIfCommand : ScriptCommand
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_begin_if))]
+    public class BeginIfCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select type of If Command")]
@@ -88,7 +85,7 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
 
             //define parameter table
-            this.v_IfActionParameterTable = new System.Data.DataTable
+            this.v_IfActionParameterTable = new DataTable
             {
                 TableName = DateTime.Now.ToString("IfActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"))
             };
@@ -96,21 +93,19 @@ namespace taskt.Core.Automation.Commands
             this.v_IfActionParameterTable.Columns.Add("Parameter Value");
         }
 
-        private void IfGridViewHelper_MouseEnter(object sender, EventArgs e, frmCommandEditor editor)
+        private void IfGridViewHelper_MouseEnter(object sender, EventArgs e, UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             ifAction_SelectionChangeCommitted(null, null, editor);
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(Engine.AutomationEngineInstance engine, Script.ScriptAction parentCommand)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             bool ifResult = ConditionControls.DetermineStatementTruth(v_IfActionType, v_IfActionParameterTable, engine);
 
             int startIndex, endIndex, elseIndex;
-            if (parentCommand.AdditionalScriptCommands.Any(item => item.ScriptCommand is Core.Automation.Commands.ElseCommand))
+            if (parentCommand.AdditionalScriptCommands.Any(item => item.ScriptCommand is ElseCommand))
             {
-                elseIndex = parentCommand.AdditionalScriptCommands.FindIndex(a => a.ScriptCommand is Core.Automation.Commands.ElseCommand);
+                elseIndex = parentCommand.AdditionalScriptCommands.FindIndex(a => a.ScriptCommand is ElseCommand);
 
                 if (ifResult)
                 {
@@ -140,701 +135,9 @@ namespace taskt.Core.Automation.Commands
 
                 engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[i]);
             }
-
         }
-        //public bool DetermineStatementTruth(object sender)
-        //{
-        //    var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-        //    bool ifResult = false;
-
-        //    string actionType = v_IfActionType.ConvertToUserVariable(engine);
-
-        //    switch (actionType.ToLower())
-        //    {
-        //        case "value":
-        //            ifResult = DetermineStatementTruth_Value(engine);
-        //            break;
-
-        //        case "date compare":
-        //            ifResult = DetermineStatementTruth_DateCompare(engine);
-        //            break;
-
-        //        case "variable compare":
-        //            ifResult = DetermineStatementTruth_VariableCompare(engine);
-        //            break;
-
-        //        case "variable has value":
-        //            ifResult = DetermineStatementTruth_VariableHasValue(engine);
-        //            break;
-
-        //        case "variable is numeric":
-        //            ifResult = DetermineStatementTruth_VariableIsNumeric(engine);
-        //            break;
-
-        //        case "error occured":
-        //            ifResult = DetermineStatementTruth_ErrorOccur(engine, false);
-        //            break;
-
-        //        case "error did not occur":
-        //            ifResult = DetermineStatementTruth_ErrorOccur(engine, true);
-        //            break;
-
-        //        case "window name exists":
-        //            ifResult = DetermineStatementTruth_WindowNameExists(engine);
-        //            break;
-
-        //        case "active window name is":
-        //            ifResult = DetermineStatementTruth_ActiveWindow(engine);
-        //            break;
-
-        //        case "file exists":
-        //            ifResult = DetermineStatementTruth_File(engine);
-        //            break;
-
-        //        case "folder exists":
-        //            ifResult = DetermineStatementTruth_Folder(engine);
-        //            break;
-
-        //        case "web element exists":
-        //            ifResult = DetermineStatementTruth_WebElement(engine);
-        //            break;
-
-        //        case "gui element exists":
-        //            ifResult = DetermineStatementTruth_GUIElement(engine);
-        //            break;
-
-        //        case "boolean":
-        //            ifResult = DetermineStatementTruth_Boolean(engine);
-        //            break;
-
-        //        default:
-        //            throw new Exception("If type not recognized!");
-        //            break;
-        //    }
-
-        //    //if (v_IfActionType == "Value")
-        //    //{
-        //    //    ifResult = DetermineStatementTruth_Value(engine);
-        //    //}
-        //    //else if (v_IfActionType == "Date Compare")
-        //    //{
-        //    //    ifResult = DetermineStatementTruth_DateCompare(engine);
-        //    //}
-        //    //else if (v_IfActionType == "Variable Compare")
-        //    //{
-        //    //    ifResult = DetermineStatementTruth_VariableCompare(engine);
-        //    //}
-        //    //else if (v_IfActionType == "Variable Has Value")
-        //    //{
-        //    //    ifResult = DetermineStatementTruth_VariableHasValue(engine);
-        //    //}
-        //    //else if (v_IfActionType == "Variable Is Numeric")
-        //    //{
-        //    //    ifResult = DetermineStatementTruth_VariableIsNumeric(engine);
-        //    //}
-        //    //else if (v_IfActionType == "Error Occured")
-        //    //{
-        //    //    ////get line number
-        //    //    //string userLineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //    //                          where rw.Field<string>("Parameter Name") == "Line Number"
-        //    //    //                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    //    ////convert to variable
-        //    //    //string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
-
-        //    //    ////convert to int
-        //    //    //int lineNumber = int.Parse(variableLineNumber);
-
-        //    //    ////determine if error happened
-        //    //    //if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() > 0)
-        //    //    //{
-
-        //    //    //    var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
-        //    //    //    error.ErrorMessage.StoreInUserVariable(sender, "Error.Message");
-        //    //    //    error.LineNumber.ToString().StoreInUserVariable(sender, "Error.Line");
-        //    //    //    error.StackTrace.StoreInUserVariable(sender, "Error.StackTrace");
-
-        //    //    //    ifResult = true;
-        //    //    //}
-        //    //    //else
-        //    //    //{
-        //    //    //    ifResult = false;
-        //    //    //}
-        //    //    ifResult = DetermineStatementTruth_ErrorDidOccur(engine, false);
-        //    //}
-        //    //else if (v_IfActionType == "Error Did Not Occur")
-        //    //{
-        //    //    ifResult = DetermineStatementTruth_ErrorDidOccur(engine, true);
-        //    //}
-        //    //else if (v_IfActionType == "Window Name Exists")
-        //    //{
-        //    //    ifResult = DetermineStatementTruth_WindowNameExists(engine);
-        //    //}
-        //    //else if (v_IfActionType == "Active Window Name Is")
-        //    //{
-        //    //    ifResult = DetermineStatementTruth_ActiveWindow(engine);
-        //    //}
-        //    //else if (v_IfActionType == "File Exists")
-        //    //{
-        //    //    ifResult = DetermineStatementTruth_File(engine);
-        //    //}
-        //    //else if (v_IfActionType == "Folder Exists")
-        //    //{
-        //    //    ifResult = DetermineStatementTruth_Folder(engine);
-        //    //}
-        //    //else if (v_IfActionType == "Web Element Exists")
-        //    //{
-        //    //    ifResult = DetermineStatementTruth_WebElement(engine);
-        //    //}
-        //    //else if (v_IfActionType == "GUI Element Exists")
-        //    //{
-        //    //    ifResult = DetermineStatementTruth_GUIElement(engine);
-        //    //}
-        //    //else if (v_IfActionType == "Boolean")
-        //    //{
-        //    //    ifResult = DetermineStatementTruth_Boolean(engine);
-        //    //}
-        //    //else
-        //    //{
-        //    //    throw new Exception("If type not recognized!");
-        //    //}
-
-        //    return ifResult;
-        //}
-
-        //private bool DetermineStatementTruth_Value(Engine.AutomationEngineInstance engine)
-        //{
-        //    //string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                  where rw.Field<string>("Parameter Name") == "Value1"
-        //    //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-        //    //string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                   where rw.Field<string>("Parameter Name") == "Operand"
-        //    //                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
-        //    //string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                  where rw.Field<string>("Parameter Name") == "Value2"
-        //    //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    //value1 = value1.ConvertToUserVariable(sender);
-        //    //value2 = value2.ConvertToUserVariable(sender);
-
-        //    var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
-
-        //    string operand = param["Operand"].ConvertToUserVariable(engine);
-
-        //    bool isBoolCompare = false;
-        //    decimal value1 = 0;
-        //    decimal value2 = 0;
-        //    switch (operand.ToLower())
-        //    {
-        //        case "is equal to":
-        //        case "is not equal to":
-        //            bool tempBool;
-        //            isBoolCompare = bool.TryParse(param["Value1"], out tempBool) && bool.TryParse(param["Value2"], out tempBool);
-        //            break;
-        //        default:
-        //            value1 = param["Value1"].ConvertToUserVariableAsDecimal("Value1", engine);
-        //            value2 = param["Value2"].ConvertToUserVariableAsDecimal("Value2", engine);
-        //            break;
-        //    }
-
-        //    //bool tempBool;
-        //    //bool isBoolCompare = (bool.TryParse(value1, out tempBool) && bool.TryParse(value2, out tempBool));
-        //    //decimal cdecValue1, cdecValue2;
-
-        //    bool ifResult;
-        //    switch (operand.ToLower())
-        //    {
-        //        case "is equal to":
-        //            if (isBoolCompare)
-        //            {
-        //                ifResult = (bool.Parse(param["Value1"]) == bool.Parse(param["Value2"]));
-        //            }
-        //            else
-        //            {
-        //                ifResult = (param["Value1"] == param["Value2"]);
-        //            }
-        //            break;
-
-        //        case "is not equal to":
-        //            if (isBoolCompare)
-        //            {
-        //                ifResult = (bool.Parse(param["Value1"]) != bool.Parse(param["Value2"]));
-        //            }
-        //            else
-        //            {
-        //                ifResult = (param["Value1"] != param["Value2"]);
-        //            }
-        //            break;
-
-        //        case "is greater than":
-        //            //cdecValue1 = Convert.ToDecimal(value1);
-        //            //cdecValue2 = Convert.ToDecimal(value2);
-        //            //ifResult = (cdecValue1 > cdecValue2);
-        //            ifResult = value1 > value2;
-        //            break;
-
-        //        case "is greater than or equal to":
-        //            //cdecValue1 = Convert.ToDecimal(value1);
-        //            //cdecValue2 = Convert.ToDecimal(value2);
-        //            //ifResult = (cdecValue1 >= cdecValue2);
-        //            ifResult = value1 >= value2;
-        //            break;
-
-        //        case "is less than":
-        //            //cdecValue1 = Convert.ToDecimal(value1);
-        //            //cdecValue2 = Convert.ToDecimal(value2);
-        //            //ifResult = (cdecValue1 < cdecValue2);
-        //            ifResult = value1 < value2;
-        //            break;
-
-        //        case "is less than or equal to":
-        //            //cdecValue1 = Convert.ToDecimal(value1);
-        //            //cdecValue2 = Convert.ToDecimal(value2);
-        //            //ifResult = (cdecValue1 <= cdecValue2);
-        //            ifResult = value1 <= value2;
-        //            break;
-        //        default:
-        //            throw new Exception("Strange Operand " + param["Operand"]);
-        //            break;
-        //    }
-        //    return ifResult;
-        //}
-
-        //private bool DetermineStatementTruth_DateCompare(Engine.AutomationEngineInstance engine)
-        //{
-        //    //string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                  where rw.Field<string>("Parameter Name") == "Value1"
-        //    //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-        //    //string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                   where rw.Field<string>("Parameter Name") == "Operand"
-        //    //                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
-        //    //string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                  where rw.Field<string>("Parameter Name") == "Value2"
-        //    //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    //value1 = value1.ConvertToUserVariable(sender);
-        //    //value2 = value2.ConvertToUserVariable(sender);
-
-        //    var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
-
-        //    string operand = param["Operand"].ConvertToUserVariable(engine);
-
-        //    DateTime dt1 = param["Value1"].ConvertToUserVariableAsDate("Value1", engine);
-        //    DateTime dt2 = param["Value2"].ConvertToUserVariableAsDate("Value2", engine);
-
-        //    //DateTime dt1, dt2;
-        //    //dt1 = DateTime.Parse(value1);
-        //    //dt2 = DateTime.Parse(value2);
-
-        //    bool ifResult;
-        //    switch (operand.ToLower())
-        //    {
-        //        case "is equal to":
-        //            ifResult = (dt1 == dt2);
-        //            break;
-
-        //        case "is not equal to":
-        //            ifResult = (dt1 != dt2);
-        //            break;
-
-        //        case "is greater than":
-        //            ifResult = (dt1 > dt2);
-        //            break;
-
-        //        case "is greater than or equal to":
-        //            ifResult = (dt1 >= dt2);
-        //            break;
-
-        //        case "is less than":
-        //            ifResult = (dt1 < dt2);
-        //            break;
-
-        //        case "is less than or equal to":
-        //            ifResult = (dt1 <= dt2);
-        //            break;
-
-        //        default:
-        //            throw new Exception("Strange Operand " + param["Operand"]);
-        //            break;
-        //    }
-        //    return ifResult;
-        //}
-
-        //private bool DetermineStatementTruth_VariableCompare(Engine.AutomationEngineInstance engine)
-        //{
-        //    //string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                  where rw.Field<string>("Parameter Name") == "Value1"
-        //    //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-        //    //string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                   where rw.Field<string>("Parameter Name") == "Operand"
-        //    //                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
-        //    //string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                  where rw.Field<string>("Parameter Name") == "Value2"
-        //    //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    //string caseSensitive = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                         where rw.Field<string>("Parameter Name") == "Case Sensitive"
-        //    //                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    //value1 = value1.ConvertToUserVariable(sender);
-        //    //value2 = value2.ConvertToUserVariable(sender);
-
-        //    var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
-
-        //    //if (caseSensitive == "No")
-        //    //{
-        //    //    value1 = value1.ToUpper();
-        //    //    value2 = value2.ToUpper();
-        //    //}
-
-        //    string value1 = param["Value1"];
-        //    string value2 = param["Value2"];
-        //    if (param["Case Sensitive"].ToLower() == "no")
-        //    {
-        //        value1 = value1.ToLower();
-        //        value2 = value2.ToLower();
-        //    }
-
-        //    bool ifResult;
-        //    switch (param["Operand"].ToLower())
-        //    {
-        //        case "contains":
-        //            ifResult = (value1.Contains(value2));
-        //            break;
-
-        //        case "does not contain":
-        //            ifResult = (!value1.Contains(value2));
-        //            break;
-
-        //        case "is equal to":
-        //            ifResult = (value1 == value2);
-        //            break;
-
-        //        case "is not equal to":
-        //            ifResult = (value1 != value2);
-        //            break;
-
-        //        default:
-        //            throw new Exception("Strange Operand " + param["Operand"]);
-        //            break;
-        //    }
-        //    return ifResult;
-        //}
-
-        //private bool DetermineStatementTruth_VariableHasValue(Engine.AutomationEngineInstance engine)
-        //{
-        //    //string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                        where rw.Field<string>("Parameter Name") == "Variable Name"
-        //    //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    //var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
-
-        //    var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
-
-        //    string actualVariable = param["Variable Name"].Trim();
-
-        //    //if (!string.IsNullOrEmpty(actualVariable))
-        //    //{
-        //    //    ifResult = true;
-        //    //}
-        //    //else
-        //    //{
-        //    //    ifResult = false;
-        //    //}
-
-        //    return (!string.IsNullOrEmpty(actualVariable));
-        //}
-
-        //private bool DetermineStatementTruth_VariableIsNumeric(Engine.AutomationEngineInstance engine)
-        //{
-        //    //string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                        where rw.Field<string>("Parameter Name") == "Variable Name"
-        //    //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    //var actualVariable = variableName.ConvertToUserVariable(sender).Trim();
-
-        //    var dic = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
-
-        //    var numericTest = decimal.TryParse(dic["Variable Name"], out decimal parsedResult);
-
-        //    //if (numericTest)
-        //    //{
-        //    //    ifResult = true;
-        //    //}
-        //    //else
-        //    //{
-        //    //    ifResult = false;
-        //    //}
-        //    return numericTest;
-        //}
-
-        //private bool DetermineStatementTruth_ErrorOccur(Engine.AutomationEngineInstance engine, bool inverseResult = false)
-        //{
-        //    ////get line number
-        //    //string userLineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                          where rw.Field<string>("Parameter Name") == "Line Number"
-        //    //                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    ////convert to variable
-        //    //string variableLineNumber = userLineNumber.ConvertToUserVariable(sender);
-
-        //    ////convert to int
-        //    //int lineNumber = int.Parse(variableLineNumber);
-
-        //    var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
-        //    int lineNumber = param["Line Number"].ConvertToUserVariableAsInteger("Line Number", engine);
-
-        //    bool result;
-
-        //    ////determine if error happened
-        //    //if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() == 0)
-        //    //{
-        //    //    result = true;
-        //    //}
-        //    //else
-        //    //{
-        //    //    var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
-        //    //    error.ErrorMessage.StoreInUserVariable(engine, "Error.Message");
-        //    //    error.LineNumber.ToString().StoreInUserVariable(engine, "Error.Line");
-        //    //    error.StackTrace.StoreInUserVariable(engine, "Error.StackTrace");
-
-        //    //    result = false;
-        //    //}
-
-        //    //determine if error happened
-        //    if (engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).Count() > 0)
-        //    {
-
-        //        var error = engine.ErrorsOccured.Where(f => f.LineNumber == lineNumber).FirstOrDefault();
-        //        error.ErrorMessage.StoreInUserVariable(engine, "Error.Message");
-        //        error.LineNumber.ToString().StoreInUserVariable(engine, "Error.Line");
-        //        error.StackTrace.StoreInUserVariable(engine, "Error.StackTrace");
-
-        //        result = true;
-        //    }
-        //    else
-        //    {
-        //        result = false;
-        //    }
-
-        //    return inverseResult ? !result : result;
-        //}
-        //private bool DetermineStatementTruth_WindowNameExists(Engine.AutomationEngineInstance engine)
-        //{
-        //    ////get user supplied name
-        //    //string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                      where rw.Field<string>("Parameter Name") == "Window Name"
-        //    //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-        //    ////variable translation
-        //    //string variablizedWindowName = windowName.ConvertToUserVariable(sender);
-
-        //    var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
-
-        //    //search for window
-        //    IntPtr windowPtr = User32Functions.FindWindow(param["Window Name"]);
-
-        //    ////conditional
-        //    //if (windowPtr != IntPtr.Zero)
-        //    //{
-        //    //    ifResult = true;
-        //    //}
-        //    return (windowPtr != IntPtr.Zero);
-        //}
-        //private bool DetermineStatementTruth_ActiveWindow(Engine.AutomationEngineInstance engine)
-        //{
-        //    //string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                      where rw.Field<string>("Parameter Name") == "Window Name"
-        //    //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    //string variablizedWindowName = windowName.ConvertToUserVariable(sender);
-
-        //    var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
-
-        //    var currentWindowTitle = User32Functions.GetActiveWindowTitle();
-
-        //    //if (currentWindowTitle == variablizedWindowName)
-        //    //{
-        //    //    ifResult = true;
-        //    //}
-        //    return (currentWindowTitle == param["Window Name"]);
-        //}
-        //private bool DetermineStatementTruth_File(Engine.AutomationEngineInstance engine)
-        //{
-        //    //string fileName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                    where rw.Field<string>("Parameter Name") == "File Path"
-        //    //                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    //string trueWhenFileExists = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                              where rw.Field<string>("Parameter Name") == "True When"
-        //    //                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
-
-        //    //var userFileSelected = fileName.ConvertToUserVariable(sender);
-
-        //    //bool existCheck = false;
-        //    //if (trueWhenFileExists == "It Does Exist")
-        //    //{
-        //    //    existCheck = true;
-        //    //}
-
-
-        //    //if (System.IO.File.Exists(userFileSelected) == existCheck)
-        //    //{
-        //    //    ifResult = true;
-        //    //}
-
-        //    bool existCheck = System.IO.File.Exists(param["File Path"]);
-        //    switch (param["True When"].ToLower())
-        //    {
-        //        case "it does exist":
-        //            return existCheck;
-        //            break;
-
-        //        case "it does not exist":
-        //            return !existCheck;
-        //            break;
-
-        //        default:
-        //            throw new Exception("True When is strange value " + param["True When"]);
-        //            break;
-        //    }
-        //}
-        //private bool DetermineStatementTruth_Folder(Engine.AutomationEngineInstance engine)
-        //{
-        //    //string folderName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                      where rw.Field<string>("Parameter Name") == "Folder Path"
-        //    //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    //string trueWhenFileExists = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                              where rw.Field<string>("Parameter Name") == "True When"
-        //    //                              select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
-
-        //    //var userFolderSelected = folderName.ConvertToUserVariable(sender);
-
-        //    //bool existCheck = false;
-        //    //if (trueWhenFileExists == "It Does Exist")
-        //    //{
-        //    //    existCheck = true;
-        //    //}
-
-
-        //    //if (System.IO.Directory.Exists(folderName) == existCheck)
-        //    //{
-        //    //    ifResult = true;
-        //    //}
-
-        //    bool existCheck = System.IO.Directory.Exists(param["Folder Path"]);
-        //    switch(param["True When"].ToLower())
-        //    {
-        //        case "it does exist":
-        //            return existCheck;
-        //            break;
-
-        //        case "it does not exist":
-        //            return !existCheck;
-        //            break;
-
-        //        default:
-        //            throw new Exception("True When is strange value " + param["True When"]);
-        //            break;
-        //    }
-        //}
-
-        //private bool DetermineStatementTruth_WebElement(Engine.AutomationEngineInstance engine)
-        //{
-        //    //string instanceName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                        where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
-        //    //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    //string parameterName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                         where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-        //    //                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    //string searchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                        where rw.Field<string>("Parameter Name") == "Element Search Method"
-        //    //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
-
-        //    SeleniumBrowserElementActionCommand newElementActionCommand = new SeleniumBrowserElementActionCommand();
-        //    newElementActionCommand.v_SeleniumSearchType = param["Element Search Method"];
-        //    newElementActionCommand.v_InstanceName = param["Selenium Instance Name"];
-        //    bool elementExists = newElementActionCommand.ElementExists(engine, param["Element Search Method"], param["Element Search Parameter"]);
-        //    return elementExists;
-        //}
-
-        //private bool DetermineStatementTruth_GUIElement(Engine.AutomationEngineInstance engine)
-        //{
-        //    //string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                      where rw.Field<string>("Parameter Name") == "Window Name"
-        //    //                      select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-        //    //string elementSearchParam = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                              where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-        //    //                              select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-        //    //string elementSearchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                               where rw.Field<string>("Parameter Name") == "Element Search Method"
-        //    //                               select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-        //    var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value", engine);
-        //    string windowName = param["Window Name"];
-
-        //    if (windowName == engine.engineSettings.CurrentWindowKeyword)
-        //    {
-        //        windowName = User32Functions.GetActiveWindowTitle();
-        //    }
-
-        //    UIAutomationCommand newUIACommand = new UIAutomationCommand();
-        //    newUIACommand.v_WindowName = windowName;
-        //    newUIACommand.v_UIASearchParameters.Rows.Add(true, param["Element Search Method"], param["Element Search Parameter"]);
-        //    var handle = newUIACommand.SearchForGUIElement(engine, windowName);
-
-        //    //if (handle is null)
-        //    //{
-        //    //    ifResult = false;
-        //    //}
-        //    //else
-        //    //{
-        //    //    ifResult = true;
-        //    //}
-        //    return !(handle is null);
-        //}
-        //private bool DetermineStatementTruth_Boolean(Engine.AutomationEngineInstance engine)
-        //{
-        //    //string value = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                 where rw.Field<string>("Parameter Name") == "Variable Name"
-        //    //                 select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-        //    //string compare = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //    //                   where rw.Field<string>("Parameter Name") == "Value Is"
-        //    //                   select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
-
-        //    var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
-
-        //    bool value = param["Variable Name"].ConvertToUserVariableAsBool("Variable Name", engine);
-        //    string compare = param["Value Is"].ConvertToUserVariable(engine);
-
-        //    switch (compare.ToLower())
-        //    {
-        //        case "true":
-        //            return value;
-        //            break;
-        //        case "false":
-        //            return !value;
-        //            break;
-        //        default:
-        //            throw new Exception("Value Is " + param["Value Is"] + " is not support.");
-        //            break;
-        //    }
-        //}
-
-
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -906,11 +209,11 @@ namespace taskt.Core.Automation.Commands
             return RenderedControls;
         }
 
-        private void linkWebBrowserInstanceSelector_Click(object sender, EventArgs e, frmCommandEditor editor)
+        private void linkWebBrowserInstanceSelector_Click(object sender, EventArgs e, UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             var instances = editor.instanceList.getInstanceClone(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser);
 
-            using (var frm = new UI.Forms.Supplemental.frmItemSelector(instances.Keys.ToList<string>()))
+            using (var frm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(instances.Keys.ToList()))
             {
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
@@ -923,24 +226,26 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private void linkWindowNameSelector_Click(object sender, EventArgs e, frmCommandEditor editor)
+        private void linkWindowNameSelector_Click(object sender, EventArgs e, UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-            List<string> windowNames = new List<string>();
-
-            windowNames.Add(editor.appSettings.EngineSettings.CurrentWindowKeyword);
+            List<string> windowNames = new List<string>
+            {
+                //editor.appSettings.EngineSettings.CurrentWindowKeyword
+                VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, editor.appSettings),
+            };
 
             System.Diagnostics.Process[] processlist = System.Diagnostics.Process.GetProcesses();
             //pull the main window title for each
             foreach (var process in processlist)
             {
-                if (!String.IsNullOrEmpty(process.MainWindowTitle))
+                if (!string.IsNullOrEmpty(process.MainWindowTitle))
                 {
                     //add to the control list of available windows
                     windowNames.Add(process.MainWindowTitle);
                 }
             }
 
-            using (var frm = new UI.Forms.Supplemental.frmItemSelector(windowNames))
+            using (var frm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(windowNames))
             {
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
@@ -953,11 +258,11 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private void linkBooleanInstanceSelector_Click(object sender, EventArgs e, frmCommandEditor editor)
+        private void linkBooleanInstanceSelector_Click(object sender, EventArgs e, UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             var instances = editor.instanceList.getInstanceClone(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean);
 
-            using (var frm = new UI.Forms.Supplemental.frmItemSelector(instances.Keys.ToList<string>()))
+            using (var frm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(instances.Keys.ToList()))
             {
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
@@ -985,12 +290,12 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private void ifAction_SelectionChangeCommitted(object sender, EventArgs e, frmCommandEditor editor)
+        private void ifAction_SelectionChangeCommitted(object sender, EventArgs e, UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             ComboBox ifAction = (ComboBox)ActionDropdown;
             DataGridView ifActionParameterBox = (DataGridView)IfGridViewHelper;
 
-            Core.Automation.Commands.BeginIfCommand cmd = (Core.Automation.Commands.BeginIfCommand)this;
+            BeginIfCommand cmd = (BeginIfCommand)this;
             DataTable actionParameters = cmd.v_IfActionParameterTable;
 
             //sender is null when command is updating
@@ -998,17 +303,6 @@ namespace taskt.Core.Automation.Commands
             {
                 actionParameters.Rows.Clear();
             }
-
-            //DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
-
-            //recorder control
-            //Control recorderControl = (Control)RecorderControl;
-
-            //remove if exists            
-            //if (RecorderControl.Visible)
-            //{
-            //    RecorderControl.Hide();
-            //}
 
             lnkBrowserInstanceSelector.Hide();
             lnkWindowNameSelector.Hide();
@@ -1089,433 +383,12 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        //private void RenderValueCompare(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
-        //{
-        //    ifActionParameterBox.Visible = true;
-
-        //    if (sender != null)
-        //    {
-        //        actionParameters.Rows.Add("Value1", "");
-        //        actionParameters.Rows.Add("Operand", "");
-        //        actionParameters.Rows.Add("Value2", "");
-        //        ifActionParameterBox.DataSource = actionParameters;
-        //    }
-
-        //    //combobox cell for Variable Name
-        //    DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
-        //    comparisonComboBox.Items.Add("is equal to");
-        //    comparisonComboBox.Items.Add("is greater than");
-        //    comparisonComboBox.Items.Add("is greater than or equal to");
-        //    comparisonComboBox.Items.Add("is less than");
-        //    comparisonComboBox.Items.Add("is less than or equal to");
-        //    comparisonComboBox.Items.Add("is not equal to");
-
-        //    //assign cell as a combobox
-        //    ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
-        //}
-
-        //private void RenderVariableCompare(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
-        //{
-        //    ifActionParameterBox.Visible = true;
-
-        //    if (sender != null)
-        //    {
-        //        actionParameters.Rows.Add("Value1", "");
-        //        actionParameters.Rows.Add("Operand", "");
-        //        actionParameters.Rows.Add("Value2", "");
-        //        actionParameters.Rows.Add("Case Sensitive", "No");
-        //        ifActionParameterBox.DataSource = actionParameters;
-        //    }
-
-        //    //combobox cell for Variable Name
-        //    DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
-        //    comparisonComboBox.Items.Add("contains");
-        //    comparisonComboBox.Items.Add("does not contain");
-        //    comparisonComboBox.Items.Add("is equal to");
-        //    comparisonComboBox.Items.Add("is not equal to");
-
-        //    //assign cell as a combobox
-        //    ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
-
-        //    DataGridViewComboBoxCell caseSensitiveComboBox = new DataGridViewComboBoxCell();
-        //    caseSensitiveComboBox.Items.Add("Yes");
-        //    caseSensitiveComboBox.Items.Add("No");
-
-        //    //assign cell as a combobox
-        //    ifActionParameterBox.Rows[3].Cells[1] = caseSensitiveComboBox;
-        //}
-
-        //private void RenderVariableIsHas(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
-        //{
-        //    ifActionParameterBox.Visible = true;
-        //    if (sender != null)
-        //    {
-        //        actionParameters.Rows.Add("Variable Name", "");
-        //        ifActionParameterBox.DataSource = actionParameters;
-        //    }
-        //}
-
-        //private void RenderErrorOccur(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
-        //{
-        //    ifActionParameterBox.Visible = true;
-        //    if (sender != null)
-        //    {
-        //        actionParameters.Rows.Add("Line Number", "");
-        //        ifActionParameterBox.DataSource = actionParameters;
-        //    }
-        //}
-
-        //private void RenderWindowName(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
-        //{
-        //    ifActionParameterBox.Visible = true;
-        //    if (sender != null)
-        //    {
-        //        actionParameters.Rows.Add("Window Name", "");
-        //        ifActionParameterBox.DataSource = actionParameters;
-        //    }
-        //}
-
-        //private void RenderFileExists(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
-        //{
-        //    ifActionParameterBox.Visible = true;
-        //    if (sender != null)
-        //    {
-        //        actionParameters.Rows.Add("File Path", "");
-        //        actionParameters.Rows.Add("True When", "It Does Exist");
-        //        ifActionParameterBox.DataSource = actionParameters;
-        //    }
-
-        //    //combobox cell for Variable Name
-        //    DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
-        //    comparisonComboBox.Items.Add("It Does Exist");
-        //    comparisonComboBox.Items.Add("It Does Not Exist");
-
-        //    //assign cell as a combobox
-        //    ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
-        //}
-
-        //private void RenderFolderExists(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
-        //{
-        //    ifActionParameterBox.Visible = true;
-
-        //    if (sender != null)
-        //    {
-        //        actionParameters.Rows.Add("Folder Path", "");
-        //        actionParameters.Rows.Add("True When", "It Does Exist");
-        //        ifActionParameterBox.DataSource = actionParameters;
-        //    }
-
-        //    //combobox cell for Variable Name
-        //    DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
-        //    comparisonComboBox.Items.Add("It Does Exist");
-        //    comparisonComboBox.Items.Add("It Does Not Exist");
-
-        //    //assign cell as a combobox
-        //    ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
-        //}
-
-        //private void RenderWebElement(object sender, DataGridView ifActionParameterBox, DataTable actionParameters, frmCommandEditor editor)
-        //{
-        //    ifActionParameterBox.Visible = true;
-
-        //    if (sender != null)
-        //    {
-        //        actionParameters.Rows.Add("Selenium Instance Name", editor.appSettings.ClientSettings.DefaultBrowserInstanceName);
-        //        actionParameters.Rows.Add("Element Search Method", "");
-        //        actionParameters.Rows.Add("Element Search Parameter", "");
-        //        ifActionParameterBox.DataSource = actionParameters;
-        //    }
-
-        //    DataGridViewComboBoxCell comparisonComboBox = new DataGridViewComboBoxCell();
-        //    comparisonComboBox.Items.Add("Find Element By XPath");
-        //    comparisonComboBox.Items.Add("Find Element By ID");
-        //    comparisonComboBox.Items.Add("Find Element By Name");
-        //    comparisonComboBox.Items.Add("Find Element By Tag Name");
-        //    comparisonComboBox.Items.Add("Find Element By Class Name");
-        //    comparisonComboBox.Items.Add("Find Element By CSS Selector");
-
-        //    //assign cell as a combobox
-        //    ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
-        //}
-
-        //private void RenderGUIElement(object sender, DataGridView ifActionParameterBox, DataTable actionParameters, frmCommandEditor editor)
-        //{
-        //    ifActionParameterBox.Visible = true;
-        //    if (sender != null)
-        //    {
-        //        actionParameters.Rows.Add("Window Name", editor.appSettings.EngineSettings.CurrentWindowKeyword);
-        //        actionParameters.Rows.Add("Element Search Method", "");
-        //        actionParameters.Rows.Add("Element Search Parameter", "");
-        //        ifActionParameterBox.DataSource = actionParameters;
-        //    }
-
-        //    var parameterName = new DataGridViewComboBoxCell();
-        //    parameterName.Items.Add("AcceleratorKey");
-        //    parameterName.Items.Add("AccessKey");
-        //    parameterName.Items.Add("AutomationId");
-        //    parameterName.Items.Add("ClassName");
-        //    parameterName.Items.Add("FrameworkId");
-        //    parameterName.Items.Add("HasKeyboardFocus");
-        //    parameterName.Items.Add("HelpText");
-        //    parameterName.Items.Add("IsContentElement");
-        //    parameterName.Items.Add("IsControlElement");
-        //    parameterName.Items.Add("IsEnabled");
-        //    parameterName.Items.Add("IsKeyboardFocusable");
-        //    parameterName.Items.Add("IsOffscreen");
-        //    parameterName.Items.Add("IsPassword");
-        //    parameterName.Items.Add("IsRequiredForForm");
-        //    parameterName.Items.Add("ItemStatus");
-        //    parameterName.Items.Add("ItemType");
-        //    parameterName.Items.Add("LocalizedControlType");
-        //    parameterName.Items.Add("Name");
-        //    parameterName.Items.Add("NativeWindowHandle");
-        //    parameterName.Items.Add("ProcessID");
-
-        //    //assign cell as a combobox
-        //    ifActionParameterBox.Rows[1].Cells[1] = parameterName;
-
-        //    //RecorderControl.Show();
-        //}
-
-        //private void RenderBoolean(object sender, DataGridView ifActionParameterBox, DataTable actionParameters)
-        //{
-        //    ifActionParameterBox.Visible = true;
-        //    if (sender != null)
-        //    {
-        //        actionParameters.Rows.Add("Variable Name", "");
-        //        actionParameters.Rows.Add("Value Is", "True");
-        //        ifActionParameterBox.DataSource = actionParameters;
-        //    }
-        //    //assign cell as a combobox
-        //    DataGridViewComboBoxCell booleanParam = new DataGridViewComboBoxCell();
-        //    booleanParam.Items.Add("True");
-        //    booleanParam.Items.Add("False");
-        //    ifActionParameterBox.Rows[1].Cells[1] = booleanParam;
-
-        //    //RecorderControl.Show();
-        //}
-
-        //private void ShowIfElementRecorder(object sender, EventArgs e)
-        //{
-        //    //get command reference
-        //    Core.Automation.Commands.UIAutomationCommand cmd = new Core.Automation.Commands.UIAutomationCommand();
-
-        //    //create recorder
-        //    UI.Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new UI.Forms.Supplemental.frmThickAppElementRecorder();
-        //    newElementRecorder.searchParameters = cmd.v_UIASearchParameters;
-
-        //    //show form
-        //    newElementRecorder.ShowDialog();
-
-
-        //    var sb = new StringBuilder();
-        //    sb.AppendLine("Element Properties Found!");
-        //    sb.AppendLine(Environment.NewLine);
-        //    sb.AppendLine("Element Search Method - Element Search Parameter");
-        //    foreach (DataRow rw in cmd.v_UIASearchParameters.Rows)
-        //    {
-        //        if (rw.ItemArray[2].ToString().Trim() == string.Empty)
-        //            continue;
-
-        //        sb.AppendLine(rw.ItemArray[1].ToString() + " - " + rw.ItemArray[2].ToString());
-        //    }
-
-        //    DataGridView ifActionBox = IfGridViewHelper;
-        //    ifActionBox.Rows[0].Cells[1].Value = newElementRecorder.cboWindowTitle.Text;
-
-        //    MessageBox.Show(sb.ToString());
-        //}
         public override string GetDisplayValue()
         {
-            //var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
-
-            //switch (v_IfActionType)
-            //{
-            //    //case "Value":
-            //    case "Numeric Compare":
-            //    case "Date Compare":
-            //    //case "Variable Compare":
-            //    case "Text Compare":
-            //    case "Boolean Compare":
-            //        //string value1 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                  where rw.Field<string>("Parameter Name") == "Value1"
-            //        //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-            //        //string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                   where rw.Field<string>("Parameter Name") == "Operand"
-            //        //                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
-            //        //string value2 = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                  where rw.Field<string>("Parameter Name") == "Value2"
-            //        //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //        //return "If ([" + v_IfActionType + "] " + value1 + " " + operand + " " + value2 + ")";
-            //        return "If ([" + v_IfActionType + "] " + param["Value1"] + " " + param["Operand"] + " " + param["Value2"] + ")";
-            //        break;
-
-            //    case "Variable Has Value":
-            //        //string variableName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                  where rw.Field<string>("Parameter Name") == "Variable Name"
-            //        //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //        //return "If (Variable " + variableName + " Has Value)";
-            //        return "If (Variable " + param["Variable Name"] + " Has Value)";
-            //        break;
-
-            //    case "Variable Is Numeric":
-            //        //string varName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                        where rw.Field<string>("Parameter Name") == "Variable Name"
-            //        //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //        //return "If (Variable " + varName + " Is Numeric)";
-            //        return "If (Variable " + param["Variable Name"] + " Is Numeric)";
-            //        break;
-
-            //    case "Error Occured":
-            //        //string lineNumber = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                      where rw.Field<string>("Parameter Name") == "Line Number"
-            //        //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //        //return "If (Error Occured on Line Number " + lineNumber + ")";
-            //        return "If (Error Occured on Line Number " + param["Line Number"] + ")";
-            //        break;
-
-
-            //    case "Error Did Not Occur":
-            //        //string lineNum = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                      where rw.Field<string>("Parameter Name") == "Line Number"
-            //        //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //        //return "If (Error Did Not Occur on Line Number " + lineNum + ")";
-            //        return "If (Error Did Not Occur on Line Number " + param["Line Number"] + ")";
-            //        break;
-
-            //    case "Window Name Exists":
-            //    case "Active Window Name Is":
-            //        //string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                      where rw.Field<string>("Parameter Name") == "Window Name"
-            //        //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //        //return "If " + v_IfActionType + " [Name: " + windowName + "]";
-            //        return "If " + v_IfActionType + " [Name: " + param["Window Name"] + "]";
-            //        break;
-
-            //    case "File Exists":
-            //        //string filePath = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                    where rw.Field<string>("Parameter Name") == "File Path"
-            //        //                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //        //string fileCompareType = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                           where rw.Field<string>("Parameter Name") == "True When"
-            //        //                           select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-
-            //        //return "If " + v_IfActionType + " [File: " + filePath + "]";
-            //        return "If " + v_IfActionType + " [File: " + param["File Path"] + "]";
-            //        break;
-
-
-            //    case "Folder Exists":
-            //        //string folderPath = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                      where rw.Field<string>("Parameter Name") == "Folder Path"
-            //        //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //        //string folderCompareType = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                             where rw.Field<string>("Parameter Name") == "True When"
-            //        //                             select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-
-            //        //return "If " + v_IfActionType + " [Folder: " + folderPath + "]";
-            //        return "If " + v_IfActionType + " [Folder: " + param["Folder Path"] + "]";
-            //        break;
-
-
-            //    case "Web Element Exists":
-            //        //string parameterName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                         where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-            //        //                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //        //string searchMethod = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                        where rw.Field<string>("Parameter Name") == "Element Search Method"
-            //        //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //        //return "If Web Element Exists [" + searchMethod + ": " + parameterName + "]";
-            //        return "If Web Element Exists [" + param["Element Search Method"] + ": " + param["Element Search Parameter"] + "]";
-            //        break;
-
-            //    case "GUI Element Exists":
-            //        //string guiWindowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                     where rw.Field<string>("Parameter Name") == "Window Name"
-            //        //                     select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //        //string guiSearch = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                         where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-            //        //                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //        //return "If GUI Element Exists [Find " + guiSearch + " Element In " + guiWindowName + "]";
-            //        return "If GUI Element Exists [Find " + param["Element Search Parameter"] + " Element In " + param["Window Name"] + "]";
-            //        break;
-
-            //    case "Boolean":
-            //        //string booleanVariable = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                         where rw.Field<string>("Parameter Name") == "Variable Name"
-            //        //                         select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //        //string compareTo = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //        //                     where rw.Field<string>("Parameter Name") == "Value Is"
-            //        //                     select rw.Field<string>("Parameter Value")).FirstOrDefault());
-            //        //return "If [Boolean] " + booleanVariable + " is " + compareTo;
-            //        return "If [Boolean] " + param["Variable Name"] + " is " + param["Value Is"];
-            //        break;
-
-            //    case "List Compare":
-            //        //var paramList = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
-            //        return "If [List Compare] '" + param["List1"] + "' and '" + param["List2"] + "'";
-
-            //    case "Dictionary Compare":
-            //        //var paramDic = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
-            //        return "If [Dictionary Compare] '" + param["Dictionary1"] + "' and '" + param["Dictionary2"] + "'";
-
-            //    case "DataTable Compare":
-            //        //var paramDT = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
-            //        return "If [DataTable Compare] '" + param["DataTable1"] + "' and '" + param["DataTable2"] + "'";
-
-            //    default:
-            //        return "If .... ";
-            //}
-
             return ConditionControls.GetDisplayValue("If", v_IfActionType, v_IfActionParameterTable);
         }
 
-        //private void IfGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-        //{
-        //    if (e.ColumnIndex == 0) 
-        //    {
-        //        e.Cancel = true;
-        //    }
-        //}
-        //private void IfGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (e.ColumnIndex >= 0)
-        //    {
-        //        if (e.ColumnIndex == 1)
-        //        {
-        //            var targetCell = IfGridViewHelper.Rows[e.RowIndex].Cells[1];
-        //            if (targetCell is DataGridViewTextBoxCell)
-        //            {
-        //                IfGridViewHelper.BeginEdit(false);
-        //            }
-        //            else if (targetCell is DataGridViewComboBoxCell && targetCell.Value.ToString() == "")
-        //            {
-        //                SendKeys.Send("{F4}");
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        IfGridViewHelper.EndEdit();
-        //    }
-        //}
-
-        public override bool IsValidate(frmCommandEditor editor)
+        public override bool IsValidate(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.IsValidate(editor);
 
@@ -1605,188 +478,7 @@ namespace taskt.Core.Automation.Commands
             return this.IsValid;
         }
 
-        //private void ValueValidate()
-        //{
-        //    string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //                      where rw.Field<string>("Parameter Name") == "Operand"
-        //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-        //    if (String.IsNullOrEmpty(operand))
-        //    {
-        //        this.validationResult += "Operand is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //}
-
-        //private void VariableValidate()
-        //{
-        //    string v = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //                       where rw.Field<string>("Parameter Name") == "Variable Name"
-        //                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
-        //    if (String.IsNullOrEmpty(v))
-        //    {
-        //        this.validationResult += "Variable Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //}
-
-        //private void WindowValidate()
-        //{
-        //    string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //                       where rw.Field<string>("Parameter Name") == "Window Name"
-        //                       select rw.Field<string>("Parameter Value")).FirstOrDefault());
-        //    if (String.IsNullOrEmpty(windowName))
-        //    {
-        //        this.validationResult += "Window Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //}
-
-        //private void FileValidate()
-        //{
-        //    string fp = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //                          where rw.Field<string>("Parameter Name") == "File Path"
-        //                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
-        //    if (String.IsNullOrEmpty(fp))
-        //    {
-        //        this.validationResult += "File Path is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //}
-
-        //private void FoloderValidate()
-        //{
-        //    string fp = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //                  where rw.Field<string>("Parameter Name") == "Folder Path"
-        //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-        //    if (String.IsNullOrEmpty(fp))
-        //    {
-        //        this.validationResult += "Folder Path is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //}
-
-        //private void WebValidate()
-        //{
-        //    string instance = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //                  where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
-        //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    string method = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //                  where rw.Field<string>("Parameter Name") == "Element Search Method"
-        //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    string param = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //                  where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-        //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    if (String.IsNullOrEmpty(instance))
-        //    {
-        //        this.validationResult += "Browser Instance Name (Selenium Insntance) is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(method))
-        //    {
-        //        this.validationResult += "Search Method is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(param))
-        //    {
-        //        this.validationResult += "Search Parameter is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //}
-
-        //private void GUIValidate()
-        //{
-        //    string window = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //                        where rw.Field<string>("Parameter Name") == "Window Name"
-        //                        select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    string method = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //                      where rw.Field<string>("Parameter Name") == "Element Search Method"
-        //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    string param = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //                     where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-        //                     select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    if (String.IsNullOrEmpty(window))
-        //    {
-        //        this.validationResult += "Window Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(method))
-        //    {
-        //        this.validationResult += "Search Method is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(param))
-        //    {
-        //        this.validationResult += "Search Parameter is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //}
-
-        //private void ErrorValidate()
-        //{
-        //    string line = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //                      where rw.Field<string>("Parameter Name") == "Line Number"
-        //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    if (String.IsNullOrEmpty(line))
-        //    {
-        //        this.validationResult += "Line Number is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    else
-        //    {
-        //        int vLine;
-        //        if (int.TryParse(line, out vLine))
-        //        {
-        //            if (vLine < 1)
-        //            {
-        //                this.validationResult += "Specify 1 or more to Line Number.\n";
-        //                this.IsValid = false;
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private void BooleanValidate()
-        //{
-        //    string variable = ((from rw in v_IfActionParameterTable.AsEnumerable()
-        //                    where rw.Field<string>("Parameter Name") == "Variable Name"
-        //                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        //    if (String.IsNullOrEmpty(variable))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //}
-
-        //private void BooleanCompareValidate()
-        //{
-        //    var param = DataTableControls.GetFieldValues(v_IfActionParameterTable, "Parameter Name", "Parameter Value");
-
-        //    if (String.IsNullOrEmpty(param["Value1"]))
-        //    {
-        //        this.validationResult += "Value1 is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(param["Value2"]))
-        //    {
-        //        this.validationResult += "Value2 is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(param["Operand"]))
-        //    {
-        //        this.validationResult += "Operand is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //}
-
-        public override void ConvertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
+        public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
             if (this.v_IfActionType == "GUI Element Exists")
             {
@@ -1812,6 +504,14 @@ namespace taskt.Core.Automation.Commands
             {
                 base.ConvertToRaw(settings);
             }
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+
+            //var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_IfActionParameterTable));
+            DataTableControls.BeforeValidate_NoRowAdding(IfGridViewHelper, v_IfActionParameterTable);
         }
     }
 }

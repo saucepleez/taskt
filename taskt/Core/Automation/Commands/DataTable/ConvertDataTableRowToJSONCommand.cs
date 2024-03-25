@@ -12,13 +12,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Row to JSON")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Row to JSON.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertDataTableRowToJSONCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_RowIndex))]
@@ -26,7 +27,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_OutputJSONName))]
-        public string v_OutputVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public ConvertDataTableRowToJSONCommand()
         {
@@ -36,21 +37,19 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;         
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var dicCommand = new ConvertDataTableRowToDictionaryCommand
             {
-                v_DataTableName = this.v_DataTableName,
+                v_DataTable = this.v_DataTable,
                 v_DataRowIndex = this.v_DataRowIndex,
-                v_OutputVariableName = VariableNameControls.GetInnerVariableName(0, engine)
+                v_Result = VariableNameControls.GetInnerVariableName(0, engine)
             };
             dicCommand.RunCommand(engine);
 
             Dictionary<string, string> tDic = (Dictionary<string, string>)VariableNameControls.GetInnerVariable(0, engine).VariableValue;
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(tDic);
-            json.StoreInUserVariable(engine, v_OutputVariableName);
+            json.StoreInUserVariable(engine, v_Result);
         }
     }
 }

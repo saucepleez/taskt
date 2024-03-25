@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command deletes a file from a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to detete a file from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class DeleteFileCommand : ScriptCommand
@@ -24,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         public string v_WhenFileDoesNotExists { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("File Move to the Recycle Bin")]
         [PropertyIsOptional(true, "No")]
         public string v_MoveToRecycleBin { get; set; }
@@ -45,10 +46,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //try
             //{
             //    var targetFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
@@ -73,7 +72,7 @@ namespace taskt.Core.Automation.Commands
             FilePathControls.FileAction(this, engine,
                 new Action<string>(path =>
                 {
-                    if (this.GetYesNoSelectionValue(nameof(v_MoveToRecycleBin), engine))
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_MoveToRecycleBin), engine))
                     {
                         Shell32.MoveToRecycleBin(path);
                     }
@@ -84,7 +83,7 @@ namespace taskt.Core.Automation.Commands
                 }),
                 new Action<Exception>(ex =>
                 {
-                    if (this.GetUISelectionValue(nameof(v_WhenFileDoesNotExists), engine) == "error")
+                    if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFileDoesNotExists), engine) == "error")
                     {
                         throw new Exception("File does Not Exists. File Path: '" + v_SourceFilePath + "'");
                     }

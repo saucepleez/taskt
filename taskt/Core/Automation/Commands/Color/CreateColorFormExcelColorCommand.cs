@@ -12,13 +12,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to create Color from Excel Color.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create Color from Excel Color.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class CreateColorFromExcelColorCommand : ScriptCommand
+    public class CreateColorFromExcelColorCommand : AColorCreateCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_InputColorVariableName))]
-        public string v_Color { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_InputColorVariableName))]
+        //public string v_Color { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Excel Color Value")]
@@ -31,6 +32,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Excel Color", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Color Value")]
+        [PropertyParameterOrder(6000)]
         public string v_ExcelColor { get; set; }
 
         public CreateColorFromExcelColorCommand()
@@ -41,12 +43,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            int color = this.ConvertToUserVariableAsInteger(nameof(v_ExcelColor), engine);
+            int color = this.ExpandValueOrUserVariableAsInteger(nameof(v_ExcelColor), engine);
 
             color &= 0xFFFFFF;
             int r = color & 0xFF;
@@ -55,8 +54,9 @@ namespace taskt.Core.Automation.Commands
             color >>= 8;
             int b = color;
 
-            Color co = Color.FromArgb(255, r, g, b);
-            co.StoreInUserVariable(engine, v_Color);
+            var co = Color.FromArgb(255, r, g, b);
+            //co.StoreInUserVariable(engine, v_Color);
+            this.StoreColorInUserVariable(co, nameof(v_Color), engine);
         }
     }
 }

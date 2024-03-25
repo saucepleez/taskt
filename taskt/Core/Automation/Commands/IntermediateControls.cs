@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using static taskt.Core.Automation.Commands.PropertyControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -10,6 +9,27 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class IntermediateControls
     {
+        #region fields
+        /// <summary>
+        /// intermediate start variable marker
+        /// </summary>
+        public const string INTERMEDIATE_VALIABLE_START_MARKER = "\u2983";  // like {
+        /// <summary>
+        /// intermediate end variable marker
+        /// </summary>
+        public const string INTERMEDIATE_VALIABLE_END_MARKER = "\u2984";    // like }
+
+        // TODO: To be discontinued eventually
+        /// <summary>
+        /// intermediate start keyword marker
+        /// </summary>
+        public const string INTERMEDIATE_KEYWORD_START_MARKER = "\U0001D542";   // like k
+        /// <summary>
+        /// intermediate end keywrod marker
+        /// </summary>
+        public const string INTERMEDIATE_KEYWORD_END_MARKER = "\U0001D54E"; // like w
+        #endregion
+
         /// <summary>
         /// proprety value convert to intermediate. this method use default convert method.
         /// </summary>
@@ -226,5 +246,58 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// check value is wrapped intermediate keyword marker
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private static bool IsWrappedIntermediateKeywordMarker(string value)
+        {
+            return (value.StartsWith(INTERMEDIATE_KEYWORD_END_MARKER) && value.EndsWith(INTERMEDIATE_KEYWORD_END_MARKER));
+        }
+
+        /// <summary>
+        /// get wrapped intermediate keyword
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        public static string GetWrappedIntermediateKeyword(string keyword)
+        {
+            if (IsWrappedIntermediateKeywordMarker(keyword))
+            {
+                return keyword;
+            }
+            else
+            {
+                return string.Concat(INTERMEDIATE_KEYWORD_START_MARKER, keyword, INTERMEDIATE_KEYWORD_END_MARKER);
+            }
+        }
+
+        /// <summary>
+        /// check value is wrapped intermediate variable marker
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private static bool IsWrappedIntermediateVariableMarker(string value)
+        {
+            return (value.StartsWith(INTERMEDIATE_VALIABLE_START_MARKER) && value.EndsWith(INTERMEDIATE_VALIABLE_END_MARKER));
+        }
+
+        /// <summary>
+        /// get wrapped intermediate variable marker
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <returns></returns>
+        public static string GetWrappedIntermediateVariable(string variableName)
+        {
+            if (IsWrappedIntermediateVariableMarker(variableName))
+            {
+                return variableName;
+            }
+            else
+            {
+                return string.Concat(INTERMEDIATE_VALIABLE_START_MARKER, variableName, INTERMEDIATE_VALIABLE_END_MARKER);
+            }
+        }
     }
 }

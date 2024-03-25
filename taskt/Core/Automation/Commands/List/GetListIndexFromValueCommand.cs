@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you want to get list index from value")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get list index from value")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetListIndexFromValueCommand : ScriptCommand
@@ -49,16 +50,14 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            List<string> targetList = v_ListName.ExpandUserVariableAsList(engine);
 
-            List<string> targetList = v_ListName.GetListVariable(engine);
-
-            var searchedValue = v_SearchItem.ConvertToUserVariable(sender);
+            var searchedValue = v_SearchItem.ExpandValueOrUserVariable(engine);
 
             //string searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), "Search Method", engine);
-            string searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), engine);
+            string searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SearchMethod), engine);
 
             switch (searchMethod)
             {

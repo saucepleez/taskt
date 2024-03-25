@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to show a message to the user.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to present or display a value on screen to the user.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'MessageBox' and invokes VariableCommand to find variable data.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_input))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ShowMessageCommand : ScriptCommand
@@ -49,10 +50,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-            string variableMessage = v_Message.ConvertToUserVariable(engine);
+            string variableMessage = v_Message.ExpandValueOrUserVariable(engine);
 
             variableMessage = variableMessage.Replace("\\n", Environment.NewLine);
 
@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
                 return;
             }
 
-            var closeAfter = this.ConvertToUserVariableAsInteger(nameof(v_AutoCloseAfter), engine);
+            var closeAfter = this.ExpandValueOrUserVariableAsInteger(nameof(v_AutoCloseAfter), engine);
 
             //automatically close messageboxes for server requests
             if (engine.serverExecution && closeAfter <= 0)
@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
             // TODO: support OK/cancel etc buttons
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
             {
-                engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, closeAfter);
+                engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.General.frmDialog.DialogType.OkOnly, closeAfter);
             }
             ));
         }

@@ -24,6 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyDisplayText(true, "EMail")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputEMailName { get; }
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyDisplayText(true, "EMail")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputEMailName { get; }
 
         /// <summary>
@@ -57,6 +59,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMailList, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyDisplayText(true, "EMailList")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputMailListName { get; }
 
         /// <summary>
@@ -78,6 +81,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Resent-Reply-To")]
         [PropertyValidationRule("Address Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
+        [PropertyParameterOrder(5000)]
         public static string v_AddressType { get; }
 
         /// <summary>
@@ -92,6 +96,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Host", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyDisplayText(true, "Host")]
+        [PropertyParameterOrder(5000)]
         public static string v_Host { get; set; }
 
         /// <summary>
@@ -105,6 +110,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValueRange(0, 65535)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyDisplayText(true, "Port")]
+        [PropertyParameterOrder(5000)]
         public static string v_Port { get; }
 
         /// <summary>
@@ -119,6 +125,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyDisplayText(true, "User")]
+        [PropertyParameterOrder(5000)]
         public static string v_UserName { get; }
 
         /// <summary>
@@ -132,6 +139,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Password", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterOrder(5000)]
         public static string v_Password { get; set; }
 
         /// <summary>
@@ -149,6 +157,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Use SSL or TLS")]
         [PropertyUISelectionOption("STARTTLS")]
         [PropertyUISelectionOption("STARTTLS When Available")]
+        [PropertyParameterOrder(5000)]
         public static string v_SecureOption { get; }
 
         /// <summary>
@@ -163,6 +172,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("EMail Address", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyDisplayText(true, "EMail Address")]
+        [PropertyParameterOrder(5000)]
         public static string v_EmailAddress { get; }
 
         /// <summary>
@@ -178,16 +188,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Path")]
+        [PropertyParameterOrder(5000)]
         public static string v_EMailPath { get; }
 
         /// <summary>
-        /// get EMailList Variable from variable name specified argument
+        /// expand user variable as EMailList
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static List<MimeKit.MimeMessage> GetMailKitEMailListVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">value is not EMailList</exception>
+        public static List<MimeKit.MimeMessage> ExpandUserVariableAsEMailList(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
             if (v.VariableValue is List<MimeKit.MimeMessage> ml)
@@ -201,13 +212,13 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get EMail Variable from variable name specified argument
+        /// expand user variable as EMail
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static MimeKit.MimeMessage GetMailKitEMailVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">value is not EMail</exception>
+        public static MimeKit.MimeMessage ExpandUserVariableAsEmail(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
             if (v.VariableValue is MimeKit.MimeMessage mail)
@@ -220,28 +231,44 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private static MimeKit.MimeMessage GetMailKitEMailVariable(this ScriptCommand command, string mailParameterName, Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// expand user variable as EMail from specified parameter
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="mailParameterName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static MimeKit.MimeMessage ExpandUserVariableAsEmail(this ScriptCommand command, string mailParameterName, Engine.AutomationEngineInstance engine)
         {
             var prop = command.GetProperty(mailParameterName);
             string mailName = prop.GetValue(command)?.ToString() ?? "";
-            return mailName.GetMailKitEMailVariable(engine);
+            return mailName.ExpandUserVariableAsEmail(engine);
         }
 
-        public static void StoreInUserVariable(this List<MimeKit.MimeMessage> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        public static void StoreInUserVariable(this List<MimeKit.MimeMessage> value, Core.Automation.Engine.AutomationEngineInstance engine, string targetVariable)
         {
-            ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
+            ExtensionMethods.StoreInUserVariable(targetVariable, value, engine, false);
         }
 
-        public static void StoreInUserVariable(this MimeKit.MimeMessage value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        public static void StoreInUserVariable(this MimeKit.MimeMessage value, Core.Automation.Engine.AutomationEngineInstance engine, string targetVariable)
         {
-            ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
+            ExtensionMethods.StoreInUserVariable(targetVariable, value, engine, false);
         }
 
+        /// <summary>
+        /// get address from EMail
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="mailParameterName"></param>
+        /// <param name="typeParameterName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static MimeKit.InternetAddressList GetMailKitEMailAddresses(this ScriptCommand command, string mailParameterName, string typeParameterName, Engine.AutomationEngineInstance engine)
         {
-            var mail = command.GetMailKitEMailVariable(mailParameterName, engine);
+            var mail = command.ExpandUserVariableAsEmail(mailParameterName, engine);
 
-            var addressType = command.GetUISelectionValue(typeParameterName, engine);
+            var addressType = command.ExpandValueOrUserVariableAsSelectionItem(typeParameterName, engine);
             switch (addressType)
             {
                 case "from":
@@ -269,9 +296,16 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// get security option
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
         public static MailKit.Security.SecureSocketOptions GetMailKitSecureOption(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
         {
-            var secureOption = command.GetUISelectionValue(propertyName, engine);
+            var secureOption = command.ExpandValueOrUserVariableAsSelectionItem(propertyName, engine);
 
             var option = MailKit.Security.SecureSocketOptions.Auto;
             switch (secureOption)

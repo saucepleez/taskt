@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Append Text")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to append text to a specific document.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class WordAppendTextCommand : ScriptCommand
@@ -49,7 +50,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Font Size", true)]
         //[SampleUsage("Select **14**")]
         [PropertyFirstValue("11")]
-        [PropertyValidationRule("Font Size", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.GreaterThanZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyValidationRule("Font Size", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyIsOptional(true, "11")]
         [PropertyDisplayText(false, "")]
         public string v_FontSize { get; set; }
@@ -106,20 +107,18 @@ namespace taskt.Core.Automation.Commands
             //this.v_FontUnderline = "No";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            (var _, var wordDocument) = v_InstanceName.ExpandValueOrUserVariableAsWordInstanceAndDocument(engine);
 
-            (var _, var wordDocument) = v_InstanceName.GetWordInstanceAndDocument(engine);
-
-            var vText = v_TextToSet.ConvertToUserVariable(engine);
+            var vText = v_TextToSet.ExpandValueOrUserVariable(engine);
 
             Paragraph paragraph = wordDocument.Content.Paragraphs.Add();
             paragraph.Range.Text = vText;
             paragraph.Range.Font.Name = v_FontName;
             paragraph.Range.Font.Size = float.Parse(v_FontSize);
 
-            if (this.GetUISelectionValue(nameof(v_FontBold), engine) == "yes")
+            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_FontBold), engine) == "yes")
             {
                 paragraph.Range.Font.Bold = 1;
             }
@@ -127,7 +126,7 @@ namespace taskt.Core.Automation.Commands
             {
                 paragraph.Range.Font.Bold = 0;
             }
-            if (this.GetUISelectionValue(nameof(v_FontItalic), engine) == "yes")
+            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_FontItalic), engine) == "yes")
             {
                 paragraph.Range.Font.Italic = 1;
             }
@@ -135,7 +134,7 @@ namespace taskt.Core.Automation.Commands
             {
                 paragraph.Range.Font.Italic = 0;
             }
-            if (this.GetUISelectionValue(nameof(v_FontUnderline), engine) == "yes")
+            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_FontUnderline), engine) == "yes")
             {
                 paragraph.Range.Font.Underline = WdUnderline.wdUnderlineSingle;
             }

@@ -12,17 +12,18 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to convert Dictionary to DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert Dictionary to DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertDictionaryToDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
-        public string v_InputData { get; set; }
+        public string v_Dictionary { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
-        public string v_OutputVariable { get; set; }
+        public string v_Result { get; set; }
 
         public ConvertDictionaryToDataTableCommand()
         {
@@ -32,11 +33,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var dic = v_InputData.GetDictionaryVariable(engine);
+            var dic = v_Dictionary.ExpandUserVariableAsDictinary(engine);
 
             DataTable DT = new DataTable();
             DT.Rows.Add();
@@ -45,7 +44,7 @@ namespace taskt.Core.Automation.Commands
                 DT.Columns.Add(item.Key);
                 DT.Rows[0][item.Key] = item.Value;
             }
-            DT.StoreInUserVariable(engine, v_OutputVariable);
+            DT.StoreInUserVariable(engine, v_Result);
         }
     }
 }

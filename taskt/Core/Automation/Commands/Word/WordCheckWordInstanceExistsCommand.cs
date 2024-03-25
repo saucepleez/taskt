@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Check Word Instance Exists")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check Word instance.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class WordCheckWordInstanceExistsCommand : ScriptCommand
@@ -33,13 +34,11 @@ namespace taskt.Core.Automation.Commands
             //this.v_InstanceName = "";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             try
             {
-                var _ = v_InstanceName.GetWordInstance(engine);
+                var _ = v_InstanceName.ExpandValueOrUserVariableAsWordInstance(engine);
                 true.StoreInUserVariable(engine, v_applyToVariableName);
             }
             catch

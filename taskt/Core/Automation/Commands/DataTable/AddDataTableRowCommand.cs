@@ -15,13 +15,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to add a row to a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a row to a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class AddDataTableRowCommand : ScriptCommand
+    public class AddDataTableRowCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlElement]
         [PropertyDescription("Column Names and Values")]
@@ -51,17 +52,16 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-            DataTable dataTable = v_DataTableName.GetDataTableVariable(engine);
+            DataTable dataTable = v_DataTable.ExpandUserVariableAsDataTable(engine);
 
             var newRow = dataTable.NewRow();
 
             foreach (DataRow rw in v_AddDataDataTable.Rows)
             {
-                var columnName = (rw.Field<string>("Column Name") ?? "").ConvertToUserVariable(sender);
-                var data = (rw.Field<string>("Data") ?? "").ConvertToUserVariable(sender);
+                var columnName = (rw.Field<string>("Column Name") ?? "").ExpandValueOrUserVariable(engine);
+                var data = (rw.Field<string>("Data") ?? "").ExpandValueOrUserVariable(engine);
                 newRow.SetField(columnName, data); 
             }
 

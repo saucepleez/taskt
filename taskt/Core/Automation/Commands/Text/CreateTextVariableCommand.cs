@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to create text variables.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create text variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateTextVariableCommand : ScriptCommand
@@ -31,12 +32,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var valueToSet = v_Value.ConvertToUserVariable(engine);
+            var valueToSet = v_Value.ExpandValueOrUserVariable(engine);
             valueToSet.StoreInUserVariable(engine, v_userVariableName);
         }
     }

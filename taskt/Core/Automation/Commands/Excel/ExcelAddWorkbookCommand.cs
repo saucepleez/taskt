@@ -11,13 +11,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command adds a new Excel Workbook.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a new workbook to an Exel Instance")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelAddWorkbookCommand : ScriptCommand
+    public class ExcelAddWorkbookCommand : AExcelInstanceCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("When Workbook Exists")]
@@ -31,6 +32,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Error")]
         [PropertyUISelectionOption("Add")]
         [PropertyIsOptional(true, "Error")]
+        [PropertyParameterOrder(6000)]
         public string v_IfWorkbookExists { get; set; }
 
         public ExcelAddWorkbookCommand()
@@ -40,20 +42,19 @@ namespace taskt.Core.Automation.Commands
             //this.CommandEnabled = true;
             //this.CustomRendering = true;
         }
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
-
-            var ifWorkbookExists = this.GetUISelectionValue(nameof(v_IfWorkbookExists), engine);
+            var ifWorkbookExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfWorkbookExists), "When Workbook Exists", engine);
 
             if (excelInstance.Workbooks.Count > 0)
             {
                 switch (ifWorkbookExists)
                 {
                     case "error":
-                        throw new Exception("Excel Instance '" + v_InstanceName + "' has Workbook.");
+                        throw new Exception($"Excel Instance '{v_InstanceName}' has Workbooks.");
 
                     case "ignore":
                         break;

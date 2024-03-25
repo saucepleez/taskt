@@ -14,16 +14,17 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to filter Dictionary value.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to filter Dictionary value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class FilterDictionaryCommand : ScriptCommand
+    public class FilterDictionaryCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
         [PropertyDescription("Dictionary Variable Name to Filter")]
         [PropertyValidationRule("Dictionary to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary to Filter")]
-        public string v_InputDictionary { get; set; }
+        public string v_TargetDictionary { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_FilterValueType))]
@@ -41,7 +42,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_NewOutputDictionaryName))]
-        public string v_OutputDictionary { get; set; }
+        public string v_NewDictionary { get; set; }
 
         public FilterDictionaryCommand()
         {
@@ -51,11 +52,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var targetDic = v_InputDictionary.GetDictionaryVariable(engine);
+            var targetDic = v_TargetDictionary.ExpandUserVariableAsDictinary(engine);
 
             var parameters = DataTableControls.GetFieldValues(v_FilterActionParameterTable, "ParameterName", "ParameterValue", engine);
             var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_FilterAction), parameters, engine, this);
@@ -70,7 +69,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            res.StoreInUserVariable(engine, v_OutputDictionary);
+            res.StoreInUserVariable(engine, v_NewDictionary);
         }
 
         private void cmbTargetType_SelectionChangeCommited(object sender, EventArgs e)
@@ -88,13 +87,21 @@ namespace taskt.Core.Automation.Commands
             ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
         }
 
-        public override void AfterShown()
+        public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             var FilterParametersGridViewHelper = (DataGridView)ControlsList[nameof(v_FilterActionParameterTable)];
             var TargetTypeComboboxHelper = (ComboBox)ControlsList[nameof(v_TargetType)];
             var FilterActionComboboxHelper = (ComboBox)ControlsList[nameof(v_FilterAction)];
             ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, FilterActionComboboxHelper);
             ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+
+            var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_FilterActionParameterTable));
+            DataTableControls.BeforeValidate_NoRowAdding(dgv, v_FilterActionParameterTable);
         }
     }
 }

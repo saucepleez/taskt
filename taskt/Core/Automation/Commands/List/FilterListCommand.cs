@@ -14,9 +14,10 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to filter List value.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to filter List value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class FilterListCommand : ScriptCommand
+    public class FilterListCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
@@ -50,11 +51,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            List<string> targetList = v_InputList.GetListVariable(engine);
+            List<string> targetList = v_InputList.ExpandUserVariableAsList(engine);
 
             var parameters = DataTableControls.GetFieldValues(v_FilterActionParameterTable, "ParameterName", "ParameterValue", engine);
             var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_FilterAction), parameters, engine, this);
@@ -84,12 +83,20 @@ namespace taskt.Core.Automation.Commands
             ConditionControls.RenderFilter(v_FilterActionParameterTable, (DataGridView)ControlsList[nameof(v_FilterActionParameterTable)], (ComboBox)ControlsList[nameof(v_FilterAction)], (ComboBox)ControlsList[nameof(v_TargetType)]);
         }
 
-        public override void AfterShown()
+        public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             //ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, FilterActionComboboxHelper);
             ConditionControls.AddFilterActionItems((ComboBox)ControlsList[nameof(v_TargetType)], (ComboBox)ControlsList[nameof(v_FilterAction)]);
             //ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
             ConditionControls.RenderFilter(v_FilterActionParameterTable, (DataGridView)ControlsList[nameof(v_FilterActionParameterTable)], (ComboBox)ControlsList[nameof(v_FilterAction)], (ComboBox)ControlsList[nameof(v_TargetType)]);
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+
+            var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_FilterActionParameterTable));
+            DataTableControls.BeforeValidate_NoRowAdding(dgv, v_FilterActionParameterTable);
         }
     }
 }

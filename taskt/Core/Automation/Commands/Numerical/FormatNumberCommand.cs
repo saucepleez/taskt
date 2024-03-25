@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Format Number.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Format Number.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     public class FormatNumberCommand : ScriptCommand
@@ -47,15 +48,13 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //decimal value = new PropertyConvertTag(v_Number, "Number").ConvertToUserVariableAsDecimal(engine);
             //var value = this.ConvertToUserVariableAsDecimal(nameof(v_Number), "Number", engine);
-            var value = this.ConvertToUserVariableAsDecimal(nameof(v_Number), engine);
+            var value = this.ExpandValueOrUserVariableAsDecimal(nameof(v_Number), engine);
 
-            string format = v_Format.ConvertToUserVariable(engine);
+            string format = v_Format.ExpandValueOrUserVariable(engine);
 
             value.ToString(format).StoreInUserVariable(engine, v_Result);
         }
@@ -63,7 +62,7 @@ namespace taskt.Core.Automation.Commands
         private void lnkFormatChecker_Click(object sender, EventArgs e)
         {
             TextBox txt = (TextBox)((CommandItemControl)sender).Tag;
-            UI.Forms.Supplement_Forms.frmFormatChecker.ShowFormatCheckerFormLinkClicked(txt, "Number");
+            UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker.ShowFormatCheckerFormLinkClicked(txt, "Number");
         }
     }
 }

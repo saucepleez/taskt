@@ -11,13 +11,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to create DateTime from Text.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create DateTime from Text.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class CreateDateTimeFromTextCommand : ScriptCommand
+    public class CreateDateTimeFromTextCommand : ADateTimeCreateCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_OutputDateTime))]
-        public string v_DateTime { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_OutputDateTime))]
+        //public string v_DateTime { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Text Value")]
@@ -30,6 +31,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Text", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Text")]
+        [PropertyParameterOrder(6000)]
         public string v_Text { get; set; }
 
         public CreateDateTimeFromTextCommand()
@@ -40,20 +42,18 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var value = v_Text.ExpandValueOrUserVariable(engine);
 
-            string value = v_Text.ConvertToUserVariable(engine);
-
-            if (DateTime.TryParse(value, out DateTime tryDT))
+            if (DateTime.TryParse(value, out DateTime myDT))
             {
-                tryDT.StoreInUserVariable(engine, v_DateTime);
+                //tryDT.StoreInUserVariable(engine, v_DateTime);
+                this.StoreDateTimeInUserVariable(myDT, nameof(v_DateTime), engine);
             }
             else
             {
-                throw new Exception("Text '" + v_Text + "' is not DateTime");
+                throw new Exception($"Specified Text is not DateTime. Value: '{v_Text}', Expand Value: '{value}'");
             }
         }
     }

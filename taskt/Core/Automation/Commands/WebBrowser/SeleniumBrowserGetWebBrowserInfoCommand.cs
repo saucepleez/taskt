@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to navigate a Selenium web browser session to a given URL or resource.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to navigate an existing Selenium instance to a known URL or web resource")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SeleniumBrowserGetWebBrowserInfoCommand : ScriptCommand
@@ -46,13 +47,11 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var seleniumInstance = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstance(v_InstanceName, engine);
 
-            var seleniumInstance = SeleniumBrowserControls.GetSeleniumBrowserInstance(v_InstanceName, engine);
-
-            var requestedInfo = this.GetUISelectionValue(nameof(v_InfoType), engine);
+            var requestedInfo = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), engine);
             string info = "";
             switch (requestedInfo)
             {
@@ -74,7 +73,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //store data
-            info.StoreInUserVariable(sender, v_applyToVariableName);
+            info.StoreInUserVariable(engine, v_applyToVariableName);
         }
     }
 }

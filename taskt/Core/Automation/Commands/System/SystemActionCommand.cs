@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to perform an account action")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to perform an action such as logoff, restart, shutdown or restart.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_script))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SystemActionCommand : ScriptCommand
@@ -33,11 +34,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var action = this.GetUISelectionValue(nameof(v_ActionName), engine);
+            var action = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ActionName), engine);
 
             switch (action)
             {

@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get Random Number.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Random Number.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class RandomNumberCommand : ScriptCommand
@@ -24,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         public string v_RandomType { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_OutputNumericalVariableName))]
         public string v_Result { get; set; }
 
         public RandomNumberCommand()
@@ -35,13 +36,11 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //var t = v_RandomType.GetUISelectionValue("v_RandomType", this, engine);
             //var t = this.GetUISelectionValue(nameof(v_RandomType), "Random Type", engine);
-            var t = this.GetUISelectionValue(nameof(v_RandomType), engine);
+            var t = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_RandomType), engine);
 
             Random rand = new Random();
 

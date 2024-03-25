@@ -14,13 +14,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command created a DataTable with the column names provided")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a new Dictionary")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
-        public string v_DictionaryName { get; set; }
+        public string v_Dictionary { get; set; }
 
         [XmlElement]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_KeyAndValue))]
@@ -34,15 +35,13 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var outputDictionary = new Dictionary<string, string>();
 
             outputDictionary.AddDataAndValueFromDataTable(v_ColumnNameDataTable, engine);
 
-            outputDictionary.StoreInUserVariable(engine, v_DictionaryName);
+            outputDictionary.StoreInUserVariable(engine, v_Dictionary);
         }
 
         public override void BeforeValidate()

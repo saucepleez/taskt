@@ -8,13 +8,14 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.CommandSettings("Load Email")]
+    [Attributes.ClassAttributes.CommandSettings("Load EMail")]
     [Attributes.ClassAttributes.Description("This command allows you to load EMail from File.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to load EMail from File.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class MailKitLoadEmailCommand : ScriptCommand
+    public class MailKitLoadEMailCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_EMailPath))]
@@ -38,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
         public string v_WaitForFile { get; set; }
 
-        public MailKitLoadEmailCommand()
+        public MailKitLoadEMailCommand()
         {
             //this.CommandName = "MailKitLoadEmailCommand";
             //this.SelectionName = "Load Email";
@@ -46,10 +47,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //string path = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "eml", "msg", "txt" }, true);
             string path = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);
 

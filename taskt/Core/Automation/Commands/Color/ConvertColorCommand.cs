@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.Data;
-using System.Drawing;
 using System.Collections.Generic;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
 using System.Windows.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,9 +14,10 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get convert Color Value.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get convert Color Value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ConvertColorCommand : ScriptCommand
+    public class ConvertColorCommand : ScriptCommand, ICanHandleColor
     {
         [XmlAttribute]
         [PropertyDescription("Color Variable Name")]
@@ -76,13 +76,12 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            Color co = v_Color.GetColorVariable(engine);
-            string format = this.GetUISelectionValue(nameof(v_Format), engine);
+            //Color co = v_Color.ExpandUserVariableAsColor(engine);
+            var co = this.ExpandUserVariableAsColor(nameof(v_Color), engine);
+            
+            string format = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_Format), engine);
 
             string res = "";
             switch (format)

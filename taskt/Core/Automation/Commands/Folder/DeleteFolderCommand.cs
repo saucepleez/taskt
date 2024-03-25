@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command deletes a folder from a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to delete a folder from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class DeleteFolderCommand : ScriptCommand
@@ -20,7 +21,7 @@ namespace taskt.Core.Automation.Commands
         public string v_SourceFolderPath { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Folder Move to the Recycle Bin")]
         [PropertyIsOptional(true, "No")]
         public string v_MoveToRecycleBin { get; set; }
@@ -41,10 +42,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             ////apply variable logic
             //var sourceFolder = FolderPathControls.WaitForFolder(this, nameof(v_SourceFolderPath), nameof(v_WaitForFolder), engine);
 
@@ -62,7 +61,7 @@ namespace taskt.Core.Automation.Commands
                 new Action<string>(path =>
                 {
                     //delete folder
-                    if (this.GetYesNoSelectionValue(nameof(v_MoveToRecycleBin), engine))
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_MoveToRecycleBin), engine))
                     {
                         Shell32.MoveToRecycleBin(path);
                     }

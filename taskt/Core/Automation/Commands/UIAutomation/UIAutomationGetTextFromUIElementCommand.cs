@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Get Text From UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to get Text Value from UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Text Value from UIElement.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationGetTextFromUIElementCommand : ScriptCommand
@@ -31,11 +32,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var targetElement = v_TargetElement.GetUIElementVariable(engine);
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
             string res = UIElementControls.GetTextValue(targetElement);
             res.StoreInUserVariable(engine, v_TextVariable);

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
+using System.Collections.Generic;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using System.Security.Principal;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,31 +12,34 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command returns window position.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want window position.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class GetWindowPositionCommand : ScriptCommand
+    public class GetWindowPositionCommand : AWindowNameCommands, IWindowPositionProperties
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
-        public string v_WindowName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
+        //public string v_WindowName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
-        public string v_SearchMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
+        //public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Recieve the Window Position X")]
         [PropertyIsOptional(true)]
         [PropertyDisplayText(false, "")]
-        public string v_VariablePositionX { get; set; }
+        [PropertyParameterOrder(6500)]
+        public string v_XPosition { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Recieve the Window Position Y")]
         [PropertyIsOptional(true)]
         [PropertyDisplayText(false, "")]
-        public string v_VariablePositionY { get; set; }
+        [PropertyParameterOrder(6500)]
+        public string v_YPosition { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Base position")]
@@ -53,28 +53,28 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Center")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Top Left")]
+        [PropertyParameterOrder(6500)]
         public string v_PositionBase { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
-        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
-        public string v_MatchMethod { get; set; }
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod_Single))]
+        public override string v_MatchMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
-        public string v_TargetWindowIndex { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
+        //public string v_TargetWindowIndex { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
-        public string v_WaitTime { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        //public string v_WaitTime { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
-        public string v_NameResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        //public string v_NameResult { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowHandleResult))]
-        public string v_HandleResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
+        //public string v_HandleResult { get; set; }
 
         public GetWindowPositionCommand()
         {
@@ -83,57 +83,17 @@ namespace taskt.Core.Automation.Commands
             //this.CommandEnabled = true;
             //this.CustomRendering = true;
         }
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            //var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
-            //var whnd = wins[0].Item1;
-
-            //var pos = WindowNameControls.GetWindowPosition(whnd);
-
-            //int x = 0, y = 0;
-            //switch(this.GetUISelectionValue(nameof(v_PositionBase), engine))
-            //{
-            //    case "top left":
-            //        x = pos.left;
-            //        y = pos.top;
-            //        break;
-            //    case "bottom right":
-            //        x = pos.right;
-            //        y = pos.bottom;
-            //        break;
-            //    case "top right":
-            //        x = pos.right;
-            //        y = pos.top;
-            //        break;
-            //    case "bottom left":
-            //        x = pos.left;
-            //        y = pos.bottom;
-            //        break;
-            //    case "center":
-            //        x = (pos.right + pos.left) / 2;
-            //        y = (pos.top + pos.bottom) / 2;
-            //        break;
-            //}
-            //if (!String.IsNullOrEmpty(v_VariablePositionX))
-            //{
-            //    x.ToString().StoreInUserVariable(engine, v_VariablePositionX);
-            //}
-            //if (!String.IsNullOrEmpty(v_VariablePositionY))
-            //{
-            //    y.ToString().StoreInUserVariable(engine, v_VariablePositionY);
-            //}
-
-            WindowNameControls.WindowAction(this, engine,
-                new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
+            WindowControls.WindowAction(this, engine,
+                new Action<List<(IntPtr, string)>>(wins =>
                 {
                     var whnd = wins[0].Item1;
 
-                    var pos = WindowNameControls.GetWindowPosition(whnd);
+                    var pos = WindowControls.GetWindowRect(whnd);
 
                     int x = 0, y = 0;
-                    switch (this.GetUISelectionValue(nameof(v_PositionBase), engine))
+                    switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PositionBase), engine))
                     {
                         case "top left":
                             x = pos.left;
@@ -156,27 +116,26 @@ namespace taskt.Core.Automation.Commands
                             y = (pos.top + pos.bottom) / 2;
                             break;
                     }
-                    if (!String.IsNullOrEmpty(v_VariablePositionX))
+                    if (!string.IsNullOrEmpty(v_XPosition))
                     {
-                        x.ToString().StoreInUserVariable(engine, v_VariablePositionX);
+                        x.ToString().StoreInUserVariable(engine, v_XPosition);
                     }
-                    if (!String.IsNullOrEmpty(v_VariablePositionY))
+                    if (!string.IsNullOrEmpty(v_YPosition))
                     {
-                        y.ToString().StoreInUserVariable(engine, v_VariablePositionY);
+                        y.ToString().StoreInUserVariable(engine, v_YPosition);
                     }
                 })
             );
         }
 
-        public override void Refresh(frmCommandEditor editor)
-        {
-            base.Refresh();
-            ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
-        }
+        //public override void Refresh(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
+        //{
+        //    ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
+        //}
 
-        private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
-        }
+        //private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        //{
+        //    WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
+        //}
     }
 }

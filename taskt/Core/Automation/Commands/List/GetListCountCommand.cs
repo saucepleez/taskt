@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get the item count of a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get the item count of a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetListCountCommand : ScriptCommand
@@ -32,10 +33,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-            
             var listVariable = v_ListName.GetRawVariable(engine);
             dynamic listToCount;
 
@@ -70,7 +69,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             string count = listToCount.Count.ToString();
-            count.StoreInUserVariable(sender, v_UserVariableName);
+            count.StoreInUserVariable(engine, v_UserVariableName);
         }
     }
 }

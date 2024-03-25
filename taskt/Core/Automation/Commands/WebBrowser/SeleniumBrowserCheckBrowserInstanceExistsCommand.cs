@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command returns existance of browser instance.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close an open instance of Excel.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SeleniumBrowserCheckBrowserInstanceExistsCommand : ScriptCommand
@@ -33,13 +34,11 @@ namespace taskt.Core.Automation.Commands
 
             //this.v_InstanceName = "";
         }
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             try
             {
-                var _ = v_InstanceName.GetSeleniumBrowserInstance(engine);
+                var _ = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
                 true.StoreInUserVariable(engine, v_applyToVariableName);
             }
             catch

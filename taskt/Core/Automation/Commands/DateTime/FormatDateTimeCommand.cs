@@ -13,13 +13,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Format DateTime Text.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Format DateTime Text.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class FormatDateTimeCommand : ScriptCommand
+    public class FormatDateTimeCommand : ADateTimeConvertCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_InputDateTime))]
-        public string v_DateTime { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_InputDateTime))]
+        //public string v_DateTime { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("DateTime Format")]
@@ -34,11 +35,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Format", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Format")]
+        [PropertyParameterOrder(6000)]
         public string v_Format { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_Result { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //public string v_Result { get; set; }
 
         public FormatDateTimeCommand()
         {
@@ -48,13 +50,12 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var myDT = v_DateTime.GetDateTimeVariable(engine);
-            string format = v_Format.ConvertToUserVariable(engine);
+            //var myDT = v_DateTime.ExpandUserVariableAsDateTime(engine);
+            var myDT = this.ExpandValueOrVariableAsDateTime(engine);
+            
+            string format = v_Format.ExpandValueOrUserVariable(engine);
 
             myDT.ToString(format).StoreInUserVariable(engine, v_Result);
         }
@@ -62,7 +63,7 @@ namespace taskt.Core.Automation.Commands
         private void lnkFormatChecker_Click(object sender, EventArgs e)
         {
             TextBox txt = (TextBox)((CommandItemControl)sender).Tag;
-            UI.Forms.Supplement_Forms.frmFormatChecker.ShowFormatCheckerFormLinkClicked(txt, "DateTime");
+            UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker.ShowFormatCheckerFormLinkClicked(txt, "DateTime");
         }
     }
 }

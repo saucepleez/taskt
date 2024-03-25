@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to trim a Text")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to select a subset of text or variable")]
     [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Substring method to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SubstringTextCommand : ScriptCommand
@@ -55,14 +56,12 @@ namespace taskt.Core.Automation.Commands
             //v_stringLength = "-1";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var variableName = v_userVariableName.ExpandValueOrUserVariable(engine);
 
-            var variableName = v_userVariableName.ConvertToUserVariable(engine);
-
-            var startIndex = this.ConvertToUserVariableAsInteger(nameof(v_startIndex), engine);
-            var stringLength = this.ConvertToUserVariableAsInteger(nameof(v_stringLength), engine);
+            var startIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_startIndex), engine);
+            var stringLength = this.ExpandValueOrUserVariableAsInteger(nameof(v_stringLength), engine);
 
             //apply substring
             string subStr;

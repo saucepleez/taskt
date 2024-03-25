@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command returns a list of file paths from a specified location")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to return a list of file paths from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetFileInfoCommand : ScriptCommand
@@ -54,10 +55,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //var targetFile = FilePathControls.WaitForFile(this, nameof(v_TargetFileName), nameof(v_WaitTime), engine);
             //var fileInfo = new System.IO.FileInfo(targetFile);
 
@@ -94,7 +93,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     var fileInfo = new System.IO.FileInfo(path);
 
-                    var infoType = this.GetUISelectionValue(nameof(v_InfoType), engine);
+                    var infoType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), engine);
                     string ret = "";
                     switch (infoType)
                     {

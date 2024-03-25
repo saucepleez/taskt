@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to send emails with outlook")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send emails with your currenty logged in outlook account")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_smtp))]
     public class OutlookEmailCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -66,14 +67,13 @@ namespace taskt.Core.Automation.Commands
             this.v_BodyType = "Plain";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-
-            var vRecipients = v_Recipients.ConvertToUserVariable(sender);
-            var vAttachment = v_Attachment.ConvertToUserVariable(sender);
-            var vSubject = v_Subject.ConvertToUserVariable(sender);
-            var vBody = v_Body.ConvertToUserVariable(sender);
-            var vBodyType = v_BodyType.ConvertToUserVariable(sender);
+            var vRecipients = v_Recipients.ExpandValueOrUserVariable(engine);
+            var vAttachment = v_Attachment.ExpandValueOrUserVariable(engine);
+            var vSubject = v_Subject.ExpandValueOrUserVariable(engine);
+            var vBody = v_Body.ExpandValueOrUserVariable(engine);
+            var vBodyType = v_BodyType.ExpandValueOrUserVariable(engine);
 
             var splittext = vRecipients.Split(';');
 
@@ -111,7 +111,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
       
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Recipients", this, editor));

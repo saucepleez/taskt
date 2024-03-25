@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command renames a folder at a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to rename an existing folder.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class RenameFolderCommand : ScriptCommand
@@ -65,10 +66,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             ////apply variable logic
             //var sourceFolder = FolderPathControls.WaitForFolder(this, nameof(v_SourceFolderPath), nameof(v_WaitForFolder), engine);
             //var currentFolderName = Path.GetFileName(sourceFolder);
@@ -102,7 +101,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     var currentFolderName = Path.GetFileName(path);
 
-                    var newFolderName = v_NewName.ConvertToUserVariableAsFolderName(engine);
+                    var newFolderName = v_NewName.ExpandValueOrUserVariableAsFolderName(engine);
 
                     //get source folder name and info
                     DirectoryInfo sourceFolderInfo = new DirectoryInfo(path);
@@ -110,7 +109,7 @@ namespace taskt.Core.Automation.Commands
                     //create destination
                     var destinationPath = Path.Combine(sourceFolderInfo.Parent.FullName, newFolderName);
 
-                    var whenSame = this.GetUISelectionValue(nameof(v_IfFolderNameSame), engine);
+                    var whenSame = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfFolderNameSame), engine);
                     if (currentFolderName == newFolderName)
                     {
                         switch (whenSame)

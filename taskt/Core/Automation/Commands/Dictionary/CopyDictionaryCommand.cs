@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to copy a Dictionary.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to copy a Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CopyDictionaryCommand : ScriptCommand
@@ -21,11 +22,11 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Dictionary Variable Name to Copy")]
         [PropertyValidationRule("Dictionary to Copy", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary to Copy")]
-        public string v_InputData { get; set; }
+        public string v_TargetDictionary { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_NewOutputDictionaryName))]
-        public string v_OutputName { get; set; }
+        public string v_NewDictionary { get; set; }
 
         public CopyDictionaryCommand()
         {
@@ -35,15 +36,13 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var srcDic = v_InputData.GetDictionaryVariable(engine);
+            var srcDic = v_TargetDictionary.ExpandUserVariableAsDictinary(engine);
 
             var newDic = new Dictionary<string, string>(srcDic);
 
-            newDic.StoreInUserVariable(engine, v_OutputName);
+            newDic.StoreInUserVariable(engine, v_NewDictionary);
         }
     }
 }

@@ -11,13 +11,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to save an Excel workbook.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save changes to a workbook.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelSaveCommand : ScriptCommand
+    public class ExcelSaveCommand : AExcelInstanceCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         public ExcelSaveCommand()
         {
@@ -27,12 +28,10 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get engine context
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
             if (excelInstance.ActiveWorkbook != null)
             {
@@ -43,12 +42,12 @@ namespace taskt.Core.Automation.Commands
                 }
                 else
                 {
-                    throw new Exception("Excel Instance '" + v_InstanceName + "' Workbook does not saved Excel File.");
+                    throw new Exception($"Excel Instance '{v_InstanceName}' Workbook does not saved Excel File.");
                 }
             }
             else
             {
-                throw new Exception("Excel Instance '" + v_InstanceName + "' has no Workbook.");
+                throw new Exception($"Excel Instance '{v_InstanceName}' has no Workbook.");
             }
         }
     }

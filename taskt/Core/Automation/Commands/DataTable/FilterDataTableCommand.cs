@@ -4,7 +4,6 @@ using System.Xml.Serialization;
 using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -16,6 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you filter a DataTable into a new Datatable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get specific rows of a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command attempts to filter a Datatable into a new Datatable")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     public class FilterDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -27,7 +27,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public string v_DataTableName { get; set; }
+        public string v_TargetDataTable { get; set; }
+
         [XmlAttribute]
         [PropertyDescription("Please indicate the output DataTable Variable Name")]
         [InputSpecification("Enter a unique DataTable name for future reference.")]
@@ -39,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        public string v_OutputDTName { get; set; }
+        public string v_NewDataTable { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please indicate tuples to filter by.")]
@@ -58,13 +59,11 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            DataTable Dt = (DataTable)v_TargetDataTable.GetRawVariable(engine).VariableValue;
 
-            DataTable Dt = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
-
-            var vSearchItem = v_SearchItem.ConvertToUserVariable(engine);
+            var vSearchItem = v_SearchItem.ExpandValueOrUserVariable(engine);
             var t = new List<Tuple<string, string>>();
             var listPairs = vSearchItem.Split('}');
             int i = 0;
@@ -84,8 +83,6 @@ namespace taskt.Core.Automation.Commands
 
             foreach (Tuple<string, string> tuple in t)
             {
-
-
                 foreach (DataRow item in listrows)
                 {
                     if (item[tuple.Item1] != null)
@@ -97,6 +94,7 @@ namespace taskt.Core.Automation.Commands
                     }
                 }
             }
+
             DataTable outputDT = new DataTable();
             int x = 0;
             foreach(DataColumn column in Dt.Columns)
@@ -104,16 +102,18 @@ namespace taskt.Core.Automation.Commands
                 outputDT.Columns.Add(Dt.Columns[x].ToString());
                 x++;
             }
+
             foreach (DataRow item in templist)
             {
                 outputDT.Rows.Add(item.ItemArray);
             }
+
             Dt.AcceptChanges();
 
-            outputDT.StoreInUserVariable(engine, v_OutputDTName);
+            outputDT.StoreInUserVariable(engine, v_NewDataTable);
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -125,7 +125,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue()+ "[Filter all datarows with the filter: " + v_SearchItem + " from DataTable: " + v_DataTableName + " and put them in DataTable: "+ v_OutputDTName+"]";
+            return base.GetDisplayValue()+ "[Filter all datarows with the filter: " + v_SearchItem + " from DataTable: " + v_TargetDataTable + " and put them in DataTable: "+ v_NewDataTable+"]";
         }
     }
 }

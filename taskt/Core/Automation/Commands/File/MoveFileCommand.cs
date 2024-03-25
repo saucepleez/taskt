@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command moves a file to a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to move a file to a new destination.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     // TODO: change to file action command
@@ -77,10 +78,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
        //     var sourceFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
 
        //     var destinationFolder = v_DestinationDirectory.ConvertToUserVariableAsFolderPath(engine);
@@ -128,11 +127,11 @@ namespace taskt.Core.Automation.Commands
             FilePathControls.FileAction(this, engine,
                 new Action<string>(path =>
                 {
-                    var destinationFolder = v_DestinationDirectory.ConvertToUserVariableAsFolderPath(engine);
+                    var destinationFolder = v_DestinationDirectory.ExpandValueOrUserVariableAsFolderPath(engine);
 
                     if (!Directory.Exists(destinationFolder))
                     {
-                        if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CreateDirectory), engine))
                         {
                             Directory.CreateDirectory(destinationFolder);
                         }
@@ -151,7 +150,7 @@ namespace taskt.Core.Automation.Commands
                     // todo: check folder is same
 
                     //delete if it already exists per user
-                    if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExisting), engine))
                     {
                         File.Delete(destinationPath);
                     }

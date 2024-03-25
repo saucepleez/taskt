@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Select an Option for WebElement.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Select an Option for WebElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SeleniumBrowserSelectOptionForWebElementCommand : ScriptCommand
@@ -68,13 +69,11 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
-            var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
-
-            if (this.GetYesNoSelectionValue(nameof(v_ScrollToElement), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToElement), engine))
             {
                 var scrollCommand = new SeleniumBrowserScrollToWebElementCommand()
                 {
@@ -91,8 +90,8 @@ namespace taskt.Core.Automation.Commands
             }
 
             var sel = new SelectElement(elem);
-            var value = v_SelectionValue.ConvertToUserVariable(engine);
-            var selectType = this.GetUISelectionValue(nameof(v_SelectionType), engine);
+            var value = v_SelectionValue.ExpandValueOrUserVariable(engine);
+            var selectType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SelectionType), engine);
             try
             {
                 switch (selectType)
@@ -131,7 +130,7 @@ namespace taskt.Core.Automation.Commands
             }
             catch
             {
-                if (this.GetUISelectionValue(nameof(v_WhenFailSelectAction), engine) == "error")
+                if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFailSelectAction), engine) == "error")
                 {
                     throw new Exception($"Fail Select Option. Type:'{selectType}', Value:'{value}'");
                 }
@@ -141,7 +140,7 @@ namespace taskt.Core.Automation.Commands
         private void cmbSelectionType_SelectionChange(object sender, EventArgs e)
         {
             var showFlag = (((ComboBox)sender).SelectedItem?.ToString().ToLower() != "deselect all");
-            GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_SelectionValue), showFlag);
+            FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_SelectionValue), showFlag);
         }
 
         private void cmbScrollToElement_SelectionChange(object sender, EventArgs e)

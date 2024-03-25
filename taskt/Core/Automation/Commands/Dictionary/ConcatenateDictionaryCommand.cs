@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to concatenate two Dictionaries.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to concatenate two Dictionaries.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConcatenateDictionaryCommand : ScriptCommand
@@ -24,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vDictionary1}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyValidationRule("Dictionary1", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary1")]
-        public string v_InputDataA { get; set; }
+        public string v_DictionaryA { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
@@ -34,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vDictionary2}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyValidationRule("Dictionary2", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary2")]
-        public string v_InputDataB { get; set; }
+        public string v_DictionaryB { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("When Key already Exists")]
@@ -54,7 +55,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_NewOutputDictionaryName))]
         [Remarks("Concatenate Dictionary 1, Dictionary 2 in that order")]
-        public string v_OutputName { get; set; }
+        public string v_NewDictionary { get; set; }
 
         public ConcatenateDictionaryCommand()
         {
@@ -64,17 +65,15 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var dicA = v_DictionaryA.ExpandUserVariableAsDictinary(engine);
 
-            var dicA = v_InputDataA.GetDictionaryVariable(engine);
-
-            var dicB = v_InputDataB.GetDictionaryVariable(engine);
+            var dicB = v_DictionaryB.ExpandUserVariableAsDictinary(engine);
 
             var myDic = new Dictionary<string, string>(dicA);
 
-            string keyExists = this.GetUISelectionValue(nameof(v_KeyExists), "When Key Exists", engine);
+            string keyExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_KeyExists), "When Key Exists", engine);
 
             switch (keyExists)
             {
@@ -114,7 +113,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     break;
             }
-            myDic.StoreInUserVariable(engine, v_OutputName);
+            myDic.StoreInUserVariable(engine, v_NewDictionary);
         }
     }
 }

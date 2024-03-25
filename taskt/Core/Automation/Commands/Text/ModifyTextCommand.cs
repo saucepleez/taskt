@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to trim Text, convert Text, etc.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to trim Text, convert Text, etc.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ModifyTextCommand : ScriptCommand
@@ -47,14 +48,12 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var stringValue = v_userVariableName.ConvertToUserVariable(engine);
+            var stringValue = v_userVariableName.ExpandValueOrUserVariable(engine);
 
             //var caseType = v_ConvertType.ConvertToUserVariable(sender);
-            var caseType = this.GetUISelectionValue(nameof(v_ConvertType), engine);
+            var caseType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ConvertType), engine);
             switch (caseType)
             {
                 case "to upper case":

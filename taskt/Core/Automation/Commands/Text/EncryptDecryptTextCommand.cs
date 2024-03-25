@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command handles text encryption")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to store some data encrypted")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class EncryptDecryptTextCommand : ScriptCommand
@@ -53,17 +54,15 @@ namespace taskt.Core.Automation.Commands
             //this.v_PassPhrase = "TASKT";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //get variablized input
-            var variableInput = v_InputValue.ConvertToUserVariable(engine);
-            var passphrase = v_PassPhrase.ConvertToUserVariable(engine);
+            var variableInput = v_InputValue.ExpandValueOrUserVariable(engine);
+            var passphrase = v_PassPhrase.ExpandValueOrUserVariable(engine);
 
             string resultData = "";
 
-            var encType = this.GetUISelectionValue(nameof(v_EncryptionType), engine);
+            var encType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionType), engine);
             switch (encType)
             {
                 case "encrypt":

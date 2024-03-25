@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Select Item In UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to Select a Item in UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Select a Item in UIElement.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationSelectItemInUIElementCommand : ScriptCommand
@@ -38,15 +39,13 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
-            var targetElement = v_TargetElement.GetUIElementVariable(engine);
+            var itemName = v_Item.ExpandValueOrUserVariable(engine);
 
-            var itemName = v_Item.ConvertToUserVariable(engine);
-
-            var items = UIElementControls.GetSelectionItems(targetElement, true);
+            var items = UIElementControls.GetSelectionItems(targetElement);
             bool isSelected = false;
             foreach(var item in items)
             {

@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to add list item.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add list item.  You can even use variables to modify other variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class AddListItemCommand : ScriptCommand
@@ -36,14 +37,11 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
+            List<string> lst = v_ListName.ExpandUserVariableAsList(engine);
 
-            List<string> lst = v_ListName.GetListVariable(engine);
-
-            var variableInput = v_Input.ConvertToUserVariable(sender);
+            var variableInput = v_Input.ExpandValueOrUserVariable(engine);
             lst.Add(variableInput);
         }
     }

@@ -15,6 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command extracts files from a compressed file")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ExtractZipFileCommand : ScriptCommand
@@ -40,7 +41,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Create Folder When Destination Does not Exist")]
         //[PropertyUISelectionOption("Yes")]
         //[PropertyUISelectionOption("No")]
@@ -78,12 +79,10 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //get absolute variable path or URL to source file
-            var vSourceFile = this.ConvertToUserVariableAsFilePath(nameof(v_FilePathOrigin), engine);
+            var vSourceFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FilePathOrigin), engine);
 
             //track local file location
             string vLocalSourceFile = vSourceFile;
@@ -94,7 +93,8 @@ namespace taskt.Core.Automation.Commands
             if (FilePathControls.IsURL(vSourceFile))
             {
                 //create temp directory
-                var tempDir = Folders.GetFolder(Folders.FolderType.TempFolder);
+                //var tempDir = Folders.GetFolder(Folders.FolderType.TempFolder);
+                var tempDir = Folders.GetTempFolderPath();
                 var tempFile = Path.Combine(tempDir, $"{ Guid.NewGuid()}." + vFileType);
 
                 //check if directory does not exist then create directory
@@ -121,7 +121,7 @@ namespace taskt.Core.Automation.Commands
 
             //get file path to destination files
             //var vExtractionFolder = v_PathDestination.ConvertToUserVariable(engine);
-            var vExtractionFolder = v_PathDestination.ConvertToUserVariableAsFolderPath(engine);
+            var vExtractionFolder = v_PathDestination.ExpandValueOrUserVariableAsFolderPath(engine);
 
             // If the directory doesn't exist, create it.
             if (!Directory.Exists(vExtractionFolder))
@@ -132,7 +132,7 @@ namespace taskt.Core.Automation.Commands
                 //{
                 //    Directory.CreateDirectory(vExtractionFolder);
                 //}
-                if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
+                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CreateDirectory), engine))
                 {
                     Directory.CreateDirectory(vExtractionFolder);
                 }
@@ -148,7 +148,7 @@ namespace taskt.Core.Automation.Commands
                     IReader reader;
 
                     //get optional password
-                    var vPassword = v_Password.ConvertToUserVariable(engine);
+                    var vPassword = v_Password.ExpandValueOrUserVariable(engine);
 
                     //check if password is needed
                     if (string.IsNullOrEmpty(vPassword))

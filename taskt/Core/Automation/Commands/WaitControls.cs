@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static object WaitProcess(this ScriptCommand command, string waitTimeName, string targetName, Func<(bool, object)> waitFunc, Engine.AutomationEngineInstance engine)
         {
-            int pauseTime = command.ConvertToUserVariableAsInteger(waitTimeName, "Wait Time", engine);
+            int pauseTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, "Wait Time", engine);
 
             return WaitProcess(pauseTime, targetName, waitFunc, engine);
         }

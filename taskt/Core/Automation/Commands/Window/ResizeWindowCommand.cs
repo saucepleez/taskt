@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
+using System.Collections.Generic;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -14,62 +12,68 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command resizes a window to a specified size.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to reize a window by name to a specific size on screen.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ResizeWindowCommand : ScriptCommand
+    public class ResizeWindowCommand : AWindowNameCommands, IWindowSizeProperties
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
-        public string v_WindowName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
+        //public string v_WindowName { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
+        //public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
-        public string v_SearchMethod { get; set; }
+        //[PropertyDescription("Window Width (Pixcel)")]
+        //[InputSpecification("Window Width", true)]
+        //[PropertyDetailSampleUsage("**640**", PropertyDetailSampleUsage.ValueType.Value, "Width")]
+        //[PropertyDetailSampleUsage("**{{{vWidth}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Width")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("Width", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        //[PropertyDisplayText(true, "Width")]
+        //[PropertyAvailableSystemVariable(Engine.SystemVariables.LimitedSystemVariableNames.Window_Size)]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_InputWidth))]
+        [PropertyParameterOrder(6500)]
+        public string v_Width { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Window Width (Pixcel)")]
-        [InputSpecification("Window Width", true)]
-        [PropertyDetailSampleUsage("**640**", PropertyDetailSampleUsage.ValueType.Value, "Width")]
-        [PropertyDetailSampleUsage("**{{{vWidth}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Width")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Width", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyDisplayText(true, "Width")]
-        public string v_XWindowSize { get; set; }
+        //[PropertyDescription("Window Height (Pixcel)")]
+        //[InputSpecification("Window Height", true)]
+        //[PropertyDetailSampleUsage("**480**", PropertyDetailSampleUsage.ValueType.Value, "Height")]
+        //[PropertyDetailSampleUsage("**{{{vHeight}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Height")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("Height", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        //[PropertyDisplayText(true, "Height")]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_InputHeight))]
+        [PropertyParameterOrder(6500)]
+        public string v_Height { get; set; }
 
-        [XmlAttribute]
-        [PropertyDescription("Window Height (Pixcel)")]
-        [InputSpecification("Window Height", true)]
-        [PropertyDetailSampleUsage("**480**", PropertyDetailSampleUsage.ValueType.Value, "Height")]
-        [PropertyDetailSampleUsage("**{{{vHeight}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Height")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Height", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyDisplayText(true, "Height")]
-        public string v_YWindowSize { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod))]
+        //[PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
+        //public string v_MatchMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod))]
-        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
-        public string v_MatchMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
+        //public string v_TargetWindowIndex { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
-        public string v_TargetWindowIndex { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        //public string v_WaitTime { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
-        public string v_WaitTime { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        //public string v_NameResult { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
-        public string v_NameResult { get; set; }
-
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowHandleResult))]
-        public string v_HandleResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
+        //public string v_HandleResult { get; set; }
 
         public ResizeWindowCommand()
         {
@@ -79,41 +83,35 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            //var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
-
-            //var width = this.ConvertToUserVariableAsInteger(nameof(v_XWindowSize), engine);
-            //var height = this.ConvertToUserVariableAsInteger(nameof(v_YWindowSize), engine);
-            //foreach (var win in wins)
-            //{
-            //    WindowNameControls.SetWindowSize(win.Item1, width, height);
-            //}
-
-            WindowNameControls.WindowAction(this, engine,
-                new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
+            WindowControls.WindowAction(this, engine,
+                new Action<List<(IntPtr, string)>>(wins =>
                 {
-                    var width = this.ConvertToUserVariableAsInteger(nameof(v_XWindowSize), engine);
-                    var height = this.ConvertToUserVariableAsInteger(nameof(v_YWindowSize), engine);
+                    //var width = this.ExpandValueOrUserVariableAsInteger(nameof(v_Width), engine);
+                    //var height = this.ExpandValueOrUserVariableAsInteger(nameof(v_Height), engine);
+                    
                     foreach (var win in wins)
                     {
-                        WindowNameControls.SetWindowSize(win.Item1, width, height);
+                        var whnd = win.Item1;
+
+                        var width = this.ExpandValueOrVariableAsWindowWidth(whnd, engine);
+                        var height = this.ExpandValueOrVariableAsWindowHeight(whnd, engine);
+
+                        WindowControls.SetWindowSize(whnd, width, height);
                     }
                 })
             );
         }
 
-        private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
-        }
+        //private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        //{
+        //    WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
+        //}
 
-        public override void Refresh(frmCommandEditor editor)
-        {
-            base.Refresh();
-            ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
-        }
+        //public override void Refresh(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
+        //{
+        //    ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
+        //}
     }
 }

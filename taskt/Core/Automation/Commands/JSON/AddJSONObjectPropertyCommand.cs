@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to add property to JSON Object.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class AddJSONObjectPropertyCommand : ScriptCommand
@@ -55,10 +56,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             Action<JToken> addPropertyFunc = new Action<JToken>((searchResult) =>
             {
                 if (!(searchResult is JObject))
@@ -68,7 +67,7 @@ namespace taskt.Core.Automation.Commands
                 JObject obj = (JObject)searchResult;
 
                 var propertyValue = this.GetJSONValue(nameof(v_PropertyValue), nameof(v_ValueType), "Add", engine);
-                var propertyName = v_PropertyName.ConvertToUserVariable(engine);
+                var propertyName = v_PropertyName.ExpandValueOrUserVariable(engine);
                 obj.Add(new JProperty(propertyName, propertyValue));
             });
             this.JSONModifyByJSONPath(nameof(v_InputValue), nameof(v_JsonExtractor), addPropertyFunc, addPropertyFunc, engine);

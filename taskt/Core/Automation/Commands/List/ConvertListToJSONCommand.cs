@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command convert a JSON array to a list.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertListToJSONCommand : ScriptCommand
@@ -32,17 +33,15 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-            
-            List<string> targetList = v_InputList.GetListVariable(engine);
+            List<string> targetList = v_InputList.ExpandUserVariableAsList(engine);
 
             // convert json
             try
             {
                 string convertedList = Newtonsoft.Json.JsonConvert.SerializeObject(targetList);
-                convertedList.StoreInUserVariable(sender, v_applyToVariableName);
+                convertedList.StoreInUserVariable(engine, v_applyToVariableName);
             }
             catch (Exception ex)
             {

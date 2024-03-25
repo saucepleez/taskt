@@ -8,12 +8,12 @@ using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to build a date and apply it to a variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a date calculation.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     public class DateCalculationCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -84,10 +84,10 @@ namespace taskt.Core.Automation.Commands
             //this.v_ToStringFormat = "MM/dd/yyyy hh:mm:ss";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //get variablized string
-            var variableDateTime = v_InputValue.ConvertToUserVariable(sender);
+            var variableDateTime = v_InputValue.ExpandValueOrUserVariable(engine);
 
             //convert to date time
             DateTime requiredDateTime;
@@ -98,7 +98,7 @@ namespace taskt.Core.Automation.Commands
 
             //get increment value
             double requiredInterval;
-            var variableIncrement = v_Increment.ConvertToUserVariable(sender);
+            var variableIncrement = v_Increment.ExpandValueOrUserVariable(engine);
 
             //convert to double
             if (!Double.TryParse(variableIncrement, out requiredInterval))
@@ -144,15 +144,15 @@ namespace taskt.Core.Automation.Commands
             }
 
             //handle if formatter is required     
-            var formatting = v_ToStringFormat.ConvertToUserVariable(sender);
+            var formatting = v_ToStringFormat.ExpandValueOrUserVariable(engine);
             var stringDateFormatted = requiredDateTime.ToString(formatting);
 
 
             //store string in variable
-            stringDateFormatted.StoreInUserVariable(sender, v_applyToVariableName);
+            stringDateFormatted.StoreInUserVariable(engine, v_applyToVariableName);
 
         }
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -212,7 +212,7 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
+        public override bool IsValidate(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             this.IsValid = true;
             this.validationResult = "";

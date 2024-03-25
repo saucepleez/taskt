@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to modify variables.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SetVariableIndexCommand : ScriptCommand
@@ -41,15 +42,12 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-            
             var variableName = VariableNameControls.GetVariableName(v_userVariableName, engine);
             var rawVariable = variableName.GetRawVariable(engine);
 
-            var index = this.ConvertToUserVariableAsInteger(nameof(v_Index), engine);
+            var index = this.ExpandValueOrUserVariableAsInteger(nameof(v_Index), engine);
             rawVariable.CurrentPosition = index;
         }
     }

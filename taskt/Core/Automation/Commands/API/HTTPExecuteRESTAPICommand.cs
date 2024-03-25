@@ -14,9 +14,10 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to show a message to the user.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to present or display a value on screen to the user.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'MessageBox' and invokes VariableCommand to find variable data.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_run_code))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class HTTPExecuteRESTAPICommand : ScriptCommand
+    public class HTTPExecuteRESTAPICommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -112,10 +113,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_AdvancedParameters.TableName = DateTime.Now.ToString("AdvRESTParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             try
             {
                 //make REST Request and store into variable
@@ -134,9 +133,9 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //get parameters
-            var targetURL = v_BaseURL.ConvertToUserVariable(engine);
-            var targetEndpoint = v_APIEndPoint.ConvertToUserVariable(engine);
-            var targetMethod = v_APIMethodType.ConvertToUserVariable(engine);
+            var targetURL = v_BaseURL.ExpandValueOrUserVariable(engine);
+            var targetEndpoint = v_APIEndPoint.ExpandValueOrUserVariable(engine);
+            var targetMethod = v_APIMethodType.ExpandValueOrUserVariable(engine);
 
             //client
             var client = new RestClient(targetURL);
@@ -171,8 +170,8 @@ namespace taskt.Core.Automation.Commands
             //for each api parameter
             foreach (var param in apiParameters)
             {
-                var paramName = ((string)param["Parameter Name"]).ConvertToUserVariable(sender);
-                var paramValue = ((string)param["Parameter Value"]).ConvertToUserVariable(sender);
+                var paramName = ((string)param["Parameter Name"]).ExpandValueOrUserVariable(engine);
+                var paramValue = ((string)param["Parameter Value"]).ExpandValueOrUserVariable(engine);
 
                 request.AddParameter(paramName, paramValue);
             }
@@ -180,8 +179,8 @@ namespace taskt.Core.Automation.Commands
             //for each header
             foreach (var header in apiHeaders)
             {
-                var paramName = ((string)header["Parameter Name"]).ConvertToUserVariable(sender);
-                var paramValue = ((string)header["Parameter Value"]).ConvertToUserVariable(sender);
+                var paramName = ((string)header["Parameter Name"]).ExpandValueOrUserVariable(engine);
+                var paramValue = ((string)header["Parameter Value"]).ExpandValueOrUserVariable(engine);
 
                 request.AddHeader(paramName, paramValue);
             }
@@ -193,7 +192,7 @@ namespace taskt.Core.Automation.Commands
             //add json body
             if (jsonBody != null)
             {
-                var json = jsonBody.ConvertToUserVariable(sender);
+                var json = jsonBody.ExpandValueOrUserVariable(engine);
                 request.AddJsonBody(jsonBody);
             }
 
@@ -205,9 +204,9 @@ namespace taskt.Core.Automation.Commands
             //get file
             if (file != null)
             {
-                var paramName = ((string)file["Parameter Name"]).ConvertToUserVariable(sender);
-                var paramValue = ((string)file["Parameter Value"]).ConvertToUserVariable(sender);
-                var fileData = paramValue.ConvertToUserVariable(sender);
+                var paramName = ((string)file["Parameter Name"]).ExpandValueOrUserVariable(engine);
+                var paramValue = ((string)file["Parameter Value"]).ExpandValueOrUserVariable(engine);
+                var fileData = paramValue.ExpandValueOrUserVariable(engine);
                 request.AddFile(paramName, fileData);
 
             }
@@ -215,10 +214,10 @@ namespace taskt.Core.Automation.Commands
             //add advanced parameters
             foreach (DataRow rw in this.v_AdvancedParameters.Rows)
             {
-                var paramName = rw.Field<string>("Parameter Name").ConvertToUserVariable(sender);
-                var paramValue = rw.Field<string>("Parameter Value").ConvertToUserVariable(sender);
-                var paramType = rw.Field<string>("Parameter Type").ConvertToUserVariable(sender);
-                var contentType = rw.Field<string>("Content Type").ConvertToUserVariable(sender);
+                var paramName = rw.Field<string>("Parameter Name").ExpandValueOrUserVariable(engine);
+                var paramValue = rw.Field<string>("Parameter Value").ExpandValueOrUserVariable(engine);
+                var paramType = rw.Field<string>("Parameter Type").ExpandValueOrUserVariable(engine);
+                var contentType = rw.Field<string>("Content Type").ExpandValueOrUserVariable(engine);
 
                 //var param = new Parameter(paramName, paramValue, (ParameterType)Enum.Parse(typeof(ParameterType), paramType));
 
@@ -227,7 +226,7 @@ namespace taskt.Core.Automation.Commands
                 request.AddParameter(paramName, paramValue, (ParameterType)Enum.Parse(typeof(ParameterType), paramType));
             }
 
-            var requestFormat = v_RequestFormat.ConvertToUserVariable(sender);
+            var requestFormat = v_RequestFormat.ExpandValueOrUserVariable(engine);
             if (string.IsNullOrEmpty(requestFormat))
             {
                 requestFormat = "Xml";

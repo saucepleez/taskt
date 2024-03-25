@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.IO;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -14,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to apply formatting to a string")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to apply specific formatting to text or a variable")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class FormatDataCommand : ScriptCommand
@@ -44,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("Specify required output format")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyCustomUIHelper("Format Checker", "lnkFormatChecker_Click")]
+        [PropertyCustomUIHelper("Format Checker", nameof(lnkFormatChecker_Click))]
         [InputSpecification("Specify if a specific string format is required.")]
         [SampleUsage("**MM/dd/yy** or **hh:mm** or **#.0** or **file** etc.")]
         [Remarks("Path supports **file**, **folder**, **filewithoutextension**, **extension**, **drive**")]
@@ -78,27 +76,11 @@ namespace taskt.Core.Automation.Commands
             //this.v_ToStringFormat = "MM/dd/yyyy";   
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            //get variablized string
-            //var variableString = v_InputValue.ConvertToUserVariable(sender);
-
-            //get formatting
-            //var formatting = v_ToStringFormat.ConvertToUserVariable(sender);
-
-            //var variableName = v_applyToVariableName.ConvertToUserVariable(sender);
-
-            //string formattedString = "";
             switch (v_FormatType)
             {
                 case "Date":
-                    //if (DateTime.TryParse(variableString, out var parsedDate))
-                    //{
-                    //    formattedString = parsedDate.ToString(formatting);
-                    //}
-
                     var inner0 = VariableNameControls.GetInnerVariableName(0, engine);
 
                     var dateTimeFromText = new CreateDateTimeFromTextCommand()
@@ -115,12 +97,8 @@ namespace taskt.Core.Automation.Commands
                     };
                     formatDateTime.RunCommand(engine);
                     break;
-                case "Number":
-                    //if (Decimal.TryParse(variableString, out var parsedDecimal))
-                    //{
-                    //    formattedString = parsedDecimal.ToString(formatting);
-                    //}
 
+                case "Number":
                     var formatNumber = new FormatNumberCommand()
                     {
                         v_Number = v_InputValue,
@@ -129,44 +107,10 @@ namespace taskt.Core.Automation.Commands
                     };
                     formatNumber.RunCommand(engine);
                     break;
+
                 case "Path":
-                    //switch(formatting.ToLower())
-                    //{
-                    //    case "file":
-                    //    case "filename":
-                    //    case "fn":
-                    //        formattedString = Path.GetFileName(variableString);
-                    //        break;
-
-                    //    case "folder":
-                    //    case "directory":
-                    //    case "dir":
-                    //        formattedString = Path.GetDirectoryName(variableString);
-                    //        break;
-
-                    //    case "filewithoutextension":
-                    //    case "filenamewithoutextension":
-                    //    case "fnwoext":
-                    //        formattedString = Path.GetFileNameWithoutExtension(variableString);
-                    //        break;
-
-                    //    case "extension":
-                    //    case "ext":
-                    //        formattedString = Path.GetExtension(variableString);
-                    //        break;
-
-                    //    case "drive":
-                    //    case "drivename":
-                    //    case "root":
-                    //        formattedString = Path.GetPathRoot(variableString);
-                    //        break;
-
-                    //    default:
-                    //        formattedString = "";
-                    //        break;
-                    //}
-                    var variableString = v_InputValue.ConvertToUserVariable(engine);
-                    var formatting = v_ToStringFormat.ConvertToUserVariable(engine);
+                    var variableString = v_InputValue.ExpandValueOrUserVariable(engine);
+                    var formatting = v_ToStringFormat.ExpandValueOrUserVariable(engine);
                     var formattedString = FilePathControls.FormatFileFolderPath(variableString, formatting);
                     formattedString.StoreInUserVariable(engine, v_applyToVariableName);
                     break;
@@ -174,92 +118,12 @@ namespace taskt.Core.Automation.Commands
                 default:
                     throw new Exception("Formatter Type Not Supported: " + v_FormatType);
             }
-
-            //if (formattedString == "")
-            //{
-            //    throw new InvalidDataException("Unable to convert '" + variableString + "' to type '" + v_FormatType + "'");
-            //}
-            //else
-            //{
-            //    formattedString.StoreInUserVariable(sender, v_applyToVariableName);
-            //}
         }
 
         private void lnkFormatChecker_Click(object sender, EventArgs e)
         {
-            //using (var fm = new UI.Forms.Supplement_Forms.frmFormatChecker())
-            //{
-            //    if (fm.ShowDialog() == DialogResult.OK)
-            //    {
-            //        ((TextBox)((CommandItemControl)sender).Tag).Text = fm.Format;
-            //    }
-            //}
             TextBox txt = (TextBox)((CommandItemControl)sender).Tag;
-            UI.Forms.Supplement_Forms.frmFormatChecker.ShowFormatCheckerFormLinkClicked(txt);
+            UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker.ShowFormatCheckerFormLinkClicked(txt);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
-
-        //    ////RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_FormatType", this));
-        //    ////RenderedControls.Add(CommandControls.CreateDropdownFor("v_FormatType", this));
-        //    //var typeCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_FormatType", this, editor);
-        //    //RenderedControls.AddRange(typeCtrls);
-
-        //    //var formatCtls = CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor);
-        //    //RenderedControls.AddRange(formatCtls);
-
-        //    //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-        //    //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-        //    //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-        //    //RenderedControls.Add(VariableNameControl);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    //if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    //{
-        //    //    this.v_InputValue = CommandControls.replaceApplicationKeyword("{{{DateTime.Now}}}");
-        //    //}
-
-        //    return RenderedControls;
-
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Format '" + v_InputValue + "' and Apply Result to Variable '" + v_applyToVariableName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    this.IsValid = true;
-        //    this.validationResult = "";
-
-        //    if (String.IsNullOrEmpty(this.v_InputValue))
-        //    {
-        //        this.validationResult += "Value is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_FormatType))
-        //    {
-        //        this.validationResult += "Type of data is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_FormatType))
-        //    {
-        //        this.validationResult += "Output format is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_applyToVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

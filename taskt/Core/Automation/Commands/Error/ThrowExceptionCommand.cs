@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to throw an exception error.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to throw an exception error")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_try))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ThrowExceptionCommand : ScriptCommand
@@ -34,10 +35,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             string message;
             if (String.IsNullOrEmpty(v_Message))
             {
@@ -45,7 +44,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                message = v_Message.ConvertToUserVariable(engine);
+                message = v_Message.ExpandValueOrUserVariable(engine);
             }
 
             throw new Exception(message);

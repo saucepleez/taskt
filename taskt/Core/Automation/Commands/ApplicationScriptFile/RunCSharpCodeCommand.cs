@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to run C# code from the input")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run custom C# code commands.  The code in this command is compiled and run at runtime when this command is invoked.  This command only supports the standard framework classes.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start' and waits for the script/program to exit before proceeding.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_script))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class RunCSharpCodeCommand : ScriptCommand
@@ -57,17 +58,15 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var customCode = v_Code.ConvertToUserVariable(engine);
+            var customCode = v_Code.ExpandValueOrUserVariable(engine);
 
             //create compiler service
-            var compilerSvc = new CompilerServices();
+            //var compilerSvc = new CompilerServices();
 
             //compile custom code
-            var result = compilerSvc.CompileInput(customCode);
+            var result = CSharpCodeCompilerControls.CompileInput(customCode);
 
             //check for errors
             if (result.Errors.HasErrors)
@@ -82,10 +81,10 @@ namespace taskt.Core.Automation.Commands
                 System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
                 scriptProc.StartInfo.FileName = result.PathToAssembly;
 
-                var arguments = v_Args.ConvertToUserVariable(sender);
+                var arguments = v_Args.ExpandValueOrUserVariable(engine);
                 scriptProc.StartInfo.Arguments = arguments;
 
-                if (!String.IsNullOrEmpty(v_applyToVariableName))
+                if (!string.IsNullOrEmpty(v_applyToVariableName))
                 {
                     //redirect output
                     scriptProc.StartInfo.RedirectStandardOutput = true;
@@ -96,10 +95,10 @@ namespace taskt.Core.Automation.Commands
 
                 scriptProc.WaitForExit();
 
-                if (!String.IsNullOrEmpty(v_applyToVariableName))
+                if (!string.IsNullOrEmpty(v_applyToVariableName))
                 {
                     var output = scriptProc.StandardOutput.ReadToEnd();
-                    output.StoreInUserVariable(sender, v_applyToVariableName);
+                    output.StoreInUserVariable(engine, v_applyToVariableName);
                 }
 
                 scriptProc.Close();
@@ -109,9 +108,9 @@ namespace taskt.Core.Automation.Commands
         private void lnkShowCodeBuilderLink_Clicked(object sender, EventArgs e)
         {
             var targetTextbox = (TextBox)((CommandItemControl)sender).Tag;
-            using (UI.Forms.Supplemental.frmCodeBuilder codeBuilder = new UI.Forms.Supplemental.frmCodeBuilder(targetTextbox.Text))
+            using (var codeBuilder = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCodeBuilder(targetTextbox.Text))
             {
-                if (codeBuilder.ShowDialog() == DialogResult.OK)
+                if (codeBuilder.ShowDialog(targetTextbox.FindForm()) == DialogResult.OK)
                 {
                     targetTextbox.Text = codeBuilder.rtbCode.Text;
                 }

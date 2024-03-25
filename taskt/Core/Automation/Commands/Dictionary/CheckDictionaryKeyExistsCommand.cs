@@ -11,13 +11,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to check key existance in Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check key existance in Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CheckDictionaryKeyExistsCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
-        public string v_InputData { get; set; }
+        public string v_Dictionary { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_Key))]
@@ -27,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the Key Exists, the Result is **True**")]
-        public string v_applyToVariable { get; set; }
+        public string v_Result { get; set; }
 
         public CheckDictionaryKeyExistsCommand()
         {
@@ -37,13 +38,12 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-            var vKey = v_Key.ConvertToUserVariable(sender);
+            var vKey = v_Key.ExpandValueOrUserVariable(engine);
 
-            var dic = v_InputData.GetDictionaryVariable(engine);
-            dic.ContainsKey(vKey).StoreInUserVariable(engine, v_applyToVariable);
+            var dic = v_Dictionary.ExpandUserVariableAsDictinary(engine);
+            dic.ContainsKey(vKey).StoreInUserVariable(engine, v_Result);
         }
     }
 }

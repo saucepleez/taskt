@@ -14,7 +14,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to evaluate a logical statement to determine if the statement is true. The following actions will repeat continuously until that statement becomes false")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check if a statement is 'true' or 'false' and subsequently loop actions based on either condition. Any 'BeginLoop' command must have a following 'EndLoop' command.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command evaluates supplied arguments and if evaluated to true runs sub elements")]
-    public class BeginMultiLoopCommand : ScriptCommand
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_startloop))]
+    public class BeginMultiLoopCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Multiple Loop Conditions - All Must Be True")]
@@ -49,11 +50,9 @@ namespace taskt.Core.Automation.Commands
             v_LoopConditionsTable.Columns.Add("CommandData");
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(Engine.AutomationEngineInstance engine, Core.Script.ScriptAction parentCommand)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            bool isTrueStatement = DetermineMultiStatementTruth(sender);
+            bool isTrueStatement = DetermineMultiStatementTruth(engine);
 
             engine.ReportProgress("Starting Loop");
 
@@ -80,13 +79,12 @@ namespace taskt.Core.Automation.Commands
                         break;
                     }
                 }
-                isTrueStatement = DetermineMultiStatementTruth(sender);
+                isTrueStatement = DetermineMultiStatementTruth(engine);
             }
         }
 
-        private bool DetermineMultiStatementTruth(object sender)
+        private bool DetermineMultiStatementTruth(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             bool isTrueStatement = true;
             foreach (DataRow rw in v_LoopConditionsTable.Rows)
             {
@@ -105,7 +103,7 @@ namespace taskt.Core.Automation.Commands
             return isTrueStatement;
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -159,12 +157,12 @@ namespace taskt.Core.Automation.Commands
 
                     var loopCommand = Newtonsoft.Json.JsonConvert.DeserializeObject<Commands.BeginLoopCommand>(commandData);
 
-                    var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginLoopCommand).ToList();
-                    frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
+                    var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsAndControls().Where(f => f.Command is BeginLoopCommand).ToList();
+                    var editor = new UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor(automationCommands, null);
                     editor.selectedCommand = loopCommand;
                     editor.editingCommand = loopCommand;
                     editor.originalCommand = loopCommand;
-                    editor.creationMode = frmCommandEditor.CreationMode.Edit;
+                    editor.creationMode = UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Edit;
                     editor.scriptVariables = ScriptVariables;
                     editor.appSettings = this.appSettings;
 
@@ -192,9 +190,9 @@ namespace taskt.Core.Automation.Commands
 
         private void CreateLoopCondition(object sender, EventArgs e)
         {
-            var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginLoopCommand).ToList();
+            var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsAndControls().Where(f => f.Command is BeginLoopCommand).ToList();
 
-            frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
+            var editor = new UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor(automationCommands, null);
             editor.selectedCommand = new BeginLoopCommand();
             editor.appSettings = this.appSettings;
             var res = editor.ShowDialog();

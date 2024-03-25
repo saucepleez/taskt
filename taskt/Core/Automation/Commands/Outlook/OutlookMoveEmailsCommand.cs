@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to move/copy emails with outlook")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to move/copy emails with your currenty logged in outlook account")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_smtp))]
 
     public class OutlookMoveEmailsCommand : ScriptCommand
     {
@@ -68,12 +69,11 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-            var vSourceFolder = v_SourceFolder.ConvertToUserVariable(sender);
-            var vFilter = v_Filter.ConvertToUserVariable(sender);
-            var vDestinationFolder = v_DestinationFolder.ConvertToUserVariable(sender);
+            var vSourceFolder = v_SourceFolder.ExpandValueOrUserVariable(engine);
+            var vFilter = v_Filter.ExpandValueOrUserVariable(engine);
+            var vDestinationFolder = v_DestinationFolder.ExpandValueOrUserVariable(engine);
             
             Application outlookApp = new Application();
             AddressEntry currentUser = outlookApp.Session.CurrentUser.AddressEntry;
@@ -137,7 +137,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_OperationType", this, editor));

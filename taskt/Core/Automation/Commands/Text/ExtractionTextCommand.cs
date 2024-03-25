@@ -15,9 +15,10 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to perform advanced string extraction.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract a piece of text from a larger text or variable")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExtractionTextCommand : ScriptCommand
+    public class ExtractionTextCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text_MultiLine))]
@@ -76,16 +77,14 @@ namespace taskt.Core.Automation.Commands
             //this.v_TextExtractionTable.Columns.Add("Parameter Value");
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //get variablized input
-            var variableInput = v_InputValue.ConvertToUserVariable(engine);
+            var variableInput = v_InputValue.ExpandValueOrUserVariable(engine);
 
             var parms = DataTableControls.GetFieldValues(v_TextExtractionTable, "Parameter Name", "Parameter Value", engine);
             string extractedText = "";
-            switch (this.GetUISelectionValue(nameof(v_TextExtractionType), engine))
+            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TextExtractionType), engine))
             {
                 case "extract all after text":
                     extractedText = ExtractLeadingText(variableInput, parms, engine);
@@ -103,7 +102,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //store variable
-            extractedText.StoreInUserVariable(sender, v_applyToVariableName);
+            extractedText.StoreInUserVariable(engine, v_applyToVariableName);
         }
 
         private void cmbTextExtraction_SelectionChangeCommitted(object sender, EventArgs e)
@@ -149,7 +148,7 @@ namespace taskt.Core.Automation.Commands
         {
             if (parms.Keys.Contains("Leading Text") && parms.Keys.Contains("Skip Past Occurences"))
             {
-                var index = parms["Skip Past Occurences"].ConvertToUserVariableAsInteger("Skip Past Occurences", engine);
+                var index = parms["Skip Past Occurences"].ExpandValueOrUserVariableAsInteger("Skip Past Occurences", engine);
                 var searchText = parms["Leading Text"];
 
                 var positions = SearchTextPositions(targetText, searchText);
@@ -177,7 +176,7 @@ namespace taskt.Core.Automation.Commands
         {
             if (parms.Keys.Contains("Trailing Text") && parms.Keys.Contains("Skip Past Occurences"))
             {
-                var index = parms["Skip Past Occurences"].ConvertToUserVariableAsInteger("Skip Past Occurences", engine);
+                var index = parms["Skip Past Occurences"].ExpandValueOrUserVariableAsInteger("Skip Past Occurences", engine);
                 var searchText = parms["Trailing Text"];
 
                 var positions = SearchTextPositions(targetText, searchText);
@@ -211,6 +210,14 @@ namespace taskt.Core.Automation.Commands
                 pos = targetText.IndexOf(searchText, pos + 1);
             }
             return positions;
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+
+            var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_TextExtractionTable));
+            DataTableControls.BeforeValidate_NoRowAdding(dgv, v_TextExtractionTable);
         }
     }
 }

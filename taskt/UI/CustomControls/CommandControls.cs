@@ -6,17 +6,25 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
-using taskt.UI.Forms;
 using taskt.Core;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using static taskt.Core.Automation.Commands.PropertyControls;
+using static taskt.Core.Automation.Engine.SystemVariables;
 
 namespace taskt.UI.CustomControls
 {
     public static class CommandControls
     {
-        public static frmCommandEditor CurrentEditor { get; set; }
+        #region const
+        public const string LABEL_PREFIX = "lbl_";
+        public const string LABEL_2ND_PREFIX = "lbl2_";
+        public const string HELPER_INFIX = "_helper_";
+        public const string CUSTOM_HELPER_INFIX = "_customhelper_";
+        public const string GROUP_PREFIX = "group_";
+        #endregion
+
+        public static Forms.ScriptBuilder.CommandEditor.frmCommandEditor CurrentEditor { get; set; }
 
         // todo: add colorful setting parameter
         private static List<Color> paramColors = new List<Color>
@@ -39,25 +47,19 @@ namespace taskt.UI.CustomControls
         /// <param name="editor"></param>
         /// <param name="renderComment"></param>
         /// <returns></returns>
-        public static List<Control> MultiCreateInferenceDefaultControlGroupFor(ScriptCommand command, frmCommandEditor editor, bool renderComment = false)
+        public static List<Control> MultiCreateInferenceDefaultControlGroupFor(ScriptCommand command, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor, bool renderComment = false)
         {
             var props = command.GetParameterProperties(renderComment);
             var controlList = new List<Control>();
 
             int count = 0;
-            foreach(var prop in props)
+            foreach (var prop in props)
             {
-                FlowLayoutPanel flowPanel = new FlowLayoutPanel
-                {
-                    Name = GroupPrefix + prop.Name,
-                    FlowDirection = FlowDirection.TopDown,
-                    WrapContents = false,
-                    AutoSize = true,
-                    Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
-                    BackColor = paramColors[count % 8],
-                };
+                var flowPanel = CreateStandardGroupFlowLayoutPanel(prop.Name, count);
                 var ctrls = CreateInferenceDefaultControlGroupFor(prop, command, editor);
                 flowPanel.Controls.AddRange(ctrls.ToArray());
+
+                SetClickEventsToLabels(ctrls);
 
                 controlList.Add(flowPanel);
                 count++;
@@ -73,29 +75,21 @@ namespace taskt.UI.CustomControls
         /// <param name="command"></param>
         /// <param name="editor"></param>
         /// <returns></returns>
-        public static List<Control> MultiCreateInferenceDefaultControlGroupFor(List<string> propartiesName, ScriptCommand command, frmCommandEditor editor)
+        public static List<Control> MultiCreateInferenceDefaultControlGroupFor(List<string> propartiesName, ScriptCommand command, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             var controlList = new List<Control>();
 
             int count = 0;
             foreach (var propertyName in propartiesName)
             {
-                FlowLayoutPanel flowPanel = new FlowLayoutPanel
-                {
-                    Name = GroupPrefix + propertyName,
-                    FlowDirection = FlowDirection.TopDown,
-                    WrapContents = false,
-                    AutoSize = true,
-                    Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
-                    BackColor = paramColors[count % 8],
-                };
-
+                var flowPanel = CreateStandardGroupFlowLayoutPanel(propertyName, count);
                 var ctrls = CreateInferenceDefaultControlGroupFor(propertyName, command, editor).ToArray();
                 flowPanel.Controls.AddRange(ctrls);
 
+                SetClickEventsToLabels(ctrls);
+
                 controlList.Add(flowPanel);
 
-                //controlList.AddRange(CreateInferenceDefaultControlGroupFor(propertyName, command, editor));
                 count++;
             }
 
@@ -111,7 +105,7 @@ namespace taskt.UI.CustomControls
         /// <param name="command"></param>
         /// <param name="editor"></param>
         /// <returns></returns>
-        public static List<Control> CreateInferenceDefaultControlGroupFor(string propertyName, ScriptCommand command, frmCommandEditor editor)
+        public static List<Control> CreateInferenceDefaultControlGroupFor(string propertyName, ScriptCommand command, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             var propInfo = command.GetProperty(propertyName);
 
@@ -126,7 +120,7 @@ namespace taskt.UI.CustomControls
         /// <param name="command"></param>
         /// <param name="editor"></param>
         /// <returns></returns>
-        public static List<Control> CreateInferenceDefaultControlGroupFor(PropertyInfo propInfo, ScriptCommand command, frmCommandEditor editor)
+        public static List<Control> CreateInferenceDefaultControlGroupFor(PropertyInfo propInfo, ScriptCommand command, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             string propertyName = propInfo.Name;
             var virtualPropInfo = propInfo.GetVirtualProperty();
@@ -184,7 +178,7 @@ namespace taskt.UI.CustomControls
         /// <param name="propInfo"></param>
         /// <param name="virtualPropInfo"></param>
         /// <returns></returns>
-        public static List<Control> CreateDefaultInputGroupFor(string propertyName, ScriptCommand command, frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
+        public static List<Control> CreateDefaultInputGroupFor(string propertyName, ScriptCommand command, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
@@ -210,7 +204,7 @@ namespace taskt.UI.CustomControls
         /// <param name="propInfo"></param>
         /// <param name="virtualPropInfo"></param>
         /// <returns></returns>
-        public static List<Control> CreateDefaultDropdownGroupFor(string propertyName, ScriptCommand command, frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
+        public static List<Control> CreateDefaultDropdownGroupFor(string propertyName, ScriptCommand command, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
@@ -235,7 +229,7 @@ namespace taskt.UI.CustomControls
         /// <param name="propInfo"></param>
         /// <param name="virtualPropInfo"></param>
         /// <returns></returns>
-        public static List<Control> CreateDefaultCheckBoxGroupFor(string propertyName, ScriptCommand command, frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
+        public static List<Control> CreateDefaultCheckBoxGroupFor(string propertyName, ScriptCommand command, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
@@ -260,7 +254,7 @@ namespace taskt.UI.CustomControls
         /// <param name="propInfo"></param>
         /// <param name="virtualPropInfo"></param>
         /// <returns></returns>
-        public static List<Control> CreateDataGridViewGroupFor(string propertyName, ScriptCommand command, frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
+        public static List<Control> CreateDataGridViewGroupFor(string propertyName, ScriptCommand command, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
@@ -286,7 +280,7 @@ namespace taskt.UI.CustomControls
         /// <param name="propInfo"></param>
         /// <param name="virtualPropInfo">if not null, try use virtual property</param>
         /// <returns></returns>
-        private static List<Control> CreateDefaultControlGroupFor(string propertyName, ScriptCommand command, Func<Control> createFunc, frmCommandEditor editor, PropertyInfo propInfo, PropertyInfo virtualPropInfo)
+        private static List<Control> CreateDefaultControlGroupFor(string propertyName, ScriptCommand command, Func<Control> createFunc, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor, PropertyInfo propInfo, PropertyInfo virtualPropInfo)
         {
             var controlList = new List<Control>();
 
@@ -299,7 +293,7 @@ namespace taskt.UI.CustomControls
             if (attr2ndLabel?.useSecondaryLabel ?? false)
             {
                 var label2 = CreateSimpleLabel();
-                label2.Name = Label2ndPrefix + propertyName;
+                label2.Name = LABEL_2ND_PREFIX + propertyName;
                 controlList.Add(label2);
             }
 
@@ -332,7 +326,7 @@ namespace taskt.UI.CustomControls
                 if (attrInto.secondLabelName != "")
                 {
                     var field = tp.GetField(attrInto.secondLabelName, BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception("The Name specified as 2nd-Label does not Exists. Name: '" + attrInto.bodyName + "'");
-                    var label2nd = controlList.Where(c => (c.Name == Label2ndPrefix + propertyName)).FirstOrDefault() ?? throw new Exception("Second Label does not Exists.");
+                    var label2nd = controlList.Where(c => (c.Name == LABEL_2ND_PREFIX + propertyName)).FirstOrDefault() ?? throw new Exception("Second Label does not Exists.");
                     field.SetValue(command, label2nd);
                 }
             }
@@ -354,7 +348,7 @@ namespace taskt.UI.CustomControls
         /// <param name="propInfo"></param>
         /// <param name="virtualPropInfo">if not null, try use viratul property</param>
         /// <returns></returns>
-        public static Control CreateDefaultLabelFor(string propertyName, ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
+        public static Control CreateDefaultLabelFor(string propertyName, ScriptCommand command, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
@@ -409,7 +403,7 @@ namespace taskt.UI.CustomControls
             var inputLabel = CreateSimpleLabel();
 
             inputLabel.Text = labelText;
-            inputLabel.Name = LabelPrefix + propertyName;
+            inputLabel.Name = LABEL_PREFIX + propertyName;
 
             if (additionalParams != null)
             {
@@ -430,7 +424,7 @@ namespace taskt.UI.CustomControls
         /// <param name="propInfo"></param>
         /// <param name="virtualPropInfo">if not null, try use virtual property info</param>
         /// <returns></returns>
-        public static Control CreateDefaultInputFor(string propertyName, ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
+        public static Control CreateDefaultInputFor(string propertyName, ScriptCommand command, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
@@ -465,7 +459,7 @@ namespace taskt.UI.CustomControls
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
         /// <returns></returns>
-        public static Control CreateDefaultInputFor(string propertyName, ScriptCommand command, int height = 30, int width = 300, bool allowNewLine = true, string firstValue = "", frmCommandEditor editor = null, PropertyInfo propInfo = null)
+        public static Control CreateDefaultInputFor(string propertyName, ScriptCommand command, int height = 30, int width = 300, bool allowNewLine = true, string firstValue = "", Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, PropertyInfo propInfo = null)
         {
             var inputBox = CreateStandardTextBoxFor(propertyName, command);
 
@@ -485,7 +479,7 @@ namespace taskt.UI.CustomControls
             inputBox.Width = width;
 
             // first value
-            if ((editor?.creationMode ?? frmCommandEditor.CreationMode.Edit) == frmCommandEditor.CreationMode.Add)
+            if ((editor?.creationMode ?? Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Edit) == Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Add)
             {
                 propInfo?.SetValue(command, editor.appSettings.replaceApplicationKeyword(firstValue));
             }
@@ -504,7 +498,7 @@ namespace taskt.UI.CustomControls
         /// <param name="propInfo"></param>
         /// <param name="virtualPropInfo">if not null, try use virtual property info</param>
         /// <returns></returns>
-        public static Control CreateDefaultCheckBoxFor(string propertyName, ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
+        public static Control CreateDefaultCheckBoxFor(string propertyName, ScriptCommand command, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
@@ -526,12 +520,12 @@ namespace taskt.UI.CustomControls
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
         /// <returns></returns>
-        public static Control CreateDefaultCheckBoxFor(string propertyName, ScriptCommand command, string description, string firstValue = "", frmCommandEditor editor = null, PropertyInfo propInfo = null)
+        public static Control CreateDefaultCheckBoxFor(string propertyName, ScriptCommand command, string description, string firstValue = "", Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, PropertyInfo propInfo = null)
         {
             var inputBox = CreateStandardCheckboxFor(propertyName, command);
             inputBox.Text = description;
 
-            if ((editor?.creationMode ?? frmCommandEditor.CreationMode.Edit) == frmCommandEditor.CreationMode.Add)
+            if ((editor?.creationMode ?? Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Edit) == Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Add)
             {
                 string convValue = editor.appSettings.replaceApplicationKeyword(firstValue);
                 if ((convValue != "") && (bool.TryParse(convValue, out bool b)))
@@ -554,7 +548,7 @@ namespace taskt.UI.CustomControls
         /// <param name="propInfo"></param>
         /// <param name="virtualPropInfo">if not null, try use virtual property info</param>
         /// <returns></returns>
-        public static Control CreateDefaultDropdownFor(string propertyName, ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
+        public static Control CreateDefaultDropdownFor(string propertyName, ScriptCommand command, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
@@ -567,7 +561,8 @@ namespace taskt.UI.CustomControls
             var attrIsWin = GetCustomAttributeWithVirtual<PropertyIsWindowNamesList>(propInfo, virtualPropInfo);
             if (attrIsWin?.isWindowNamesList ?? false)
             {
-                uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
+                //uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
+                uiOptions.AddRange(WindowControls.GetAllWindowTitles(editor?.appSettings, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
             }
 
             // variable names list & instance name list
@@ -575,7 +570,7 @@ namespace taskt.UI.CustomControls
             var attrIsInstance = GetCustomAttributeWithVirtual<PropertyInstanceType>(propInfo, virtualPropInfo);
             if (attrIsVar?.isVariablesList ?? false)
             {
-                uiOptions.AddRange(GetVariableNames(editor));
+                uiOptions.AddRange(VariableNameControls.GetVariableNames(editor));
             }
             else
             {
@@ -584,7 +579,7 @@ namespace taskt.UI.CustomControls
                 {
                     if ((attrDirection?.porpose ?? PropertyParameterDirection.ParameterDirection.Unknown) == PropertyParameterDirection.ParameterDirection.Output)
                     {
-                        uiOptions.AddRange(GetVariableNames(editor));
+                        uiOptions.AddRange(VariableNameControls.GetVariableNames(editor));
                     }
                     else
                     {
@@ -643,7 +638,7 @@ namespace taskt.UI.CustomControls
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
         /// <returns></returns>
-        public static Control CreateDefaultDropdownFor(string propertyName, ScriptCommand command, List<string> uiOptions, string selectionChangeEventName = "", string firstValue = "", frmCommandEditor editor = null, PropertyInfo propInfo = null)
+        public static Control CreateDefaultDropdownFor(string propertyName, ScriptCommand command, List<string> uiOptions, string selectionChangeEventName = "", string firstValue = "", Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, PropertyInfo propInfo = null)
         {
             var inputBox = CreateStandardComboboxFor(propertyName, command);
             inputBox.Items.AddRange(uiOptions.ToArray());
@@ -657,7 +652,7 @@ namespace taskt.UI.CustomControls
                     (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), command, trgMethod);
             }
 
-            if ((editor?.creationMode ?? frmCommandEditor.CreationMode.Edit) == frmCommandEditor.CreationMode.Add)
+            if ((editor?.creationMode ?? Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Edit) == Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Add)
             {
                 propInfo?.SetValue(command, editor.appSettings.replaceApplicationKeyword(firstValue));
             }
@@ -676,7 +671,7 @@ namespace taskt.UI.CustomControls
         /// <param name="propInfo"></param>
         /// <param name="virtualPropertyInfo">if not null, try use virtual property</param>
         /// <returns></returns>
-        public static DataGridView CreateDefaultDataGridViewFor(string propertyName, ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropertyInfo = null)
+        public static DataGridView CreateDefaultDataGridViewFor(string propertyName, ScriptCommand command, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropertyInfo = null)
         {
             if (propInfo == null)
             {
@@ -818,7 +813,7 @@ namespace taskt.UI.CustomControls
         /// <param name="propInfo"></param>
         /// <param name="virtualPropInfo">if not null, try use virtual property</param>
         /// <returns></returns>
-        public static List<Control> CreateDefaultUIHelpersFor(string propertyName, ScriptCommand command, Control targetControl, frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
+        public static List<Control> CreateDefaultUIHelpersFor(string propertyName, ScriptCommand command, Control targetControl, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
@@ -856,7 +851,7 @@ namespace taskt.UI.CustomControls
         /// <param name="propInfo"></param>
         /// <param name="virtualPropertyInfo">if not null, try use virtual property info</param>
         /// <returns></returns>
-        public static List<Control> CreateCustomUIHelpersFor(string propertyName, ScriptCommand command, Control targetControl, frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropertyInfo = null)
+        public static List<Control> CreateCustomUIHelpersFor(string propertyName, ScriptCommand command, Control targetControl, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropertyInfo = null)
         {
             if (propInfo == null)
             {
@@ -891,9 +886,9 @@ namespace taskt.UI.CustomControls
         /// <param name="targetControl"></param>
         /// <param name="editor"></param>
         /// <returns></returns>
-        public static CommandItemControl CreateDefaultUIHelperFor(string propertyName, PropertyUIHelper setting, int num, Control targetControl, frmCommandEditor editor)
+        public static CommandItemControl CreateDefaultUIHelperFor(string propertyName, PropertyUIHelper setting, int num, Control targetControl, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-            var uiHelper = CreateSimpleUIHelper(propertyName + HelperInfix + num, targetControl);
+            var uiHelper = CreateSimpleUIHelper(propertyName + HELPER_INFIX + num, targetControl);
             uiHelper.HelperType = setting.additionalHelper;
             switch (setting.additionalHelper)
             {
@@ -933,9 +928,9 @@ namespace taskt.UI.CustomControls
         /// <param name="targetControl"></param>
         /// <param name="editor"></param>
         /// <returns></returns>
-        public static CommandItemControl CreateDefaultCustomUIHelperFor(string propertyName, ScriptCommand command, PropertyCustomUIHelper setting, int num, Control targetControl, frmCommandEditor editor)
+        public static CommandItemControl CreateDefaultCustomUIHelperFor(string propertyName, ScriptCommand command, PropertyCustomUIHelper setting, int num, Control targetControl, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-            var uiHelper = CreateSimpleUIHelper(propertyName + CustomHelperInfix + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
+            var uiHelper = CreateSimpleUIHelper(propertyName + CUSTOM_HELPER_INFIX + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
             uiHelper.CommandDisplay = setting.labelText;
             (var trgMethod, var isOuterClass) = GetMethodInfo(setting.methodName, command);
 
@@ -995,6 +990,7 @@ namespace taskt.UI.CustomControls
             // cursor position events
             inputBox.KeyUp += (sender, e) => ComboBoxKeyUp_SaveCursorPosition(sender, e);
             inputBox.Click += (sender, e) => ComboBoxClick_SaveCursorPosition(sender, e);
+            inputBox.MouseClick += (sender, e) => ComboBoxClick_ShowItems(sender, e);
 
             return inputBox;
         }
@@ -1080,6 +1076,23 @@ namespace taskt.UI.CustomControls
             };
             return newLabel;
         }
+
+        private static FlowLayoutPanel CreateStandardGroupFlowLayoutPanel(string name, int count)
+        {
+            FlowLayoutPanel flowPanel = new FlowLayoutPanel
+            {
+                Name = GROUP_PREFIX + name,
+                FlowDirection = FlowDirection.TopDown,
+                WrapContents = false,
+                AutoSize = true,
+                Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
+                BackColor = paramColors[count % 8],
+            };
+            flowPanel.Click += flowLayoutPanel_Click;
+            flowPanel.DoubleClick += flowLayoutPanel_DblClick;
+            return flowPanel;
+        }
+
         #endregion
 
         #region create Control support methods
@@ -1264,14 +1277,16 @@ namespace taskt.UI.CustomControls
                 }
             }
 
-            if (planeText)
-            {
-                return GetSampleUsageTextForLabel(sampleText, setting);
-            }
-            else
-            {
-                return setting.replaceApplicationKeyword(sampleText);
-            }
+            //if (planeText)
+            //{
+            //    return GetSampleUsageTextForLabel(sampleText, setting);
+            //}
+            //else
+            //{
+            //    //return setting.replaceApplicationKeyword(sampleText);
+            //    return GetSampleUsageTextForLabel(sampleText, setting, false);
+            //}
+            return GetSampleUsageTextForLabel(sampleText, setting, planeText);
         }
 
         #region keyword md format
@@ -1282,9 +1297,30 @@ namespace taskt.UI.CustomControls
         /// <param name="sample"></param>
         /// <param name="setting"></param>
         /// <returns></returns>
-        private static string GetSampleUsageTextForLabel(string sample, ApplicationSettings setting)
+        private static string GetSampleUsageTextForLabel(string sample, ApplicationSettings setting, bool planeText = true)
         {
-            return setting.replaceApplicationKeyword(Markdig.Markdown.ToPlainText(sample).Trim()).Replace(" or ", ", ");
+            if (planeText)
+            {
+                sample = Markdig.Markdown.ToPlainText(sample).Trim();
+            }
+            sample = sample.Replace(WindowControls.INTERNAL_CURRENT_WINDOW_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentWindowName.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentPosition.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_X_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentXPosition.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_Y_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentYPosition.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_SIZE_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentSize.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_WIDTH_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentWidth.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_HEIGHT_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentHeight.VariableName, setting))
+                        .Replace(ExcelControls.INTERNAL_EXCEL_CURRENT_WORKSHEET_KEYWORD, VariableNameControls.GetWrappedVariableName(Excel_CurrentWorkSheet.VariableName, setting));
+            var replacedSample = setting.replaceApplicationKeyword(Markdig.Markdown.ToPlainText(sample).Trim());
+
+            if (planeText)
+            {
+                return replacedSample.Replace(" or ", ", ");
+            }
+            else
+            {
+                return replacedSample;
+            }
         }
         #endregion
         #endregion
@@ -1300,10 +1336,10 @@ namespace taskt.UI.CustomControls
         /// <param name="addAllWindows"></param>
         /// <param name="addDesktop"></param>
         /// <returns></returns>
-        public static ComboBox AddWindowNames(this ComboBox cbo, frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
+        public static ComboBox AddWindowNames(this ComboBox cbo, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
         {
             return cbo.AddComoboBoxItems(editor, new Func<List<string>>( () => {
-                return GetWindowNames(editor, addCurrentWindow, addAllWindows, addDesktop);
+                return WindowControls.GetAllWindowTitles(editor?.appSettings, addCurrentWindow, addAllWindows, addDesktop);
             }));
         }
 
@@ -1313,11 +1349,11 @@ namespace taskt.UI.CustomControls
         /// <param name="cbo"></param>
         /// <param name="editor"></param>
         /// <returns></returns>
-        public static ComboBox AddVariableNames(this ComboBox cbo, frmCommandEditor editor)
+        public static ComboBox AddVariableNames(this ComboBox cbo, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             return cbo.AddComoboBoxItems(editor, new Func<List<string>>(() =>
             {
-                return GetVariableNames(editor);
+                return VariableNameControls.GetVariableNames(editor);
             }));
         }
 
@@ -1328,7 +1364,7 @@ namespace taskt.UI.CustomControls
         /// <param name="editor"></param>
         /// <param name="tp"></param>
         /// <returns></returns>
-        public static ComboBox AddInstanceNames(this ComboBox cbo, frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
+        public static ComboBox AddInstanceNames(this ComboBox cbo, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
         {
             return cbo.AddComoboBoxItems(editor, new Func<List<string>>(() =>
             {
@@ -1336,7 +1372,14 @@ namespace taskt.UI.CustomControls
             }));
         }
 
-        public static ComboBox AddComoboBoxItems(this ComboBox cbo, frmCommandEditor editor, Func<List<string>> itemsFunc)
+        /// <summary>
+        /// add combobox items by specified Func
+        /// </summary>
+        /// <param name="cbo"></param>
+        /// <param name="editor"></param>
+        /// <param name="itemsFunc"></param>
+        /// <returns></returns>
+        public static ComboBox AddComoboBoxItems(this ComboBox cbo, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor, Func<List<string>> itemsFunc)
         {
             if ((cbo == null) || (editor == null))
             {
@@ -1354,46 +1397,7 @@ namespace taskt.UI.CustomControls
             return cbo;
         }
 
-        /// <summary>
-        /// get Window Names list
-        /// </summary>
-        /// <param name="editor"></param>
-        /// <param name="addCurrentWindow"></param>
-        /// <param name="addAllWindows"></param>
-        /// <param name="addDesktop"></param>
-        /// <returns></returns>
-        public static List<string> GetWindowNames(frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
-        {
-            var lst = new List<string>();
-
-            if (addCurrentWindow)
-            {
-                lst.Add(editor?.appSettings.EngineSettings.CurrentWindowKeyword ?? "Current Window");
-            }
-
-            if (addAllWindows)
-            {
-                lst.Add(editor?.appSettings.EngineSettings.AllWindowsKeyword ?? "All Windows");
-            }
-            if (addDesktop)
-            {
-                lst.Add(editor.appSettings.EngineSettings.DesktopKeyword ?? "Desktop");
-            }
-            lst.AddRange(WindowNameControls.GetAllWindowTitles());
-
-            return lst;
-        }
-
         #region create ComboBox items list
-        /// <summary>
-        /// get variable names list
-        /// </summary>
-        /// <param name="editor"></param>
-        /// <returns></returns>
-        public static List<string> GetVariableNames(frmCommandEditor editor)
-        {
-            return editor?.scriptVariables.Select(v => v.VariableName).ToList() ?? new List<string>();
-        }
 
         /// <summary>
         /// get instance names list
@@ -1401,7 +1405,7 @@ namespace taskt.UI.CustomControls
         /// <param name="editor"></param>
         /// <param name="tp"></param>
         /// <returns></returns>
-        public static List<string> GetInstanceNames(frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
+        public static List<string> GetInstanceNames(Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
         {
             if (editor == null)
             {
@@ -1531,6 +1535,22 @@ namespace taskt.UI.CustomControls
             ComboBox trg = (ComboBox)sender;
             trg.Tag = trg.SelectionStart;
         }
+        /// <summary>
+        /// show combobox items when ctrl+click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void ComboBoxClick_ShowItems(object sender, MouseEventArgs e)
+        {
+            if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+            {
+                ComboBox trg = (ComboBox)sender;
+                if (!trg.DroppedDown)
+                {
+                    trg.DroppedDown = true;
+                }
+            }
+        }
         #endregion
 
         #endregion
@@ -1543,15 +1563,54 @@ namespace taskt.UI.CustomControls
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <param name="editor"></param>
-        public static void ShowVariableSelector(object sender, EventArgs e, frmCommandEditor editor)
+        public static void ShowVariableSelector(object sender, EventArgs e, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             //get copy of user variables and append system variables, then load to combobox
             var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
-            variableList.AddRange(Common.GenerateSystemVariables().Select(f => f.VariableName));
 
-            using (Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector(variableList))
+            var systemVariables = GetSystemVariablesName();
+
+            // TODO: I feel like we can make smarter code
+            var senderControl = (Control)sender;
+            var parameterName = ((Control)(senderControl.Tag)).Name;
+            var fm = (Forms.ScriptBuilder.CommandEditor.frmCommandEditor)senderControl.FindForm();
+            var command = fm.selectedCommand;
+            (var prop, var vProp) = command.GetPropertyAndVirturalProperty(parameterName);
+            var attrs = GetCustomAttributesWithVirtual<PropertyAvailableSystemVariable>(prop, vProp);
+
+            foreach (var attr in attrs)
             {
-                if (newVariableSelector.ShowDialog() == DialogResult.OK)
+                switch (attr.variable)
+                {
+                    case LimitedSystemVariableNames.Window_AllWindows:
+                        systemVariables.Add(Window_AllWindows.VariableName);
+                        break;
+                    case LimitedSystemVariableNames.Window_Desktop:
+                        systemVariables.Add(Window_Desktop.VariableName);
+                        break;
+                    case LimitedSystemVariableNames.Window_Position:
+                        systemVariables.Add(Window_CurrentPosition.VariableName);
+                        systemVariables.Add(Window_CurrentXPosition.VariableName);
+                        systemVariables.Add(Window_CurrentYPosition.VariableName);
+                        break;
+                    case LimitedSystemVariableNames.Window_Size:
+                        systemVariables.Add(Window_CurrentSize.VariableName);
+                        systemVariables.Add(Window_CurrentWidth.VariableName);
+                        systemVariables.Add(Window_CurrentHeight.VariableName);
+                        break;
+                    case LimitedSystemVariableNames.Excel_Worksheet:
+                        systemVariables.Add(Excel_CurrentWorkSheet.VariableName);
+                        systemVariables.Add(Excel_NextWorkSheet.VariableName);
+                        systemVariables.Add(Excel_PreviousWorkSheet.VariableName);
+                        break;
+                }
+            }
+
+            variableList.AddRange(systemVariables);
+
+            using (var newVariableSelector = new Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(variableList))
+            {
+                if (newVariableSelector.ShowDialog(editor) == DialogResult.OK)
                 {
                     //ensure that a variable was actually selected
                     if (newVariableSelector.selectedItem == null)
@@ -1663,11 +1722,11 @@ namespace taskt.UI.CustomControls
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <param name="editor"></param>
-        private static void ShowFileSelector(object sender, EventArgs e, frmCommandEditor editor)
+        private static void ShowFileSelector(object sender, EventArgs e, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                if (ofd.ShowDialog() == DialogResult.OK)
+                if (ofd.ShowDialog(editor) == DialogResult.OK)
                 {
                     SetControlValue((Control)((CommandItemControl)sender).Tag, ofd.FileName);
                 }
@@ -1680,11 +1739,11 @@ namespace taskt.UI.CustomControls
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <param name="editor"></param>
-        private static void ShowFolderSelector(object sender, EventArgs e, frmCommandEditor editor)
+        private static void ShowFolderSelector(object sender, EventArgs e, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             using (FolderBrowserDialog fbd = new FolderBrowserDialog())
             {
-                if (fbd.ShowDialog() == DialogResult.OK)
+                if (fbd.ShowDialog(editor) == DialogResult.OK)
                 {
                     SetControlValue((Control)((CommandItemControl)sender).Tag, fbd.SelectedPath);
                 }
@@ -1709,17 +1768,75 @@ namespace taskt.UI.CustomControls
 
         #endregion
 
-        public static List<AutomationCommand> GenerateCommandsandControls()
+        #region FlowLayout Events
+        private static void flowLayoutPanel_Click(object sender, EventArgs e)
+        {
+            var flp = (FlowLayoutPanel)sender;
+            foreach(Control c in flp.Controls)
+            {
+                if (c is TextBox || c is ComboBox || c is DataGridView)
+                {
+                    c.Focus();
+                    break;
+                }
+            }
+        }
+
+        private static void flowLayoutPanel_DblClick(object sender, EventArgs e)
+        {
+            flowLayoutPanel_Click(sender, null);    // focus editable control
+            var flp = (FlowLayoutPanel)sender;
+            var parentFlp = (FlowLayoutPanel)flp.Parent;
+            
+            // DBG
+            //Debug.WriteLine(flp.Location.Y + ", " + parentFlp.AutoScrollPosition.Y + ", " + parentFlp.Height);
+
+            parentFlp.AutoScrollPosition = new Point(0, flp.Location.Y - parentFlp.AutoScrollPosition.Y);
+        }
+
+        private static void SetClickEventsToLabels(List<Control> ctrls)
+        {
+            SetClickEventsToLabels(ctrls.ToArray());
+        }
+
+        private static void SetClickEventsToLabels(Control[] ctrls)
+        {
+            foreach(var c in ctrls)
+            {
+                if (c is Label lbl)
+                {
+                    lbl.Click += label_Click;
+                    lbl.DoubleClick += label_DblClick;
+                }
+            }
+        }
+
+        private static void label_Click(object sender, EventArgs e)
+        {
+            flowLayoutPanel_Click((FlowLayoutPanel)((Label)sender).Parent, e);
+        }
+
+        private static void label_DblClick(object sender, EventArgs e)
+        { 
+            flowLayoutPanel_DblClick((FlowLayoutPanel)((Label)sender).Parent, e);
+        }
+        #endregion
+
+        public static List<AutomationCommand> GenerateCommandsAndControls()
         {
             var commandList = new List<AutomationCommand>();
 
-            var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
-                                 .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
-                                 .Where(t => t.Name != "ScriptCommand")
-                                 .Where(t => t.IsAbstract == false)
-                                 .Where(t => t.BaseType.Name == "ScriptCommand")
-                                 .ToList();
-
+            //var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
+            //                     .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
+            //                     .Where(t => t.Name != "ScriptCommand")
+            //                     .Where(t => t.IsAbstract == false)
+            //                     .Where(t => t.BaseType.Name == "ScriptCommand")
+            //                     .ToList();
+            var commandClasses = Assembly.GetAssembly(typeof(ScriptCommand)).GetTypes()
+                .Where(t =>
+                {
+                    return t.IsSubclassOf(typeof(ScriptCommand)) && !t.IsAbstract;
+                }).ToList();
 
             var userPrefs = new ApplicationSettings().GetOrCreateApplicationSettings();
 
@@ -1757,7 +1874,6 @@ namespace taskt.UI.CustomControls
 
                     //call RenderUIComponents to render UI controls              
                     commandList.Add(newAutomationCommand);
-
                 }
             }
 

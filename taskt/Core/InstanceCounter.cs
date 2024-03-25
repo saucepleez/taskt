@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using taskt.Core.Automation.Commands;
+using static taskt.Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType;
 
 namespace taskt.Core
 {
@@ -74,7 +76,7 @@ namespace taskt.Core
             { "created", new Dictionary<string, int>() },
             { "used", new Dictionary<string, int>() }
         };
-        private Dictionary<string, Dictionary<string, int>> automationElementInstance = new Dictionary<string, Dictionary<string, int>>
+        private Dictionary<string, Dictionary<string, int>> uiElementInstance = new Dictionary<string, Dictionary<string, int>>
         {
             { "created", new Dictionary<string, int>() },
             { "used", new Dictionary<string, int>() }
@@ -99,6 +101,16 @@ namespace taskt.Core
             { "created", new Dictionary<string, int>() },
             { "used", new Dictionary<string, int>() }
         };
+        private Dictionary<string, Dictionary<string, int>> windowHandleInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
+        private Dictionary<string, Dictionary<string, int>> numericInstance = new Dictionary<string, Dictionary<string, int>>
+        {
+            { "created", new Dictionary<string, int>() },
+            { "used", new Dictionary<string, int>() }
+        };
 
         public InstanceCounter(ApplicationSettings settings)
         {
@@ -109,7 +121,7 @@ namespace taskt.Core
         {
             Dictionary<string, int> targetDic = decideDictionary(instanceType.instanceType, isUsed);
 
-            if (String.IsNullOrEmpty(instanceName))
+            if (string.IsNullOrEmpty(instanceName))
             {
                 instanceName = "";
             }
@@ -119,9 +131,12 @@ namespace taskt.Core
                 return;
             }
 
-            if ((instanceType.autoWrapVariableMarker) && !(this.appSettings.EngineSettings.isWrappedVariableMarker(instanceName)))
+            //if ((instanceType.autoWrapVariableMarker) && !(this.appSettings.EngineSettings.isWrappedVariableMarker(instanceName)))
+            if ((instanceType.autoWrapVariableMarker) &&
+                    !(VariableNameControls.IsWrappedVariableMarker(instanceName, appSettings)))
             {
-                instanceName = this.appSettings.EngineSettings.wrapVariableMarker(instanceName);
+                //instanceName = this.appSettings.EngineSettings.wrapVariableMarker(instanceName);
+                instanceName = VariableNameControls.GetWrappedVariableName(instanceName, appSettings);
             }
             
             if (targetDic.ContainsKey(instanceName))
@@ -138,7 +153,7 @@ namespace taskt.Core
         {
             Dictionary<string, int> targetDic = decideDictionary(instanceType.instanceType, isUsed);
 
-            if (String.IsNullOrEmpty(instanceName))
+            if (string.IsNullOrEmpty(instanceName))
             {
                 instanceName = "";
             }
@@ -148,9 +163,12 @@ namespace taskt.Core
                 return;
             }
 
-            if ((instanceType.autoWrapVariableMarker) && !(this.appSettings.EngineSettings.isWrappedVariableMarker(instanceName)))
+            //if ((instanceType.autoWrapVariableMarker) && !(this.appSettings.EngineSettings.isWrappedVariableMarker(instanceName)))
+            if ((instanceType.autoWrapVariableMarker) && 
+                    !(VariableNameControls.IsWrappedVariableMarker(instanceName, appSettings)))
             {
-                instanceName = this.appSettings.EngineSettings.wrapVariableMarker(instanceName);
+                //instanceName = this.appSettings.EngineSettings.wrapVariableMarker(instanceName);
+                instanceName = VariableNameControls.GetWrappedVariableName(instanceName, appSettings);
             }
 
             if (targetDic.ContainsKey(instanceName))
@@ -166,70 +184,76 @@ namespace taskt.Core
             }
         }
 
-        public Dictionary<string, int> getInstanceClone(Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType, bool isUsed = false)
+        public Dictionary<string, int> getInstanceClone(InstanceType instanceType, bool isUsed = false)
         {
             Dictionary<string, int> targetDic = decideDictionary(instanceType, isUsed);
 
             return new Dictionary<string, int>(targetDic);
         }
 
-        private Dictionary<string, int> decideDictionary(Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType instanceType, bool isUsed = false)
+        private Dictionary<string, int> decideDictionary(InstanceType instanceType, bool isUsed = false)
         {
             Dictionary<string, Dictionary<string, int>> targetDic;
             switch (instanceType)
             {
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.UIElement:
-                    targetDic = automationElementInstance;
-                    break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean:
+                case InstanceType.Boolean:
                     targetDic = booleanInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Color:
+                case InstanceType.Color:
                     targetDic = colorInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase:
+                case InstanceType.DataBase:
                     targetDic = databaseInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable:
+                case InstanceType.DataTable:
                     targetDic = dataTableInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DateTime:
+                case InstanceType.DateTime:
                     targetDic = dateTimeInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary:
+                case InstanceType.Dictionary:
                     targetDic = dictionaryInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel:
+                case InstanceType.Excel:
                     targetDic = excelInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE:
+                case InstanceType.IE:
                     targetDic = ieInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON:
+                case InstanceType.JSON:
                     targetDic = jsonInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List:
+                case InstanceType.List:
                     targetDic = listInstance; ;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.MailKitEMail:
+                case InstanceType.MailKitEMail:
                     targetDic = mailkitEMailInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.MailKitEMailList:
+                case InstanceType.MailKitEMailList:
                     targetDic = mailkitEMailListInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG:
+                case InstanceType.NLG:
                     targetDic = nlgInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch:
+                case InstanceType.Numeric:
+                    targetDic = numericInstance;
+                    break;
+                case InstanceType.StopWatch:
                     targetDic = stopWatchInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser:
+                case InstanceType.UIElement:
+                    targetDic = uiElementInstance;
+                    break;
+                case InstanceType.WebBrowser:
                     targetDic = webBrowserInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebElement:
+                case InstanceType.WebElement:
                     targetDic = webElementInstance;
                     break;
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word:
+                case InstanceType.WindowHandle:
+                    targetDic = windowHandleInstance;
+                    break;
+                case InstanceType.Word:
                     targetDic = wordInstance;
                     break;
                 default:
@@ -238,47 +262,51 @@ namespace taskt.Core
             return (isUsed) ? targetDic["used"] : targetDic["created"];
         }
 
-        public static Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType GetInstanceType(string instanceType)
+        public static InstanceType GetInstanceType(string instanceType)
         {
             switch (instanceType.ToLower())
             {
-                case "automationelement":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.UIElement;
                 case "boolean":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean;
+                    return InstanceType.Boolean;
                 case "color":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Color;
+                    return InstanceType.Color;
                 case "database":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
+                    return InstanceType.DataBase;
                 case "datatable":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable;
+                    return InstanceType.DataTable;
                 case "datetime":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DateTime;
+                    return InstanceType.DateTime;
                 case "dictionary":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary;
+                    return InstanceType.Dictionary;
                 case "excel":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel;
+                    return InstanceType.Excel;
                 case "ie":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE;
+                    return InstanceType.IE;
                 case "json":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON;
+                    return InstanceType.JSON;
                 case "list":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List;
+                    return InstanceType.List;
                 case "mailkitemail":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.MailKitEMail;
+                    return InstanceType.MailKitEMail;
                 case "mailkitemaillist":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.MailKitEMailList;
+                    return InstanceType.MailKitEMailList;
+                case "numeric":
+                    return InstanceType.Numeric;
                 case "stopwatch":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
+                    return InstanceType.StopWatch;
+                case "uielement":
+                    return InstanceType.UIElement;
                 case "web browser":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser;
+                    return InstanceType.WebBrowser;
                 case "webelement":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebElement;
+                    return InstanceType.WebElement;
+                case "windowhandle":
+                    return InstanceType.WindowHandle;
                 case "word":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word;
+                    return InstanceType.Word;
                 case "none":
                 default:
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none;
+                    return InstanceType.none;
             }
         }
     }

@@ -11,9 +11,10 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get Text from EMail.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Text from EMail.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class MailKitGetEMailTextCommand : ScriptCommand
+    public class MailKitGetEMailTextCommand : ScriptCommand, ICanHandleDateTime
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_InputEMailName))]
@@ -41,19 +42,17 @@ namespace taskt.Core.Automation.Commands
 
         public MailKitGetEMailTextCommand()
         {
-            this.CommandName = "MailKitGetEMailTextCommand";
-            this.SelectionName = "Get EMail Text";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "MailKitGetEMailTextCommand";
+            //this.SelectionName = "Get EMail Text";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            var mail = v_MailName.ExpandUserVariableAsEmail(engine);
 
-            var mail = v_MailName.GetMailKitEMailVariable(engine);
-
-            var textType = this.GetUISelectionValue(nameof(v_TextType), engine);
+            var textType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TextType), engine);
 
             string res = "";
             switch (textType)
@@ -93,11 +92,13 @@ namespace taskt.Core.Automation.Commands
 
                 // Date
                 case "date":
-                    (mail.Date.DateTime).StoreInUserVariable(engine, v_ResultVariable);
+                    //(mail.Date.DateTime).StoreInUserVariable(engine, v_ResultVariable);
+                    this.StoreDateTimeInUserVariable((mail.Date.DateTime), nameof(v_ResultVariable), engine);
                     return;
 
                 case "resent-date":
-                    (mail.ResentDate.DateTime).StoreInUserVariable(engine, v_ResultVariable);
+                    //(mail.ResentDate.DateTime).StoreInUserVariable(engine, v_ResultVariable);
+                    this.StoreDateTimeInUserVariable((mail.ResentDate.Date), nameof(v_ResultVariable), engine);
                     return;
             }
 

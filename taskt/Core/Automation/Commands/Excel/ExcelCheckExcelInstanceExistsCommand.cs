@@ -11,18 +11,20 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command returns existance of Excel instance.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check Excel instance.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelCheckExcelInstanceExistsCommand : ScriptCommand
+    public class ExcelCheckExcelInstanceExistsCommand : AExcelInstanceCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the Excel Instance Exists, Result is **True**")]
-        public string v_applyToVariableName { get; set; }
+        [PropertyParameterOrder(6000)]
+        public string v_Result { get; set; }
 
         public ExcelCheckExcelInstanceExistsCommand()
         {
@@ -32,17 +34,17 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
             try
             {
-                var excelInstance = v_InstanceName.GetExcelInstance(engine);
-                true.StoreInUserVariable(engine, v_applyToVariableName);
+                //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+                this.ExpandValueOrVariableAsExcelInstance(engine);
+                true.StoreInUserVariable(engine, v_Result);
             }
             catch
             {
-                false.StoreInUserVariable(engine, v_applyToVariableName);
+                false.StoreInUserVariable(engine, v_Result);
             }
         }
     }

@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to loop through an Excel Dataset")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to iterate over a series of Excel cells.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command attempts to loop through a known Excel DataSet")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetRegexMatchesCommand : ScriptCommand
@@ -45,12 +46,10 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var vInputData = v_InputData.ConvertToUserVariable(engine);
-            var vRegex = v_Regex.ConvertToUserVariable(engine);
+            var vInputData = v_InputData.ExpandValueOrUserVariable(engine);
+            var vRegex = v_Regex.ExpandValueOrUserVariable(engine);
 
             Match[] matches = Regex.Matches(vInputData, vRegex)
                        .Cast<Match>()

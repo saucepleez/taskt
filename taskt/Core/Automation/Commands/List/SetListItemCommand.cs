@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you want to set an item in a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set an item in a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SetListItemCommand : ScriptCommand
@@ -41,10 +42,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //var listVariable = v_ListName.GetRawVariable(engine);
             //if (listVariable == null)
             //{
@@ -76,11 +75,11 @@ namespace taskt.Core.Automation.Commands
             //    index = targetList.Count + index;
             //}
 
-            (var list, var index) = this.GetListVariableAndIndex(nameof(v_ListName), nameof(v_ItemIndex), engine);
+            (var list, var index) = this.ExpandUserVariablesAsListAndIndex(nameof(v_ListName), nameof(v_ItemIndex), engine);
 
             if ((index >= 0) && (index < list.Count))
             {
-                list[index] = v_NewValue.ConvertToUserVariable(engine);
+                list[index] = v_NewValue.ExpandValueOrUserVariable(engine);
             }
             else
             {

@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("Allows the entry of data into a web-enabled form")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want a fancy data collection.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'WebBrowser Control' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_input))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ShowHTMLInputDialogCommand : ScriptCommand
@@ -114,10 +115,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             if (engine.tasktEngineUI == null)
             {
                 engine.ReportProgress("HTML UserInput Supported With UI Only");
@@ -129,9 +128,9 @@ namespace taskt.Core.Automation.Commands
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
                 {
                     //sample for temp testing
-                    var htmlInput = v_InputHTML.ConvertToUserVariable(sender);
+                    var htmlInput = v_InputHTML.ExpandValueOrUserVariable(engine);
 
-                    var errorOnClose = this.GetUISelectionValue(nameof(v_ErrorOnClose), engine);
+                    var errorOnClose = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorOnClose), engine);
 
                     var variables = engine.tasktEngineUI.ShowHTMLInput(htmlInput);
 
@@ -142,7 +141,7 @@ namespace taskt.Core.Automation.Commands
                         //store each one into context
                         foreach (var variable in variables)
                         {
-                            variable.VariableValue.ToString().StoreInUserVariable(sender, variable.VariableName);
+                            variable.VariableValue.ToString().StoreInUserVariable(engine, variable.VariableName);
                         }
                     }
                     else if (errorOnClose == "Error On Close")
@@ -155,12 +154,12 @@ namespace taskt.Core.Automation.Commands
 
         private void ShowHTMLBuilder(object sender, EventArgs e)
         {
-            using (var htmlForm = new UI.Forms.Supplemental.frmHTMLBuilder())
+            using (var htmlForm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmHTMLBuilder())
             {
                 var htmlInput = (TextBox)ControlsList[nameof(v_InputHTML)];
                 htmlForm.rtbHTML.Text = htmlInput.Text;
 
-                if (htmlForm.ShowDialog() == DialogResult.OK)
+                if (htmlForm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {
                     htmlInput.Text = htmlForm.rtbHTML.Text;
                 }

@@ -12,13 +12,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to create Color.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create Color.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class CreateColorCommand : ScriptCommand
+    public class CreateColorCommand : AColorCreateCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_InputColorVariableName))]
-        public string v_Color { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_InputColorVariableName))]
+        //public string v_Color { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_ColorValue))]
@@ -26,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vRed}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Red")]
         [PropertyValidationRule("Red", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyDisplayText(true, "Red")]
+        [PropertyParameterOrder(6000)]
         public string v_Red { get; set; }
 
         [XmlAttribute]
@@ -34,6 +36,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vGreen}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Green")]
         [PropertyValidationRule("Green", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyDisplayText(true, "Green")]
+        [PropertyParameterOrder(6001)]
         public string v_Green { get; set; }
 
         [XmlAttribute]
@@ -42,6 +45,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vBlue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Blue")]
         [PropertyValidationRule("Blue", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyDisplayText(true, "Blue")]
+        [PropertyParameterOrder(6002)]
         public string v_Blue { get; set; }
 
         [XmlAttribute]
@@ -51,6 +55,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "255")]
         [PropertyValidationRule("Alpha", PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyDisplayText(true, "Alpha")]
+        [PropertyParameterOrder(6003)]
         public string v_Alpha { get; set; }
 
         public CreateColorCommand()
@@ -61,19 +66,17 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
+            int r = this.ExpandValueOrUserVariableAsInteger(nameof(v_Red), engine);
+            int g = this.ExpandValueOrUserVariableAsInteger(nameof(v_Green), engine);
+            int b = this.ExpandValueOrUserVariableAsInteger(nameof(v_Blue), engine);
 
-            int r = this.ConvertToUserVariableAsInteger(nameof(v_Red), engine);
-            int g = this.ConvertToUserVariableAsInteger(nameof(v_Green), engine);
-            int b = this.ConvertToUserVariableAsInteger(nameof(v_Blue), engine);
+            int a = this.ExpandValueOrUserVariableAsInteger(nameof(v_Alpha), engine);
 
-            int a = this.ConvertToUserVariableAsInteger(nameof(v_Alpha), engine);
-
-            Color co = Color.FromArgb(a, r, g, b);
-            co.StoreInUserVariable(engine, v_Color);
+            var co = Color.FromArgb(a, r, g, b);
+            //co.StoreInUserVariable(engine, v_Color);
+            this.StoreColorInUserVariable(co, nameof(v_Color), engine);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Get HTML from WebElement.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get HTML from WebElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SeleniumBrowserGetHTMLFromWebElementCommand : ScriptCommand
@@ -36,10 +37,8 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var getAttribute = new SeleniumBrowserGetAttributeFromWebElementCommand()
             {
                 v_WebElement = this.v_WebElement,

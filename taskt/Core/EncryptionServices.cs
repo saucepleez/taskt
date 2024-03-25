@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace taskt.Core
 {
@@ -15,6 +12,7 @@ namespace taskt.Core
         private const string initVector = "kPcmAhmtL4ofXSMJ";
         // This constant is used to determine the keysize of the encryption algorithm
         private const int keysize = 256;
+
         //Encrypt
         public static string EncryptString(string plainText, string passPhrase)
         {

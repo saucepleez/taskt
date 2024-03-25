@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to set a column to a DataTable by a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a column to a DataTable by a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SetDataTableColumnValuesByDataTableCommand : ScriptCommand
@@ -21,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("DataTable Variable Name to be Setted")]
         [PropertyValidationRule("DataTable to be Setted", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "DataTable to be Setted")]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
@@ -55,18 +56,16 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            (var myDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
+            (var myDT, var colIndex) = this.ExpandUserVariablesAsDataTableAndColumnIndex(nameof(v_DataTable), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
 
             string trgColName = myDT.Columns[colIndex].ColumnName;
 
 
-            DataTable setDT = v_SetDataTableName.GetDataTableVariable(engine);
+            DataTable setDT = v_SetDataTableName.ExpandUserVariableAsDataTable(engine);
 
-            string ifRowNotEnough = this.GetUISelectionValue(nameof(v_IfRowNotEnough), "Row Not Enough", engine);
+            string ifRowNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfRowNotEnough), "Row Not Enough", engine);
             // rows check
             if (myDT.Rows.Count < setDT.Rows.Count)
             {
@@ -81,7 +80,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            string ifDataTableNotEnough = this.GetUISelectionValue(nameof(v_IfSetDataTableNotEnough), "DataTable Not Enough", engine);
+            string ifDataTableNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfSetDataTableNotEnough), "DataTable Not Enough", engine);
             if ((myDT.Rows.Count > setDT.Rows.Count) && (ifDataTableNotEnough == "error"))
             {
                 throw new Exception("The number of DataTable items is less than the rows to settedd");

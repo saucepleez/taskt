@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to navigate a IE web browser session to a given URL or resource.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to navigate an existing IE instance to a known URL or web resource")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements the 'InternetExplorer' application object from SHDocVw.dll to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     public class IEBrowserNavigateURLCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -42,24 +43,22 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             object browserObject = null;
 
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
 
             browserObject = engine.GetAppInstance(vInstance);
 
             var browserInstance = (SHDocVw.InternetExplorer)browserObject;
 
-            browserInstance.Navigate(v_URL.ConvertToUserVariable(sender));
+            browserInstance.Navigate(v_URL.ExpandValueOrUserVariable(engine));
 
             IEBrowserCreateCommand.WaitForReadyState(browserInstance);
 
         }
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -70,7 +69,7 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_URL", this, editor));
 
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            if (editor.creationMode == UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Add)
             {
                 this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
             }

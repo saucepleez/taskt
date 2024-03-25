@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command downloads the HTML source of a web page for parsing")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to retrieve HTML of a web page without using browser automation.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements System.Web to achieve automation")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class HTTPSendHTTPRequestCommand : ScriptCommand
@@ -28,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         public string v_WebRequestURL { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Execute Request as the currently logged on user?")]
         public string v_WebRequestCredentials { get; set; }
 
@@ -44,16 +45,14 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(v_WebRequestURL.ConvertToUserVariable(sender));
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(v_WebRequestURL.ExpandValueOrUserVariable(engine));
             request.Method = "GET";
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2";
 
             //if (v_WebRequestCredentials == "Yes")
-            if (this.GetYesNoSelectionValue(nameof(v_WebRequestCredentials), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_WebRequestCredentials), engine))
             {
                 request.Credentials = CredentialCache.DefaultCredentials;
             }
@@ -64,7 +63,7 @@ namespace taskt.Core.Automation.Commands
             StreamReader reader = new StreamReader(dataStream);
             string strResponse = reader.ReadToEnd();
 
-            strResponse.StoreInUserVariable(sender, v_userVariableName);
+            strResponse.StoreInUserVariable(engine, v_userVariableName);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command signifies the exit point of looped (repeated) actions.  Required for all loops.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to signify the end point of a loop command.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command is used by the serializer to signify the end point of a loop.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_endloop))]
     public class EndLoopCommand : ScriptCommand
     {
         public EndLoopCommand()
@@ -22,7 +23,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 

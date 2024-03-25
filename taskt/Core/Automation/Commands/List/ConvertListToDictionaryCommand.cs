@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command convert a List to Dictionary.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertListToDictionaryCommand : ScriptCommand
@@ -65,20 +66,18 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            List<string> targetList = v_InputList.ExpandUserVariableAsList(engine);
 
-            List<string> targetList = v_InputList.GetListVariable(engine);
-
-            var keyType = this.GetUISelectionValue(nameof(v_KeyType), "Key Type", engine);
+            var keyType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_KeyType), "Key Type", engine);
 
             Dictionary<string, string> myDic = new Dictionary<string, string>();
 
             Action<List<string>> dicUseKeys = new Action<List<string>>((targetKeys) =>
             {
-                string keysNotEnough = this.GetUISelectionValue(nameof(v_KeysNotEnough), "Keys Not Enough", engine);
-                string listItemNotEnough = this.GetUISelectionValue(nameof(v_ListItemNotEnough), "List Item Not Enough", engine);
+                string keysNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_KeysNotEnough), "Keys Not Enough", engine);
+                string listItemNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ListItemNotEnough), "List Item Not Enough", engine);
 
                 if ((keysNotEnough == "error") && (targetList.Count > targetKeys.Count))
                 {
@@ -148,23 +147,23 @@ namespace taskt.Core.Automation.Commands
             switch (keyType)
             {
                 case "list":
-                    keysList = v_Keys.GetListVariable(engine);
+                    keysList = v_Keys.ExpandUserVariableAsList(engine);
                     dicUseKeys(keysList);
                     break;
                 case "comma separated":
-                    keysList = v_Keys.ConvertToUserVariable(engine).Split(',').ToList();
+                    keysList = v_Keys.ExpandValueOrUserVariable(engine).Split(',').ToList();
                     dicUseKeys(keysList);
                     break;
                 case "space separated":
-                    keysList = v_Keys.ConvertToUserVariable(engine).Split(' ').ToList();
+                    keysList = v_Keys.ExpandValueOrUserVariable(engine).Split(' ').ToList();
                     dicUseKeys(keysList);
                     break;
                 case "tab separated":
-                    keysList = v_Keys.ConvertToUserVariable(engine).Split('\t').ToList();
+                    keysList = v_Keys.ExpandValueOrUserVariable(engine).Split('\t').ToList();
                     dicUseKeys(keysList);
                     break;
                 case "newline separated":
-                    keysList = v_Keys.ConvertToUserVariable(engine).Replace("\r\n", "\n").Replace("\r", "\n").Split('\n').ToList();
+                    keysList = v_Keys.ExpandValueOrUserVariable(engine).Replace("\r\n", "\n").Replace("\r", "\n").Split('\n').ToList();
                     dicUseKeys(keysList);
                     break;
                 case "key prefix":
@@ -175,7 +174,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        prefix = v_Keys.ConvertToUserVariable(engine);
+                        prefix = v_Keys.ExpandValueOrUserVariable(engine);
                     }
                     for (int i = 0; i < targetList.Count; i++)
                     {

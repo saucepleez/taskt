@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace taskt.Core
 {
@@ -12,19 +10,20 @@ namespace taskt.Core
         public List<ExecutionMetric> ExecutionMetricsSummary()
         {
             //create execution file path
-            var filePath = System.IO.Path.Combine(Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.LogFolder), "taskt Execution Summary Logs.txt");
+            //var filePath = Path.Combine(IO.Folders.GetFolder(IO.Folders.FolderType.LogFolder), "taskt Execution Summary Logs.txt");
+            var filePath = Path.Combine(IO.Folders.GetLogsFolderPath(), "taskt Execution Summary Logs.txt");
 
             //throw if file doesnt exist
-            if (!System.IO.File.Exists(filePath))
+            if (!File.Exists(filePath))
             {
-                throw new System.IO.FileNotFoundException("Execution Summary Log does not exist!");
+                throw new FileNotFoundException("Execution Summary Log does not exist!");
             }
 
             //create list for sorting data
-            var scriptsFinishedArgs = new List<Core.Automation.Engine.ScriptFinishedEventArgs>();
+            var scriptsFinishedArgs = new List<Automation.Engine.ScriptFinishedEventArgs>();
            
             //get all text from log file
-            var logFileLines = System.IO.File.ReadAllLines(filePath);
+            var logFileLines = File.ReadAllLines(filePath);
 
             //loop each line from log file
             foreach (var line in logFileLines)
@@ -35,7 +34,7 @@ namespace taskt.Core
                     var deserializedLine = Newtonsoft.Json.JsonConvert.DeserializeObject(line) as Newtonsoft.Json.Linq.JToken;
 
                     //convert the logged data json
-                    var scriptArgs = Newtonsoft.Json.JsonConvert.DeserializeObject<Core.Automation.Engine.ScriptFinishedEventArgs>(deserializedLine["@mt"].ToString());
+                    var scriptArgs = Newtonsoft.Json.JsonConvert.DeserializeObject<Automation.Engine.ScriptFinishedEventArgs>(deserializedLine["@mt"].ToString());
     
                     //add to tracking list
                     scriptsFinishedArgs.Add(scriptArgs);
@@ -49,16 +48,9 @@ namespace taskt.Core
             //create list to return
             var executionMetrics = new List<ExecutionMetric>();
 
-
             //group by file name and create execution time average
-            var groupedTasks = scriptsFinishedArgs
-                .GroupBy(f => f.FileName);
+            var groupedTasks = scriptsFinishedArgs.GroupBy(f => f.FileName);
           
-
-
-
-
-
             //loop through each group
             foreach (var task in groupedTasks)
             {
@@ -70,7 +62,7 @@ namespace taskt.Core
                     //get info around file
                     var fullFileName = task.FirstOrDefault().FileName;
                     string parentFolder = new DirectoryInfo(fullFileName).Parent.Name;
-                    string fileName = new System.IO.FileInfo(fullFileName).Name;
+                    string fileName = new FileInfo(fullFileName).Name;
 
                     //create metric
                     var metric = new ExecutionMetric()
@@ -82,26 +74,22 @@ namespace taskt.Core
 
                     //add metric to list
                     executionMetrics.Add(metric);
-
                 }
                 catch (Exception)
                 {
                     //do nothing
                 }
-                
-
-
             }
 
             //return metric
             return executionMetrics;
-
         }
 
         public void ClearExecutionMetrics()
         {
-            var filePath = System.IO.Path.Combine(Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.LogFolder), "taskt Execution Summary Logs.txt");
-            System.IO.File.WriteAllText(filePath, string.Empty);
+            //var filePath = Path.Combine(IO.Folders.GetFolder(IO.Folders.FolderType.LogFolder), "taskt Execution Summary Logs.txt");
+            var filePath = Path.Combine(IO.Folders.GetLogsFolderPath(), "taskt Execution Summary Logs.txt");
+            File.WriteAllText(filePath, string.Empty);
         }
     }
 
@@ -109,7 +97,6 @@ namespace taskt.Core
     {
        public string FileName { get; set; }
        public TimeSpan AverageExecutionTime { get; set; }
-       public List<Core.Automation.Engine.ScriptFinishedEventArgs> ExecutionData { get; set; }
-        
+       public List<Automation.Engine.ScriptFinishedEventArgs> ExecutionData { get; set; }
     }
 }

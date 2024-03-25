@@ -1,4 +1,6 @@
-﻿using taskt.Core.Automation.Attributes.PropertyAttributes;
+﻿using System.Text;
+using System;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -7,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class TextControls
     {
+        #region Virtual Property
         /// <summary>
         /// text
         /// </summary>
@@ -19,6 +22,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyDisplayText(true, "Text")]
+        [PropertyParameterOrder(5000)]
         public static string v_Text { get; }
 
         /// <summary>
@@ -34,6 +38,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
         [PropertyDisplayText(true, "Text")]
+        [PropertyParameterOrder(5000)]
         public static string v_Text_MultiLine { get; }
 
         /// <summary>
@@ -50,6 +55,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Variable")]
+        [PropertyParameterOrder(5000)]
 
         public static string v_OutputTextVariableName { get; set; }
 
@@ -68,6 +74,45 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Path")]
+        [PropertyParameterOrder(5000)]
         public static string v_FilePath { get; }
+        #endregion
+
+        public static string ConvertToBase64(this string text)
+        {
+            return ConvertToBase64(text, Encoding.UTF8);
+        }
+
+        public static string ConvertToBase64(this string text, Encoding encoding)
+        {
+            byte[] textAsBytes = encoding.GetBytes(text);
+            return Convert.ToBase64String(textAsBytes);
+        }
+
+        public static bool TryParseBase64(this string text, out string decodedText)
+        {
+            return TryParseBase64(text, Encoding.UTF8, out decodedText);
+        }
+
+        public static bool TryParseBase64(this string text, Encoding encoding, out string decodedText)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                decodedText = text;
+                return false;
+            }
+
+            try
+            {
+                byte[] textAsBytes = Convert.FromBase64String(text);
+                decodedText = encoding.GetString(textAsBytes);
+                return true;
+            }
+            catch (Exception)
+            {
+                decodedText = null;
+                return false;
+            }
+        }
     }
 }

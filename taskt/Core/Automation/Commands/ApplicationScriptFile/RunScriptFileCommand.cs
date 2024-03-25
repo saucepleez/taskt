@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command runs tasks.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run another task.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_start_process))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class RunScriptFileCommand : ScriptCommand
@@ -79,10 +80,8 @@ namespace taskt.Core.Automation.Commands
             //AssignmentsGridViewHelper.Hide();
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //var startFile = v_taskPath.ConvertToUserVariable(sender);
             //string startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
             var startFile = FilePathControls.WaitForFile(this, nameof(v_taskPath), nameof(v_WaitForFile), engine);
@@ -101,7 +100,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 catch
                 {
-                    variableValue = rw.Field<string>("VariableValue").ConvertToUserVariable(engine);
+                    variableValue = rw.Field<string>("VariableValue").ExpandValueOrUserVariable(engine);
                 }
 
                 var variableReturn = "No";
@@ -124,7 +123,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            frmScriptEngine newEngine = new frmScriptEngine(startFile, null, variableList, true, engine.PreloadedTasks);
+            var newEngine = new UI.Forms.ScriptEngine.frmScriptEngine(startFile, null, variableList, true, engine.PreloadedTasks);
             
             engine.tasktEngineUI.Invoke((Action)delegate () { engine.tasktEngineUI.TopMost = false; });
             Application.Run(newEngine);
@@ -164,7 +163,7 @@ namespace taskt.Core.Automation.Commands
             var engine = new Engine.AutomationEngineInstance();
 
             var cmb = (ComboBox)sender;
-            var engineSettings = ((frmCommandEditor)cmb.FindForm()).appSettings.EngineSettings;
+            var engineSettings = ((UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor)cmb.FindForm()).appSettings.EngineSettings;
 
             bool isVisible = (cmb.SelectedItem?.ToString().Trim().ToLower() == "yes");
             foreach(var item in ControlsList.Where(c => (c.Key.Contains(nameof(v_VariableAssignments)))))
@@ -174,12 +173,12 @@ namespace taskt.Core.Automation.Commands
 
             //var startFile = v_taskPath.ConvertToUserVariable(engine);
             //var startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
-            var startFile = this.ConvertToUserVariableAsFilePath(nameof(v_taskPath), engine);
+            var startFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_taskPath), engine);
 
             // check file exists
             if (!System.IO.File.Exists(startFile))
             {
-                using(var fm = new taskt.UI.Forms.Supplemental.frmDialog("Script File Not Found. Name: " + startFile, "error", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using(var fm = new UI.Forms.General.frmDialog("Script File Not Found. Name: " + startFile, "error", UI.Forms.General.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                 }

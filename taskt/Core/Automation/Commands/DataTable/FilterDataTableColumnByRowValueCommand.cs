@@ -13,16 +13,17 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Filter Columns by reference to Row values.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Filter Columns by reference to Row values.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class FilterDataTableColumnByRowValueCommand : ScriptCommand
+    public class FilterDataTableColumnByRowValueCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
         [PropertyDescription("DataTable Variable Name to Filter")]
         [PropertyValidationRule("DataTable to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "DataTable to Filter")]
-        public string v_InputDataTable { get; set; }
+        public string v_TargetDataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_RowIndex))]
@@ -44,7 +45,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_NewOutputDataTableName))]
-        public string v_OutputDataTable { get; set; }
+        public string v_NewDataTable { get; set; }
 
         public FilterDataTableColumnByRowValueCommand()
         {
@@ -56,11 +57,9 @@ namespace taskt.Core.Automation.Commands
             //this.v_TargetType = "Text";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            (var targetDT, var rowIndex) = this.GetDataTableVariableAndRowIndex(nameof(v_InputDataTable), nameof(v_TargetRowIndex), engine);
+            (var targetDT, var rowIndex) = this.ExpandUserVariablesAsDataTableAndRowIndex(nameof(v_TargetDataTable), nameof(v_TargetRowIndex), engine);
 
             var parameters = DataTableControls.GetFieldValues(v_FilterActionParameterTable, "ParameterName", "ParameterValue", engine);
             var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_FilterAction), parameters, engine, this);
@@ -96,7 +95,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            res.StoreInUserVariable(engine, v_OutputDataTable);
+            res.StoreInUserVariable(engine, v_NewDataTable);
         }
 
         private void cmbTargetType_SelectionChangeCommited(object sender, EventArgs e)
@@ -113,13 +112,21 @@ namespace taskt.Core.Automation.Commands
             var FilterActionComboboxHelper = (ComboBox)ControlsList[nameof(v_FilterAction)];
             ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
         }
-        public override void AfterShown()
+        public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             var FilterParametersGridViewHelper = (DataGridView)ControlsList[nameof(v_FilterActionParameterTable)];
             var TargetTypeComboboxHelper = (ComboBox)ControlsList[nameof(v_TargetType)];
             var FilterActionComboboxHelper = (ComboBox)ControlsList[nameof(v_FilterAction)];
             ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, FilterActionComboboxHelper);
             ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+
+            var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_FilterActionParameterTable));
+            DataTableControls.BeforeValidate_NoRowAdding(dgv, v_FilterActionParameterTable);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Row to DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Row to DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertDataTableRowToDataTableCommand : ScriptCommand
@@ -19,7 +20,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
         [PropertyDescription("DataTable Variable Name to Converted")]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_RowIndex))]
@@ -27,7 +28,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_NewOutputDataTableName))]
-        public string v_OutputVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public ConvertDataTableRowToDataTableCommand()
         {
@@ -37,11 +38,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;         
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            (var srcDT, var index) = this.GetDataTableVariableAndRowIndex(nameof(v_DataTableName), nameof(v_DataRowIndex), engine);
+            (var srcDT, var index) = this.ExpandUserVariablesAsDataTableAndRowIndex(nameof(v_DataTable), nameof(v_DataRowIndex), engine);
 
             DataTable myDT = new DataTable();
 
@@ -53,7 +52,7 @@ namespace taskt.Core.Automation.Commands
                 myDT.Rows[0][i] = srcDT.Rows[index][i];
             }
 
-            myDT.StoreInUserVariable(engine, v_OutputVariableName);
+            myDT.StoreInUserVariable(engine, v_Result);
         }
     }
 }

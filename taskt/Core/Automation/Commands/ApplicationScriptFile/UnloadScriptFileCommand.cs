@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command runs tasks.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run another task.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_stop_process))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UnloadScriptFileCommand : ScriptCommand
@@ -48,14 +49,12 @@ namespace taskt.Core.Automation.Commands
             //this.v_ErrorPreference = "Continue if not found";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //string startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
             var startFile = FilePathControls.WaitForFile(this, nameof(v_taskPath), nameof(v_WaitForFile), engine);
 
-            var errorPreference = this.GetUISelectionValue(nameof(v_ErrorPreference), engine);
+            var errorPreference = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorPreference), engine);
 
             if (engine.PreloadedTasks.ContainsKey(startFile))
             {

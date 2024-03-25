@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to stop a program or a process.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to close an application by its name such as 'chrome'. Alternatively, you may use the Close Window or Thick App Command instead.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.CloseMainWindow'.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_system))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class LaunchRemoteDesktopCommand : ScriptCommand
@@ -77,25 +78,23 @@ namespace taskt.Core.Automation.Commands
             //this.v_RDPHeight = SystemInformation.PrimaryMonitorSize.Height.ToString();
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var machineName = v_MachineName.ConvertToUserVariable(sender);
-            var userName = v_UserName.ConvertToUserVariable(sender);
-            var password = v_Password.ConvertToUserVariable(sender);
+            var machineName = v_MachineName.ExpandValueOrUserVariable(engine);
+            var userName = v_UserName.ExpandValueOrUserVariable(engine);
+            var password = v_Password.ExpandValueOrUserVariable(engine);
 
             if (String.IsNullOrEmpty(v_RDPWidth))
             {
                 v_RDPWidth = SystemInformation.PrimaryMonitorSize.Width.ToString();
             }
-            var width = this.ConvertToUserVariableAsInteger(nameof(v_RDPWidth), engine);
+            var width = this.ExpandValueOrUserVariableAsInteger(nameof(v_RDPWidth), engine);
 
             if (String.IsNullOrEmpty(v_RDPHeight))
             {
                 v_RDPHeight = SystemInformation.PrimaryMonitorSize.Height.ToString();
             }
-            var height = this.ConvertToUserVariableAsInteger(nameof(v_RDPHeight), engine);
+            var height = this.ExpandValueOrUserVariableAsInteger(nameof(v_RDPHeight), engine);
 
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
             {

@@ -13,13 +13,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command created a DataTable with the column names provided")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a new DataTable")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlElement]
         [PropertyDescription("Column Names")]
@@ -50,10 +51,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_ColumnNameDataTable.Columns.Add("Column Name");
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             DataTable newDT = new DataTable();
 
             // check column name is empty
@@ -70,7 +69,7 @@ namespace taskt.Core.Automation.Commands
                 newDT.Columns.Add(row.Field<string>("Column Name"));
             }
 
-            newDT.StoreInUserVariable(engine, v_DataTableName);
+            newDT.StoreInUserVariable(engine, v_DataTable);
         }
 
         public override void BeforeValidate()

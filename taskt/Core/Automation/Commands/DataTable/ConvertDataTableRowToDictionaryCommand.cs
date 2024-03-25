@@ -12,13 +12,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Row to Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Row to Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertDataTableRowToDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_RowIndex))]
@@ -26,7 +27,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
-        public string v_OutputVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public ConvertDataTableRowToDictionaryCommand()
         {
@@ -36,11 +37,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;         
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            (var srcDT, var index) = this.GetDataTableVariableAndRowIndex(nameof(v_DataTableName), nameof(v_DataRowIndex), engine);
+            (var srcDT, var index) = this.ExpandUserVariablesAsDataTableAndRowIndex(nameof(v_DataTable), nameof(v_DataRowIndex), engine);
 
             Dictionary<string, string> myDic = new Dictionary<string, string>();
 
@@ -50,7 +49,7 @@ namespace taskt.Core.Automation.Commands
                 myDic.Add(srcDT.Columns[i].ColumnName, srcDT.Rows[index][i]?.ToString() ?? "");
             }
 
-            myDic.StoreInUserVariable(engine, v_OutputVariableName);
+            myDic.StoreInUserVariable(engine, v_Result);
         }
     }
 }

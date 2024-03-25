@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Group("IE Browser Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to close the associated IE web browser")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements the 'InternetExplorer' application object from SHDocVw.dll to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     public class IEBrowserCloseCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -29,11 +30,9 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
 
             var browserObject = engine.GetAppInstance(vInstance);
 
@@ -44,7 +43,7 @@ namespace taskt.Core.Automation.Commands
             engine.RemoveAppInstance(vInstance);
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -53,7 +52,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(instanceCtrls);
             //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
 
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            if (editor.creationMode == UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Add)
             {
                 this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
             }

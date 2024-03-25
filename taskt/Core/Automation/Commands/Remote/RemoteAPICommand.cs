@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to execute automation against another taskt Client.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to automate against a taskt instance that enables Local Listener.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command uses Core.Server.LocalTCPListener")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_remote))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class RemoteAPICommand : ScriptCommand
@@ -59,16 +60,14 @@ namespace taskt.Core.Automation.Commands
             //this.v_RequestTimeout = "5000";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             try
             {
-                var server = v_BaseURL.ConvertToUserVariable(engine);
+                var server = v_BaseURL.ExpandValueOrUserVariable(engine);
                 //var paramType = v_ParameterType.ConvertToUserVariable(engine);
-                var paramType = this.GetUISelectionValue(nameof(v_ParameterType), engine);
-                var timeout = v_RequestTimeout.ConvertToUserVariable(engine);
+                var paramType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ParameterType), engine);
+                var timeout = v_RequestTimeout.ExpandValueOrUserVariable(engine);
 
                 var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, timeout);
 

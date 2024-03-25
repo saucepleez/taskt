@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command pauses the script for a set amount of time specified in milliseconds.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to pause your script for a specific amount of time.  After the specified time is finished, the script will resume execution.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_nlg))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class NLGCreateNLGInstanceCommand : ScriptCommand
@@ -30,15 +31,13 @@ namespace taskt.Core.Automation.Commands
             //this.v_InstanceName = "";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-  
             Lexicon lexicon = Lexicon.getDefaultLexicon();
             NLGFactory nlgFactory = new NLGFactory(lexicon);
             SPhraseSpec p = nlgFactory.createClause();
 
-            var vInstance = v_InstanceName.ConvertToUserVariable(sender);
+            var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
 
             engine.AddAppInstance(vInstance, p);
         }

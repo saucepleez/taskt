@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to add a DataTable Row to a DataTable by a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a DataTable Row to a DataTable by a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class AddDataTableRowsByDataTableCommand : ScriptCommand
@@ -23,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("DataTable Variable Name to be added a row")]
         [PropertyValidationRule("DataTable to be added", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "DataTable to be added")]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
@@ -45,15 +46,13 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            DataTable myDT = v_DataTable.ExpandUserVariableAsDataTable(engine);
 
-            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+            DataTable addDT = v_RowName.ExpandUserVariableAsDataTable(engine);
 
-            DataTable addDT = v_RowName.GetDataTableVariable(engine);
-
-            string notExistsKey = this.GetUISelectionValue(nameof(v_NotExistsKey), "Key Does Not Exists", engine);
+            string notExistsKey = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_NotExistsKey), "Key Does Not Exists", engine);
 
             // get columns list
             List<string> columns = myDT.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();

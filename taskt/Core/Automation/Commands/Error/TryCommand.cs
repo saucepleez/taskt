@@ -1,5 +1,6 @@
 ﻿using System;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -9,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows embedding commands and will automatically move to the 'catch' handler")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to handle potential errors that could occur.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_try))]
     [Attributes.ClassAttributes.EnableAutomateRender(true, true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class TryCommand : ScriptCommand
@@ -21,11 +23,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender, Script.ScriptAction parentCommand)
+        public override void RunCommand(Engine.AutomationEngineInstance engine, Script.ScriptAction parentCommand)
         {
-           //get engine
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             //get indexes of commands
             var startIndex = 0;
             var catchIndex = parentCommand.AdditionalScriptCommands.FindIndex(a => a.ScriptCommand is CatchExceptionCommand);
@@ -49,10 +48,11 @@ namespace taskt.Core.Automation.Commands
                     var catchCommandItem = parentCommand.AdditionalScriptCommands[catchIndex];
                     var catchCommand = (CatchExceptionCommand)catchCommandItem.ScriptCommand;
 
-                    catchCommand.StackTrace = ex.ToString();
-                    catchCommand.ErrorMessage = ex.Message;
-                    engine.AddVariable("Catch:StackTrace", catchCommand.StackTrace);
-                    engine.AddVariable("Catch:ErrorMessage", catchCommand.ErrorMessage);
+                    //catchCommand.StackTrace = ex.ToString();
+                    //catchCommand.ErrorMessage = ex.Message;
+                    //engine.AddVariable("Catch:StackTrace", catchCommand.StackTrace);
+                    //engine.AddVariable("Catch:ErrorMessage", catchCommand.ErrorMessage);
+                    SystemVariables.Update_ErrorCatch(catchCommand, ex);
 
                     //assify = (input >= 0) ? "nonnegative" : "negative";
                     var endCatch = (finallyIndex != -1) ? finallyIndex : endTryIndex;

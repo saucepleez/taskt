@@ -13,17 +13,18 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to convert DataTable to JSON")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable to JSON.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertDataTableToJSONCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_OutputJSONName))]
-        public string v_OutputVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public ConvertDataTableToJSONCommand()
         {
@@ -33,11 +34,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;         
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            DataTable srcDT = v_DataTableName.GetDataTableVariable(engine);
+            DataTable srcDT = v_DataTable.ExpandUserVariableAsDataTable(engine);
 
             List<Dictionary<string, string>> jsonList = new List<Dictionary<string, string>>();
             for (int j = 0; j < srcDT.Rows.Count; j++)
@@ -52,7 +51,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonList);
-            json.StoreInUserVariable(engine, v_OutputVariableName);
+            json.StoreInUserVariable(engine, v_Result);
         }
     }
 }

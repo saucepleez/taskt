@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to sort list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to sort list.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SortListCommand : ScriptCommand
@@ -59,18 +60,16 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            string sortOrder = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SortOrder), "Sort Order", engine);
 
-            string sortOrder = this.GetUISelectionValue(nameof(v_SortOrder), "Sort Order", engine);
-
-            string targetType = this.GetUISelectionValue(nameof(v_TargetType), "Target Type", engine);
+            string targetType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TargetType), "Target Type", engine);
 
             switch (targetType)
             {
                 case "text":
-                    List<string> targetList = v_InputList.GetListVariable(engine);
+                    List<string> targetList = v_InputList.ExpandUserVariableAsList(engine);
                     List<string> newList = new List<string>(targetList);
 
                     newList.Sort();
@@ -82,7 +81,7 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "number":
-                    List<decimal> targetValueList = v_InputList.GetDecimalListVariable(false, engine);
+                    List<decimal> targetValueList = v_InputList.ExpandUserVariableAsDecimalList(false, engine);
                     List<decimal> valueList = new List<decimal>(targetValueList);
 
                     valueList.Sort();

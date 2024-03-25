@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get emails and attachments with outlook")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get emails and attachments with your currenty logged in outlook account")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_smtp))]
 
     public class OutlookGetEmailsCommand : ScriptCommand
     {
@@ -94,13 +95,12 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-            var vFolder = v_Folder.ConvertToUserVariable(sender);
-            var vFilter = v_Filter.ConvertToUserVariable(sender);
-            var vAttachmentDirectory = v_AttachmentDirectory.ConvertToUserVariable(sender);
-            var vMessageDirectory = v_MessageDirectory.ConvertToUserVariable(sender);
+            var vFolder = v_Folder.ExpandValueOrUserVariable(engine);
+            var vFilter = v_Filter.ExpandValueOrUserVariable(engine);
+            var vAttachmentDirectory = v_AttachmentDirectory.ExpandValueOrUserVariable(engine);
+            var vMessageDirectory = v_MessageDirectory.ExpandValueOrUserVariable(engine);
 
             if (vFolder == "") vFolder = "Inbox";
 
@@ -172,7 +172,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Folder", this, editor));

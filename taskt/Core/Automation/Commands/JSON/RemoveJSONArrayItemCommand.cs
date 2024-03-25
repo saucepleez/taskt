@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to remove item to JSON Array.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class RemoveJSONArrayItemCommand : ScriptCommand
@@ -49,10 +50,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             Action<JToken> removeItemFunc = new Action<JToken>((searchResult) =>
             {
                 if (!(searchResult is JArray))
@@ -61,7 +60,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 JArray ary = (JArray)searchResult;
 
-                var index = this.ConvertToUserVariableAsInteger(nameof(v_RemoveIndex), engine);
+                var index = this.ExpandValueOrUserVariableAsInteger(nameof(v_RemoveIndex), engine);
 
                 if ((index < 0) && (index > ary.Count))
                 {

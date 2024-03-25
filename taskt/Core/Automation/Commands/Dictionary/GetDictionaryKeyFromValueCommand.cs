@@ -12,13 +12,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get Dictionary key Name from Value")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Dictionary key Name from Value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetDictionaryKeyFromValueCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
-        public string v_InputData { get; set; }
+        public string v_Dictionary { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_Value))]
@@ -28,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store Key name")]
         [Remarks("When value not found, Result is Empty")]
-        public string v_OutputVariable { get; set; }
+        public string v_Result { get; set; }
 
         public GetDictionaryKeyFromValueCommand()
         {
@@ -38,22 +39,21 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-            var vValue = v_Value.ConvertToUserVariable(sender);
+            var vValue = v_Value.ExpandValueOrUserVariable(engine);
 
-            var dic = v_InputData.GetDictionaryVariable(engine);
+            var dic = v_Dictionary.ExpandUserVariableAsDictinary(engine);
             
             foreach(KeyValuePair<string, string> item in dic)
             {
                 if (item.Value == vValue)
                 {
-                    item.Key.StoreInUserVariable(engine, v_OutputVariable);
+                    item.Key.StoreInUserVariable(engine, v_Result);
                     return;
                 }
             }
-            "".StoreInUserVariable(engine, v_OutputVariable);
+            "".StoreInUserVariable(engine, v_Result);
         }
     }
 }

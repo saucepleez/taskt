@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to you to retrieve the word count of a Text or Variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to find word count of a Text or Variable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetWordCountCommand : ScriptCommand
@@ -32,13 +33,10 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get engine
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //get input value
-            var stringRequiringCount = v_InputValue.ConvertToUserVariable(engine);
+            var stringRequiringCount = v_InputValue.ExpandValueOrUserVariable(engine);
 
             //count number of words
             var wordCount = stringRequiringCount.Split(new string[] {" "}, StringSplitOptions.RemoveEmptyEntries).Length;

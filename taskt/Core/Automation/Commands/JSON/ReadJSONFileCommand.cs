@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command reads JSON data into a variable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to read data from JSON files.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ReadJSONFileCommand : ScriptCommand
@@ -50,10 +51,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //string filePath;
             //if (!FilePathControls.IsURL(v_FilePath))
             //{
@@ -70,7 +69,7 @@ namespace taskt.Core.Automation.Commands
                 v_FilePath = filePath,
                 v_userVariableName = this.v_userVariableName
             };
-            readFile.RunCommand(sender);
+            readFile.RunCommand(engine);
         }
     }
 }

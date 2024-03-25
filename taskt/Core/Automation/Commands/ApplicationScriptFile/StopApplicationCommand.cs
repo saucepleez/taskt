@@ -11,16 +11,17 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Group("Application/Script Commands")]
     [Attributes.ClassAttributes.SubGruop("Application")]
     [Attributes.ClassAttributes.CommandSettings("Stop Application")]
-    [Attributes.ClassAttributes.Description("This command allows you to stop a program or a process.")]
+    [Attributes.ClassAttributes.Description("This command allows you to Stop a Application.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to close an application by its name such as 'chrome'. Alternatively, you may use the Close Window or Thick App Command instead.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.CloseMainWindow'.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_stop_process))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class StopApplicationCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Application Name")]
+        [PropertyDescription("Application Process Name")]
         [InputSpecification("Application Name", true)]
         [PropertyDetailSampleUsage("**notepad**", "Stop Notepad")]
         [PropertyDetailSampleUsage("**myapp**", PropertyDetailSampleUsage.ValueType.Value, "Application Name")]
@@ -39,11 +40,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            string shortName = v_ProgramShortName.ConvertToUserVariable(engine);
+            string shortName = v_ProgramShortName.ExpandValueOrUserVariable(engine);
             var processes = System.Diagnostics.Process.GetProcessesByName(shortName);
 
             foreach (var prc in processes)
@@ -58,7 +57,7 @@ namespace taskt.Core.Automation.Commands
 
             var ps = System.Diagnostics.Process.GetProcesses()
                 .OrderByDescending(p => p.Id).Select(p => p.ProcessName).ToList();
-            using (var fm = new UI.Forms.Supplemental.frmItemSelector(ps))
+            using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(ps))
             {
                 if (fm.ShowDialog() == DialogResult.OK)
                 {

@@ -19,6 +19,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Group("IE Browser Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to manipulate (get or set) elements within the HTML document of the associated IE web browser.  Features an assisting element capture form")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements the 'InternetExplorer' application object from SHDocVw.dll and MSHTML.dll to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     public class IEBrowserElementActionCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -142,19 +143,18 @@ namespace taskt.Core.Automation.Commands
         }
 
         [STAThread]
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             object browserObject = null;
 
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
 
             browserObject = engine.GetAppInstance(vInstance);
 
             var browserInstance = (SHDocVw.InternetExplorer)browserObject;
 
-            DataTable searchTable = Core.Common.Clone<DataTable>(v_WebSearchParameter);
+            //DataTable searchTable = Core.Common.Clone<DataTable>(v_WebSearchParameter);
+            DataTable searchTable = v_WebSearchParameter.Copy();
 
             DataColumn matchFoundColumn = new DataColumn();
             matchFoundColumn.ColumnName = "Match Found";
@@ -167,7 +167,7 @@ namespace taskt.Core.Automation.Commands
             foreach (DataRow seachCriteria in elementSearchProperties)
             {
                 string searchPropertyValue = seachCriteria.Field<string>("Property Value");
-                searchPropertyValue = searchPropertyValue.ConvertToUserVariable(engine);
+                searchPropertyValue = searchPropertyValue.ExpandValueOrUserVariable(engine);
                 seachCriteria.SetField<string>("Property Value", searchPropertyValue);
             }
 
@@ -177,11 +177,11 @@ namespace taskt.Core.Automation.Commands
 
             if (doc == lastDocFound)
             {
-                qualifyingElementFound = InspectFrame(lastElementCollectionFound, elementSearchProperties, sender, browserInstance);
+                qualifyingElementFound = InspectFrame(lastElementCollectionFound, elementSearchProperties, engine, browserInstance);
             }
             if (!qualifyingElementFound)
             {
-                qualifyingElementFound = InspectFrame(doc.all, elementSearchProperties, sender, browserInstance);
+                qualifyingElementFound = InspectFrame(doc.all, elementSearchProperties, engine, browserInstance);
             }
             if (qualifyingElementFound)
             {
@@ -279,6 +279,8 @@ namespace taskt.Core.Automation.Commands
 
         private void RunCommandActions(IHTMLElement element, object sender, InternetExplorer browserInstance)
         {
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+
             if (v_WebAction == "Fire onmousedown event")
             {
                 ((IHTMLElement3)element).FireEvent("onmousedown");
@@ -308,14 +310,14 @@ namespace taskt.Core.Automation.Commands
                                                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 //var ieClientLocation = User32Functions.GetWindowPosition(new IntPtr(browserInstance.HWND));
-                var ieClientLocation = WindowNameControls.GetWindowPosition(new IntPtr(browserInstance.HWND));
+                var ieClientLocation = WindowControls.GetWindowRect(new IntPtr(browserInstance.HWND));
 
                 MoveMouseCommand newMouseMove = new MoveMouseCommand();
 
                 newMouseMove.v_XMousePosition = ((elementXposition + ieClientLocation.left + 10) + userXAdjust).ToString(); // + 10 gives extra padding
                 newMouseMove.v_YMousePosition = ((elementYposition + ieClientLocation.top + 90 + System.Windows.Forms.SystemInformation.CaptionHeight) + userYAdjust).ToString(); // +90 accounts for title bar height
                 newMouseMove.v_MouseClick = v_WebAction;
-                newMouseMove.RunCommand(sender);
+                newMouseMove.RunCommand(engine);
             }
             else if (v_WebAction == "Set Attribute")
             {
@@ -327,7 +329,7 @@ namespace taskt.Core.Automation.Commands
                                      where rw.Field<string>("Parameter Name") == "Value To Set"
                                      select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-                valueToSet = valueToSet.ConvertToUserVariable(sender);
+                valueToSet = valueToSet.ExpandValueOrUserVariable(engine);
 
                 element.setAttribute(attributeName, valueToSet);
             }
@@ -339,7 +341,7 @@ namespace taskt.Core.Automation.Commands
                                     where rw.Field<string>("Parameter Name") == "Text To Set"
                                     select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-                textToSet = textToSet.ConvertToUserVariable(sender);
+                textToSet = textToSet.ExpandValueOrUserVariable(engine);
 
                 element.setAttribute(attributeName, textToSet);
             }
@@ -355,7 +357,7 @@ namespace taskt.Core.Automation.Commands
 
                 string convertedAttribute = Convert.ToString(element.getAttribute(attributeName));
 
-                convertedAttribute.StoreInUserVariable(sender, variableName);
+                convertedAttribute.StoreInUserVariable(engine, variableName);
             }
         }
 
@@ -389,7 +391,7 @@ namespace taskt.Core.Automation.Commands
             return curtop;
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -436,7 +438,7 @@ namespace taskt.Core.Automation.Commands
             ElementParameterControls.Add(ElementsGridViewHelper);
             RenderedControls.AddRange(ElementParameterControls);
 
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            if (editor.creationMode == UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Add)
             {
                 this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
             }

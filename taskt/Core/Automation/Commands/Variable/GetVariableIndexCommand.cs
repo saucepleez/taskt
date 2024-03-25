@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get Variable Index.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Variable Index.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetVariableIndexCommand : ScriptCommand
@@ -27,11 +28,8 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var variableName = VariableNameControls.GetVariableName(v_userVariableName, engine);
             var rawVarialbe = variableName.GetRawVariable(engine);
             rawVarialbe.CurrentPosition.ToString().StoreInUserVariable(engine, v_Result);

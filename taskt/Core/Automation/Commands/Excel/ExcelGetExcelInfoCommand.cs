@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using Microsoft.Office.Interop.Excel;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -11,13 +12,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get current sheet name.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to launch a new instance of Excel.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelGetExcelInfoCommand : ScriptCommand
+    public class ExcelGetExcelInfoCommand : AExcelInstanceCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please select the information type to receive")]
@@ -33,11 +35,13 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Last sheet")]
         [PropertyValidationRule("Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
+        [PropertyParameterOrder(6000)]
         public string v_InfoType { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_applyToVariable { get; set; }
+        [PropertyParameterOrder(6001)]
+        public string v_Result { get; set; }
 
         public ExcelGetExcelInfoCommand()
         {
@@ -47,15 +51,13 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
+            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
-
-            var infoType = this.GetUISelectionValue(nameof(v_InfoType), "Info Type", engine);
             string ret = "";
-            switch (infoType)
+            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), "Info Type", engine))
             {
                 case "file name":
                     ret = excelInstance.ActiveWorkbook?.Name ?? "";
@@ -64,8 +66,9 @@ namespace taskt.Core.Automation.Commands
                     ret = excelInstance.ActiveWorkbook?.FullName ?? "";
                     break;
                 case "current sheet":
-                    var sheet = engine.engineSettings.CurrentWorksheetKeyword.GetExcelWorksheet(engine, excelInstance, true);
-                    ret = (sheet == null) ? "" : sheet.Name;
+                    //var sheet = engine.engineSettings.CurrentWorksheetKeyword.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance, true);
+                    //ret = (sheet == null) ? "" : sheet.Name;
+                    ret = (excelInstance.Worksheets.Count > 0) ? excelInstance.ActiveSheet.Name : "";
                     break;
                 case "number of sheets":
                     try
@@ -81,7 +84,7 @@ namespace taskt.Core.Automation.Commands
                     try
                     {
 
-                        ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[1]).Name;
+                        ret = ((Worksheet)excelInstance.Worksheets[1]).Name;
                     }
                     catch
                     {
@@ -91,7 +94,7 @@ namespace taskt.Core.Automation.Commands
                 case "last sheet":
                     try
                     {
-                        ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name;
+                        ret = ((Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name;
                     }
                     catch
                     {
@@ -100,7 +103,7 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            ret.StoreInUserVariable(sender, v_applyToVariable);
+            ret.StoreInUserVariable(engine, v_Result);
         }
     }
 }

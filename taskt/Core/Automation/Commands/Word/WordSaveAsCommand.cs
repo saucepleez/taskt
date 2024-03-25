@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Save Document As")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save a document to a file.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class WordSaveDocumentAsCommand : ScriptCommand
@@ -32,11 +33,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get engine context
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //string fileName;
             //if (FilePathControls.ContainsFileCounter(v_FileName, engine))
             //{
@@ -46,9 +44,9 @@ namespace taskt.Core.Automation.Commands
             //{
             //    fileName = FilePathControls.FormatFilePath_NoFileCounter(v_FileName, engine, "docx");
             //}
-            string fileName = this.ConvertToUserVariableAsFilePath(nameof(v_FileName), engine);
+            string fileName = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FileName), engine);
 
-            var wordInstance = v_InstanceName.GetWordInstance(engine);
+            var wordInstance = v_InstanceName.ExpandValueOrUserVariableAsWordInstance(engine);
 
             //overwrite and save
             wordInstance.DisplayAlerts = WdAlertLevel.wdAlertsNone;

@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to change web browser window size.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change web browser window size.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SeleniumBrowserResizeWebBrowserCommand : ScriptCommand
@@ -49,11 +50,9 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
             var currentSize = seleniumInstance.Manage().Window.Size;
 
@@ -64,7 +63,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                width = this.ConvertToUserVariableAsInteger(nameof(v_BrowserWidth), engine);
+                width = this.ExpandValueOrUserVariableAsInteger(nameof(v_BrowserWidth), engine);
             }
 
             int height;
@@ -74,7 +73,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                height = this.ConvertToUserVariableAsInteger(nameof(v_BrowserHeight), engine);
+                height = this.ExpandValueOrUserVariableAsInteger(nameof(v_BrowserHeight), engine);
             }
             seleniumInstance.Manage().Window.Size = new System.Drawing.Size(width, height);
         }
