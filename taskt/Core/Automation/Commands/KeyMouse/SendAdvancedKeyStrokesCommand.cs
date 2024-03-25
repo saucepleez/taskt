@@ -63,6 +63,12 @@ namespace taskt.Core.Automation.Commands
         public string v_WaitTimeForWindow { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Try Activate Window, when Specifiy Current Window Variable")]
+        [PropertyIsOptional(true, "No")]
+        public string v_ActivateCurrentWindow { get; set; }
+
+        [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
         public string v_NameResult { get; set; }
 
@@ -83,8 +89,19 @@ namespace taskt.Core.Automation.Commands
             WindowControls.WindowAction(this, engine,
                 new Action<List<(IntPtr, string)>>(wins =>
                 {
-                    var whnd = wins[0].Item1;
-                    WindowControls.ActivateWindow(whnd);
+                    //var whnd = wins[0].Item1;
+                    //WindowControls.ActivateWindow(whnd);
+                    if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
+                    {
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
+                        {
+                            WindowControls.ActivateWindow(wins[0].Item1);
+                        }
+                    }
+                    else
+                    {
+                        WindowControls.ActivateWindow(wins[0].Item1);
+                    }
 
                     //track all keys down
                     var keysDown = new List<Keys>();
