@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Script Builder Modern</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <style>
+    body { margin: 0; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    function App() {
+      const commands = ['Open File', 'Click Element', 'Send Keys'];
+      const actions = [
+        {id:1, cmd:'Open File', param:'C:/file.txt'},
+        {id:2, cmd:'Click Element', param:'#submit'},
+        {id:3, cmd:'Send Keys', param:'Hello'}
+      ];
+      return (
+        <div className="container-fluid p-2">
+          <nav className="navbar navbar-dark bg-dark mb-2">
+            <span className="navbar-brand">Script Builder Modern</span>
+          </nav>
+          <div className="row">
+            <div className="col-md-3 border-right">
+              <h6>Commands</h6>
+              <ul className="list-group">
+                {commands.map(c => <li key={c} className="list-group-item">{c}</li>)}
+              </ul>
+            </div>
+            <div className="col-md-9">
+              <h6>Script Actions</h6>
+              <table className="table table-striped">
+                <thead>
+                  <tr><th>#</th><th>Command</th><th>Parameters</th></tr>
+                </thead>
+                <tbody>
+                  {actions.map(a => (
+                    <tr key={a.id}><td>{a.id}</td><td>{a.cmd}</td><td>{a.param}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>

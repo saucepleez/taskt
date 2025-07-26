@@ -1529,6 +1529,12 @@
     <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmShowCursorPosition.Designer.cs">
       <DependentUpon>frmShowCursorPosition.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\ScriptBuilderModern\frmScriptBuilderModern.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\ScriptBuilderModern\frmScriptBuilderModern.Designer.cs">
+      <DependentUpon>frmScriptBuilderModern.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Images\Images.cs" />
@@ -1644,6 +1650,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmShowCursorPosition.resx">
       <DependentUpon>frmShowCursorPosition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\ScriptBuilderModern\frmScriptBuilderModern.resx">
+      <DependentUpon>frmScriptBuilderModern.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1870,12 +1879,16 @@
     </Content>
     <None Include="Resources\RPALogo.png" />
     <None Include="Resources\various-chat-icon.png" />
+    <Content Include="ModernUI\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="External Dependencies\" />
     <Folder Include="Sample Scripts\" />
     <Folder Include="Samples\" />
     <Folder Include="UI\Utilities\" />
+    <Folder Include="ModernUI\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
