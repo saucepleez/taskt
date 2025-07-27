@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -131,26 +132,84 @@ Similarly, The <b>Cancel</b> button should call <b>chrome.webview.hostObjects.fm
                 return;
             }
 
-            //invoke ui for data collection
-            var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            //// invoke ui for data collection
+            //var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            //{
+            //    // sample for temp testing
+            //    var htmlInput = v_InputHTML.ExpandValueOrUserVariable(engine);
+
+            //    var errorOnClose = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorOnClose), engine);
+
+            //    var variables = engine.tasktEngineUI.ShowHTMLInput(htmlInput);
+
+            //    // if user selected Ok then process variables
+            //    // null result means user cancelled/closed
+            //    if (variables != null)
+            //    {
+            //        ////store each one into context
+            //        //foreach (var variable in variables)
+            //        //{
+            //        //    variable.VariableValue.ToString().StoreInUserVariable(engine, variable.VariableName);
+            //        //}
+
+            //        Action<ScriptVariable> newVariableAction;
+            //        if (engine.engineSettings.CreateMissingVariablesDuringExecution)
+            //        {
+            //            newVariableAction = new Action<ScriptVariable>((v) =>
+            //            {
+            //                engine.VariableList.Add(v);
+            //            });
+            //        }
+            //        else
+            //        {
+            //            newVariableAction = new Action<ScriptVariable>((v) => {
+            //                // nothing
+            //            });
+            //        }
+
+            //        foreach(var v in variables)
+            //        {
+            //            var existsVar = engine.VariableList.FirstOrDefault(t => v.VariableName == t.VariableName);
+            //            if (existsVar != null)
+            //            {
+            //                existsVar.VariableValue = v.VariableValue;
+            //            }
+            //            else
+            //            {
+            //                newVariableAction(v);
+            //            }
+            //        }
+            //    }
+            //    else if (errorOnClose == "Error On Close")
+            //    {
+            //        throw new Exception("Input Form was closed by the user");
+            //    }
+            //}));
+
+            engine.tasktEngineUI.Invoke(new Action(() =>
             {
-                //sample for temp testing
+                // sample for temp testing
                 var htmlInput = v_InputHTML.ExpandValueOrUserVariable(engine);
 
                 var errorOnClose = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorOnClose), engine);
 
-                var variables = engine.tasktEngineUI.ShowHTMLInput(htmlInput);
+                List<ScriptVariable> variables = null;
+                using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmHTMLDisplayForm())
+                {
+                    fm.TemplateHTML = htmlInput;
 
-                //if user selected Ok then process variables
-                //null result means user cancelled/closed
+                    var dialogResult = fm.ShowDialog();
+
+                    if (fm.Result == DialogResult.OK)
+                    {
+                        variables = fm.variablesList;
+                    }
+                }
+
+                // if user selected Ok then process variables
+                // null result means user cancelled/closed
                 if (variables != null)
                 {
-                    ////store each one into context
-                    //foreach (var variable in variables)
-                    //{
-                    //    variable.VariableValue.ToString().StoreInUserVariable(engine, variable.VariableName);
-                    //}
-
                     Action<ScriptVariable> newVariableAction;
                     if (engine.engineSettings.CreateMissingVariablesDuringExecution)
                     {
@@ -166,7 +225,7 @@ Similarly, The <b>Cancel</b> button should call <b>chrome.webview.hostObjects.fm
                         });
                     }
 
-                    foreach(var v in variables)
+                    foreach (var v in variables)
                     {
                         var existsVar = engine.VariableList.FirstOrDefault(t => v.VariableName == t.VariableName);
                         if (existsVar != null)
@@ -178,9 +237,6 @@ Similarly, The <b>Cancel</b> button should call <b>chrome.webview.hostObjects.fm
                             newVariableAction(v);
                         }
                     }
-
-                    // DBG
-                    //var x = engine.VariableList;
                 }
                 else if (errorOnClose == "Error On Close")
                 {

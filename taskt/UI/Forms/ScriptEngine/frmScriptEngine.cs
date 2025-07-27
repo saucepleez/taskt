@@ -458,36 +458,36 @@ namespace taskt.UI.Forms.ScriptEngine
             }
         }
 
-        public delegate List<Core.Script.ScriptVariable> ShowHTMLInputDelegate(string htmlTemplate);
-        public List<Core.Script.ScriptVariable> ShowHTMLInput(string htmlTemplate)
-        {
-            if (InvokeRequired)
-            {
-                var d = new ShowHTMLInputDelegate(ShowHTMLInput);
-                Invoke(d, new object[] { htmlTemplate });
-                return null;
-            }
-            else
-            {
-                using (var inputForm = new Supplemental.frmHTMLDisplayForm())
-                {
-                    inputForm.TemplateHTML = htmlTemplate;
+        //public delegate List<Core.Script.ScriptVariable> ShowHTMLInputDelegate(string htmlTemplate);
+        //public List<Core.Script.ScriptVariable> ShowHTMLInput(string htmlTemplate)
+        //{
+        //    if (InvokeRequired)
+        //    {
+        //        var d = new ShowHTMLInputDelegate(ShowHTMLInput);
+        //        Invoke(d, new object[] { htmlTemplate });
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        using (var inputForm = new Supplemental.frmHTMLDisplayForm())
+        //        {
+        //            inputForm.TemplateHTML = htmlTemplate;
 
-                    var dialogResult = inputForm.ShowDialog();
+        //            var dialogResult = inputForm.ShowDialog();
 
-                    if (inputForm.Result == DialogResult.OK)
-                    {
-                        var variables = inputForm.variablesList;
+        //            if (inputForm.Result == DialogResult.OK)
+        //            {
+        //                var variables = inputForm.variablesList;
 
-                        return variables;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-            }
-        }
+        //                return variables;
+        //            }
+        //            else
+        //            {
+        //                return null;
+        //            }
+        //        }
+        //    }
+        //}
 
         //public delegate string ShowOpenFileDialogDelegate(string filter, int index, string directory);
         //public string ShowOpenFileDialog(string filter, int index, string directory)
