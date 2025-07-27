@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Remoting.Contexts;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -41,15 +42,24 @@ namespace taskt.Core.Automation.Commands
         {
             var closeValue = this.ExpandValueOrUserVariableAsInteger(nameof(v_AutoCloseAfter), engine);
 
-            //automatically close messageboxes for server requests
-            if (engine.serverExecution && closeValue <= 0)
+            // automatically close messageboxes for server requests
+            if (engine.serverExecution && (closeValue <= 0))
             {
                 closeValue = 10;
             }
 
-            var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            //var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            //    {
+            //        engine.tasktEngineUI.ShowEngineContext(engine.GetEngineContext(), closeValue);
+            //    }
+            //));
+
+            engine.tasktEngineUI.Invoke(new Action(() =>
                 {
-                    engine.tasktEngineUI.ShowEngineContext(engine.GetEngineContext(), closeValue);
+                    using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmEngineContextViewer(engine.GetEngineContextAsJSON(), closeValue))
+                    {
+                        fm.ShowDialog();
+                    }
                 }
             ));
         }

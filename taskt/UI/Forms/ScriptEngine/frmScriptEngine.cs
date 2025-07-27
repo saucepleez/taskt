@@ -365,29 +365,29 @@ namespace taskt.UI.Forms.ScriptEngine
         //    }
         //}
 
-        /// <summary>
-        /// Delegate for showing engine context form
-        /// </summary>
-        /// <param name="message"></param>
-        public delegate void ShowEngineContextDelegate(string context, int closeAfter);
-        /// <summary>
-        /// Used by the automation engine to show the engine context data
-        /// </summary>
-        public void ShowEngineContext(string context, int closeAfter)
-        {
-            if (InvokeRequired)
-            {
-                var d = new ShowEngineContextDelegate(ShowEngineContext);
-                Invoke(d, new object[] { context, closeAfter });
-            }
-            else
-            {
-                using (var contextForm = new Supplemental.frmEngineContextViewer(context, closeAfter))
-                {
-                    contextForm.ShowDialog();
-                }
-            }
-        }
+        ///// <summary>
+        ///// Delegate for showing engine context form
+        ///// </summary>
+        ///// <param name="message"></param>
+        //public delegate void ShowEngineContextDelegate(string context, int closeAfter);
+        ///// <summary>
+        ///// Used by the automation engine to show the engine context data
+        ///// </summary>
+        //public void ShowEngineContext(string context, int closeAfter)
+        //{
+        //    if (InvokeRequired)
+        //    {
+        //        var d = new ShowEngineContextDelegate(ShowEngineContext);
+        //        Invoke(d, new object[] { context, closeAfter });
+        //    }
+        //    else
+        //    {
+        //        using (var contextForm = new Supplemental.frmEngineContextViewer(context, closeAfter))
+        //        {
+        //            contextForm.ShowDialog();
+        //        }
+        //    }
+        //}
 
         public delegate void ShowCallBackFormMessageDelegate(string message);
         public void ShowCallBackFormMessage(string message)

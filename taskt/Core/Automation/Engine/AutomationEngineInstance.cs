@@ -532,15 +532,21 @@ namespace taskt.Core.Automation.Engine
             Loaded, Running, Paused, Finished
         }
 
-        public string GetEngineContext()
+        /// <summary>
+        /// get engine status as json text
+        /// </summary>
+        /// <returns></returns>
+        public string GetEngineContextAsJSON()
         {
             // set json settings
-            JsonSerializerSettings settings = new JsonSerializerSettings();
-            settings.Error = (serializer, err) =>
+            JsonSerializerSettings settings = new JsonSerializerSettings
             {
-                err.ErrorContext.Handled = true;
+                Error = (serializer, err) =>
+                {
+                    err.ErrorContext.Handled = true;
+                },
+                Formatting = Formatting.Indented
             };
-            settings.Formatting = Formatting.Indented;
 
             return  JsonConvert.SerializeObject(this, settings);
         }
