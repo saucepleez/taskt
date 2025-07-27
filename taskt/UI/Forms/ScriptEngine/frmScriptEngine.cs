@@ -477,15 +477,6 @@ namespace taskt.UI.Forms.ScriptEngine
 
                     if (inputForm.Result == DialogResult.OK)
                     {
-                        //var variables = inputForm.GetVariablesFromHTML("input");
-
-                        //variables.AddRange(inputForm.GetVariablesFromHTML("select"));
-
-                        //var t = inputForm.GetVariablesFromHTML();
-                        //t.Wait();
-
-                        //inputForm.GetVariablesFromHTML();
-
                         var variables = inputForm.variablesList;
 
                         return variables;
