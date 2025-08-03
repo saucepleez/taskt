@@ -641,15 +641,15 @@ namespace taskt.UI.Forms.ScriptEngine
         // various small UI methods
         #region UI Elements
 
-        private void lblClose_MouseEnter(object sender, EventArgs e)
-        {
-            Cursor = Cursors.Hand;
-        }
+        //private void lblClose_MouseEnter(object sender, EventArgs e)
+        //{
+        //    Cursor = Cursors.Hand;
+        //}
 
-        private void lblClose_MouseLeave(object sender, EventArgs e)
-        {
-            Cursor = Cursors.Arrow;
-        }
+        //private void lblClose_MouseLeave(object sender, EventArgs e)
+        //{
+        //    Cursor = Cursors.Arrow;
+        //}
 
         private void autoCloseTimer_Tick(object sender, EventArgs e)
         {
