@@ -217,31 +217,35 @@ namespace taskt.UI.Forms.ScriptEngine
             {
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Successful:
                     AddSteppingCommandsReport("Script Completed Successfully");
-                    UpdateUI("debug info (success)");
+                    ShowFinishedResult("debug info (success)", e.Result);
                     ShowNotifyMessageInScriptBuilder("Script Completed Successfully");
                     break;
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Error:
-                    AddSteppingCommandsReport("Error: " + e.Error);
+                    AddSteppingCommandsReport($"Error: {e.Error}");
                     AddSteppingCommandsReport("Script Completed With Errors!");
-                    UpdateUI("debug info (error)");
+                    ShowFinishedResult("debug info (error)", e.Result);
                     ShowNotifyMessageInScriptBuilder("Script Completed With Errors!");
                     break;
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Cancelled:
                     AddSteppingCommandsReport("Script Cancelled By User");
-                    UpdateUI("debug info (cancelled)");
+                    ShowFinishedResult("debug info (cancelled)", e.Result);
                     ShowNotifyMessageInScriptBuilder("Script Cancelled By User");
                     break;
                 default:
                     break;
             }
 
-            Result = engineInstance.TasktResult;
+            this.Result = engineInstance.TasktResult;
 
-            AddSteppingCommandsReport("Total Execution Time: " + e.ExecutionTime.ToString());
+            AddSteppingCommandsReport($"Total Execution Time: {e.ExecutionTime}");
 
             if(CloseWhenDone)
             {
-                engineInstance.tasktEngineUI.Invoke((Action)delegate () { this.Close(); });
+                //engineInstance.tasktEngineUI.Invoke((Action)delegate () { this.Close(); });
+                engineInstance.tasktEngineUI.Invoke(new Action(() =>
+                {
+                    this.Close();
+                }));
             }
         }
 
@@ -286,20 +290,20 @@ namespace taskt.UI.Forms.ScriptEngine
         }
 
         /// <summary>
-        /// Delegate for updating UI after Automation Engine finishes
+        /// Delegate for show result after Automation Engine finishes
         /// </summary>
         /// <param name="message"></param>
-        public delegate void UpdateUIDelegate(string message);
+        public delegate void ShowFinishedResultDelegate(string message, ScriptFinishedEventArgs.ScriptFinishedResult result);
         /// <summary>
-        /// Standard UI updates after automation is finished running
+        /// show result after automation is finished running
         /// </summary>
         /// <param name="mainLogoText"></param>
-        private void UpdateUI(string mainLogoText)
+        private void ShowFinishedResult(string mainLogoText, ScriptFinishedEventArgs.ScriptFinishedResult result)
         {
             if (InvokeRequired)
             {
-                var d = new UpdateUIDelegate(UpdateUI);
-                Invoke(d, new object[] { mainLogoText });
+                var d = new ShowFinishedResultDelegate(ShowFinishedResult);
+                Invoke(d, new object[] { mainLogoText, result });
             }
             else
             {
@@ -311,23 +315,46 @@ namespace taskt.UI.Forms.ScriptEngine
                 uiBtnCancel.DisplayText = "Close";
                 uiBtnCancel.Visible = true;
 
-                if ((!advancedDebug) && (mainLogoText.Contains("(error)")))
-                {
-                    pbBotIcon.Image = Properties.Resources.error;
-                }
+                //if ((!advancedDebug) && (mainLogoText.Contains("(error)")))
+                //{
+                //    pbBotIcon.Image = Properties.Resources.error;
+                //}
 
-                if (mainLogoText.Contains("(error)"))
+                //if (mainLogoText.Contains("(error)"))
+                //{
+                //    this.Theme.BgGradientStartColor = Color.OrangeRed;
+                //    this.Theme.BgGradientEndColor = Color.OrangeRed;
+                //    this.Invalidate();
+                //}
+                //else if (mainLogoText.Contains("(success)"))
+                //{
+                //    this.Theme.BgGradientStartColor = Color.Green;
+                //    this.Theme.BgGradientEndColor = Color.Green;
+                //    this.Invalidate();
+                //}
+
+                switch (result)
                 {
-                    this.Theme.BgGradientStartColor = Color.OrangeRed;
-                    this.Theme.BgGradientEndColor = Color.OrangeRed;
-                    this.Invalidate();
+                    case ScriptFinishedEventArgs.ScriptFinishedResult.Error:
+                        if (!advancedDebug)
+                        {
+                            pbBotIcon.Image = Properties.Resources.error;
+                        }
+                        this.Theme.BgGradientStartColor = Color.OrangeRed;
+                        this.Theme.BgGradientEndColor = Color.OrangeRed;
+                        break;
+
+                    case ScriptFinishedEventArgs.ScriptFinishedResult.Successful:
+                        this.Theme.BgGradientStartColor = Color.Green;
+                        this.Theme.BgGradientEndColor = Color.Green;
+                        break;
+
+                    case ScriptFinishedEventArgs.ScriptFinishedResult.Cancelled:
+                        this.Theme.BgGradientStartColor = Color.DarkBlue;
+                        this.Theme.BgGradientEndColor = Color.DarkBlue;
+                        break;
                 }
-                else if (mainLogoText.Contains("(success)"))
-                {
-                    this.Theme.BgGradientStartColor = Color.Green;
-                    this.Theme.BgGradientEndColor = Color.Green;
-                    this.Invalidate();
-                }
+                this.Invalidate();
 
                 // reset debug line
                 //if (callBackForm != null)
@@ -669,7 +696,7 @@ namespace taskt.UI.Forms.ScriptEngine
 
         private void pbBotIcon_Click(object sender, EventArgs e)
         {
-            //show debug if user clicks
+            // show debug if user clicks
             lblMainLogo.Show();
             lstSteppingCommands.Visible = !lstSteppingCommands.Visible;
         }
