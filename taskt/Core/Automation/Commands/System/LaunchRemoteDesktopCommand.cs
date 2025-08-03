@@ -134,9 +134,14 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            //var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            //{
+            //    engine.tasktEngineUI.LaunchRDPSession(machineName, userName, password, credSsp, width, height, keyboardHook);
+            //}));
+            engine.tasktEngineUI.Invoke(new Action(() =>
             {
-                engine.tasktEngineUI.LaunchRDPSession(machineName, userName, password, credSsp, width, height, keyboardHook);
+                var remoteDesktopForm = new UI.Forms.ScriptEngine.Supplemental.frmRemoteDesktopViewer(machineName, userName, password, credSsp, width, height, false, false, keyboardHook);
+                remoteDesktopForm.Show();
             }));
         }
     }

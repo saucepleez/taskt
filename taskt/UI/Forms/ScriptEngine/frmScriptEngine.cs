@@ -403,17 +403,17 @@ namespace taskt.UI.Forms.ScriptEngine
             }
         }
 
-        // TODO: is it possible to move to LaunchRemoteDesktopCommand or other class file
-        public void LaunchRDPSession(string machineName, string userName, string password, bool supportCredSsp, int width, int height, int keyboardHookMode = 2)
-        {
-            if (InvokeRequired)
-            {
-                this.Invoke((Action)(() => LaunchRDPSession(machineName, userName, password, supportCredSsp, width, height, keyboardHookMode)));
-            }
+        //// TODO: is it possible to move to LaunchRemoteDesktopCommand or other class file
+        //public void LaunchRDPSession(string machineName, string userName, string password, bool supportCredSsp, int width, int height, int keyboardHookMode = 2)
+        //{
+        //    if (InvokeRequired)
+        //    {
+        //        this.Invoke((Action)(() => LaunchRDPSession(machineName, userName, password, supportCredSsp, width, height, keyboardHookMode)));
+        //    }
 
-            var remoteDesktopForm = new Supplemental.frmRemoteDesktopViewer(machineName, userName, password, supportCredSsp, width, height, false, false, keyboardHookMode);
-            remoteDesktopForm.Show();
-        }
+        //    var remoteDesktopForm = new Supplemental.frmRemoteDesktopViewer(machineName, userName, password, supportCredSsp, width, height, false, false, keyboardHookMode);
+        //    remoteDesktopForm.Show();
+        //}
 
         //public delegate List<string> ShowInputDelegate(Core.Automation.Commands.ShowUserInputDialogCommand inputs);
         //public List<string> ShowInput(Core.Automation.Commands.ShowUserInputDialogCommand inputs)
