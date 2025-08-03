@@ -199,9 +199,10 @@ namespace taskt.UI.Forms.ScriptEngine
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        // memo: why event ?
         private void Engine_ReportProgress(object sender, ReportProgressEventArgs e)
         {
-            AddStatus(e.ProgressUpdate);
+            AddSteppingCommandsReport(e.ProgressUpdate);
         }
 
         /// <summary>
@@ -209,23 +210,24 @@ namespace taskt.UI.Forms.ScriptEngine
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        // memo: why event ?
         private void Engine_ScriptFinishedEvent(object sender, ScriptFinishedEventArgs e)
         {
             switch (e.Result)
             {
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Successful:
-                    AddStatus("Script Completed Successfully");
+                    AddSteppingCommandsReport("Script Completed Successfully");
                     UpdateUI("debug info (success)");
                     ShowNotifyMessageInScriptBuilder("Script Completed Successfully");
                     break;
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Error:
-                    AddStatus("Error: " + e.Error);
-                    AddStatus("Script Completed With Errors!");
+                    AddSteppingCommandsReport("Error: " + e.Error);
+                    AddSteppingCommandsReport("Script Completed With Errors!");
                     UpdateUI("debug info (error)");
                     ShowNotifyMessageInScriptBuilder("Script Completed With Errors!");
                     break;
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Cancelled:
-                    AddStatus("Script Cancelled By User");
+                    AddSteppingCommandsReport("Script Cancelled By User");
                     UpdateUI("debug info (cancelled)");
                     ShowNotifyMessageInScriptBuilder("Script Cancelled By User");
                     break;
@@ -235,7 +237,7 @@ namespace taskt.UI.Forms.ScriptEngine
 
             Result = engineInstance.TasktResult;
 
-            AddStatus("Total Execution Time: " + e.ExecutionTime.ToString());
+            AddSteppingCommandsReport("Total Execution Time: " + e.ExecutionTime.ToString());
 
             if(CloseWhenDone)
             {
@@ -243,12 +245,13 @@ namespace taskt.UI.Forms.ScriptEngine
             }
         }
 
-        
+
         /// <summary>
         /// handles frmScriptBuilder line nubemr changed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        // memo: why event ?
         private void EngineInstance_LineNumberChangedEvent(object sender, LineNumberChangedEventArgs e)
         {
             UpdateLineNumberInScriptBuilder(e.CurrentLineNumber);
@@ -257,26 +260,27 @@ namespace taskt.UI.Forms.ScriptEngine
 
         #region Engine Delegates
         /// <summary>
-        /// Delegate for adding progress reports
+        /// Delegate for adding progress reports in lstSteppingCommands
         /// </summary>
         /// <param name="message">The progress report string from Automation Engine</param>
-        public delegate void AddStatusDelegate(string message);
+        public delegate void AddSteppingCommandsReportDelegate(string message);
         /// <summary>
-        /// Adds a status to the listbox for debugging and display purposes
+        /// Adds a report to lstSteppingCommands for debugging and display purposes
         /// </summary>
         /// <param name="text"></param>
-        private void AddStatus(string text)
+        private void AddSteppingCommandsReport(string text)
         {
             if (InvokeRequired)
             {
-                var d = new AddStatusDelegate(AddStatus);
+                var d = new AddSteppingCommandsReportDelegate(AddSteppingCommandsReport);
                 Invoke(d, new object[] { text });
             }
             else
             {
                 // update status
-                lblAction.Text = text + "..";
-                lstSteppingCommands.Items.Add($"{DateTime.Now.ToString("MM/dd/yy hh:mm:ss.fff")} | {text}..");
+                lblAction.Text = $"{text}..";
+                // todo: enable specify format
+                lstSteppingCommands.Items.Add($"{DateTime.Now:MM/dd/yy hh:mm:ss.fff} | {text}..");
                 lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
             }
         }
@@ -299,10 +303,10 @@ namespace taskt.UI.Forms.ScriptEngine
             }
             else
             {
-                //set main logo text
+                // set main logo text
                 lblMainLogo.Text = mainLogoText;
 
-                //hide and change buttons not required
+                // hide and change buttons not required
                 uiBtnPause.Visible = false;
                 uiBtnCancel.DisplayText = "Close";
                 uiBtnCancel.Visible = true;
@@ -325,16 +329,64 @@ namespace taskt.UI.Forms.ScriptEngine
                     this.Invalidate();
                 }
 
-                //reset debug line
-                if (callBackForm != null)
-                {
-                    callBackForm.DebugLine = 0;
-                }
-                
-                //begin auto close
+                // reset debug line
+                //if (callBackForm != null)
+                //{
+                //    //callBackForm.DebugLine = 0;
+                //}
+                UpdateLineNumberInScriptBuilder(0); // check callBackForm is null in this method
+
+                // begin auto close
                 if ((engineSettings.AutoCloseDebugWindow) || (serverExecution))
                 {
                     tmrNotify.Enabled = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// show notify message in frmScriptBuilder delegate
+        /// </summary>
+        /// <param name="message"></param>
+        public delegate void ShowNotifyMessageInScriptBuilderDelegate(string message);
+        /// <summary>
+        /// show notify message in frmScriptBuilder
+        /// </summary>
+        /// <param name="message"></param>
+        public void ShowNotifyMessageInScriptBuilder(string message)
+        {
+            if (InvokeRequired)
+            {
+                var d = new ShowNotifyMessageInScriptBuilderDelegate(ShowNotifyMessageInScriptBuilder);
+                Invoke(d, new object[] { message });
+            }
+            else
+            {
+                callBackForm?.Notify(message);
+            }
+        }
+
+        /// <summary>
+        /// set line number in frmScriptBuilder deleagte
+        /// </summary>
+        /// <param name="lineNumber"></param>
+        private delegate void SetLineNumberInScriptBuilder(int lineNumber);
+        /// <summary>
+        /// update line number in frmScriptBuilder
+        /// </summary>
+        /// <param name="lineNumber"></param>
+        private void UpdateLineNumberInScriptBuilder(int lineNumber)
+        {
+            if (InvokeRequired)
+            {
+                var d = new SetLineNumberInScriptBuilder(UpdateLineNumberInScriptBuilder);
+                Invoke(d, new object[] { lineNumber });
+            }
+            else
+            {
+                if (callBackForm != null)
+                {
+                    callBackForm.DebugLine = lineNumber;
                 }
             }
         }
@@ -387,27 +439,7 @@ namespace taskt.UI.Forms.ScriptEngine
         //    }
         //}
 
-        /// <summary>
-        /// show notify message in frmScriptBuilder delegate
-        /// </summary>
-        /// <param name="message"></param>
-        public delegate void ShowNotifyMessageInScriptBuilderDelegate(string message);
-        /// <summary>
-        /// show notify message in frmScriptBuilder
-        /// </summary>
-        /// <param name="message"></param>
-        public void ShowNotifyMessageInScriptBuilder(string message)
-        {
-            if (InvokeRequired)
-            {
-                var d = new ShowNotifyMessageInScriptBuilderDelegate(ShowNotifyMessageInScriptBuilder);
-                Invoke(d, new object[] { message });
-            }
-            else
-            {
-                callBackForm?.Notify(message);
-            }
-        }
+
 
         //// TODO: is it possible to move to LaunchRemoteDesktopCommand or other class file
         //public void LaunchRDPSession(string machineName, string userName, string password, bool supportCredSsp, int width, int height, int keyboardHookMode = 2)
@@ -576,33 +608,10 @@ namespace taskt.UI.Forms.ScriptEngine
         //    }
         //}
 
-        /// <summary>
-        /// set line number in frmScriptBuilder deleagte
-        /// </summary>
-        /// <param name="lineNumber"></param>
-        private delegate void SetLineNumberInScriptBuilder(int lineNumber);
-        /// <summary>
-        /// update line number in frmScriptBuilder
-        /// </summary>
-        /// <param name="lineNumber"></param>
-        private void UpdateLineNumberInScriptBuilder(int lineNumber)
-        {
-            if (InvokeRequired)
-            {
-                var d = new SetLineNumberInScriptBuilder(UpdateLineNumberInScriptBuilder);
-                Invoke(d, new object[] { lineNumber });
-            }
-            else
-            {
-                if (callBackForm != null)
-                {
-                    callBackForm.DebugLine = lineNumber;
-                }
-            }
-        }
+
         #endregion
 
-        //various small UI methods
+        // various small UI methods
         #region UI Elements
 
         private void lblClose_MouseEnter(object sender, EventArgs e)
