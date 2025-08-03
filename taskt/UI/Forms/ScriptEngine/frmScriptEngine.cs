@@ -65,24 +65,21 @@ namespace taskt.UI.Forms.ScriptEngine
                 PreloadedTasks = preloadedTasks;
             }
 
-            CloseWhenDone = blnCloseWhenDone;
+            this.CloseWhenDone = blnCloseWhenDone;
 
-            //set callback form
-            callBackForm = builderForm;
+            // set callback form
+            this.callBackForm = builderForm;
 
-            //set file
+            // set file
             this.filePath = pathToFile;
 
-            //get engine settings
-            //engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
-            //engineSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings().EngineSettings;
-            //engineSettings = App.Taskt_UNSAFE_Settings.EngineSettings;
+            // get engine settings
             engineSettings = App.Taskt_Settings.GetEngineSettings();
 
-            //determine whether to show listbox or not
+            // determine whether to show listbox or not
             advancedDebug = engineSettings.ShowAdvancedDebugOutput;
 
-            //if listbox should be shown
+            // if listbox should be shown
             if (advancedDebug)
             {
                 lstSteppingCommands.Show();
@@ -99,14 +96,14 @@ namespace taskt.UI.Forms.ScriptEngine
             }
 
 
-            //apply debug window setting
+            // apply debug window setting
             if (!engineSettings.ShowDebugWindow)
             {
                 this.Visible = false;
                 this.Opacity = 0;
             }
 
-            //add hooks for hot key cancellation
+            // add hooks for hot key cancellation
             GlobalHook.HookStopped += new EventHandler(OnHookStopped);
             GlobalHook.StartEngineCancellationHook(engineSettings.CancellationKey);
         }
@@ -115,19 +112,16 @@ namespace taskt.UI.Forms.ScriptEngine
         {
             InitializeComponent();
 
-            //set file
+            // set file
             this.filePath = null;
 
-            //get engine settings
-            //engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
-            //engineSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings().EngineSettings;
-            //engineSettings = App.Taskt_UNSAFE_Settings.EngineSettings;
+            // get engine settings
             engineSettings = App.Taskt_Settings.GetEngineSettings();
 
-            //determine whether to show listbox or not
+            // determine whether to show listbox or not
             advancedDebug = engineSettings.ShowAdvancedDebugOutput;
 
-            //if listbox should be shown
+            // if listbox should be shown
             if (advancedDebug)
             {
                 lstSteppingCommands.Show();
@@ -143,28 +137,28 @@ namespace taskt.UI.Forms.ScriptEngine
                 lblAction.Show();
             }
 
-            //apply debug window setting
+            // apply debug window setting
             if (!engineSettings.ShowDebugWindow)
             {
                 this.Visible = false;
                 this.Opacity = 0;
             }
 
-            //add hooks for hot key cancellation
+            // add hooks for hot key cancellation
             GlobalHook.HookStopped += new EventHandler(OnHookStopped);
             GlobalHook.StartEngineCancellationHook(engineSettings.CancellationKey);
         }
 
         private void frmProcessingStatus_Load(object sender, EventArgs e)
         {
-            //move engine form to bottom right and bring to front
+            // move engine form to bottom right and bring to front
             if (engineSettings.ShowDebugWindow)
             {
                 this.BringToFront();
                 MoveFormToBottomRight(this);
             }
 
-            //start running
+            // start running
             engineInstance = new Core.Automation.Engine.AutomationEngineInstance();
             engineInstance.ReportProgressEvent += Engine_ReportProgress;
             engineInstance.ScriptFinishedEvent += Engine_ScriptFinishedEvent;
@@ -199,7 +193,6 @@ namespace taskt.UI.Forms.ScriptEngine
         }
         #endregion
 
-        //engine event handlers
         #region Engine Event Handlers
         /// <summary>
         /// Handles Progress Updates raised by Automation Engine
@@ -223,18 +216,18 @@ namespace taskt.UI.Forms.ScriptEngine
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Successful:
                     AddStatus("Script Completed Successfully");
                     UpdateUI("debug info (success)");
-                    ShowCallBackFormMessage("Script Completed Successfully");
+                    ShowNotifyMessageInScriptBuilder("Script Completed Successfully");
                     break;
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Error:
                     AddStatus("Error: " + e.Error);
                     AddStatus("Script Completed With Errors!");
                     UpdateUI("debug info (error)");
-                    ShowCallBackFormMessage("Script Completed With Errors!");
+                    ShowNotifyMessageInScriptBuilder("Script Completed With Errors!");
                     break;
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Cancelled:
                     AddStatus("Script Cancelled By User");
                     UpdateUI("debug info (cancelled)");
-                    ShowCallBackFormMessage("Script Cancelled By User");
+                    ShowNotifyMessageInScriptBuilder("Script Cancelled By User");
                     break;
                 default:
                     break;
@@ -250,13 +243,18 @@ namespace taskt.UI.Forms.ScriptEngine
             }
         }
 
+        
+        /// <summary>
+        /// handles frmScriptBuilder line nubemr changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EngineInstance_LineNumberChangedEvent(object sender, LineNumberChangedEventArgs e)
         {
-            UpdateLineNumber(e.CurrentLineNumber);
+            UpdateLineNumberInScriptBuilder(e.CurrentLineNumber);
         }
         #endregion
 
-        //delegates to marshal changes to UI
         #region Engine Delegates
         /// <summary>
         /// Delegate for adding progress reports
@@ -276,9 +274,9 @@ namespace taskt.UI.Forms.ScriptEngine
             }
             else
             {
-                //update status
+                // update status
                 lblAction.Text = text + "..";
-                lstSteppingCommands.Items.Add(DateTime.Now.ToString("MM/dd/yy hh:mm:ss.fff") + " | " + text + "..");
+                lstSteppingCommands.Items.Add($"{DateTime.Now.ToString("MM/dd/yy hh:mm:ss.fff")} | {text}..");
                 lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
             }
         }
@@ -332,7 +330,7 @@ namespace taskt.UI.Forms.ScriptEngine
                 {
                     callBackForm.DebugLine = 0;
                 }
-                    
+                
                 //begin auto close
                 if ((engineSettings.AutoCloseDebugWindow) || (serverExecution))
                 {
@@ -389,12 +387,20 @@ namespace taskt.UI.Forms.ScriptEngine
         //    }
         //}
 
-        public delegate void ShowCallBackFormMessageDelegate(string message);
-        public void ShowCallBackFormMessage(string message)
+        /// <summary>
+        /// show notify message in frmScriptBuilder delegate
+        /// </summary>
+        /// <param name="message"></param>
+        public delegate void ShowNotifyMessageInScriptBuilderDelegate(string message);
+        /// <summary>
+        /// show notify message in frmScriptBuilder
+        /// </summary>
+        /// <param name="message"></param>
+        public void ShowNotifyMessageInScriptBuilder(string message)
         {
             if (InvokeRequired)
             {
-                var d = new ShowCallBackFormMessageDelegate(ShowCallBackFormMessage);
+                var d = new ShowNotifyMessageInScriptBuilderDelegate(ShowNotifyMessageInScriptBuilder);
                 Invoke(d, new object[] { message });
             }
             else
@@ -570,12 +576,20 @@ namespace taskt.UI.Forms.ScriptEngine
         //    }
         //}
 
-        public delegate void SetLineNumber(int lineNumber);
-        public void UpdateLineNumber(int lineNumber)
+        /// <summary>
+        /// set line number in frmScriptBuilder deleagte
+        /// </summary>
+        /// <param name="lineNumber"></param>
+        private delegate void SetLineNumberInScriptBuilder(int lineNumber);
+        /// <summary>
+        /// update line number in frmScriptBuilder
+        /// </summary>
+        /// <param name="lineNumber"></param>
+        private void UpdateLineNumberInScriptBuilder(int lineNumber)
         {
             if (InvokeRequired)
             {
-                var d = new SetLineNumber(UpdateLineNumber);
+                var d = new SetLineNumberInScriptBuilder(UpdateLineNumberInScriptBuilder);
                 Invoke(d, new object[] { lineNumber });
             }
             else

@@ -583,7 +583,9 @@ namespace taskt.Core.Automation.Engine
         public string FileName { get; set; }
         public enum ScriptFinishedResult
         {
-            Successful, Error, Cancelled
+            Successful, 
+            Error, 
+            Cancelled
         }
     }
 
