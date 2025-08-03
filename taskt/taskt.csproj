@@ -767,6 +767,9 @@
     <Compile Include="Core\Automation\Engine\EM_ScriptVariablePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Engine\IAppInstancesProperties.cs" />
     <Compile Include="Core\Automation\Engine\IScriptVariableListProperties.cs" />
+    <Compile Include="Core\Automation\Engine\LineNumberChangedEventArgs.cs" />
+    <Compile Include="Core\Automation\Engine\ReportProgressEventArgs.cs" />
+    <Compile Include="Core\Automation\Engine\ScriptFinishedEventArgs.cs" />
     <Compile Include="Core\Automation\Engine\SystemVariables.cs" />
     <Compile Include="Core\Automation\Commands\FormUIControls.cs" />
     <Compile Include="Core\IO\Files.cs" />
