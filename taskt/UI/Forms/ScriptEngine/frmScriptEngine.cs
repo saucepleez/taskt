@@ -415,48 +415,48 @@ namespace taskt.UI.Forms.ScriptEngine
             remoteDesktopForm.Show();
         }
 
-        public delegate List<string> ShowInputDelegate(Core.Automation.Commands.ShowUserInputDialogCommand inputs);
-        public List<string> ShowInput(Core.Automation.Commands.ShowUserInputDialogCommand inputs)
-        {
-            if (InvokeRequired)
-            {
-                var d = new ShowInputDelegate(ShowInput);
-                Invoke(d, new object[] { inputs });
-                return null;
-            }
-            else
-            {
-                using (var inputForm = new Supplemental.frmUserInput())
-                {
-                    inputForm.InputCommand = inputs;
+        //public delegate List<string> ShowInputDelegate(Core.Automation.Commands.ShowUserInputDialogCommand inputs);
+        //public List<string> ShowInput(Core.Automation.Commands.ShowUserInputDialogCommand inputs)
+        //{
+        //    if (InvokeRequired)
+        //    {
+        //        var d = new ShowInputDelegate(ShowInput);
+        //        Invoke(d, new object[] { inputs });
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        using (var inputForm = new Supplemental.frmUserInput())
+        //        {
+        //            inputForm.InputCommand = inputs;
 
-                    var dialogResult = inputForm.ShowDialog();
+        //            var dialogResult = inputForm.ShowDialog();
 
-                    if (dialogResult == DialogResult.OK)
-                    {
-                        var responses = new List<string>();
-                        foreach (var ctrl in inputForm.InputControls)
-                        {
-                            if (ctrl is CheckBox)
-                            {
-                                var checkboxCtrl = (CheckBox)ctrl;
-                                responses.Add(checkboxCtrl.Checked.ToString());
-                            }
-                            else
-                            {
-                                responses.Add(ctrl.Text);
-                            }
-                        }
+        //            if (dialogResult == DialogResult.OK)
+        //            {
+        //                var responses = new List<string>();
+        //                foreach (var ctrl in inputForm.InputControls)
+        //                {
+        //                    if (ctrl is CheckBox)
+        //                    {
+        //                        var checkboxCtrl = (CheckBox)ctrl;
+        //                        responses.Add(checkboxCtrl.Checked.ToString());
+        //                    }
+        //                    else
+        //                    {
+        //                        responses.Add(ctrl.Text);
+        //                    }
+        //                }
 
-                        return responses;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-            }
-        }
+        //                return responses;
+        //            }
+        //            else
+        //            {
+        //                return null;
+        //            }
+        //        }
+        //    }
+        //}
 
         //public delegate List<Core.Script.ScriptVariable> ShowHTMLInputDelegate(string htmlTemplate);
         //public List<Core.Script.ScriptVariable> ShowHTMLInput(string htmlTemplate)

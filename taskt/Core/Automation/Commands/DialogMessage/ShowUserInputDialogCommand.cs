@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Xml.Serialization;
+using System.Collections.Generic;
 using System.Data;
-using taskt.UI.Forms;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -74,18 +75,16 @@ namespace taskt.Core.Automation.Commands
                 return;
             }
 
-            //create clone of original
-            //var clonedCommand = Common.Clone(this);
+            // create clone of original
             var clonedCommand = (ShowUserInputDialogCommand)this.Clone();
 
-            //translate variable
+            // translate variable
             clonedCommand.v_InputHeader = clonedCommand.v_InputHeader.ExpandValueOrUserVariable(engine);
             clonedCommand.v_InputDirections = clonedCommand.v_InputDirections.ExpandValueOrUserVariable(engine);
 
-            //translate variables for each label
+            // translate variables for each label
             foreach (DataRow rw in clonedCommand.v_UserInputConfig.Rows)
             {
-                //rw["DefaultValue"] = rw["DefaultValue"].ToString().ConvertToUserVariable(engine);
                 rw["DefaultValue"] = (rw.Field<string>("DefaultValue") ?? "").ExpandValueOrUserVariable(engine);
 
                 var targetVariable = rw["ApplyToVariable"] as string;
@@ -94,37 +93,85 @@ namespace taskt.Core.Automation.Commands
                 {
                     var newMessage = new ShowMessageCommand
                     {
-                        v_Message = "User Input question '" + rw["Label"] + "' is missing variables to apply results to! Results for the item will not be tracked.  To fix this, assign a variable in the designer!",
+                        v_Message = $"User Input question '{rw["Label"]}' is missing variables to apply results to! Results for the item will not be tracked.  To fix this, assign a variable in the designer!",
                         v_AutoCloseAfter = "10"
                     };
                     newMessage.RunCommand(engine);
                 }
             }
 
-            //invoke ui for data collection
-            var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            //// invoke ui for data collection
+            //var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            //    {
+
+            //        //get input from user
+            //        var userInputs =  engine.tasktEngineUI.ShowInput(clonedCommand);
+
+            //        //check if user provided input
+            //        if (userInputs != null)
+            //        {
+            //            //loop through each input and assign
+            //            for (int i = 0; i < userInputs.Count; i++)
+            //            {
+            //                var targetVariable = VariableNameControls.GetVariableName(v_UserInputConfig.Rows[i].Field<string>("ApplyToVariable") ?? "", engine);
+
+            //                //store user data in variable
+            //                if (!string.IsNullOrEmpty(targetVariable))
+            //                {
+            //                    userInputs[i].StoreInUserVariable(engine, targetVariable);
+            //                }
+            //            }
+            //        }
+            //    }
+            //));
+
+            engine.tasktEngineUI.Invoke(new Action(() =>
+            {
+                var responses = new List<string>();
+                using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmUserInput())
                 {
+                    fm.InputCommand = clonedCommand;
 
-                    //get input from user
-                    var userInputs =  engine.tasktEngineUI.ShowInput(clonedCommand);
+                    var dialogResult = fm.ShowDialog();
 
-                    //check if user provided input
-                    if (userInputs != null)
+                    if (dialogResult == DialogResult.OK)
                     {
-                        //loop through each input and assign
-                        for (int i = 0; i < userInputs.Count; i++)
+                        foreach (var ctrl in fm.InputControls)
                         {
-                            var targetVariable = VariableNameControls.GetVariableName(v_UserInputConfig.Rows[i].Field<string>("ApplyToVariable") ?? "", engine);
-                            
-                            //store user data in variable
-                            if (!string.IsNullOrEmpty(targetVariable))
+                            if (ctrl is CheckBox)
                             {
-                                userInputs[i].StoreInUserVariable(engine, targetVariable);
+                                var checkboxCtrl = (CheckBox)ctrl;
+                                responses.Add(checkboxCtrl.Checked.ToString());
+                            }
+                            else
+                            {
+                                responses.Add(ctrl.Text);
                             }
                         }
                     }
+                    else
+                    {
+                        responses = null;
+                    }
                 }
-            ));
+
+                // check if user provided input
+                if (responses != null)
+                {
+                    // loop through each input and assign
+                    //for (int i = 0; i < responses.Count; i++)
+                    for (int i = responses.Count - 1; i >= 0; i--)
+                    {
+                        var targetVariable = VariableNameControls.GetVariableName(v_UserInputConfig.Rows[i].Field<string>("ApplyToVariable") ?? "", engine);
+
+                        // store user data in variable
+                        if (!string.IsNullOrEmpty(targetVariable))
+                        {
+                            responses[i].StoreInUserVariable(engine, targetVariable);
+                        }
+                    }
+                }
+            }));
         }
 
         private void lnkAddInputParameter_Click(object sender, EventArgs e)
