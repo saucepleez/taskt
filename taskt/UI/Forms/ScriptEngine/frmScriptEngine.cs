@@ -668,8 +668,11 @@ namespace taskt.UI.Forms.ScriptEngine
             uiBtnCancel.Visible = false;
             lblKillProcNote.Text = "Cancelling...";
             engineInstance.ResumeScript();
-            lstSteppingCommands.Items.Add("[User Requested Cancellation]");
-            lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
+
+            //lstSteppingCommands.Items.Add("[User Requested Cancellation]");
+            //lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
+            AddSteppingCommandsReport("[User Requested Cancellation]");
+            
             lblMainLogo.Text = "debug info (cancelling)";
             engineInstance.CancelScript();
         }
@@ -678,14 +681,19 @@ namespace taskt.UI.Forms.ScriptEngine
         {
             if (uiBtnPause.DisplayText == "Pause")
             {
-                lstSteppingCommands.Items.Add("[User Requested Pause]");
+                //lstSteppingCommands.Items.Add("[User Requested Pause]");
+                AddSteppingCommandsReport("[User Requested Pause]");
+
+
                 uiBtnPause.Image = Properties.Resources.action_bar_run;
                 uiBtnPause.DisplayText = "Resume";
                 engineInstance.PauseScript();
             }
             else
             {
-                lstSteppingCommands.Items.Add("[User Requested Resume]");
+                //lstSteppingCommands.Items.Add("[User Requested Resume]");
+                AddSteppingCommandsReport("[User Requested Resume]");
+
                 uiBtnPause.Image = Properties.Resources.command_pause;
                 uiBtnPause.DisplayText = "Pause";
                 engineInstance.ResumeScript();
