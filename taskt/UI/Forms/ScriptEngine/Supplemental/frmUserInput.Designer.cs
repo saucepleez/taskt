@@ -48,9 +48,10 @@
             this.flwInputControls.BackColor = System.Drawing.Color.WhiteSmoke;
             this.flwInputControls.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flwInputControls.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flwInputControls.Location = new System.Drawing.Point(3, 51);
+            this.flwInputControls.Location = new System.Drawing.Point(4, 64);
+            this.flwInputControls.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.flwInputControls.Name = "flwInputControls";
-            this.flwInputControls.Size = new System.Drawing.Size(528, 359);
+            this.flwInputControls.Size = new System.Drawing.Size(704, 449);
             this.flwInputControls.TabIndex = 0;
             this.flwInputControls.WrapContents = false;
             // 
@@ -60,9 +61,10 @@
             this.lblHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblHeader.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeader.ForeColor = System.Drawing.Color.White;
-            this.lblHeader.Location = new System.Drawing.Point(3, 0);
+            this.lblHeader.Location = new System.Drawing.Point(4, 0);
+            this.lblHeader.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Size = new System.Drawing.Size(528, 28);
+            this.lblHeader.Size = new System.Drawing.Size(704, 35);
             this.lblHeader.TabIndex = 0;
             this.lblHeader.Text = "Please Provide Input";
             // 
@@ -72,9 +74,10 @@
             this.lblDirections.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblDirections.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDirections.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblDirections.Location = new System.Drawing.Point(3, 28);
+            this.lblDirections.Location = new System.Drawing.Point(4, 35);
+            this.lblDirections.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDirections.Name = "lblDirections";
-            this.lblDirections.Size = new System.Drawing.Size(528, 20);
+            this.lblDirections.Size = new System.Drawing.Size(704, 25);
             this.lblDirections.TabIndex = 1;
             this.lblDirections.Text = "Directions:";
             // 
@@ -89,13 +92,14 @@
             this.tlpInputs.Controls.Add(this.panel1, 0, 3);
             this.tlpInputs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpInputs.Location = new System.Drawing.Point(0, 0);
+            this.tlpInputs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tlpInputs.Name = "tlpInputs";
             this.tlpInputs.RowCount = 4;
-            this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
-            this.tlpInputs.Size = new System.Drawing.Size(534, 470);
+            this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 71F));
+            this.tlpInputs.Size = new System.Drawing.Size(712, 588);
             this.tlpInputs.TabIndex = 1;
             // 
             // panel1
@@ -104,27 +108,28 @@
             this.panel1.Controls.Add(this.uiBtnOk);
             this.panel1.Controls.Add(this.uiBtnCancel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 416);
+            this.panel1.Location = new System.Drawing.Point(4, 521);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(528, 51);
+            this.panel1.Size = new System.Drawing.Size(704, 63);
             this.panel1.TabIndex = 2;
             // 
             // uiBtnOk
             // 
             this.uiBtnOk.BackColor = System.Drawing.Color.Transparent;
             this.uiBtnOk.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.uiBtnOk.DisplayText = "Accept";
+            this.uiBtnOk.DisplayText = "OK";
             this.uiBtnOk.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnOk.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnOk.Image = global::taskt.Properties.Resources.various_ok_button;
             this.uiBtnOk.IsMouseOver = false;
-            this.uiBtnOk.Location = new System.Drawing.Point(4, 2);
-            this.uiBtnOk.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.uiBtnOk.Location = new System.Drawing.Point(5, 2);
+            this.uiBtnOk.Margin = new System.Windows.Forms.Padding(8, 6, 8, 6);
             this.uiBtnOk.Name = "uiBtnOk";
-            this.uiBtnOk.Size = new System.Drawing.Size(88, 45);
+            this.uiBtnOk.Size = new System.Drawing.Size(117, 56);
             this.uiBtnOk.TabIndex = 20;
             this.uiBtnOk.TabStop = false;
-            this.uiBtnOk.Text = "Accept";
+            this.uiBtnOk.Text = "OK";
             this.uiBtnOk.Click += new System.EventHandler(this.uiBtnOk_Click);
             // 
             // uiBtnCancel
@@ -136,10 +141,10 @@
             this.uiBtnCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.uiBtnCancel.Image = global::taskt.Properties.Resources.various_cancel_button;
             this.uiBtnCancel.IsMouseOver = false;
-            this.uiBtnCancel.Location = new System.Drawing.Point(93, 2);
-            this.uiBtnCancel.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.uiBtnCancel.Location = new System.Drawing.Point(124, 2);
+            this.uiBtnCancel.Margin = new System.Windows.Forms.Padding(8, 6, 8, 6);
             this.uiBtnCancel.Name = "uiBtnCancel";
-            this.uiBtnCancel.Size = new System.Drawing.Size(88, 45);
+            this.uiBtnCancel.Size = new System.Drawing.Size(117, 56);
             this.uiBtnCancel.TabIndex = 21;
             this.uiBtnCancel.TabStop = false;
             this.uiBtnCancel.Text = "Cancel";
@@ -147,12 +152,13 @@
             // 
             // frmUserInput
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundChangeIndex = 153;
-            this.ClientSize = new System.Drawing.Size(534, 470);
+            this.ClientSize = new System.Drawing.Size(712, 588);
             this.Controls.Add(this.tlpInputs);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmUserInput";
             this.Text = "User Input";
             this.Load += new System.EventHandler(this.frmUserInput_Load);

@@ -10,6 +10,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
     {
         public Core.Automation.Commands.ShowUserInputDialogCommand InputCommand { get; set; }
         public List<Control> InputControls;
+
         public frmUserInput()
         {
             InitializeComponent();
@@ -17,18 +18,16 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
 
         private void frmUserInput_Load(object sender, EventArgs e)
         {
-
             InputControls = new List<Control>();
 
-
-            //get presentation data from command
+            // get presentation data from command
             this.lblHeader.Text = InputCommand.v_InputHeader;
             this.lblDirections.Text = InputCommand.v_InputDirections;
 
-            //get input table
+            // get input table
             var inputTable = InputCommand.v_UserInputConfig;
 
-            //loop each data collection point
+            // loop each data collection point
             foreach (DataRow rw in inputTable.Rows)
             {
                 //get properties to render controls with
@@ -36,23 +35,23 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
                 var fieldLabel = rw["Label"] as string;
                 var fieldSize = rw["Size"] as string;
 
-                //attempt to parse custom width/height
+                // attempt to parse custom width/height
                 int fieldWidth, fieldHeight;
                 try
                 {
-                    //format should be X,Y
+                    // format should be X,Y
                     var fieldSizeData = fieldSize.Split(',');
                     fieldWidth = int.Parse(fieldSizeData[0].Trim());
                     fieldHeight = int.Parse(fieldSizeData[1].Trim());
                 }
                 catch (Exception)
                 {
-                    //if something goes wrong just use defaults
+                    // if something goes wrong just use defaults
                     fieldWidth = 500;
                     fieldHeight = 100;
                 }
 
-                //get default value
+                // get default value
                 var defaultFieldValue = rw["DefaultValue"] as string;
 
                 var labelingFont = new Font("Segoe UI Bold", 12);
@@ -61,19 +60,16 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
 
                 switch (fieldType)
                 {
-                    //add more cases here
+                    // add more cases here
                     case "ComboBox":
-
-                        //add label
+                        // add label
                         label.AutoSize = true;
                         label.ForeColor = Color.SteelBlue;
                         label.Font = labelingFont;
                         label.Text = fieldLabel;
                         flwInputControls.Controls.Add(label);
 
-
                         var combobox = new ComboBox();
-
                         try
                         {
                             var items = defaultFieldValue.Split(',');
@@ -88,7 +84,6 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
                             return;
                         }
 
-              
                         combobox.Width = fieldWidth;
                         combobox.Height = fieldHeight;
                         combobox.Margin = new Padding(10, 5, 0, 0);
@@ -98,12 +93,10 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
                         combobox.ForeColor = Color.SteelBlue;
                         InputControls.Add(combobox);
                         flwInputControls.Controls.Add(combobox);
-
                         break;
+
                     case "CheckBox":
                         var checkBox = new CheckBox();
-
-
                         try
                         {
                             checkBox.Checked = bool.Parse(defaultFieldValue);
@@ -112,7 +105,6 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
                         {
                             checkBox.Checked = false;
                         }
-
 
                         checkBox.Width = fieldWidth;
                         checkBox.Height = fieldHeight;
@@ -124,10 +116,9 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
 
                         InputControls.Add(checkBox);
                         flwInputControls.Controls.Add(checkBox);
-
                         break;
-                    default:
 
+                    default:
                         //add label 
                         label.AutoSize = true;
                         label.ForeColor = Color.SteelBlue;
@@ -148,14 +139,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
                         flwInputControls.Controls.Add(textBox);
                         break;
                 }
-
-
-
-
             }
-
-
-
         }
 
         private void uiBtnOk_Click(object sender, EventArgs e)

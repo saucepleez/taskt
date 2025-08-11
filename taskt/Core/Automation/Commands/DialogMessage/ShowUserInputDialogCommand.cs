@@ -188,15 +188,16 @@ namespace taskt.Core.Automation.Commands
             for (int i = 0; i < v_UserInputConfig.Rows.Count; i++)
             {
                 var row = v_UserInputConfig.Rows[i];
+                var showIndex = i + 1;
                 
                 if (string.IsNullOrEmpty(row.Field<string>("Type")))
                 {
-                    this.validationResult += "Input Type #" + (i + 1) + " is empty.\n";
+                    this.validationResult += $"Input Type #{showIndex} is empty.\n";
                     this.IsValid = false;
                 }
                 if (string.IsNullOrEmpty(row.Field<string>("Size")))
                 {
-                    this.validationResult += "Input Size #" + (i + 1) + " is empty.\n";
+                    this.validationResult += $"Input Size #{showIndex} is empty.\n";
                     this.IsValid = false;
                 }
             }
