@@ -4,7 +4,6 @@ using System.Data;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -78,11 +77,11 @@ namespace taskt.Core.Automation.Commands
             // create clone of original
             var clonedCommand = (ShowUserInputDialogCommand)this.Clone();
 
-            // translate variable
+            // expand variables
             clonedCommand.v_InputHeader = clonedCommand.v_InputHeader.ExpandValueOrUserVariable(engine);
             clonedCommand.v_InputDirections = clonedCommand.v_InputDirections.ExpandValueOrUserVariable(engine);
 
-            // translate variables for each label
+            // expand variables for each label
             foreach (DataRow rw in clonedCommand.v_UserInputConfig.Rows)
             {
                 rw["DefaultValue"] = (rw.Field<string>("DefaultValue") ?? "").ExpandValueOrUserVariable(engine);
@@ -128,26 +127,26 @@ namespace taskt.Core.Automation.Commands
             engine.tasktEngineUI.Invoke(new Action(() =>
             {
                 var responses = new List<string>();
-                using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmUserInput())
+                using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmUserInput(clonedCommand))
                 {
-                    fm.InputCommand = clonedCommand;
+                    //fm.InputCommand = clonedCommand;
 
                     var dialogResult = fm.ShowDialog();
 
                     if (dialogResult == DialogResult.OK)
                     {
-                        foreach (var ctrl in fm.InputControls)
-                        {
-                            if (ctrl is CheckBox)
-                            {
-                                var checkboxCtrl = (CheckBox)ctrl;
-                                responses.Add(checkboxCtrl.Checked.ToString());
-                            }
-                            else
-                            {
-                                responses.Add(ctrl.Text);
-                            }
-                        }
+                        //foreach (var ctrl in fm.inputControls)
+                        //{
+                        //    if (ctrl is CheckBox checkboxCtrl)
+                        //    {
+                        //        responses.Add(checkboxCtrl.Checked.ToString());
+                        //    }
+                        //    else
+                        //    {
+                        //        responses.Add(ctrl.Text);
+                        //    }
+                        //}
+                        responses = fm.GetSpecifiedValues();
                     }
                     else
                     {

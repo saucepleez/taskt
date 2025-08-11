@@ -3,29 +3,67 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
+using taskt.Core.Automation.Commands;
 
 namespace taskt.UI.Forms.ScriptEngine.Supplemental
 {
     public partial class frmUserInput : UIForm
     {
-        public Core.Automation.Commands.ShowUserInputDialogCommand InputCommand { get; set; }
-        public List<Control> InputControls;
+        /// <summary>
+        /// frmUserInput button state
+        /// </summary>
+        public enum ButtonState
+        {
+            OK,
+            OKCancel,
+            Accept,
+            AcceptCancel
+        }
 
-        public frmUserInput()
+        /// <summary>
+        /// called ShowUserInputCommand clone
+        /// </summary>
+        private readonly ShowUserInputDialogCommand inputCommand;
+
+        /// <summary>
+        /// controls list
+        /// </summary>
+        private List<Control> inputControls;
+
+        public frmUserInput(ShowUserInputDialogCommand command)
         {
             InitializeComponent();
+
+            this.inputCommand = command;
+        }
+
+        public frmUserInput(ButtonState button) : base()
+        {
+            switch (button)
+            {
+                case ButtonState.OK:
+                    uiBtnCancel.Visible = false;
+                    break;
+                case ButtonState.Accept:
+                    uiBtnCancel.Visible = false;
+                    uiBtnOk.Text = "Accept";
+                    break;
+                case ButtonState.AcceptCancel:
+                    uiBtnOk.Text = "Accept";
+                    break;
+            }
         }
 
         private void frmUserInput_Load(object sender, EventArgs e)
         {
-            InputControls = new List<Control>();
+            this.inputControls = new List<Control>();
 
             // get presentation data from command
-            this.lblHeader.Text = InputCommand.v_InputHeader;
-            this.lblDirections.Text = InputCommand.v_InputDirections;
+            this.lblHeader.Text = inputCommand.v_InputHeader;
+            this.lblDirections.Text = inputCommand.v_InputDirections;
 
             // get input table
-            var inputTable = InputCommand.v_UserInputConfig;
+            var inputTable = inputCommand.v_UserInputConfig;
 
             // loop each data collection point
             foreach (DataRow rw in inputTable.Rows)
@@ -91,7 +129,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
                         combobox.SelectedIndex = -1;
                         combobox.Font = labelingFont;
                         combobox.ForeColor = Color.SteelBlue;
-                        InputControls.Add(combobox);
+                        this.inputControls.Add(combobox);
                         flwInputControls.Controls.Add(combobox);
                         break;
 
@@ -114,7 +152,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
                         checkBox.ForeColor = Color.SteelBlue;
                         checkBox.AutoSize = true;
 
-                        InputControls.Add(checkBox);
+                        this.inputControls.Add(checkBox);
                         flwInputControls.Controls.Add(checkBox);
                         break;
 
@@ -135,7 +173,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
                         textBox.Text = defaultFieldValue;
                         textBox.Font = labelingFont;
                         textBox.ForeColor = Color.SteelBlue;
-                        InputControls.Add(textBox);
+                        this.inputControls.Add(textBox);
                         flwInputControls.Controls.Add(textBox);
                         break;
                 }
@@ -150,6 +188,30 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+        }
+
+        /// <summary>
+        /// get specified values
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetSpecifiedValues()
+        {
+            var ret = new List<string>();
+            if (this.inputControls != null)
+            {
+                foreach (var ctrl in this.inputControls) 
+                {
+                    if (ctrl is CheckBox chk)
+                    {
+                        ret.Add(chk.Checked.ToString());
+                    }
+                    else
+                    {
+                        ret.Add(ctrl.Text);
+                    }
+                }
+            }
+            return ret;
         }
     }
 
