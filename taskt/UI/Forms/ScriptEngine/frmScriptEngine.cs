@@ -95,7 +95,6 @@ namespace taskt.UI.Forms.ScriptEngine
                 lblAction.Show();
             }
 
-
             // apply debug window setting
             if (!engineSettings.ShowDebugWindow)
             {
