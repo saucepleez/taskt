@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_input))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ShowHTMLInputDialogCommand : ScriptCommand
+    public sealed class ShowHTMLInputDialogCommand : ScriptCommand, IDialogResultProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
@@ -105,16 +105,27 @@ Similarly, The <b>Cancel</b> button should call <b>chrome.webview.hostObjects.fm
   </div>
 </body>
 </html>")]
+        [PropertyParameterOrder(1000)]
         public string v_InputHTML { get; set; }
 
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        //[PropertyDescription("When an Error should Occur on any Result other than 'OK'")]
+        //[PropertyUISelectionOption("Error On Close")]
+        //[PropertyUISelectionOption("Do Not Error On Close")]
+        //[PropertyIsOptional(true, "Error On Close")]
+        //[PropertyDisplayText(false, "Error")]
+        //public string v_ErrorOnClose { get; set; }
+
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("When an Error should Occur on any Result other than 'OK'")]
-        [PropertyUISelectionOption("Error On Close")]
-        [PropertyUISelectionOption("Do Not Error On Close")]
-        [PropertyIsOptional(true, "Error On Close")]
-        [PropertyDisplayText(false, "Error")]
-        public string v_ErrorOnClose { get; set; }
+        [PropertyVirtualProperty(nameof(ShowDialogControls), nameof(ShowDialogControls.v_WhenCancel))]
+        [PropertyParameterOrder(12000)]
+        public string v_WhenCancel { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(ShowDialogControls), nameof(ShowDialogControls.v_DialogResult))]
+        [PropertyParameterOrder(13000)]
+        public string v_DialogResult { get; set; }
 
         public ShowHTMLInputDialogCommand()
         {
@@ -192,7 +203,8 @@ Similarly, The <b>Cancel</b> button should call <b>chrome.webview.hostObjects.fm
                 // sample for temp testing
                 var htmlInput = v_InputHTML.ExpandValueOrUserVariable(engine);
 
-                var errorOnClose = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorOnClose), engine);
+                //var errorOnClose = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorOnClose), engine);
+                var errorOnClose = "";
 
                 List<ScriptVariable> variables = null;
                 using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmHTMLDisplayForm())

@@ -454,6 +454,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_24(doc);
             convertTo3_5_2_25(doc);
             convertTo3_5_2_31(doc);
+            convertTo3_5_2_38(doc);
             return doc;
         }
 
@@ -4366,6 +4367,39 @@ namespace taskt.Core.Script
                             return false;
                     }
                 }), "v_applyToVariableName", "v_Result");
+        }
+
+        private static void convertTo3_5_2_38(XDocument doc)
+        {
+            // ShowHTMLInputDialog v_WhenCancel
+            var commands = GetCommands(doc, "ShowHTMLInputDialogCommand");
+            foreach (var command in commands)
+            {
+                var wc = command.Attribute("v_WhenCancel");
+                if (wc == null)
+                {
+                    var er = command.Attribute("v_ErrorOnClose");
+                    var erv = er?.Value ?? "";
+                    string newValue;
+                    switch (erv.ToLower())
+                    {
+                        case "error on close":
+                            newValue = "Error";
+                            break;
+                        case "do not error on close":
+                            newValue = "Ignore";
+                            break;
+                        default:
+                            newValue = "";
+                            break;
+                    }
+                    command.SetAttributeValue("v_WhenCancel", newValue);
+                    if (er != null)
+                    {
+                        er.Remove();
+                    }
+                }
+            }
         }
 
         /// <summary>
