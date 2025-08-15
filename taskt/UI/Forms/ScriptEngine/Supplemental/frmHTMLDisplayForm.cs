@@ -144,7 +144,7 @@ function getInputValues_" + func_id + @"() {
 }" + @"
 getInputValues_" + func_id + "();";
 
-            Console.WriteLine(inputJS);
+            //Console.WriteLine(inputJS);
 
             var jsonText = await webBrowserHTML.ExecuteScriptAsync(inputJS);
 
