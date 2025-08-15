@@ -276,11 +276,54 @@ namespace taskt.Core.Automation.Commands
         {
             base.IsValidate(editor);
 
-            for (int i = 0; i < v_UserInputConfig.Rows.Count; i++)
+            
+            int dgvRows;
+            DataGridView dgv = null;
+            try
             {
-                var row = v_UserInputConfig.Rows[i];
+                dgv = this.ControlsList.GetPropertyControl<DataGridView>(nameof(v_UserInputConfig));
+                dgvRows = dgv.Rows.Count;
+            }
+            catch
+            {
+                dgvRows = v_UserInputConfig.Rows.Count;
+            }
+
+            //var rows = (dgvRows < v_UserInputConfig.Rows.Count) ? dgvRows : v_UserInputConfig.Rows.Count;
+
+            DataTable targetDT;
+            int rows;
+            if (dgvRows < v_UserInputConfig.Rows.Count)
+            {
+                rows = dgvRows;
+                targetDT = new DataTable();
+                targetDT.Columns.Add("Type");
+                targetDT.Columns.Add("Label");
+                targetDT.Columns.Add("Size");
+                targetDT.Columns.Add("DefaultValue");
+                targetDT.Columns.Add("UserInput");
+                targetDT.Columns.Add("ApplyToVariable");
+                int cols = dgv.Columns.Count;
+                for (int i = 0; i < rows; i++)
+                {
+                    targetDT.Rows.Add();
+                    for (int j = 0; j < cols; j++)
+                    {
+                        targetDT.Rows[i][j] = dgv[j, i].Value?.ToString() ?? "";
+                    }
+                }
+            }
+            else
+            {
+                rows = v_UserInputConfig.Rows.Count;
+                targetDT = v_UserInputConfig;
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                var row = targetDT.Rows[i];
                 var showIndex = i + 1;
-                
+
                 if (string.IsNullOrEmpty(row.Field<string>("Type")))
                 {
                     this.validationResult += $"Input Type #{showIndex} is empty.\n";
