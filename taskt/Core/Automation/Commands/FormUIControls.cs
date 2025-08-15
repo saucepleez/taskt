@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Control '" + parameterName + "' does not exists.");
+                throw new Exception($"Control '{parameterName}' does not exists.");
             }
         }
 
@@ -75,7 +75,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Label '" + LABEL_PREFIX + parameterName + "' does not exists.");
+                throw new Exception($"Label '{LABEL_PREFIX}{parameterName}' does not exists.");
             }
         }
 
@@ -94,7 +94,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("2nd Label '" + LABEL_2ND_PREFIX + parameterName + "' does not exists.");
+                throw new Exception($"2nd Label '{LABEL_2ND_PREFIX}{parameterName}' does not exists.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception(lbl.Name + " does not has Dictionary item for 2nd-Label");
+                throw new Exception($"{lbl.Name} does not has Dictionary item for 2nd-Label");
             }
         }
 
