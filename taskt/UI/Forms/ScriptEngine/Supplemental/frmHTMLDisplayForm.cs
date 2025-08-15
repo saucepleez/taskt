@@ -17,14 +17,23 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
     [ComVisible(true)]
     public partial class frmHTMLDisplayForm : Form
     {
-        public DialogResult Result { get; set; }
-        public string TemplateHTML { get; set; }
+        //public DialogResult Result { get; set; }
 
+        /// <summary>
+        /// user specified variable values
+        /// </summary>
         public List<ScriptVariable> VariablesList { private set; get; }
 
-        public frmHTMLDisplayForm()
+        /// <summary>
+        /// html for webView2
+        /// </summary>
+        private string templateHTML;
+        
+        public frmHTMLDisplayForm(string html)
         {
             InitializeComponent();
+            this.templateHTML = html;
+            this.DialogResult = DialogResult.None;
         }
 
         private async void frmHTMLDisplayForm_Load(object sender, EventArgs e)
@@ -39,7 +48,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
 
             webBrowserHTML.CoreWebView2.AddHostObjectToScript("fm", this);
 
-            webBrowserHTML.NavigateToString(TemplateHTML);
+            webBrowserHTML.NavigateToString(this.templateHTML);
 
             this.TopMost = true;
         }
@@ -47,7 +56,9 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
         private async void frmHTMLDisplayForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             await webBrowserHTML.CoreWebView2.Profile.ClearBrowsingDataAsync();
+            CancelProcess();
         }
+
         private void webBrowserHTML_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
         {
             webBrowserHTML.Enabled = false;
@@ -63,14 +74,10 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
         /// </summary>
         public async void OK()
         {
-            //Todo: figure out why return DialogResult not working for some reason
-
-            this.VariablesList = new List<ScriptVariable>();
-
             // input tags
             await GetValueAndVariableNameFromInputElements();
 
-            Result = DialogResult.OK;
+            //Result = DialogResult.OK;
             this.DialogResult= DialogResult.OK;
             this.Close();
         }
@@ -78,13 +85,22 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
         /// <summary>
         /// Call from WebView2, Cancel button
         /// </summary>
-        public void Cancel()
+        public async void Cancel()
         {
-            //Todo: figure out why return DialogResult not working for some reason
+            // input tags
+            await GetValueAndVariableNameFromInputElements();
 
-            Result = DialogResult.Cancel;
-            this.DialogResult = DialogResult.Cancel;
+            //Result = DialogResult.Cancel;
+            CancelProcess();
             this.Close();
+        }
+
+        private void CancelProcess()
+        {
+            if (this.DialogResult == DialogResult.None)
+            {
+                this.DialogResult = DialogResult.Cancel;
+            }
         }
 
         /// <summary>
@@ -155,8 +171,14 @@ getInputValues_" + func_id + "();";
             AddVariablesList(ary);
         }
 
+        /// <summary>
+        /// add variable list from parsed json
+        /// </summary>
+        /// <param name="ary"></param>
         private void AddVariablesList(JArray ary)
         {
+            this.VariablesList = new List<ScriptVariable>();
+
             foreach(JObject item in ary.Cast<JObject>())
             {
                 var name = item["name"].ToString();

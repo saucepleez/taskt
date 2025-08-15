@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Word;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -198,30 +199,9 @@ Similarly, The <b>Cancel</b> button should call <b>chrome.webview.hostObjects.fm
             //    }
             //}));
 
-            engine.tasktEngineUI.Invoke(new Action(() =>
+            void SetOrAddVariableValueProcess(List<ScriptVariable> vs)
             {
-                // sample for temp testing
-                var htmlInput = v_InputHTML.ExpandValueOrUserVariable(engine);
-
-                //var errorOnClose = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorOnClose), engine);
-                var errorOnClose = "";
-
-                List<ScriptVariable> variables = null;
-                using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmHTMLDisplayForm())
-                {
-                    fm.TemplateHTML = htmlInput;
-
-                    var dialogResult = fm.ShowDialog();
-
-                    if (fm.Result == DialogResult.OK)
-                    {
-                        variables = fm.VariablesList;
-                    }
-                }
-
-                // if user selected Ok then process variables
-                // null result means user cancelled/closed
-                if (variables != null)
+                if (vs != null)
                 {
                     Action<ScriptVariable> newVariableAction;
                     if (engine.engineSettings.CreateMissingVariablesDuringExecution)
@@ -238,7 +218,7 @@ Similarly, The <b>Cancel</b> button should call <b>chrome.webview.hostObjects.fm
                         });
                     }
 
-                    foreach (var v in variables)
+                    foreach (var v in vs)
                     {
                         var existsVar = engine.VariableList.FirstOrDefault(t => v.VariableName == t.VariableName);
                         if (existsVar != null)
@@ -251,10 +231,135 @@ Similarly, The <b>Cancel</b> button should call <b>chrome.webview.hostObjects.fm
                         }
                     }
                 }
-                else if (errorOnClose == "Error On Close")
+            }
+
+            engine.tasktEngineUI.Invoke(new Action(() =>
+            {
+                // sample for temp testing
+                var htmlInput = v_InputHTML.ExpandValueOrUserVariable(engine);
+
+                //var errorOnClose = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorOnClose), engine);
+                //var errorOnClose = "";
+                var whenCancel = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenCancel), engine);
+
+                //List<ScriptVariable> variables = null;
+
+                if (whenCancel == "show dialog again")
                 {
-                    throw new Exception("Input Form was closed by the user");
+                    bool isAgain = true;
+                    do
+                    {
+                        using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmHTMLDisplayForm(htmlInput))
+                        {
+                            if (fm.ShowDialog() == DialogResult.OK)
+                            {
+                                //variables = fm.VariablesList;
+                                SetOrAddVariableValueProcess(fm.VariablesList);
+                                isAgain = false;
+                            }
+                        }
+                    } while (isAgain);
+                    this.StoreDialogResultInUserVariable("OK", engine);
                 }
+                else
+                {
+                    using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmHTMLDisplayForm(htmlInput)) 
+                    { 
+                        if (fm.ShowDialog() == DialogResult.OK)
+                        {
+                            SetOrAddVariableValueProcess(fm.VariablesList);
+                            this.StoreDialogResultInUserVariable("OK", engine);
+                        }
+                        else
+                        {
+                            switch (whenCancel)
+                            {
+                                case "error":
+                                    throw new Exception("Error. HTML Input clicked Cancel.");
+
+                                case "ignore":
+                                    break;
+
+                                case "set empty":
+                                    var vars = fm.VariablesList;
+                                    if (vars != null)
+                                    {
+                                        Action<ScriptVariable> newVariableAction;
+                                        if (engine.engineSettings.CreateMissingVariablesDuringExecution)
+                                        {
+                                            newVariableAction = new Action<ScriptVariable>((v) =>
+                                            {
+                                                engine.VariableList.Add(new ScriptVariable()
+                                                {
+                                                    VariableName = v.VariableName,
+                                                    VariableValue = "",
+                                                });
+                                            });
+                                        }
+                                        else
+                                        {
+                                            newVariableAction = new Action<ScriptVariable>((v) =>
+                                            {
+                                                // nothing
+                                            });
+                                        }
+
+                                        foreach (var v in vars)
+                                        {
+                                            var existsVar = engine.VariableList.FirstOrDefault(t => v.VariableName == t.VariableName);
+                                            if (existsVar != null)
+                                            {
+                                                existsVar.VariableValue = "";
+                                            }
+                                            else
+                                            {
+                                                newVariableAction(v);
+                                            }
+                                        }
+                                    }
+                                    break;
+                            }
+                            this.StoreDialogResultInUserVariable("Cancel", engine);
+                        }
+                    }
+                }
+
+                //// if user selected Ok then process variables
+                //// null result means user cancelled/closed
+                //if (variables != null)
+                //{
+                //    Action<ScriptVariable> newVariableAction;
+                //    if (engine.engineSettings.CreateMissingVariablesDuringExecution)
+                //    {
+                //        newVariableAction = new Action<ScriptVariable>((v) =>
+                //        {
+                //            engine.VariableList.Add(v);
+                //        });
+                //    }
+                //    else
+                //    {
+                //        newVariableAction = new Action<ScriptVariable>((v) => {
+                //            // nothing
+                //        });
+                //    }
+
+                //    foreach (var v in variables)
+                //    {
+                //        var existsVar = engine.VariableList.FirstOrDefault(t => v.VariableName == t.VariableName);
+                //        if (existsVar != null)
+                //        {
+                //            existsVar.VariableValue = v.VariableValue;
+                //        }
+                //        else
+                //        {
+                //            newVariableAction(v);
+                //        }
+                //    }
+                //}
+                //else if (errorOnClose == "Error On Close")
+                //{
+                //    throw new Exception("Input Form was closed by the user");
+                //}
             }));
         }
 
