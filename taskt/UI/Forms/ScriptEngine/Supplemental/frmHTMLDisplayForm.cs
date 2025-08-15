@@ -69,6 +69,21 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
             webBrowserHTML.Enabled = true;
         }
 
+
+        private async void frmHTMLDisplayForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // MEMO: not works :-(
+            if (e.KeyChar == (char)Keys.Escape)
+            {
+                // input tags
+                await GetValueAndVariableNameFromInputElements();
+
+                //Result = DialogResult.Cancel;
+                CancelProcess();
+                this.Close();
+            }
+        }
+
         /// <summary>
         /// Call from WebView2, OK button
         /// </summary>
@@ -198,5 +213,6 @@ getInputValues_" + func_id + "();";
                 }
             }
         }
+
     }
 }
