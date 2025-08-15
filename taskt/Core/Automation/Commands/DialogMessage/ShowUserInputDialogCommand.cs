@@ -56,6 +56,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewColumnSettings("UserInput", "User Input", false)]
         [PropertyDataGridViewColumnSettings("ApplyToVariable", "Apply To Variable", false)]
         [PropertyCustomUIHelper("Add Input Parameter", nameof(lnkAddInputParameter_Click), "addrow")]
+        [PropertyCustomUIHelper("Delete Row", nameof(lnkDeleteInputParameter_Click), "deleterow")]
         [PropertyCustomUIHelper("Move Up Row", nameof(lnkUpInputParameter_Click), "uprow")]
         [PropertyCustomUIHelper("Move Down Row", nameof(lnkDownInputParameter_Click), "downrow")]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
@@ -252,6 +253,13 @@ namespace taskt.Core.Automation.Commands
                 SwapUserInputParameterRows(row, row + 1);
                 dgv.CurrentCell = dgv[dgv.CurrentCell.ColumnIndex, row + 1];
             }
+        }
+
+        private void lnkDeleteInputParameter_Click(object sender, EventArgs e)
+        {
+            var dgv = this.ControlsList.GetPropertyControl<DataGridView>(nameof(v_UserInputConfig));
+            var row = dgv.CurrentCell.RowIndex;
+            v_UserInputConfig.Rows[row].Delete();
         }
 
         /// <summary>
