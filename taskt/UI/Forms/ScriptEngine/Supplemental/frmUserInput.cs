@@ -28,7 +28,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
         /// <summary>
         /// controls list
         /// </summary>
-        private List<Control> inputControls;
+        private readonly List<Control> inputControls;
 
         /// <summary>
         /// dialog result value
@@ -209,6 +209,15 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
             }
         }
 
+
+        private void frmUserInput_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Escape)
+            {
+                this.Close();
+            }
+        }
+
         /// <summary>
         /// get specified values
         /// </summary>
@@ -235,8 +244,9 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
 
     }
 
-    public class UserInput
-    {
-        public Control RenderedControl { get; set; }
-    }
+    // MEMO: what is this class ?
+    //public class UserInput
+    //{
+    //    public Control RenderedControl { get; set; }
+    //}
 }

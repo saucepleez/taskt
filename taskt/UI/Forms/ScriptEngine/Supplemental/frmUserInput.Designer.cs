@@ -158,10 +158,12 @@
             this.ClientSize = new System.Drawing.Size(712, 588);
             this.Controls.Add(this.tlpInputs);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmUserInput";
             this.Text = "User Input";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmUserInput_FormClosing);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmUserInput_KeyPress);
             this.tlpInputs.ResumeLayout(false);
             this.tlpInputs.PerformLayout();
             this.panel1.ResumeLayout(false);
