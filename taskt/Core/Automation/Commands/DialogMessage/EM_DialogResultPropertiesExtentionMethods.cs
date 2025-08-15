@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
-        public static string ExpandValueOrVariableAsWhenCancel(this IDialogResultProperties command, AutomationEngineInstance engine)
+        public static string ExpandValueOrUserVariableAsWhenCancel(this IDialogResultProperties command, AutomationEngineInstance engine)
         {
             return ((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_WhenCancel), engine);
         }

@@ -103,7 +103,8 @@ namespace taskt.Core.Automation.Commands
             //    }
             //}
 
-            var whenCancel = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenCancel), engine);
+            //var whenCancel = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenCancel), engine);
+            var whenCancel = this.ExpandValueOrUserVariableAsWhenCancel(engine);
             switch (whenCancel)
             {
                 case "show dialog again":
