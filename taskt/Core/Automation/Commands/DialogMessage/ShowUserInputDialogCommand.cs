@@ -56,6 +56,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewColumnSettings("UserInput", "User Input", false)]
         [PropertyDataGridViewColumnSettings("ApplyToVariable", "Apply To Variable", false)]
         [PropertyCustomUIHelper("Add Input Parameter", nameof(lnkAddInputParameter_Click), "addrow")]
+        [PropertyCustomUIHelper("Move Up Row", nameof(lnkUpInputParameter_Click), "uprow")]
+        [PropertyCustomUIHelper("Move Down Row", nameof(lnkDownInputParameter_Click), "downrow")]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyParameterOrder(3000)]
         public DataTable v_UserInputConfig { get; set; }
@@ -228,6 +230,46 @@ namespace taskt.Core.Automation.Commands
             var newRow = v_UserInputConfig.NewRow();
             newRow["Size"] = "500,100";
             v_UserInputConfig.Rows.Add(newRow);
+        }
+
+        private void lnkUpInputParameter_Click(object sender, EventArgs e)
+        {
+            var dgv = this.ControlsList.GetPropertyControl<DataGridView>(nameof(v_UserInputConfig));
+            var row = dgv.CurrentCell.RowIndex;
+            if (row > 0)
+            {
+                SwapUserInputParameterRows(row, row - 1);
+                dgv.CurrentCell = dgv[dgv.CurrentCell.ColumnIndex, row - 1];
+            }
+        }
+
+        private void lnkDownInputParameter_Click(object sender, EventArgs e)
+        {
+            var dgv = this.ControlsList.GetPropertyControl<DataGridView>(nameof(v_UserInputConfig));
+            var row = dgv.CurrentCell.RowIndex;
+            if (row < dgv.Rows.Count - 1)
+            {
+                SwapUserInputParameterRows(row, row + 1);
+                dgv.CurrentCell = dgv[dgv.CurrentCell.ColumnIndex, row + 1];
+            }
+        }
+
+        /// <summary>
+        /// swap v_UserInputConfig parameters value
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        private void SwapUserInputParameterRows(int a, int b)
+        {
+            //var dgv = this.ControlsList.GetPropertyControl<DataGridView>(nameof(v_UserInputConfig));
+            
+            for (int i = v_UserInputConfig.Columns.Count - 1; i > 0; i--) 
+            {
+                var va = v_UserInputConfig.Rows[a][i]?.ToString() ?? "";
+                var vb = v_UserInputConfig.Rows[b][i]?.ToString() ?? "";
+                v_UserInputConfig.Rows[a][i] = vb;
+                v_UserInputConfig.Rows[b][i] = va;
+            }
         }
 
         public override bool IsValidate(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
