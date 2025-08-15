@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Show Dialog Again")]
         [PropertyValidationRule("When Dialog Result Is Cancel", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "When Dialog Result Is Cancel")]
-        [PropertyParameterOrder(12000)]
+        //[PropertyParameterOrder(12000)]
         public static string v_WhenCancel { get; }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("Value is **OK** or **Cancel**")]
         [PropertyValidationRule("DialogResult", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "DialogResult")]
-        [PropertyParameterOrder(13000)]
+        //[PropertyParameterOrder(13000)]
         public static string v_DialogResult { get; }
     }
 }

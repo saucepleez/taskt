@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("When Dialog Result Is Cancel", PropertyValidationRule.ValidationRuleFlags.None)]
         //[PropertyDisplayText(false, "When Dialog Result Is Cancel")]
         [PropertyVirtualProperty(nameof(ShowDialogControls), nameof(ShowDialogControls.v_WhenCancel))]
-        //[PropertyParameterOrder(12000)]
+        [PropertyParameterOrder(12000)]
         public string v_WhenCancel { get; set; }
 
         [XmlAttribute]
@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("DialogResult", PropertyValidationRule.ValidationRuleFlags.None)]
         //[PropertyDisplayText(false, "DialogResult")]
         [PropertyVirtualProperty(nameof(ShowDialogControls), nameof(ShowDialogControls.v_DialogResult))]
-        //[PropertyParameterOrder(13000)]
+        [PropertyParameterOrder(13000)]
         public string v_DialogResult { get; set; }
 
         /// <summary>
