@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for Show File/Folder Dialog commands
     /// </summary>
-    public abstract class AShowFileFolderDialogCommands : ScriptCommand, ICanHandleFolderPath
+    public abstract class AShowFileFolderDialogCommands : ScriptCommand, IDialogResultProperties, ICanHandleFolderPath
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
@@ -30,25 +30,27 @@ namespace taskt.Core.Automation.Commands
         public string v_Result { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
-        [PropertyDescription("When Dialog Result Is Cancel")]
-        [PropertyUISelectionOption("Set Empty")]
-        [PropertyUISelectionOption("Show Dialog Again")]
-        [PropertyDetailSampleUsage("**Ignore**", "Nothing to do. The Result Variable is not Changed.")]
-        [PropertyDetailSampleUsage("**Set Empty**", "Result Variable value is Empty")]
-        [PropertyDetailSampleUsage("**Show Dialog Again", "Show Dialog Again")]
-        [PropertyIsOptional(true, "Show Dialog Again")]
-        [PropertyValidationRule("When Dialog Result Is Cancel", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(false, "When Dialog Result Is Cancel")]
+        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
+        //[PropertyDescription("When Dialog Result Is Cancel")]
+        //[PropertyUISelectionOption("Set Empty")]
+        //[PropertyUISelectionOption("Show Dialog Again")]
+        //[PropertyDetailSampleUsage("**Ignore**", "Nothing to do. The Result Variable is not Changed.")]
+        //[PropertyDetailSampleUsage("**Set Empty**", "Result Variable value is Empty")]
+        //[PropertyDetailSampleUsage("**Show Dialog Again", "Show Dialog Again")]
+        //[PropertyIsOptional(true, "Show Dialog Again")]
+        //[PropertyValidationRule("When Dialog Result Is Cancel", PropertyValidationRule.ValidationRuleFlags.None)]
+        //[PropertyDisplayText(false, "When Dialog Result Is Cancel")]
+        [PropertyVirtualProperty(nameof(ShowDialogControls), nameof(ShowDialogControls.v_WhenCancel))]
         [PropertyParameterOrder(12000)]
         public string v_WhenCancel { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [PropertyDescription("Variable Name To Store Dislog Result")]
-        [Remarks("Value is **OK** or **Cancel**")]
-        [PropertyValidationRule("DialogResult", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(false, "DialogResult")]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //[PropertyDescription("Variable Name To Store Dislog Result")]
+        //[Remarks("Value is **OK** or **Cancel**")]
+        //[PropertyValidationRule("DialogResult", PropertyValidationRule.ValidationRuleFlags.None)]
+        //[PropertyDisplayText(false, "DialogResult")]
+        [PropertyVirtualProperty(nameof(ShowDialogControls), nameof(ShowDialogControls.v_DialogResult))]
         [PropertyParameterOrder(13000)]
         public string v_DialogResult { get; set; }
 
@@ -93,13 +95,13 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception($"Strange dialog object. Type; {dialog.GetType().Name}");
             }
 
-            void StoreDialogResultValue(string v)
-            {
-                if (!string.IsNullOrEmpty(v_DialogResult))
-                {
-                    v.StoreInUserVariable(engine, v_DialogResult);
-                }
-            }
+            //void StoreDialogResultValue(string v)
+            //{
+            //    if (!string.IsNullOrEmpty(v_DialogResult))
+            //    {
+            //        v.StoreInUserVariable(engine, v_DialogResult);
+            //    }
+            //}
 
             var whenCancel = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenCancel), engine);
             switch (whenCancel)
@@ -114,17 +116,20 @@ namespace taskt.Core.Automation.Commands
                             isAgain = false;
                         }
                     }
-                    StoreDialogResultValue("OK");
+                    //StoreDialogResultValue("OK");
+                    this.StoreDialogResultInUserVariable("OK", engine);
                     break;
                 default:
                     if ((int)dialog.ShowDialog() == okValue)
                     {
                         GetPathFunc().StoreInUserVariable(engine, v_Result);
-                        StoreDialogResultValue("OK");
+                        //StoreDialogResultValue("OK");
+                        this.StoreDialogResultInUserVariable("OK", engine);
                     }
                     else
                     {
-                        StoreDialogResultValue("Cancel");
+                        //StoreDialogResultValue("Cancel");
+                        this.StoreDialogResultInUserVariable("Cancel", engine);
                         switch (whenCancel)
                         {
                             case "error":

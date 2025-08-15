@@ -402,6 +402,9 @@
     <Compile Include="Core\Automation\Commands\DateTime\FormatDateTimeByTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\IDateTimeResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessage\AShowFileFolderDialogCommands.cs" />
+    <Compile Include="Core\Automation\Commands\DialogMessage\EM_DialogResultPropertiesExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\DialogMessage\IDialogResultProperties.cs" />
+    <Compile Include="Core\Automation\Commands\DialogMessage\ShowDialogControls.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGoToCellRCCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\AFileCopyMoveFileCommands.cs" />
     <Compile Include="Core\Automation\Commands\File\AFileExistsFilePathBeforeAfterResultCommands.cs" />
