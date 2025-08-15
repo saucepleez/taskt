@@ -62,7 +62,6 @@
             this.Text = "taskt - input window";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmHTMLDisplayForm_FormClosing);
             this.Load += new System.EventHandler(this.frmHTMLDisplayForm_Load);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmHTMLDisplayForm_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.webBrowserHTML)).EndInit();
             this.ResumeLayout(false);
 
