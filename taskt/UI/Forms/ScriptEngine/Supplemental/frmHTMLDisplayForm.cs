@@ -20,7 +20,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
         public DialogResult Result { get; set; }
         public string TemplateHTML { get; set; }
 
-        public List<ScriptVariable> variablesList { private set; get; }
+        public List<ScriptVariable> VariablesList { private set; get; }
 
         public frmHTMLDisplayForm()
         {
@@ -65,7 +65,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
         {
             //Todo: figure out why return DialogResult not working for some reason
 
-            this.variablesList = new List<ScriptVariable>();
+            this.VariablesList = new List<ScriptVariable>();
 
             // input tags
             await GetValueAndVariableNameFromInputElements();
@@ -161,14 +161,14 @@ getInputValues_" + func_id + "();";
             {
                 var name = item["name"].ToString();
 
-                var existsVar = variablesList.FirstOrDefault(v => v.VariableName == name);
+                var existsVar = VariablesList.FirstOrDefault(v => v.VariableName == name);
                 if (existsVar != null)
                 {
                     existsVar.VariableValue = item["value"].ToString();
                 }
                 else
                 {
-                    variablesList.Add(new ScriptVariable()
+                    VariablesList.Add(new ScriptVariable()
                     {
                         VariableName = name,
                         VariableValue = item["value"].ToString(),

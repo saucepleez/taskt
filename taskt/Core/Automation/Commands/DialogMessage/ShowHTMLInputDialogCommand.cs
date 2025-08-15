@@ -203,7 +203,7 @@ Similarly, The <b>Cancel</b> button should call <b>chrome.webview.hostObjects.fm
 
                     if (fm.Result == DialogResult.OK)
                     {
-                        variables = fm.variablesList;
+                        variables = fm.VariablesList;
                     }
                 }
 
