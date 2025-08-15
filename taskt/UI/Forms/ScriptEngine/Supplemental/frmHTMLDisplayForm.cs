@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using taskt.Core.IO;
 using taskt.Core.Script;
 
-
 namespace taskt.UI.Forms.ScriptEngine.Supplemental
 {
     /* This attribute is required to call C# code from WebView2 */
@@ -72,6 +71,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
             await GetValueAndVariableNameFromInputElements();
 
             Result = DialogResult.OK;
+            this.DialogResult= DialogResult.OK;
             this.Close();
         }
 
@@ -83,6 +83,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
             //Todo: figure out why return DialogResult not working for some reason
 
             Result = DialogResult.Cancel;
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
