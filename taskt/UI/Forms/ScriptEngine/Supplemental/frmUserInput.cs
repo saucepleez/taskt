@@ -14,9 +14,9 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
         /// </summary>
         public enum ButtonState
         {
-            OK,
+            OKOnly,
             OKCancel,
-            Accept,
+            AcceptOnly,
             AcceptCancel
         }
 
@@ -30,33 +30,18 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
         /// </summary>
         private List<Control> inputControls;
 
+        /// <summary>
+        /// dialog result value
+        /// </summary>
+        public string DialogResultText { get; private set; }
+
         public frmUserInput(ShowUserInputDialogCommand command)
         {
             InitializeComponent();
 
-            this.inputCommand = command;
-        }
-
-        public frmUserInput(ButtonState button) : base()
-        {
-            switch (button)
-            {
-                case ButtonState.OK:
-                    uiBtnCancel.Visible = false;
-                    break;
-                case ButtonState.Accept:
-                    uiBtnCancel.Visible = false;
-                    uiBtnOk.Text = "Accept";
-                    break;
-                case ButtonState.AcceptCancel:
-                    uiBtnOk.Text = "Accept";
-                    break;
-            }
-        }
-
-        private void frmUserInput_Load(object sender, EventArgs e)
-        {
+            this.DialogResult = DialogResult.None;  // set empty
             this.inputControls = new List<Control>();
+            this.inputCommand = command;
 
             // get presentation data from command
             this.lblHeader.Text = inputCommand.v_InputHeader;
@@ -169,7 +154,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
                         textBox.Multiline = true;
                         textBox.Width = fieldWidth;
                         textBox.Height = fieldHeight;
-                        textBox.Margin = new Padding(10,5,0,0);
+                        textBox.Margin = new Padding(10, 5, 0, 0);
                         textBox.Text = defaultFieldValue;
                         textBox.Font = labelingFont;
                         textBox.ForeColor = Color.SteelBlue;
@@ -180,14 +165,48 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
             }
         }
 
+        public frmUserInput(ShowUserInputDialogCommand command, ButtonState button) : this(command)
+        {
+            switch (button)
+            {
+                case ButtonState.OKOnly:
+                    uiBtnCancel.Visible = false;
+                    break;
+                case ButtonState.AcceptOnly:
+                    uiBtnCancel.Visible = false;
+                    uiBtnOk.Text = "Accept";
+                    break;
+                case ButtonState.AcceptCancel:
+                    uiBtnOk.Text = "Accept";
+                    break;
+            }
+        }
+
         private void uiBtnOk_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
+            this.DialogResultText = uiBtnOk.Text;
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            //this.DialogResult = DialogResult.Cancel;
+            //this.DialogResultText = "Cancel";
+            CancelProcess();
+        }
+
+        private void frmUserInput_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            CancelProcess();
+        }
+
+        private void CancelProcess()
+        {
+            if (this.DialogResult == DialogResult.None)
+            {
+                this.DialogResult = DialogResult.Cancel;
+                this.DialogResultText = "Cancel";
+            }
         }
 
         /// <summary>
@@ -213,6 +232,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
             }
             return ret;
         }
+
     }
 
     public class UserInput

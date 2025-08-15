@@ -49,7 +49,7 @@
             this.flwInputControls.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flwInputControls.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flwInputControls.Location = new System.Drawing.Point(4, 64);
-            this.flwInputControls.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flwInputControls.Margin = new System.Windows.Forms.Padding(4);
             this.flwInputControls.Name = "flwInputControls";
             this.flwInputControls.Size = new System.Drawing.Size(704, 449);
             this.flwInputControls.TabIndex = 0;
@@ -92,7 +92,7 @@
             this.tlpInputs.Controls.Add(this.panel1, 0, 3);
             this.tlpInputs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpInputs.Location = new System.Drawing.Point(0, 0);
-            this.tlpInputs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpInputs.Margin = new System.Windows.Forms.Padding(4);
             this.tlpInputs.Name = "tlpInputs";
             this.tlpInputs.RowCount = 4;
             this.tlpInputs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
@@ -109,7 +109,7 @@
             this.panel1.Controls.Add(this.uiBtnCancel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(4, 521);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(704, 63);
             this.panel1.TabIndex = 2;
@@ -158,10 +158,10 @@
             this.ClientSize = new System.Drawing.Size(712, 588);
             this.Controls.Add(this.tlpInputs);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmUserInput";
             this.Text = "User Input";
-            this.Load += new System.EventHandler(this.frmUserInput_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmUserInput_FormClosing);
             this.tlpInputs.ResumeLayout(false);
             this.tlpInputs.PerformLayout();
             this.panel1.ResumeLayout(false);

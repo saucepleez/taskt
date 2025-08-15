@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_input))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ShowUserInputDialogCommand : ScriptCommand, IHaveDataTableElements
+    public sealed class ShowUserInputDialogCommand : ScriptCommand, IDialogResultProperties, IHaveDataTableElements
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -27,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Title", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyIsOptional(true)]
         [PropertyDisplayText(true, "Title")]
+        [PropertyParameterOrder(1000)]
         public string v_InputHeader { get; set; }
 
         [XmlAttribute]
@@ -38,6 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Input Direction", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "Input Directions")]
+        [PropertyParameterOrder(2000)]
         public string v_InputDirections { get; set; }
 
         [XmlElement]
@@ -55,7 +57,30 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewColumnSettings("ApplyToVariable", "Apply To Variable", false)]
         [PropertyCustomUIHelper("Add Input Parameter", nameof(lnkAddInputParameter_Click), "addrow")]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyParameterOrder(3000)]
         public DataTable v_UserInputConfig { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Dialog Buttons")]
+        [PropertyUISelectionOption("OKCancel")]
+        [PropertyUISelectionOption("OKOnly")]
+        [PropertyUISelectionOption("AcceptCancel")]
+        [PropertyUISelectionOption("AcceptOnly")]
+        [PropertyIsOptional(true, "OKCancel")]
+        [PropertyValidationRule("Dialog Buttons", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyParameterOrder(11000)]
+        public string v_DialogButtons { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(ShowDialogControls), nameof(ShowDialogControls.v_WhenCancel))]
+        [PropertyParameterOrder(12000)]
+        public string v_WhenCancel { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(ShowDialogControls), nameof(ShowDialogControls.v_DialogResult))]
+        [PropertyParameterOrder(13000)]
+        public string v_DialogResult { get; set; }
 
         public ShowUserInputDialogCommand()
         {
@@ -124,49 +149,74 @@ namespace taskt.Core.Automation.Commands
             //    }
             //));
 
+            var dialogButtons = (UI.Forms.ScriptEngine.Supplemental.frmUserInput.ButtonState)Enum.Parse(typeof(UI.Forms.ScriptEngine.Supplemental.frmUserInput.ButtonState), this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_DialogButtons), engine), true);
+
+            var whenCancel = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenCancel), engine);
+
+            void SetVariableValues(List<string> values)
+            {
+                for (int i = values.Count - 1; i >= 0; i--)
+                {
+                    var targetVariable = VariableNameControls.GetVariableName(v_UserInputConfig.Rows[i].Field<string>("ApplyToVariable") ?? "", engine);
+
+                    // store user data in variable
+                    if (!string.IsNullOrEmpty(targetVariable))
+                    {
+                        values[i].StoreInUserVariable(engine, targetVariable);
+                    }
+                }
+            }
+
             engine.tasktEngineUI.Invoke(new Action(() =>
             {
-                var responses = new List<string>();
-                using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmUserInput(clonedCommand))
+                //var responses = new List<string>();
+                using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmUserInput(clonedCommand, dialogButtons))
                 {
-                    //fm.InputCommand = clonedCommand;
-
-                    var dialogResult = fm.ShowDialog();
-
-                    if (dialogResult == DialogResult.OK)
+                    if (whenCancel == "show dialog again")
                     {
-                        //foreach (var ctrl in fm.inputControls)
-                        //{
-                        //    if (ctrl is CheckBox checkboxCtrl)
-                        //    {
-                        //        responses.Add(checkboxCtrl.Checked.ToString());
-                        //    }
-                        //    else
-                        //    {
-                        //        responses.Add(ctrl.Text);
-                        //    }
-                        //}
-                        responses = fm.GetSpecifiedValues();
+                        bool isAgain = true;
+                        do
+                        {
+                            //if (fm.ShowDialog() == DialogResult.OK)
+                            //{
+                            //    isAgain = false;
+                            //    SetVariableValues(fm.GetSpecifiedValues());
+                            //}
+                            var r = fm.ShowDialog();
+                            if (r == DialogResult.OK)
+                            {
+                                isAgain = false;
+                                SetVariableValues(fm.GetSpecifiedValues());
+                            }
+                        } while (isAgain);
+                        this.StoreDialogResultInUserVariable(fm.DialogResultText, engine);
                     }
                     else
                     {
-                        responses = null;
-                    }
-                }
-
-                // check if user provided input
-                if (responses != null)
-                {
-                    // loop through each input and assign
-                    //for (int i = 0; i < responses.Count; i++)
-                    for (int i = responses.Count - 1; i >= 0; i--)
-                    {
-                        var targetVariable = VariableNameControls.GetVariableName(v_UserInputConfig.Rows[i].Field<string>("ApplyToVariable") ?? "", engine);
-
-                        // store user data in variable
-                        if (!string.IsNullOrEmpty(targetVariable))
+                        if (fm.ShowDialog() == DialogResult.OK)
                         {
-                            responses[i].StoreInUserVariable(engine, targetVariable);
+                            SetVariableValues(fm.GetSpecifiedValues());
+                            this.StoreDialogResultInUserVariable(fm.DialogResultText, engine);
+                        }
+                        else
+                        {
+                            switch (whenCancel)
+                            {
+                                case "error":
+                                    throw new Exception("Error. UserInput Dialog is Clicked Cancel.");
+                                    
+                                case "ignore":
+                                    break;
+
+                                case "set empty":
+                                    for (int i = v_UserInputConfig.Rows.Count - 1; i >= 0; i--)
+                                    {
+                                        var targetVariable = VariableNameControls.GetVariableName(v_UserInputConfig.Rows[i].Field<string>("ApplyToVariable") ?? "", engine);
+                                        "".StoreInUserVariable(engine, targetVariable);
+                                    }
+                                    break;
+                            }
+                            this.StoreDialogResultInUserVariable("Cancel", engine);
                         }
                     }
                 }
