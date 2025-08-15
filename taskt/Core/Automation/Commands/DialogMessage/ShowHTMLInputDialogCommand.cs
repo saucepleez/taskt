@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("HTML", true)]
         [PropertyCustomUIHelper("Launch HTML Builder", nameof(ShowHTMLBuilder))]
         [PropertyValidationRule("HTML", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(false, "")]
+        [PropertyDisplayText(false, "HTML")]
         [PropertyFirstValue(
 @"<!DOCTYPE html>
 <html lang=""en"" xmlns=""http://www.w3.org/1999/xhtml"">
@@ -113,6 +113,7 @@ Similarly, The <b>Cancel</b> button should call <b>chrome.webview.hostObjects.fm
         [PropertyUISelectionOption("Error On Close")]
         [PropertyUISelectionOption("Do Not Error On Close")]
         [PropertyIsOptional(true, "Error On Close")]
+        [PropertyDisplayText(false, "Error")]
         public string v_ErrorOnClose { get; set; }
 
         public ShowHTMLInputDialogCommand()
