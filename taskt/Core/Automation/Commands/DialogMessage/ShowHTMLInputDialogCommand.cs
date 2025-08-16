@@ -108,6 +108,13 @@ Similarly, The <b>Cancel</b> button should call <b>chrome.webview.hostObjects.fm
         [PropertyParameterOrder(1000)]
         public string v_InputHTML { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(ShowDialogControls), nameof(ShowDialogControls.v_DialogTitle))]
+        [PropertyFirstValue("ShowHTMLInputDialog Command")]
+        [PropertyIsOptional(true, "ShowHTMLInputDialog Command")]
+        [PropertyParameterOrder(2000)]
+        public string v_DialogTitle { get; set; }
+
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         //[PropertyDescription("When an Error should Occur on any Result other than 'OK'")]
@@ -241,6 +248,12 @@ Similarly, The <b>Cancel</b> button should call <b>chrome.webview.hostObjects.fm
                 //var errorOnClose = "";
                 var whenCancel = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenCancel), engine);
 
+                if (string.IsNullOrEmpty(v_DialogTitle))
+                {
+                    v_DialogTitle = "ShowHTMLInputDialog Command";
+                }
+                var title = this.ExpandValueOrUserVariable(nameof(v_DialogTitle), "DialogTitle", engine);
+
                 //List<ScriptVariable> variables = null;
 
                 if (whenCancel == "show dialog again")
@@ -248,7 +261,7 @@ Similarly, The <b>Cancel</b> button should call <b>chrome.webview.hostObjects.fm
                     bool isAgain = true;
                     do
                     {
-                        using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmHTMLDisplayForm(htmlInput))
+                        using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmHTMLDisplayForm(htmlInput, title))
                         {
                             if (fm.ShowDialog() == DialogResult.OK)
                             {
@@ -262,7 +275,7 @@ Similarly, The <b>Cancel</b> button should call <b>chrome.webview.hostObjects.fm
                 }
                 else
                 {
-                    using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmHTMLDisplayForm(htmlInput)) 
+                    using (var fm = new UI.Forms.ScriptEngine.Supplemental.frmHTMLDisplayForm(htmlInput, title)) 
                     { 
                         if (fm.ShowDialog() == DialogResult.OK)
                         {

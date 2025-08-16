@@ -29,11 +29,12 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
         /// </summary>
         private string templateHTML;
         
-        public frmHTMLDisplayForm(string html)
+        public frmHTMLDisplayForm(string html, string title)
         {
             InitializeComponent();
             this.templateHTML = html;
             this.DialogResult = DialogResult.None;
+            this.Text = title;
         }
 
         private async void frmHTMLDisplayForm_Load(object sender, EventArgs e)
