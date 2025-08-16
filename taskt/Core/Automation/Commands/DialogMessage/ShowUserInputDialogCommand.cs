@@ -28,19 +28,19 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyDisplayText(true, "Title")]
         [PropertyParameterOrder(1000)]
-        public string v_InputHeader { get; set; }
+        public string v_DialogTitle { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Input Directions")]
-        [InputSpecification("Input Directions", true)]
+        [PropertyDescription("Message")]
+        [InputSpecification("Message", true)]
         [SampleUsage("**Please fill in the following fields**")]
         [PropertyFirstValue("Directions: Please fill in the following fields")]
         [PropertyIsOptional(true)]
-        [PropertyValidationRule("Input Direction", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(true, "Input Directions")]
+        [PropertyValidationRule("Message Direction", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(true, "Message")]
         [PropertyParameterOrder(2000)]
-        public string v_InputDirections { get; set; }
+        public string v_Message { get; set; }
 
         [XmlElement]
         [PropertyDescription("User Input Parameters")]
@@ -106,8 +106,8 @@ namespace taskt.Core.Automation.Commands
             var clonedCommand = (ShowUserInputDialogCommand)this.Clone();
 
             // expand variables
-            clonedCommand.v_InputHeader = clonedCommand.v_InputHeader.ExpandValueOrUserVariable(engine);
-            clonedCommand.v_InputDirections = clonedCommand.v_InputDirections.ExpandValueOrUserVariable(engine);
+            clonedCommand.v_DialogTitle = clonedCommand.v_DialogTitle.ExpandValueOrUserVariable(engine);
+            clonedCommand.v_Message = clonedCommand.v_Message.ExpandValueOrUserVariable(engine);
 
             // expand variables for each label
             foreach (DataRow rw in clonedCommand.v_UserInputConfig.Rows)

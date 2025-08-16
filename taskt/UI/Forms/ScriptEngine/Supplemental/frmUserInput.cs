@@ -44,8 +44,8 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
             this.inputCommand = command;
 
             // get presentation data from command
-            this.lblHeader.Text = inputCommand.v_InputHeader;
-            this.lblDirections.Text = inputCommand.v_InputDirections;
+            this.lblHeader.Text = inputCommand.v_DialogTitle;
+            this.lblDirections.Text = inputCommand.v_Message;
 
             // get input table
             var inputTable = inputCommand.v_UserInputConfig;

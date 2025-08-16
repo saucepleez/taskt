@@ -4400,6 +4400,15 @@ namespace taskt.Core.Script
                     }
                 }
             }
+
+            // ShowUserInputDialogCommand v_InputHeader -> v_DialogTitle, v_InputDirections -> v_Message
+            ChangeMultiAttributeNames(doc, "ShowUserInputDialogCommand",
+                new List<(string, string)>()
+                {
+                    ("v_InputHeader", "v_DialogTitle"),
+                    ("v_InputDirections", "v_Message"),
+                }
+            );
         }
 
         /// <summary>
