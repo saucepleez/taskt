@@ -28,6 +28,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(6000)]
         public string v_WindowHandle { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Reference Style")]
+        [PropertyUISelectionOption("A1")]
+        [PropertyUISelectionOption("R1C1")]
+        [PropertyIsOptional(true, "A1")]
+        [PropertyValidationRule("Reference Style", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Reference Style")]
+        [Remarks("Strongly recommend specifying **A1**")]
+        [PropertyParameterOrder(7000)]
+        public string v_ReferenceStyle { get; set; }
+
         public ExcelCreateExcelInstanceCommand()
         {
         }
@@ -40,6 +52,16 @@ namespace taskt.Core.Automation.Commands
             {
                 Visible = true
             };
+
+            switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReferenceStyle), engine))
+            {
+                case "a1":
+                    newExcelSession.ReferenceStyle = Microsoft.Office.Interop.Excel.XlReferenceStyle.xlA1;
+                    break;
+                case "r1c1":
+                    newExcelSession.ReferenceStyle = Microsoft.Office.Interop.Excel.XlReferenceStyle.xlR1C1;
+                    break;
+            }
 
             engine.AddAppInstance(vInstance, newExcelSession);
 
