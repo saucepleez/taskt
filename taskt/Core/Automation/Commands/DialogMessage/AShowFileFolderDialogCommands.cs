@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for Show File/Folder Dialog commands
     /// </summary>
-    public abstract class AShowFileFolderDialogCommands : ScriptCommand, IDialogResultProperties, ICanHandleFolderPath
+    public abstract class AShowFileFolderDialogCommands : ScriptCommand, IWaitDialogResultProperties, ICanHandleFolderPath
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]

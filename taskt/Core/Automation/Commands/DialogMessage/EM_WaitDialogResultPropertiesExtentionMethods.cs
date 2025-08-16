@@ -2,14 +2,14 @@
 
 namespace taskt.Core.Automation.Commands
 {
-    public static class EM_DialogResultPropertiesExtentionMethods
+    public static class EM_WaitDialogResultPropertiesExtentionMethods
     {
         /// <summary>
         /// expand value or variable as When Cancel
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
-        public static string ExpandValueOrUserVariableAsWhenCancel(this IDialogResultProperties command, AutomationEngineInstance engine)
+        public static string ExpandValueOrUserVariableAsWhenCancel(this IWaitDialogResultProperties command, AutomationEngineInstance engine)
         {
             return ((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_WhenCancel), engine);
         }
@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="result"></param>
         /// <param name="engine"></param>
-        public static void StoreDialogResultInUserVariable(this IDialogResultProperties command, string result, AutomationEngineInstance engine)
+        public static void StoreDialogResultInUserVariable(this IWaitDialogResultProperties command, string result, AutomationEngineInstance engine)
         {
             if (!string.IsNullOrEmpty(command.v_DialogResult))
             {

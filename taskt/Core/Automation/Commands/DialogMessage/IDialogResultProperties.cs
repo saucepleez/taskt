@@ -3,13 +3,8 @@
     /// <summary>
     /// for to get dialog result properties
     /// </summary>
-    public interface IDialogResultProperties
+    public interface IDialogResultProperties : ILExpandableProperties
     {
-        /// <summary>
-        /// behavior when user click cancel in Dialog
-        /// </summary>
-        string v_WhenCancel { get; set; }
-
         /// <summary>
         /// variable name to store dialog result
         /// </summary>
