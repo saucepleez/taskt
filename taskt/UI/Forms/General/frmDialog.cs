@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace taskt.UI.Forms.General
 {
-    public partial class frmDialog : Form
+    public partial class frmDialog : DialogLikeThemedForm
     {
         #region fields
         public enum DialogType
@@ -118,19 +118,19 @@ namespace taskt.UI.Forms.General
             this.Focus();
         }
 
-        private void frmDialog_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-            {
-                this.Close();
-            }
-        }      
-        private void txtMessage_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-            {
-                this.Close();
-            }
-        }
+        //private void frmDialog_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.KeyCode == Keys.Escape)
+        //    {
+        //        this.Close();
+        //    }
+        //}
+        //private void txtMessage_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.KeyCode == Keys.Escape)
+        //    {
+        //        this.Close();
+        //    }
+        //}
     }
 }
