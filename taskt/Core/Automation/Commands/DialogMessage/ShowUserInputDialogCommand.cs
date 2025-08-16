@@ -19,14 +19,17 @@ namespace taskt.Core.Automation.Commands
     public sealed class ShowUserInputDialogCommand : ScriptCommand, IWaitDialogResultProperties, IHaveDataTableElements
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Dialog Title")]
-        [InputSpecification("Title", true)]
-        [SampleUsage("**Please Provide Input**")]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Dialog Title")]
+        //[InputSpecification("Title", true)]
+        //[SampleUsage("**Please Provide Input**")]
+        //[PropertyFirstValue("Please Provide Input")]
+        //[PropertyValidationRule("Title", PropertyValidationRule.ValidationRuleFlags.None)]
+        //[PropertyIsOptional(true)]
+        //[PropertyDisplayText(true, "Title")]
+        [PropertyVirtualProperty(nameof(ShowDialogControls), nameof(ShowDialogControls.v_DialogTitle))]
         [PropertyFirstValue("Please Provide Input")]
-        [PropertyValidationRule("Title", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyIsOptional(true)]
-        [PropertyDisplayText(true, "Title")]
+        [PropertyIsOptional(true, "Please Provide Input")]
         [PropertyParameterOrder(1000)]
         public string v_DialogTitle { get; set; }
 

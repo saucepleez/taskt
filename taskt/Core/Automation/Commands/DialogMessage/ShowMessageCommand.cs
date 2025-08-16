@@ -77,13 +77,16 @@ namespace taskt.Core.Automation.Commands
         public string v_DialogType { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Dialog Title")]
-        [InputSpecification("Text")]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Dialog Title")]
+        //[InputSpecification("Text")]
+        //[PropertyIsOptional(true, "ShowMessage Command")]
+        //[PropertyValidationRule("DialogTitle", PropertyValidationRule.ValidationRuleFlags.None)]
+        //[PropertyFirstValue("ShowMessage Command")]
+        //[PropertyDisplayText(false, "Dialog Title")]
+        [PropertyVirtualProperty(nameof(ShowDialogControls), nameof(ShowDialogControls.v_DialogTitle))]
+        [PropertyFirstValue("ShowMessage Comamnd")]
         [PropertyIsOptional(true, "ShowMessage Command")]
-        [PropertyValidationRule("DialogTitle", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyFirstValue("ShowMessage Command")]
-        [PropertyDisplayText(false, "Dialog Title")]
         public string v_DialogTitle { get; set; }
 
         [XmlAttribute]

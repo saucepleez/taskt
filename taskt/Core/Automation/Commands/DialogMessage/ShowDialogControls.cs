@@ -30,5 +30,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "DialogResult")]
         //[PropertyParameterOrder(13000)]
         public static string v_DialogResult { get; }
+
+        /// <summary>
+        /// dialog title
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Dialog Title")]
+        [InputSpecification("Title", true)]
+        [PropertyDetailSampleUsage("**Title**", PropertyDetailSampleUsage.ValueType.Value)]
+        [PropertyDetailSampleUsage("**{{{vTitle}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        [PropertyValidationRule("Title", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyIsOptional(true)]
+        [PropertyDisplayText(true, "Title")]
+        public static string v_DialogTitle { get; }
     }
 }
