@@ -27,9 +27,16 @@ namespace taskt.UI.Forms.General
             OkOnly
         }
 
-        public int closeTicks;
+        /// <summary>
+        /// close sec
+        /// </summary>
+        private int closeTicks;
 
-        public int ticksPassed;
+        /// <summary>
+        /// current sec passed
+        /// </summary>
+        private int ticksPassed;
+
         #endregion
         public frmDialog(string message, string title, DialogType dialogType, int closeAfterSeconds, bool showTop = true, string fontName = "", float fontSize = 0F)
         {
@@ -80,7 +87,7 @@ namespace taskt.UI.Forms.General
 
         private void CalculateCloseTime()
         {
-            lblAutoClose.Text = "closing in " + (closeTicks - ticksPassed) + " sec(s)";
+            lblAutoClose.Text = $"closing in {(closeTicks - ticksPassed)} sec(s)";
         }
 
         private void uiBtnOk_Click(object sender, EventArgs e)
