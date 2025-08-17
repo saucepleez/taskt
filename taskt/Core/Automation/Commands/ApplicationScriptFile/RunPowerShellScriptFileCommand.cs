@@ -165,7 +165,7 @@ namespace taskt.Core.Automation.Commands
                 UseShellExecute = false,
                 RedirectStandardOutput = true
             };
-            var proc =  Process.Start(startInfo);
+            var proc = System.Diagnostics.Process.Start(startInfo);
 
             // url: https://stackoverflow.com/questions/2285288/calling-a-ruby-script-in-c-sharp/12848337#12848337
             var reader = proc.StandardOutput;

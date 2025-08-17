@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Script;
@@ -103,35 +104,39 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             // local start process func
-            System.Diagnostics.Process StartProcess(string name, string arguments)
+            Process StartProcess(string name, string arguments, bool shell)
             {
-                if (string.IsNullOrEmpty(arguments))
+                //System.Diagnostics.Process proc;
+                //if (string.IsNullOrEmpty(arguments))
+                //{
+                //    proc = System.Diagnostics.Process.Start(name);
+                //}
+                //else
+                //{
+                //    proc = System.Diagnostics.Process.Start(name, arguments);
+                //}
+
+                var proc = new Process();
+                proc.StartInfo.FileName = name;
+                if (!string.IsNullOrEmpty(arguments)) 
                 {
-                    return System.Diagnostics.Process.Start(name);
+                    proc.StartInfo.Arguments = arguments;
                 }
-                else
-                {
-                    return System.Diagnostics.Process.Start(name, arguments);
-                }
+                proc.StartInfo.UseShellExecute = shell;
+                proc.Start();
+
+                return proc;
             }
 
             var args = v_Arguments.ExpandValueOrUserVariable(engine);
 
-            System.Diagnostics.Process p;
+            Process p;
             try
             {
                 // consider the application name is specified
                 var appName = v_ApplicationPath.ExpandValueOrUserVariable(engine);
                 
-                //if (string.IsNullOrEmpty(args))
-                //{
-                //    p = System.Diagnostics.Process.Start(appName);
-                //}
-                //else
-                //{
-                //    p = System.Diagnostics.Process.Start(appName, args);
-                //}
-                p = StartProcess(appName, args);
+                p = StartProcess(appName, args, false);
             }
             catch
             {
@@ -148,7 +153,7 @@ namespace taskt.Core.Automation.Commands
                     };
                     fileExists.RunCommand(engine);
                 }
-                p = StartProcess(filePath, args);
+                p = StartProcess(filePath, args, false);
             }
 
             var waitTimeUntil = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeForExecute), engine);
@@ -167,7 +172,25 @@ namespace taskt.Core.Automation.Commands
             // window handle
             if (!string.IsNullOrEmpty(v_WindowHandle))
             {
-                p.MainWindowHandle.StoreInUserVariable(engine, v_WindowHandle);
+                try
+                {
+                    (((int)p.MainWindowHandle > 0) ? p.MainWindowHandle : p.Handle).StoreInUserVariable(engine, v_WindowHandle);
+                }
+                catch (InvalidOperationException)
+                {
+                    try
+                    {
+                        p.Handle.StoreInUserVariable(engine, v_WindowHandle);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+                catch
+                {
+                    throw new Exception("Error. Fail get WindowHandle.");
+                }
             }
 
             //var waitForExit = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WaitForExit), engine);

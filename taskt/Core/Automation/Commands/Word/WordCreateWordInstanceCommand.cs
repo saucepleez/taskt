@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
                 newWordSession.Application.Caption = newCaption;
 
                 bool isFound = false;
-                foreach(var p in Process.GetProcessesByName("winword"))
+                foreach(var p in System.Diagnostics.Process.GetProcessesByName("winword"))
                 {
                     if (p.MainWindowTitle == newCaption)
                     {

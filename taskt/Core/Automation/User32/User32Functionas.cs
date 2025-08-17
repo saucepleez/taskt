@@ -532,7 +532,7 @@ namespace taskt.Core.Automation.User32
 
             private static IntPtr SetKeyboardHook(LowLevelKeyboardProc proc)
             {
-                using (Process curProcess = Process.GetCurrentProcess())
+                using (System.Diagnostics.Process curProcess = System.Diagnostics.Process.GetCurrentProcess())
 
                 using (ProcessModule curModule = curProcess.MainModule)
                 {
@@ -543,7 +543,7 @@ namespace taskt.Core.Automation.User32
             }
             private static IntPtr SetMouseHook(LowLevelMouseProc proc)
             {
-                using (Process curProcess = Process.GetCurrentProcess())
+                using (System.Diagnostics.Process curProcess = System.Diagnostics.Process.GetCurrentProcess())
 
                 using (ProcessModule curModule = curProcess.MainModule)
                 {
