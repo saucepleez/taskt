@@ -9,6 +9,17 @@ namespace taskt.Core.Automation.Commands
     public static class EM_WindowPositionPropertiesExtensionMethods
     {
         /// <summary>
+        /// get window position
+        /// </summary>
+        /// <param name="whnd"></param>
+        /// <returns>(top, left)</returns>
+        private static (int, int) GetWindowPosition(IntPtr whnd)
+        {
+            var rect = EM_WindowRECTPropertiesExtentionMethods.GetWindowRect(whnd);
+            return (rect.top, rect.left);
+        }
+
+        /// <summary>
         /// expand value or variable as Window X Position
         /// </summary>
         /// <param name="command"></param>
@@ -18,16 +29,16 @@ namespace taskt.Core.Automation.Commands
         public static int ExpandValueOrVariableAsWindowXPosition(this IWindowPositionProperties command, IntPtr whnd, AutomationEngineInstance engine)
         {
             var v = command.v_XPosition;
-            var rect = WindowControls.GetWindowRect(whnd);
+            (var top, var left) = GetWindowPosition(whnd);
 
             if ((v == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentPosition.VariableName, engine)) ||
                 (v == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentXPosition.VariableName, engine)))
             {
-                return rect.left;
+                return left;
             }
             else if (v == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentYPosition.VariableName, engine))
             {
-                return rect.top;
+                return top;
             }
             else
             {
@@ -45,16 +56,16 @@ namespace taskt.Core.Automation.Commands
         public static int ExpandValueOrVariableAsWindowYPosition(this IWindowPositionProperties command, IntPtr whnd, AutomationEngineInstance engine)
         {
             var v = command.v_YPosition;
-            var rect = WindowControls.GetWindowRect(whnd);
+            (var top, var left) = GetWindowPosition(whnd);
 
             if ((v == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentPosition.VariableName, engine)) ||
                 (v == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentYPosition.VariableName, engine)))
             {
-                return rect.top;
+                return top;
             }
             else if (v == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentXPosition.VariableName, engine))
             {
-                return rect.left;
+                return left;
             }
             else
             {

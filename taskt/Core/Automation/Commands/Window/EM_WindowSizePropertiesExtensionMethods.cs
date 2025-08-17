@@ -9,6 +9,17 @@ namespace taskt.Core.Automation.Commands
     public static class EM_WindowSizePropertiesExtensionMethods
     {
         /// <summary>
+        /// get window size
+        /// </summary>
+        /// <param name="whnd"></param>
+        /// <returns>(width, height)</returns>
+        private static (int, int) GetWindowSize(IntPtr whnd)
+        {
+            var r = EM_WindowRECTPropertiesExtentionMethods.GetWindowRect(whnd);
+            return (r.GetWidth(), r.GetHeight());
+        }
+
+        /// <summary>
         /// expand value or variable as Window Width
         /// </summary>
         /// <param name="command"></param>
@@ -18,16 +29,16 @@ namespace taskt.Core.Automation.Commands
         public static int ExpandValueOrVariableAsWindowWidth(this IWindowSizeProperties command, IntPtr whnd, AutomationEngineInstance engine)
         {
             var w = command.v_Width;
-            var rect = WindowControls.GetWindowRect(whnd);
+            (var width, var height) = GetWindowSize(whnd);
 
             if ((w == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentSize.VariableName, engine)) ||
                  (w == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentWidth.VariableName, engine)))
             {
-                return rect.GetWidth();
+                return width;
             }
             else if (w == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentHeight.VariableName, engine))
             {
-                return rect.GetHeight();
+                return height;
             }
             else
             {
@@ -45,16 +56,16 @@ namespace taskt.Core.Automation.Commands
         public static int ExpandValueOrVariableAsWindowHeight(this IWindowSizeProperties command, IntPtr whnd, AutomationEngineInstance engine)
         {
             var w = command.v_Height;
-            var rect = WindowControls.GetWindowRect(whnd);
+            (var width, var height) = GetWindowSize(whnd);
 
             if ((w == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentSize.VariableName, engine)) ||
                  (w == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentHeight.VariableName, engine)))
             {
-                return rect.GetHeight();
+                return height;
             }
             else if (w == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentWidth.VariableName, engine))
             {
-                return rect.GetWidth();
+                return width;
             }
             else
             {
