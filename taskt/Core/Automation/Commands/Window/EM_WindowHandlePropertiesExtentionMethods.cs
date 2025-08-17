@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using taskt.Core.Automation.Engine;
 
-namespace taskt.Core.Automation.Commands.Window
+namespace taskt.Core.Automation.Commands
 {
     public static class EM_WindowHandlePropertiesExtentionMethods
     {

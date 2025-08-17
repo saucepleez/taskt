@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -22,18 +23,36 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         //public string v_WaitTime { get; set; }
 
+        /// <summary>
+        /// for close window by whnd
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="Msg"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// close value
+        /// </summary>
+        private static readonly UInt32 WM_CLOSE = 0x0010;
+
         public CloseWindowByWindowHandle()
         {
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowControls.WindowHandleAction(this, engine, 
-                new Action<IntPtr>(whnd =>
-                {
-                    WindowControls.CloseWindow(whnd);
-                })
-            );
+            //WindowControls.WindowHandleAction(this, engine, 
+            //    new Action<IntPtr>(whnd =>
+            //    {
+            //        WindowControls.CloseWindow(whnd);
+            //    })
+            //);
+            var whnd = this.GetWindowHandle(engine);
+            SendMessage(whnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
         }
     }
 }

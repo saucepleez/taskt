@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using taskt.Core.Automation.Commands.Window;
 
 namespace taskt.Core.Automation.Commands
 {
