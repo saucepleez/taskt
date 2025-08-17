@@ -162,30 +162,33 @@ namespace taskt.Core.Automation.Commands
             // process name
             if (!string.IsNullOrEmpty(v_StartedProcessName))
             {
-                p.ProcessName.StoreInUserVariable(engine, v_StartedProcessName);
+                try
+                {
+                    p.ProcessName.StoreInUserVariable(engine, v_StartedProcessName);
+                }
+                catch
+                {
+                    throw new Exception("Error. Fail get Process Name.");
+                }
             }
             // window name
             if (!string.IsNullOrEmpty(v_WindowName))
             {
-                p.MainWindowTitle.StoreInUserVariable(engine, v_WindowName);
+                try
+                {
+                    p.MainWindowTitle.StoreInUserVariable(engine, v_WindowName);
+                }
+                catch
+                {
+                    throw new Exception("Error. Fail get Window Name.");
+                }
             }
             // window handle
             if (!string.IsNullOrEmpty(v_WindowHandle))
             {
                 try
                 {
-                    (((int)p.MainWindowHandle > 0) ? p.MainWindowHandle : p.Handle).StoreInUserVariable(engine, v_WindowHandle);
-                }
-                catch (InvalidOperationException)
-                {
-                    try
-                    {
-                        p.Handle.StoreInUserVariable(engine, v_WindowHandle);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
+                    p.MainWindowHandle.StoreInUserVariable(engine, v_WindowHandle);
                 }
                 catch
                 {
