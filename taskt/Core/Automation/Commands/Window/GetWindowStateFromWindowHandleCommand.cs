@@ -23,6 +23,10 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Store Window State Text")]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("Window State", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(true, "State")]
         [Remarks("Restore is **1**, Minimize is **2**, Maximize is **3**")]
         [PropertyParameterOrder(5500)]
         public string v_WindowState { get; set; }
@@ -33,6 +37,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Window State Text", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "State Text")]
+        [PropertyParameterOrder(5501)]
         public string v_WindowStateText { get; set; }
 
         //[XmlAttribute]
@@ -76,8 +81,12 @@ namespace taskt.Core.Automation.Commands
             var whnd = this.GetWindowHandle(engine);
             var info = new WINDOWPLACEMENT();
             GetWindowPlacement(whnd, ref info);
-            ((int)info.showCmd).StoreInUserVariable(engine, v_WindowState);
 
+            if (!string.IsNullOrEmpty(v_WindowState))
+            {
+                ((int)info.showCmd).StoreInUserVariable(engine, v_WindowState);
+            }
+            
             if (!string.IsNullOrEmpty(v_WindowStateText))
             {
                 string txt;
