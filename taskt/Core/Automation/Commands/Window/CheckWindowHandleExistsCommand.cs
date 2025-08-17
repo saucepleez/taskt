@@ -29,9 +29,10 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
-        [PropertyIsOptional(true, "0")]
-        [PropertyValidationRule("WaitTime", PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyFirstValue("0")]
+        //[PropertyIsOptional(true, "0")]
+        //[PropertyValidationRule("WaitTime", PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        //[PropertyFirstValue("0")]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_ZeroWaitTime))]
         public override string v_WaitTimeForWindow { get; set; }
 
         public CheckWindowHandleExistsCommand()

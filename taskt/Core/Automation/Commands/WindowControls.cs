@@ -172,6 +172,15 @@ namespace taskt.Core.Automation.Commands
         public static string v_WaitTime { get; }
 
         /// <summary>
+        /// window wait time allows 0
+        /// </summary>
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
+        [PropertyIsOptional(true, "0")]
+        [PropertyFirstValue("0")]
+        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        public static string v_ZeroWaitTime { get; }
+
+        /// <summary>
         /// window name result
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]

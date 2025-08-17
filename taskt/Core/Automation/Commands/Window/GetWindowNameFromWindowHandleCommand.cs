@@ -31,9 +31,10 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
-        [PropertyIsOptional(true, "0")]
-        [PropertyFirstValue("0")]
-        [PropertyValidationRule("WaitTime", PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        //[PropertyIsOptional(true, "0")]
+        //[PropertyFirstValue("0")]
+        //[PropertyValidationRule("WaitTime", PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_ZeroWaitTime))]
         public override string v_WaitTimeForWindow { get; set; }
 
         /// <summary>
