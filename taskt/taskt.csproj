@@ -462,6 +462,8 @@
     <Compile Include="Core\Automation\Commands\List\SliceListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\CheckNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowHandlePropertiesExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Window\EM_WindowRECTPropertiesExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Window\IWindowRECTProperties.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\CompareNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\TextCompareSelectMethodControls.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ADataTableBothRowCommands.cs" />

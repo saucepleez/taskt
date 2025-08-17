@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         /// <param name="whnd"></param>
         /// <returns>(width, height)</returns>
-        private static (int, int) GetWindowSize(IntPtr whnd)
+        public static (int, int) GetWindowSize(IntPtr whnd)
         {
             var r = EM_WindowRECTPropertiesExtentionMethods.GetWindowRect(whnd);
             return (r.GetWidth(), r.GetHeight());

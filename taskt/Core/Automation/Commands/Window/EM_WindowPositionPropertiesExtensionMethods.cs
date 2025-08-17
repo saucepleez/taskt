@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         /// <param name="whnd"></param>
         /// <returns>(top, left)</returns>
-        private static (int, int) GetWindowPosition(IntPtr whnd)
+        public static (int, int) GetWindowPosition(IntPtr whnd)
         {
             var rect = EM_WindowRECTPropertiesExtentionMethods.GetWindowRect(whnd);
             return (rect.top, rect.left);

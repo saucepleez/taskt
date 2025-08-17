@@ -20,12 +20,11 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
         //public string v_WindowHandle { get; set; }
 
-
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Recieve the Window Width")]
         [PropertyIsOptional(true)]
-        [PropertyDisplayText(false, "")]
+        [PropertyDisplayText(false, "Width")]
         [PropertyParameterOrder(5500)]
         public string v_Width { get; set; }
 
@@ -33,8 +32,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Recieve the Window Height")]
         [PropertyIsOptional(true)]
-        [PropertyDisplayText(false, "")]
-        [PropertyParameterOrder(5500)]
+        [PropertyDisplayText(false, "Height")]
+        [PropertyParameterOrder(5501)]
         public string v_Height { get; set; }
 
         //[XmlAttribute]
@@ -44,23 +43,34 @@ namespace taskt.Core.Automation.Commands
         public GetWindowSizeFromWindowHandleCommand()
         {
         }
+
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowControls.WindowHandleAction(this, engine,
-                new Action<IntPtr>(whnd =>
-                {
-                    var rct = WindowControls.GetWindowRect(whnd);
+            //WindowControls.WindowHandleAction(this, engine,
+            //    new Action<IntPtr>(whnd =>
+            //    {
+            //        var rct = WindowControls.GetWindowRect(whnd);
 
-                    if (!string.IsNullOrEmpty(v_Width))
-                    {
-                        (rct.right - rct.left).StoreInUserVariable(engine, v_Width);
-                    }
-                    if (!string.IsNullOrEmpty(v_Height))
-                    {
-                        (rct.bottom - rct.top).StoreInUserVariable(engine, v_Height);
-                    }
-                })
-            );
+            //        if (!string.IsNullOrEmpty(v_Width))
+            //        {
+            //            (rct.right - rct.left).StoreInUserVariable(engine, v_Width);
+            //        }
+            //        if (!string.IsNullOrEmpty(v_Height))
+            //        {
+            //            (rct.bottom - rct.top).StoreInUserVariable(engine, v_Height);
+            //        }
+            //    })
+            //);
+            var whnd = this.GetWindowHandle(engine);
+            (var width, var height) = EM_WindowSizePropertiesExtensionMethods.GetWindowSize(whnd);
+            if (!string.IsNullOrEmpty(v_Width))
+            {
+                width.StoreInUserVariable(engine, v_Width);
+            }
+            if (!string.IsNullOrEmpty(v_Height))
+            {
+                height.StoreInUserVariable(engine, v_Height);
+            }
         }
     }
 }
