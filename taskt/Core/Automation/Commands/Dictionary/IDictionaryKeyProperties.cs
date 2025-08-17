@@ -3,7 +3,7 @@
     /// <summary>
     /// Dictionary & Key properties
     /// </summary>
-    public interface IDictionaryKeyProperties : ILDictionaryProperties
+    public interface IDictionaryKeyProperties : IDictionaryProperties
     {
         /// <summary>
         /// Dictionary key name

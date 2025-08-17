@@ -3,7 +3,7 @@
     /// <summary>
     /// List is Result Properties
     /// </summary>
-    public interface IListResultProperties : ILResultProperties, ICanHandleList
+    public interface IListResultProperties : IResultProperties, ICanHandleList
     {
         // only imple
     }

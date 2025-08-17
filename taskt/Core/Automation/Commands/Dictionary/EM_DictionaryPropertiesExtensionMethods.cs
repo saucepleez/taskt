@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static Dictionary<string, string> ExpandUserVariableAsDictionary(this ILDictionaryProperties command, Engine.AutomationEngineInstance engine)
+        public static Dictionary<string, string> ExpandUserVariableAsDictionary(this IDictionaryProperties command, Engine.AutomationEngineInstance engine)
         {
             return command.ExpandUserVariableAsDictionary(nameof(command.v_Dictionary), engine);
         }

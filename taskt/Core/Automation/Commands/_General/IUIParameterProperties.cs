@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for search & use Control for ScriptCommand parameters
     /// </summary>
-    public interface ILUIParameterProperties
+    public interface IUIParameterProperties
     {
         Dictionary<string, Control> ControlsList { get; }
     }

@@ -3,7 +3,7 @@
     /// <summary>
     /// cell RC row, column properties
     /// </summary>
-    public interface IExcelRCLocationProperties : ILExcelInstanceProperties
+    public interface IExcelRCLocationProperties : IExcelInstanceProperties
     {
         /// <summary>
         /// cell row index

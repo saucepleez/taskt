@@ -1,6 +1,6 @@
 ﻿namespace taskt.Core.Automation.Commands
 {
-    public interface IDataTableColumnProperties : ILDataTableProperties, ILDataTableColumnPositionProperties
+    public interface IDataTableColumnProperties : IDataTableProperties, IDataTableColumnPositionProperties
     {
         // only imple
     }

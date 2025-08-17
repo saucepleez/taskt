@@ -3,7 +3,7 @@
     /// <summary>
     /// for handle List
     /// </summary>
-    public interface ICanHandleList : ILExpandableProperties
+    public interface ICanHandleList : IExpandableProperties
     {
         // nothing
     }

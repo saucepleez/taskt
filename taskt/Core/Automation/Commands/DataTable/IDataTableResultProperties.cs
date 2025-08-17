@@ -3,7 +3,7 @@
     /// <summary>
     /// Result is DataTable properties
     /// </summary>
-    public interface IDataTableResultProperties : ILResultProperties, ICanHandleDataTable
+    public interface IDataTableResultProperties : IResultProperties, ICanHandleDataTable
     {
         // only imple
     }

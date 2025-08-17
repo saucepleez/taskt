@@ -3,7 +3,7 @@
     /// <summary>
     /// Get From List properties
     /// </summary>
-    public interface IListGetFromListProperties : ILListProperties, ILResultProperties
+    public interface IListGetFromListProperties : IListProperties, IResultProperties
     {
         // only imple
     }

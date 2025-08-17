@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static List<string> ExpandUserVariableAsList(this ILListCreateFromListProperties command, Engine.AutomationEngineInstance engine)
+        public static List<string> ExpandUserVariableAsList(this IListCreateFromListProperties command, Engine.AutomationEngineInstance engine)
         {
             return command.ExpandUserVariableAsList(nameof(command.v_TargetList), engine);
         }
@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="list"></param>
         /// <param name="engine"></param>
-        public static void StoreListInUserVariable(this ILListCreateFromListProperties command, List<string> list, Engine.AutomationEngineInstance engine)
+        public static void StoreListInUserVariable(this IListCreateFromListProperties command, List<string> list, Engine.AutomationEngineInstance engine)
         {
             command.StoreListInUserVariable(list, nameof(command.v_NewList), engine);
         }

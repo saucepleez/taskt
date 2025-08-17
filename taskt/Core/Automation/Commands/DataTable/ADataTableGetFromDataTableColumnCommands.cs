@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for Get Something From DataTable Column commands
     /// </summary>
-    public abstract class ADataTableGetFromDataTableColumnCommands : ADataTableColumnCommands, ILResultProperties
+    public abstract class ADataTableGetFromDataTableColumnCommands : ADataTableColumnCommands, IResultProperties
     {
         [XmlAttribute]
         [PropertyParameterOrder(10000)]

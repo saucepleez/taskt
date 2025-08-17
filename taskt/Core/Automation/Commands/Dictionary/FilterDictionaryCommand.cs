@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class FilterDictionaryCommand : ADictionaryCreateFromDictionaryCommands, ILFilterValueProperties, IHaveDataTableElements
+    public sealed class FilterDictionaryCommand : ADictionaryCreateFromDictionaryCommands, IFilterValueProperties, IHaveDataTableElements
     {
         [XmlAttribute]
         //[PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]

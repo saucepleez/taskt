@@ -3,7 +3,7 @@
     /// <summary>
     /// DataTable Column Position Properties
     /// </summary>
-    public interface ILDataTableColumnPositionProperties : ILExpandableProperties
+    public interface IDataTableColumnPositionProperties : IExpandableProperties
     {
         /// <summary>
         /// Column Type (Index or ColumnName)

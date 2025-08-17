@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for Create Dictionary From Dictionary commands
     /// </summary>
-    public abstract class ADictionaryCreateFromDictionaryCommands : ScriptCommand, ILDictionaryCreateFromDictionary
+    public abstract class ADictionaryCreateFromDictionaryCommands : ScriptCommand, IDictionaryCreateFromDictionary
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]

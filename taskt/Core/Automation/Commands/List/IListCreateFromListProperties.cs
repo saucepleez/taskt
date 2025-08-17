@@ -3,7 +3,7 @@
     /// <summary>
     /// Create List from List properties
     /// </summary>
-    public interface ILListCreateFromListProperties : ICanHandleList, ILExpandableProperties
+    public interface IListCreateFromListProperties : ICanHandleList, IExpandableProperties
     {
         /// <summary>
         /// List variable name to Create New List

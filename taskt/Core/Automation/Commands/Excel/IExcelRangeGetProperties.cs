@@ -1,12 +1,12 @@
 ﻿namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// Result properties
+    /// excel Range get properties
     /// </summary>
-    public interface ILResultProperties
+    public interface IExcelRangeGetProperties : IExpandableProperties
     {
         /// <summary>
-        /// Variable Name to Store Result
+        /// variable name to store result
         /// </summary>
         string v_Result { get; set; }
     }

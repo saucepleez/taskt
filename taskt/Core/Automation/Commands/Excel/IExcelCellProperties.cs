@@ -3,7 +3,7 @@
     /// <summary>
     /// Excel **Single** Cell properties
     /// </summary>
-    public interface IExcelCellProperties : ILExcelInstanceProperties
+    public interface IExcelCellProperties : IExcelInstanceProperties
     {
         /// <summary>
         /// cell location

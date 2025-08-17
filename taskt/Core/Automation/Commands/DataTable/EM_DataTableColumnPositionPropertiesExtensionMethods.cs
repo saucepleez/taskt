@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (int, string) ExpandValueOrUserVariableAsDataTableColumn(this ILDataTableColumnPositionProperties command, DataTable table, Engine.AutomationEngineInstance engine)
+        public static (int, string) ExpandValueOrUserVariableAsDataTableColumn(this IDataTableColumnPositionProperties command, DataTable table, Engine.AutomationEngineInstance engine)
         {
             var sc = command.ToScriptCommand();
 

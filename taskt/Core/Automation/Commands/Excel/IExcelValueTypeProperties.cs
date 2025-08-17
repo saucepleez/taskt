@@ -3,7 +3,7 @@
     /// <summary>
     /// excel value type properties
     /// </summary>
-    public interface ILExcelValueTypeProperties : ILExpandableProperties
+    public interface IExcelValueTypeProperties : IExpandableProperties
     {
         /// <summary>
         /// value type

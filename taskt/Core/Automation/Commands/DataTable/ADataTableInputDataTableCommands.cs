@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for Input DataTable commands
     /// </summary>
-    public abstract class ADataTableInputDataTableCommands : ScriptCommand, ILDataTableProperties
+    public abstract class ADataTableInputDataTableCommands : ScriptCommand, IDataTableProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]

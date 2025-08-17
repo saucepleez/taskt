@@ -3,7 +3,7 @@
     /// <summary>
     /// for Excel RC Value Type properties
     /// </summary>
-    public interface IExcelRCValueTypeProperties : ILExcelValueTypeProperties
+    public interface IExcelRCValueTypeProperties : IExcelValueTypeProperties
     {
         // only implements
     }

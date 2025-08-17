@@ -3,7 +3,7 @@
     /// <summary>
     /// general position properties
     /// </summary>
-    public interface ILPositionProperties : ILExpandableProperties
+    public interface IPositionProperties : IExpandableProperties
     {
         /// <summary>
         /// x position

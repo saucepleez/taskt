@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for Create From DataTable commands
     /// </summary>
-    public abstract class ADataTableCreateFromDataTableCommands : ScriptCommand, ILDataTableCreateFromDataTableProperties
+    public abstract class ADataTableCreateFromDataTableCommands : ScriptCommand, IDataTableCreateFromDataTableProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]

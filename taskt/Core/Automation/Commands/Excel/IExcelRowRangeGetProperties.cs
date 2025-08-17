@@ -3,7 +3,7 @@
     /// <summary>
     /// row Range Get commands properties
     /// </summary>
-    public interface IExcelRowRangeGetProperties : IExcelRowRangeProperties, ILExcelRangeGetProperties
+    public interface IExcelRowRangeGetProperties : IExcelRowRangeProperties, IExcelRangeGetProperties
     {
         // only implements
     }

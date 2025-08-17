@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class FilterDataTableColumnByRowValueCommand : ADataTableCreateFromDataTableCommands, ILDataTableRowPositionProperties, ILFilterValueProperties, IHaveDataTableElements
+    public sealed class FilterDataTableColumnByRowValueCommand : ADataTableCreateFromDataTableCommands, IDataTableRowPositionProperties, IFilterValueProperties, IHaveDataTableElements
     {
         [XmlAttribute]
         //[PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]

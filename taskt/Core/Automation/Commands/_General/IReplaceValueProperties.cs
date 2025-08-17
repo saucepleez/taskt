@@ -5,7 +5,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// Replace value properties
     /// </summary>
-    public interface ILReplaceValueProperties : ILExpandableProperties
+    public interface IReplaceValueProperties : IExpandableProperties
     {
         /// <summary>
         /// Value Type (Text or Number)

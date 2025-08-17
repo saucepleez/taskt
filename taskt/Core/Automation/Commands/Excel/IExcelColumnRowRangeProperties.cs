@@ -3,7 +3,7 @@
     /// <summary>
     /// for Excel Column-Row Range (2D-Range) Properties
     /// </summary>
-    public interface IExcelColumnRowRangeProperties : ILExcelInstanceProperties, IExcelRCRangeProperties
+    public interface IExcelColumnRowRangeProperties : IExcelInstanceProperties, IExcelRCRangeProperties
     {
         /// <summary>
         /// column start index

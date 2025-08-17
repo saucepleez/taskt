@@ -3,7 +3,7 @@
     /// <summary>
     /// any window name commands properties
     /// </summary>
-    public interface ILAnyWindowNameProperties : ILExpandableProperties
+    public interface IAnyWindowNameProperties : IExpandableProperties
     {
         /// <summary>
         /// window name

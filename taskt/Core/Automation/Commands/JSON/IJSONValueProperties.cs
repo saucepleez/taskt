@@ -1,18 +1,18 @@
 ﻿namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// Math commands value-result
+    /// JSON Value properties
     /// </summary>
-    public interface ILMathValueResultProperties : ILExpandableProperties
+    public interface IJSONValueProperties : IExpandableProperties
     {
         /// <summary>
-        /// value
+        /// JSON Value
         /// </summary>
         string v_Value { get; set; }
 
         /// <summary>
-        /// variable name to store result
+        /// Type of JSON Value
         /// </summary>
-        string v_Result { get; set; }
+        string v_ValueType { get; set; }
     }
 }

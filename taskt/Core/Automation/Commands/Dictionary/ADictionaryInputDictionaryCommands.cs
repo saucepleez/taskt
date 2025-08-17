@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for Input Dictionary commands
     /// </summary>
-    public abstract class ADictionaryInputDictionaryCommands : ScriptCommand, ILDictionaryProperties
+    public abstract class ADictionaryInputDictionaryCommands : ScriptCommand, IDictionaryProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]

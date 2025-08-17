@@ -3,7 +3,7 @@
     /// <summary>
     /// Create Dictionary from Dictionary properties
     /// </summary>
-    public interface ILDictionaryCreateFromDictionary: ILExpandableProperties, ICanHandleDictionary
+    public interface IDictionaryCreateFromDictionary: IExpandableProperties, ICanHandleDictionary
     {
         /// <summary>
         /// Dictionary variable name to Create New Dictionary

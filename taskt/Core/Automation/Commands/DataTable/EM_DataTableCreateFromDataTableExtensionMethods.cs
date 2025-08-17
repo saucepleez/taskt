@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static DataTable ExpandUserVariableAsDataTable(this ILDataTableCreateFromDataTableProperties command, Engine.AutomationEngineInstance engine)
+        public static DataTable ExpandUserVariableAsDataTable(this IDataTableCreateFromDataTableProperties command, Engine.AutomationEngineInstance engine)
         {
             return command.ExpandUserVariableAsDataTable(nameof(command.v_TargetDataTable), engine);
         }
@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="table"></param>
         /// <param name="engine"></param>
-        public static void StoreDataTableInUserVariable(this ILDataTableCreateFromDataTableProperties command, DataTable table, Engine.AutomationEngineInstance engine)
+        public static void StoreDataTableInUserVariable(this IDataTableCreateFromDataTableProperties command, DataTable table, Engine.AutomationEngineInstance engine)
         {
             command.StoreDataTableInUserVariable(table, nameof(command.v_NewDataTable), engine);
         }

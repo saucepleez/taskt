@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static int ExpandValueOrUserVariableAsDataTableRow(this ILDataTableRowPositionProperties command, DataTable table, Engine.AutomationEngineInstance engine)
+        public static int ExpandValueOrUserVariableAsDataTableRow(this IDataTableRowPositionProperties command, DataTable table, Engine.AutomationEngineInstance engine)
         {
             // fix if row index empty
             if (string.IsNullOrEmpty(command.v_RowIndex))

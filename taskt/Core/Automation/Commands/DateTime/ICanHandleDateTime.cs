@@ -3,7 +3,7 @@
     /// <summary>
     /// for DateTime commands
     /// </summary>
-    public interface ICanHandleDateTime : ILExpandableProperties
+    public interface ICanHandleDateTime : IExpandableProperties
     {
     }
 }

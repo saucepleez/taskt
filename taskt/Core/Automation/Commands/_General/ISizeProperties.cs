@@ -3,7 +3,7 @@
     /// <summary>
     /// general size properties
     /// </summary>
-    public interface ILSizeProperties : ILExpandableProperties
+    public interface ISizeProperties : IExpandableProperties
     {
         /// <summary>
         /// width

@@ -3,7 +3,7 @@
     /// <summary>
     /// Json input properties
     /// </summary>
-    public interface ILJSONInputJSONProperties : ICanHandleJSON, ILExpandableProperties
+    public interface IJSONInputJSONProperties : ICanHandleJSON, IExpandableProperties
     {
         /// <summary>
         /// JSON Value or Variable Name

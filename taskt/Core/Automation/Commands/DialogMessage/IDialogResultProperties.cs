@@ -3,7 +3,7 @@
     /// <summary>
     /// for to get dialog result properties
     /// </summary>
-    public interface IDialogResultProperties : ILExpandableProperties
+    public interface IDialogResultProperties : IExpandableProperties
     {
         /// <summary>
         /// variable name to store dialog result

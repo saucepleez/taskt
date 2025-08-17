@@ -3,7 +3,7 @@
     /// <summary>
     /// JContainer properties
     /// </summary>
-    public interface IJSONInputJContainer : ILJSONInputJSONProperties, ICanHandleJContainer
+    public interface IJSONInputJContainer : IJSONInputJSONProperties, ICanHandleJContainer
     {
         // only imple
     }

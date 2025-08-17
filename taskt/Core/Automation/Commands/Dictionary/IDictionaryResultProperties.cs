@@ -3,7 +3,7 @@
     /// <summary>
     /// Result is Dictionary Properties
     /// </summary>
-    public interface IDictionaryResultProperties : ILResultProperties, ICanHandleDictionary
+    public interface IDictionaryResultProperties : IResultProperties, ICanHandleDictionary
     {
         // only imple
     }

@@ -1,6 +1,6 @@
 ﻿namespace taskt.Core.Automation.Commands
 {
-    public interface ITrignometricProperties : ILMathValueResultProperties
+    public interface ITrignometricProperties : IMathValueResultProperties
     {
         /// <summary>
         /// agnle type Radian or Degree

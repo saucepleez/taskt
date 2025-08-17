@@ -3,7 +3,7 @@
     /// <summary>
     /// text compare properties
     /// </summary>
-    public interface ITextCompareProperties : ILCompareProperties
+    public interface ITextCompareProperties : ICompareProperties
     {
         /// <summary>
         /// Trim Before Compare

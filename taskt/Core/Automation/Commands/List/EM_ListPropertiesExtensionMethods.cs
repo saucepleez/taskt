@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static List<string> ExpandUserVariableAsList(this ILListProperties command, Engine.AutomationEngineInstance engine)
+        public static List<string> ExpandUserVariableAsList(this IListProperties command, Engine.AutomationEngineInstance engine)
         {
             return command.ExpandUserVariableAsList(nameof(command.v_List), engine);
         }

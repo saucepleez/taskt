@@ -1,6 +1,6 @@
 ﻿namespace taskt.Core.Automation.Commands
 {
-    public interface ILExcelValueSetProperties : ILExpandableProperties
+    public interface IExcelValueSetProperties : IExpandableProperties
     {
         /// <summary>
         /// text to set

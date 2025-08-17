@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for Get something from JSON commands
     /// </summary>
-    public abstract class AJSONGetFromJSONCommands : AJSONInputJSONCommands, ILResultProperties
+    public abstract class AJSONGetFromJSONCommands : AJSONInputJSONCommands, IResultProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]

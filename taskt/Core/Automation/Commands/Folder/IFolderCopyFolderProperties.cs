@@ -3,7 +3,7 @@
     /// <summary>
     /// copy folder commands properties
     /// </summary>
-    public interface IFolderCopyFolderProperties : ILExpandableProperties
+    public interface IFolderCopyFolderProperties : IExpandableProperties
     {
         /// <summary>
         /// copy sub folder or not

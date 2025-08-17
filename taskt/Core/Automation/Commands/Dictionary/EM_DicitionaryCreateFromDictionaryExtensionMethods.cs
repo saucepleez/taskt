@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static Dictionary<string, string> ExpandUserVariableAsDictionary(this ILDictionaryCreateFromDictionary command, Engine.AutomationEngineInstance engine)
+        public static Dictionary<string, string> ExpandUserVariableAsDictionary(this IDictionaryCreateFromDictionary command, Engine.AutomationEngineInstance engine)
         {
             return command.ExpandUserVariableAsDictionary(nameof(command.v_TargetDictionary), engine);
         }
@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="dic"></param>
         /// <param name="parameterName"></param>
         /// <param name="engine"></param>
-        public static void StoreDictionaryInUserVariable(this ILDictionaryCreateFromDictionary command, Dictionary<string, string> dic, Engine.AutomationEngineInstance engine)
+        public static void StoreDictionaryInUserVariable(this IDictionaryCreateFromDictionary command, Dictionary<string, string> dic, Engine.AutomationEngineInstance engine)
         {
             command.StoreDictionaryInUserVariable(dic, nameof(command.v_NewDictionary), engine);
         }

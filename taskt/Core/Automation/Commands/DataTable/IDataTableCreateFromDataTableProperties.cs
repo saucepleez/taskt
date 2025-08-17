@@ -3,7 +3,7 @@
     /// <summary>
     /// Create From DataTable properties
     /// </summary>
-    public interface ILDataTableCreateFromDataTableProperties : ILExpandableProperties, ICanHandleDataTable
+    public interface IDataTableCreateFromDataTableProperties : IExpandableProperties, ICanHandleDataTable
     {
         /// <summary>
         /// DataTable Variable Name to Create DataTable

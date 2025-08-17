@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for List Input Commands
     /// </summary>
-    public abstract class AListInputListCommands : ScriptCommand, ILListProperties
+    public abstract class AListInputListCommands : ScriptCommand, IListProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]

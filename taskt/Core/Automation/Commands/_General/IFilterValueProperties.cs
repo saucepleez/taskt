@@ -5,7 +5,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// Filter Value Properties
     /// </summary>
-    public interface ILFilterValueProperties : ILExpandableProperties
+    public interface IFilterValueProperties : IExpandableProperties
     {
         /// <summary>
         /// Value Type (Text or Number)

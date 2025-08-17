@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for Input JSON commands
     /// </summary>
-    public abstract class AJSONInputJSONCommands : ScriptCommand, ILJSONInputJSONProperties
+    public abstract class AJSONInputJSONCommands : ScriptCommand, IJSONInputJSONProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_InputJSONName))]

@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static DataTable ExpandUserVariableAsDataTable(this ILDataTableProperties command, Engine.AutomationEngineInstance engine)
+        public static DataTable ExpandUserVariableAsDataTable(this IDataTableProperties command, Engine.AutomationEngineInstance engine)
         {
             return command.ExpandUserVariableAsDataTable(nameof(command.v_DataTable), engine);
         }

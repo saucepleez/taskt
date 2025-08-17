@@ -3,7 +3,7 @@
     /// <summary>
     /// window name commands properties
     /// </summary>
-    public interface IWindowNameProperties : ILAnyWindowNameProperties
+    public interface IWindowNameProperties : IAnyWindowNameProperties
     {
         /// <summary>
         /// match method (first, last, index)

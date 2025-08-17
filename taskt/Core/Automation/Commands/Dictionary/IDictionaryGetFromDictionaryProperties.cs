@@ -3,7 +3,7 @@
     /// <summary>
     /// Get something from Dictionary properties
     /// </summary>
-    public interface IDictionaryGetFromDictionaryProperties : ILResultProperties
+    public interface IDictionaryGetFromDictionaryProperties : IResultProperties
     {
         //string v_Result { get; set; }
     }

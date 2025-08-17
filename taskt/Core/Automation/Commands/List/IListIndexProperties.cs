@@ -3,7 +3,7 @@
     /// <summary>
     /// List Index properties
     /// </summary>
-    public interface IListIndexProperties : ILListProperties
+    public interface IListIndexProperties : IListProperties
     {
         /// <summary>
         /// List Index

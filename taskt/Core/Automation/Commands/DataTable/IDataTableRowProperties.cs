@@ -3,7 +3,7 @@
     /// <summary>
     /// DataTable Row Properties
     /// </summary>
-    public interface IDataTableRowProperties : ILDataTableProperties, ILDataTableRowPositionProperties
+    public interface IDataTableRowProperties : IDataTableProperties, IDataTableRowPositionProperties
     {
         // no imple
     }
