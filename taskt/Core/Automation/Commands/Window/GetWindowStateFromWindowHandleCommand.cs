@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -26,9 +27,38 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(5500)]
         public string v_WindowState { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Store Window State Text")]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("Window State Text", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(true, "State Text")]
+        public string v_WindowStateText { get; set; }
+
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         //public string v_WaitTime { get; set; }
+
+        private struct WINDOWPLACEMENT
+        {
+            uint length;
+            uint flags;
+            public uint showCmd;
+            System.Drawing.Point ptMinPosition;
+            System.Drawing.Point ptMaxPosition;
+            RECT rcNormalPosition;
+            RECT rcDevice;
+        }
+
+        /// <summary>
+        /// get window state
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="lpwndpl"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
 
         public GetWindowStateFromWindowHandleCommand()
         {
@@ -36,13 +66,38 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowControls.WindowHandleAction(this, engine,
-                new Action<IntPtr>(whnd =>
+            //WindowControls.WindowHandleAction(this, engine,
+            //    new Action<IntPtr>(whnd =>
+            //    {
+            //        var state = WindowControls.GetWindowState(whnd);
+            //        state.StoreInUserVariable(engine, v_WindowState);
+            //    })
+            //);
+            var whnd = this.GetWindowHandle(engine);
+            var info = new WINDOWPLACEMENT();
+            GetWindowPlacement(whnd, ref info);
+            ((int)info.showCmd).StoreInUserVariable(engine, v_WindowState);
+
+            if (!string.IsNullOrEmpty(v_WindowStateText))
+            {
+                string txt;
+                switch (info.showCmd)
                 {
-                    var state = WindowControls.GetWindowState(whnd);
-                    state.StoreInUserVariable(engine, v_WindowState);
-                })
-            );
+                    case 1:
+                        txt = "Restore";
+                        break;
+                    case 2:
+                        txt = "Minimize";
+                        break;
+                    case 3:
+                        txt = "Maximize";
+                        break;
+                    default:
+                        txt = "Unknown";
+                        break;
+                }
+                txt.StoreInUserVariable(engine, v_WindowStateText);
+            }
         }
     }
 }
