@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.Window;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -29,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         [PropertyIsOptional(true, "0")]
+        [PropertyValidationRule("WaitTime", PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyFirstValue("0")]
         public override string v_WaitTimeForWindow { get; set; }
 
@@ -38,16 +40,25 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowControls.WindowHandleAction(this, engine,
-                new Action<IntPtr>(whnd =>
-                {
-                    true.StoreInUserVariable(engine, v_Result);
-                }),
-                new Action<Exception>(ex =>
-                {
-                    false.StoreInUserVariable(engine, v_Result);
-                })
-            );
+            //WindowControls.WindowHandleAction(this, engine,
+            //    new Action<IntPtr>(whnd =>
+            //    {
+            //        true.StoreInUserVariable(engine, v_Result);
+            //    }),
+            //    new Action<Exception>(ex =>
+            //    {
+            //        false.StoreInUserVariable(engine, v_Result);
+            //    })
+            //);
+            try
+            {
+                this.GetWindowHandle(engine);
+                true.StoreInUserVariable(engine, v_Result);
+            }
+            catch
+            {
+                false.StoreInUserVariable(engine, v_Result);
+            }
         }
     }
 }

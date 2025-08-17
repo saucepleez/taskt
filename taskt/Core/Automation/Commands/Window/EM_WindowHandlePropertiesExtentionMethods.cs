@@ -56,6 +56,13 @@ namespace taskt.Core.Automation.Commands.Window
             return (command.ExpandValueOrUserVariableAsWindowHandle(engine), command.ExpandValueOrUserVariableAsWaitTimeForWindowHandle(engine));
         }
 
+        /// <summary>
+        /// get window handle
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static IntPtr GetWindowHandle(this IWindowHandleProperties command, AutomationEngineInstance engine)
         {
             (var whnd, var waitTime) = command.ExpandValueOrUserVariableAsWindowHandleAndWaitTime(engine);
