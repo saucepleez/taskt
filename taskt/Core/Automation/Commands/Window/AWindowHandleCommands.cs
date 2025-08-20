@@ -26,6 +26,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "Window Name")]
+        [PropertyParameterOrder(10000)]
         public virtual string v_WindowNameResult { get; set; }
 
         public AWindowHandleCommands()
