@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium.BiDi.Network;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -357,7 +356,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Execute")]
         [PropertyUISelectionOption("Restore")]
         [PropertyUISelectionOption("Set Zero")]
-        [PropertyIsOptional(true, "Execute")]
+        [PropertyIsOptional(true, "Restore")]
         [PropertyDisplayText(false, "When Window Is Minimized")]
         public static string v_WhenWindowIsMinimized { get; }
 
@@ -369,7 +368,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Execute")]
         [PropertyUISelectionOption("Restore")]
         [PropertyUISelectionOption("Set Zero")]
-        [PropertyIsOptional(true, "Execute")]
+        [PropertyIsOptional(true, "Restore")]
         [PropertyDisplayText(false, "When Window Is Maximized")]
         public static string v_WhenWindowIsMaximized { get; }
 
