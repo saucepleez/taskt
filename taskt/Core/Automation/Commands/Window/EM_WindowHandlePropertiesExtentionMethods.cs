@@ -134,7 +134,7 @@ namespace taskt.Core.Automation.Commands
             {
                 actionFunc(handle);
 
-                if (string.IsNullOrEmpty(command.v_WindowNameResult))
+                if (!string.IsNullOrEmpty(command.v_WindowNameResult))
                 {
                     command.StoreWindowTitleInUserVariable(GetWindowName(handle), engine);
                 }
