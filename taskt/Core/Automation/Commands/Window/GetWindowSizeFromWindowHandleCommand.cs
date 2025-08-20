@@ -40,41 +40,20 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         //public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMinimized))]
+        [PropertyParameterOrder(9000)]
+        public string v_WhenWindowIsMinimized {  get; set; }
+
         public GetWindowSizeFromWindowHandleCommand()
         {
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //WindowControls.WindowHandleAction(this, engine,
-            //    new Action<IntPtr>(whnd =>
-            //    {
-            //        var rct = WindowControls.GetWindowRect(whnd);
-
-            //        if (!string.IsNullOrEmpty(v_Width))
-            //        {
-            //            (rct.right - rct.left).StoreInUserVariable(engine, v_Width);
-            //        }
-            //        if (!string.IsNullOrEmpty(v_Height))
-            //        {
-            //            (rct.bottom - rct.top).StoreInUserVariable(engine, v_Height);
-            //        }
-            //    })
-            //);
-            //var whnd = this.GetWindowHandle(engine);
-            //(var width, var height) = EM_WindowSizePropertiesExtensionMethods.GetWindowSize(whnd);
-            //if (!string.IsNullOrEmpty(v_Width))
-            //{
-            //    width.StoreInUserVariable(engine, v_Width);
-            //}
-            //if (!string.IsNullOrEmpty(v_Height))
-            //{
-            //    height.StoreInUserVariable(engine, v_Height);
-            //}
-
-            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
+            void GetWindowSizeProcess(IntPtr h)
             {
-                (var width, var height) = EM_WindowSizePropertiesExtensionMethods.GetWindowSize(whnd);
+                (var width, var height) = EM_WindowSizePropertiesExtensionMethods.GetWindowSize(h);
                 if (!string.IsNullOrEmpty(v_Width))
                 {
                     width.StoreInUserVariable(engine, v_Width);
@@ -82,6 +61,46 @@ namespace taskt.Core.Automation.Commands
                 if (!string.IsNullOrEmpty(v_Height))
                 {
                     height.StoreInUserVariable(engine, v_Height);
+                }
+            }
+
+            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
+            {
+                if (EM_WindowHandlePropertiesExtentionMethods.IsIconic(whnd))
+                {
+                    switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenWindowIsMinimized), engine))
+                    {
+                        case "execute":
+                            GetWindowSizeProcess(whnd);
+                            break;
+                        case "restore":
+                            var setRestore = new SetWindowStateByWindowHandleCommand
+                            {
+                                v_WindowHandle = whnd.ToString(),
+                                v_WindowState = "Restore",
+                            };
+                            setRestore.RunCommand(engine);
+                            GetWindowSizeProcess(whnd);
+                            break;
+                        case "set zero":
+                            if (!string.IsNullOrEmpty(v_Width))
+                            {
+                                0.StoreInUserVariable(engine, v_Width);
+                            }
+                            if (!string.IsNullOrEmpty(v_Height))
+                            {
+                                0.StoreInUserVariable(engine, v_Height);
+                            }
+                            break;
+                        case "ignore":
+                            break;
+                        case "error":
+                            throw new Exception($"Error. Target Window is Minimized. Handle: '{v_WindowHandle}', Expand Value: '{whnd}'");
+                    }
+                }
+                else
+                {
+                    GetWindowSizeProcess(whnd);
                 }
             }));
         }
