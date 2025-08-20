@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenQA.Selenium.BiDi.Network;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -347,6 +348,30 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Window State", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "State")]
         public static string v_WindowState { get; }
+
+        /// <summary>
+        /// when target window is minimized
+        /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
+        [PropertyDescription("When Window Is Minimized")]
+        [PropertyUISelectionOption("Execute")]
+        [PropertyUISelectionOption("Restore")]
+        [PropertyUISelectionOption("Set Zero")]
+        [PropertyIsOptional(true, "Execute")]
+        [PropertyDisplayText(false, "When Window Is Minimized")]
+        public static string v_WhenWindowIsMinimized { get; }
+
+        /// <summary>
+        /// when target window is maximized
+        /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
+        [PropertyDescription("When Window Is Maximized")]
+        [PropertyUISelectionOption("Execute")]
+        [PropertyUISelectionOption("Restore")]
+        [PropertyUISelectionOption("Set Zero")]
+        [PropertyIsOptional(true, "Execute")]
+        [PropertyDisplayText(false, "When Window Is Maximized")]
+        public static string v_WhenWindowIsMaximized { get; }
 
         #endregion
 
