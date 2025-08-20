@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text;
 using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
@@ -11,8 +13,26 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         /// <param name="hWnd"></param>
         /// <returns></returns>
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         private static extern bool IsWindow(IntPtr hWnd);
+
+        /// <summary>
+        /// get window title length
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern int GetWindowTextLengthW(IntPtr hWnd);
+
+        /// <summary>
+        /// get window title
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="text"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern int GetWindowTextW(IntPtr hWnd, StringBuilder text, int count);
 
         /// <summary>
         /// expand value or user variable as WindowHandle
@@ -57,13 +77,24 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
+        /// store window title to user variable
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="title"></param>
+        /// <param name="engine"></param>
+        public static void StoreWindowTitleInUserVariable(this IWindowHandleProperties command, string title, AutomationEngineInstance engine)
+        {
+            title.StoreInUserVariable(engine, nameof(command.v_WindowNameResult));
+        }
+
+        /// <summary>
         /// get window handle
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static IntPtr GetWindowHandle(this IWindowHandleProperties command, AutomationEngineInstance engine)
+        public static IntPtr GetWindowHandle(this IWindowHandleProperties command, AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action errorFunc = null)
         {
             (var whnd, var waitTime) = command.ExpandValueOrUserVariableAsWindowHandleAndWaitTime(engine);
             var ret = WaitControls.WaitProcess(waitTime, "WindowHandle",
@@ -81,11 +112,25 @@ namespace taskt.Core.Automation.Commands
             );
             if (ret is IntPtr handle)
             {
+                actionFunc(handle);
+
+                int titleLengthA = GetWindowTextLengthW(whnd);
+                StringBuilder title = new StringBuilder(titleLengthA + 1);
+                GetWindowTextW(whnd, title, title.Capacity);
+                command.StoreWindowTitleInUserVariable(title.ToString(), engine);
                 return handle;
             }
             else
             {
-                throw new Exception($"Window Handle does not Exists. Value: '{command.v_WindowHandle}', Expand Value: '{whnd}'");
+                if (errorFunc != null)
+                {
+                    throw new Exception($"Window Handle does not Exists. Value: '{command.v_WindowHandle}', Expand Value: '{whnd}'");
+                }
+                else
+                {
+                    errorFunc();
+                    return IntPtr.Zero;
+                }
             }
         }
     }

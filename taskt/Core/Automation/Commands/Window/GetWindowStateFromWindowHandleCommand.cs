@@ -78,35 +78,67 @@ namespace taskt.Core.Automation.Commands
             //        state.StoreInUserVariable(engine, v_WindowState);
             //    })
             //);
-            var whnd = this.GetWindowHandle(engine);
-            var info = new WINDOWPLACEMENT();
-            GetWindowPlacement(whnd, ref info);
+            //var whnd = this.GetWindowHandle(engine);
+            //var info = new WINDOWPLACEMENT();
+            //GetWindowPlacement(whnd, ref info);
 
-            if (!string.IsNullOrEmpty(v_WindowState))
-            {
-                ((int)info.showCmd).StoreInUserVariable(engine, v_WindowState);
-            }
+            //if (!string.IsNullOrEmpty(v_WindowState))
+            //{
+            //    ((int)info.showCmd).StoreInUserVariable(engine, v_WindowState);
+            //}
             
-            if (!string.IsNullOrEmpty(v_WindowStateText))
+            //if (!string.IsNullOrEmpty(v_WindowStateText))
+            //{
+            //    string txt;
+            //    switch (info.showCmd)
+            //    {
+            //        case 1:
+            //            txt = "Restore";
+            //            break;
+            //        case 2:
+            //            txt = "Minimize";
+            //            break;
+            //        case 3:
+            //            txt = "Maximize";
+            //            break;
+            //        default:
+            //            txt = "Unknown";
+            //            break;
+            //    }
+            //    txt.StoreInUserVariable(engine, v_WindowStateText);
+            //}
+
+            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
             {
-                string txt;
-                switch (info.showCmd)
+                var info = new WINDOWPLACEMENT();
+                GetWindowPlacement(whnd, ref info);
+
+                if (!string.IsNullOrEmpty(v_WindowState))
                 {
-                    case 1:
-                        txt = "Restore";
-                        break;
-                    case 2:
-                        txt = "Minimize";
-                        break;
-                    case 3:
-                        txt = "Maximize";
-                        break;
-                    default:
-                        txt = "Unknown";
-                        break;
+                    ((int)info.showCmd).StoreInUserVariable(engine, v_WindowState);
                 }
-                txt.StoreInUserVariable(engine, v_WindowStateText);
-            }
+
+                if (!string.IsNullOrEmpty(v_WindowStateText))
+                {
+                    string txt;
+                    switch (info.showCmd)
+                    {
+                        case 1:
+                            txt = "Restore";
+                            break;
+                        case 2:
+                            txt = "Minimize";
+                            break;
+                        case 3:
+                            txt = "Maximize";
+                            break;
+                        default:
+                            txt = "Unknown";
+                            break;
+                    }
+                    txt.StoreInUserVariable(engine, v_WindowStateText);
+                }
+            }));
         }
     }
 }

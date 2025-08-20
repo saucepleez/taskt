@@ -101,40 +101,77 @@ namespace taskt.Core.Automation.Commands
             //    })
             //);
 
-            var whnd = this.GetWindowHandle(engine);
-            var r = EM_WindowRECTPropertiesExtentionMethods.GetWindowRect(whnd);
-            int x = 0, y = 0;
-            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PositionBase), engine))
+            //var whnd = this.GetWindowHandle(engine);
+            //var r = EM_WindowRECTPropertiesExtentionMethods.GetWindowRect(whnd);
+            //int x = 0, y = 0;
+            //switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PositionBase), engine))
+            //{
+            //    case "top left":
+            //        x = r.left;
+            //        y = r.top;
+            //        break;
+            //    case "bottom right":
+            //        x = r.right;
+            //        y = r.bottom;
+            //        break;
+            //    case "top right":
+            //        x = r.right;
+            //        y = r.top;
+            //        break;
+            //    case "bottom left":
+            //        x = r.left;
+            //        y = r.bottom;
+            //        break;
+            //    case "center":
+            //        x = (r.right + r.left) / 2;
+            //        y = (r.top + r.bottom) / 2;
+            //        break;
+            //}
+            //if (!string.IsNullOrEmpty(v_XPosition))
+            //{
+            //    x.StoreInUserVariable(engine, v_XPosition);
+            //}
+            //if (!string.IsNullOrEmpty(v_YPosition))
+            //{
+            //    y.StoreInUserVariable(engine, v_YPosition);
+            //}
+
+            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
             {
-                case "top left":
-                    x = r.left;
-                    y = r.top;
-                    break;
-                case "bottom right":
-                    x = r.right;
-                    y = r.bottom;
-                    break;
-                case "top right":
-                    x = r.right;
-                    y = r.top;
-                    break;
-                case "bottom left":
-                    x = r.left;
-                    y = r.bottom;
-                    break;
-                case "center":
-                    x = (r.right + r.left) / 2;
-                    y = (r.top + r.bottom) / 2;
-                    break;
-            }
-            if (!string.IsNullOrEmpty(v_XPosition))
-            {
-                x.StoreInUserVariable(engine, v_XPosition);
-            }
-            if (!string.IsNullOrEmpty(v_YPosition))
-            {
-                y.StoreInUserVariable(engine, v_YPosition);
-            }
+                var r = EM_WindowRECTPropertiesExtentionMethods.GetWindowRect(whnd);
+                int x = 0, y = 0;
+                switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PositionBase), engine))
+                {
+                    case "top left":
+                        x = r.left;
+                        y = r.top;
+                        break;
+                    case "bottom right":
+                        x = r.right;
+                        y = r.bottom;
+                        break;
+                    case "top right":
+                        x = r.right;
+                        y = r.top;
+                        break;
+                    case "bottom left":
+                        x = r.left;
+                        y = r.bottom;
+                        break;
+                    case "center":
+                        x = (r.right + r.left) / 2;
+                        y = (r.top + r.bottom) / 2;
+                        break;
+                }
+                if (!string.IsNullOrEmpty(v_XPosition))
+                {
+                    x.StoreInUserVariable(engine, v_XPosition);
+                }
+                if (!string.IsNullOrEmpty(v_YPosition))
+                {
+                    y.StoreInUserVariable(engine, v_YPosition);
+                }
+            }));
         }
     }
 }

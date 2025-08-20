@@ -61,16 +61,29 @@ namespace taskt.Core.Automation.Commands
             //        }
             //    })
             //);
-            var whnd = this.GetWindowHandle(engine);
-            (var width, var height) = EM_WindowSizePropertiesExtensionMethods.GetWindowSize(whnd);
-            if (!string.IsNullOrEmpty(v_Width))
+            //var whnd = this.GetWindowHandle(engine);
+            //(var width, var height) = EM_WindowSizePropertiesExtensionMethods.GetWindowSize(whnd);
+            //if (!string.IsNullOrEmpty(v_Width))
+            //{
+            //    width.StoreInUserVariable(engine, v_Width);
+            //}
+            //if (!string.IsNullOrEmpty(v_Height))
+            //{
+            //    height.StoreInUserVariable(engine, v_Height);
+            //}
+
+            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
             {
-                width.StoreInUserVariable(engine, v_Width);
-            }
-            if (!string.IsNullOrEmpty(v_Height))
-            {
-                height.StoreInUserVariable(engine, v_Height);
-            }
+                (var width, var height) = EM_WindowSizePropertiesExtensionMethods.GetWindowSize(whnd);
+                if (!string.IsNullOrEmpty(v_Width))
+                {
+                    width.StoreInUserVariable(engine, v_Width);
+                }
+                if (!string.IsNullOrEmpty(v_Height))
+                {
+                    height.StoreInUserVariable(engine, v_Height);
+                }
+            }));
         }
     }
 }

@@ -53,18 +53,28 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         //public string v_WaitTime { get; set; }
 
+        //public string v_WindowTitleResult {get;set;}
+
         public ActivateWindowByWindowHandleCommand()
         {
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var whnd = this.GetWindowHandle(engine);
-            if (IsIconic(whnd)) 
+            //var whnd = this.GetWindowHandle(engine);
+            //if (IsIconic(whnd)) 
+            //{
+            //    SetWindowState(whnd, WINDOW_NORMAL);
+            //}
+            //SetForegroundWindow(whnd);
+            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
             {
-                SetWindowState(whnd, WINDOW_NORMAL);
-            }
-            SetForegroundWindow(whnd);
+                if (IsIconic(whnd))
+                {
+                    SetWindowState(whnd, WINDOW_NORMAL);
+                }
+                SetForegroundWindow(whnd);
+            }));
         }
     }
 }

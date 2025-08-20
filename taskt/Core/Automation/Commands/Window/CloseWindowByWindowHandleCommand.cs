@@ -23,6 +23,8 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         //public string v_WaitTime { get; set; }
 
+        //public string v_WindowTitleResult {get;set;}
+
         /// <summary>
         /// for close window by whnd
         /// </summary>
@@ -51,8 +53,13 @@ namespace taskt.Core.Automation.Commands
             //        WindowControls.CloseWindow(whnd);
             //    })
             //);
-            var whnd = this.GetWindowHandle(engine);
-            SendMessage(whnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+            //var whnd = this.GetWindowHandle(engine);
+            //SendMessage(whnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+
+            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
+            {
+                SendMessage(whnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+            }));
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Windows.Input;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -89,36 +88,37 @@ namespace taskt.Core.Automation.Commands
             //    })
             //);
 
-            var whnd = this.GetWindowHandleAndWait(engine);
-
-            int state = 0;
-            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WindowState), engine))
+            this.GetWindowHandleAndWait(engine, new Action<IntPtr>((whnd) =>
             {
-                case "maximize":
-                    state = MAXIMIZE;
-                    break;
-                case "minimize":
-                    state = MINIMIZE;
-                    break;
-                case "restore":
-                    state = RESTORE;
-                    break;
-                case "3":
-                    state = MAXIMIZE;
-                    break;
-                case "2":
-                    state = MINIMIZE;
-                    break;
-                case "1":
-                    state = RESTORE;
-                    break;
-            }
+                int state = 0;
+                switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WindowState), engine))
+                {
+                    case "maximize":
+                        state = MAXIMIZE;
+                        break;
+                    case "minimize":
+                        state = MINIMIZE;
+                        break;
+                    case "restore":
+                        state = RESTORE;
+                        break;
+                    case "3":
+                        state = MAXIMIZE;
+                        break;
+                    case "2":
+                        state = MINIMIZE;
+                        break;
+                    case "1":
+                        state = RESTORE;
+                        break;
+                }
 
-            if (IsIconic(whnd) && (state != MINIMIZE))
-            {
-                ShowWindowAsync(whnd, state);
-            }
-            ShowWindow(whnd, state);
+                if (IsIconic(whnd) && (state != MINIMIZE))
+                {
+                    ShowWindowAsync(whnd, state);
+                }
+                ShowWindow(whnd, state);
+            }));
         }
     }
 }

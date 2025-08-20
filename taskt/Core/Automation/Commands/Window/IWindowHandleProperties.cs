@@ -14,5 +14,10 @@
         /// wait time for window
         /// </summary>
         string v_WaitTimeForWindow { get; set; }
+
+        /// <summary>
+        /// window name
+        /// </summary>
+        string v_WindowNameResult { get; set; }
     }
 }

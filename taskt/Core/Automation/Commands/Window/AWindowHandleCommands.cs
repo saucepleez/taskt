@@ -20,6 +20,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(6000)]
         public  virtual string v_WaitTimeForWindow { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Store Window Name")]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Window Name")]
+        public virtual string v_WindowNameResult { get; set; }
+
         public AWindowHandleCommands()
         {
         }

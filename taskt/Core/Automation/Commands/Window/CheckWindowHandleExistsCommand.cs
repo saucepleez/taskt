@@ -34,6 +34,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
         public override string v_WaitTimeForWindow { get; set; }
 
+        //public string v_WindowTitleResult {get;set;}
+
         public CheckWindowHandleExistsCommand()
         {
         }
@@ -50,15 +52,25 @@ namespace taskt.Core.Automation.Commands
             //        false.StoreInUserVariable(engine, v_Result);
             //    })
             //);
-            try
-            {
-                this.GetWindowHandle(engine);
-                true.StoreInUserVariable(engine, v_Result);
-            }
-            catch
-            {
-                false.StoreInUserVariable(engine, v_Result);
-            }
+            //try
+            //{
+            //    this.GetWindowHandle(engine);
+            //    true.StoreInUserVariable(engine, v_Result);
+            //}
+            //catch
+            //{
+            //    false.StoreInUserVariable(engine, v_Result);
+            //}
+            this.GetWindowHandle(engine,
+                new Action<IntPtr>((whnd) =>
+                {
+                    true.StoreInUserVariable(engine, v_Result);
+                }),
+                new Action(() =>
+                {
+                    false.StoreInUserVariable(engine, v_Result);
+                })
+            );
         }
     }
 }

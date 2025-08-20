@@ -35,6 +35,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
         public override string v_WaitTimeForWindow { get; set; }
 
+        //public string v_WindowTitleResult {get;set;}
+
         public GetProcessNameFromWindowHandleCommand()
         {
         }
@@ -48,9 +50,15 @@ namespace taskt.Core.Automation.Commands
             //        proc.ProcessName.StoreInUserVariable(engine, v_Result);
             //    })
             //);
-            var whnd = this.GetWindowHandle(engine);
-            var proc = Process.GetProcesses().Where(p => (p.MainWindowHandle == whnd)).First();
-            proc.ProcessName.StoreInUserVariable(engine, v_Result);
+            //var whnd = this.GetWindowHandle(engine);
+            //var proc = Process.GetProcesses().Where(p => (p.MainWindowHandle == whnd)).First();
+            //proc.ProcessName.StoreInUserVariable(engine, v_Result);
+
+            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
+            {
+                var proc = Process.GetProcesses().Where(p => (p.MainWindowHandle == whnd)).First();
+                proc.ProcessName.StoreInUserVariable(engine, v_Result);
+            }));
         }
     }
 }
