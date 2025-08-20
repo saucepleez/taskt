@@ -171,6 +171,15 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterOrder(5000)]
         public static string v_WaitTime { get; }
 
+        /// <summary>
+        /// wait time between find the window and execute action
+        /// </summary>
+        [PropertyVirtualProperty(nameof(WaitControls), nameof(WaitControls.v_WaitTime))]
+        [PropertyDescription("Wait Time between Finding the Window and Executing Action (sec)")]
+        [PropertyIsOptional(true, "0")]
+        [PropertyFirstValue("0")]
+        public static string v_WaitTimeBetweenFindAndAction { get; }
+
         ///// <summary>
         ///// window wait time allows 0
         ///// </summary>
@@ -317,6 +326,27 @@ namespace taskt.Core.Automation.Commands
         //[PropertyTextBoxSetting(1, false)]
         //[PropertyParameterOrder(5000)]
         public static string v_InputYPosition { get; }
+
+        /// <summary>
+        /// window state
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("State of the Window")]
+        [PropertyUISelectionOption("Maximize")]
+        [PropertyUISelectionOption("Minimize")]
+        [PropertyUISelectionOption("Restore")]
+        [PropertyUISelectionOption("3")]
+        [PropertyUISelectionOption("2")]
+        [PropertyUISelectionOption("1")]
+        [PropertyDetailSampleUsage("**Maximize**", "Specifiy Maximize")]
+        [PropertyDetailSampleUsage("**3**", "Specifiy Maximize")]
+        [PropertyDetailSampleUsage("**2**", "Specifiy Minimize")]
+        [PropertyDetailSampleUsage("**1**", "Specifiy Restore")]
+        [PropertyDetailSampleUsage("**{{{vState}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        [InputSpecification("Window State Text or Number", true)]
+        [PropertyValidationRule("Window State", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "State")]
+        public static string v_WindowState { get; }
 
         #endregion
 

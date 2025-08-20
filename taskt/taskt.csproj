@@ -461,8 +461,11 @@
     <Compile Include="Core\Automation\Commands\List\GetListWithDuplicateItemsRemovedCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\SliceListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\CheckNumberCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\AWindowHandleActionBaseCommands.cs" />
+    <Compile Include="Core\Automation\Commands\Window\EM_WindowHandleActionBasePropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowHandlePropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowRECTPropertiesExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Window\IWindowHandleActionBasePropeties.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowRECTProperties.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\CompareNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\TextCompareSelectMethodControls.cs" />

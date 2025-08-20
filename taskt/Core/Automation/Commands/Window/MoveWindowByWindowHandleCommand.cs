@@ -62,6 +62,8 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         //public string v_WaitTime { get; set; }
 
+        //public string v_WaintTimeFindAndAction {get; set;}
+
         public MoveWindowByWindowHandleCommand()
         {
         }
