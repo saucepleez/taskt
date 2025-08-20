@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands
 
             this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
             {
-                v_WindowNameResult.StoreInUserVariable(engine, v_Result);
+                EM_WindowHandlePropertiesExtentionMethods.GetWindowName(whnd).StoreInUserVariable(engine, v_Result);
             }));
         }
     }

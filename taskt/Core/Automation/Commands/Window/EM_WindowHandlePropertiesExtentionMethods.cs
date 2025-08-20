@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using taskt.Core.Automation.Engine;
@@ -41,6 +40,19 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         [DllImport("user32.dll")]
         public static extern bool IsIconic(IntPtr hWnd);
+
+        /// <summary>
+        /// get window name
+        /// </summary>
+        /// <param name="wHnd"></param>
+        /// <returns></returns>
+        public static string GetWindowName(IntPtr wHnd)
+        {
+            int titleLengthA = GetWindowTextLengthW(wHnd);
+            StringBuilder title = new StringBuilder(titleLengthA + 1);
+            GetWindowTextW(wHnd, title, title.Capacity);
+            return title.ToString();
+        }
 
         /// <summary>
         /// expand value or user variable as WindowHandle
@@ -92,7 +104,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         public static void StoreWindowTitleInUserVariable(this IWindowHandleProperties command, string title, AutomationEngineInstance engine)
         {
-            title.StoreInUserVariable(engine, nameof(command.v_WindowNameResult));
+            title.StoreInUserVariable(engine, command.v_WindowNameResult);
         }
 
         /// <summary>
@@ -122,10 +134,10 @@ namespace taskt.Core.Automation.Commands
             {
                 actionFunc(handle);
 
-                int titleLengthA = GetWindowTextLengthW(whnd);
-                StringBuilder title = new StringBuilder(titleLengthA + 1);
-                GetWindowTextW(whnd, title, title.Capacity);
-                command.StoreWindowTitleInUserVariable(title.ToString(), engine);
+                if (string.IsNullOrEmpty(command.v_WindowNameResult))
+                {
+                    command.StoreWindowTitleInUserVariable(GetWindowName(handle), engine);
+                }
                 return handle;
             }
             else
