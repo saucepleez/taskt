@@ -35,6 +35,14 @@ namespace taskt.Core.Automation.Commands
         private static extern int GetWindowTextW(IntPtr hWnd, StringBuilder text, int count);
 
         /// <summary>
+        /// check window is minimize
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern bool IsIconic(IntPtr hWnd);
+
+        /// <summary>
         /// expand value or user variable as WindowHandle
         /// </summary>
         /// <param name="command"></param>

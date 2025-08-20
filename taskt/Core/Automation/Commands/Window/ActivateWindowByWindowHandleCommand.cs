@@ -16,14 +16,6 @@ namespace taskt.Core.Automation.Commands
     public sealed class ActivateWindowByWindowHandleCommand : AWindowHandleCommands
     {
         /// <summary>
-        /// check window is minimum
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <returns></returns>
-        [DllImport("user32.dll")]
-        private static extern bool IsIconic(IntPtr hWnd);
-
-        /// <summary>
         /// set window state
         /// </summary>
         /// <param name="hWnd"></param>
@@ -69,7 +61,7 @@ namespace taskt.Core.Automation.Commands
             //SetForegroundWindow(whnd);
             this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
             {
-                if (IsIconic(whnd))
+                if (EM_WindowHandlePropertiesExtentionMethods.IsIconic(whnd))
                 {
                     SetWindowState(whnd, WINDOW_NORMAL);
                 }
