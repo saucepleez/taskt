@@ -72,5 +72,17 @@ namespace taskt.Core.Automation.Commands
                 return v.ExpandValueOrUserVariableAsInteger("Window Y Position", engine);
             }
         }
+
+        /// <summary>
+        /// move window
+        /// </summary>
+        /// <param name="whnd"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public static void MoveWindow(IntPtr whnd, int x, int y)
+        {
+            const uint flag = 0x0045; // 0x0001 | 0x0004 | 0x0040;
+            EM_WindowRECTPropertiesExtentionMethods.SetWindowPos(whnd, 0, x, y, 0, 0, flag);
+        }
     }
 }
