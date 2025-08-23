@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class MoveWindowByWindowHandleCommand : AWindowHandleCommands, IWindowPositionProperties
+    public sealed class MoveWindowByWindowHandleCommand : AWindowHandleActionBaseCommands, IWindowPositionProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
@@ -62,6 +62,16 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         //public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMinimizedForSet))]
+        [PropertyParameterOrder(9000)]
+        public string v_WhenWindowIsMinimized { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMaximizedForSet))]
+        [PropertyParameterOrder(9001)]
+        public string v_WhenWindowIsMaximized { get; set; }
+
         //public string v_WaintTimeFindAndAction {get; set;}
 
         public MoveWindowByWindowHandleCommand()
@@ -73,44 +83,71 @@ namespace taskt.Core.Automation.Commands
             WindowControls.WindowHandleAction(this, engine,
                 new Action<IntPtr>(whnd =>
                 {
-                    //var pos = WindowControls.GetWindowRect(whnd);
-
-                    //var variableXPosition = v_XPosition.ExpandValueOrUserVariable(engine);
-                    //int xPos;
-                    //if ((variableXPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableXPosition == engine.engineSettings.CurrentWindowXPositionKeyword))
-                    //{
-                    //    xPos = pos.left;
-                    //}
-                    //else if (variableXPosition == engine.engineSettings.CurrentWindowYPositionKeyword)
-                    //{
-                    //    xPos = pos.top;
-                    //}
-                    //else
-                    //{
-                    //    xPos = v_XPosition.ExpandValueOrUserVariableAsInteger("X Position", engine);
-                    //}
-
-                    //var variableYPosition = v_YPosition.ExpandValueOrUserVariable(engine);
-                    //int yPos;
-                    //if ((variableYPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableYPosition == engine.engineSettings.CurrentWindowYPositionKeyword))
-                    //{
-                    //    yPos = pos.top;
-                    //}
-                    //else if (variableYPosition == engine.engineSettings.CurrentWindowXPositionKeyword)
-                    //{
-                    //    yPos = pos.left;
-                    //}
-                    //else
-                    //{
-                    //    yPos = v_YPosition.ExpandValueOrUserVariableAsInteger("Y Position", engine);
-                    //}
-
                     var xPos = this.ExpandValueOrVariableAsWindowXPosition(whnd, engine);
                     var yPos = this.ExpandValueOrVariableAsWindowYPosition(whnd, engine);
 
                     WindowControls.SetWindowPosition(whnd, xPos, yPos);
                 })
             );
+
+            void MoveWindowProcess(IntPtr wh)
+            {
+                var xPos = this.ExpandValueOrVariableAsWindowXPosition(wh, engine);
+                var yPos = this.ExpandValueOrVariableAsWindowYPosition(wh, engine);
+
+                EM_WindowPositionPropertiesExtensionMethods.MoveWindow(wh, xPos, yPos);
+            }
+
+            void RestoreWindowProcess(IntPtr wh)
+            {
+                var restoreCommand = new SetWindowStateByWindowHandleCommand()
+                {
+                    v_WindowHandle = wh.ToString(),
+                    v_WindowState = "Restore",
+                };
+                restoreCommand.RunCommand(engine);
+            }
+
+            this.GetWindowHandleAndWait(engine, new Action<IntPtr>((whnd) =>
+            {
+                if (EM_CanHandleWindowHandleExtentionMethods.IsWindowMinimized(whnd))
+                {
+                    switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenWindowIsMinimized), engine))
+                    {
+                        case "execute":
+                            MoveWindowProcess(whnd);
+                            return;
+                        case "ignore":
+                            return;
+                        case "error":
+                            throw new Exception($"Error. Target Window is Minimized. Handle: '{v_WindowHandle}', Expand Value: '{whnd}'");
+
+                        case "restore":
+                            RestoreWindowProcess(whnd);
+                            break;
+                    }
+                }
+
+                if (EM_CanHandleWindowHandleExtentionMethods.IsWindowMaximized(whnd))
+                {
+                    switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenWindowIsMinimized), engine))
+                    {
+                        case "execute":
+                            MoveWindowProcess(whnd);
+                            return;
+                        case "ignore":
+                            return;
+                        case "error":
+                            throw new Exception($"Error. Target Window is Maximized. Handle: '{v_WindowHandle}', Expand Value: '{whnd}'");
+
+                        case "restore":
+                            RestoreWindowProcess(whnd);
+                            break;
+                    }
+                }
+
+                MoveWindowProcess(whnd);
+            }));
         }
     }
 }

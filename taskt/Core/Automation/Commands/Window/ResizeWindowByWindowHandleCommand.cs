@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ResizeWindowByWindowHandleCommand : AWindowHandleCommands, IWindowSizeProperties
+    public sealed class ResizeWindowByWindowHandleCommand : AWindowHandleActionBaseCommands, IWindowSizeProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
@@ -52,23 +52,90 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         //public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMinimizedForSet))]
+        [PropertyParameterOrder(9000)]
+        public string v_WhenWindowIsMinimized { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMinimizedForSet))]
+        [PropertyParameterOrder(9001)]
+        public string v_WhenWindowIsMaximized { get; set; }
+
         public ResizeWindowByWindowHandleCommand()
         {
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowControls.WindowHandleAction(this, engine,
-                new Action<IntPtr>(whnd =>
-                {
-                    //var width = this.ExpandValueOrUserVariableAsInteger(nameof(v_Width), engine);
-                    //var height = this.ExpandValueOrUserVariableAsInteger(nameof(v_Height), engine);
-                    var width = this.ExpandValueOrVariableAsWindowWidth(whnd, engine);
-                    var height = this.ExpandValueOrVariableAsWindowHeight(whnd, engine);
+            //WindowControls.WindowHandleAction(this, engine,
+            //    new Action<IntPtr>(whnd =>
+            //    {
+            //        var width = this.ExpandValueOrVariableAsWindowWidth(whnd, engine);
+            //        var height = this.ExpandValueOrVariableAsWindowHeight(whnd, engine);
 
-                    WindowControls.SetWindowSize(whnd, width, height);
-                })
-            );
+            //        WindowControls.SetWindowSize(whnd, width, height);
+            //    })
+            //);
+
+            void ResizeWindowProcess(IntPtr wh)
+            {
+                var width = this.ExpandValueOrVariableAsWindowWidth(wh, engine);
+                var height = this.ExpandValueOrVariableAsWindowHeight(wh, engine);
+
+                EM_WindowSizePropertiesExtensionMethods.ResizeWindow(wh, width, height);
+            }
+
+            void RestoreWindowProcess(IntPtr wh)
+            {
+                var restoreCommand = new SetWindowStateByWindowHandleCommand()
+                {
+                    v_WindowHandle = wh.ToString(),
+                    v_WindowState = "Restore",
+                };
+                restoreCommand.RunCommand(engine);
+            }
+
+            this.GetWindowHandleAndWait(engine, new Action<IntPtr>((whnd) =>
+            {
+                if (EM_CanHandleWindowHandleExtentionMethods.IsWindowMinimized(whnd))
+                {
+                    switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenWindowIsMinimized), engine))
+                    {
+                        case "execute":
+                            ResizeWindowProcess(whnd);
+                            return;
+                        case "ignore":
+                            return;
+                        case "error":
+                            throw new Exception($"Error. Target Window is Minimized. Handle: '{v_WindowHandle}', Expand Value: '{whnd}'");
+
+                        case "restore":
+                            RestoreWindowProcess(whnd);
+                            break;
+                    }
+                }
+
+                if (EM_CanHandleWindowHandleExtentionMethods.IsWindowMaximized(whnd))
+                {
+                    switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenWindowIsMinimized), engine))
+                    {
+                        case "execute":
+                            ResizeWindowProcess(whnd);
+                            return;
+                        case "ignore":
+                            return;
+                        case "error":
+                            throw new Exception($"Error. Target Window is Maximized. Handle: '{v_WindowHandle}', Expand Value: '{whnd}'");
+
+                        case "restore":
+                            RestoreWindowProcess(whnd);
+                            break;
+                    }
+                }
+
+                ResizeWindowProcess(whnd);
+            }));
         }
     }
 }
