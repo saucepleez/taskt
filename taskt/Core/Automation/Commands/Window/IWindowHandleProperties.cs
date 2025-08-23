@@ -3,7 +3,7 @@
     /// <summary>
     /// window handle command properties
     /// </summary>
-    public interface IWindowHandleProperties : IExpandableProperties
+    public interface IWindowHandleProperties : ICanHandleWindowHandle
     {
         /// <summary>
         /// window handle

@@ -66,7 +66,7 @@ namespace taskt.Core.Automation.Commands
 
             this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
             {
-                if (EM_WindowHandlePropertiesExtentionMethods.IsIconic(whnd))
+                if (EM_CanHandleWindowHandleExtentionMethods.IsWindowMinimized(whnd))
                 {
                     switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenWindowIsMinimized), engine))
                     {

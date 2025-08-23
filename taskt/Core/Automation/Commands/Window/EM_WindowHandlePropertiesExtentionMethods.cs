@@ -8,53 +8,6 @@ namespace taskt.Core.Automation.Commands
     public static class EM_WindowHandlePropertiesExtentionMethods
     {
         /// <summary>
-        /// check window handle exists
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <returns></returns>
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        private static extern bool IsWindow(IntPtr hWnd);
-
-        /// <summary>
-        /// get window title length
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <returns></returns>
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        private static extern int GetWindowTextLengthW(IntPtr hWnd);
-
-        /// <summary>
-        /// get window title
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <param name="text"></param>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        private static extern int GetWindowTextW(IntPtr hWnd, StringBuilder text, int count);
-
-        /// <summary>
-        /// check window is minimize
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <returns></returns>
-        [DllImport("user32.dll")]
-        public static extern bool IsIconic(IntPtr hWnd);
-
-        /// <summary>
-        /// get window name
-        /// </summary>
-        /// <param name="wHnd"></param>
-        /// <returns></returns>
-        public static string GetWindowName(IntPtr wHnd)
-        {
-            int titleLengthA = GetWindowTextLengthW(wHnd);
-            StringBuilder title = new StringBuilder(titleLengthA + 1);
-            GetWindowTextW(wHnd, title, title.Capacity);
-            return title.ToString();
-        }
-
-        /// <summary>
         /// expand value or user variable as WindowHandle
         /// </summary>
         /// <param name="command"></param>
@@ -120,7 +73,7 @@ namespace taskt.Core.Automation.Commands
             var ret = WaitControls.WaitProcess(waitTime, "WindowHandle",
                 new Func<(bool, object)>(() =>
                 {
-                    if (IsWindow(whnd))
+                    if (EM_CanHandleWindowHandleExtentionMethods.CheckWindowHandleExists(whnd))
                     {
                         return (true, whnd);
                     }
@@ -136,7 +89,7 @@ namespace taskt.Core.Automation.Commands
 
                 if (!string.IsNullOrEmpty(command.v_WindowNameResult))
                 {
-                    command.StoreWindowTitleInUserVariable(GetWindowName(handle), engine);
+                    command.StoreWindowTitleInUserVariable(EM_CanHandleWindowHandleExtentionMethods.GetWindowName(handle), engine);
                 }
                 return handle;
             }
