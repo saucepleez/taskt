@@ -80,15 +80,15 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowControls.WindowHandleAction(this, engine,
-                new Action<IntPtr>(whnd =>
-                {
-                    var xPos = this.ExpandValueOrVariableAsWindowXPosition(whnd, engine);
-                    var yPos = this.ExpandValueOrVariableAsWindowYPosition(whnd, engine);
+            //WindowControls.WindowHandleAction(this, engine,
+            //    new Action<IntPtr>(whnd =>
+            //    {
+            //        var xPos = this.ExpandValueOrVariableAsWindowXPosition(whnd, engine);
+            //        var yPos = this.ExpandValueOrVariableAsWindowYPosition(whnd, engine);
 
-                    WindowControls.SetWindowPosition(whnd, xPos, yPos);
-                })
-            );
+            //        WindowControls.SetWindowPosition(whnd, xPos, yPos);
+            //    })
+            //);
 
             void MoveWindowProcess(IntPtr wh)
             {
