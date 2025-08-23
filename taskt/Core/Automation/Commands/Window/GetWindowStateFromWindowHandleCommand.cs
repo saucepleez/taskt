@@ -108,7 +108,7 @@ namespace taskt.Core.Automation.Commands
             //    txt.StoreInUserVariable(engine, v_WindowStateText);
             //}
 
-            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
+            this.WindowHandleAction(engine, new Action<IntPtr>((whnd) =>
             {
                 var info = new WINDOWPLACEMENT();
                 GetWindowPlacement(whnd, ref info);

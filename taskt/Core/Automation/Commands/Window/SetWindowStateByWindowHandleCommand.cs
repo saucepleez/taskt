@@ -97,7 +97,7 @@ namespace taskt.Core.Automation.Commands
             //    })
             //);
 
-            this.GetWindowHandleAndWait(engine, new Action<IntPtr>((whnd) =>
+            this.WindowHandleActionBeforeWait(engine, new Action<IntPtr>((whnd) =>
             {
                 int state = 0;
                 switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WindowState), engine))

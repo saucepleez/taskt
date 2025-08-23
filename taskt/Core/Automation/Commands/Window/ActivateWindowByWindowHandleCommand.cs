@@ -59,7 +59,7 @@ namespace taskt.Core.Automation.Commands
             //    SetWindowState(whnd, WINDOW_NORMAL);
             //}
             //SetForegroundWindow(whnd);
-            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
+            this.WindowHandleAction(engine, new Action<IntPtr>((whnd) =>
             {
                 if (EM_CanHandleWindowHandleExtentionMethods.IsWindowMinimized(whnd))
                 {

@@ -59,13 +59,13 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get window handle
+        /// window handle action
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static IntPtr GetWindowHandle(this IWindowHandleProperties command, AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action errorFunc = null)
+        public static void WindowHandleAction(this IWindowHandleProperties command, AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action errorFunc = null)
         {
             (var whnd, var waitTime) = command.ExpandValueOrUserVariableAsWindowHandleAndWaitTime(engine);
             var ret = WaitControls.WaitProcess(waitTime, "WindowHandle",
@@ -89,8 +89,6 @@ namespace taskt.Core.Automation.Commands
                 }
 
                 actionFunc(handle);
-
-                return handle;
             }
             else
             {
@@ -101,7 +99,6 @@ namespace taskt.Core.Automation.Commands
                 else
                 {
                     errorFunc();
-                    return IntPtr.Zero;
                 }
             }
         }

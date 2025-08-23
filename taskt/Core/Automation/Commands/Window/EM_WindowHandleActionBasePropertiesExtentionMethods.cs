@@ -17,12 +17,12 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get window handle and wait before execution
+        /// window handle action and wait before execute action
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static IntPtr GetWindowHandleAndWait(this IWindowHandleActionBasePropeties command, AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action errorFunc = null)
+        public static void WindowHandleActionBeforeWait(this IWindowHandleActionBasePropeties command, AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action errorFunc = null)
         {
             //var whnd = command.GetWindowHandle(engine);
             //var waitTime = command.ExpandValueOrUserVariableAsWaitTimeBetweenFindAndAction(engine);
@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    System.Threading.Thread.Sleep(waitTime * 1000);
             //}
-            var whnd = command.GetWindowHandle(engine,
+            command.WindowHandleAction(engine,
                 new Action<IntPtr>((w) =>
                 {
                     var waitTime = command.ExpandValueOrUserVariableAsWaitTimeBetweenFindAndAction(engine);
@@ -40,9 +40,8 @@ namespace taskt.Core.Automation.Commands
                     }
                     actionFunc(w);
                 }),
-                errorFunc);
-
-            return whnd;
+                errorFunc
+            );
         }
     }
 }

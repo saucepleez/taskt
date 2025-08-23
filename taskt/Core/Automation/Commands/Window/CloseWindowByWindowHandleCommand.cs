@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
             //var whnd = this.GetWindowHandle(engine);
             //SendMessage(whnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
 
-            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
+            this.WindowHandleAction(engine, new Action<IntPtr>((whnd) =>
             {
                 SendMessage(whnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
             }));

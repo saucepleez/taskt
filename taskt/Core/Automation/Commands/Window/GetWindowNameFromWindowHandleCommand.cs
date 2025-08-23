@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
             //GetWindowTextW(whnd, title, title.Capacity);
             //title.ToString().StoreInUserVariable(engine, v_Result);
 
-            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
+            this.WindowHandleAction(engine, new Action<IntPtr>((whnd) =>
             {
                 EM_CanHandleWindowHandleExtentionMethods.GetWindowName(whnd).StoreInUserVariable(engine, v_Result);
             }));

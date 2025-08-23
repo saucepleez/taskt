@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
             //var proc = Process.GetProcesses().Where(p => (p.MainWindowHandle == whnd)).First();
             //proc.ProcessName.StoreInUserVariable(engine, v_Result);
 
-            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
+            this.WindowHandleAction(engine, new Action<IntPtr>((whnd) =>
             {
                 var proc = Process.GetProcesses().Where(p => (p.MainWindowHandle == whnd)).First();
                 proc.ProcessName.StoreInUserVariable(engine, v_Result);

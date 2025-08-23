@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    false.StoreInUserVariable(engine, v_Result);
             //}
-            this.GetWindowHandle(engine,
+            this.WindowHandleAction(engine,
                 new Action<IntPtr>((whnd) =>
                 {
                     true.StoreInUserVariable(engine, v_Result);
