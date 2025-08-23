@@ -85,12 +85,13 @@ namespace taskt.Core.Automation.Commands
             );
             if (ret is IntPtr handle)
             {
-                actionFunc(handle);
-
                 if (!string.IsNullOrEmpty(command.v_WindowNameResult))
                 {
                     command.StoreWindowTitleInUserVariable(EM_CanHandleWindowHandleExtentionMethods.GetWindowName(handle), engine);
                 }
+
+                actionFunc(handle);
+
                 return handle;
             }
             else
