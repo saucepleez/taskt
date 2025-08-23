@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using System.Text;
 using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
