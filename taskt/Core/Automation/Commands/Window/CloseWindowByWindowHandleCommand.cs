@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window_close))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class CloseWindowByWindowHandle : AWindowHandleCommands
+    public sealed class CloseWindowByWindowHandle : AWindowHandleActionBaseCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="wParam"></param>
         /// <param name="lParam"></param>
         /// <returns></returns>
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
             //var whnd = this.GetWindowHandle(engine);
             //SendMessage(whnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
 
-            this.WindowHandleAction(engine, new Action<IntPtr>((whnd) =>
+            this.WindowHandleActionBeforeWait(engine, new Action<IntPtr>((whnd) =>
             {
                 SendMessage(whnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
             }));
