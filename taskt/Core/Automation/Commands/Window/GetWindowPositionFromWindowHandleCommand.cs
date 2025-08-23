@@ -55,6 +55,18 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         //public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMinimized))]
+        [PropertyParameterOrder(9000)]
+        public string v_WhenWindowIsMinimized { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMaximized))]
+        [PropertyIsOptional(true, "Execute")]
+        [PropertyParameterOrder(9001)]
+        public string v_WhenWindowIsMaximized { get; set; }
+
+
         public GetWindowPositionFromWindowHandleCommand()
         {
         }
@@ -136,9 +148,9 @@ namespace taskt.Core.Automation.Commands
             //    y.StoreInUserVariable(engine, v_YPosition);
             //}
 
-            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
+            void GetWindowPositionProcess(IntPtr wh)
             {
-                var r = EM_WindowRECTPropertiesExtentionMethods.GetWindowRect(whnd);
+                var r = EM_WindowRECTPropertiesExtentionMethods.GetWindowRect(wh);
                 int x = 0, y = 0;
                 switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PositionBase), engine))
                 {
@@ -171,6 +183,75 @@ namespace taskt.Core.Automation.Commands
                 {
                     y.StoreInUserVariable(engine, v_YPosition);
                 }
+            }
+
+            void SetZeroPositionProcess()
+            {
+                if (!string.IsNullOrEmpty(v_XPosition))
+                {
+                    0.StoreInUserVariable(engine, v_XPosition);
+                }
+                if (!string.IsNullOrEmpty(v_YPosition))
+                {
+                    0.StoreInUserVariable(engine, v_YPosition);
+                }
+            }
+
+            void RestoreWindowProcess(IntPtr wh)
+            {
+                var setRestore = new SetWindowStateByWindowHandleCommand
+                {
+                    v_WindowHandle = wh.ToString(),
+                    v_WindowState = "Restore",
+                };
+                setRestore.RunCommand(engine);
+            }
+
+            this.GetWindowHandle(engine, new Action<IntPtr>((whnd) =>
+            {
+                if (EM_CanHandleWindowHandleExtentionMethods.IsWindowMinimized(whnd))
+                {
+                    switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenWindowIsMinimized), engine))
+                    {
+                        case "execute":
+                            GetWindowPositionProcess(whnd);
+                            return;
+                        case "set zero":
+                            SetZeroPositionProcess();
+                            return;
+                        case "ignore":
+                            return;
+                        case "error":
+                            throw new Exception($"Error. Target Window is Minimized. Handle: '{v_WindowHandle}', Exand Value: '{whnd}'");
+
+                        case "restore":
+                            RestoreWindowProcess(whnd);
+                            break;
+                    }
+                }
+
+                if (EM_CanHandleWindowHandleExtentionMethods.IsWindowMaximized(whnd))
+                {
+                    switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenWindowIsMaximized), engine))
+                    {
+                        case "execute":
+                            GetWindowPositionProcess(whnd);
+                            return;
+                        case "set zero":
+                            SetZeroPositionProcess();
+                            return;
+                        case "ignore":
+                            return;
+                        case "error":
+                            throw new Exception($"Error. Target Window is Maximized. Handle: '{v_WindowHandle}', Exand Value: '{whnd}'");
+
+                        case "restore":
+                            RestoreWindowProcess(whnd);
+                            break;
+                    }
+                }
+
+                GetWindowPositionProcess(whnd);
             }));
         }
     }
