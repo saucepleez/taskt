@@ -55,8 +55,17 @@ namespace taskt.Core.Automation.Commands
         [DllImport("user32.dll")]
         private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
+        /// <summary>
+        ///  window maximize value
+        /// </summary>
         private const int MAXIMIZE = 3;
+        /// <summary>
+        /// window minimize value
+        /// </summary>
         private const int MINIMIZE = 6;
+        /// <summary>
+        /// window restore value
+        /// </summary>
         private const int RESTORE = 9;
 
         public SetWindowStateByWindowHandleCommand()
