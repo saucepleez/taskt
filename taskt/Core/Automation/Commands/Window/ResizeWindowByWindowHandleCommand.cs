@@ -83,7 +83,7 @@ namespace taskt.Core.Automation.Commands
                 var width = this.ExpandValueOrVariableAsWindowWidth(wh, engine);
                 var height = this.ExpandValueOrVariableAsWindowHeight(wh, engine);
 
-                EM_WindowSizePropertiesExtensionMethods.ResizeWindow(wh, width, height);
+                EM_WindowResizePropertiesExtensionMethods.ResizeWindow(wh, width, height);
             }
 
             void RestoreWindowProcess(IntPtr wh)
