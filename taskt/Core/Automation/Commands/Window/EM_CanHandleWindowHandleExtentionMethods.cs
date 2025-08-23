@@ -11,7 +11,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         /// <param name="hWnd"></param>
         /// <returns></returns>
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        [DllImport("user32.dll")]
         private static extern bool IsWindow(IntPtr hWnd);
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         /// <param name="hWnd"></param>
         /// <returns></returns>
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        [DllImport("user32.dll")]
         private static extern int GetWindowTextLengthW(IntPtr hWnd);
 
         /// <summary>
