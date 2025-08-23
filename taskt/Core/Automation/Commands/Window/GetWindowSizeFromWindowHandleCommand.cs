@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         //public string v_WaitTime { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMinimized))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMinimizedForGet))]
         [PropertyParameterOrder(9000)]
         public string v_WhenWindowIsMinimized {  get; set; }
 

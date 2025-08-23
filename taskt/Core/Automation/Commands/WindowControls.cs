@@ -349,28 +349,40 @@ namespace taskt.Core.Automation.Commands
         public static string v_WindowState { get; }
 
         /// <summary>
-        /// when target window is minimized
+        /// when target window is minimized for Set-commands
         /// </summary>
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
         [PropertyDescription("When Window Is Minimized")]
         [PropertyUISelectionOption("Execute")]
         [PropertyUISelectionOption("Restore")]
-        [PropertyUISelectionOption("Set Zero")]
         [PropertyIsOptional(true, "Restore")]
         [PropertyDisplayText(false, "When Window Is Minimized")]
-        public static string v_WhenWindowIsMinimized { get; }
+        public static string v_WhenWindowIsMinimizedForSet { get; }
 
         /// <summary>
-        /// when target window is maximized
+        /// when target window is minimized for Get-commands
         /// </summary>
-        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
-        [PropertyDescription("When Window Is Maximized")]
-        [PropertyUISelectionOption("Execute")]
-        [PropertyUISelectionOption("Restore")]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMinimizedForSet))]
+        [PropertyDescription("When Window Is Minimized")]
         [PropertyUISelectionOption("Set Zero")]
-        [PropertyIsOptional(true, "Restore")]
+        [PropertyDisplayText(false, "When Window Is Minimized")]
+        public static string v_WhenWindowIsMinimizedForGet { get; }
+
+        /// <summary>
+        /// when target window is maximized for Set-commands
+        /// </summary>
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMinimizedForSet))]
+        [PropertyDescription("When Window Is Maximized")]
         [PropertyDisplayText(false, "When Window Is Maximized")]
-        public static string v_WhenWindowIsMaximized { get; }
+        public static string v_WhenWindowIsMaximizedForSet { get; }
+
+        /// <summary>
+        /// when target window is maximized for Get-commands
+        /// </summary>
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMinimizedForGet))]
+        [PropertyDescription("When Window Is Maximized")]
+        [PropertyDisplayText(false, "When Window Is Maximized")]
+        public static string v_WhenWindowIsMaximizedForGet { get; }
 
         #endregion
 
