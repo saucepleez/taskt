@@ -40,13 +40,13 @@ namespace taskt.Core.Automation.Commands
 
         //public string v_WaitTimeBetweenFindAndAction
 
-        /// <summary>
-        /// check minimize
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <returns></returns>
-        [DllImport("user32.dll")]
-        private static extern bool IsIconic(IntPtr hWnd);
+        ///// <summary>
+        ///// check minimize
+        ///// </summary>
+        ///// <param name="hWnd"></param>
+        ///// <returns></returns>
+        //[DllImport("user32.dll")]
+        //private static extern bool IsIconic(IntPtr hWnd);
 
 
         [DllImport("user32.dll")]
@@ -113,7 +113,7 @@ namespace taskt.Core.Automation.Commands
                         break;
                 }
 
-                if (IsIconic(whnd) && (state != MINIMIZE))
+                if (EM_CanHandleWindowHandleExtentionMethods.IsWindowMinimized(whnd) && (state != MINIMIZE))
                 {
                     ShowWindowAsync(whnd, state);
                 }
