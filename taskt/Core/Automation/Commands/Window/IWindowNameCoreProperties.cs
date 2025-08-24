@@ -1,9 +1,9 @@
 ﻿namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// any window name commands properties
+    /// window name commands core properties
     /// </summary>
-    public interface IAnyWindowNameProperties : IExpandableProperties
+    public interface IWindowNameCoreProperties : ICanHandleWindowName
     {
         /// <summary>
         /// window name

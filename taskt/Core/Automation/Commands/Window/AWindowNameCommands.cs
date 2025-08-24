@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
     /// Abstract class for Window Name commands 
     /// </summary>
     [Serializable]
-    public abstract class AWindowNameCommands : AAnyWindowNameCommands, IWindowNameProperties
+    public abstract class AWindowNameCommands : AWindowNameCoreCommands, IWindowNameProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]

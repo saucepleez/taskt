@@ -7,10 +7,10 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// Abstract class for Any Window Name commands 
+    /// Abstract class for Window Name commands core
     /// </summary>
     [Serializable]
-    public abstract class AAnyWindowNameCommands : ScriptCommand, IAnyWindowNameProperties
+    public abstract class AWindowNameCoreCommands : ScriptCommand, IWindowNameCoreProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(8200)]
         public virtual string v_HandleResult { get; set; }
 
-        public AAnyWindowNameCommands()
+        public AWindowNameCoreCommands()
         {
         }
 
