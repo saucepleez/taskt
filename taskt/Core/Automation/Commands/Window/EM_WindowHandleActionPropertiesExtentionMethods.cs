@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static void WindowHandleActionBeforeWait(this IWindowHandleActionPropeties command, AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action errorFunc = null)
+        public static void WindowHandleActionBeforeWait(this IWindowHandleActionPropeties command, AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action<Exception> errorFunc = null)
         {
             //var whnd = command.GetWindowHandle(engine);
             //var waitTime = command.ExpandValueOrUserVariableAsWaitTimeBetweenFindAndAction(engine);

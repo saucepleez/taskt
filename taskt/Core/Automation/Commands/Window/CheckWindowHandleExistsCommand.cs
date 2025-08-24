@@ -66,7 +66,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     true.StoreInUserVariable(engine, v_Result);
                 }),
-                new Action(() =>
+                new Action<Exception>((ex) =>
                 {
                     false.StoreInUserVariable(engine, v_Result);
                 })
