@@ -3,7 +3,7 @@
     /// <summary>
     /// for window handle action
     /// </summary>
-    public interface IWindowHandleActionBasePropeties : IWindowHandleProperties
+    public interface IWindowHandleActionPropeties : IWindowHandleProperties
     {
         /// <summary>
         /// wait time between finding window and exection action

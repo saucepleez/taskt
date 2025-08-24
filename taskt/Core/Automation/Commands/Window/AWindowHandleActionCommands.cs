@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// window handle action commands
     /// </summary>
-    public abstract class AWindowHandleActionBaseCommands : AWindowHandleCommands, IWindowHandleActionBasePropeties
+    public abstract class AWindowHandleActionCommands : AWindowHandleCommands, IWindowHandleActionPropeties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTimeBetweenFindAndAction))]
