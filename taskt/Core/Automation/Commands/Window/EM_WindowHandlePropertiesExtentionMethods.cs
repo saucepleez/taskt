@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using taskt.Core.Automation.Engine;
 
@@ -67,13 +68,13 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// window handle action
+        /// wait for window handle
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static void WindowHandleAction(this IWindowHandleProperties command, AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action errorFunc = null)
+        public static IntPtr WaitForWindowHandle(this IWindowHandleProperties command, AutomationEngineInstance engine)
         {
             (var whnd, var waitTime) = command.ExpandValueOrUserVariableAsWindowHandleAndWaitTime(engine);
             var ret = WaitControls.WaitProcess(waitTime, "WindowHandle",
@@ -91,22 +92,42 @@ namespace taskt.Core.Automation.Commands
             );
             if (ret is IntPtr handle)
             {
-                if (!string.IsNullOrEmpty(command.v_WindowNameResult))
-                {
-                    command.StoreWindowTitleInUserVariable(EM_CanHandleWindowHandleExtentionMethods.GetWindowName(handle), engine);
-                }
-
-                actionFunc(handle);
+                return handle;
             }
             else
             {
+                throw new Exception($"Window Handle does not Exists. Value: '{command.v_WindowHandle}', Expand Value: '{whnd}'");
+            }
+        }
+
+        /// <summary>
+        /// window handle action
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static void WindowHandleAction(this IWindowHandleProperties command, AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action<Exception> errorFunc = null)
+        {
+            try
+            {
+                var whnd = command.WaitForWindowHandle(engine);
+
+                // get window title before handle expired
+                var title = EM_CanHandleWindowHandleExtentionMethods.GetWindowName(whnd);
+                command.StoreWindowTitleInUserVariable(title, engine);
+
+                actionFunc(whnd);
+            }
+            catch (Exception ex)
+            {
                 if (errorFunc != null)
                 {
-                    throw new Exception($"Window Handle does not Exists. Value: '{command.v_WindowHandle}', Expand Value: '{whnd}'");
+                    errorFunc(ex);
                 }
                 else
                 {
-                    errorFunc();
+                    throw ex;
                 }
             }
         }
