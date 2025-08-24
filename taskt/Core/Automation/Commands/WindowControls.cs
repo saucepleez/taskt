@@ -1234,82 +1234,82 @@ namespace taskt.Core.Automation.Commands
                 engine, actionFunc, nameof(command.v_NameResult), nameof(command.v_HandleResult), errorFunc);
         }
 
-        /// <summary>
-        /// inner window handle action
-        /// </summary>
-        /// <param name="handleValue"></param>
-        /// <param name="waitTime"></param>
-        /// <param name="engine"></param>
-        /// <param name="actionFunc"></param>
-        /// <param name="errorFunc"></param>
-        private static void WindowHandleAction(string handleValue, int waitTime, Engine.AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action<Exception> errorFunc = null)
-        {
-            try
-            {
-                var whnd = handleValue.ExpandUserVariableAsWindowHandle(engine);
+        ///// <summary>
+        ///// inner window handle action
+        ///// </summary>
+        ///// <param name="handleValue"></param>
+        ///// <param name="waitTime"></param>
+        ///// <param name="engine"></param>
+        ///// <param name="actionFunc"></param>
+        ///// <param name="errorFunc"></param>
+        //private static void WindowHandleAction(string handleValue, int waitTime, Engine.AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action<Exception> errorFunc = null)
+        //{
+        //    try
+        //    {
+        //        var whnd = handleValue.ExpandUserVariableAsWindowHandle(engine);
 
-                var obj = WaitControls.WaitProcess(waitTime, "Window Handle", new Func<(bool, object)>(() =>
-                {
-                    if (IsWindow(whnd))
-                    {
-                        return (true, whnd);
-                    }
-                    else
-                    {
-                        return (false, null);
-                    }
+        //        var obj = WaitControls.WaitProcess(waitTime, "Window Handle", new Func<(bool, object)>(() =>
+        //        {
+        //            if (IsWindow(whnd))
+        //            {
+        //                return (true, whnd);
+        //            }
+        //            else
+        //            {
+        //                return (false, null);
+        //            }
                     
-                }), engine);
+        //        }), engine);
 
-                if (obj is IntPtr ptr)
-                {
-                    actionFunc(ptr);
-                }
-            }
-            catch (Exception ex)
-            {
-                if (errorFunc != null)
-                {
-                    errorFunc(ex);
-                }
-                else
-                {
-                    throw ex;
-                }
-            }
-        }
+        //        if (obj is IntPtr ptr)
+        //        {
+        //            actionFunc(ptr);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (errorFunc != null)
+        //        {
+        //            errorFunc(ex);
+        //        }
+        //        else
+        //        {
+        //            throw ex;
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// window handle action. specified Window Handle, Wait Time parameter names
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="handleName"></param>
-        /// <param name="waitTimeName"></param>
-        /// <param name="engine"></param>
-        /// <param name="actionFunc"></param>
-        /// <param name="errorFunc"></param>
-        public static void WindowHandleAction(ScriptCommand command, string handleName, string waitTimeName, Engine.AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action<Exception> errorFunc = null)
-        {
-            //var handle = command.ExpandValueOrUserVariable(handleName, "Window Handle", engine);
-            var handle = command.GetRawPropertyValueAsString(handleName, "Window Handle");
-            var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, "Wait Time", engine);
-            WindowHandleAction(handle, waitTime, engine, actionFunc, errorFunc);
-        }
+        ///// <summary>
+        ///// window handle action. specified Window Handle, Wait Time parameter names
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="handleName"></param>
+        ///// <param name="waitTimeName"></param>
+        ///// <param name="engine"></param>
+        ///// <param name="actionFunc"></param>
+        ///// <param name="errorFunc"></param>
+        //public static void WindowHandleAction(ScriptCommand command, string handleName, string waitTimeName, Engine.AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action<Exception> errorFunc = null)
+        //{
+        //    //var handle = command.ExpandValueOrUserVariable(handleName, "Window Handle", engine);
+        //    var handle = command.GetRawPropertyValueAsString(handleName, "Window Handle");
+        //    var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, "Wait Time", engine);
+        //    WindowHandleAction(handle, waitTime, engine, actionFunc, errorFunc);
+        //}
 
-        /// <summary>
-        /// general window handle action. Infer parameter names from VirtualProperty
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="engine"></param>
-        /// <param name="actionFunc"></param>
-        /// <param name="errorFunc"></param>
-        public static void WindowHandleAction(ScriptCommand command, Engine.AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action<Exception> errorFunc = null)
-        {
-            var props = command.GetParameterProperties();
-            var handleName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_InputWindowHandle)))?.Name ?? "";
-            var waitTimeName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_WaitTime)))?.Name ?? "";
-            WindowHandleAction(command, handleName, waitTimeName, engine, actionFunc, errorFunc);
-        }
+        ///// <summary>
+        ///// general window handle action. Infer parameter names from VirtualProperty
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="engine"></param>
+        ///// <param name="actionFunc"></param>
+        ///// <param name="errorFunc"></param>
+        //public static void WindowHandleAction(ScriptCommand command, Engine.AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action<Exception> errorFunc = null)
+        //{
+        //    var props = command.GetParameterProperties();
+        //    var handleName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_InputWindowHandle)))?.Name ?? "";
+        //    var waitTimeName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_WaitTime)))?.Name ?? "";
+        //    WindowHandleAction(command, handleName, waitTimeName, engine, actionFunc, errorFunc);
+        //}
         
 
         #endregion
@@ -1349,54 +1349,54 @@ namespace taskt.Core.Automation.Commands
             return value.ExpandValueOrUserVariableAsWindowName(engine);
         }
 
-        /// <summary>
-        /// expand variable as WindowHandle specified by parameter value
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static IntPtr ExpandUserVariableAsWindowHandle(this string value, Engine.AutomationEngineInstance engine)
-        {
-            var v = value.GetRawVariable(engine);
-            var vv = v.VariableValue;
-            string handleStr;
-            if (vv is string str)
-            {
-                handleStr = str;
-            }
-            else if (vv is List<string> lst)
-            {
-                handleStr = lst[v.CurrentPosition];
-            }
-            else
-            {
-                throw new Exception($"Value '{value}' is not Window Handle value type.");
-            }
+        ///// <summary>
+        ///// expand variable as WindowHandle specified by parameter value
+        ///// </summary>
+        ///// <param name="value"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public static IntPtr ExpandUserVariableAsWindowHandle(this string value, Engine.AutomationEngineInstance engine)
+        //{
+        //    var v = value.GetRawVariable(engine);
+        //    var vv = v.VariableValue;
+        //    string handleStr;
+        //    if (vv is string str)
+        //    {
+        //        handleStr = str;
+        //    }
+        //    else if (vv is List<string> lst)
+        //    {
+        //        handleStr = lst[v.CurrentPosition];
+        //    }
+        //    else
+        //    {
+        //        throw new Exception($"Value '{value}' is not Window Handle value type.");
+        //    }
 
-            if (int.TryParse(handleStr, out int whnd))
-            {
-                return (IntPtr)whnd;
-            }
-            else
-            {
-                throw new Exception($"Value '{value}' is not Window Handle value type.");
-            }
-        }
+        //    if (int.TryParse(handleStr, out int whnd))
+        //    {
+        //        return (IntPtr)whnd;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception($"Value '{value}' is not Window Handle value type.");
+        //    }
+        //}
 
-        /// <summary>
-        /// expand variable as WindowHanle specified by parameter name
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="windowName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        public static IntPtr ExpandUserVariableAsWindowHandle(this ScriptCommand command, string windowName, Engine.AutomationEngineInstance engine)
-        {
-            var prop = command.GetProperty(windowName);
-            var value = prop.GetValue(command)?.ToString() ?? "";
-            return value.ExpandUserVariableAsWindowHandle(engine);
-        }
+        ///// <summary>
+        ///// expand variable as WindowHanle specified by parameter name
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="windowName"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //public static IntPtr ExpandUserVariableAsWindowHandle(this ScriptCommand command, string windowName, Engine.AutomationEngineInstance engine)
+        //{
+        //    var prop = command.GetProperty(windowName);
+        //    var value = prop.GetValue(command)?.ToString() ?? "";
+        //    return value.ExpandUserVariableAsWindowHandle(engine);
+        //}
 
         /// <summary>
         /// store IntPtr In User Variable
