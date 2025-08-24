@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
@@ -14,14 +15,21 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static IntPtr ExpandValueOrUserVariableAsWindowHandle(this IWindowHandleProperties command, AutomationEngineInstance engine)
         {
-            var whnd = ((ScriptCommand)command).ExpandValueOrUserVariableAsInteger(nameof(command.v_WindowHandle), "WindowHandle", engine);
-            if (whnd >= 0)
+            if (command.v_WindowHandle == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentWindowHandle.VariableName, engine))
             {
-                return (IntPtr)whnd;
+                return EM_CanHandleWindowHandleExtentionMethods.GetActiveWindowHandle();
             }
             else
             {
-                throw new Exception($"Strange WindowHandle Value. Value: '{whnd}'");
+                var whnd = ((ScriptCommand)command).ExpandValueOrUserVariableAsInteger(nameof(command.v_WindowHandle), "WindowHandle", engine);
+                if (whnd >= 0)
+                {
+                    return (IntPtr)whnd;
+                }
+                else
+                {
+                    throw new Exception($"Strange WindowHandle Value. Value: '{whnd}'");
+                }
             }
         }
 

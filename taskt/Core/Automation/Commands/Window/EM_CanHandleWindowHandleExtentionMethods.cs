@@ -49,6 +49,13 @@ namespace taskt.Core.Automation.Commands
         private static extern bool IsZoomed(IntPtr hWhnd);
 
         /// <summary>
+        /// get active window handle
+        /// </summary>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        /// <summary>
         /// check window handle exists
         /// </summary>
         /// <param name="wHnd"></param>
@@ -89,6 +96,15 @@ namespace taskt.Core.Automation.Commands
             StringBuilder title = new StringBuilder(titleLengthA + 1);
             GetWindowTextW(wHnd, title, title.Capacity);
             return title.ToString();
+        }
+
+        /// <summary>
+        /// get window handle
+        /// </summary>
+        /// <returns></returns>
+        public static IntPtr GetActiveWindowHandle()
+        {
+            return GetForegroundWindow();
         }
     }
 }
