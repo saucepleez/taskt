@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Window State Text", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "State Text")]
-        [PropertyParameterOrder(5501)]
+        [PropertyParameterOrder(6501)]
         public string v_WindowStateText { get; set; }
 
         public GetOneWindowStateCommand()
