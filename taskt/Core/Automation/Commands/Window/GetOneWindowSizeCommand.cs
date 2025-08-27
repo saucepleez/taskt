@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window")]
-    [Attributes.ClassAttributes.SubGruop("Window State")]
+    [Attributes.ClassAttributes.SubGruop("Get From Window Name")]
     [Attributes.ClassAttributes.CommandSettings("Get One Window Size")]
     [Attributes.ClassAttributes.Description("This command returns one window size.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want one window size.")]
