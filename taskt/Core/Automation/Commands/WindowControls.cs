@@ -113,6 +113,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Index**", "the Window specifed by Index. **0** means First Window")]
         [Remarks("Specify when there are Multiple Matching Windows")]
         [PropertyIsOptional(true, "First")]
+        [PropertyDisplayText(true, "Match")]
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         //[InputSpecification("", true)]
         //[PropertyParameterOrder(5000)]
@@ -149,6 +150,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Window Index")]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
+        [PropertyDisplayText(true, "Window Index")]
         //[Remarks("")]
         //[PropertyShowSampleUsageInDescription(true)]
         //[PropertyTextBoxSetting(1, false)]
@@ -178,6 +180,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Wait Time between Finding the Window and Executing Action (sec)")]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
+        [PropertyDisplayText(false, "Wait Time Between", "s")]
         public static string v_WaitTimeBetweenFindAndAction { get; }
 
         ///// <summary>

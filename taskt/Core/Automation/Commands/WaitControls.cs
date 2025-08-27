@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// Wait Time for something
         /// </summary>
-        /// [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Wait Time for *** (sec)")]
         [InputSpecification("Number Greater than or Equal 0")]
         [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
