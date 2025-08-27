@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         //public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod_Single))]
         [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
         [PropertyParameterOrder(7000)]
         public virtual string v_MatchMethod { get; set; }

@@ -64,7 +64,10 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         public static void StoreWindowTitleInUserVariable(this IWindowHandleProperties command, string title, AutomationEngineInstance engine)
         {
-            title.StoreInUserVariable(engine, command.v_WindowNameResult);
+            if (!string.IsNullOrEmpty(command.v_WindowNameResult))
+            {
+                title.StoreInUserVariable(engine, command.v_WindowNameResult);
+            }
         }
 
         /// <summary>

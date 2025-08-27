@@ -460,7 +460,11 @@
     <Compile Include="Core\Automation\Commands\Window\EM_CanHandleWindowHandleExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_CanHandleWindowNameExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowNameCorePropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Window\EM_WindowNamePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowResizePropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetOneWindowStateCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetOneWindowPositionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetOneWindowSizeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ICanHandleWindowHandle.cs" />
     <Compile Include="Core\Automation\Commands\List\RemoveListItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\GetListWithDuplicateItemsRemovedCommand.cs" />
