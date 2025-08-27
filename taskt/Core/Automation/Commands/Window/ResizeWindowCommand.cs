@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ResizeWindowCommand : AWindowNameCommands, IWindowSizeProperties
+    public sealed class ResizeWindowCommand : AWindowNameCommands, IWindowResizeProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
@@ -74,6 +74,16 @@ namespace taskt.Core.Automation.Commands
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
         //public string v_HandleResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMinimizedForSet))]
+        [PropertyParameterOrder(9000)]
+        public string v_WhenWindowIsMinimized { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMinimizedForSet))]
+        [PropertyParameterOrder(9001)]
+        public string v_WhenWindowIsMaximized { get; set; }
 
         public ResizeWindowCommand()
         {

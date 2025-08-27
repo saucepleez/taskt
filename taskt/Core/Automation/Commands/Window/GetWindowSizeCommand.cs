@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window")]
-    [Attributes.ClassAttributes.SubGruop("Window State")]
+    [Attributes.ClassAttributes.SubGruop("Get From Window Name")]
     [Attributes.ClassAttributes.CommandSettings("Get Window Size")]
     [Attributes.ClassAttributes.Description("This command returns window size.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want window size.")]
@@ -44,6 +44,11 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod_Single))]
         public override string v_MatchMethod { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMinimizedForGet))]
+        [PropertyParameterOrder(9000)]
+        public string v_WhenWindowIsMinimized { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]

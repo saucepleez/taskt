@@ -84,6 +84,16 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
         //public string v_HandleResult { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMinimizedForSet))]
+        [PropertyParameterOrder(9000)]
+        public string v_WhenWindowIsMinimized { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WhenWindowIsMaximizedForSet))]
+        [PropertyParameterOrder(9001)]
+        public string v_WhenWindowIsMaximized { get; set; }
+
         public MoveWindowCommand()
         {
             //this.CommandName = "MoveWindowCommand";

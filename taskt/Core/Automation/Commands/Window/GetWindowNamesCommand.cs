@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window")]
-    [Attributes.ClassAttributes.SubGruop("Window State")]
+    [Attributes.ClassAttributes.SubGruop("Get From Window Name")]
     [Attributes.ClassAttributes.CommandSettings("Get Window Names")]
     [Attributes.ClassAttributes.Description("This command returns window names.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want window names.")]

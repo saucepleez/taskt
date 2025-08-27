@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window")]
-    [Attributes.ClassAttributes.SubGruop("Window Actions")]
+    [Attributes.ClassAttributes.SubGruop("Get From Window Name")]
     [Attributes.ClassAttributes.CommandSettings("Get Process Name From Window Name")]
     [Attributes.ClassAttributes.Description("This command allows you to Get Process Name from Window Name.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get Process Name from Window Name.")]

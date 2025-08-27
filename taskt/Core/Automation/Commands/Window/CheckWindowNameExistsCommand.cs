@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window")]
-    [Attributes.ClassAttributes.SubGruop("Window State")]
+    [Attributes.ClassAttributes.SubGruop("Get From Window Name")]
     [Attributes.ClassAttributes.CommandSettings("Check Window Name Exists")]
     [Attributes.ClassAttributes.Description("This command returns a existence of window name.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check a existence of window name.")]
