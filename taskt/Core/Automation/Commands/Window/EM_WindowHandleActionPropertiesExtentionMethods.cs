@@ -33,11 +33,12 @@ namespace taskt.Core.Automation.Commands
             command.WindowHandleAction(engine,
                 new Action<IntPtr>((w) =>
                 {
-                    var waitTime = command.ExpandValueOrUserVariableAsWaitTimeBetweenFindAndAction(engine);
-                    if (waitTime > 0)
-                    {
-                        System.Threading.Thread.Sleep(waitTime * 1000);
-                    }
+                    //var waitTime = command.ExpandValueOrUserVariableAsWaitTimeBetweenFindAndAction(engine);
+                    //if (waitTime > 0)
+                    //{
+                    //    System.Threading.Thread.Sleep(waitTime * 1000);
+                    //}
+                    command.WaitAfterFindWindowProcess(engine);
                     actionFunc(w);
                 }),
                 errorFunc
