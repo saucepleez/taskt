@@ -115,9 +115,10 @@ namespace taskt.Core.Automation.Commands
 
                 // get window title before handle expired
                 var title = EM_CanHandleWindowHandleExtentionMethods.GetWindowName(whnd);
-                command.StoreWindowTitleInUserVariable(title, engine);
-
+                
                 actionFunc(whnd);
+
+                command.StoreWindowTitleInUserVariable(title, engine);
             }
             catch (Exception ex)
             {
