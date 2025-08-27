@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
             //    })
             //);
 
-            this.WindowAction(engine,
+            this.WindowNamesAction(engine,
                 new Action<List<(IntPtr, string)>>(wins =>
                 {
                     true.StoreInUserVariable(engine, v_UserVariableName);
