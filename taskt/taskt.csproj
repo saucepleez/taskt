@@ -462,6 +462,7 @@
     <Compile Include="Core\Automation\Commands\Window\EM_WindowNameCorePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowNamePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowResizePropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Window\EM_WindowWaitTimeBetweenFindAndActionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetOneWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetOneWindowPositionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetOneWindowSizeCommand.cs" />
@@ -476,8 +477,10 @@
     <Compile Include="Core\Automation\Commands\Window\EM_WindowRECTPropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\ICanHandleWindowName.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowHandleActionPropeties.cs" />
+    <Compile Include="Core\Automation\Commands\Window\IWindowNameActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowRECTProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowResizeProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Window\IWindowWaitTimeBetweenFindAndActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\CompareNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\TextCompareSelectMethodControls.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ADataTableBothRowCommands.cs" />

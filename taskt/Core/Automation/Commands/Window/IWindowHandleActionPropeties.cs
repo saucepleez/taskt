@@ -3,11 +3,8 @@
     /// <summary>
     /// for window handle action
     /// </summary>
-    public interface IWindowHandleActionPropeties : IWindowHandleProperties
+    public interface IWindowHandleActionPropeties : IWindowHandleProperties, IWindowWaitTimeBetweenFindAndActionProperties
     {
-        /// <summary>
-        /// wait time between finding window and exection action
-        /// </summary>
-        string v_WaitTimeBetweenFindAndAction { get; set; }
+        // nothing
     }
 }
