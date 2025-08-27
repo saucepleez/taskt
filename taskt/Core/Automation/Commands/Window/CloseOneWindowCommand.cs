@@ -4,7 +4,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window")]
-    [Attributes.ClassAttributes.SubGruop("One Window Actions")]
+    [Attributes.ClassAttributes.SubGruop("One Window Name Actions")]
     [Attributes.ClassAttributes.CommandSettings("Close One Winodw")]
     [Attributes.ClassAttributes.Description("This command Close one Window.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Close one Windown.")]
