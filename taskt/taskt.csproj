@@ -106,7 +106,7 @@
       <HintPath>..\packages\ImapX.2.0.0.18\lib\net452\ImapX.dll</HintPath>
     </Reference>
     <Reference Include="JetBrains.Annotations, Version=4242.42.42.42, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\packages\JetBrains.Annotations.2025.2.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+      <HintPath>..\packages\JetBrains.Annotations.2025.2.1\lib\net20\JetBrains.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="MailKit, Version=4.13.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
       <HintPath>..\packages\MailKit.4.13.0\lib\net48\MailKit.dll</HintPath>
@@ -457,6 +457,7 @@
     <Compile Include="Core\Automation\Commands\Folder\CopyFolderInSameLocationCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\GetCommonValuesOfListsCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\CheckValidListIndexCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\IWindowStateProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\SetOneWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ResizeOneWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\MoveOneWindowCommand.cs" />
