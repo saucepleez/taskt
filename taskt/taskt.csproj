@@ -467,6 +467,8 @@
     <Compile Include="Core\Automation\Commands\Window\EM_WindowResizePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowWaitTimeBetweenFindAndActionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\ActivateOneWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetOneWindowHandleFromOneWindowNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetOneProcessNameFromOneWindowNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetOneWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetOneWindowPositionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetOneWindowSizeCommand.cs" />
