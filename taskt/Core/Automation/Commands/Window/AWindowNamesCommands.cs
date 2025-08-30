@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for window names commands
     /// </summary>
-    public abstract class AWindowNamesCommands : AWindowNameCoreCommands, ICanHandleList
+    public abstract class AWindowNamesCommands : AWindowNameCoreCommands, IWindowNamesProperties, ICanHandleList
     {
         /// <summary>
         /// found window names list
