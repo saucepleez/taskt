@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for one window name action commands
     /// </summary>
-    public abstract class AWindowNameActionCommands : AOneWindowNameCommands, IWindowNameActionProperties
+    public abstract class AOneWindowNameActionCommands : AOneWindowNameCommands, IOneWindowNameActionProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTimeBetweenFindAndAction))]

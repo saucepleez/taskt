@@ -12,7 +12,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <param name="actionFunc"></param>
         /// <param name="errorFunc"></param>
-        public static void WindowNameActionAndWait(this IWindowNameActionProperties command, AutomationEngineInstance engine, Action<IntPtr, string> actionFunc, Action<Exception> errorFunc = null)
+        public static void WindowNameActionAndWait(this IOneWindowNameActionProperties command, AutomationEngineInstance engine, Action<IntPtr, string> actionFunc, Action<Exception> errorFunc = null)
         {
             command.WindowNameAction(engine, 
                 new Action<IntPtr, string>((whnd, name) =>
