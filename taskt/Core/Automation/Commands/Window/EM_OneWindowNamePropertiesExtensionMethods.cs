@@ -4,7 +4,7 @@ using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
-    public static class EM_WindowNamePropertiesExtensionMethods
+    public static class EM_OneWindowNamePropertiesExtensionMethods
     {
         /// <summary>
         /// expand value or user variable as window index

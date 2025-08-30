@@ -466,9 +466,9 @@
     <Compile Include="Core\Automation\Commands\Window\AWindowNameActionCommands.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_CanHandleWindowHandleExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_CanHandleWindowNameExtensionMethods.cs" />
-    <Compile Include="Core\Automation\Commands\Window\EM_WindowNameActionPropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Window\EM_OneWindowNameActionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowNameCorePropertiesExtensionMethods.cs" />
-    <Compile Include="Core\Automation\Commands\Window\EM_WindowNamePropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Window\EM_OneWindowNamePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowResizePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowWaitTimeBetweenFindAndActionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\ActivateOneWindowCommand.cs" />
@@ -755,7 +755,7 @@
     <Compile Include="Core\Automation\Commands\Window\AWindowHandleCommands.cs" />
     <Compile Include="Core\Automation\Commands\Window\ActivateWindowByWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\AWindowNameCoreCommands.cs" />
-    <Compile Include="Core\Automation\Commands\Window\AWindowNameCommands.cs" />
+    <Compile Include="Core\Automation\Commands\Window\AOneWindowNameCommands.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetProcessNameFromWindowName.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowHandleFromWindowName.cs" />
     <Compile Include="Core\Automation\Commands\Window\CheckWindowHandleExistsCommand.cs" />
@@ -768,7 +768,7 @@
     <Compile Include="Core\Automation\Commands\Window\GetWindowStateFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowNameCoreProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowHandleProperties.cs" />
-    <Compile Include="Core\Automation\Commands\Window\IWindowNameProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Window\IOneWindowNameProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowPositionProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowSizeProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\MoveWindowByWindowHandleCommand.cs" />

@@ -3,7 +3,7 @@ using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
-    public static class EM_WindowNameActionPropertiesExtensionMethods
+    public static class EM_OneWindowNameActionPropertiesExtensionMethods
     {
         /// <summary>
         /// window name action, and wait before execute ation
