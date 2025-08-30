@@ -12,7 +12,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static int ExpandValueOrUserVariableAsWindowIndex(this IWindowNameProperties command, AutomationEngineInstance engine)
+        public static int ExpandValueOrUserVariableAsWindowIndex(this IOneWindowNameProperties command, AutomationEngineInstance engine)
         {
             return ((ScriptCommand)command).ExpandValueOrUserVariableAsInteger(nameof(command.v_TargetWindowIndex), engine);
         }
@@ -23,7 +23,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="name"></param>
         /// <param name="engine"></param>
-        public static void StoreWindowNameResultInUserVariable(this IWindowNameProperties command, string name, AutomationEngineInstance engine)
+        public static void StoreWindowNameResultInUserVariable(this IOneWindowNameProperties command, string name, AutomationEngineInstance engine)
         {
             if (!string.IsNullOrEmpty(command.v_NameResult))
             {
@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="whnd"></param>
         /// <param name="engine"></param>
-        public static void StoreWindowHandleResultInUserVariable(this IWindowNameProperties command, IntPtr whnd, AutomationEngineInstance engine)
+        public static void StoreWindowHandleResultInUserVariable(this IOneWindowNameProperties command, IntPtr whnd, AutomationEngineInstance engine)
         {
             if (!string.IsNullOrEmpty(command.v_HandleResult))
             {
@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (IntPtr whnd, string name) WaitForWindowName(this IWindowNameProperties command, AutomationEngineInstance engine)
+        public static (IntPtr whnd, string name) WaitForWindowName(this IOneWindowNameProperties command, AutomationEngineInstance engine)
         {
             var wins = command.WaitForWindowNames(engine);
             (IntPtr whnd, string name) windowSet = (IntPtr.Zero, null);
@@ -90,7 +90,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <param name="actionFunc"></param>
         /// <param name="errorFunc"></param>
-        public static void WindowNameAction(this IWindowNameProperties command, AutomationEngineInstance engine, Action<IntPtr, string> actionFunc, Action<Exception> errorFunc = null)
+        public static void WindowNameAction(this IOneWindowNameProperties command, AutomationEngineInstance engine, Action<IntPtr, string> actionFunc, Action<Exception> errorFunc = null)
         {
             try
             {

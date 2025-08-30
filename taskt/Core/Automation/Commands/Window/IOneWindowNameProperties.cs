@@ -1,9 +1,9 @@
 ﻿namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// window name commands properties
+    /// one window name commands properties
     /// </summary>
-    public interface IWindowNameProperties : IWindowNameCoreProperties
+    public interface IOneWindowNameProperties : IWindowNameCoreProperties
     {
         /// <summary>
         /// match method (first, last, index)

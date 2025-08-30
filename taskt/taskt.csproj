@@ -457,6 +457,7 @@
     <Compile Include="Core\Automation\Commands\Folder\CopyFolderInSameLocationCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\GetCommonValuesOfListsCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\CheckValidListIndexCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\AWindowNamesCommands.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowStateProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\SetOneWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ResizeOneWindowCommand.cs" />

@@ -79,8 +79,17 @@ namespace taskt.Core.Automation.Commands
         /// <returns>Func(a,b) is like a.Contains(b)</returns>
         public static (string, int, Func<string, string, bool>) ExpandValueOrUserVariableAsWindowNameWindowWaitTimeAndMethod(this IWindowNameCoreProperties command, AutomationEngineInstance engine)
         {
-            return (command.ExpandValueOrUserVariableAsWindowName(engine), command.ExpandValueOrUserVariableAsWindowWaitTime(engine),
-                        command.GetWindowNameCheckMethod(engine));
+            // all window system variable
+            if (command.v_WindowName == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_AllWindows.VariableName, engine))
+            {
+                return ("", command.ExpandValueOrUserVariableAsWindowWaitTime(engine),
+                        new Func<string, string, bool>((a, b) => true));
+            }
+            else
+            {
+                return (command.ExpandValueOrUserVariableAsWindowName(engine), command.ExpandValueOrUserVariableAsWindowWaitTime(engine),
+                            command.GetWindowNameCheckMethod(engine));
+            }
         }
 
         /// <summary>

@@ -6,10 +6,10 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// Abstract class for Window Name commands 
+    /// Abstract class for one Window Name commands 
     /// </summary>
     [Serializable]
-    public abstract class AWindowNameCommands : AWindowNameCoreCommands, IWindowNameProperties
+    public abstract class AOneWindowNameCommands : AWindowNameCoreCommands, IOneWindowNameProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterOrder(7400)]
         //public string v_HandleResult { get; set; }
 
-        public AWindowNameCommands()
+        public AOneWindowNameCommands()
         {
         }
 
