@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using taskt.Core.Automation.Commands.Window;
 using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
