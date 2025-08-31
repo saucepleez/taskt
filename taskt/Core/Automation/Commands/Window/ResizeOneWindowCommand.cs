@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Window")]
     [Attributes.ClassAttributes.SubGruop("One Window Name Actions")]
-    [Attributes.ClassAttributes.CommandSettings("Resize One Winodw")]
+    [Attributes.ClassAttributes.CommandSettings("Resize One Window")]
     [Attributes.ClassAttributes.Description("This command Resize one Window.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Resize one Window.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
