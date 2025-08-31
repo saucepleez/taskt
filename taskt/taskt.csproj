@@ -457,8 +457,13 @@
     <Compile Include="Core\Automation\Commands\Folder\CopyFolderInSameLocationCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\GetCommonValuesOfListsCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\CheckValidListIndexCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\ActivateWindowsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\AWindowNamesActionCommnads.cs" />
     <Compile Include="Core\Automation\Commands\Window\AWindowNamesCommands.cs" />
+    <Compile Include="Core\Automation\Commands\Window\SetWindowsStateCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\ResizeWindowsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\MoveWindowsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\CloseWindowsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowNamesPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowNamesActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowNamesProperties.cs" />
