@@ -23,5 +23,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Variable Name to Store Window Handles List")]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List, false)]
         public override string v_HandleResult { get; set; }
+
+        // todo: add sort order?
     }
 }
