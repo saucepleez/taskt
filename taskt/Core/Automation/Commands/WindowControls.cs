@@ -431,16 +431,16 @@ namespace taskt.Core.Automation.Commands
         //    public int bottom;
         //}
 
-        public struct WINDOWPLACEMENT
-        {
-            public int length;
-            public int flags;
-            public int showCmd;
-            Point ptMinPosition;
-            Point ptMaxPosition;
-            RECT rcNormalPosition;
-            RECT rcDevice;
-        }
+        //public struct WINDOWPLACEMENT
+        //{
+        //    public int length;
+        //    public int flags;
+        //    public int showCmd;
+        //    Point ptMinPosition;
+        //    Point ptMaxPosition;
+        //    RECT rcNormalPosition;
+        //    RECT rcDevice;
+        //}
         #endregion
 
         #region win api
@@ -455,8 +455,8 @@ namespace taskt.Core.Automation.Commands
         [DllImport("user32.dll")]
         private static extern bool IsWindowVisible(IntPtr hWnd);
 
-        [DllImport("user32.dll")]
-        private static extern bool IsWindow(IntPtr hWnd);
+        //[DllImport("user32.dll")]
+        //private static extern bool IsWindow(IntPtr hWnd);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         private static extern int GetWindowTextLengthW(IntPtr hWnd);
@@ -482,18 +482,18 @@ namespace taskt.Core.Automation.Commands
         [DllImport("user32.dll", EntryPoint = "GetWindowRect")]
         private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+        //[DllImport("user32.dll", SetLastError = true)]
+        //[return: MarshalAs(UnmanagedType.Bool)]
+        //private static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        private static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
+        //[DllImport("user32.dll", CharSet = CharSet.Auto)]
+        //private static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
         private static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
 
-        [DllImport("user32.dll")]
-        private static extern bool ShowWindowAsync(IntPtr hWnd, WindowState nCmdShow);
+        //[DllImport("user32.dll")]
+        //private static extern bool ShowWindowAsync(IntPtr hWnd, WindowState nCmdShow);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         private static extern IntPtr GetDesktopWindow();
@@ -582,27 +582,27 @@ namespace taskt.Core.Automation.Commands
             return clientArea;
         }
 
-        /// <summary>
-        /// get window state
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <returns></returns>
-        public static int GetWindowState(IntPtr hWnd)
-        {
-            var wInfo = new WINDOWPLACEMENT();
-            GetWindowPlacement(hWnd, ref wInfo);
-            return wInfo.showCmd;
-        }
+        ///// <summary>
+        ///// get window state
+        ///// </summary>
+        ///// <param name="hWnd"></param>
+        ///// <returns></returns>
+        //public static int GetWindowState(IntPtr hWnd)
+        //{
+        //    var wInfo = new WINDOWPLACEMENT();
+        //    GetWindowPlacement(hWnd, ref wInfo);
+        //    return wInfo.showCmd;
+        //}
 
-        /// <summary>
-        /// close window. send SendMessage
-        /// </summary>
-        /// <param name="hWnd"></param>
-        public static void CloseWindow(IntPtr hWnd)
-        {
-            const UInt32 WM_CLOSE = 0x0010;
-            SendMessage(hWnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
-        }
+        ///// <summary>
+        ///// close window. send SendMessage
+        ///// </summary>
+        ///// <param name="hWnd"></param>
+        //public static void CloseWindow(IntPtr hWnd)
+        //{
+        //    const UInt32 WM_CLOSE = 0x0010;
+        //    SendMessage(hWnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+        //}
 
         /// <summary>
         /// set window position
@@ -619,30 +619,30 @@ namespace taskt.Core.Automation.Commands
             SetWindowPos(hWnd, 0, newXPosition, newYPosition, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
         }
 
-        /// <summary>
-        /// set window size
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <param name="newXSize"></param>
-        /// <param name="newYSize"></param>
-        public static void SetWindowSize(IntPtr hWnd, int newXSize, int newYSize)
-        {
-            const short SWP_NOZORDER = 0X4;
-            const int SWP_SHOWWINDOW = 0x0040;
+        ///// <summary>
+        ///// set window size
+        ///// </summary>
+        ///// <param name="hWnd"></param>
+        ///// <param name="newXSize"></param>
+        ///// <param name="newYSize"></param>
+        //public static void SetWindowSize(IntPtr hWnd, int newXSize, int newYSize)
+        //{
+        //    const short SWP_NOZORDER = 0X4;
+        //    const int SWP_SHOWWINDOW = 0x0040;
 
-            GetWindowRect(hWnd, out RECT windowRect);
+        //    GetWindowRect(hWnd, out RECT windowRect);
 
-            SetWindowPos(hWnd, 0, windowRect.left, windowRect.top, newXSize, newYSize, SWP_NOZORDER | SWP_SHOWWINDOW);
-        }
+        //    SetWindowPos(hWnd, 0, windowRect.left, windowRect.top, newXSize, newYSize, SWP_NOZORDER | SWP_SHOWWINDOW);
+        //}
 
-        /// <summary>
-        /// ?
-        /// </summary>
-        /// <param name="hWind"></param>
-        public static void ShowIconicWindow(IntPtr hWind)
-        {
-            ShowWindowAsync(hWind, WindowState.SW_SHOWNORMAL);
-        }
+        ///// <summary>
+        ///// ?
+        ///// </summary>
+        ///// <param name="hWind"></param>
+        //public static void ShowIconicWindow(IntPtr hWind)
+        //{
+        //    ShowWindowAsync(hWind, WindowState.SW_SHOWNORMAL);
+        //}
 
         /// <summary>
         /// get active window name (title)
@@ -1208,34 +1208,34 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        /// <summary>
-        /// window general action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc. This method specifies the parameter names from interface
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="engine"></param>
-        /// <param name="actionFunc"></param>
-        /// <param name="errorFunc"></param>
-        public static void WindowAction(AOneWindowNameCommands command, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, Action<Exception> errorFunc = null)
-        {
-            WindowAction(command, 
-                nameof(command.v_WindowName), nameof(command.v_CompareMethod), nameof(command.v_MatchMethod), 
-                nameof(command.v_TargetWindowIndex), nameof(command.v_WaitTimeForWindow), engine, actionFunc, 
-                nameof(command.v_NameResult), nameof(command.v_HandleResult), errorFunc);
-        }
+        ///// <summary>
+        ///// window general action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc. This method specifies the parameter names from interface
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="engine"></param>
+        ///// <param name="actionFunc"></param>
+        ///// <param name="errorFunc"></param>
+        //public static void WindowAction(AOneWindowNameCommands command, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, Action<Exception> errorFunc = null)
+        //{
+        //    WindowAction(command, 
+        //        nameof(command.v_WindowName), nameof(command.v_CompareMethod), nameof(command.v_MatchMethod), 
+        //        nameof(command.v_TargetWindowIndex), nameof(command.v_WaitTimeForWindow), engine, actionFunc, 
+        //        nameof(command.v_NameResult), nameof(command.v_HandleResult), errorFunc);
+        //}
 
-        /// <summary>
-        /// window general action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc. This method specifies the parameter names from interface
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="engine"></param>
-        /// <param name="actionFunc"></param>
-        /// <param name="errorFunc"></param>
-        public static void WindowAction(AWindowNameCoreCommands command, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, Action<Exception> errorFunc = null)
-        {
-            WindowAction(command, 
-                nameof(command.v_WindowName), nameof(command.v_CompareMethod), nameof(command.v_WaitTimeForWindow), 
-                engine, actionFunc, nameof(command.v_NameResult), nameof(command.v_HandleResult), errorFunc);
-        }
+        ///// <summary>
+        ///// window general action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc. This method specifies the parameter names from interface
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="engine"></param>
+        ///// <param name="actionFunc"></param>
+        ///// <param name="errorFunc"></param>
+        //public static void WindowAction(AWindowNameCoreCommands command, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, Action<Exception> errorFunc = null)
+        //{
+        //    WindowAction(command, 
+        //        nameof(command.v_WindowName), nameof(command.v_CompareMethod), nameof(command.v_WaitTimeForWindow), 
+        //        engine, actionFunc, nameof(command.v_NameResult), nameof(command.v_HandleResult), errorFunc);
+        //}
 
         ///// <summary>
         ///// inner window handle action
