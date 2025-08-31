@@ -765,15 +765,15 @@
     <Compile Include="Core\Automation\Commands\Window\ActivateWindowByWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\AWindowNameCoreCommands.cs" />
     <Compile Include="Core\Automation\Commands\Window\AOneWindowNameCommands.cs" />
-    <Compile Include="Core\Automation\Commands\Window\GetProcessNameFromWindowName.cs" />
-    <Compile Include="Core\Automation\Commands\Window\GetWindowHandleFromWindowName.cs" />
+    <Compile Include="Core\Automation\Commands\_RemovedCommands\GetProcessNameFromWindowName.cs" />
+    <Compile Include="Core\Automation\Commands\_RemovedCommands\GetWindowHandleFromWindowName.cs" />
     <Compile Include="Core\Automation\Commands\Window\CheckWindowHandleExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\CloseWindowByWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetProcessNameFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowNameFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowPositionFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowSizeFromWindowHandleCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\GetWindowSizeCommand.cs" />
+    <Compile Include="Core\Automation\Commands\_RemovedCommands\GetWindowSizeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowStateFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowNameCoreProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowHandleProperties.cs" />
@@ -1035,8 +1035,8 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValueAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserResizeWebBrowserCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowControls.cs" />
-    <Compile Include="Core\Automation\Commands\Window\GetWindowStateCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\GetWindowPositionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\_RemovedCommands\GetWindowStateCommand.cs" />
+    <Compile Include="Core\Automation\Commands\_RemovedCommands\GetWindowPositionCommand.cs" />
     <Compile Include="Core\Automation\Commands\WordControls.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordCheckWordInstanceExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCheckBrowserInstanceExistsCommand.cs" />
@@ -1081,7 +1081,7 @@
     <Compile Include="Core\Automation\Commands\_RemovedCommands\BeginExcelDatasetLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\BeginLoopForComplexDataTypesCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\BeginNumberOfTimesLoopCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\ActivateWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\_RemovedCommands\ActivateWindowCommand.cs" />
     <Compile Include="Core\Automation\Attributes\ClassAttributes.cs" />
     <Compile Include="Core\Automation\Commands\Misc\GetClipboardTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\SetClipboardTextCommand.cs" />
@@ -1123,7 +1123,7 @@
     <Compile Include="Core\Automation\Commands\IE\IEBrowserFindBrowserCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\GetOSVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\GetBotStoreDataCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\CloseWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\_RemovedCommands\CloseWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Script\CommentCommand.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessage\ShowMessageCommand.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\ParseJSONArrayCommand.cs" />
@@ -1136,8 +1136,8 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebBrowserInformationCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchWebBrowserWindowAndTabCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCreateWebBrowserInstanceCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\MoveWindowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\ResizeWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\_RemovedCommands\MoveWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\_RemovedCommands\ResizeWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunCSharpCodeCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunBatchScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserElementActionCommand.cs" />
@@ -1148,7 +1148,7 @@
     <Compile Include="Core\Automation\Commands\IE\IEBrowserNavigateURLCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserNavigateToURLCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserRefreshCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\SetWindowStateCommand.cs" />
+    <Compile Include="Core\Automation\Commands\_RemovedCommands\SetWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\SMTPSendEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\StartApplicationCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\LaunchRemoteDesktopCommand.cs" />

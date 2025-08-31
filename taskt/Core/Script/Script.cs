@@ -4451,6 +4451,27 @@ namespace taskt.Core.Script
 
             // SetWindowStateCommand -> SetOneWindowStateCommand, SetWindowsStateCommand
             SeparateOneAll(doc, "SetWindowStateCommand", "SetOneWindowStateCommand", "Set One Window State", "SetWindowsStateCommand", "Set Windows State");
+
+            // GetProcessNameFromWindowNameCommand -> GetOneProcessNameFromOneWindowNameCommand
+            ChangeCommandName(doc, "GetProcessNameFromWindowNameCommand", "GetOneProcessNameFromOneWindowNameCommand", "Get One Process Name From One Window Name");
+
+            // GetWindowHandleFromWindowNameCommand -> GetOneWindowHandleFromOneWindowNameCommand
+            //ChangeCommandName(doc, "GetWindowHandleFromWindowNameCommand", "GetOneWindowHandleFromOneWindowNameCommand", "Get One Window Handle From One Window Name");
+            ChangeToOtherCommand(doc, "GetWindowHandleFromWindowNameCommand", "GetOneWindowHandleFromOneWindowNameCommand", "Get One Window Handle From One Window Name",
+                new List<(string, string)>()
+                {
+                    ("v_HandleResult", "v_Result"),
+                }
+            );
+
+            // GetWindowPositionCommand -> GetOneWindowPositionCommand
+            ChangeCommandName(doc, "GetWindowPositionCommand", "GetOneWindowPositionCommand", "Get One Window Position");
+
+            // GetWindowSizeCommand -> GetOneWindowSizeCommand
+            ChangeCommandName(doc, "GetWindowSizeCommand", "GetOneWindowSizeCommand", "Get One Window Size");
+
+            // GetWindowStateCommand -> GetOneWindowStateCommand
+            ChangeCommandName(doc, "GetWindowStateCommand", "GetOneWindowStateCommand", "Get One Window State");
         }
 
         /// <summary>

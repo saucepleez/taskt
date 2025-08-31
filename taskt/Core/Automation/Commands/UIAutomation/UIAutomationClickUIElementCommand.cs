@@ -53,9 +53,13 @@ namespace taskt.Core.Automation.Commands
             string windowName = UIElementControls.GetWindowName(targetElement);
             if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindow), engine))
             {
-                var activateWindow = new ActivateWindowCommand()
+                //var activateWindow = new ActivateWindowCommand()
+                //{
+                //    v_WindowName = windowName
+                //};
+                var activateWindow = new ActivateOneWindowCommand()
                 {
-                    v_WindowName = windowName
+                    v_WindowName = windowName,
                 };
                 activateWindow.RunCommand(engine);
             }
@@ -65,22 +69,34 @@ namespace taskt.Core.Automation.Commands
             {
                 if (!targetElement.TryGetClickablePoint(out point))
                 {
-                    var moveWindow = new MoveWindowCommand()
+                    //var moveWindow = new MoveWindowCommand()
+                    //{
+                    //    v_WindowName = windowName,
+                    //    v_XPosition = "0",
+                    //    v_YPosition = "0"
+                    //};
+                    var moveWindow = new MoveOneWindowCommand()
                     {
                         v_WindowName = windowName,
                         v_XPosition = "0",
-                        v_YPosition = "0"
+                        v_YPosition = "0",
                     };
                     moveWindow.RunCommand(engine);
                     targetElement.TryGetClickablePoint(out point);
                 }
                 if ((point.X < 0.0) || (point.Y < 0.0))
                 {
-                    var moveWindow = new MoveWindowCommand()
+                    //var moveWindow = new MoveWindowCommand()
+                    //{
+                    //    v_WindowName = windowName,
+                    //    v_XPosition = "0",
+                    //    v_YPosition = "0"
+                    //};
+                    var moveWindow = new MoveOneWindowCommand()
                     {
                         v_WindowName = windowName,
                         v_XPosition = "0",
-                        v_YPosition = "0"
+                        v_YPosition = "0",
                     };
                     moveWindow.RunCommand(engine);
 
