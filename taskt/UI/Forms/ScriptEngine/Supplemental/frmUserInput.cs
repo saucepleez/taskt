@@ -76,6 +76,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
 
                 // get default value
                 var defaultFieldValue = rw["DefaultValue"] as string;
+                var userInputValue = (rw["UserInput"] as string).Trim();
 
                 var labelingFont = new Font("Segoe UI Bold", 12);
 
@@ -96,10 +97,18 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
                         try
                         {
                             var items = defaultFieldValue.Split(',');
+                            int idx = -1;
+                            int cnt = 0;
                             foreach (var comboItem in items)
                             {
                                 combobox.Items.Add(comboItem.Trim());
+                                if (comboItem.Trim() == userInputValue)
+                                {
+                                    idx = cnt;
+                                }
+                                cnt++;
                             }
+                            combobox.SelectedIndex = (idx >= 0) ? idx : -1;
                         }
                         catch (Exception ex)
                         {
@@ -111,7 +120,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
                         combobox.Height = fieldHeight;
                         combobox.Margin = new Padding(10, 5, 0, 0);
                         combobox.DropDownStyle = ComboBoxStyle.DropDownList;
-                        combobox.SelectedIndex = -1;
+                        //combobox.SelectedIndex = -1;
                         combobox.Font = labelingFont;
                         combobox.ForeColor = Color.SteelBlue;
                         this.inputControls.Add(combobox);
