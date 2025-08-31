@@ -455,6 +455,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_25(doc);
             convertTo3_5_2_31(doc);
             convertTo3_5_2_38(doc);
+            convertTo3_5_2_39(doc);
             return doc;
         }
 
@@ -4409,6 +4410,47 @@ namespace taskt.Core.Script
                     ("v_InputDirections", "v_Message"),
                 }
             );
+        }
+
+        private static void convertTo3_5_2_39(XDocument doc)
+        {
+            void SeparateOneAll(XDocument x, string currentCommandName, string oneCommandName, string oneSelectionName, string allCommandName, string allSelectionName)
+            {
+                var cmds = GetCommands(x, currentCommandName);
+                var one = new List<XElement>();
+                var all = new List<XElement>();
+                foreach (var cmd in cmds)
+                {
+                    var matchAttr = cmd.Attribute("v_MatchMethod");
+                    switch (matchAttr?.Value.ToLower() ?? "")
+                    {
+                        case "all":
+                            matchAttr?.Remove();
+                            all.Add(cmd);
+                            break;
+                        default:
+                            one.Add(cmd);
+                            break;
+                    }
+                }
+                ChangeCommandNameProcess(one, oneCommandName, oneSelectionName);
+                ChangeCommandNameProcess(all, allCommandName, allSelectionName);
+            }
+
+            // ActivateWindowCommand -> ActivateOneWindowCommand, ActivateWindowsCommand
+            SeparateOneAll(doc, "ActivateWindowCommand", "ActivateOneWindowCommand", "Activate One Window", "ActivateWindowsCommand", "Activate Windows");
+
+            // CloseWindowCommand -> CloseOneWindowCommand, CloseWindowsCommand
+            SeparateOneAll(doc, "CloseWindowCommand", "CloseOneWindowCommand", "Close One Window", "CloseWindowsCommand", "Close Windows");
+
+            // MoveWindowCommand -> MoveOneWindowCommand, MoveWindowsCommand
+            SeparateOneAll(doc, "MoveWindowCommand", "MoveOneWindowCommand", "Move One Window", "MoveWindowsCommand", "Move Windows");
+
+            // ResizeWindowCommand -> ResizeOneWindowCommand, ResizeWindowsCommand
+            SeparateOneAll(doc, "ResizeWindowCommand", "ResizeOneWindowCommand", "Resize One Window", "ResizeWindowsCommand", "Resize Windows");
+
+            // SetWindowStateCommand -> SetOneWindowStateCommand, SetWindowsStateCommand
+            SeparateOneAll(doc, "SetWindowStateCommand", "SetOneWindowStateCommand", "Set One Window State", "SetWindowsStateCommand", "Set Windows State");
         }
 
         /// <summary>
