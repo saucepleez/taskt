@@ -458,9 +458,11 @@
     <Compile Include="Core\Automation\Commands\List\GetCommonValuesOfListsCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\CheckValidListIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ActivateWindowsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\AGetFromWindowNamesAsListCommands.cs" />
     <Compile Include="Core\Automation\Commands\Window\AWindowNamesActionCommnads.cs" />
     <Compile Include="Core\Automation\Commands\Window\AWindowNamesCommands.cs" />
     <Compile Include="Core\Automation\Commands\Window\AGetFromWindowNamesAsDataTableCommands.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetWindowHandlesFromWindowNamesAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowStatesFromWindowNamesAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowSizesFromWindowNamesAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowPositionsFromWindowNamesAsDataTableCommand.cs" />
