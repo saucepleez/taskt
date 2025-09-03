@@ -12,6 +12,6 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTimeBetweenFindAndAction))]
         [PropertyParameterOrder(10000)]
-        public string v_WaitTimeBetweenFindAndAction { get; set; }
+        public virtual string v_WaitTimeBetweenFindAndAction { get; set; }
     }
 }
