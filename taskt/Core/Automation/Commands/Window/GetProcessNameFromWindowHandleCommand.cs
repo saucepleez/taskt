@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
+using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -37,6 +37,49 @@ namespace taskt.Core.Automation.Commands
 
         //public string v_WindowTitleResult {get;set;}
 
+        /// <summary>
+        /// get process id from window handle
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="lpdwProcessId"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        ///// <summary>
+        ///// open process from pid
+        ///// </summary>
+        ///// <param name="processAccess"></param>
+        ///// <param name="bInheritHandle"></param>
+        ///// <param name="processId"></param>
+        ///// <returns></returns>
+        //[DllImport("kernel32.dll")]
+        //public static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, uint processId);
+
+        ///// <summary>
+        ///// https://www.pinvoke.net/default.aspx/kernel32.openprocess
+        ///// </summary>
+        //private const uint AccessMode = 0x0410; // 0x0400 | 0x0010
+
+        ///// <summary>
+        ///// get process name
+        ///// </summary>
+        ///// <param name="hProcess"></param>
+        ///// <param name="hModule"></param>
+        ///// <param name="lpBaseName"></param>
+        ///// <param name="nSize"></param>
+        ///// <returns></returns>
+        //[DllImport("psapi.dll", CharSet = CharSet.Ansi)]
+        //static extern uint GetModuleBaseName(IntPtr hProcess, IntPtr hModule, [MarshalAs(UnmanagedType.LPStr), Out] StringBuilder lpBaseName, uint nSize);
+
+        ///// <summary>
+        ///// close handle
+        ///// </summary>
+        ///// <param name="handle"></param>
+        ///// <returns></returns>
+        //[DllImport("kernel32.dll")]
+        //private static extern bool CloseHandle(IntPtr handle);
+
         public GetProcessNameFromWindowHandleCommand()
         {
         }
@@ -56,8 +99,26 @@ namespace taskt.Core.Automation.Commands
 
             this.WindowHandleAction(engine, new Action<IntPtr>((whnd) =>
             {
-                var proc = Process.GetProcesses().Where(p => (p.MainWindowHandle == whnd)).First();
-                proc.ProcessName.StoreInUserVariable(engine, v_Result);
+                //var ps = Process.GetProcesses();
+                //// DBG
+                //foreach(var p in ps)
+                //{
+                //    Console.WriteLine(p.MainWindowHandle);
+                //}
+                //var proc = ps.Where(p => (p.MainWindowHandle == whnd)).First();
+                ////var proc = Process.GetProcesses().Where(p => (p.MainWindowHandle == whnd)).First();
+                //proc.ProcessName.StoreInUserVariable(engine, v_Result);
+
+                GetWindowThreadProcessId(whnd, out uint pid);
+                if (pid != 0)
+                {
+                    var p = Process.GetProcessById((int)pid);
+                    p.ProcessName.StoreInUserVariable(engine, v_Result);
+                }
+                else
+                {
+                    throw new Exception($"Error. Can not find Process Name. Handle: '{v_WindowHandle}', Expand Value: '{whnd}'");
+                }
             }));
         }
     }
