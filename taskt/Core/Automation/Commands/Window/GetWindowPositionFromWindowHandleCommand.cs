@@ -37,17 +37,7 @@ namespace taskt.Core.Automation.Commands
         public string v_YPosition { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Base position")]
-        [InputSpecification("", true)]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyUISelectionOption("Top Left")]
-        [PropertyUISelectionOption("Bottom Right")]
-        [PropertyUISelectionOption("Top Right")]
-        [PropertyUISelectionOption("Bottom Left")]
-        [PropertyUISelectionOption("Center")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsOptional(true, "Top Left")]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_PositionBase))]
         [PropertyParameterOrder(5003)]
         public string v_PositionBase { get; set; }
 

@@ -387,6 +387,20 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "When Window Is Maximized")]
         public static string v_WhenWindowIsMaximizedForGet { get; }
 
+        /// <summary>
+        /// base position
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Base Position")]
+        [PropertyUISelectionOption("Top Left")]
+        [PropertyUISelectionOption("Bottom Right")]
+        [PropertyUISelectionOption("Top Right")]
+        [PropertyUISelectionOption("Bottom Left")]
+        [PropertyUISelectionOption("Center")]
+        [PropertyIsOptional(true, "Top Left")]
+        [PropertyDisplayText(false, "Base Position")]
+        public static string v_PositionBase { get; }
+
         #endregion
 
         #region enum, struct
