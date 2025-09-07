@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Xml.Serialization;
+using System.Windows.Automation;
 using System.Windows.Forms;
-using taskt.UI.CustomControls;
+using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,40 +16,41 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationSearchUIElementFromWindowCommand : ScriptCommand
+    public sealed class UIAutomationSearchUIElementFromWindowCommand : AOneWindowNameCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
-        public string v_WindowName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
+        //public string v_WindowName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_OutputUIElementName))]
+        [PropertyParameterOrder(5100)]
         public string v_AutomationElementVariable { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CompareMethod))]
-        public string v_CompareMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CompareMethod))]
+        //public string v_CompareMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod_Single))]
-        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
-        public string v_MatchMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod_Single))]
+        //[PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
+        //public string v_MatchMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
-        public string v_TargetWindowIndex { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
+        //public string v_TargetWindowIndex { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
-        public string v_WaitTimeForWindow { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
+        //public string v_WaitTimeForWindow { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
-        public string v_NameResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
+        //public string v_NameResult { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
-        public string v_HandleResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
+        //public string v_HandleResult { get; set; }
 
         public UIAutomationSearchUIElementFromWindowCommand()
         {
@@ -60,13 +62,23 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            UIElementControls.GetWindowUIElement(this, engine);
+            //UIElementControls.GetWindowUIElement(this, engine);
+
+            this.WindowNameAction(engine, new Action<IntPtr, string>((whnd, name) =>
+            {
+                var ret = AutomationElement.FromHandle(whnd);
+
+                if (!string.IsNullOrEmpty(v_AutomationElementVariable))
+                {
+                    ret.StoreInUserVariable(engine, v_AutomationElementVariable);
+                }
+            }));
         }
 
-        private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            WindowControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
-        }
+        //private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        //{
+        //    WindowControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
+        //}
 
         public override void Refresh(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {

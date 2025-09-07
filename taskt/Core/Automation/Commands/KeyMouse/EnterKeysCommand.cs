@@ -16,11 +16,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_input))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class EnterKeysCommand : ScriptCommand
+    public sealed class EnterKeysCommand : AOneWindowNameActionCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
-        public string v_WindowName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
+        //public string v_WindowName { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Text or Keys to Send.")]
@@ -36,6 +36,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIntermediateConvert(nameof(IntermediateControls.ConvertToIntermediate_CheckedVariableMarker), "")]
         [PropertyDisplayText(true, "Text")]
+        [PropertyParameterOrder(5100)]
         public string v_TextToSend { get; set; }
 
         [XmlAttribute]
@@ -44,6 +45,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Not Encrypted")]
         [PropertyUISelectionOption("Encrypted")]
         [PropertyIsOptional(true, "Not Encrypted")]
+        [PropertyParameterOrder(5200)]
+        [PropertyDisplayText(false, "Encrypted")]
         public string v_EncryptionOption { get; set; }
 
         [XmlAttribute]
@@ -51,49 +54,54 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Use Paste from Clipboard")]
         [PropertyIsOptional(true, "No")]
         [Remarks("When entering keys in combination with the Ctrl key, etc., It will NOT work correctly.")]
+        [PropertyParameterOrder(5300)]
+        [PropertyDisplayText(false, "Use Clipboard")]
         public string v_UseClipBoard { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CompareMethod))]
-        public string v_CompareMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CompareMethod))]
+        //public string v_CompareMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod_Single))]
-        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
-        public string v_MatchMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod_Single))]
+        //[PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
+        //public string v_MatchMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
-        public string v_TargetWindowIndex { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
+        //public string v_TargetWindowIndex { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
-        public string v_WaitTimeForWindow { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
+        //public string v_WaitTimeForWindow { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterKeyEnter))]
+        [PropertyParameterOrder(8010)]
         public string v_WaitTime { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Try Activate Window, when Specifiy Current Window Variable")]
         [PropertyIsOptional(true, "No")]
+        [PropertyParameterOrder(8020)]
         public string v_ActivateCurrentWindow { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
-        public string v_NameResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
+        //public string v_NameResult { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
-        public string v_HandleResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
+        //public string v_HandleResult { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Clear Clipboard After Paste")]
         [PropertyIsOptional(true, "No")]
         [PropertyValidationRule("Clear Clipboard", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(false, "")]
+        [PropertyDisplayText(false, "Clear Clipboard after Paste")]
+        [PropertyParameterOrder(9000)]
         public string v_ClearClipboardAfterPaste { get; set; }
 
         public EnterKeysCommand()
@@ -161,100 +169,151 @@ namespace taskt.Core.Automation.Commands
             //var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);
             //System.Threading.Thread.Sleep(waitTime);
 
-            WindowControls.WindowAction(this, engine,
-                new Action<List<(IntPtr, string)>>(wins =>
+            //WindowControls.WindowAction(this, engine,
+            //    new Action<List<(IntPtr, string)>>(wins =>
+            //    {
+            //        if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
+            //        {
+            //            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
+            //            {
+            //                WindowControls.ActivateWindow(wins[0].Item1);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            WindowControls.ActivateWindow(wins[0].Item1);
+            //        }
+
+            //        var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
+
+            //        var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
+            //        if (encryptOption == "encrypted")
+            //        {
+            //            textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
+            //        }
+
+            //        if (textToSend == "{WIN_KEY}")
+            //        {
+            //            KeyMouseControls.KeyDown(Keys.LWin);
+            //            KeyMouseControls.KeyUp(Keys.LWin);
+            //        }
+            //        else if (textToSend.StartsWith("{WIN_KEY+") && textToSend.EndsWith("}"))
+            //        {
+            //            KeyMouseControls.KeyDown(Keys.LWin);
+            //            var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}", "");
+
+            //            foreach (var c in remainingText)
+            //            {
+            //                Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
+            //                KeyMouseControls.KeyDown(key);
+            //            }
+
+            //            KeyMouseControls.KeyUp(Keys.LWin);
+
+            //            foreach (var c in remainingText)
+            //            {
+            //                Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
+            //                KeyMouseControls.KeyUp(key);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_UseClipBoard), engine))
+            //            {
+            //                ClipboardControls.SetClipboardText(textToSend);
+            //                textToSend = "^v";  // Ctrl+V
+            //            }
+            //            SendKeys.SendWait(textToSend);
+            //            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ClearClipboardAfterPaste), engine))
+            //            {
+            //                ClipboardControls.ClearClipboard();
+            //            }
+            //        }
+
+            //        var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);
+            //        System.Threading.Thread.Sleep(waitTime);
+            //    })
+            //);
+
+            // activate window
+            void ActivateWindowProcess(IntPtr h)
+            {
+                var activateWindow = new ActivateWindowByWindowHandleCommand()
                 {
-                    //if (WindowControls.GetActiveWindowHandle() != wins[0].Item1)
-                    //{
-                    //    // DBG
-                    //    Console.WriteLine($"#### strange win-handle. cur: {WindowControls.GetActiveWindowHandle()}, arg: {wins[0].Item1}");
-                    //    WindowControls.ActivateWindow(wins[0].Item1);
-                    //}
-                    //else
-                    //{
-                    //    // DBG
-                    //    Console.WriteLine($"#### same win-handle. key: {v_TextToSend}");
-                    //}
-                    //if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
-                    //{
-                    //    // DBG
-                    //    Console.WriteLine($"#### same win-handle. key: {v_TextToSend}");
-                    //}
-                    //else
-                    //{
-                    //    // DBG
-                    //    Console.WriteLine($"#### strange win-handle. cur: {WindowControls.GetActiveWindowHandle()}, arg: {wins[0].Item1}");
-                    //    WindowControls.ActivateWindow(wins[0].Item1);
-                    //}
+                    v_WindowHandle = h.ToString(),
+                };
+                activateWindow.RunCommand(engine);
+            }
 
-                    if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
+            this.WindowNameActionAndWait(engine, new Action<IntPtr, string>((whnd, name) =>
+            {
+                if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
+                {
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
                     {
-                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
-                        {
-                            WindowControls.ActivateWindow(wins[0].Item1);
-                        }
+                        ActivateWindowProcess(whnd);   
                     }
-                    else
+                }
+                else
+                {
+                    ActivateWindowProcess(whnd);
+                }
+
+                var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
+
+                var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
+                if (encryptOption == "encrypted")
+                {
+                    textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
+                }
+
+                if (textToSend == "{WIN_KEY}")
+                {
+                    KeyMouseControls.KeyDown(Keys.LWin);
+                    KeyMouseControls.KeyUp(Keys.LWin);
+                }
+                else if (textToSend.StartsWith("{WIN_KEY+") && textToSend.EndsWith("}"))
+                {
+                    KeyMouseControls.KeyDown(Keys.LWin);
+                    var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}", "");
+
+                    foreach (var c in remainingText)
                     {
-                        WindowControls.ActivateWindow(wins[0].Item1);
-                    }
-
-                    var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
-
-                    var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
-                    if (encryptOption == "encrypted")
-                    {
-                        textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
-                    }
-
-                    if (textToSend == "{WIN_KEY}")
-                    {
-                        KeyMouseControls.KeyDown(Keys.LWin);
-                        KeyMouseControls.KeyUp(Keys.LWin);
-                    }
-                    else if (textToSend.StartsWith("{WIN_KEY+") && textToSend.EndsWith("}"))
-                    {
-                        KeyMouseControls.KeyDown(Keys.LWin);
-                        var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}", "");
-
-                        foreach (var c in remainingText)
-                        {
-                            Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-                            KeyMouseControls.KeyDown(key);
-                        }
-
-                        KeyMouseControls.KeyUp(Keys.LWin);
-
-                        foreach (var c in remainingText)
-                        {
-                            Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-                            KeyMouseControls.KeyUp(key);
-                        }
-                    }
-                    else
-                    {
-                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_UseClipBoard), engine))
-                        {
-                            ClipboardControls.SetClipboardText(textToSend);
-                            textToSend = "^v";  // Ctrl+V
-                        }
-                        SendKeys.SendWait(textToSend);
-                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ClearClipboardAfterPaste), engine))
-                        {
-                            ClipboardControls.ClearClipboard();
-                        }
+                        Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
+                        KeyMouseControls.KeyDown(key);
                     }
 
-                    var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);
-                    System.Threading.Thread.Sleep(waitTime);
-                })
-            );
+                    KeyMouseControls.KeyUp(Keys.LWin);
+
+                    foreach (var c in remainingText)
+                    {
+                        Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
+                        KeyMouseControls.KeyUp(key);
+                    }
+                }
+                else
+                {
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_UseClipBoard), engine))
+                    {
+                        ClipboardControls.SetClipboardText(textToSend);
+                        textToSend = "^v";  // Ctrl+V
+                    }
+                    SendKeys.SendWait(textToSend);
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ClearClipboardAfterPaste), engine))
+                    {
+                        ClipboardControls.ClearClipboard();
+                    }
+                }
+
+                var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);
+                System.Threading.Thread.Sleep(waitTime);
+            }));
         }
 
-        private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            WindowControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
-        }
+        //private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        //{
+        //    WindowControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
+        //}
 
         private void lnkEncryptText_Click(object sender, EventArgs e)
         {
