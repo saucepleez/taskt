@@ -26,22 +26,31 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
     {
         //list of available commands
         List<AutomationCommand> commandList = new List<AutomationCommand>();
+
         //list of variables, assigned from frmScriptBuilder
         public List<Core.Script.ScriptVariable> scriptVariables;
+
         //reference to currently selected command
         public ScriptCommand selectedCommand;
+
         //reference to original command
         public ScriptCommand originalCommand;
+
         //assigned by frmScriptBuilder to restrict inputs for editing existing commands
         public CreationMode creationMode;
+
         //startup command, assigned from frmScriptBuilder
         public string defaultStartupCommand;
+
         //editing command, assigned from frmScriptBuilder when editing a command
         public ScriptCommand editingCommand;
+
         //track existing commands for visibility
         public List<ScriptCommand> configuredCommands;
+
         // taskt setting
         public Core.SafeApplicationSettings appSettings;
+
         // instance counter
         public Core.InstanceCounter instanceList;
 
