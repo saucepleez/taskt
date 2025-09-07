@@ -44,13 +44,13 @@ namespace taskt.UI.Forms.ScriptBuilder
                 using (var newBuilder = new frmScriptBuilder())
                 {
                     // add variables
-                    newBuilder.scriptVariables = new List<ScriptVariable>();
+                    newBuilder.scriptVariables = new List<ScriptVariable>(this.scriptVariables);
                     newBuilder.instanceList = instanceList;
 
-                    foreach (var variable in this.scriptVariables)
-                    {
-                        newBuilder.scriptVariables.Add(variable);
-                    }
+                    //foreach (var variable in this.scriptVariables)
+                    //{
+                    //    newBuilder.scriptVariables.Add(variable);
+                    //}
 
                     // append to new builder
                     foreach (var cmd in sequence.v_scriptActions)
@@ -133,6 +133,8 @@ namespace taskt.UI.Forms.ScriptBuilder
                         selectedCommandItem.SubItems.Add(editCommand.selectedCommand.GetDisplayValue());
 
                         editCommand.selectedCommand.IsDontSavedCommand = true;
+
+                        this.scriptVariables = editCommand.scriptVariables;
 
                         editCommand.selectedCommand.AddInstance(instanceList);
 

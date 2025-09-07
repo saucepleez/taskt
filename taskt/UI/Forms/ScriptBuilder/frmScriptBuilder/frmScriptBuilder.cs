@@ -605,6 +605,8 @@ namespace taskt.UI.Forms.ScriptBuilder
                     selectedComamnd.IsDontSavedCommand = true;
                     selectedComamnd.IsNewInsertedCommand = true;
                     AddCommandToListView(selectedComamnd);
+
+                    this.scriptVariables = newCommandForm.scriptVariables;
                 }
             }
         }
