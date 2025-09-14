@@ -373,6 +373,7 @@
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\CompileCSharpCodeCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\CSharpCodeFileControls.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\ICSharpCompileProperties.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\OpenFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunCSharpFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunPowerShellScriptByCodeCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunJavaScriptByCodeCommand.cs" />
@@ -436,6 +437,7 @@
     <Compile Include="Core\Automation\Commands\Folder\AFolderExistsFolderPathCommands.cs" />
     <Compile Include="Core\Automation\Commands\Folder\AFolderExistsFolderPathPathResultCommands.cs" />
     <Compile Include="Core\Automation\Commands\Folder\AFolderCopyMoveCommands.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\OpenFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\GetRandomFolderPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\CreateFolderByPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\EM_CanHandleFolderNameExtensionMethods.cs" />

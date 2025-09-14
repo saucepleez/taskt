@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static List<(IntPtr, string)> GetAllWindowNamesAndHandles()
         {
-            windowHandleNamePair = new List<(IntPtr, string)>();
+            windowHandleNamePair = CreateEmptyWindowNameAndHandleList();
 
             EnumWindows(new EnumWindowsDelegate(EnumerateWindow), IntPtr.Zero);
 
@@ -63,6 +63,15 @@ namespace taskt.Core.Automation.Commands
         public static string GetActiveWindowName()
         {
             return EM_CanHandleWindowHandleExtentionMethods.GetWindowName(EM_CanHandleWindowHandleExtentionMethods.GetActiveWindowHandle());
+        }
+
+        /// <summary>
+        /// create empty window name and handle list
+        /// </summary>
+        /// <returns></returns>
+        public static List<(IntPtr, string)> CreateEmptyWindowNameAndHandleList()
+        {
+            return new List<(IntPtr, string)>();
         }
     }
 }
