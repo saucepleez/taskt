@@ -159,41 +159,48 @@ namespace taskt.Core.Automation.Commands
             var waitTimeUntil = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeForExecute), engine);
             System.Threading.Thread.Sleep(waitTimeUntil);
 
+            // current window handle
+            var currentHandle = (p.MainWindowHandle != IntPtr.Zero) ? p.MainWindowHandle : EM_CanHandleWindowHandleExtentionMethods.GetActiveWindowHandle();
+
             // process name
             if (!string.IsNullOrEmpty(v_StartedProcessName))
             {
-                try
+                using (var proc = new InnerScriptVariable(engine))
                 {
-                    p.ProcessName.StoreInUserVariable(engine, v_StartedProcessName);
-                }
-                catch
-                {
-                    throw new Exception("Error. Fail get Process Name.");
+                    var getProc = new GetProcessNameFromWindowHandleCommand()
+                    {
+                        v_WindowHandle = currentHandle.ToString(),
+                        v_Result = proc.VariableName,
+                    };
+                    getProc.RunCommand(engine);
+                    proc.VariableValue.ToString().StoreInUserVariable(engine, v_StartedProcessName);
                 }
             }
             // window name
             if (!string.IsNullOrEmpty(v_WindowName))
             {
-                try
+                if (p.MainWindowHandle != IntPtr.Zero) 
                 {
                     p.MainWindowTitle.StoreInUserVariable(engine, v_WindowName);
                 }
-                catch
+                else
                 {
-                    throw new Exception("Error. Fail get Window Name.");
+                    using (var name = new InnerScriptVariable(engine))
+                    {
+                        var getName = new GetWindowNameFromWindowHandleCommand()
+                        {
+                            v_WindowHandle = currentHandle.ToString(),
+                            v_Result = name.VariableName,
+                        };
+                        getName.RunCommand(engine);
+                        name.VariableValue.ToString().StoreInUserVariable(engine, v_WindowName);
+                    }
                 }
             }
             // window handle
             if (!string.IsNullOrEmpty(v_WindowHandle))
             {
-                try
-                {
-                    p.MainWindowHandle.StoreInUserVariable(engine, v_WindowHandle);
-                }
-                catch
-                {
-                    throw new Exception("Error. Fail get WindowHandle.");
-                }
+                currentHandle.StoreInUserVariable(engine, v_WindowHandle);
             }
 
             //var waitForExit = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WaitForExit), engine);
