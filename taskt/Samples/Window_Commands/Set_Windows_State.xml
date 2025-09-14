@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="0700d166-ac69-4956-8f3a-8d56beda9573" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Set Windows State sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="72b4b010-adcf-43f5-9ccf-d2e9b65580f2" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute SimpleWindowApp" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="78710c1d-b93e-4faf-9d17-e042566588e1" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="⦃Folder.SamplesPath⦄\Resources\SimpleWindowApp.exe" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" v_WaitTimeForApplication="10" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="66ee23ba-aa4b-4889-a5e9-9d266371aa20" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="⦃Folder.SamplesPath⦄\Resources\SimpleWindowApp.exe" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" v_WaitTimeForApplication="10" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="d0da0d5c-bd4d-4c0a-9dbb-b5aa2d3fcf56" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Minimize SimpleWindowApps" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetWindowsStateCommand" CommandID="5b119ea4-855c-4ef3-8370-bb2dc6bd12d2" CommandName="SetWindowsStateCommand" IsCommented="false" SelectionName="Set Windows State" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CompareMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_WaitTimeBetweenFindAndAction="0" v_WindowState="Minimize" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseScriptCommand" CommandID="d5d7c30c-95de-466b-9bc0-a634abc4edf1" CommandName="PauseScriptCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="wait 2 sec" CommandEnabled="true" v_PauseLength="2000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e1b0ac8f-7188-4c16-8375-a162ff9c8ebb" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Maximize SimpleWindowApps" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetWindowsStateCommand" CommandID="cca231ad-a779-45f8-b32c-dfa5d0a3b286" CommandName="SetWindowsStateCommand" IsCommented="false" SelectionName="Set Windows State" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CompareMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_WaitTimeBetweenFindAndAction="0" v_WindowState="Maximize" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseScriptCommand" CommandID="27cd0a55-9608-40dd-b317-ba0fee06af92" CommandName="PauseScriptCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="wait 2 sec" CommandEnabled="true" v_PauseLength="2000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="9f9774ce-e168-4c14-a132-e8814cf72d85" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Restore SimpleWindowApps" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetWindowsStateCommand" CommandID="59b0ebe4-203c-4bd1-9c7a-d50848e5bbf4" CommandName="SetWindowsStateCommand" IsCommented="false" SelectionName="Set Windows State" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CompareMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_WaitTimeBetweenFindAndAction="0" v_WindowState="Restore" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.2.40</TasktVersion>
+    <Author />
+    <LastRunTime>2025-09-14T12:14:00.9227473+09:00</LastRunTime>
+    <RunTimes>3</RunTimes>
+    <Revision>4</Revision>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables />
+</Script>
