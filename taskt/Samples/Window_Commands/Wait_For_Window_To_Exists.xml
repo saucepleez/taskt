@@ -8,10 +8,10 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="dfcb5c71-5d40-4c91-b2d2-2c4415fa42a0" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Open taskt Sample\Resources folder" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="416446d8-3a63-4155-a230-034001399918" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="cmd" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="vCmd" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="416446d8-3a63-4155-a230-034001399918" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="cmd" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="vCmd" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="EnterKeysCommand" CommandID="01740ae1-ee7b-42a4-b8e4-ea19196d1e4d" CommandName="EnterKeysCommand" IsCommented="false" SelectionName="Enter Keys" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="⦃vCmd⦄" v_TextToSend="start &quot;&quot; &quot;⦃Folder.SamplesPath⦄\Resources\&quot; &amp; exit{ENTER}" v_EncryptionOption="" v_UseClipBoard="No" v_CompareMethod="" v_MatchMethod="" v_TargetWindowIndex="0" v_WaitTimeForWindow="60" v_WaitTime="500" v_ActivateCurrentWindow="" v_NameResult="" v_HandleResult="" />
+      <ScriptCommand xsi:type="EnterKeysCommand" CommandID="01740ae1-ee7b-42a4-b8e4-ea19196d1e4d" CommandName="EnterKeysCommand" IsCommented="false" SelectionName="Enter Keys" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="⦃vCmd⦄" v_CompareMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_MatchMethod="" v_TargetWindowIndex="0" v_TextToSend="start &quot;&quot; &quot;⦃Folder.SamplesPath⦄\Resources\&quot; &amp; exit{ENTER}" v_EncryptionOption="" v_UseClipBoard="No" v_WaitTime="500" v_ActivateCurrentWindow="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="31a6a2e9-0260-46f2-813a-c47f66e72a69" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Show Message" CommandEnabled="true" />
@@ -30,11 +30,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.4</TasktVersion>
+    <TasktVersion>3.5.2.40</TasktVersion>
     <Author />
-    <LastRunTime>2024-09-22T09:36:44.7487615+09:00</LastRunTime>
-    <RunTimes>8</RunTimes>
-    <Revision>12</Revision>
+    <LastRunTime>2025-09-14T10:35:34.3422245+09:00</LastRunTime>
+    <RunTimes>9</RunTimes>
+    <Revision>13</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>
