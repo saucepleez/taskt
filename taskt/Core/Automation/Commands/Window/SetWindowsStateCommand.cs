@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window")]
-    [Attributes.ClassAttributes.SubGruop("Window Actions")]
+    [Attributes.ClassAttributes.SubGruop("Multi Window Actions")]
     [Attributes.ClassAttributes.CommandSettings("Set Windows State")]
     [Attributes.ClassAttributes.Description("This command sets a target windows state.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change a windows state to minimized, maximized, or restored state")]

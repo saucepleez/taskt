@@ -5,7 +5,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window")]
-    [Attributes.ClassAttributes.SubGruop("Window Actions")]
+    [Attributes.ClassAttributes.SubGruop("Multi Window Actions")]
     [Attributes.ClassAttributes.CommandSettings("Activate Windows")]
     [Attributes.ClassAttributes.Description("This command activates windows")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to active a windows by name")]

@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window")]
-    [Attributes.ClassAttributes.SubGruop("Window Actions")]
+    [Attributes.ClassAttributes.SubGruop("Multi Window Actions")]
     [Attributes.ClassAttributes.CommandSettings("Move Windows")]
     [Attributes.ClassAttributes.Description("This command Move windows.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Move Windows")]
