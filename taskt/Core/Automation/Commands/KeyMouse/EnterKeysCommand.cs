@@ -103,6 +103,11 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "Clear Clipboard after Paste")]
         [PropertyParameterOrder(9000)]
         public string v_ClearClipboardAfterPaste { get; set; }
+        
+        [XmlAttribute]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyFirstValue("Yes")]
+        public override string v_ActivateBeforeAction { get; set; }
 
         public EnterKeysCommand()
         {
@@ -245,19 +250,87 @@ namespace taskt.Core.Automation.Commands
                 activateWindow.RunCommand(engine);
             }
 
-            this.WindowNameActionAndWaitActivate(engine, new Action<IntPtr, string>((whnd, name) =>
+            //this.WindowNameActionAndWaitActivate(engine, new Action<IntPtr, string>((whnd, name) =>
+            //{
+            //    if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
+            //    {
+            //        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
+            //        {
+            //            ActivateWindowProcess(whnd);   
+            //        }
+            //    }
+            //    else
+            //    {
+            //        ActivateWindowProcess(whnd);
+            //    }
+
+            //    var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
+
+            //    var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
+            //    if (encryptOption == "encrypted")
+            //    {
+            //        textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
+            //    }
+
+            //    if (textToSend == "{WIN_KEY}")
+            //    {
+            //        KeyMouseControls.KeyDown(Keys.LWin);
+            //        KeyMouseControls.KeyUp(Keys.LWin);
+            //    }
+            //    else if (textToSend.StartsWith("{WIN_KEY+") && textToSend.EndsWith("}"))
+            //    {
+            //        KeyMouseControls.KeyDown(Keys.LWin);
+            //        var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}", "");
+
+            //        foreach (var c in remainingText)
+            //        {
+            //            Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
+            //            KeyMouseControls.KeyDown(key);
+            //        }
+
+            //        KeyMouseControls.KeyUp(Keys.LWin);
+
+            //        foreach (var c in remainingText)
+            //        {
+            //            Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
+            //            KeyMouseControls.KeyUp(key);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_UseClipBoard), engine))
+            //        {
+            //            ClipboardControls.SetClipboardText(textToSend);
+            //            textToSend = "^v";  // Ctrl+V
+            //        }
+            //        SendKeys.SendWait(textToSend);
+            //        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ClearClipboardAfterPaste), engine))
+            //        {
+            //            ClipboardControls.ClearClipboard();
+            //        }
+            //    }
+
+            //    var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);
+            //    System.Threading.Thread.Sleep(waitTime);
+            //}));
+
+            this.WindowNameAction(engine, new Action<IntPtr, string>((whnd, name) =>
             {
-                if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
+                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateBeforeAction), engine))
                 {
-                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
+                    if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
                     {
-                        ActivateWindowProcess(whnd);   
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
+                        {
+                            ActivateWindowProcess(whnd);
+                        }
+                    }
+                    else
+                    {
+                        ActivateWindowProcess(whnd);
                     }
                 }
-                else
-                {
-                    ActivateWindowProcess(whnd);
-                }
+                this.WaitAfterFindWindowProcess(engine);
 
                 var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
 

@@ -80,6 +80,11 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
         //public string v_HandleResult { get; set; }
 
+        [XmlAttribute]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyFirstValue("Yes")]
+        public override string v_ActivateBeforeAction { get; set; }
+
         public SendAdvancedKeyStrokesCommand()
         {
             //this.CommandName = "SendAdvancedKeyStrokesCommand";
@@ -178,7 +183,7 @@ namespace taskt.Core.Automation.Commands
             //    })
             //);
 
-            void WindowActivateProcess(IntPtr h)
+            void ActivateWindowProcess(IntPtr h)
             {
                 var activateWindow = new ActivateWindowByWindowHandleCommand()
                 {
@@ -187,19 +192,107 @@ namespace taskt.Core.Automation.Commands
                 activateWindow.RunCommand(engine);
             }
 
-            this.WindowNameActionAndWaitActivate(engine, new Action<IntPtr, string>((whnd, name) =>
+            //this.WindowNameActionAndWaitActivate(engine, new Action<IntPtr, string>((whnd, name) =>
+            //{
+            //    if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
+            //    {
+            //        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
+            //        {
+            //            WindowActivateProcess(whnd);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        WindowActivateProcess(whnd);
+            //    }
+
+            //    // track all keys down
+            //    var keysDown = new List<Keys>();
+
+            //    // run each selected item
+            //    foreach (DataRow rw in v_KeyActions.Rows)
+            //    {
+            //        // get key name
+            //        var keyName = rw.Field<string>("Key");
+
+            //        // get key action
+            //        var action = rw.Field<string>("Action");
+
+            //        // parse OEM key name
+            //        string oemKeyString = keyName.Split('[', ']')[1];
+
+            //        var oemKeyName = (Keys)Enum.Parse(typeof(Keys), oemKeyString);
+
+
+            //        // "Key Press (Down + Up)", "Key Down", "Key Up"
+            //        switch (action)
+            //        {
+            //            case "Key Press (Down + Up)":
+            //                // simulate press
+            //                KeyMouseControls.KeyDown(oemKeyName);
+            //                KeyMouseControls.KeyUp(oemKeyName);
+
+            //                // key returned to UP position so remove if we added it to the keys down list
+            //                if (keysDown.Contains(oemKeyName))
+            //                {
+            //                    keysDown.Remove(oemKeyName);
+            //                }
+            //                break;
+
+            //            case "Key Down":
+            //                // simulate down
+            //                KeyMouseControls.KeyDown(oemKeyName);
+
+            //                // track via keys down list
+            //                if (!keysDown.Contains(oemKeyName))
+            //                {
+            //                    keysDown.Add(oemKeyName);
+            //                }
+            //                break;
+
+            //            case "Key Up":
+            //                // simulate up
+            //                KeyMouseControls.KeyUp(oemKeyName);
+
+            //                // remove from key down
+            //                if (keysDown.Contains(oemKeyName))
+            //                {
+            //                    keysDown.Remove(oemKeyName);
+            //                }
+            //                break;
+
+            //            default:
+            //                break;
+            //        }
+            //    }
+
+            //    // return key to up position if requested
+            //    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_KeyUpDefault), engine))
+            //    {
+            //        foreach (var key in keysDown)
+            //        {
+            //            KeyMouseControls.KeyUp(key);
+            //        }
+            //    }
+            //}));
+
+            this.WindowNameAction(engine, new Action<IntPtr, string>((whnd, name) =>
             {
-                if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
+                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateBeforeAction), engine))
                 {
-                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
+                    if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
                     {
-                        WindowActivateProcess(whnd);
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
+                        {
+                            ActivateWindowProcess(whnd);
+                        }
+                    }
+                    else
+                    {
+                        ActivateWindowProcess(whnd);
                     }
                 }
-                else
-                {
-                    WindowActivateProcess(whnd);
-                }
+                this.WaitAfterFindWindowProcess(engine);
 
                 // track all keys down
                 var keysDown = new List<Keys>();
