@@ -55,6 +55,7 @@ namespace taskt.Core.Automation.Commands
                         v_WhenWindowIsMaximized = this.v_WhenWindowIsMaximized,
                         v_WhenWindowIsMinimized = this.v_WhenWindowIsMinimized,
                         v_WaitTimeBetweenFindAndAction = this.v_WaitTimeBetweenFindAndAction,
+                        v_ActivateBeforeAction = this.v_ActivateBeforeAction,
                     };
                     resizeWindow.RunCommand(engine);
                 }

@@ -37,6 +37,7 @@ namespace taskt.Core.Automation.Commands
                         v_WindowHandle = whnd.ToString(),
                         v_WindowState = this.v_WindowState,
                         v_WaitTimeBetweenFindAndAction = this.v_WaitTimeBetweenFindAndAction,
+                        v_ActivateBeforeAction = this.v_ActivateBeforeAction,
                     };
                     setState.RunCommand(engine);
                 }

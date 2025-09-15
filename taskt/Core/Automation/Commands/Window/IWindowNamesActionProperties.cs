@@ -3,7 +3,7 @@
     /// <summary>
     /// window names action properties
     /// </summary>
-    public interface IWindowNamesActionProperties : IWindowNamesProperties, IWindowWaitTimeBetweenFindAndActionProperties
+    public interface IWindowNamesActionProperties : IWindowNamesProperties, IWindowWaitTimeBetweenFindAndActionProperties, IWindowActivateProperties
     {
         // nothing
     }
