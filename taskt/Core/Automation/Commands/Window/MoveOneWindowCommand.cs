@@ -42,7 +42,20 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            this.WindowNameActionAndWaitActivate(engine, new Action<IntPtr, string>((whnd, name) =>
+            //this.WindowNameActionAndWaitActivate(engine, new Action<IntPtr, string>((whnd, name) =>
+            //{
+            //    var moveWindow = new MoveWindowByWindowHandleCommand()
+            //    {
+            //        v_WindowHandle = whnd.ToString(),
+            //        v_XPosition = this.v_XPosition,
+            //        v_YPosition = this.v_YPosition,
+            //        v_WhenWindowIsMaximized = this.v_WhenWindowIsMaximized,
+            //        v_WhenWindowIsMinimized = this.v_WhenWindowIsMinimized,
+            //    };
+            //    moveWindow.RunCommand(engine);
+            //}));
+
+            this.WindowNameAction(engine, new Action<IntPtr, string>((whnd, name) =>
             {
                 var moveWindow = new MoveWindowByWindowHandleCommand()
                 {
@@ -51,6 +64,8 @@ namespace taskt.Core.Automation.Commands
                     v_YPosition = this.v_YPosition,
                     v_WhenWindowIsMaximized = this.v_WhenWindowIsMaximized,
                     v_WhenWindowIsMinimized = this.v_WhenWindowIsMinimized,
+                    v_WaitTimeBetweenFindAndAction= this.v_WaitTimeBetweenFindAndAction,
+                    v_ActivateBeforeAction = this.v_ActivateBeforeAction,
                 };
                 moveWindow.RunCommand(engine);
             }));
