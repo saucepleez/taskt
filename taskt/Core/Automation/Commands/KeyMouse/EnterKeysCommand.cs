@@ -120,126 +120,6 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var targetWindow = v_WindowName.ExpandValueOrUserVariable(engine);
-            //if (targetWindow != engine.engineSettings.CurrentWindowKeyword)
-            //{
-            //    var activateWindow = new ActivateWindowCommand
-            //    {
-            //        v_WindowName = v_WindowName,
-            //        v_SearchMethod = v_SearchMethod,
-            //        v_MatchMethod= v_MatchMethod,
-            //        v_TargetWindowIndex = v_TargetWindowIndex,
-            //        v_WaitTime = v_WaitForWindow
-            //    };
-            //    activateWindow.RunCommand(engine);
-            //}
-
-            //var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
-
-            //var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
-            //if (encryptOption == "encrypted")
-            //{
-            //    textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
-            //}
-
-            //if (textToSend == "{WIN_KEY}")
-            //{
-            //    KeyMouseControls.KeyDown(Keys.LWin);
-            //    KeyMouseControls.KeyUp(Keys.LWin);
-            //}
-            //else if (textToSend.StartsWith("{WIN_KEY+") && textToSend.EndsWith("}"))
-            //{
-            //    KeyMouseControls.KeyDown(Keys.LWin);
-            //    var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}","");
-
-            //    foreach (var c in remainingText)
-            //    {
-            //        Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-            //        KeyMouseControls.KeyDown(key);
-            //    }
-
-            //    KeyMouseControls.KeyUp(Keys.LWin);
-
-            //    foreach (var c in remainingText)
-            //    {
-            //        Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-            //        KeyMouseControls.KeyUp(key);
-            //    }
-            //}
-            //else
-            //{
-            //    SendKeys.SendWait(textToSend);
-            //}
-
-            //var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);
-            //System.Threading.Thread.Sleep(waitTime);
-
-            //WindowControls.WindowAction(this, engine,
-            //    new Action<List<(IntPtr, string)>>(wins =>
-            //    {
-            //        if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
-            //        {
-            //            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
-            //            {
-            //                WindowControls.ActivateWindow(wins[0].Item1);
-            //            }
-            //        }
-            //        else
-            //        {
-            //            WindowControls.ActivateWindow(wins[0].Item1);
-            //        }
-
-            //        var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
-
-            //        var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
-            //        if (encryptOption == "encrypted")
-            //        {
-            //            textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
-            //        }
-
-            //        if (textToSend == "{WIN_KEY}")
-            //        {
-            //            KeyMouseControls.KeyDown(Keys.LWin);
-            //            KeyMouseControls.KeyUp(Keys.LWin);
-            //        }
-            //        else if (textToSend.StartsWith("{WIN_KEY+") && textToSend.EndsWith("}"))
-            //        {
-            //            KeyMouseControls.KeyDown(Keys.LWin);
-            //            var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}", "");
-
-            //            foreach (var c in remainingText)
-            //            {
-            //                Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-            //                KeyMouseControls.KeyDown(key);
-            //            }
-
-            //            KeyMouseControls.KeyUp(Keys.LWin);
-
-            //            foreach (var c in remainingText)
-            //            {
-            //                Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-            //                KeyMouseControls.KeyUp(key);
-            //            }
-            //        }
-            //        else
-            //        {
-            //            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_UseClipBoard), engine))
-            //            {
-            //                ClipboardControls.SetClipboardText(textToSend);
-            //                textToSend = "^v";  // Ctrl+V
-            //            }
-            //            SendKeys.SendWait(textToSend);
-            //            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ClearClipboardAfterPaste), engine))
-            //            {
-            //                ClipboardControls.ClearClipboard();
-            //            }
-            //        }
-
-            //        var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);
-            //        System.Threading.Thread.Sleep(waitTime);
-            //    })
-            //);
-
             // activate window
             void ActivateWindowProcess(IntPtr h)
             {
@@ -249,70 +129,6 @@ namespace taskt.Core.Automation.Commands
                 };
                 activateWindow.RunCommand(engine);
             }
-
-            //this.WindowNameActionAndWaitActivate(engine, new Action<IntPtr, string>((whnd, name) =>
-            //{
-            //    if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
-            //    {
-            //        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
-            //        {
-            //            ActivateWindowProcess(whnd);   
-            //        }
-            //    }
-            //    else
-            //    {
-            //        ActivateWindowProcess(whnd);
-            //    }
-
-            //    var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
-
-            //    var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
-            //    if (encryptOption == "encrypted")
-            //    {
-            //        textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
-            //    }
-
-            //    if (textToSend == "{WIN_KEY}")
-            //    {
-            //        KeyMouseControls.KeyDown(Keys.LWin);
-            //        KeyMouseControls.KeyUp(Keys.LWin);
-            //    }
-            //    else if (textToSend.StartsWith("{WIN_KEY+") && textToSend.EndsWith("}"))
-            //    {
-            //        KeyMouseControls.KeyDown(Keys.LWin);
-            //        var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}", "");
-
-            //        foreach (var c in remainingText)
-            //        {
-            //            Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-            //            KeyMouseControls.KeyDown(key);
-            //        }
-
-            //        KeyMouseControls.KeyUp(Keys.LWin);
-
-            //        foreach (var c in remainingText)
-            //        {
-            //            Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-            //            KeyMouseControls.KeyUp(key);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_UseClipBoard), engine))
-            //        {
-            //            ClipboardControls.SetClipboardText(textToSend);
-            //            textToSend = "^v";  // Ctrl+V
-            //        }
-            //        SendKeys.SendWait(textToSend);
-            //        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ClearClipboardAfterPaste), engine))
-            //        {
-            //            ClipboardControls.ClearClipboard();
-            //        }
-            //    }
-
-            //    var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);
-            //    System.Threading.Thread.Sleep(waitTime);
-            //}));
 
             this.WindowNameAction(engine, new Action<IntPtr, string>((whnd, name) =>
             {
@@ -382,11 +198,6 @@ namespace taskt.Core.Automation.Commands
                 System.Threading.Thread.Sleep(waitTime);
             }));
         }
-
-        //private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-        //{
-        //    WindowControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
-        //}
 
         private void lnkEncryptText_Click(object sender, EventArgs e)
         {

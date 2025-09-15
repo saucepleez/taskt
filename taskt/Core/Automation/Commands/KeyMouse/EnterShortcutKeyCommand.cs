@@ -188,11 +188,6 @@ namespace taskt.Core.Automation.Commands
             enterKeysCommand.RunCommand(engine);
         }
 
-        //private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-        //{
-        //    WindowControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
-        //}
-
         private void cmbHotkey_SelectedIndexChanged(object sender, EventArgs e)
         {
             var searchedKey = ((ComboBox)sender).SelectedItem?.ToString() ?? "";
