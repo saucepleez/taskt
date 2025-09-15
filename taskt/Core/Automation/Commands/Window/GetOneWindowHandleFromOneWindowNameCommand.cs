@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     public sealed class GetOneWindowHandleFromOneWindowNameCommand : AOneWindowNameCommands
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyParameterOrder(6500)]
         public string v_Result { get; set; }
