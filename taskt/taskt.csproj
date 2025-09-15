@@ -491,7 +491,6 @@
     <Compile Include="Core\Automation\Commands\Window\AOneWindowNameActionCommands.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_CanHandleWindowHandleExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_CanHandleWindowNameExtensionMethods.cs" />
-    <Compile Include="Core\Automation\Commands\Window\EM_OneWindowNameActionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowNameCorePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_OneWindowNamePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowResizePropertiesExtensionMethods.cs" />
