@@ -10,9 +10,9 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static int ExpandValueOrUserVariableAsWaitTimeBetweenFindAndAction(this IWindowWaitTimeBetweenFindAndActionProperties command, AutomationEngineInstance engine)
+        public static double ExpandValueOrUserVariableAsWaitTimeBetweenFindAndAction(this IWindowWaitTimeBetweenFindAndActionProperties command, AutomationEngineInstance engine)
         {
-            return ((ScriptCommand)command).ExpandValueOrUserVariableAsInteger(nameof(command.v_WaitTimeBetweenFindAndAction), engine);
+            return (double)((ScriptCommand)command).ExpandValueOrUserVariableAsDecimal(nameof(command.v_WaitTimeBetweenFindAndAction), engine);
         }
 
         /// <summary>
@@ -22,11 +22,10 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         public static void WaitAfterFindWindowProcess(this IWindowWaitTimeBetweenFindAndActionProperties command, AutomationEngineInstance engine)
         {
-            var wait = command.ExpandValueOrUserVariableAsWaitTimeBetweenFindAndAction(engine);
             var waitTime = command.ExpandValueOrUserVariableAsWaitTimeBetweenFindAndAction(engine);
             if (waitTime > 0)
             {
-                System.Threading.Thread.Sleep(waitTime * 1000);
+                System.Threading.Thread.Sleep((int)(waitTime * 1000));
             }
         }
     }
