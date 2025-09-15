@@ -108,7 +108,7 @@ namespace taskt.Core.Automation.Commands
                 restoreCommand.RunCommand(engine);
             }
 
-            this.WindowHandleActionBeforeWait(engine, new Action<IntPtr>((whnd) =>
+            this.WindowHandleActionBeforeWaitActivate(engine, new Action<IntPtr>((whnd) =>
             {
                 if (EM_CanHandleWindowHandleExtentionMethods.IsWindowMinimized(whnd))
                 {

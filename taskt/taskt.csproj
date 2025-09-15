@@ -464,6 +464,7 @@
     <Compile Include="Core\Automation\Commands\Window\AWindowNamesActionCommnads.cs" />
     <Compile Include="Core\Automation\Commands\Window\AWindowNamesCommands.cs" />
     <Compile Include="Core\Automation\Commands\Window\AGetFromWindowNamesAsDataTableCommands.cs" />
+    <Compile Include="Core\Automation\Commands\Window\EM_WindowActivatePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowStatesFromWindowNamesAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowSizesFromWindowNamesAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowPositionsFromWindowNamesAsListCommand.cs" />
@@ -474,6 +475,7 @@
     <Compile Include="Core\Automation\Commands\Window\GetWindowSizesFromWindowNamesAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowPositionsFromWindowNamesAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetProcessNamesFromWindowNamesAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\IWindowActivateProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\SetWindowsStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ResizeWindowsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\MoveWindowsCommand.cs" />

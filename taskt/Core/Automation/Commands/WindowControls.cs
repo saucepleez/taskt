@@ -388,6 +388,16 @@ namespace taskt.Core.Automation.Commands
         public static string v_WhenWindowIsMaximizedForGet { get; }
 
         /// <summary>
+        /// activate window before action
+        /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Activate Window Before Action")]
+        [PropertyIsOptional(true, "No")]
+        [PropertyValidationRule("Activate Window", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Activate Window")]
+        public static string v_ActivateBeforeAction { get; }
+
+        /// <summary>
         /// base position
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
