@@ -4497,6 +4497,23 @@ namespace taskt.Core.Script
                     attr_wbc.Remove();
                 }
             }
+
+            // EnterKeys v_WaitTime -> v_WaitTimeAfterKeyEnter
+            ChangeAttributeName(doc, "EnterKeysCommand", "v_WaitTime", "v_WaitTimeAfterKeyEnter");
+
+            // SendAdvancedKeyStrokes, EnterShotcutKey v_WaitAfterKeyEnter -> v_WaitTimeAfterKeyEnter
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>((el) =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "SendAdvancedKeyStrokesCommand":
+                        case "EnterShortcutKeyCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_WaitAfterKeyEnter", "v_WaitTimeAfterKeyEnter");
         }
 
         /// <summary>

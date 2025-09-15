@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterKeyEnter))]
         [PropertyParameterOrder(8010)]
-        public string v_WaitAfterKeyEnter { get; set; }
+        public string v_WaitTimeAfterKeyEnter { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]

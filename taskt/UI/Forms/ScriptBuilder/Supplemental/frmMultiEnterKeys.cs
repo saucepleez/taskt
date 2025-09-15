@@ -42,7 +42,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 EnterKeysCommand firstKeystroke = (EnterKeysCommand)keyCommands[0];
                 cmbWindowName.Text = firstKeystroke.v_WindowName;
                 cmbCompareMethod.Text = firstKeystroke.v_CompareMethod;
-                txtWaitTimeAfter.Text = firstKeystroke.v_WaitTime;
+                txtWaitTimeAfter.Text = firstKeystroke.v_WaitTimeAfterKeyEnter;
 
                 string keystrokes = "";
                 foreach(var cmd in keyCommands)
@@ -287,7 +287,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                         v_CompareMethod = cmbCompareMethod.Text,
                         v_TextToSend = s,
                         v_EncryptionOption = "",
-                        v_WaitTime = txtWaitTimeAfter.Text
+                        v_WaitTimeAfterKeyEnter = txtWaitTimeAfter.Text
                     }
                 );
             }
