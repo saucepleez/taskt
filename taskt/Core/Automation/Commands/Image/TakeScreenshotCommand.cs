@@ -128,7 +128,7 @@ namespace taskt.Core.Automation.Commands
             //    })
             //);
 
-            this.WindowNameActionAndWait(engine, new Action<IntPtr, string>((whnd, name) =>
+            this.WindowNameActionAndWaitActivate(engine, new Action<IntPtr, string>((whnd, name) =>
             {
                 if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindowBeforeCapture), engine))
                 {

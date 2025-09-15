@@ -245,7 +245,7 @@ namespace taskt.Core.Automation.Commands
                 activateWindow.RunCommand(engine);
             }
 
-            this.WindowNameActionAndWait(engine, new Action<IntPtr, string>((whnd, name) =>
+            this.WindowNameActionAndWaitActivate(engine, new Action<IntPtr, string>((whnd, name) =>
             {
                 if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
                 {

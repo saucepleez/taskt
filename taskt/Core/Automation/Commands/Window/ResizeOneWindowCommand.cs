@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            this.WindowNameActionAndWait(engine, new Action<IntPtr, string>((whnd, name) =>
+            this.WindowNameActionAndWaitActivate(engine, new Action<IntPtr, string>((whnd, name) =>
             {
                 var resizeWindow = new ResizeWindowByWindowHandleCommand()
                 {
