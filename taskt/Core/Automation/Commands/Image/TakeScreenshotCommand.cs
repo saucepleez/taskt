@@ -33,24 +33,25 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(5100)]
         public string v_FilePath { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        [PropertyDescription("Activate Window Before Capture")]
-        [PropertyIsOptional(true, "No")]
-        [PropertyValidationRule("", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(false, "Activate Window")]
-        [PropertyParameterOrder(5200)]
-        public string v_ActivateWindowBeforeCapture { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        //[PropertyDescription("Activate Window Before Capture")]
+        //[PropertyIsOptional(true, "No")]
+        //[PropertyValidationRule("", PropertyValidationRule.ValidationRuleFlags.None)]
+        //[PropertyDisplayText(false, "Activate Window")]
+        //[PropertyParameterOrder(5200)]
+        //public string v_ActivateWindowBeforeCapture { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Wait Time before Capture")]
-        [PropertyIsOptional(true, "500")]
-        [PropertyValidationRule("Before Capture", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyFirstValue("500")]
-        [PropertyDisplayText(false, "Wait Time before Capture")]
-        [PropertyParameterOrder(5300)]
-        public string v_WaitTimeBeforeCapture { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Wait Time before Capture")]
+        //[PropertyIsOptional(true, "500")]
+        //[PropertyValidationRule("Before Capture", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        //[PropertyFirstValue("500")]
+        //[PropertyDisplayText(false, "Wait Time before Capture")]
+        //[PropertyParameterOrder(5300)]
+        //public string v_WaitTimeBeforeCapture { get; set; }
+        
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CompareMethod))]
@@ -76,6 +77,11 @@ namespace taskt.Core.Automation.Commands
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
         //public string v_HandleResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyIsOptional(true, "0.5")]
+        [PropertyFirstValue("0.5")]
+        public override string v_WaitTimeBetweenFindAndAction { get; set; }
 
         public TakeScreenshotCommand()
         {
@@ -128,20 +134,34 @@ namespace taskt.Core.Automation.Commands
             //    })
             //);
 
-            this.WindowNameActionAndWaitActivate(engine, new Action<IntPtr, string>((whnd, name) =>
-            {
-                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindowBeforeCapture), engine))
-                {
-                    var activate = new ActivateWindowByWindowHandleCommand()
-                    {
-                        v_WindowHandle = whnd.ToString(),
-                    };
-                    activate.RunCommand(engine);
-                }
+            //this.WindowNameActionAndWaitActivate(engine, new Action<IntPtr, string>((whnd, name) =>
+            //{
+            //    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindowBeforeCapture), engine))
+            //    {
+            //        var activate = new ActivateWindowByWindowHandleCommand()
+            //        {
+            //            v_WindowHandle = whnd.ToString(),
+            //        };
+            //        activate.RunCommand(engine);
+            //    }
 
-                // wait time
-                var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeBeforeCapture), engine);
-                System.Threading.Thread.Sleep(waitTime);
+            //    // wait time
+            //    var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeBeforeCapture), engine);
+            //    System.Threading.Thread.Sleep(waitTime);
+
+            //    var image = CaptureWindow(whnd);
+
+            //    // MEMO: now, this.ExpandValueOrUserVariableAsFilePath has 2 methods
+            //    var outputFile = EM_CanHandleFilePathExtentionMethods.ExpandValueOrUserVariableAsFilePath(this, nameof(v_FilePath), engine);
+
+            //    image.Save(outputFile);
+            //}));
+
+            this.WindowNameAction(engine, new Action<IntPtr, string>((whnd, name) =>
+            {
+                this.ActivateWindowProcess(whnd, engine);
+
+                this.WaitAfterFindWindowProcess(engine);
 
                 var image = CaptureWindow(whnd);
 

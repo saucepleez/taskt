@@ -456,6 +456,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_31(doc);
             convertTo3_5_2_38(doc);
             convertTo3_5_2_39(doc);
+            convertTo3_5_2_42(doc);
             return doc;
         }
 
@@ -4472,6 +4473,30 @@ namespace taskt.Core.Script
 
             // GetWindowStateCommand -> GetOneWindowStateCommand
             ChangeCommandName(doc, "GetWindowStateCommand", "GetOneWindowStateCommand", "Get One Window State");
+        }
+
+        private static void convertTo3_5_2_42(XDocument doc)
+        {
+            // TakeScreenshot v_ActivateWindowBeforeCapture -> v_ActivateBeforeAction
+            // v_WaitTimeBeforeCapture -> v_WaitTimeBetweenFindAndAction
+            var takes = GetCommands(doc, "TakeScreenshotCommand").ToList();
+            ChangeAttributeNameProcess(takes, "v_ActivateWindowBeforeCapture", "v_ActivateBeforeAction");
+            foreach(var cmd in takes)
+            {
+                var attr_wbc = cmd.Attribute("v_WaitTimeBeforeCapture");
+                if (attr_wbc != null)
+                {
+                    if (int.TryParse(attr_wbc.Value, out int wbc))
+                    {
+                        cmd.SetAttributeValue("v_WaitTimeBetweenFindAndAction", ((wbc / 1000.0)).ToString());
+                    }
+                    else
+                    {
+                        cmd.SetAttributeValue("v_WaitTimeBetweenFindAndAction", attr_wbc.Value);
+                    }
+                    attr_wbc.Remove();
+                }
+            }
         }
 
         /// <summary>
