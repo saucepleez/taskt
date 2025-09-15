@@ -182,6 +182,8 @@ namespace taskt.Core.Automation.Commands
                 v_WaitTimeAfterKeyEnter = this.v_WaitTimeAfterKeyEnter,
                 v_NameResult = this.v_NameResult,
                 v_HandleResult = this.v_HandleResult,
+                v_WaitTimeBetweenFindAndAction = this.v_WaitTimeBetweenFindAndAction,
+                v_ActivateBeforeAction = this.v_ActivateBeforeAction,
             };
             enterKeysCommand.RunCommand(engine);
         }
