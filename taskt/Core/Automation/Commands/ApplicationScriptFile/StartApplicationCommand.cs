@@ -150,55 +150,58 @@ namespace taskt.Core.Automation.Commands
             System.Threading.Thread.Sleep(waitTimeUntil);
 
             // current window handle
-            var currentHandle = (p.MainWindowHandle != IntPtr.Zero) ? p.MainWindowHandle : EM_CanHandleWindowHandleExtentionMethods.GetActiveWindowHandle();
+            if (!string.IsNullOrEmpty(v_StartedProcessName) || !string.IsNullOrEmpty(v_WindowName) ||
+                !string.IsNullOrEmpty(v_WindowHandle))
+            {
+                var currentHandle = (p.MainWindowHandle != IntPtr.Zero) ? p.MainWindowHandle : EM_CanHandleWindowHandleExtentionMethods.GetActiveWindowHandle();
 
-            // process name
-            if (!string.IsNullOrEmpty(v_StartedProcessName))
-            {
-                using (var proc = new InnerScriptVariable(engine))
+                // process name
+                if (!string.IsNullOrEmpty(v_StartedProcessName))
                 {
-                    var getProc = new GetProcessNameFromWindowHandleCommand()
+                    using (var proc = new InnerScriptVariable(engine))
                     {
-                        v_WindowHandle = currentHandle.ToString(),
-                        v_Result = proc.VariableName,
-                    };
-                    getProc.RunCommand(engine);
-                    proc.VariableValue.ToString().StoreInUserVariable(engine, v_StartedProcessName);
-                }
-            }
-            // window name
-            if (!string.IsNullOrEmpty(v_WindowName))
-            {
-                if (p.MainWindowHandle != IntPtr.Zero) 
-                {
-                    p.MainWindowTitle.StoreInUserVariable(engine, v_WindowName);
-                }
-                else
-                {
-                    using (var name = new InnerScriptVariable(engine))
-                    {
-                        var getName = new GetWindowNameFromWindowHandleCommand()
+                        var getProc = new GetProcessNameFromWindowHandleCommand()
                         {
                             v_WindowHandle = currentHandle.ToString(),
-                            v_Result = name.VariableName,
+                            v_Result = proc.VariableName,
                         };
-                        getName.RunCommand(engine);
-                        name.VariableValue.ToString().StoreInUserVariable(engine, v_WindowName);
+                        getProc.RunCommand(engine);
+                        proc.VariableValue.ToString().StoreInUserVariable(engine, v_StartedProcessName);
                     }
                 }
+                // window name
+                if (!string.IsNullOrEmpty(v_WindowName))
+                {
+                    if (p.MainWindowHandle != IntPtr.Zero)
+                    {
+                        p.MainWindowTitle.StoreInUserVariable(engine, v_WindowName);
+                    }
+                    else
+                    {
+                        using (var name = new InnerScriptVariable(engine))
+                        {
+                            var getName = new GetWindowNameFromWindowHandleCommand()
+                            {
+                                v_WindowHandle = currentHandle.ToString(),
+                                v_Result = name.VariableName,
+                            };
+                            getName.RunCommand(engine);
+                            name.VariableValue.ToString().StoreInUserVariable(engine, v_WindowName);
+                        }
+                    }
+                }
+                // window handle
+                if (!string.IsNullOrEmpty(v_WindowHandle))
+                {
+                    currentHandle.StoreInUserVariable(engine, v_WindowHandle);
+                }
             }
-            // window handle
-            if (!string.IsNullOrEmpty(v_WindowHandle))
-            {
-                currentHandle.StoreInUserVariable(engine, v_WindowHandle);
-            }
-
+            
             if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_WaitForExit), engine))
             {
                 p.WaitForExit();
             }
 
-            //System.Threading.Thread.Sleep(2000);
             var waitTimeBeforeNext = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeBeforeNext), engine);
             System.Threading.Thread.Sleep(waitTimeBeforeNext);
         }
