@@ -106,16 +106,6 @@ namespace taskt.Core.Automation.Commands
             // local start process func
             Process StartProcess(string name, string arguments, bool shell)
             {
-                //System.Diagnostics.Process proc;
-                //if (string.IsNullOrEmpty(arguments))
-                //{
-                //    proc = System.Diagnostics.Process.Start(name);
-                //}
-                //else
-                //{
-                //    proc = System.Diagnostics.Process.Start(name, arguments);
-                //}
-
                 var proc = new Process();
                 proc.StartInfo.FileName = name;
                 if (!string.IsNullOrEmpty(arguments)) 
@@ -202,12 +192,6 @@ namespace taskt.Core.Automation.Commands
             {
                 currentHandle.StoreInUserVariable(engine, v_WindowHandle);
             }
-
-            //var waitForExit = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WaitForExit), engine);
-            //if (waitForExit == "yes")
-            //{
-            //    p.WaitForExit();
-            //}
 
             if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_WaitForExit), engine))
             {
