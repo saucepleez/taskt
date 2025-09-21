@@ -337,5 +337,13 @@
                 return clientSettings.DisplayNumberBeforeParameterDescription;
             }
         }
+
+        public bool DisplayParameterOrderInDescription
+        {
+            get
+            {
+                return clientSettings.DisplayParameterOrderInDescription;
+            }
+        }
     }
 }

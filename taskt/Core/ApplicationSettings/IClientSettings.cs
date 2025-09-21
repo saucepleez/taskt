@@ -231,5 +231,10 @@
         /// display number before parameter description
         /// </summary>
         bool DisplayNumberBeforeParameterDescription { get; }
+
+        /// <summary>
+        /// display parameter order in description (instead of number)
+        /// </summary>
+        bool DisplayParameterOrderInDescription { get; }
     }
 }

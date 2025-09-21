@@ -1267,6 +1267,16 @@ namespace taskt.UI.CustomControls
                 }
             }
 
+            // show parmater order
+            if (setting.ClientSettings.DisplayParameterOrderInDescription)
+            {
+                var order = GetCustomAttributeWithVirtual<PropertyParameterOrder>(propInfo, virtualPropertyInfo);
+                if (order != null)
+                {
+                    labelText = $"[{order.order}] {labelText}";
+                }
+            }
+
             return labelText;
         }
 
