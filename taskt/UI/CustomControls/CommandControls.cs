@@ -1273,7 +1273,7 @@ namespace taskt.UI.CustomControls
                 var order = GetCustomAttributeWithVirtual<PropertyParameterOrder>(propInfo, virtualPropertyInfo);
                 if (order != null)
                 {
-                    labelText = $"[{order.order}] {labelText}";
+                    labelText = $"[{order.order},0x{order.order:X8}] {labelText}";
                 }
             }
 
