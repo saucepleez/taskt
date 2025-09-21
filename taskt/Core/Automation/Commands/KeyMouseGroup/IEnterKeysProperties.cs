@@ -3,7 +3,7 @@
     /// <summary>
     /// for enter keys properties
     /// </summary>
-    public interface IEnterKeysProperties
+    public interface IEnterKeysProperties : IKeyActionCoreProperties
     {
         /// <summary>
         /// text or key strokes to send
