@@ -3,7 +3,7 @@
     /// <summary>
     /// enter shortcut key properties
     /// </summary>
-    public interface IEnterShortcutKeyProperties : IWindowActivateProperties
+    public interface IEnterShortcutKeyProperties : IKeyActionCoreProperties
     {
         /// <summary>
         /// hot key (shortcut key)

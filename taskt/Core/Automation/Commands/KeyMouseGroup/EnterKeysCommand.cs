@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Collections.Generic;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.KeyMouseGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_input))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class EnterKeysCommand : AOneWindowNameActionCommands
+    public sealed class EnterKeysCommand : AOneWindowNameActionCommands, IEnterKeysProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]

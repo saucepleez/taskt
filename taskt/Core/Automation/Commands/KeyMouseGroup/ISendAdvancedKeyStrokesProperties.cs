@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands.KeyMouseGroup
         /// <summary>
         /// key actions
         /// </summary>
-        DataTable v_KeyAction { get; set; }
+        DataTable v_KeyActions { get; set; }
 
         /// <summary>
         /// force key up after keys down

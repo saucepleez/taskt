@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using System.Data;
 using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.KeyMouseGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -17,7 +18,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_input))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SendAdvancedKeyStrokesCommand : AOneWindowNameActionCommands, IHaveDataTableElements
+    public sealed class SendAdvancedKeyStrokesCommand : AOneWindowNameActionCommands, ISendAdvancedKeyStrokesProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
