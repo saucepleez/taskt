@@ -1523,7 +1523,8 @@ namespace taskt.UI.CustomControls
                 int idx = methodName.IndexOf("+");
                 string className = methodName.Substring(0, idx);
                 string shortMethodName = methodName.Substring(idx + 1);
-                var tp = Type.GetType("taskt.Core.Automation.Commands." + className);
+                //var tp = Type.GetType("taskt.Core.Automation.Commands." + className);
+                var tp = Type.GetType(GetClassFullName(className));
                 trgMethod = tp.GetMethod(shortMethodName, BindingFlags.Public | BindingFlags.Static);
             }
             else
@@ -1533,7 +1534,7 @@ namespace taskt.UI.CustomControls
 
             if (trgMethod == null)
             {
-                throw new Exception("Method '" + methodName + "' does not exists. Command: " + command.CommandName);
+                throw new Exception($"Method '{methodName}' does not exists. Command: '{command.CommandName}'");
             }
 
             return (trgMethod, useOuterClassEvent);
