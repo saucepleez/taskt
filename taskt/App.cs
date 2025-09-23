@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using taskt.Core;
+using taskt.Core.Automation.Commands;
 
 namespace taskt
 {
@@ -33,6 +35,11 @@ namespace taskt
         /// application settings
         /// </summary>
         public static SafeApplicationSettings Taskt_Settings { get; private set; }
+
+        /// <summary>
+        /// all commands info, etc
+        /// </summary>
+        public static List<ScriptCommandInformation> AllCommandsInfo { get; private set; }
 
         /// <summary>
         /// update location, version info
@@ -139,6 +146,14 @@ namespace taskt
         public static SafeAutomationEngineInstanceApplicationSettings GetAutomationEngineInstanceApplicationSettings()
         {
             return (new SafeAutomationEngineInstanceApplicationSettings(Taskt_UNSAFE_Settings)).Clone();
+        }
+
+        /// <summary>
+        /// create all commands info
+        /// </summary>
+        public static void CreateAllCommandsInfo()
+        {
+            AllCommandsInfo = ScriptCommandInformation.CreateScriptCommandInformations();
         }
     }
 }

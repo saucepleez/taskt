@@ -55,6 +55,12 @@ namespace taskt
             // create namespace list
             Core.Automation.Commands.PropertyControls.CreateCommandClassDic();
 
+            // create all commands info
+            App.CreateAllCommandsInfo();
+
+            // DBG
+            //var a = App.AllCommandsInfo;
+
             //if the exe was passed a filename argument then run the script
             if (args.Length > 0)
             {
