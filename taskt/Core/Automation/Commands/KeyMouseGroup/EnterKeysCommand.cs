@@ -23,37 +23,40 @@ namespace taskt.Core.Automation.Commands
         //public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Text or Keys to Send.")]
-        [PropertyCustomUIHelper("Keys Builder", nameof(lnkKeysBulider_Click))]
-        [PropertyCustomUIHelper("Encrypt Text", nameof(lnkEncryptText_Click))]
-        [InputSpecification("Text to Send", true)]
-        [PropertyDetailSampleUsage("**Hello, World!**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
-        [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
-        [PropertyDetailSampleUsage("**^s**", "Specify **Ctrl+S** for Enter Keys")]
-        [PropertyDetailSampleUsage("**{WIN_KEY}**", "Specify **Windows Key** for Enter Keys")]
-        [PropertyDetailSampleUsage("**{WIN_KEY+R}**", "Specify **Windows Key** and **R** for Enter Keys")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyIntermediateConvert(nameof(IntermediateControls.ConvertToIntermediate_CheckedVariableMarker), "")]
-        [PropertyDisplayText(true, "Text")]
+        [PropertyVirtualProperty(nameof(VP_KeyMouseControls), nameof(VP_KeyMouseControls.v_TextToSend))]
+        //[PropertyDescription("Text or Keys to Send")]
+        //[PropertyCustomUIHelper("Keys Builder", nameof(lnkKeysBulider_Click))]
+        //[PropertyCustomUIHelper("Encrypt Text", nameof(lnkEncryptText_Click))]
+        //[InputSpecification("Text to Send", true)]
+        //[PropertyDetailSampleUsage("**Hello, World!**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
+        //[PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
+        //[PropertyDetailSampleUsage("**^s**", "Specify **Ctrl+S** for Enter Keys")]
+        //[PropertyDetailSampleUsage("**{WIN_KEY}**", "Specify **Windows Key** for Enter Keys")]
+        //[PropertyDetailSampleUsage("**{WIN_KEY+R}**", "Specify **Windows Key** and **R** for Enter Keys")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyIntermediateConvert(nameof(IntermediateControls.ConvertToIntermediate_CheckedVariableMarker), "")]
+        //[PropertyDisplayText(true, "Text")]
         [PropertyParameterOrder(5100)]
         public string v_TextToSend { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        [PropertyDescription("Text is Encrypted")]
-        [PropertyIsOptional(true, "No")]
+        [PropertyVirtualProperty(nameof(VP_KeyMouseControls), nameof(VP_KeyMouseControls.v_EncryptionOption))]
+        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        //[PropertyDescription("Text is Encrypted")]
+        //[PropertyIsOptional(true, "No")]
+        //[PropertyDisplayText(false, "Encrypted")]
         [PropertyParameterOrder(5200)]
-        [PropertyDisplayText(false, "Encrypted")]
         public string v_EncryptionOption { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        [PropertyDescription("Use Paste from Clipboard")]
-        [PropertyIsOptional(true, "No")]
-        [Remarks("When entering keys in combination with the Ctrl key, etc., It will NOT work correctly.")]
+        [PropertyVirtualProperty(nameof(VP_KeyMouseControls), nameof(VP_KeyMouseControls.v_UseClipBoard))]
+        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        //[PropertyDescription("Use Paste from Clipboard")]
+        //[PropertyIsOptional(true, "No")]
+        //[Remarks("When entering keys in combination with the Ctrl key, etc., It will NOT work correctly.")]
+        //[PropertyDisplayText(false, "Use Clipboard")]
         [PropertyParameterOrder(5300)]
-        [PropertyDisplayText(false, "Use Clipboard")]
         public string v_UseClipBoard { get; set; }
 
         //[XmlAttribute]
@@ -74,14 +77,16 @@ namespace taskt.Core.Automation.Commands
         //public string v_WaitTimeForWindow { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterKeyEnter))]
+        [PropertyVirtualProperty(nameof(VP_KeyMouseControls), nameof(VP_KeyMouseControls.v_WaitTimeAfterKeyEnter))]
+        //[PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterKeyEnter))]
         [PropertyParameterOrder(8010)]
         public string v_WaitTimeAfterKeyEnter { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        [PropertyDescription("Try Activate Window, when Specifiy Current Window Variable")]
-        [PropertyIsOptional(true, "No")]
+        [PropertyVirtualProperty(nameof(VP_KeyMouseControls), nameof(VP_KeyMouseControls.v_ActivateCurrentWindow))]
+        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        //[PropertyDescription("Try Activate Window, when Specifiy Current Window Variable")]
+        //[PropertyIsOptional(true, "No")]
         [PropertyParameterOrder(8020)]
         public string v_ActivateCurrentWindow { get; set; }
 
@@ -94,11 +99,12 @@ namespace taskt.Core.Automation.Commands
         //public string v_HandleResult { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        [PropertyDescription("Clear Clipboard After Paste")]
-        [PropertyIsOptional(true, "No")]
-        [PropertyValidationRule("Clear Clipboard", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(false, "Clear Clipboard after Paste")]
+        [PropertyVirtualProperty(nameof(VP_KeyMouseControls), nameof(VP_KeyMouseControls.v_ClearClipboardAfterPaste))]
+        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        //[PropertyDescription("Clear Clipboard After Paste")]
+        //[PropertyIsOptional(true, "No")]
+        //[PropertyValidationRule("Clear Clipboard", PropertyValidationRule.ValidationRuleFlags.None)]
+        //[PropertyDisplayText(false, "Clear Clipboard after Paste")]
         [PropertyParameterOrder(9000)]
         public string v_ClearClipboardAfterPaste { get; set; }
         
@@ -201,32 +207,32 @@ namespace taskt.Core.Automation.Commands
             }));
         }
 
-        private void lnkEncryptText_Click(object sender, EventArgs e)
-        {
-            var inputText = ControlsList.GetPropertyControl<TextBox>(nameof(v_TextToSend));
+        //private void lnkEncryptText_Click(object sender, EventArgs e)
+        //{
+        //    var inputText = ControlsList.GetPropertyControl<TextBox>(nameof(v_TextToSend));
 
-            if (string.IsNullOrEmpty(inputText.Text))
-            {
-                MessageBox.Show("Text to send is empty.", "Notice");
-                return;
-            }
+        //    if (string.IsNullOrEmpty(inputText.Text))
+        //    {
+        //        MessageBox.Show("Text to send is empty.", "Notice");
+        //        return;
+        //    }
 
-            var encrypted = EncryptionServices.EncryptString(inputText.Text, "TASKT");
-            this.v_EncryptionOption = "Encrypted";
+        //    var encrypted = EncryptionServices.EncryptString(inputText.Text, "TASKT");
+        //    this.v_EncryptionOption = "Encrypted";
 
-            inputText.Text = encrypted;
-        }
+        //    inputText.Text = encrypted;
+        //}
 
-        private void lnkKeysBulider_Click(object sender, EventArgs e)
-        {
-            using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmKeysBuilder())
-            {
-                if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
-                {
-                    var inputText = ControlsList.GetPropertyControl<TextBox>(nameof(v_TextToSend));
-                    inputText.Text = fm.Result;
-                }
-            }
-        }
+        //private void lnkKeysBulider_Click(object sender, EventArgs e)
+        //{
+        //    using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmKeysBuilder())
+        //    {
+        //        if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
+        //        {
+        //            var inputText = ControlsList.GetPropertyControl<TextBox>(nameof(v_TextToSend));
+        //            inputText.Text = fm.Result;
+        //        }
+        //    }
+        //}
     }
 }

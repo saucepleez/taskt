@@ -461,6 +461,7 @@
     <Compile Include="Core\Automation\Commands\KeyMouseGroup\IEnterShortcutKeyProperties.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouseGroup\IKeyActionCoreProperties.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouseGroup\ISendAdvancedKeyStrokesProperties.cs" />
+    <Compile Include="Core\Automation\Commands\KeyMouseGroup\VP_KeyMouseControls.cs" />
     <Compile Include="Core\Automation\Commands\ListGroup\GetCommonValuesOfListsCommand.cs" />
     <Compile Include="Core\Automation\Commands\ListGroup\CheckValidListIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\ActivateWindowsCommand.cs" />
