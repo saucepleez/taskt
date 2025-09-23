@@ -1567,6 +1567,7 @@ namespace taskt.UI.CustomControls
             ComboBox trg = (ComboBox)sender;
             trg.Tag = trg.SelectionStart;
         }
+
         /// <summary>
         /// remember cursor position in ComboBox
         /// </summary>
