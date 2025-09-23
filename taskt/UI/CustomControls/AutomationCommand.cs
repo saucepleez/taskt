@@ -138,9 +138,7 @@ namespace taskt.UI.CustomControls
 
                 //if (ctrl is UIPictureBox)
                 //{
-
                 //    var typedControl = (UIPictureBox)InputControl;
-
                 //}
 
                 //Todo: helper for loading variables, move to attribute
