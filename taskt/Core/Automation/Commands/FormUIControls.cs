@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using taskt.UI.CustomControls;
+using taskt.UI.Forms.ScriptBuilder.CommandEditor;
 using static taskt.UI.CustomControls.CommandControls;
 
 namespace taskt.Core.Automation.Commands
@@ -208,5 +210,26 @@ namespace taskt.Core.Automation.Commands
             }
         }
         #endregion
+
+        /// <summary>
+        /// get frmCommandEditor from control
+        /// </summary>
+        /// <param name="ctrl"></param>
+        /// <returns></returns>
+        public static frmCommandEditor GetCommandEditorFromControl(Control ctrl)
+        {
+            return (frmCommandEditor)(ctrl.FindForm());
+        }
+
+        /// <summary>
+        /// get link target control
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ctrl"></param>
+        /// <returns></returns>
+        public static T GetLinkTargetControl<T>(object ctrl) where T : Control
+        {
+            return (T)(((CommandItemControl)ctrl).Tag);
+        }
     }
 }
