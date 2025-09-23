@@ -12,9 +12,10 @@ namespace taskt.Core.Automation.Commands
     public static class PropertyControls
     {
         /// <summary>
-        /// classnam & namespace dictionary
+        /// classname & fullname dictionary
         /// </summary>
         private static Dictionary<string, string> commandClassDic = null;
+
         /// <summary>
         /// search base namespace
         /// </summary>
