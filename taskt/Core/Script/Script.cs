@@ -4514,6 +4514,20 @@ namespace taskt.Core.Script
                             return false;
                     }
                 }), "v_WaitAfterKeyEnter", "v_WaitTimeAfterKeyEnter");
+
+            // EnterKeys v_EncryptionOption values -> Yes/No
+            ChangeAttributeValue(doc, "EnterKeysCommand", "v_EncryptionOption", new Action<XAttribute>(attr =>
+            {
+                switch (attr.Value.ToLower())
+                {
+                    case "encrypted":
+                        attr.SetValue("Yes");
+                        break;
+                    case "not encrypted":
+                        attr.SetValue("No");
+                        break;
+                }
+            }));
         }
 
         /// <summary>

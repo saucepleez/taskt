@@ -40,11 +40,9 @@ namespace taskt.Core.Automation.Commands
         public string v_TextToSend { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("Text is Encrypted or Not")]
-        [PropertyUISelectionOption("Not Encrypted")]
-        [PropertyUISelectionOption("Encrypted")]
-        [PropertyIsOptional(true, "Not Encrypted")]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Text is Encrypted")]
+        [PropertyIsOptional(true, "No")]
         [PropertyParameterOrder(5200)]
         [PropertyDisplayText(false, "Encrypted")]
         public string v_EncryptionOption { get; set; }
@@ -150,8 +148,12 @@ namespace taskt.Core.Automation.Commands
 
                 var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
 
-                var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
-                if (encryptOption == "encrypted")
+                //var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
+                //if (encryptOption == "encrypted")
+                //{
+                //    textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
+                //}
+                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_EncryptionOption), engine))
                 {
                     textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
                 }
