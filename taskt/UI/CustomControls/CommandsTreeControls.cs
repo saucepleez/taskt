@@ -5,14 +5,32 @@ using taskt.Core;
 
 namespace taskt.UI.CustomControls
 {
-    static internal class CommandsTreeControls
+    /// <summary>
+    /// management commands tree in form
+    /// </summary>
+    public static class CommandsTreeControls
     {
+        /// <summary>
+        /// commands tree list
+        /// </summary>
+        public static TreeNode[] BufferedCommandList { get; private set; }
+        /// <summary>
+        /// commands tree ImageList
+        /// </summary>
+        public static ImageList BufferedCommandTreeImages { get; private set; }
+
+        static CommandsTreeControls()
+        {
+            BufferedCommandList = CreateAllCommandsArray(App.Taskt_Settings.ClientSettings);
+            BufferedCommandTreeImages = CreateCommandImageList();
+        }
+
         /// <summary>
         /// create all commands tree array
         /// </summary>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public static TreeNode[] CreateAllCommandsArray(IClientSettings settings)
+        private static TreeNode[] CreateAllCommandsArray(IClientSettings settings)
         {
             List<AutomationCommand> automationCommands = CommandControls.GenerateCommandsAndControls();
 
@@ -132,7 +150,11 @@ namespace taskt.UI.CustomControls
             treeCommands.Add(pGroup);
         }
 
-        public static ImageList CreateCommandImageList()
+        /// <summary>
+        /// create command tree image list
+        /// </summary>
+        /// <returns></returns>
+        private static ImageList CreateCommandImageList()
         {
             ImageList commandImages = new ImageList();
             commandImages.ImageSize = new System.Drawing.Size(16, 16);
@@ -142,6 +164,12 @@ namespace taskt.UI.CustomControls
             return commandImages;
         }
 
+        /// <summary>
+        /// show commands tree in form
+        /// </summary>
+        /// <param name="tvCommands"></param>
+        /// <param name="commandTree"></param>
+        /// <param name="expandAllNodes"></param>
         public static void ShowCommandsTree(TreeView tvCommands, TreeNode[] commandTree, bool expandAllNodes = false)
         {
             tvCommands.BeginUpdate();
@@ -167,6 +195,13 @@ namespace taskt.UI.CustomControls
             tvCommands.EndUpdate();
         }
 
+        /// <summary>
+        /// filter commands
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <param name="allCommands"></param>
+        /// <param name="settings"></param>
+        /// <returns></returns>
         public static TreeNode[] FilterCommands(string keyword, TreeNode[] allCommands, IClientSettings settings)
         {
             List<TreeNode> matchedCommands = new List<TreeNode>();
@@ -313,6 +348,12 @@ namespace taskt.UI.CustomControls
             }
         }
 
+        /// <summary>
+        /// focus specified command in commands tree
+        /// </summary>
+        /// <param name="group"></param>
+        /// <param name="command"></param>
+        /// <param name="tvCommands"></param>
         public static void FocusCommand(string group, string command, TreeView tvCommands)
         {
             if (!group.EndsWith(" Commands"))

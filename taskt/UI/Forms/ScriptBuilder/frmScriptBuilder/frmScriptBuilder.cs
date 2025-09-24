@@ -21,6 +21,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Script;
+using taskt.UI.CustomControls;
 
 namespace taskt.UI.Forms.ScriptBuilder
 {
@@ -633,8 +634,10 @@ namespace taskt.UI.Forms.ScriptBuilder
         
         private void GenerateTreeViewCommands()
         {
-            bufferedCommandList = CustomControls.CommandsTreeControls.CreateAllCommandsArray(appSettings.ClientSettings);
-            bufferedCommandTreeImages = CustomControls.CommandsTreeControls.CreateCommandImageList();
+            //bufferedCommandList = CustomControls.CommandsTreeControls.CreateAllCommandsArray(appSettings.ClientSettings);
+            //bufferedCommandTreeImages = CustomControls.CommandsTreeControls.CreateCommandImageList();
+            bufferedCommandList = CommandsTreeControls.BufferedCommandList;
+            bufferedCommandTreeImages = CommandsTreeControls.BufferedCommandTreeImages;
             tvCommands.ImageList = bufferedCommandTreeImages;
 
             ShowAllCommands();
