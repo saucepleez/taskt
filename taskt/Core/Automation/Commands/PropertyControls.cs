@@ -11,16 +11,6 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     public static class PropertyControls
     {
-        ///// <summary>
-        ///// classname & fullname dictionary
-        ///// </summary>
-        //private static Dictionary<string, string> commandClassDic = null;
-
-        ///// <summary>
-        ///// search base namespace
-        ///// </summary>
-        //private const string NSBase = "taskt.Core.Automation.Commands";
-
         #region Property methods
         /// <summary>
         /// get parameters property info
@@ -294,77 +284,6 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        ///// <summary>
-        ///// create classname and namespace dictionary
-        ///// </summary>
-        //public static void CreateCommandClassDic()
-        //{
-        //    commandClassDic = new Dictionary<string, string>();
-
-        //    string getClassName(Type x)
-        //    {
-        //        var fn = x.FullName;
-        //        return fn.Substring(fn.LastIndexOf('.') + 1); ;
-        //    }
-
-        //    var asm = Assembly.GetExecutingAssembly();
-        //    var types = asm.GetTypes().Where(p =>
-        //    {
-        //        if (p.IsClass)
-        //        {
-        //            // check abstract class
-        //            if (p.IsAbstract && !p.IsSealed)
-        //            {
-        //                return false;
-        //            }
-
-        //            // class, sealed class, static class
-        //            var ns = p.Namespace ?? "";
-        //            var name = getClassName(p);
-        //            return (
-        //                ((ns == NSBase) || (ns.StartsWith($"{NSBase}."))) &&
-        //                (!name.StartsWith("EM_")) &&
-        //                (!name.Contains("+<>"))
-        //            );
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    });
-        //    foreach(var t in types)
-        //    {
-        //        var full = t.FullName;
-        //        var name = getClassName(t);
-        //        if (!commandClassDic.ContainsKey(name))
-        //        {
-        //            commandClassDic.Add(name, full);
-        //        }
-        //        else
-        //        {
-        //            throw new Exception($"Duplicate classname. class: '{name}', fullname: '{full}'");
-        //        }
-        //    }
-        //}
-
-        ///// <summary>
-        ///// return class full name (commands class)
-        ///// </summary>
-        ///// <param name="className"></param>
-        ///// <returns></returns>
-        ///// <exception cref="Exception"></exception>
-        //public static string GetClassFullName(string className)
-        //{
-        //    if (commandClassDic.ContainsKey(className))
-        //    {
-        //        return commandClassDic[className];
-        //    }
-        //    else
-        //    {
-        //        throw new Exception($"Class Name does not exists. class: '{className}'");
-        //    }
-        //}
         #endregion
     }
 }
