@@ -52,12 +52,6 @@ namespace taskt
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
-            // create namespace list
-            Core.Automation.Commands.PropertyControls.CreateCommandClassDic();
-
-            // create all commands info
-            App.CreateAllCommandsInfo();
-
             // DBG
             //var a = App.AllCommandsInfo;
 

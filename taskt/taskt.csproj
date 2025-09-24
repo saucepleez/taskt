@@ -385,6 +385,7 @@
     <Compile Include="Core\Automation\Commands\ColorGroup\ICanHandleColor.cs" />
     <Compile Include="Core\Automation\Commands\ColorGroup\IColorCreateProperties.cs" />
     <Compile Include="Core\Automation\Commands\ColorGroup\IColorProperties.cs" />
+    <Compile Include="Core\Automation\Commands\CommandClassesControl.cs" />
     <Compile Include="Core\Automation\Commands\DateTimeGroup\AFormatDateTimeCommands.cs" />
     <Compile Include="Core\Automation\Commands\DateTimeGroup\ACalculateDateTimeCommands.cs" />
     <Compile Include="Core\Automation\Commands\DateTimeGroup\AGetFormattedDateTimeFromCalculatedDateTimeCommands.cs" />

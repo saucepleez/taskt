@@ -41,6 +41,11 @@ namespace taskt
         /// </summary>
         public static List<ScriptCommandInformation> AllCommandsInfo { get; private set; }
 
+        static App()
+        {
+            AllCommandsInfo = ScriptCommandInformation.CreateScriptCommandInformations();
+        }
+
         /// <summary>
         /// update location, version info
         /// </summary>
@@ -146,14 +151,6 @@ namespace taskt
         public static SafeAutomationEngineInstanceApplicationSettings GetAutomationEngineInstanceApplicationSettings()
         {
             return (new SafeAutomationEngineInstanceApplicationSettings(Taskt_UNSAFE_Settings)).Clone();
-        }
-
-        /// <summary>
-        /// create all commands info
-        /// </summary>
-        public static void CreateAllCommandsInfo()
-        {
-            AllCommandsInfo = ScriptCommandInformation.CreateScriptCommandInformations();
         }
     }
 }
