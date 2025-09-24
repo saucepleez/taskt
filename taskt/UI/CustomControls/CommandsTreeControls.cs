@@ -37,6 +37,11 @@ namespace taskt.UI.CustomControls
             return commandsTreeList.ToArray();
         }
 
+        /// <summary>
+        /// create command tree sort by group
+        /// </summary>
+        /// <param name="treeCommands"></param>
+        /// <param name="commands"></param>
         private static void CommandsSortByGroup(List<TreeNode> treeCommands, List<AutomationCommand> commands)
         {
             var groupedCommands = commands.GroupBy(f => f.DisplayGroup);
@@ -59,6 +64,12 @@ namespace taskt.UI.CustomControls
                 treeCommands.Add(newGroup);
             }
         }
+
+        /// <summary>
+        /// create command tree sort by group and subgruop
+        /// </summary>
+        /// <param name="treeCommands"></param>
+        /// <param name="commands"></param>
         private static void CommandsSortBySubGroupAndGroup(List<TreeNode> treeCommands, List<AutomationCommand> commands)
         {
             var groupedCommands = commands.GroupBy(f => new { f.DisplayGroup, f.DisplaySubGroup })
