@@ -102,6 +102,17 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
+        /// check specified current window handle keyword
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static bool IsCurrentWindowHandleKeyword(this IWindowHandleProperties command, AutomationEngineInstance engine)
+        {
+            return EM_CanHandleWindowHandleExtentionMethods.IsCurrentWindowHandleKeyword(command.v_WindowHandle, engine);
+        }
+
+        /// <summary>
         /// window handle action
         /// </summary>
         /// <param name="command"></param>

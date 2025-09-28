@@ -93,6 +93,17 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
+        /// check specified current window name keyword
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static bool IsCurrentWindowNameKeyword(this IWindowNameCoreProperties command, AutomationEngineInstance engine)
+        {
+            return EM_CanHandleWindowNameExtensionMethods.IsCurrentWindowNameKeyword(command.v_WindowName, engine);
+        }
+
+        /// <summary>
         /// wait for window names
         /// </summary>
         /// <param name="command"></param>
