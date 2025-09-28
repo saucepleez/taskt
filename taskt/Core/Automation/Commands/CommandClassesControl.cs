@@ -43,11 +43,11 @@ namespace taskt.Core.Automation.Commands
             {
                 if (p.IsClass)
                 {
-                    // check abstract class
-                    if (p.IsAbstract && !p.IsSealed)
-                    {
-                        return false;
-                    }
+                    //// check abstract class
+                    //if (p.IsAbstract && !p.IsSealed)
+                    //{
+                    //    return false;
+                    //}
 
                     // class, sealed class, static class
                     var ns = p.Namespace ?? "";
