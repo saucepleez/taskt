@@ -202,6 +202,7 @@ namespace taskt.Core.Automation.Commands.KeyMouseGroup
 
             var fm = FormUIControls.GetCommandEditorFromControl((Control)sender);
 
+            // TODO: make it. second label process
             //ControlsList.SecondLabelProcess(nameof(v_Hotkey), nameof(v_Hotkey), searchedKey);
         }
     }
