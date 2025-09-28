@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
 using System.Data;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands.KeyMouseGroup;
 
@@ -10,57 +11,24 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Key/Mouse")]
     [Attributes.ClassAttributes.SubGruop("Key")]
-    [Attributes.ClassAttributes.CommandSettings("Send Advanced Keystrokes")]
+    [Attributes.ClassAttributes.CommandSettings("Send Advanced Keystrokes From Window Handle")]
     [Attributes.ClassAttributes.Description("Sends advanced keystrokes to a targeted window")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send advanced keystroke inputs to a window.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'User32' method to achieve automation.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_input))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SendAdvancedKeyStrokesCommand : AOneWindowNameActionCommands, ISendAdvancedKeyStrokesProperties
+    public sealed class SendAdvancedKeyStrokesFromWindowHandleCommand : AWindowHandleActionCommands, ISendAdvancedKeyStrokesProperties
     {
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
-        //public string v_WindowName { get; set; }
-
         [XmlElement]
         [PropertyVirtualProperty(nameof(VP_KeyMouseControls), nameof(VP_KeyMouseControls.v_KeyActions))]
-        //[PropertyDescription("Keys and Action Type")]
-        //[InputSpecification("")]
-        //[SampleUsage("")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        //[PropertyDataGridViewSetting(true, true, true, 400, 250)]
-        //[PropertyDataGridViewColumnSettings("Key", "Key", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.ComboBox)]
-        //[PropertyDataGridViewColumnSettings("Action", "Action", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.ComboBox, "Key Press (Down + Up)\nKey Down\nKey Up")]
-        //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyParameterOrder(5010)]
         public DataTable v_KeyActions { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_KeyMouseControls), nameof(VP_KeyMouseControls.v_KeyUpDefault))]
-        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        //[PropertyDescription("Return all keys to 'UP' position after execution")]
-        //[PropertyIsOptional(true, "Yes")]
         [PropertyParameterOrder(5020)]
         public string v_KeyUpDefault { get; set; }
-
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CompareMethod))]
-        //public string v_CompareMethod { get; set; }
-
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod_Single))]
-        //[PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
-        //public string v_MatchMethod { get; set; }
-
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
-        //public string v_TargetWindowIndex { get; set; }
-
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
-        //public string v_WaitTimeForWindow { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_KeyMouseControls), nameof(VP_KeyMouseControls.v_WaitTimeAfterKeyEnter))]
@@ -69,43 +37,115 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_KeyMouseControls), nameof(VP_KeyMouseControls.v_ActivateCurrentWindow))]
-        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        //[PropertyDescription("Try Activate Window, when Specifiy Current Window Variable")]
-        //[PropertyIsOptional(true, "No")]
         [PropertyParameterOrder(8020)]
         public string v_ActivateCurrentWindow { get; set; }
-
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
-        //public string v_NameResult { get; set; }
-
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
-        //public string v_HandleResult { get; set; }
 
         [XmlAttribute]
         [PropertyIsOptional(true, "Yes")]
         [PropertyFirstValue("Yes")]
         public override string v_ActivateBeforeAction { get; set; }
 
-        public SendAdvancedKeyStrokesCommand()
+        public SendAdvancedKeyStrokesFromWindowHandleCommand()
         {
-            //this.CommandName = "SendAdvancedKeyStrokesCommand";
-            //this.SelectionName = "Send Advanced Keystrokes";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //void ActivateWindowProcess(IntPtr h)
-            //{
-            //    var activateWindow = new ActivateWindowByWindowHandleCommand()
-            //    {
-            //        v_WindowHandle = h.ToString(),
-            //    };
-            //    activateWindow.RunCommand(engine);
-            //}
+            void ActivateWindowProcess(IntPtr h)
+            {
+                var activateWindow = new ActivateWindowByWindowHandleCommand()
+                {
+                    v_WindowHandle = h.ToString(),
+                };
+                activateWindow.RunCommand(engine);
+            }
+
+            this.WindowHandleActionBeforeWaitActivate(engine, new Action<IntPtr>((whnd) =>
+            {
+                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateBeforeAction), engine))
+                {
+                    if (this.IsCurrentWindowHandleKeyword(engine))
+                    {
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
+                        {
+                            ActivateWindowProcess(whnd);
+                        }
+                    }
+                    else
+                    {
+                        ActivateWindowProcess(whnd);
+                    }
+                }
+                this.WaitAfterFindWindowProcess(engine);
+
+                // track all keys down
+                var keysDown = new List<Keys>();
+
+                // run each selected item
+                foreach (DataRow rw in v_KeyActions.Rows)
+                {
+                    // get key name
+                    var keyName = rw.Field<string>("Key");
+
+                    // get key action
+                    var action = rw.Field<string>("Action");
+
+                    // parse OEM key name
+                    string oemKeyString = keyName.Split('[', ']')[1];
+
+                    var oemKeyName = (Keys)Enum.Parse(typeof(Keys), oemKeyString);
+
+                    // "Key Press (Down + Up)", "Key Down", "Key Up"
+                    switch (action)
+                    {
+                        case "Key Press (Down + Up)":
+                            // simulate press
+                            KeyMouseControls.KeyDown(oemKeyName);
+                            KeyMouseControls.KeyUp(oemKeyName);
+
+                            // key returned to UP position so remove if we added it to the keys down list
+                            if (keysDown.Contains(oemKeyName))
+                            {
+                                keysDown.Remove(oemKeyName);
+                            }
+                            break;
+
+                        case "Key Down":
+                            // simulate down
+                            KeyMouseControls.KeyDown(oemKeyName);
+
+                            // track via keys down list
+                            if (!keysDown.Contains(oemKeyName))
+                            {
+                                keysDown.Add(oemKeyName);
+                            }
+                            break;
+
+                        case "Key Up":
+                            // simulate up
+                            KeyMouseControls.KeyUp(oemKeyName);
+
+                            // remove from key down
+                            if (keysDown.Contains(oemKeyName))
+                            {
+                                keysDown.Remove(oemKeyName);
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+
+                // return key to up position if requested
+                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_KeyUpDefault), engine))
+                {
+                    foreach (var key in keysDown)
+                    {
+                        KeyMouseControls.KeyUp(key);
+                    }
+                }
+            }));
 
             //this.WindowNameAction(engine, new Action<IntPtr, string>((whnd, name) =>
             //{
@@ -194,32 +234,6 @@ namespace taskt.Core.Automation.Commands
             //        }
             //    }
             //}));
-
-            this.WindowNameAction(engine, new Action<IntPtr, string>((whnd, name) =>
-            {
-                string sendHandle;
-                if (this.IsCurrentWindowNameKeyword(engine))
-                {
-                    sendHandle = VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowHandle.VariableName, engine);
-                }
-                else
-                {
-                    sendHandle = whnd.ToString();
-                }
-
-                var sendKeys = new SendAdvancedKeyStrokesFromWindowHandleCommand()
-                {
-                    v_WindowHandle = sendHandle,
-                    v_ActivateBeforeAction = this.v_ActivateBeforeAction,
-                    v_ActivateCurrentWindow = this.v_ActivateCurrentWindow,
-                    v_KeyActions = this.v_KeyActions,
-                    v_KeyUpDefault = this.v_KeyUpDefault,
-                    v_WaitTimeAfterKeyEnter = this.v_WaitTimeAfterKeyEnter,
-                    v_WaitTimeBetweenFindAndAction = this.v_WaitTimeBetweenFindAndAction,
-                    v_WaitTimeForWindow = this.v_WaitTimeForWindow,
-                };
-                sendKeys.RunCommand(engine);
-            }));
         }
 
         public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)

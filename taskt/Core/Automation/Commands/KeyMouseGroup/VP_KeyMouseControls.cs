@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Data;
 using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms.ScriptBuilder.CommandEditor;
 
 namespace taskt.Core.Automation.Commands.KeyMouseGroup
 {
@@ -127,6 +126,29 @@ namespace taskt.Core.Automation.Commands.KeyMouseGroup
         public static string v_Hotkey { get; }
 
         /// <summary>
+        /// advanced keystrokes keya and actions (actually data type is DataTable)
+        /// </summary>
+        [PropertyDescription("Keys and Action Type")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDataGridViewSetting(true, true, true, 400, 250)]
+        [PropertyDataGridViewColumnSettings("Key", "Key", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.ComboBox)]
+        [PropertyDataGridViewColumnSettings("Action", "Action", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.ComboBox, "Key Press (Down + Up)\nKey Down\nKey Up")]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        public static string v_KeyActions { get; }
+
+        /// <summary>
+        /// all keys up after execution
+        /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Return all keys to 'UP' position after execution")]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyDisplayText(false, "Keys UP")]
+        public static string v_KeyUpDefault { get; }
+
+        /// <summary>
         /// encrypt text to send keys
         /// </summary>
         /// <param name="sender"></param>
@@ -180,7 +202,7 @@ namespace taskt.Core.Automation.Commands.KeyMouseGroup
 
             var fm = FormUIControls.GetCommandEditorFromControl((Control)sender);
 
-            ControlsList.SecondLabelProcess(nameof(v_Hotkey), nameof(v_Hotkey), searchedKey);
+            //ControlsList.SecondLabelProcess(nameof(v_Hotkey), nameof(v_Hotkey), searchedKey);
         }
     }
 }

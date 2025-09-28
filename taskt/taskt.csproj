@@ -458,10 +458,13 @@
     <Compile Include="Core\Automation\Commands\FolderGroup\IFolderPathProperties.cs" />
     <Compile Include="Core\Automation\Commands\FolderGroup\AFolderCopySameRenameFolderCommands.cs" />
     <Compile Include="Core\Automation\Commands\FolderGroup\CopyFolderInSameLocationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\KeyMouseGroup\EnterKeysFromWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\KeyMouseGroup\EnterShortcutKeyFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouseGroup\IEnterKeysProperties.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouseGroup\IEnterShortcutKeyProperties.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouseGroup\IKeyActionCoreProperties.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouseGroup\ISendAdvancedKeyStrokesProperties.cs" />
+    <Compile Include="Core\Automation\Commands\KeyMouseGroup\SendAdvancedKeyStrokesFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouseGroup\VP_KeyMouseControls.cs" />
     <Compile Include="Core\Automation\Commands\ListGroup\GetCommonValuesOfListsCommand.cs" />
     <Compile Include="Core\Automation\Commands\ListGroup\CheckValidListIndexCommand.cs" />

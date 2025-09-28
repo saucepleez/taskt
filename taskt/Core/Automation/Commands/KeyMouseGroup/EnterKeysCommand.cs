@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands.KeyMouseGroup;
@@ -125,85 +124,112 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             // activate window
-            void ActivateWindowProcess(IntPtr h)
-            {
-                var activateWindow = new ActivateWindowByWindowHandleCommand()
-                {
-                    v_WindowHandle = h.ToString(),
-                };
-                activateWindow.RunCommand(engine);
-            }
+            //void ActivateWindowProcess(IntPtr h)
+            //{
+            //    var activateWindow = new ActivateWindowByWindowHandleCommand()
+            //    {
+            //        v_WindowHandle = h.ToString(),
+            //    };
+            //    activateWindow.RunCommand(engine);
+            //}
 
             this.WindowNameAction(engine, new Action<IntPtr, string>((whnd, name) =>
             {
-                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateBeforeAction), engine))
-                {
-                    if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
-                    {
-                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
-                        {
-                            ActivateWindowProcess(whnd);
-                        }
-                    }
-                    else
-                    {
-                        ActivateWindowProcess(whnd);
-                    }
-                }
-                this.WaitAfterFindWindowProcess(engine);
+                //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateBeforeAction), engine))
+                //{
+                //    if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
+                //    {
+                //        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateCurrentWindow), engine))
+                //        {
+                //            ActivateWindowProcess(whnd);
+                //        }
+                //    }
+                //    else
+                //    {
+                //        ActivateWindowProcess(whnd);
+                //    }
+                //}
+                //this.WaitAfterFindWindowProcess(engine);
 
-                var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
+                //var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
 
-                //var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
-                //if (encryptOption == "encrypted")
+                ////var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
+                ////if (encryptOption == "encrypted")
+                ////{
+                ////    textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
+                ////}
+                //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_EncryptionOption), engine))
                 //{
                 //    textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
                 //}
-                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_EncryptionOption), engine))
+
+                //if (textToSend == "{WIN_KEY}")
+                //{
+                //    KeyMouseControls.KeyDown(Keys.LWin);
+                //    KeyMouseControls.KeyUp(Keys.LWin);
+                //}
+                //else if (textToSend.StartsWith("{WIN_KEY+") && textToSend.EndsWith("}"))
+                //{
+                //    KeyMouseControls.KeyDown(Keys.LWin);
+                //    var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}", "");
+
+                //    foreach (var c in remainingText)
+                //    {
+                //        Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
+                //        KeyMouseControls.KeyDown(key);
+                //    }
+
+                //    KeyMouseControls.KeyUp(Keys.LWin);
+
+                //    foreach (var c in remainingText)
+                //    {
+                //        Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
+                //        KeyMouseControls.KeyUp(key);
+                //    }
+                //}
+                //else
+                //{
+                //    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_UseClipBoard), engine))
+                //    {
+                //        ClipboardControls.SetClipboardText(textToSend);
+                //        textToSend = "^v";  // Ctrl+V
+                //    }
+                //    SendKeys.SendWait(textToSend);
+                //    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ClearClipboardAfterPaste), engine))
+                //    {
+                //        ClipboardControls.ClearClipboard();
+                //    }
+                //}
+
+                //var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeAfterKeyEnter), engine);
+                //System.Threading.Thread.Sleep(waitTime);
+
+                string targetHandle;
+                //if (VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine) == v_WindowName)
+                if (this.IsCurrentWindowNameKeyword(engine))
                 {
-                    textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
-                }
-
-                if (textToSend == "{WIN_KEY}")
-                {
-                    KeyMouseControls.KeyDown(Keys.LWin);
-                    KeyMouseControls.KeyUp(Keys.LWin);
-                }
-                else if (textToSend.StartsWith("{WIN_KEY+") && textToSend.EndsWith("}"))
-                {
-                    KeyMouseControls.KeyDown(Keys.LWin);
-                    var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}", "");
-
-                    foreach (var c in remainingText)
-                    {
-                        Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-                        KeyMouseControls.KeyDown(key);
-                    }
-
-                    KeyMouseControls.KeyUp(Keys.LWin);
-
-                    foreach (var c in remainingText)
-                    {
-                        Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-                        KeyMouseControls.KeyUp(key);
-                    }
+                    targetHandle = VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowHandle.VariableName, engine);
                 }
                 else
                 {
-                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_UseClipBoard), engine))
-                    {
-                        ClipboardControls.SetClipboardText(textToSend);
-                        textToSend = "^v";  // Ctrl+V
-                    }
-                    SendKeys.SendWait(textToSend);
-                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ClearClipboardAfterPaste), engine))
-                    {
-                        ClipboardControls.ClearClipboard();
-                    }
+                    targetHandle = whnd.ToString();
                 }
 
-                var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeAfterKeyEnter), engine);
-                System.Threading.Thread.Sleep(waitTime);
+                var enterKeys = new EnterKeysFromWindowHandleCommand()
+                {
+                    v_WindowHandle = targetHandle,
+                    v_TextToSend = this.v_TextToSend,
+                    v_ActivateBeforeAction = this.v_ActivateBeforeAction,
+                    v_ActivateCurrentWindow = this.v_ActivateCurrentWindow,
+                    v_ClearClipboardAfterPaste = this.v_ClearClipboardAfterPaste,
+                    v_EncryptionOption = this.v_EncryptionOption,
+                    v_UseClipBoard = this.v_UseClipBoard,
+                    v_WaitTimeAfterKeyEnter = this.v_WaitTimeAfterKeyEnter,
+                    v_WaitTimeBetweenFindAndAction = this.v_WaitTimeBetweenFindAndAction,
+                    v_WaitTimeForWindow = this.v_WaitTimeForWindow,
+                    v_WindowNameResult = this.v_WindowName,
+                };
+                enterKeys.RunCommand(engine);
             }));
         }
 

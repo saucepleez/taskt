@@ -5,7 +5,7 @@ namespace taskt.Core.Automation.Commands.KeyMouseGroup
     /// <summary>
     /// send advanced key strokes properties
     /// </summary>
-    public interface ISendAdvancedKeyStrokesProperties : IKeyActionCoreProperties, ICanHandleDataTable
+    public interface ISendAdvancedKeyStrokesProperties : IKeyActionCoreProperties, IHaveDataTableElements
     {
         /// <summary>
         /// key actions
