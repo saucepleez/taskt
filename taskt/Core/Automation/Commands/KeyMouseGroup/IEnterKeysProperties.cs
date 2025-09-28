@@ -16,11 +16,6 @@
         string v_EncryptionOption { get; set; }
 
         /// <summary>
-        /// activate when specified current window
-        /// </summary>
-        string v_ActivateCurrentWindow { get; set; }
-
-        /// <summary>
         /// use clipboard when text send
         /// </summary>
         string v_UseClipBoard { get; set; }

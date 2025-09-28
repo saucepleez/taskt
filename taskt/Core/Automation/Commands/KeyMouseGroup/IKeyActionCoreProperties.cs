@@ -9,5 +9,10 @@
         /// wait time after keys enter
         /// </summary>
         string v_WaitTimeAfterKeyEnter { get; set; }
+
+        /// <summary>
+        /// activate when specified current window
+        /// </summary>
+        string v_ActivateCurrentWindow { get; set; }
     }
 }
