@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyAddtionalParameterInfo("Has Value", "Result is **TRUE** or **FALSE**")]
         //[PropertyAddtionalParameterInfo("Is a Number", "Result is **TRUE** or **FALSE**")]
         //[PropertyAddtionalParameterInfo("Is a Boolean", "Result is **TRUE** or **FALSE**")]
-        [PropertyVirtualProperty(nameof(TextCompareSelectMethodControls), nameof(TextCompareSelectMethodControls.v_CompareMethod))]
+        [PropertyVirtualProperty(nameof(TextCompareSelectMethodControls), nameof(TextCompareSelectMethodControls.v_CheckMethod))]
         public string v_CompareMethod { get; set; }
 
         [XmlAttribute]
@@ -71,7 +71,7 @@ namespace taskt.Core.Automation.Commands
         public string v_CaseSensitive { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(TextCompareSelectMethodControls), nameof(TextCompareSelectMethodControls.v_TrimBeforeCompare))]
+        [PropertyVirtualProperty(nameof(TextCompareSelectMethodControls), nameof(TextCompareSelectMethodControls.v_TrimBeforeCheck))]
         public string v_TrimBeforeCompare { get; set; }
 
         public CheckTextCommand()
