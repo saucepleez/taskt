@@ -527,7 +527,7 @@
     <Compile Include="Core\Automation\Commands\WindowGroup\IWindowResizeProperties.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\IWindowWaitTimeBetweenFindAndActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\CompareNumberCommand.cs" />
-    <Compile Include="Core\Automation\Commands\TextCompareSelectMethodControls.cs" />
+    <Compile Include="Core\Automation\Commands\TextGroup\VP_TextCheckSelectionMethodControls.cs" />
     <Compile Include="Core\Automation\Commands\DataTableGroup\ADataTableBothRowCommands.cs" />
     <Compile Include="Core\Automation\Commands\DataTableGroup\ADataTableBothColumnCommands.cs" />
     <Compile Include="Core\Automation\Commands\DataTableGroup\ADataTableBothDataTableCommands.cs" />
@@ -814,12 +814,12 @@
     <Compile Include="Core\Automation\Commands\_General\EM_CanHandleFileOrFolderPathExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\_General\EM_CommandIDPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\_General\EM_ExpandablePropertiesExtensionMethods.cs" />
-    <Compile Include="Core\Automation\Commands\_General\EM_TextComparePropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\TextGroup\EM_TextCheckPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\_General\EM_HaveDataTablePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\_General\ICanHandleFileOrFolderName.cs" />
     <Compile Include="Core\Automation\Commands\_General\ICanHandleFileOrFolderPath.cs" />
     <Compile Include="Core\Automation\Commands\_General\ICommandIDProperties.cs" />
-    <Compile Include="Core\Automation\Commands\_General\ICompareProperties.cs" />
+    <Compile Include="Core\Automation\Commands\_General\ICheckProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\IDelimitersOfStructuredCommands.cs" />
     <Compile Include="Core\Automation\Commands\_General\IEndOfStacturedCommand.cs" />
     <Compile Include="Core\Automation\Commands\_General\IHaveAdditionalCommands.cs" />
@@ -831,7 +831,7 @@
     <Compile Include="Core\Automation\Commands\_General\IPositionProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\ISizeProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\IReplaceValueProperties.cs" />
-    <Compile Include="Core\Automation\Commands\_General\ITextCompareProperties.cs" />
+    <Compile Include="Core\Automation\Commands\TextGroup\ITextCheckProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\RECT.cs" />
     <Compile Include="Core\Automation\Engine\EM_AppInstancesPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Engine\EM_ScriptVariablePropertiesExtensionMethods.cs" />

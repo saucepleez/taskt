@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.TextGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -16,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class GetFoldersPathAsListCommand : AFolderExistsFolderPathCommands, ITextCompareProperties, IListResultProperties
+    public sealed class GetFoldersPathAsListCommand : AFolderExistsFolderPathCommands, ITextCheckProperties, IListResultProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
@@ -43,18 +44,18 @@ namespace taskt.Core.Automation.Commands
         //[PropertyUISelectionOption("Ends with")]
         //[PropertyUISelectionOption("Exact match")]
         //[PropertyIsOptional(true, "Contains")]
-        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_CheckMethod))]
+        [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_CheckMethod))]
         [PropertyDescription("Folder Name Compare Method")]
         [PropertyParameterOrder(6100)]
         public string v_CompareMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_CaseSensitiveNo))]
+        [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_CaseSensitiveNo))]
         [PropertyParameterOrder(6200)]
         public string v_CaseSensitive { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_TrimBeforeCheck))]
+        [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_TrimBeforeCheck))]
         [PropertyParameterOrder(6300)]
         public string v_TrimBeforeCompare { get; set; }
 

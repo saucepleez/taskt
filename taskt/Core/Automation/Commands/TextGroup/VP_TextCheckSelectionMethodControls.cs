@@ -1,8 +1,8 @@
 ﻿using taskt.Core.Automation.Attributes.PropertyAttributes;
 
-namespace taskt.Core.Automation.Commands
+namespace taskt.Core.Automation.Commands.TextGroup
 {
-    public static class TextCheckSelectionMethodControls
+    public static class VP_TextCheckSelectionMethodControls
     {
         /// <summary>
         /// text check method
@@ -75,7 +75,7 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// check method is case sensitive or not
         /// </summary>
-        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_CaseSensitiveNo))]
+        [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_CaseSensitiveNo))]
         [PropertyIsOptional(true, "Yes")]
         //[PropertyDescription("Case Sensitive")]
         //[InputSpecification("", true)]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.TextGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -47,7 +48,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Result { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_CaseSensitiveYes))]
+        [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_CaseSensitiveYes))]
         public string v_CaseSensitive { get; set; }
 
         [XmlAttribute]

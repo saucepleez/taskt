@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace taskt.Core.Automation.Commands
+namespace taskt.Core.Automation.Commands.TextGroup
 {
-    public static class EM_TextComparePropertiesExtensionMethods
+    public static class EM_TextCheckPropertiesExtensionMethods
     {
         /// <summary>
-        /// Get Pre Function for Text Compare
+        /// Get Pre Function for Text check
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private static Func<string, string> GetPreFunction(ITextCompareProperties command, Engine.AutomationEngineInstance engine)
+        private static Func<string, string> GetPreFunction(ITextCheckProperties command, Engine.AutomationEngineInstance engine)
         {
             var sc = command.ToScriptCommand();
 
@@ -100,13 +100,13 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// create compare function
+        /// create check function
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns>Func(targetString, conditionString, bool)</returns>
         /// <exception cref="Exception"></exception>
-        public static Func<string, string, bool> GetCompareFunction(this ITextCompareProperties command, Engine.AutomationEngineInstance engine)
+        public static Func<string, string, bool> GetCompareFunction(this ITextCheckProperties command, Engine.AutomationEngineInstance engine)
         {
             var preFunc = GetPreFunction(command, engine);
 

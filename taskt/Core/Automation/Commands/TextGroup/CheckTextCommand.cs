@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.TextGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class CheckTextCommand : ScriptCommand, ITextCompareProperties
+    public sealed class CheckTextCommand : ScriptCommand, ITextCheckProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text_MultiLine))]
@@ -45,7 +46,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyAddtionalParameterInfo("Has Value", "Result is **TRUE** or **FALSE**")]
         //[PropertyAddtionalParameterInfo("Is a Number", "Result is **TRUE** or **FALSE**")]
         //[PropertyAddtionalParameterInfo("Is a Boolean", "Result is **TRUE** or **FALSE**")]
-        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_CheckMethod))]
+        [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_CheckMethod))]
         public string v_CompareMethod { get; set; }
 
         [XmlAttribute]
@@ -67,11 +68,11 @@ namespace taskt.Core.Automation.Commands
         //[PropertyUISelectionOption("No")]
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         //[PropertyIsOptional(true, "Yes")]
-        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_CaseSensitiveYes))]
+        [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_CaseSensitiveYes))]
         public string v_CaseSensitive { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_TrimBeforeCheck))]
+        [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_TrimBeforeCheck))]
         public string v_TrimBeforeCompare { get; set; }
 
         public CheckTextCommand()
