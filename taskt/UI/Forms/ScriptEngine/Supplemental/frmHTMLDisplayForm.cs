@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using taskt.Core.IO;
 using taskt.Core.Script;
 
-
 namespace taskt.UI.Forms.ScriptEngine.Supplemental
 {
     /* This attribute is required to call C# code from WebView2 */
@@ -18,14 +17,24 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
     [ComVisible(true)]
     public partial class frmHTMLDisplayForm : Form
     {
-        public DialogResult Result { get; set; }
-        public string TemplateHTML { get; set; }
+        //public DialogResult Result { get; set; }
 
-        public List<ScriptVariable> variablesList { private set; get; }
+        /// <summary>
+        /// user specified variable values
+        /// </summary>
+        public List<ScriptVariable> VariablesList { private set; get; }
 
-        public frmHTMLDisplayForm()
+        /// <summary>
+        /// html for webView2
+        /// </summary>
+        private string templateHTML;
+        
+        public frmHTMLDisplayForm(string html, string title)
         {
             InitializeComponent();
+            this.templateHTML = html;
+            this.DialogResult = DialogResult.None;
+            this.Text = title;
         }
 
         private async void frmHTMLDisplayForm_Load(object sender, EventArgs e)
@@ -40,7 +49,7 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
 
             webBrowserHTML.CoreWebView2.AddHostObjectToScript("fm", this);
 
-            webBrowserHTML.NavigateToString(TemplateHTML);
+            webBrowserHTML.NavigateToString(this.templateHTML);
 
             this.TopMost = true;
         }
@@ -48,7 +57,9 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
         private async void frmHTMLDisplayForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             await webBrowserHTML.CoreWebView2.Profile.ClearBrowsingDataAsync();
+            CancelProcess();
         }
+
         private void webBrowserHTML_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
         {
             webBrowserHTML.Enabled = false;
@@ -64,26 +75,33 @@ namespace taskt.UI.Forms.ScriptEngine.Supplemental
         /// </summary>
         public async void OK()
         {
-            //Todo: figure out why return DialogResult not working for some reason
-
-            this.variablesList = new List<ScriptVariable>();
-
             // input tags
             await GetValueAndVariableNameFromInputElements();
 
-            Result = DialogResult.OK;
+            //Result = DialogResult.OK;
+            this.DialogResult= DialogResult.OK;
             this.Close();
         }
 
         /// <summary>
         /// Call from WebView2, Cancel button
         /// </summary>
-        public void Cancel()
+        public async void Cancel()
         {
-            //Todo: figure out why return DialogResult not working for some reason
+            // input tags
+            await GetValueAndVariableNameFromInputElements();
 
-            Result = DialogResult.Cancel;
+            //Result = DialogResult.Cancel;
+            CancelProcess();
             this.Close();
+        }
+
+        private void CancelProcess()
+        {
+            if (this.DialogResult == DialogResult.None)
+            {
+                this.DialogResult = DialogResult.Cancel;
+            }
         }
 
         /// <summary>
@@ -143,7 +161,7 @@ function getInputValues_" + func_id + @"() {
 }" + @"
 getInputValues_" + func_id + "();";
 
-            Console.WriteLine(inputJS);
+            //Console.WriteLine(inputJS);
 
             var jsonText = await webBrowserHTML.ExecuteScriptAsync(inputJS);
 
@@ -154,20 +172,26 @@ getInputValues_" + func_id + "();";
             AddVariablesList(ary);
         }
 
+        /// <summary>
+        /// add variable list from parsed json
+        /// </summary>
+        /// <param name="ary"></param>
         private void AddVariablesList(JArray ary)
         {
+            this.VariablesList = new List<ScriptVariable>();
+
             foreach(JObject item in ary.Cast<JObject>())
             {
                 var name = item["name"].ToString();
 
-                var existsVar = variablesList.FirstOrDefault(v => v.VariableName == name);
+                var existsVar = VariablesList.FirstOrDefault(v => v.VariableName == name);
                 if (existsVar != null)
                 {
                     existsVar.VariableValue = item["value"].ToString();
                 }
                 else
                 {
-                    variablesList.Add(new ScriptVariable()
+                    VariablesList.Add(new ScriptVariable()
                     {
                         VariableName = name,
                         VariableValue = item["value"].ToString(),
@@ -175,5 +199,6 @@ getInputValues_" + func_id + "();";
                 }
             }
         }
+
     }
 }

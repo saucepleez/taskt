@@ -163,6 +163,8 @@ namespace taskt.Core
 
         public bool DisplayNumberBeforeParameterDescription { get; set; }
 
+        public bool DisplayParameterOrderInDescription { get; set; }
+
         //private static readonly string InterDefaultBrowserInstanceNameKeyword = "%kwd_default_browser_instance%";
         //private static readonly string InterDefaultStopWatchInstanceNameKeyword = "%kwd_default_stopwatch_instance%";
         //private static readonly string InterDefaultExcelInstanceNameKeyword = "%kwd_default_excel_instance%";
@@ -224,6 +226,7 @@ namespace taskt.Core
 
             ChangeItemsWithWheelWhenNotForcused = false;
             DisplayNumberBeforeParameterDescription = true;
+            DisplayParameterOrderInDescription = false;
         }
 
         /// <summary>

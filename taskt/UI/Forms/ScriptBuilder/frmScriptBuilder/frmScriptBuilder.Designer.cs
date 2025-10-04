@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme2 = new taskt.Core.Theme();
+            taskt.Core.Theme theme1 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.headerMenu = new taskt.UI.CustomControls.UIMenuStrip();
@@ -178,6 +178,8 @@
             this.insertCommentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboveHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.belowHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveUpToolStripMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveDownToolStripMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToParentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstContextStripSep4 = new System.Windows.Forms.ToolStripSeparator();
             this.searchThisCommnadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1352,9 +1354,9 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(1224, 51);
             this.pnlMain.TabIndex = 2;
-            theme2.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme2.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme2;
+            theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme1;
             // 
             // lblMainLogo
             // 
@@ -1850,6 +1852,8 @@
             this.deleteSelectedToolStripMenuItem,
             this.lstContextStripSep3,
             this.insertCommentToolStripMenuItem,
+            this.moveUpToolStripMenu,
+            this.moveDownToolStripMenu,
             this.moveToParentToolStripMenuItem,
             this.lstContextStripSep4,
             this.searchThisCommnadToolStripMenuItem,
@@ -1859,7 +1863,8 @@
             this.showScriptInfoMenuItem,
             this.variableManagerToolStripMenuItem});
             this.lstScriptActionsContextStrip.Name = "lstContextStrip";
-            this.lstScriptActionsContextStrip.Size = new System.Drawing.Size(466, 634);
+            this.lstScriptActionsContextStrip.Size = new System.Drawing.Size(466, 694);
+            this.lstScriptActionsContextStrip.Opened += new System.EventHandler(this.lstScriptActionsContextStrip_Opened);
             // 
             // editThisCodeToolStripMenuItem
             // 
@@ -2009,6 +2014,20 @@
             this.belowHereToolStripMenuItem.Size = new System.Drawing.Size(202, 30);
             this.belowHereToolStripMenuItem.Text = "Below Here";
             this.belowHereToolStripMenuItem.Click += new System.EventHandler(this.belowHereToolStripMenuItem_Click);
+            // 
+            // moveUpToolStripMenu
+            // 
+            this.moveUpToolStripMenu.Name = "moveUpToolStripMenu";
+            this.moveUpToolStripMenu.Size = new System.Drawing.Size(465, 30);
+            this.moveUpToolStripMenu.Text = "Move Up This Command";
+            this.moveUpToolStripMenu.Click += new System.EventHandler(this.moveUpToolStripMenu_Click);
+            // 
+            // moveDownToolStripMenu
+            // 
+            this.moveDownToolStripMenu.Name = "moveDownToolStripMenu";
+            this.moveDownToolStripMenu.Size = new System.Drawing.Size(465, 30);
+            this.moveDownToolStripMenu.Text = "Move Down This Command";
+            this.moveDownToolStripMenu.Click += new System.EventHandler(this.moveDownToolStripMenu_Click);
             // 
             // moveToParentToolStripMenuItem
             // 
@@ -2452,6 +2471,8 @@
         private System.Windows.Forms.ToolStripMenuItem undoSplitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoSplitMenuItem;
         private System.Windows.Forms.ToolStripSeparator editSplitMenuSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem moveUpToolStripMenu;
+        private System.Windows.Forms.ToolStripMenuItem moveDownToolStripMenu;
     }
 }
 

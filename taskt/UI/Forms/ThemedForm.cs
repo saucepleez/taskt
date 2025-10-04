@@ -32,8 +32,11 @@ namespace taskt.UI.Forms
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(this.Theme.CreateGradient(this.ClientRectangle), this.ClientRectangle);
-            base.OnPaint(e);
+            if (this.WindowState != FormWindowState.Minimized)
+            {
+                e.Graphics.FillRectangle(this.Theme.CreateGradient(this.ClientRectangle), this.ClientRectangle);
+                base.OnPaint(e);
+            }
         }
     }
 }

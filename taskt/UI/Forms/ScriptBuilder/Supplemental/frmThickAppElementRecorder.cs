@@ -60,6 +60,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             {
                 IntPtr hWnd = WindowControls.FindWindowHandle(windowName, "exact match", new Core.Automation.Engine.AutomationEngineInstance());
                 WindowControls.ActivateWindow(hWnd);
+                
                 //User32Functions.SetWindowPosition(hWnd, 0, 0);
                 WindowControls.SetWindowPosition(hWnd, 0, 0);
 

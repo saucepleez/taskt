@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// PropertyInfo methods to ScriptCommand
     /// </summary>
-    internal static class PropertyControls
+    public static class PropertyControls
     {
         #region Property methods
         /// <summary>
@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static PropertyInfo GetProperty(this ScriptCommand command, string propertyName)
         {
-            return command.GetType().GetProperty(propertyName) ?? throw new Exception("Property '" + propertyName + "' does not exists. Command: " + command.CommandName);
+            return command.GetType().GetProperty(propertyName) ?? throw new Exception($"Property '{propertyName}' does not exists. Command: '{command.CommandName}'");
         }
 
         /// <summary>
@@ -109,7 +109,8 @@ namespace taskt.Core.Automation.Commands
             {
                 return null;
             }
-            var tp = Type.GetType("taskt.Core.Automation.Commands." + attrVP.className);
+            //var tp = Type.GetType("taskt.Core.Automation.Commands." + attrVP.className);
+            var tp = Type.GetType(CommandClassesControl.GetClassFullName(attrVP.className));
             return tp.GetProperty(attrVP.propertyName, BindingFlags.Public | BindingFlags.Static);
         }
 

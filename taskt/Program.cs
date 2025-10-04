@@ -52,6 +52,9 @@ namespace taskt
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
+            // DBG
+            //var a = App.AllCommandsInfo;
+
             //if the exe was passed a filename argument then run the script
             if (args.Length > 0)
             {

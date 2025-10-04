@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -848,47 +849,47 @@ namespace taskt.Core.Automation.Commands
 
         #region Winodow Search Methods
 
-        /// <summary>
-        /// get window UIElement. this method use PropertyVirtualProperty
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="engine"></param>
-        /// <param name="resultName"></param>
-        /// <returns></returns>
-        public static AutomationElement GetWindowUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine, string resultName = "")
-        {
-            AutomationElement ret = null;
+        ///// <summary>
+        ///// get window UIElement. this method use PropertyVirtualProperty
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="engine"></param>
+        ///// <param name="resultName"></param>
+        ///// <returns></returns>
+        //public static AutomationElement GetWindowUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine, string resultName = "")
+        //{
+        //    AutomationElement ret = null;
 
-            WindowControls.WindowAction(command, engine,
-                new Action<List<(IntPtr, string)>>(wins =>
-                {
-                    ret = AutomationElement.FromHandle(wins[0].Item1);
+        //    WindowControls.WindowAction(command, engine,
+        //        new Action<List<(IntPtr, string)>>(wins =>
+        //        {
+        //            ret = AutomationElement.FromHandle(wins[0].Item1);
 
-                    if (!string.IsNullOrEmpty(resultName))
-                    {
-                        //var resultValue = command.ConvertToUserVariable(resultName, "Result", engine);
-                        var resultValue = command.GetRawPropertyValueAsString(resultName, "Result");
+        //            if (!string.IsNullOrEmpty(resultName))
+        //            {
+        //                //var resultValue = command.ConvertToUserVariable(resultName, "Result", engine);
+        //                var resultValue = command.GetRawPropertyValueAsString(resultName, "Result");
 
-                        ret.StoreInUserVariable(engine, resultValue);
-                    }
-                })
-            );
+        //                ret.StoreInUserVariable(engine, resultValue);
+        //            }
+        //        })
+        //    );
 
-            return ret;
-        }
+        //    return ret;
+        //}
 
-        /// <summary>
-        /// get window UIElement
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        public static AutomationElement GetWindowUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine)
-        {
-            var resultName = command.GetProperty(new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_OutputUIElementName)))?.Name ?? "";
+        ///// <summary>
+        ///// get window UIElement
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //public static AutomationElement GetWindowUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine)
+        //{
+        //    var resultName = command.GetProperty(new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_OutputUIElementName)))?.Name ?? "";
 
-            return GetWindowUIElement(command, engine, resultName);
-        }
+        //    return GetWindowUIElement(command, engine, resultName);
+        //}
         #endregion
 
         #region search element node
@@ -1000,32 +1001,32 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        /// <summary>
-        /// get window handle from UIElement
-        /// </summary>
-        /// <param name="targetElement"></param>
-        /// <returns></returns>
-        public static int GetWindowHandle(AutomationElement targetElement)
-        {
-            TreeWalker walker = TreeWalker.RawViewWalker;
+        ///// <summary>
+        ///// get window handle from UIElement
+        ///// </summary>
+        ///// <param name="targetElement"></param>
+        ///// <returns></returns>
+        //public static int GetWindowHandle(AutomationElement targetElement)
+        //{
+        //    TreeWalker walker = TreeWalker.RawViewWalker;
 
-            var hnd = targetElement.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
-            if(hnd != AutomationElement.NotSupported)
-            {
-                return (int)hnd;
-            }
+        //    var hnd = targetElement.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
+        //    if(hnd != AutomationElement.NotSupported)
+        //    {
+        //        return (int)hnd;
+        //    }
 
-            var parent = walker.GetParent(targetElement);
-            while (true)
-            {
-                hnd = parent.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
-                if (hnd != AutomationElement.NotSupported)
-                {
-                    return (int)hnd;
-                }
-                parent = walker.GetParent(parent);
-            }
-        }
+        //    var parent = walker.GetParent(targetElement);
+        //    while (true)
+        //    {
+        //        hnd = parent.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
+        //        if (hnd != AutomationElement.NotSupported)
+        //        {
+        //            return (int)hnd;
+        //        }
+        //        parent = walker.GetParent(parent);
+        //    }
+        //}
 
         #endregion
 
@@ -1621,6 +1622,7 @@ namespace taskt.Core.Automation.Commands
                 myDGV.EndEdit();
             }
         }
+
         public static void UIAutomationDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             if (e.ColumnIndex == 1)

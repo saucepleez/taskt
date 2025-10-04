@@ -11,7 +11,7 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    public abstract class ScriptCommand : ILUIParameterProperties, ICommandIDProperties
+    public abstract class ScriptCommand : IUIParameterProperties, ICommandIDProperties
     {
         [XmlAttribute]
         public string CommandID { get; set; }
@@ -124,6 +124,7 @@ namespace taskt.Core.Automation.Commands
         {
             System.Threading.Thread.Sleep(DefaultPause);
         }
+
         public virtual void RunCommand(Engine.AutomationEngineInstance engine, Script.ScriptAction command)
         {
             System.Threading.Thread.Sleep(DefaultPause);
@@ -174,14 +175,13 @@ namespace taskt.Core.Automation.Commands
             RenderedControls = new List<Control>();
             return RenderedControls;
         }
+
         public virtual void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-
         }
 
         public virtual void Refresh(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-
         }
         #endregion
 

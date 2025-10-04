@@ -261,6 +261,3 @@ __pycache__/
 *.pyc
 /sharpRPA/sharpRPA2.licenseheader
 
-#Custom Files
-taskt/latest.json
-taskt/Properties/AssemblyInfo.cs

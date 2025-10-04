@@ -24,24 +24,33 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
 {
     public partial class frmCommandEditor : ThemedForm
     {
-        //list of available commands
+        // list of available commands
         List<AutomationCommand> commandList = new List<AutomationCommand>();
-        //list of variables, assigned from frmScriptBuilder
+
+        // list of variables, assigned from frmScriptBuilder
         public List<Core.Script.ScriptVariable> scriptVariables;
-        //reference to currently selected command
+
+        // reference to currently selected command
         public ScriptCommand selectedCommand;
-        //reference to original command
+
+        // reference to original command
         public ScriptCommand originalCommand;
-        //assigned by frmScriptBuilder to restrict inputs for editing existing commands
+
+        // assigned by frmScriptBuilder to restrict inputs for editing existing commands
         public CreationMode creationMode;
-        //startup command, assigned from frmScriptBuilder
+
+        // startup command, assigned from frmScriptBuilder
         public string defaultStartupCommand;
-        //editing command, assigned from frmScriptBuilder when editing a command
+
+        // editing command, assigned from frmScriptBuilder when editing a command
         public ScriptCommand editingCommand;
-        //track existing commands for visibility
+
+        // track existing commands for visibility
         public List<ScriptCommand> configuredCommands;
+
         // taskt setting
         public Core.SafeApplicationSettings appSettings;
+
         // instance counter
         public Core.InstanceCounter instanceList;
 
@@ -80,19 +89,18 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
 
         #region Form Events
 
-        //handle events for the form
         private void frmNewCommand_Load(object sender, EventArgs e)
         {
-            //declare loaded editor
+            // declare loaded editor
             CommandControls.CurrentEditor = this;
 
-            //order list
+            // order list
             commandList = commandList.OrderBy(itm => itm.FullName).ToList();
 
-            //set command list
+            // set command list
             cboSelectedCommand.DataSource = commandList;
 
-            //Set DisplayMember to track DisplayValue from the class
+            // Set DisplayMember to track DisplayValue from the class
             cboSelectedCommand.DisplayMember = "FullName";
 
             if ((creationMode == CreationMode.Add) && (defaultStartupCommand != null) && (commandList.Where(x => x.FullName == defaultStartupCommand).Count() > 0))
@@ -101,8 +109,6 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
             }
             else if (creationMode == CreationMode.Edit)
             {
-                // var requiredCommand = commandList.Where(x => x.FullName.Contains(defaultStartupCommand)).FirstOrDefault(); //&& x.CommandClass.Name == originalCommand.CommandName).FirstOrDefault();
-
                 var requiredCommand = commandList.Where(x => x.Command.ToString() == editingCommand.ToString()).FirstOrDefault();
 
                 if (requiredCommand == null)
@@ -119,13 +125,13 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
                 cboSelectedCommand.SelectedIndex = 0;
             }
 
-            //force commit event to populate the flow layout
+            // force commit event to populate the flow layout
             cboSelectedCommand_SelectionChangeCommitted(null, null);
 
-            //apply original variables if command is being updated
+            // apply original variables if command is being updated
             if (originalCommand != null)
             {
-                //copy original properties
+                // copy original properties
                 CopyPropertiesTo(originalCommand, selectedCommand);
 
                 Action<Control> readValueFunc = new Action<Control>(c =>
@@ -149,7 +155,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
                     //}
                 });
 
-                //update bindings
+                // update bindings
                 foreach (Control ctrl in flw_InputVariables.Controls)
                 {
                     readValueFunc(ctrl);
@@ -163,13 +169,13 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
                     }
                 }
 
-
-                //handle selection change events
+                // handle selection change events
             }
 
-            //gracefully handle post initialization setups (drop downs, etc)
+            // gracefully handle post initialization setups (drop downs, etc)
             AfterFormInitialization();
         }
+
         private void CopyPropertiesTo(object fromObject, object toObject)
         {
             PropertyInfo[] toObjectProperties = toObject.GetType().GetProperties();
@@ -190,7 +196,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
 
         private void AfterFormInitialization()
         {
-            //force control resizing
+            // force control resizing
             frmCommandEditor_Resize(null, null);
         }
 
@@ -257,18 +263,17 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
 
         private void cboSelectedCommand_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            //find underlying command item
+            // find underlying command item
             var selectedCommandItem = cboSelectedCommand.Text;
 
-            //get command
+            // get command
             var userSelectedCommand = commandList.Where(itm => itm.FullName == selectedCommandItem).FirstOrDefault();
 
-            //create new command for binding
+            // create new command for binding
             selectedCommand = (ScriptCommand)Activator.CreateInstance(userSelectedCommand.CommandClass);
 
 
             //Todo: MAKE OPTION TO RENDER ON THE FLY
-
             //if (true)
             //{
             //    var renderedControls = selectedCommand.Render(null);
@@ -276,19 +281,18 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
             //    userSelectedCommand.UIControls.AddRange(renderedControls);
             //}
 
-
-            //update data source
+            // update data source
             userSelectedCommand.Command = selectedCommand;
 
-            //bind controls to new data source
+            // bind controls to new data source
             userSelectedCommand.Bind(this);
 
             flw_InputVariables.SuspendLayout();
 
-            //clear controls
+            // clear controls
             flw_InputVariables.Controls.Clear();
 
-            //add each control
+            // add each control
             foreach (var ctrl in userSelectedCommand.UIControls)
             {
                 flw_InputVariables.Controls.Add(ctrl);
@@ -296,7 +300,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
 
             flw_InputVariables.ResumeLayout();
 
-            //focus first TextBox
+            // focus first TextBox
             FocusFirstEditableControl();
 
             // resize
@@ -306,18 +310,15 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
 
         #region Save/Close Buttons
 
-        //handles returning DialogResult
-
         private void uiBtnAdd_Click(object sender, EventArgs e)
         {
             selectedCommand.BeforeValidate();
 
-            //commit any datagridviews
+            // commit any datagridviews
             foreach (Control ctrl in flw_InputVariables.Controls)
             {
-                if (ctrl is DataGridView)
+                if (ctrl is DataGridView currentControl)
                 {
-                    DataGridView currentControl = (DataGridView)ctrl;
                     currentControl.EndEdit();
                 }
 
@@ -388,9 +389,6 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
         {
             using (var scriptVariableEditor = new ScriptBuilder.Supplemental.frmScriptVariables(this.scriptVariables, this.appSettings))
             {
-                //scriptVariableEditor.appSettings = this.appSettings;
-                //scriptVariableEditor.scriptVariables = this.scriptVariables;
-
                 if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
                 {
                     this.scriptVariables = scriptVariableEditor.scriptVariables.OrderBy(v => v.VariableName).ToList();
@@ -415,10 +413,9 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
             {
                 if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
                 {
-                    //var varList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList));
                     var vProp = PropertyControls.GetVirtualProperty(prop);
                     var varList = PropertyControls.GetCustomAttributeWithVirtual<Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList>(prop, vProp);
-                    //if ((varList != null) && (varList.isVariablesList))
+
                     if (varList?.isVariablesList ?? false)
                     {
                         var trgCtrl = flw_InputVariables.Controls.Find(prop.Name, true).FirstOrDefault();

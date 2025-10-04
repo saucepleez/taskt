@@ -480,6 +480,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             using (var fm = new CommandEditor.frmCommandEditor(automationCommands, GetConfiguredCommands()))
             {
                 fm.appSettings = this.appSettings;
+                fm.scriptVariables = this.scriptVariables;
                 foreach (var cmd in commands)
                 {
                     cmd.IsValidate(fm);

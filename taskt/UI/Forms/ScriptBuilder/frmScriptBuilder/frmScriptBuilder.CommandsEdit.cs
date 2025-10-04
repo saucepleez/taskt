@@ -44,13 +44,13 @@ namespace taskt.UI.Forms.ScriptBuilder
                 using (var newBuilder = new frmScriptBuilder())
                 {
                     // add variables
-                    newBuilder.scriptVariables = new List<ScriptVariable>();
+                    newBuilder.scriptVariables = new List<ScriptVariable>(this.scriptVariables);
                     newBuilder.instanceList = instanceList;
 
-                    foreach (var variable in this.scriptVariables)
-                    {
-                        newBuilder.scriptVariables.Add(variable);
-                    }
+                    //foreach (var variable in this.scriptVariables)
+                    //{
+                    //    newBuilder.scriptVariables.Add(variable);
+                    //}
 
                     // append to new builder
                     foreach (var cmd in sequence.v_scriptActions)
@@ -133,6 +133,8 @@ namespace taskt.UI.Forms.ScriptBuilder
                         selectedCommandItem.SubItems.Add(editCommand.selectedCommand.GetDisplayValue());
 
                         editCommand.selectedCommand.IsDontSavedCommand = true;
+
+                        this.scriptVariables = editCommand.scriptVariables;
 
                         editCommand.selectedCommand.AddInstance(instanceList);
 
@@ -382,6 +384,122 @@ namespace taskt.UI.Forms.ScriptBuilder
             lstScriptActions.Invalidate();
         }
 
+        ///// <summary>
+        ///// swap lstScriptActions items
+        ///// </summary>
+        ///// <param name="a"></param>
+        ///// <param name="b"></param>
+        //private void SwapScriptCommandListViewItems(int a, int b)
+        //{
+        //    // out of range
+        //    if (a < 0 || a >= lstScriptActions.Items.Count || b < 0 || b >= lstScriptActions.Items.Count)
+        //    {
+        //        return;
+        //    }
+        //    else if (a == b)
+        //    {
+        //        return;
+        //    }
+
+        //    lstScriptActions.BeginUpdate();
+
+        //    CreateUndoSnapshot();
+
+        //    var itemA = CloneScriptCommandListViewItem(lstScriptActions.Items[a]);
+        //    var itemB = CloneScriptCommandListViewItem(lstScriptActions.Items[b]);
+
+        //    if (a > b)
+        //    {
+        //        lstScriptActions.Items.Insert(a, itemB);
+        //        lstScriptActions.Items.RemoveAt(a + 1);
+        //        lstScriptActions.Items.Insert(b, itemA);
+        //        lstScriptActions.Items.RemoveAt(b + 1);
+        //    }
+        //    else
+        //    {
+        //        lstScriptActions.Items.Insert(b, itemA);
+        //        lstScriptActions.Items.RemoveAt(b + 1);
+        //        lstScriptActions.Items.Insert(a, itemB);
+        //        lstScriptActions.Items.RemoveAt(a + 1);
+        //    }
+
+        //    ChangeSaveState(true);
+
+        //    lstScriptActions.EndUpdate();
+        //}
+
+        /// <summary>
+        /// move some script commands to specifiy row
+        /// </summary>
+        /// <param name="insertIndex"></param>
+        private void MoveScriptCommandListViewItems(int insertIndex)
+        {
+            if (lstScriptActions.SelectedIndices.Count == 0)
+            {
+                return;
+            }
+
+            var startIndex = lstScriptActions.SelectedIndices[0];
+            var endIndex = lstScriptActions.SelectedIndices[lstScriptActions.SelectedIndices.Count - 1]; 
+
+            // strange insert index
+            if ((startIndex <= insertIndex) && (insertIndex <= endIndex))
+            {
+                return;
+            }
+
+            var indices = new int[lstScriptActions.SelectedIndices.Count];
+            lstScriptActions.SelectedIndices.CopyTo(indices, 0);
+
+            var newItems = new ListViewItem[lstScriptActions.SelectedIndices.Count];
+            for (int i = lstScriptActions.SelectedIndices.Count - 1 ; i >= 0; i--)
+            {
+                newItems[i] = CloneScriptCommandListViewItem(lstScriptActions.Items[lstScriptActions.SelectedIndices[i]]);
+            }
+
+            if (insertIndex < startIndex)
+            {
+                for (int i = indices.Length - 1 ; i >= 0 ; i--)
+                {
+                    lstScriptActions.Items.RemoveAt(indices[i]);
+                }
+                for (int i = indices.Length - 1; i >= 0; i--)
+                {
+                    lstScriptActions.Items.Insert(insertIndex, newItems[i]);
+                }
+            }
+            else // if (insertIndex > endIndex) 
+            {
+                for (int i = indices.Length - 1; i >= 0; i--)
+                {
+                    lstScriptActions.Items.Insert(insertIndex, newItems[i]);
+                }
+                for (int i = indices.Length - 1; i >= 0; i--)
+                {
+                    lstScriptActions.Items.RemoveAt(indices[i]);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// clone lstScriptActions listview Item
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="isNewCommand"></param>
+        /// <returns></returns>
+        private ListViewItem CloneScriptCommandListViewItem(ListViewItem item, bool isNewCommand = true)
+        {
+            ListViewItem newItem = (ListViewItem)item.Clone();
+            if (isNewCommand)
+            {
+                var cmd = (ScriptCommand)item.Tag;
+                cmd.IsNewInsertedCommand = true;
+                cmd.IsDontSavedCommand = true;
+            }
+            return newItem;
+        }
+
         private void ClearSelectedListViewItems()
         {
             if (lstScriptActions.FocusedItem != null)
@@ -571,6 +689,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             //AutoSizeLineNumberColumn();
         }
+
 
         #endregion
     }

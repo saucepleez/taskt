@@ -454,6 +454,9 @@ namespace taskt.Core.Script
             convertTo3_5_2_24(doc);
             convertTo3_5_2_25(doc);
             convertTo3_5_2_31(doc);
+            convertTo3_5_2_38(doc);
+            convertTo3_5_2_39(doc);
+            convertTo3_5_2_42(doc);
             return doc;
         }
 
@@ -4366,6 +4369,165 @@ namespace taskt.Core.Script
                             return false;
                     }
                 }), "v_applyToVariableName", "v_Result");
+        }
+
+        private static void convertTo3_5_2_38(XDocument doc)
+        {
+            // ShowHTMLInputDialog v_WhenCancel
+            var commands = GetCommands(doc, "ShowHTMLInputDialogCommand");
+            foreach (var command in commands)
+            {
+                var wc = command.Attribute("v_WhenCancel");
+                if (wc == null)
+                {
+                    var er = command.Attribute("v_ErrorOnClose");
+                    var erv = er?.Value ?? "";
+                    string newValue;
+                    switch (erv.ToLower())
+                    {
+                        case "error on close":
+                            newValue = "Error";
+                            break;
+                        case "do not error on close":
+                            newValue = "Ignore";
+                            break;
+                        default:
+                            newValue = "";
+                            break;
+                    }
+                    command.SetAttributeValue("v_WhenCancel", newValue);
+                    if (er != null)
+                    {
+                        er.Remove();
+                    }
+                }
+            }
+
+            // ShowUserInputDialogCommand v_InputHeader -> v_DialogTitle, v_InputDirections -> v_Message
+            ChangeMultiAttributeNames(doc, "ShowUserInputDialogCommand",
+                new List<(string, string)>()
+                {
+                    ("v_InputHeader", "v_DialogTitle"),
+                    ("v_InputDirections", "v_Message"),
+                }
+            );
+        }
+
+        private static void convertTo3_5_2_39(XDocument doc)
+        {
+            void SeparateOneAll(XDocument x, string currentCommandName, string oneCommandName, string oneSelectionName, string allCommandName, string allSelectionName)
+            {
+                var cmds = GetCommands(x, currentCommandName);
+                var one = new List<XElement>();
+                var all = new List<XElement>();
+                foreach (var cmd in cmds)
+                {
+                    var matchAttr = cmd.Attribute("v_MatchMethod");
+                    switch (matchAttr?.Value.ToLower() ?? "")
+                    {
+                        case "all":
+                            matchAttr?.Remove();
+                            all.Add(cmd);
+                            break;
+                        default:
+                            one.Add(cmd);
+                            break;
+                    }
+                }
+                ChangeCommandNameProcess(one, oneCommandName, oneSelectionName);
+                ChangeCommandNameProcess(all, allCommandName, allSelectionName);
+            }
+
+            // ActivateWindowCommand -> ActivateOneWindowCommand, ActivateWindowsCommand
+            SeparateOneAll(doc, "ActivateWindowCommand", "ActivateOneWindowCommand", "Activate One Window", "ActivateWindowsCommand", "Activate Windows");
+
+            // CloseWindowCommand -> CloseOneWindowCommand, CloseWindowsCommand
+            SeparateOneAll(doc, "CloseWindowCommand", "CloseOneWindowCommand", "Close One Window", "CloseWindowsCommand", "Close Windows");
+
+            // MoveWindowCommand -> MoveOneWindowCommand, MoveWindowsCommand
+            SeparateOneAll(doc, "MoveWindowCommand", "MoveOneWindowCommand", "Move One Window", "MoveWindowsCommand", "Move Windows");
+
+            // ResizeWindowCommand -> ResizeOneWindowCommand, ResizeWindowsCommand
+            SeparateOneAll(doc, "ResizeWindowCommand", "ResizeOneWindowCommand", "Resize One Window", "ResizeWindowsCommand", "Resize Windows");
+
+            // SetWindowStateCommand -> SetOneWindowStateCommand, SetWindowsStateCommand
+            SeparateOneAll(doc, "SetWindowStateCommand", "SetOneWindowStateCommand", "Set One Window State", "SetWindowsStateCommand", "Set Windows State");
+
+            // GetProcessNameFromWindowNameCommand -> GetOneProcessNameFromOneWindowNameCommand
+            ChangeCommandName(doc, "GetProcessNameFromWindowNameCommand", "GetOneProcessNameFromOneWindowNameCommand", "Get One Process Name From One Window Name");
+
+            // GetWindowHandleFromWindowNameCommand -> GetOneWindowHandleFromOneWindowNameCommand
+            //ChangeCommandName(doc, "GetWindowHandleFromWindowNameCommand", "GetOneWindowHandleFromOneWindowNameCommand", "Get One Window Handle From One Window Name");
+            ChangeToOtherCommand(doc, "GetWindowHandleFromWindowNameCommand", "GetOneWindowHandleFromOneWindowNameCommand", "Get One Window Handle From One Window Name",
+                new List<(string, string)>()
+                {
+                    ("v_HandleResult", "v_Result"),
+                }
+            );
+
+            // GetWindowPositionCommand -> GetOneWindowPositionCommand
+            ChangeCommandName(doc, "GetWindowPositionCommand", "GetOneWindowPositionCommand", "Get One Window Position");
+
+            // GetWindowSizeCommand -> GetOneWindowSizeCommand
+            ChangeCommandName(doc, "GetWindowSizeCommand", "GetOneWindowSizeCommand", "Get One Window Size");
+
+            // GetWindowStateCommand -> GetOneWindowStateCommand
+            ChangeCommandName(doc, "GetWindowStateCommand", "GetOneWindowStateCommand", "Get One Window State");
+        }
+
+        private static void convertTo3_5_2_42(XDocument doc)
+        {
+            // TakeScreenshot v_ActivateWindowBeforeCapture -> v_ActivateBeforeAction
+            // v_WaitTimeBeforeCapture -> v_WaitTimeBetweenFindAndAction
+            var takes = GetCommands(doc, "TakeScreenshotCommand").ToList();
+            ChangeAttributeNameProcess(takes, "v_ActivateWindowBeforeCapture", "v_ActivateBeforeAction");
+            foreach(var cmd in takes)
+            {
+                var attr_wbc = cmd.Attribute("v_WaitTimeBeforeCapture");
+                if (attr_wbc != null)
+                {
+                    if (int.TryParse(attr_wbc.Value, out int wbc))
+                    {
+                        cmd.SetAttributeValue("v_WaitTimeBetweenFindAndAction", ((wbc / 1000.0)).ToString());
+                    }
+                    else
+                    {
+                        cmd.SetAttributeValue("v_WaitTimeBetweenFindAndAction", attr_wbc.Value);
+                    }
+                    attr_wbc.Remove();
+                }
+            }
+
+            // EnterKeys v_WaitTime -> v_WaitTimeAfterKeyEnter
+            ChangeAttributeName(doc, "EnterKeysCommand", "v_WaitTime", "v_WaitTimeAfterKeyEnter");
+
+            // SendAdvancedKeyStrokes, EnterShotcutKey v_WaitAfterKeyEnter -> v_WaitTimeAfterKeyEnter
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>((el) =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "SendAdvancedKeyStrokesCommand":
+                        case "EnterShortcutKeyCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_WaitAfterKeyEnter", "v_WaitTimeAfterKeyEnter");
+
+            // EnterKeys v_EncryptionOption values -> Yes/No
+            ChangeAttributeValue(doc, "EnterKeysCommand", "v_EncryptionOption", new Action<XAttribute>(attr =>
+            {
+                switch (attr.Value.ToLower())
+                {
+                    case "encrypted":
+                        attr.SetValue("Yes");
+                        break;
+                    case "not encrypted":
+                        attr.SetValue("No");
+                        break;
+                }
+            }));
         }
 
         /// <summary>

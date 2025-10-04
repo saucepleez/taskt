@@ -3,7 +3,7 @@
     /// <summary>
     /// for file or folder path
     /// </summary>
-    public interface ICanHandleFileOrFolderPath : ILExpandableProperties
+    public interface ICanHandleFileOrFolderPath : IExpandableProperties
     {
         // nothing
     }
