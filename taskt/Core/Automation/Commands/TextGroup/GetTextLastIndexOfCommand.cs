@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Result { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(TextCompareSelectMethodControls), nameof(TextCompareSelectMethodControls.v_CaseSensitiveYes))]
+        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_CaseSensitiveYes))]
         public string v_CaseSensitive { get; set; }
 
         [XmlAttribute]

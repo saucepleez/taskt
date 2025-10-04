@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyAddtionalParameterInfo("Has Value", "Result is **TRUE** or **FALSE**")]
         //[PropertyAddtionalParameterInfo("Is a Number", "Result is **TRUE** or **FALSE**")]
         //[PropertyAddtionalParameterInfo("Is a Boolean", "Result is **TRUE** or **FALSE**")]
-        [PropertyVirtualProperty(nameof(TextCompareSelectMethodControls), nameof(TextCompareSelectMethodControls.v_CheckMethod))]
+        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_CheckMethod))]
         public string v_CompareMethod { get; set; }
 
         [XmlAttribute]
@@ -67,11 +67,11 @@ namespace taskt.Core.Automation.Commands
         //[PropertyUISelectionOption("No")]
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         //[PropertyIsOptional(true, "Yes")]
-        [PropertyVirtualProperty(nameof(TextCompareSelectMethodControls), nameof(TextCompareSelectMethodControls.v_CaseSensitiveYes))]
+        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_CaseSensitiveYes))]
         public string v_CaseSensitive { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(TextCompareSelectMethodControls), nameof(TextCompareSelectMethodControls.v_TrimBeforeCheck))]
+        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_TrimBeforeCheck))]
         public string v_TrimBeforeCompare { get; set; }
 
         public CheckTextCommand()

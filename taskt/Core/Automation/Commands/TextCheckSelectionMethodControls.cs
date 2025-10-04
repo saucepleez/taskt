@@ -2,7 +2,7 @@
 
 namespace taskt.Core.Automation.Commands
 {
-    public static class TextCompareSelectMethodControls
+    public static class TextCheckSelectionMethodControls
     {
         /// <summary>
         /// text check method
@@ -75,7 +75,7 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// check method is case sensitive or not
         /// </summary>
-        [PropertyVirtualProperty(nameof(TextCompareSelectMethodControls), nameof(TextCompareSelectMethodControls.v_CaseSensitiveNo))]
+        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_CaseSensitiveNo))]
         [PropertyIsOptional(true, "Yes")]
         //[PropertyDescription("Case Sensitive")]
         //[InputSpecification("", true)]

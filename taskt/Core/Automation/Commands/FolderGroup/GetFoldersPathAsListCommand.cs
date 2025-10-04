@@ -43,18 +43,18 @@ namespace taskt.Core.Automation.Commands
         //[PropertyUISelectionOption("Ends with")]
         //[PropertyUISelectionOption("Exact match")]
         //[PropertyIsOptional(true, "Contains")]
-        [PropertyVirtualProperty(nameof(TextCompareSelectMethodControls), nameof(TextCompareSelectMethodControls.v_CheckMethod))]
+        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_CheckMethod))]
         [PropertyDescription("Folder Name Compare Method")]
         [PropertyParameterOrder(6100)]
         public string v_CompareMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(TextCompareSelectMethodControls), nameof(TextCompareSelectMethodControls.v_CaseSensitiveNo))]
+        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_CaseSensitiveNo))]
         [PropertyParameterOrder(6200)]
         public string v_CaseSensitive { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(TextCompareSelectMethodControls), nameof(TextCompareSelectMethodControls.v_TrimBeforeCheck))]
+        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_TrimBeforeCheck))]
         [PropertyParameterOrder(6300)]
         public string v_TrimBeforeCompare { get; set; }
 

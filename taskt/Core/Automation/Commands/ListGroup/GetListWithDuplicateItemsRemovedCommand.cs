@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         //public string v_NewList { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(TextCompareSelectMethodControls), nameof(TextCompareSelectMethodControls.v_CaseSensitiveNo))]
+        [PropertyVirtualProperty(nameof(TextCheckSelectionMethodControls), nameof(TextCheckSelectionMethodControls.v_CaseSensitiveNo))]
         [PropertyParameterOrder(11000)]
         [PropertyIsOptional(true, "Yes")]
         public string v_CaseSenstive { get; set; }
