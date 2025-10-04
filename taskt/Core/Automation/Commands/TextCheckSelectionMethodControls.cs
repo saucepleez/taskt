@@ -110,39 +110,39 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterOrder(5000)]
         public static string v_TrimBeforeCheck { get; }
 
-        /// <summary>
-        /// selection method, select one item
-        /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("Selection Method")]
-        [PropertyUISelectionOption("First")]
-        [PropertyUISelectionOption("Last")]
-        [PropertyUISelectionOption("Index")]
-        [PropertyDetailSampleUsage("**First**", "Specify the First Item")]
-        [PropertyDetailSampleUsage("**Last**", "Specify the Last Item")]
-        [PropertyDetailSampleUsage("**Index**", "the Item specifed by Index. **0** means First Item")]
-        [PropertyIsOptional(true, "First")]
-        [PropertyDisplayText(false, "Selection Method")]
-        //[InputSpecification("", true)]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyParameterOrder(5000)]
-        public static string v_SelectionMethod { get; }
+        ///// <summary>
+        ///// selection method, select one item
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        //[PropertyDescription("Selection Method")]
+        //[PropertyUISelectionOption("First")]
+        //[PropertyUISelectionOption("Last")]
+        //[PropertyUISelectionOption("Index")]
+        //[PropertyDetailSampleUsage("**First**", "Specify the First Item")]
+        //[PropertyDetailSampleUsage("**Last**", "Specify the Last Item")]
+        //[PropertyDetailSampleUsage("**Index**", "the Item specifed by Index. **0** means First Item")]
+        //[PropertyIsOptional(true, "First")]
+        //[PropertyDisplayText(false, "Selection Method")]
+        ////[InputSpecification("", true)]
+        ////[Remarks("")]
+        ////[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_SelectionMethod { get; }
 
-        /// <summary>
-        /// selection item index
-        /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Selection Item Index")]
-        [InputSpecification("Selection Item Index", true)]
-        [PropertyDetailSampleUsage("**0**", "Specify the First Item")]
-        [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Item Index")]
-        //[PropertyIsOptional(true, "0")]
-        //[PropertyFirstValue("0")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyParameterOrder(5000)]
-        public static string v_SelectionItemIndex { get; }
+        ///// <summary>
+        ///// selection item index
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Selection Item Index")]
+        //[InputSpecification("Selection Item Index", true)]
+        //[PropertyDetailSampleUsage("**0**", "Specify the First Item")]
+        //[PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Item Index")]
+        ////[PropertyIsOptional(true, "0")]
+        ////[PropertyFirstValue("0")]
+        ////[Remarks("")]
+        ////[PropertyShowSampleUsageInDescription(true)]
+        ////[PropertyTextBoxSetting(1, false)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_SelectionItemIndex { get; }
     }
 }
