@@ -8,13 +8,13 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="6ddbc7d0-4e04-460b-a86f-a560a056b573" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Run Notepad, Calc, MSPaint" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="d20b5bd6-f68b-409e-b041-433a044ae989" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="notepad" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="d20b5bd6-f68b-409e-b041-433a044ae989" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="notepad" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="9e4e344b-d622-4453-8af7-7f2f142bef13" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="calc" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="9e4e344b-d622-4453-8af7-7f2f142bef13" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="calc" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a04217f7-0712-47ff-a7be-79910d9ff38e" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="mspaint" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a04217f7-0712-47ff-a7be-79910d9ff38e" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="mspaint" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="SetEngineDelayCommand" CommandID="fe5d2e70-65a2-44ff-8893-c223ed6ef0ed" CommandName="SetEngineDelayCommand" IsCommented="false" SelectionName="Set Engine Delay" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_EngineSpeed="1000" />
@@ -23,7 +23,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="abdd5cd6-2116-4d40-8b83-563542b72140" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Use Ctrl+Tab to Show Window List" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SendAdvancedKeyStrokesCommand" CommandID="fb153eb7-1363-42f9-96f3-890928e11692" CommandName="SendAdvancedKeyStrokesCommand" IsCommented="false" SelectionName="Send Advanced Keystrokes" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="⦃Window.CurrentWindowName⦄" v_KeyUpDefault="No" v_CompareMethod="" v_WaitAfterKeyEnter="500" v_MatchMethod="" v_TargetWindowIndex="0" v_WaitTimeForWindow="60" v_ActivateCurrentWindow="" v_NameResult="" v_HandleResult="">
+      <ScriptCommand xsi:type="SendAdvancedKeyStrokesCommand" CommandID="fb153eb7-1363-42f9-96f3-890928e11692" CommandName="SendAdvancedKeyStrokesCommand" IsCommented="false" SelectionName="Send Advanced Keystrokes" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="⦃Window.CurrentWindowName⦄" v_CheckMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_SelectionMethod="" v_TargetWindowIndex="0" v_KeyUpDefault="No" v_WaitTimeAfterKeyEnter="500" v_ActivateCurrentWindow="">
         <v_KeyActions>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="KeyActions091624.110220" msdata:UseCurrentLocale="true">
@@ -70,7 +70,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="71d0a454-a8d7-414d-9eac-252b6c618391" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Press Tab while holding down Alt" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SendAdvancedKeyStrokesCommand" CommandID="dc6c2a0f-0eb2-4fe7-92f4-77c5cd04ac9a" CommandName="SendAdvancedKeyStrokesCommand" IsCommented="false" SelectionName="Send Advanced Keystrokes" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="⦃Window.CurrentWindowName⦄" v_KeyUpDefault="" v_CompareMethod="" v_WaitAfterKeyEnter="500" v_MatchMethod="" v_TargetWindowIndex="0" v_WaitTimeForWindow="60" v_ActivateCurrentWindow="" v_NameResult="" v_HandleResult="">
+      <ScriptCommand xsi:type="SendAdvancedKeyStrokesCommand" CommandID="dc6c2a0f-0eb2-4fe7-92f4-77c5cd04ac9a" CommandName="SendAdvancedKeyStrokesCommand" IsCommented="false" SelectionName="Send Advanced Keystrokes" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="⦃Window.CurrentWindowName⦄" v_CheckMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_SelectionMethod="" v_TargetWindowIndex="0" v_KeyUpDefault="" v_WaitTimeAfterKeyEnter="500" v_ActivateCurrentWindow="">
         <v_KeyActions>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="KeyActions091624.110405" msdata:UseCurrentLocale="true">
@@ -109,7 +109,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="a1c4cf32-e05d-48dd-86e1-7c9ab593432f" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Alt Key Up" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SendAdvancedKeyStrokesCommand" CommandID="f677c47f-1cd3-43ef-8404-3e53d65bbd0a" CommandName="SendAdvancedKeyStrokesCommand" IsCommented="false" SelectionName="Send Advanced Keystrokes" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="⦃Window.CurrentWindowName⦄" v_KeyUpDefault="" v_CompareMethod="" v_WaitAfterKeyEnter="500" v_MatchMethod="" v_TargetWindowIndex="0" v_WaitTimeForWindow="60" v_ActivateCurrentWindow="" v_NameResult="" v_HandleResult="">
+      <ScriptCommand xsi:type="SendAdvancedKeyStrokesCommand" CommandID="f677c47f-1cd3-43ef-8404-3e53d65bbd0a" CommandName="SendAdvancedKeyStrokesCommand" IsCommented="false" SelectionName="Send Advanced Keystrokes" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="⦃Window.CurrentWindowName⦄" v_CheckMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_SelectionMethod="" v_TargetWindowIndex="0" v_KeyUpDefault="" v_WaitTimeAfterKeyEnter="500" v_ActivateCurrentWindow="">
         <v_KeyActions>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="KeyActions091624.110450" msdata:UseCurrentLocale="true">
@@ -146,11 +146,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.4</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2024-09-16T11:06:07.053004+09:00</LastRunTime>
     <RunTimes>2</RunTimes>
-    <Revision>4</Revision>
+    <Revision>5</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>
