@@ -106,7 +106,7 @@ namespace taskt.Core.Automation.Commands.TextGroup
         /// <param name="engine"></param>
         /// <returns>Func(targetString, conditionString, bool)</returns>
         /// <exception cref="Exception"></exception>
-        public static Func<string, string, bool> GetCompareFunction(this ITextCheckProperties command, Engine.AutomationEngineInstance engine)
+        public static Func<string, string, bool> GetCheckFunction(this ITextCheckProperties command, Engine.AutomationEngineInstance engine)
         {
             var preFunc = GetPreFunction(command, engine);
 
@@ -225,7 +225,7 @@ namespace taskt.Core.Automation.Commands.TextGroup
                     });
                     break;
                 default:
-                    throw new Exception($"Strange Compare Method. Value: '{command.v_CheckMethod}', Expand: '{compareMethod}'");
+                    throw new Exception($"Strange Check Method. Value: '{command.v_CheckMethod}', Expand: '{compareMethod}'");
             }
             return ret;
         }
