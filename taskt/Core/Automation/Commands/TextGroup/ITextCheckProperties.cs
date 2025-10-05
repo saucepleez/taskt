@@ -11,7 +11,7 @@
         string v_CaseSensitive { get; set; }
 
         /// <summary>
-        /// Trim Before check
+        /// trim text before check
         /// </summary>
         string v_TrimBeforeCheck { get; set; }
     }
