@@ -1,37 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using taskt.Core.Automation.Commands.TextGroup;
 using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
     public static class EM_WindowNameCorePropertiesExtensionMethods
     {
-        /// <summary>
-        /// get window name check method
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="engine"></param>
-        /// <returns>Func(a,b) is a.Contains(b)</returns>
-        /// <exception cref="Exception"></exception>
-        public static Func<string, string, bool> GetWindowNameCheckMethod(this IWindowNameCoreProperties command, AutomationEngineInstance engine)
-        {
-            switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_CompareMethod), engine))
-            {
-                case "contains":
-                    return new Func<string, string, bool>((a, b) => { return a.Contains(b); });
+        ///// <summary>
+        ///// get window name check method
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="engine"></param>
+        ///// <returns>Func(a,b) is a.Contains(b)</returns>
+        ///// <exception cref="Exception"></exception>
+        //public static Func<string, string, bool> GetWindowNameCheckMethod(this IWindowNameCoreProperties command, AutomationEngineInstance engine)
+        //{
+        //    switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_CompareMethod), engine))
+        //    {
+        //        case "contains":
+        //            return new Func<string, string, bool>((a, b) => { return a.Contains(b); });
 
-                case "starts with":
-                    return new Func<string, string, bool>((a, b) => { return a.StartsWith(b); });
+        //        case "starts with":
+        //            return new Func<string, string, bool>((a, b) => { return a.StartsWith(b); });
 
-                case "ends with":
-                    return new Func<string, string, bool>((a, b) => { return a.EndsWith(b); });
+        //        case "ends with":
+        //            return new Func<string, string, bool>((a, b) => { return a.EndsWith(b); });
 
-                case "exact match":
-                    return new Func<string, string, bool>((a, b) => { return (a == b); });
-                default:
-                    throw new Exception($"Error. Strange method. Value: '{command.v_CompareMethod}'");
-            }
-        }
+        //        case "exact match":
+        //            return new Func<string, string, bool>((a, b) => { return (a == b); });
+        //        default:
+        //            throw new Exception($"Error. Strange method. Value: '{command.v_CompareMethod}'");
+        //    }
+        //}
 
         /// <summary>
         /// expand value or user variable as window name
@@ -88,7 +89,7 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 return (command.ExpandValueOrUserVariableAsWindowName(engine), command.ExpandValueOrUserVariableAsWindowWaitTime(engine),
-                            command.GetWindowNameCheckMethod(engine));
+                            command.GetCheckFunction(engine));
             }
         }
 
