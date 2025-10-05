@@ -87,7 +87,7 @@ namespace taskt.Core.Automation.Commands
         /// windows name check(search) method
         /// </summary>
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_CheckMethod))]
+        [PropertyVirtualProperty(nameof(VP_TextCheckMethodControls), nameof(VP_TextCheckMethodControls.v_CheckMethod))]
         [PropertyDescription("Check Method for the Window Name")]
         //[PropertyUISelectionOption("Contains")]
         //[PropertyUISelectionOption("Starts with")]
@@ -104,14 +104,14 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// window check case sensitive
         /// </summary>
-        [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_CaseSensitiveNo))]
+        [PropertyVirtualProperty(nameof(VP_TextCheckMethodControls), nameof(VP_TextCheckMethodControls.v_CaseSensitiveNo))]
         [PropertyDescription("Case Sensitive Checking for Window Names")]
         public static string v_CaseSensitive { get; }
 
         /// <summary>
         /// trim before check window name
         /// </summary>
-        [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_TrimBeforeCheck))]
+        [PropertyVirtualProperty(nameof(VP_TextCheckMethodControls), nameof(VP_TextCheckMethodControls.v_TrimBeforeCheck))]
         [PropertyDescription("Trim before Check Window Names")]
         public static string v_TrimBeforeCheck { get; }
 

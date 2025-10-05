@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyAddtionalParameterInfo("Has Value", "Result is **TRUE** or **FALSE**")]
         //[PropertyAddtionalParameterInfo("Is a Number", "Result is **TRUE** or **FALSE**")]
         //[PropertyAddtionalParameterInfo("Is a Boolean", "Result is **TRUE** or **FALSE**")]
-        [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_CheckMethod))]
+        [PropertyVirtualProperty(nameof(VP_TextCheckMethodControls), nameof(VP_TextCheckMethodControls.v_CheckMethod))]
         public string v_CheckMethod { get; set; }
 
         [XmlAttribute]
@@ -68,11 +68,11 @@ namespace taskt.Core.Automation.Commands
         //[PropertyUISelectionOption("No")]
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         //[PropertyIsOptional(true, "Yes")]
-        [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_CaseSensitiveYes))]
+        [PropertyVirtualProperty(nameof(VP_TextCheckMethodControls), nameof(VP_TextCheckMethodControls.v_CaseSensitiveYes))]
         public string v_CaseSensitive { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_TrimBeforeCheck))]
+        [PropertyVirtualProperty(nameof(VP_TextCheckMethodControls), nameof(VP_TextCheckMethodControls.v_TrimBeforeCheck))]
         public string v_TrimBeforeCheck { get; set; }
 
         public CheckTextCommand()
