@@ -14,7 +14,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="dbdbfa24-76b4-4b22-82df-bb22f8efef74" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Get Window State" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="GetOneWindowStateCommand" CommandID="fab67834-8c75-47b2-b849-5e393fce3b0e" CommandName="GetOneWindowStateCommand" IsCommented="false" SelectionName="Get One Window State" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CompareMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_MatchMethod="" v_TargetWindowIndex="0" v_WindowState="vState" v_WindowStateText="vStateText" />
+      <ScriptCommand xsi:type="GetOneWindowStateCommand" CommandID="fab67834-8c75-47b2-b849-5e393fce3b0e" CommandName="GetOneWindowStateCommand" IsCommented="false" SelectionName="Get One Window State" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CheckMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_SelectionMethod="" v_TargetWindowIndex="0" v_WindowState="vState" v_WindowStateText="vStateText" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="63e27468-1352-48cb-9aab-b4e365c37d6a" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="State: ⦃vState⦄&#xD;&#xA;StateText: ⦃vStateText⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
@@ -29,7 +29,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="2f25166b-82ed-479b-a60b-422c8f9284d5" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Get Window State" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="GetOneWindowStateCommand" CommandID="5a98f417-5366-4328-be6b-b5bd362cdac6" CommandName="GetOneWindowStateCommand" IsCommented="false" SelectionName="Get One Window State" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CompareMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_MatchMethod="" v_TargetWindowIndex="0" v_WindowState="vState" v_WindowStateText="vStateText" />
+      <ScriptCommand xsi:type="GetOneWindowStateCommand" CommandID="5a98f417-5366-4328-be6b-b5bd362cdac6" CommandName="GetOneWindowStateCommand" IsCommented="false" SelectionName="Get One Window State" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CheckMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_SelectionMethod="" v_TargetWindowIndex="0" v_WindowState="vState" v_WindowStateText="vStateText" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="e53ba11b-2531-4722-811d-49bcb8e8bdb6" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="State: ⦃vState⦄&#xD;&#xA;StateText: ⦃vStateText⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
@@ -45,11 +45,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.40</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2025-09-14T10:31:59.6976723+09:00</LastRunTime>
     <RunTimes>10</RunTimes>
-    <Revision>22</Revision>
+    <Revision>23</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>

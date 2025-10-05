@@ -23,15 +23,15 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="d0da0d5c-bd4d-4c0a-9dbb-b5aa2d3fcf56" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Activate SimpleWindowApps" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="ActivateWindowsCommand" CommandID="c3dc9982-bd43-4fcb-ba9a-68962068c495" CommandName="ActivateWindowsCommand" IsCommented="false" SelectionName="Activate Windows" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CompareMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" />
+      <ScriptCommand xsi:type="ActivateWindowsCommand" CommandID="c3dc9982-bd43-4fcb-ba9a-68962068c495" CommandName="ActivateWindowsCommand" IsCommented="false" SelectionName="Activate Windows" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CheckMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" />
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.40</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2025-09-14T12:09:22.3463588+09:00</LastRunTime>
     <RunTimes>1</RunTimes>
-    <Revision>2</Revision>
+    <Revision>3</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>

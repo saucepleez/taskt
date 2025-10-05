@@ -17,15 +17,15 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="d0da0d5c-bd4d-4c0a-9dbb-b5aa2d3fcf56" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Resize SimpleWindowApps to (640, 480)" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="ResizeWindowsCommand" CommandID="15b09453-b65d-452b-9192-8132498da8b5" CommandName="ResizeWindowsCommand" IsCommented="false" SelectionName="Resize Windows" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CompareMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_WaitTimeBetweenFindAndAction="0" v_Width="640" v_Height="480" v_WhenWindowIsMinimized="" v_WhenWindowIsMaximized="" />
+      <ScriptCommand xsi:type="ResizeWindowsCommand" CommandID="15b09453-b65d-452b-9192-8132498da8b5" CommandName="ResizeWindowsCommand" IsCommented="false" SelectionName="Resize Windows" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CheckMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_WaitTimeBetweenFindAndAction="0" v_Width="640" v_Height="480" v_WhenWindowIsMinimized="" v_WhenWindowIsMaximized="" />
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.40</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2025-09-14T12:12:24.9361557+09:00</LastRunTime>
     <RunTimes>4</RunTimes>
-    <Revision>5</Revision>
+    <Revision>6</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>

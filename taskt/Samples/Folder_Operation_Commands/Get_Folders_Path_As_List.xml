@@ -8,7 +8,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="86288778-ebde-4231-a854-5242103cc683" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Get Folders in &quot;Samples&quot; folder" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="GetFoldersPathAsListCommand" CommandID="84c4ec23-32f0-447c-9f3b-8469e41faa86" CommandName="GetFoldersPathAsListCommand" IsCommented="false" SelectionName="Get Folders Path As List" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetFolderPath="⦃Folder.SamplesPath⦄" v_WaitTimeForFolder="10" v_SearchFolderName="" v_CompareMethod="" v_Result="vList" />
+      <ScriptCommand xsi:type="GetFoldersPathAsListCommand" CommandID="84c4ec23-32f0-447c-9f3b-8469e41faa86" CommandName="GetFoldersPathAsListCommand" IsCommented="false" SelectionName="Get Folders Path As List" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetFolderPath="⦃Folder.SamplesPath⦄" v_WaitTimeForFolder="10" v_SearchFolderName="" v_CheckMethod="" v_Result="vList" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ConvertListToVisualizedTextCommand" CommandID="e9af3671-225d-4181-ae47-a42a9b43474f" CommandName="ConvertListToVisualizedTextCommand" IsCommented="false" SelectionName="Convert List To Visualized Text" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_List="vList" v_Result="view" />
@@ -20,7 +20,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="bcb7aef3-9515-4114-8d71-f11490b41afa" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Get Folders starts with &quot;F&quot; in &quot;Samples&quot; folder" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="GetFoldersPathAsListCommand" CommandID="f412216e-955e-426b-a307-3d538116b955" CommandName="GetFoldersPathAsListCommand" IsCommented="false" SelectionName="Get Folders Path As List" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetFolderPath="⦃Folder.SamplesPath⦄" v_WaitTimeForFolder="10" v_SearchFolderName="F" v_CompareMethod="Starts with" v_Result="vList" />
+      <ScriptCommand xsi:type="GetFoldersPathAsListCommand" CommandID="f412216e-955e-426b-a307-3d538116b955" CommandName="GetFoldersPathAsListCommand" IsCommented="false" SelectionName="Get Folders Path As List" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetFolderPath="⦃Folder.SamplesPath⦄" v_WaitTimeForFolder="10" v_SearchFolderName="F" v_CheckMethod="Starts with" v_Result="vList" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ConvertListToVisualizedTextCommand" CommandID="8c3d190b-e780-4b9e-b73c-093a47a60895" CommandName="ConvertListToVisualizedTextCommand" IsCommented="false" SelectionName="Convert List To Visualized Text" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_List="vList" v_Result="view" />
@@ -30,11 +30,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.22</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2024-09-16T09:56:42.6221992+09:00</LastRunTime>
     <RunTimes>4</RunTimes>
-    <Revision>7</Revision>
+    <Revision>8</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>

@@ -14,7 +14,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="70644e20-c181-45bd-90b6-7b7383cdecab" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Get Process Name" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="GetOneProcessNameFromOneWindowNameCommand" CommandID="a07f45ce-e121-4f31-aad9-160b1f2a3aaf" CommandName="GetOneProcessNameFromOneWindowNameCommand" IsCommented="false" SelectionName="Get One Process Name From One Window Name" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CompareMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_MatchMethod="" v_TargetWindowIndex="0" v_Result="vProcName" />
+      <ScriptCommand xsi:type="GetOneProcessNameFromOneWindowNameCommand" CommandID="a07f45ce-e121-4f31-aad9-160b1f2a3aaf" CommandName="GetOneProcessNameFromOneWindowNameCommand" IsCommented="false" SelectionName="Get One Process Name From One Window Name" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CheckMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_SelectionMethod="" v_TargetWindowIndex="0" v_Result="vProcName" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="01572b87-e526-498c-979d-6d6763ecaa80" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Show Process Name" CommandEnabled="true" />
@@ -24,11 +24,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.40</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2025-09-14T10:47:44.5368318+09:00</LastRunTime>
     <RunTimes>2</RunTimes>
-    <Revision>3</Revision>
+    <Revision>4</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>

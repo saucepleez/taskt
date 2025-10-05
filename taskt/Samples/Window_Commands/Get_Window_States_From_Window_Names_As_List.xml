@@ -23,7 +23,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="b094e16b-eaff-415e-9fab-b778ca21eeed" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Get Window States" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="GetWindowStatesFromWindowNamesAsListCommand" CommandID="89e61934-1f2c-435d-9e2b-50fa10a35efc" CommandName="GetWindowStatesFromWindowNamesAsListCommand" IsCommented="false" SelectionName="Get Window States From Window States As List" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CompareMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_WindowState="vStates" v_WindowStateText="vTexts" />
+      <ScriptCommand xsi:type="GetWindowStatesFromWindowNamesAsListCommand" CommandID="89e61934-1f2c-435d-9e2b-50fa10a35efc" CommandName="GetWindowStatesFromWindowNamesAsListCommand" IsCommented="false" SelectionName="Get Window States From Window States As List" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CheckMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_WindowState="vStates" v_WindowStateText="vTexts" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="02f37902-67af-4e76-a768-40a5fa539768" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Convert to Visualized Text" CommandEnabled="true" />
@@ -42,11 +42,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.40</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2025-09-14T12:05:03.9393072+09:00</LastRunTime>
     <RunTimes>10</RunTimes>
-    <Revision>15</Revision>
+    <Revision>16</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>

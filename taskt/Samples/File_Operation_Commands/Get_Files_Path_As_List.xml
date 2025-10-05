@@ -8,7 +8,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="807995a2-730b-418f-bbe5-54e0bd9bd946" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Get All Files in Resource Folder" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="GetFilesPathAsListCommand" CommandID="b26decc4-8607-41e2-bef5-91a8a9bc86ce" CommandName="GetFilesPathAsListCommand" IsCommented="false" SelectionName="Get Files Path As List" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetFolderPath="⦃Folder.ResourcesPath⦄" v_WaitTimeForFolder="10" v_SearchFileName="" v_CompareMethod="" v_SearchExtension="" v_Result="vList" />
+      <ScriptCommand xsi:type="GetFilesPathAsListCommand" CommandID="b26decc4-8607-41e2-bef5-91a8a9bc86ce" CommandName="GetFilesPathAsListCommand" IsCommented="false" SelectionName="Get Files Path As List" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetFolderPath="⦃Folder.ResourcesPath⦄" v_WaitTimeForFolder="10" v_SearchFileName="" v_CheckMethod="" v_SearchExtension="" v_Result="vList" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ConvertListToVisualizedTextCommand" CommandID="8968310a-62e4-4f9d-a083-a1a5f212095e" CommandName="ConvertListToVisualizedTextCommand" IsCommented="false" SelectionName="Convert List To Visualized Text" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_List="vList" v_Result="view" />
@@ -20,7 +20,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="574a36ce-ce26-42c7-b915-7138691544f7" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Get Execute File in Resource Folder (Extension Filter)" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="GetFilesPathAsListCommand" CommandID="a746ca69-0570-4df0-aab3-8a07b21a5a71" CommandName="GetFilesPathAsListCommand" IsCommented="false" SelectionName="Get Files Path As List" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetFolderPath="⦃Folder.ResourcesPath⦄" v_WaitTimeForFolder="10" v_SearchFileName="" v_CompareMethod="" v_SearchExtension="exe" v_Result="vList" />
+      <ScriptCommand xsi:type="GetFilesPathAsListCommand" CommandID="a746ca69-0570-4df0-aab3-8a07b21a5a71" CommandName="GetFilesPathAsListCommand" IsCommented="false" SelectionName="Get Files Path As List" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetFolderPath="⦃Folder.ResourcesPath⦄" v_WaitTimeForFolder="10" v_SearchFileName="" v_CheckMethod="" v_SearchExtension="exe" v_Result="vList" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ConvertListToVisualizedTextCommand" CommandID="d6869946-059b-4378-9f63-bec2962b2df4" CommandName="ConvertListToVisualizedTextCommand" IsCommented="false" SelectionName="Convert List To Visualized Text" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_List="vList" v_Result="view" />
@@ -32,7 +32,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="482c412b-2f5d-43cf-8741-ed6499ea5fb9" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Get File Name that Contains &quot;driver&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="GetFilesPathAsListCommand" CommandID="1b627720-5cad-4c09-afb2-5ec654df8ad0" CommandName="GetFilesPathAsListCommand" IsCommented="false" SelectionName="Get Files Path As List" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetFolderPath="⦃Folder.ResourcesPath⦄" v_WaitTimeForFolder="10" v_SearchFileName="driver" v_CompareMethod="" v_SearchExtension="" v_Result="vList" />
+      <ScriptCommand xsi:type="GetFilesPathAsListCommand" CommandID="1b627720-5cad-4c09-afb2-5ec654df8ad0" CommandName="GetFilesPathAsListCommand" IsCommented="false" SelectionName="Get Files Path As List" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetFolderPath="⦃Folder.ResourcesPath⦄" v_WaitTimeForFolder="10" v_SearchFileName="driver" v_CheckMethod="" v_SearchExtension="" v_Result="vList" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ConvertListToVisualizedTextCommand" CommandID="4ed47f5e-ca62-4c90-ac16-2630e5f61e29" CommandName="ConvertListToVisualizedTextCommand" IsCommented="false" SelectionName="Convert List To Visualized Text" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_List="vList" v_Result="view" />
@@ -42,11 +42,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.22</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2024-09-15T21:40:06.6233843+09:00</LastRunTime>
     <RunTimes>3</RunTimes>
-    <Revision>7</Revision>
+    <Revision>8</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>

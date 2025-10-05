@@ -14,7 +14,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="70644e20-c181-45bd-90b6-7b7383cdecab" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Get Window Hanlde" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="GetOneWindowHandleFromOneWindowNameCommand" CommandID="5fc9ebc1-7fa2-46a9-85e5-024bb031b149" CommandName="GetOneWindowHandleFromOneWindowNameCommand" IsCommented="false" SelectionName="Get One Window Handle From One Window Name" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CompareMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_MatchMethod="" v_TargetWindowIndex="0" v_Result="vHandle" />
+      <ScriptCommand xsi:type="GetOneWindowHandleFromOneWindowNameCommand" CommandID="5fc9ebc1-7fa2-46a9-85e5-024bb031b149" CommandName="GetOneWindowHandleFromOneWindowNameCommand" IsCommented="false" SelectionName="Get One Window Handle From One Window Name" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Simple Window App" v_CheckMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_SelectionMethod="" v_TargetWindowIndex="0" v_Result="vHandle" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="01572b87-e526-498c-979d-6d6763ecaa80" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Show Window Handle" CommandEnabled="true" />
@@ -24,11 +24,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.40</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2025-09-14T10:49:22.3001195+09:00</LastRunTime>
     <RunTimes>3</RunTimes>
-    <Revision>4</Revision>
+    <Revision>5</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>
