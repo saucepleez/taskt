@@ -15,13 +15,13 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class CheckTextCommand : ScriptCommand, ITextCheckProperties
+    public sealed class CheckTextCommand : ScriptCommand, ITextCheckProperties, IResultProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text_MultiLine))]
         [PropertyDescription("Text to be Checked")]
         [PropertyDisplayText(true, "Text to be Checked")]
-        public string v_userVariableName { get; set; }
+        public string v_Text { get; set; }
 
         [XmlAttribute]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyAddtionalParameterInfo("Is a Number", "Result is **TRUE** or **FALSE**")]
         //[PropertyAddtionalParameterInfo("Is a Boolean", "Result is **TRUE** or **FALSE**")]
         [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_CheckMethod))]
-        public string v_CompareMethod { get; set; }
+        public string v_CheckMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text))]
@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_applyToVariableName { get; set; }
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         //[PropertyDescription("Case sensitive")]
@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_TextCheckSelectionMethodControls), nameof(VP_TextCheckSelectionMethodControls.v_TrimBeforeCheck))]
-        public string v_TrimBeforeCompare { get; set; }
+        public string v_TrimBeforeCheck { get; set; }
 
         public CheckTextCommand()
         {
@@ -127,12 +127,12 @@ namespace taskt.Core.Automation.Commands
 
             //resultValue.StoreInUserVariable(engine, v_applyToVariableName);
 
-            var targetText = v_userVariableName.ExpandValueOrUserVariable(engine);
+            var targetText = v_Text.ExpandValueOrUserVariable(engine);
             var searchText = v_CheckParameter.ExpandValueOrUserVariable(engine);
 
             var compreFunc = this.GetCompareFunction(engine);
 
-            compreFunc(targetText, searchText).StoreInUserVariable(engine, v_applyToVariableName);
+            compreFunc(targetText, searchText).StoreInUserVariable(engine, v_Result);
         }
 
         //private void cmbCheckMethod_SelectionChanged(object sender, EventArgs e)

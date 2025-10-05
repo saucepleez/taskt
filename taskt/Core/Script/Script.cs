@@ -457,6 +457,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_38(doc);
             convertTo3_5_2_39(doc);
             convertTo3_5_2_42(doc);
+            convertTo3_5_2_43(doc);
             return doc;
         }
 
@@ -4528,6 +4529,40 @@ namespace taskt.Core.Script
                         break;
                 }
             }));
+        }
+
+        private static void convertTo3_5_2_43(XDocument doc)
+        {
+            // CheckTextCommand, GetFilesPathAsListCommand, GetFoldersPathAsListCommand
+            // v_CompareMethod -> v_CheckMethod, v_TrimBeforeCompare -> v_TrimBeforeCheck
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "CheckTextCommand":
+                        case "GetFilesPathAsListCommand":
+                        case "GetFoldersPathAsListCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_CompareMethod", "v_CheckMethod"),
+                    ("v_TrimBeforeCompare", "v_TrimBeforeCheck"),
+                }
+            );
+
+            // CheckTextCommand v_userVariableName -> v_Text, v_applyToVariableName -> v_Result
+            ChangeMultiAttributeNames(doc, "CheckTextCommand",
+                new List<(string, string)>()
+                {
+                    ("v_userVariableName", "v_Text"),
+                    ("v_applyToVariableName", "v_Result"),
+                }
+            );
         }
 
         /// <summary>

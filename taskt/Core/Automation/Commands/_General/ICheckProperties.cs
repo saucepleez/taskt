@@ -8,6 +8,6 @@
         /// <summary>
         /// check method
         /// </summary>
-        string v_CompareMethod { get; set; }
+        string v_CheckMethod { get; set; }
     }
 }

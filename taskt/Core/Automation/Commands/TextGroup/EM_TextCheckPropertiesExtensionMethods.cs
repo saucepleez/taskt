@@ -27,7 +27,7 @@ namespace taskt.Core.Automation.Commands.TextGroup
                 caseFunc = new Func<string, string>(str => str.ToLower());
             }
 
-            var trim = sc.ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_TrimBeforeCompare), engine);
+            var trim = sc.ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_TrimBeforeCheck), engine);
             Func<string, string> preFunc;
             switch (trim)
             {
@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands.TextGroup
                     });
                     break;
                 default:
-                    throw new Exception($"Strange Trim Method. Value: '{command.v_TrimBeforeCompare}', Expand: '{trim}'");
+                    throw new Exception($"Strange Trim Method. Value: '{command.v_TrimBeforeCheck}', Expand: '{trim}'");
             }
 
             return preFunc;
@@ -111,7 +111,7 @@ namespace taskt.Core.Automation.Commands.TextGroup
             var preFunc = GetPreFunction(command, engine);
 
             Func<string, string, bool> ret;
-            var compareMethod = command.ToScriptCommand().ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_CompareMethod), engine);
+            var compareMethod = command.ToScriptCommand().ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_CheckMethod), engine);
             switch (compareMethod)
             {
                 case "contains":
@@ -225,7 +225,7 @@ namespace taskt.Core.Automation.Commands.TextGroup
                     });
                     break;
                 default:
-                    throw new Exception($"Strange Compare Method. Value: '{command.v_CompareMethod}', Expand: '{compareMethod}'");
+                    throw new Exception($"Strange Compare Method. Value: '{command.v_CheckMethod}', Expand: '{compareMethod}'");
             }
             return ret;
         }

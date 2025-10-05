@@ -13,6 +13,6 @@
         /// <summary>
         /// Trim Before check
         /// </summary>
-        string v_TrimBeforeCompare { get; set; }
+        string v_TrimBeforeCheck { get; set; }
     }
 }
