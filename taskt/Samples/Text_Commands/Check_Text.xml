@@ -11,7 +11,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="3cedcca8-fe77-45f1-8099-5104c5c76caa" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Check contains &quot;hell&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="1b10ee04-c07f-4d2d-bc09-60ab47f94ada" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="⦃vText⦄" v_CompareMethod="Contains" v_CheckParameter="hell" v_applyToVariableName="vResult" v_CaseSensitive="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="1b10ee04-c07f-4d2d-bc09-60ab47f94ada" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="⦃vText⦄" v_CheckMethod="Contains" v_CheckParameter="hell" v_Result="vResult" v_CaseSensitive="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="29d2ccaa-bf97-48f7-943a-10450384514f" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Result: ⦃vResult⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
@@ -20,7 +20,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="abc13383-9f9e-4809-9692-a9b1108288ed" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Check contains &quot;hell&quot; (not case sensitive)" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="58ec449f-7539-4e98-ac6b-eac572b73156" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="⦃vText⦄" v_CompareMethod="Contains" v_CheckParameter="hell" v_applyToVariableName="vResult" v_CaseSensitive="No" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="58ec449f-7539-4e98-ac6b-eac572b73156" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="⦃vText⦄" v_CheckMethod="Contains" v_CheckParameter="hell" v_Result="vResult" v_CaseSensitive="No" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="e29cb80b-5100-4186-bcfd-4254b208ade3" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Result: ⦃vResult⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
@@ -29,10 +29,10 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="ff247c94-b02a-485a-b98c-849b4e2968b8" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Check starts with &quot;Hell&quot; or &quot;hall&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="3b5c0108-b5b3-47ac-8d54-720e6d9502b0" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="⦃vText⦄" v_CompareMethod="Starts with" v_CheckParameter="Hell" v_applyToVariableName="vResult" v_CaseSensitive="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="3b5c0108-b5b3-47ac-8d54-720e6d9502b0" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="⦃vText⦄" v_CheckMethod="Starts with" v_CheckParameter="Hell" v_Result="vResult" v_CaseSensitive="" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="6ee28f48-8423-48df-811b-41eafe57f633" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="⦃vText⦄" v_CompareMethod="Starts with" v_CheckParameter="hall" v_applyToVariableName="vResult2" v_CaseSensitive="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="6ee28f48-8423-48df-811b-41eafe57f633" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="⦃vText⦄" v_CheckMethod="Starts with" v_CheckParameter="hall" v_Result="vResult2" v_CaseSensitive="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="a534e651-c235-4af8-9f8d-7a678effa5eb" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="hell: ⦃vResult⦄&#xD;&#xA;hall: ⦃vResult2⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
@@ -41,10 +41,10 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="6971d0eb-3a48-41ba-b098-44344e4c8511" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" v_Comment="Check ends with &quot;rld!&quot; or &quot;rld&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="df08aba9-0389-455b-8505-3621dcefed62" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="⦃vText⦄" v_CompareMethod="Ends with" v_CheckParameter="rld!" v_applyToVariableName="vResult" v_CaseSensitive="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="df08aba9-0389-455b-8505-3621dcefed62" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="⦃vText⦄" v_CheckMethod="Ends with" v_CheckParameter="rld!" v_Result="vResult" v_CaseSensitive="" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="54e47761-0263-4a05-8d08-25e6bfa45c1a" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="⦃vText⦄" v_CompareMethod="Ends with" v_CheckParameter="rld" v_applyToVariableName="vResult2" v_CaseSensitive="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="54e47761-0263-4a05-8d08-25e6bfa45c1a" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="⦃vText⦄" v_CheckMethod="Ends with" v_CheckParameter="rld" v_Result="vResult2" v_CaseSensitive="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="f69bf1e6-d246-41bb-99de-7ba647cd96db" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="rld!: ⦃vResult⦄&#xD;&#xA;rld: ⦃vResult2⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
@@ -53,21 +53,21 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="2ee8fbfe-762e-4ab6-b67e-e44b7c0fc7db" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" v_Comment="Check exact match &quot;Hello World!&quot; or &quot;Hello World&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="ede869af-8d8c-4e88-9406-4ad1ecc0e681" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="⦃vText⦄" v_CompareMethod="Exact match" v_CheckParameter="Hello World!" v_applyToVariableName="vResult" v_CaseSensitive="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="ede869af-8d8c-4e88-9406-4ad1ecc0e681" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="⦃vText⦄" v_CheckMethod="Exact match" v_CheckParameter="Hello World!" v_Result="vResult" v_CaseSensitive="" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="376c35c5-61c4-44e6-acc3-e6b22222a312" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="⦃vText⦄" v_CompareMethod="Exact match" v_CheckParameter="Hello World" v_applyToVariableName="vResult2" v_CaseSensitive="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="376c35c5-61c4-44e6-acc3-e6b22222a312" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="⦃vText⦄" v_CheckMethod="Exact match" v_CheckParameter="Hello World" v_Result="vResult2" v_CaseSensitive="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="91d3080c-18c6-44a3-b218-c950bca29abd" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Hello World!: ⦃vResult⦄&#xD;&#xA;Hello World: ⦃vResult2⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.15</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2024-12-01T11:00:43.7504395+09:00</LastRunTime>
     <RunTimes>8</RunTimes>
-    <Revision>13</Revision>
+    <Revision>14</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>
