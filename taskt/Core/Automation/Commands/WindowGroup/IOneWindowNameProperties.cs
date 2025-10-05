@@ -3,12 +3,12 @@
     /// <summary>
     /// one window name commands properties
     /// </summary>
-    public interface IOneWindowNameProperties : IWindowNameCoreProperties
+    public interface IOneWindowNameProperties : IWindowNameCoreProperties, ISelectionMethodProperties
     {
-        /// <summary>
-        /// selection method (first, last, index)
-        /// </summary>
-        string v_SelectionMethod { get; set; }
+        ///// <summary>
+        ///// selection method (first, last, index)
+        ///// </summary>
+        //string v_SelectionMethod { get; set; }
 
         /// <summary>
         /// selection method index
