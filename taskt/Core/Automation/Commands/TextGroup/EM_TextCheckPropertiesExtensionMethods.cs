@@ -100,13 +100,13 @@ namespace taskt.Core.Automation.Commands.TextGroup
         }
 
         /// <summary>
-        /// create check function
+        /// create/get text check function
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns>Func(targetString, conditionString, bool)</returns>
         /// <exception cref="Exception"></exception>
-        public static Func<string, string, bool> GetCheckFunction(this ITextCheckProperties command, Engine.AutomationEngineInstance engine)
+        public static Func<string, string, bool> GetTextCheckFunction(this ITextCheckProperties command, Engine.AutomationEngineInstance engine)
         {
             var preFunc = GetPreFunction(command, engine);
 

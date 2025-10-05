@@ -89,7 +89,7 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 return (command.ExpandValueOrUserVariableAsWindowName(engine), command.ExpandValueOrUserVariableAsWindowWaitTime(engine),
-                            command.GetCheckFunction(engine));
+                            command.GetTextCheckFunction(engine));
             }
         }
 

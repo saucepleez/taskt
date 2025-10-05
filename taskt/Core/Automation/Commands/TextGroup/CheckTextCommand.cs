@@ -130,7 +130,7 @@ namespace taskt.Core.Automation.Commands
             var targetText = v_Text.ExpandValueOrUserVariable(engine);
             var searchText = v_CheckParameter.ExpandValueOrUserVariable(engine);
 
-            var compreFunc = this.GetCheckFunction(engine);
+            var compreFunc = this.GetTextCheckFunction(engine);
 
             compreFunc(targetText, searchText).StoreInUserVariable(engine, v_Result);
         }

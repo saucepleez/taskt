@@ -89,7 +89,7 @@ namespace taskt.Core.Automation.Commands
                     //var searchFolder = v_SearchFolderName.ExpandValueOrUserVariableAsFolderName(engine);
                     var searchFolder = this.ExpandValueOrUserVariable(nameof(v_SearchFolderName), "Folder Name", engine);
 
-                    var compareFunc = this.GetCheckFunction(engine);
+                    var compareFunc = this.GetTextCheckFunction(engine);
 
                     var filteredDirectory = new List<string>();
                     foreach (var f in directoriesList)

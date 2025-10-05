@@ -106,7 +106,7 @@ namespace taskt.Core.Automation.Commands
                     // get all files
                     var fullFilesList = Directory.GetFiles(sourceFolder).ToList();
 
-                    var compareFunc = this.GetCheckFunction(engine);
+                    var compareFunc = this.GetTextCheckFunction(engine);
                     var comparedFilesList = new List<string>();
                     foreach (var f in fullFilesList)
                     {
