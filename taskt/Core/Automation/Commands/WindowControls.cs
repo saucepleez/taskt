@@ -134,25 +134,25 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterOrder(5000)]
         public static string v_SelectionMethod_Single { get; }
 
-        /// <summary>
-        /// match method, please specify PropertySelectionChangeEvent
-        /// </summary>
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_SelectionMethod_Single))]
-        [PropertyUISelectionOption("All")]
-        [PropertyDetailSampleUsage("**All**", "Specify the All Windows")]
-        //[PropertyDescription("Match Method for the Window Name")]
-        //[PropertyUISelectionOption("First")]
-        //[PropertyUISelectionOption("Last")]
-        //[PropertyUISelectionOption("Index")]
-        //[PropertyDetailSampleUsage("**First**", "Specify the First Window")]
-        //[PropertyDetailSampleUsage("**Last**", "Specify the Last Window")]
-        //[PropertyDetailSampleUsage("**Index**", "the Window specifed by Index. **0** means First Window")]
-        //[Remarks("Specify when there are Multiple Matching Windows")]
-        //[PropertyIsOptional(true, "First")]
-        //[InputSpecification("", true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyParameterOrder(5000)]
-        public static string v_SelectionMethod { get; }
+        ///// <summary>
+        ///// match method, please specify PropertySelectionChangeEvent
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_SelectionMethod_Single))]
+        //[PropertyUISelectionOption("All")]
+        //[PropertyDetailSampleUsage("**All**", "Specify the All Windows")]
+        ////[PropertyDescription("Match Method for the Window Name")]
+        ////[PropertyUISelectionOption("First")]
+        ////[PropertyUISelectionOption("Last")]
+        ////[PropertyUISelectionOption("Index")]
+        ////[PropertyDetailSampleUsage("**First**", "Specify the First Window")]
+        ////[PropertyDetailSampleUsage("**Last**", "Specify the Last Window")]
+        ////[PropertyDetailSampleUsage("**Index**", "the Window specifed by Index. **0** means First Window")]
+        ////[Remarks("Specify when there are Multiple Matching Windows")]
+        ////[PropertyIsOptional(true, "First")]
+        ////[InputSpecification("", true)]
+        ////[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_SelectionMethod { get; }
 
         /// <summary>
         /// window index for match
