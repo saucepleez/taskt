@@ -45,9 +45,9 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterOrder(7400)]
         //public string v_HandleResult { get; set; }
 
-        public AOneWindowNameCommands()
-        {
-        }
+        //public AOneWindowNameCommands()
+        //{
+        //}
 
         protected void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
