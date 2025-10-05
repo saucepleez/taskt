@@ -4646,6 +4646,21 @@ namespace taskt.Core.Script
                     ("v_CompareMethod", "v_CheckMethod"),
                 }
             );
+
+            // CheckWindowNameExistsCommand, GetWindowNamesCommand
+            // v_UserVariableName -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "CheckWindowNameExistsCommand":
+                        case "GetWindowNamesCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_UserVariableName", "v_Result");
         }
 
         /// <summary>

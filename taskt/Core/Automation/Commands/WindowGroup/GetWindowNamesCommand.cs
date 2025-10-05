@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         [PropertyParameterOrder(6500)]
-        public string v_UserVariableName { get; set; }
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
@@ -92,14 +92,14 @@ namespace taskt.Core.Automation.Commands
             this.WindowNamesAction(engine,
                 new Action<List<(IntPtr, string)>>((wins) =>
                 {
-                    this.StoreListInUserVariable(wins.Select(w => w.Item2).ToList(), nameof(v_UserVariableName), engine);
+                    this.StoreListInUserVariable(wins.Select(w => w.Item2).ToList(), nameof(v_Result), engine);
                 }),
                 new Action<Exception>((ex) =>
                 {
                     switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenWindowNotFound), engine))
                     {
                         case "set empty":
-                            this.StoreListInUserVariable(new List<string>(), nameof(v_UserVariableName), engine);
+                            this.StoreListInUserVariable(new List<string>(), nameof(v_Result), engine);
                             break;
                         case "ignore":
                             break;

@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When Window Exists, Result is **True**")]
         [PropertyParameterOrder(6100)]
-        public string v_UserVariableName { get; set; }
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
@@ -70,11 +70,11 @@ namespace taskt.Core.Automation.Commands
             this.WindowNamesAction(engine,
                 new Action<List<(IntPtr, string)>>(wins =>
                 {
-                    true.StoreInUserVariable(engine, v_UserVariableName);
+                    true.StoreInUserVariable(engine, v_Result);
                 }),
                 new Action<Exception>((ex) =>
                 {
-                    false.StoreInUserVariable(engine, v_UserVariableName);
+                    false.StoreInUserVariable(engine, v_Result);
                 })
             );
         }
