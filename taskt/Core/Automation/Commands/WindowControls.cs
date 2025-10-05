@@ -128,7 +128,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Index**", "the Window specifed by Index. **0** means First Window")]
         [Remarks("Specify when there are Multiple Matching Windows")]
         [PropertyIsOptional(true, "First")]
-        [PropertyDisplayText(true, "Match")]
+        [PropertyDisplayText(true, "Select")]
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         //[InputSpecification("", true)]
         //[PropertyParameterOrder(5000)]

@@ -58,13 +58,13 @@ namespace taskt.Core.Automation.Commands
         public DataTable v_UIAActionParameters { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CompareMethod))]
-        public string v_CompareMethod { get; set; }
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CheckMethod))]
+        public string v_CheckMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod_Single))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_SelectionMethod_Single))]
         [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
-        public string v_MatchMethod { get; set; }
+        public string v_SelectionMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
@@ -253,8 +253,8 @@ namespace taskt.Core.Automation.Commands
                 var winElem = new UIAutomationSearchUIElementFromWindowCommand()
                 {
                     v_WindowName = this.v_WindowName,
-                    v_CompareMethod = this.v_CompareMethod,
-                    v_MatchMethod = this.v_MatchMethod,
+                    v_CheckMethod = this.v_CheckMethod,
+                    v_SelectionMethod = this.v_SelectionMethod,
                     v_TargetWindowIndex = this.v_TargetWindowIndex,
                     v_WaitTimeForWindow = this.v_WaitTimeForWindow,
                     v_AutomationElementVariable = myWinElem.VariableName,

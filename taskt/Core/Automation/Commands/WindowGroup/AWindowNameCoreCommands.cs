@@ -18,9 +18,9 @@ namespace taskt.Core.Automation.Commands
         public virtual string v_WindowName { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CompareMethod))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CheckMethod))]
         [PropertyParameterOrder(6000)]
-        public virtual string v_CompareMethod { get; set; }
+        public virtual string v_CheckMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
@@ -37,9 +37,19 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(8200)]
         public virtual string v_HandleResult { get; set; }
 
-        public AWindowNameCoreCommands()
-        {
-        }
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CaseSensitive))]
+        [PropertyParameterOrder(8300)]
+        public virtual string v_CaseSensitive { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TrimBeforeCheck))]
+        [PropertyParameterOrder(8400)]
+        public virtual string v_TrimBeforeCheck { get; set; }
+
+        //public AWindowNameCoreCommands()
+        //{
+        //}
 
         public override void Refresh(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {

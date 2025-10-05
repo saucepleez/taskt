@@ -1,19 +1,22 @@
-﻿namespace taskt.Core.Automation.Commands
+﻿using taskt.Core.Automation.Commands.TextGroup;
+
+namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// window name commands core properties
     /// </summary>
-    public interface IWindowNameCoreProperties : ICanHandleWindowName
+    public interface IWindowNameCoreProperties : ICanHandleWindowName, ITextCheckProperties
     {
         /// <summary>
         /// window name
         /// </summary>
         string v_WindowName { get; set; }
 
-        /// <summary>
-        /// compare method (contains, starts-with, ...)
-        /// </summary>
-        string v_CompareMethod { get; set; }
+        // memo: imple text-check interface
+        ///// <summary>
+        ///// compare method (contains, starts-with, ...)
+        ///// </summary>
+        //string v_CompareMethod { get; set; }
 
         /// <summary>
         /// wait time for window

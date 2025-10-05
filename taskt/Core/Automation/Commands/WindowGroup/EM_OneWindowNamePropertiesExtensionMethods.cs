@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
         {
             var wins = command.WaitForWindowNames(engine);
             (IntPtr whnd, string name) windowSet = (IntPtr.Zero, null);
-            switch(((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_MatchMethod), engine))
+            switch(((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_SelectionMethod), engine))
             {
                 case "first":
                     windowSet = wins[0];

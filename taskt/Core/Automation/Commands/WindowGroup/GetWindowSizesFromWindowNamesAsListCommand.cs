@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
                 var getSize = new GetWindowSizesFromWindowNamesAsDataTableCommand()
                 {
                     v_WindowName = this.v_WindowName,
-                    v_CompareMethod = this.v_CompareMethod,
+                    v_CheckMethod = this.v_CheckMethod,
                     v_WaitTimeForWindow = this.v_WaitTimeForWindow,
                     v_WhenWindowIsMinimized = this.v_WhenWindowIsMinimized,
                     v_Result = table.VariableName,

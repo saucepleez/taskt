@@ -62,7 +62,7 @@ namespace taskt.Core.Automation.Commands
                 var getPos = new GetWindowPositionsFromWindowNamesAsDataTableCommand()
                 {
                     v_WindowName = this.v_WindowName,
-                    v_CompareMethod = this.v_CompareMethod,
+                    v_CheckMethod = this.v_CheckMethod,
                     v_WaitTimeForWindow = this.v_WaitTimeForWindow,
                     v_PositionBase = this.v_PositionBase,
                     v_WhenWindowIsMaximized = this.v_WhenWindowIsMaximized,

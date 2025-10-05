@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
                 var getState = new GetWindowStatesFromWindowNamesAsDataTableCommand()
                 {
                     v_WindowName = this.v_WindowName,
-                    v_CompareMethod = this.v_CompareMethod,
+                    v_CheckMethod = this.v_CheckMethod,
                     v_WaitTimeForWindow = this.v_WaitTimeForWindow,
                     v_Result = table.VariableName,
                 };

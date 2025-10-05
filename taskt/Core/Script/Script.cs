@@ -4563,6 +4563,89 @@ namespace taskt.Core.Script
                     ("v_applyToVariableName", "v_Result"),
                 }
             );
+
+            // many window commands, uiautomation commands, key commands, image command
+            // v_CompareMethod -> v_CheckMethod, v_MatchMethod -> v_SelectionMethod
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        // image
+                        case "TakeScreenshotCommand":
+                        // key
+                        case "EnterKeysCommand":
+                        case "EnterShortcutKeyCommand":
+                        case "SendAdvancedKeyStrokesCommand":
+                        // uiautomation (uielement)
+                        case "UIAutomationSearchUIElementAndWindowByXPathCommand":
+                        case "UIAutomationSearchUIElementAndWindowCommand":
+                        case "UIAutomationSearchUIElementFromWindowCommand":
+                        case "UIAutomationUIElementActionByXPathCommand":
+                        case "UIAutomationUIElementActionCommand":
+                        // get from window name
+                        case "GetOneProcessNameFromOneWindowNameCommand":
+                        case "GetOneWindowHandleFromOneWindowNameCommand":
+                        case "GetOneWindowPositionCommand":
+                        case "GetOneWindowSizeCommand":
+                        case "GetOneWindowStateCommand":
+                        // one window action
+                        case "ActivateOneWindowCommand":
+                        case "CloseOneWindowCommand":
+                        case "MoveOneWindowCommand":
+                        case "ResizeOneWindowCommand":
+                        case "SetOneWindowStateCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_CompareMethod", "v_CheckMethod"),
+                    ("v_MatchMethod", "v_SelectionMethod"),
+                }
+            );
+
+            // many window commands
+            // v_CompareMethod -> v_CheckMethod
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        // get from window name
+                        case "CheckWindowNameExistsCommand":
+                        case "GetProcessNamesFromWindowNamesAsDataTableCommand":
+                        case "GetProcessNamesFromWindowNamesAsListCommand":
+                        case "GetWindowHandlesFromWindowNamesAsDataTableCommand":
+                        case "GetWindowHandlesFromWindowNamesAsListCommand":
+                        case "GetWindowNamesCommand":
+                        case "GetWindowPositionsFromWindowNamesAsDataTableCommand":
+                        case "GetWindowPositionsFromWindowNamesAsListCommand":
+                        case "GetWindowSizesFromWindowNamesAsDataTableCommand":
+                        case "GetWindowSizesFromWindowNamesAsListCommand":
+                        case "GetWindowStatesFromWindowNamesAsDataTableCommand":
+                        case "GetWindowStatesFromWindowNamesAsListCommand":
+                        // multi window actions
+                        case "ActivateWindowsCommand":  
+                        case "CloseWindowsCommand":
+                        case "MoveWindowsCommand":
+                        case "ResizeWindowsCommand":
+                        case "SetWindowsStateCommand":
+                        // one window name actions
+                        case "WaitForWindowToExistsCommand":    
+                            return true;
+
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_CompareMethod", "v_CheckMethod"),
+                }
+            );
         }
 
         /// <summary>
