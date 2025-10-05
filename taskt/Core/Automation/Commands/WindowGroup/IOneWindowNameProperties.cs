@@ -6,12 +6,12 @@
     public interface IOneWindowNameProperties : IWindowNameCoreProperties
     {
         /// <summary>
-        /// match method (first, last, index)
+        /// selection method (first, last, index)
         /// </summary>
-        string v_MatchMethod { get; set; }
+        string v_SelectionMethod { get; set; }
 
         /// <summary>
-        /// match method index
+        /// selection method index
         /// </summary>
         string v_TargetWindowIndex { get; set; }
     }
