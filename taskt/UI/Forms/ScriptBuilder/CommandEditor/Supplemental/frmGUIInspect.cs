@@ -498,7 +498,5 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         }
 
         #endregion
-
-
     }
 }

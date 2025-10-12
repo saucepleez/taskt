@@ -1139,7 +1139,7 @@ namespace taskt.Core.Automation.Commands
 
             var tp = targetElement.Current.GetType();
 
-            foreach(var t in TargetControlTypes)
+            foreach (var t in TargetControlTypes)
             {
                 node.SetAttributeValue(t, tp.GetProperty(t)?.GetValue(targetElement.Current)?.ToString() ?? "");
             }
@@ -1205,21 +1205,33 @@ namespace taskt.Core.Automation.Commands
 
         public static TreeNode GetElementTreeNode(string windowName, Engine.AutomationEngineInstance engine, out XElement xml)
         {
-            AutomationElement root = GetFromWindowName(windowName, engine);
+            // cache request
+            var cacheReq = new CacheRequest();
+            cacheReq.Add(AutomationElement.NameProperty);
+            cacheReq.Add(AutomationElement.ControlTypeProperty);
+            cacheReq.Add(AutomationElement.LocalizedControlTypeProperty);
+            cacheReq.TreeScope = TreeScope.Element | TreeScope.Children;
 
-            TreeWalker walker = TreeWalker.RawViewWalker;
+            var root = GetFromWindowName(windowName, engine);
+
+            cacheReq.Push();
+
+            var walker = TreeWalker.RawViewWalker;
 
             var tree = CreateTreeNodeFromAutomationElement(root);
             xml = CreateXmlElement(root);
 
-            GetChildElementTreeNode(tree, xml, root, walker, 1, engine);
+            GetChildElementTreeNode(tree, xml, root, walker, cacheReq, 1, engine);
+
+            cacheReq.Pop();
 
             return tree;
         }
 
-        private static void GetChildElementTreeNode(TreeNode tree, XElement xml, AutomationElement rootElement, TreeWalker walker, int depth, Engine.AutomationEngineInstance engine)
+        private static void GetChildElementTreeNode(TreeNode tree, XElement xml, AutomationElement rootElement, TreeWalker walker, CacheRequest cacheRequest, int depth, Engine.AutomationEngineInstance engine)
         {
-            AutomationElement node = walker.GetFirstChild(rootElement);
+            var node = walker.GetFirstChild(rootElement, cacheRequest);
+            //var node = walker.GetLastChild(rootElement);
 
             int siblingCount = 0;
             while(node != null)
@@ -1230,9 +1242,10 @@ namespace taskt.Core.Automation.Commands
                 var childXml = CreateXmlElement(node);
                 xml.Add(childXml);
 
-                if ((walker.GetFirstChild(node) != null) && (depth < engine.engineSettings.MaxUIElementInpectDepth))
+                if ((walker.GetFirstChild(node, cacheRequest) != null) && (depth < engine.engineSettings.MaxUIElementInpectDepth))
+                //if ((walker.GetLastChild(node) != null) && (depth < engine.engineSettings.MaxUIElementInpectDepth))
                 {
-                    GetChildElementTreeNode(item, childXml, node, walker, (depth + 1), engine);
+                    GetChildElementTreeNode(item, childXml, node, walker, cacheRequest, (depth + 1), engine);
                 }
 
                 siblingCount++;
@@ -1241,16 +1254,44 @@ namespace taskt.Core.Automation.Commands
                     break;
                 }
 
-                node = walker.GetNextSibling(node);
+                node = walker.GetNextSibling(node, cacheRequest);
+                //node = walker.GetPreviousSibling(node);
             }
         }
         
 
         private static TreeNode CreateTreeNodeFromAutomationElement(AutomationElement element)
         {
-            TreeNode node = new TreeNode
+            //try
+            //{
+            //    // Debug
+            //    var r = element.GetCurrentPropertyValue(AutomationElement.NameProperty, true);
+            //    Console.WriteLine($"{element.Cached.Name}" + ((r == AutomationElement.NotSupported) ? "*" : ""));
+
+            //    var node = new TreeNode
+            //    {
+            //        Text = "\"" + (element.Cached.Name) + "\" " + (element.Cached.LocalizedControlType),
+            //        Tag = element
+            //    };
+            //    return node;
+            //}
+            //catch
+            //{
+            //    var node = new TreeNode
+            //    {
+            //        Text = "\"" + (element.Current.Name) + "\" " + (element.Current.LocalizedControlType),
+            //        Tag = element
+            //    };
+            //    return node;
+            //}
+
+            // Debug
+            //var r = element.GetCurrentPropertyValue(AutomationElement.NameProperty, true);
+            //Console.WriteLine($"{element.Cached.Name}" + ((r == AutomationElement.NotSupported) ? "*" : ""));
+
+            var node = new TreeNode
             {
-                Text = "\"" + element.Current.Name + "\" " + element.Current.LocalizedControlType,
+                Text = "\"" + (element.Current.Name) + "\" " + (element.Current.LocalizedControlType),
                 Tag = element
             };
             return node;
