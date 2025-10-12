@@ -3,7 +3,7 @@
     /// <summary>
     /// Get from UIElement or UIElement Action commands properties
     /// </summary>
-    public interface IGetActionUIElementProperties : IUIElementCoreProperties
+    public interface IDoSomethingUIElementProperties : IUIElementCoreProperties
     {
         /// <summary>
         /// variable name to store Window Name

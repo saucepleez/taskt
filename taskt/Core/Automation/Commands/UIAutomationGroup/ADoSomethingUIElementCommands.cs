@@ -4,9 +4,9 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
     /// <summary>
-    /// for Get from UIElement or UIElement Action commands
+    /// for Get from UIElement or UIElement Action commands base
     /// </summary>
-    public abstract class AGetActionUIElementCommands : AUIElementCoreCommands, IGetActionUIElementProperties
+    public abstract class ADoSomethingUIElementCommands : AUIElementCoreCommands, IDoSomethingUIElementProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]

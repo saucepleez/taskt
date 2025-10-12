@@ -17,5 +17,33 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         [PropertyValidationRule("UIElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Element")]
         public static string v_InputUIElementName { get; }
+
+        /// <summary>
+        /// wait time before action
+        /// </summary>
+        [PropertyVirtualProperty(nameof(WaitControls), nameof(WaitControls.v_WaitTime))]
+        [PropertyDescription("Wait Time before Action (sec)")]
+        [PropertyIsOptional(true, "0")]
+        [PropertyFirstValue("0")]
+        [PropertyDisplayText(false, "Wait Time Before", "s")]
+        public static string v_WaitTimeBeforeAction { get; }
+
+        /// <summary>
+        /// wait time after action
+        /// </summary>
+        [PropertyVirtualProperty(nameof(WaitControls), nameof(WaitControls.v_WaitTime))]
+        [PropertyDescription("Wait Time after Action (sec)")]
+        [PropertyIsOptional(true, "0")]
+        [PropertyFirstValue("0")]
+        [PropertyDisplayText(false, "Wait Time Before", "s")]
+        public static string v_WaitTimeAfterAction { get; }
+
+        /// <summary>
+        /// activate window before action
+        /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Activate Window before Action")]
+        [PropertyIsOptional(true, "No")]
+        public static string v_ActivateWindow { get; }
     }
 }

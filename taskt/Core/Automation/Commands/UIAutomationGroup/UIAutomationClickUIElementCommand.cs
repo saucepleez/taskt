@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationClickUIElementCommand : AGetActionUIElementCommands
+    public sealed class UIAutomationClickUIElementCommand : AUIElementActionCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -38,11 +38,11 @@ namespace taskt.Core.Automation.Commands
         public string v_YOffset { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        [PropertyDescription("Activate Window before Click")]
+        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        //[PropertyDescription("Activate Window before Click")]
         [PropertyIsOptional(true, "Yes")]
-        [PropertyParameterOrder(8000)]
-        public string v_ActivateWindow { get; set; }
+        //[PropertyParameterOrder(8000)]
+        public override string v_ActivateWindowBeforeAction { get; set; }
 
         public UIAutomationClickUIElementCommand()
         {
@@ -50,11 +50,21 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
+            if (!string.IsNullOrEmpty(v_WaitTimeBeforeAction))
+            {
+                var wt = this.ExpandValueOrUserVariableAsDecimal(nameof(v_WaitTimeBeforeAction), engine);
+                if (wt > 0) 
+                {
+                    int waitTime = (int)(wt * 1000);
+                    System.Threading.Thread.Sleep(waitTime);
+                }
+            }
+
             var targetElement = this.ExpandUserVariableAsUIElement(engine);
 
             (var windowName, var wHnd) = EM_CanHandleUIElementExtentionMethods.GetWindowNameAndHandle(targetElement);
 
-            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindow), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindowBeforeAction), engine))
             {
                 var activateWindow = new ActivateWindowByWindowHandleCommand()
                 {
@@ -137,6 +147,16 @@ namespace taskt.Core.Automation.Commands
                     v_YMousePosition = (point.Y + yAd).ToString()
                 };
                 mouseClick.RunCommand(engine);
+            }
+
+            if (!string.IsNullOrEmpty(v_WaitTimeAfterAction))
+            {
+                var wt = this.ExpandValueOrUserVariableAsDecimal(nameof(v_WaitTimeAfterAction), engine);
+                if (wt > 0)
+                {
+                    int waitTime = (int)(wt * 1000);
+                    System.Threading.Thread.Sleep(waitTime);
+                }
             }
 
             if (!string.IsNullOrEmpty(v_WindowNameResult))
