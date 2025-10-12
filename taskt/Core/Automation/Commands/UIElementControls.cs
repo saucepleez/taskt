@@ -171,7 +171,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Variable " + variableName + " is not UIElement");
+                throw new Exception($"Variable '{variableName}' is not UIElement");
             }
         }
 
@@ -845,51 +845,6 @@ namespace taskt.Core.Automation.Commands
             return SearchGUIElement(command, elementName, conditionName, waitTimeName, engine);
         }
 
-        #endregion
-
-        #region Winodow Search Methods
-
-        ///// <summary>
-        ///// get window UIElement. this method use PropertyVirtualProperty
-        ///// </summary>
-        ///// <param name="command"></param>
-        ///// <param name="engine"></param>
-        ///// <param name="resultName"></param>
-        ///// <returns></returns>
-        //public static AutomationElement GetWindowUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine, string resultName = "")
-        //{
-        //    AutomationElement ret = null;
-
-        //    WindowControls.WindowAction(command, engine,
-        //        new Action<List<(IntPtr, string)>>(wins =>
-        //        {
-        //            ret = AutomationElement.FromHandle(wins[0].Item1);
-
-        //            if (!string.IsNullOrEmpty(resultName))
-        //            {
-        //                //var resultValue = command.ConvertToUserVariable(resultName, "Result", engine);
-        //                var resultValue = command.GetRawPropertyValueAsString(resultName, "Result");
-
-        //                ret.StoreInUserVariable(engine, resultValue);
-        //            }
-        //        })
-        //    );
-
-        //    return ret;
-        //}
-
-        ///// <summary>
-        ///// get window UIElement
-        ///// </summary>
-        ///// <param name="command"></param>
-        ///// <param name="engine"></param>
-        ///// <returns></returns>
-        //public static AutomationElement GetWindowUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine)
-        //{
-        //    var resultName = command.GetProperty(new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_OutputUIElementName)))?.Name ?? "";
-
-        //    return GetWindowUIElement(command, engine, resultName);
-        //}
         #endregion
 
         #region search element node
