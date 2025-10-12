@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Windows.Automation;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
     [Attributes.ClassAttributes.SubGruop("UIElement Action")]
@@ -14,114 +15,138 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationClickUIElementCommand : ScriptCommand
+    public sealed class UIAutomationClickUIElementCommand : AGetActionUIElementCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
-        public string v_TargetElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
+        //public string v_TargetElement { get; set; }
 
+        // TODO: add click parameters interface
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_MouseClickType))]
+        [PropertyParameterOrder(6000)]
         public string v_ClickType { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_XOffsetAdjustment))]
+        [PropertyParameterOrder(6100)]
         public string v_XOffset { get; set; }
         
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_YOffsetAdjustment))]
+        [PropertyParameterOrder(6200)]
         public string v_YOffset { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Activate Window before Click")]
         [PropertyIsOptional(true, "Yes")]
+        [PropertyParameterOrder(8000)]
         public string v_ActivateWindow { get; set; }
 
         public UIAutomationClickUIElementCommand()
         {
-            //this.CommandName = "UIAutomationClickElementCommand";
-            //this.SelectionName = "Click Element";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
+            var targetElement = this.ExpandUserVariableAsUIElement(engine);
 
-            string windowName = UIElementControls.GetWindowName(targetElement);
+            (var windowName, var wHnd) = EM_CanHandleUIElementExtentionMethods.GetWindowNameAndHandle(targetElement);
+
             if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindow), engine))
             {
-                //var activateWindow = new ActivateWindowCommand()
-                //{
-                //    v_WindowName = windowName
-                //};
-                var activateWindow = new ActivateOneWindowCommand()
+                var activateWindow = new ActivateWindowByWindowHandleCommand()
                 {
-                    v_WindowName = windowName,
+                    v_WindowHandle = wHnd.ToString(),
                 };
                 activateWindow.RunCommand(engine);
             }
 
-            System.Windows.Point point;
-            try
+            // check empty or zero
+            bool IsEmptyOrZero(string txt)
             {
-                if (!targetElement.TryGetClickablePoint(out point))
+                txt = txt.Trim();
+                if (string.IsNullOrEmpty(txt) || txt == "0")
                 {
-                    //var moveWindow = new MoveWindowCommand()
-                    //{
-                    //    v_WindowName = windowName,
-                    //    v_XPosition = "0",
-                    //    v_YPosition = "0"
-                    //};
-                    var moveWindow = new MoveOneWindowCommand()
-                    {
-                        v_WindowName = windowName,
-                        v_XPosition = "0",
-                        v_YPosition = "0",
-                    };
-                    moveWindow.RunCommand(engine);
-                    targetElement.TryGetClickablePoint(out point);
+                    return true;
                 }
-                if ((point.X < 0.0) || (point.Y < 0.0))
+                else
                 {
-                    //var moveWindow = new MoveWindowCommand()
-                    //{
-                    //    v_WindowName = windowName,
-                    //    v_XPosition = "0",
-                    //    v_YPosition = "0"
-                    //};
-                    var moveWindow = new MoveOneWindowCommand()
+                    var exp = txt.ExpandValueOrUserVariable(engine).Trim();
+                    return (string.IsNullOrEmpty(exp) || exp == "0");
+                }
+            }
+
+            // check available invoke
+            var canInvoke = (bool)targetElement.GetCurrentPropertyValue(AutomationElement.IsInvokePatternAvailableProperty);
+
+            if (canInvoke && IsEmptyOrZero(v_XOffset) && IsEmptyOrZero(v_YOffset))
+            {
+                // try button
+                var btn = (InvokePattern)targetElement.GetCurrentPattern(InvokePattern.Pattern);
+                btn.Invoke();
+            }
+            else
+            {
+                // try mouse click
+
+                // move window to left-top
+                void MoveWindowToLeftTop()
+                {
+                    var moveWindow = new MoveWindowByWindowHandleCommand()
                     {
-                        v_WindowName = windowName,
+                        v_WindowHandle = wHnd.ToString(),
                         v_XPosition = "0",
                         v_YPosition = "0",
                     };
                     moveWindow.RunCommand(engine);
+                }
 
+                System.Windows.Point point;
+                try
+                {
                     if (!targetElement.TryGetClickablePoint(out point))
                     {
-                        throw new Exception("No Clickable Point in UIElement '" + v_TargetElement + "'");
+                        MoveWindowToLeftTop();
+                        targetElement.TryGetClickablePoint(out point);
+                    }
+                    if ((point.X < 0.0) || (point.Y < 0.0))
+                    {
+                        MoveWindowToLeftTop();
+
+                        if (!targetElement.TryGetClickablePoint(out point))
+                        {
+                            throw new Exception($"No Clickable Point in UIElement '{v_TargetElement}'");
+                        }
                     }
                 }
-            }
-            catch (Exception)
-            {
-                throw new Exception("No Clickable Point in UIElement '" + v_TargetElement + "'");
+                catch (Exception)
+                {
+                    throw new Exception($"No Clickable Point in UIElement '{v_TargetElement}'");
+                }
+
+                var click = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ClickType), engine);
+                var xAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_XOffset), engine);
+                var yAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffset), engine);
+
+                var mouseClick = new MoveMouseCommand()
+                {
+                    v_MouseClick = click,
+                    v_XMousePosition = (point.X + xAd).ToString(),
+                    v_YMousePosition = (point.Y + yAd).ToString()
+                };
+                mouseClick.RunCommand(engine);
             }
 
-            var click = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ClickType), engine);
-            var xAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_XOffset), engine);
-            var yAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffset), engine);
-
-            var mouseClick = new MoveMouseCommand()
+            if (!string.IsNullOrEmpty(v_WindowNameResult))
             {
-                v_MouseClick = click,
-                v_XMousePosition = (point.X + xAd).ToString(),
-                v_YMousePosition = (point.Y + yAd).ToString()
-            };
-            mouseClick.RunCommand(engine);
+                windowName.StoreInUserVariable(engine, v_WindowNameResult);
+            }
+            if (!string.IsNullOrEmpty(v_WindowHandleResult))
+            {
+                wHnd.StoreInUserVariable(engine, v_WindowHandleResult);
+            }
         }
     }
 }
