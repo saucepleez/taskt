@@ -956,33 +956,6 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        ///// <summary>
-        ///// get window handle from UIElement
-        ///// </summary>
-        ///// <param name="targetElement"></param>
-        ///// <returns></returns>
-        //public static int GetWindowHandle(AutomationElement targetElement)
-        //{
-        //    TreeWalker walker = TreeWalker.RawViewWalker;
-
-        //    var hnd = targetElement.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
-        //    if(hnd != AutomationElement.NotSupported)
-        //    {
-        //        return (int)hnd;
-        //    }
-
-        //    var parent = walker.GetParent(targetElement);
-        //    while (true)
-        //    {
-        //        hnd = parent.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
-        //        if (hnd != AutomationElement.NotSupported)
-        //        {
-        //            return (int)hnd;
-        //        }
-        //        parent = walker.GetParent(parent);
-        //    }
-        //}
-
         #endregion
 
         public static string GetTextValue(AutomationElement targetElement)
@@ -1034,7 +1007,7 @@ namespace taskt.Core.Automation.Commands
                         }
                     }
 
-                    throw new Exception("Table Row: '" + row + "', Column: '" + column + "' does not exists");
+                    throw new Exception($"Table Row: '{row}', Column: '{column}' does not exists");
                 }
                 else
                 {
@@ -1042,7 +1015,7 @@ namespace taskt.Core.Automation.Commands
                     AutomationElement cellElem = ((GridPattern)gridObj).GetItem(row, column);
                     if (cellElem == null)
                     {
-                        throw new Exception("Table Row: '" + row + "', Column: '" + column + "' does not exists");
+                        throw new Exception($"Table Row: '{row}', Column: '{column}' does not exists");
                     }
                     return cellElem;
                 }
@@ -1275,9 +1248,11 @@ namespace taskt.Core.Automation.Commands
 
         private static TreeNode CreateTreeNodeFromAutomationElement(AutomationElement element)
         {
-            TreeNode node = new TreeNode();
-            node.Text = "\"" + element.Current.Name + "\" " + element.Current.LocalizedControlType;
-            node.Tag = element;
+            TreeNode node = new TreeNode
+            {
+                Text = "\"" + element.Current.Name + "\" " + element.Current.LocalizedControlType,
+                Tag = element
+            };
             return node;
         }
 
@@ -1331,7 +1306,7 @@ namespace taskt.Core.Automation.Commands
             }
             catch(Exception ex)
             {
-                res += "Error: " + ex.Message;
+                res += $"Error: {ex.Message}";
             }
 
             return res;
