@@ -48,12 +48,12 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         }
 
         /// <summary>
-        /// UIElement action
+        /// UIElement action and wait
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <param name="actionFunc"></param>
-        public static void UIElementAction(this IUIElementActionProperties command, AutomationEngineInstance engine, Action<AutomationElement, IntPtr> actionFunc)
+        public static void UIElementActionAndWait(this IUIElementActionProperties command, AutomationEngineInstance engine, Action<AutomationElement, IntPtr> actionFunc)
         {
             var targetElement = command.ExpandUserVariableAsUIElement(engine);
 

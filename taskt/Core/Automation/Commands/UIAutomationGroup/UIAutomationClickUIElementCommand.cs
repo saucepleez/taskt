@@ -168,7 +168,7 @@ namespace taskt.Core.Automation.Commands
             //    wHnd.StoreInUserVariable(engine, v_WindowHandleResult);
             //}
 
-            this.UIElementAction(engine,
+            this.UIElementActionAndWait(engine,
                 new Action<AutomationElement, IntPtr>((targetElement, whnd) =>
                 {
                     // check empty or zero

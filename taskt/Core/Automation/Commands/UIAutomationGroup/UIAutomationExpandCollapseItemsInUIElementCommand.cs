@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
             //    throw new Exception($"UIElement '{v_TargetElement}' does not support Expand/Collapse");
             //}
 
-            this.UIElementAction(engine,
+            this.UIElementActionAndWait(engine,
                 new Action<AutomationElement, IntPtr>((targetElement, whnd) =>
                 {
                     var state = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ItemsState), engine);
