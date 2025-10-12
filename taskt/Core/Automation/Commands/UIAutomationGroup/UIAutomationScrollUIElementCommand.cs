@@ -2,10 +2,10 @@
 using System.Xml.Serialization;
 using System.Windows.Automation;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
     [Attributes.ClassAttributes.SubGruop("UIElement Action")]
@@ -15,53 +15,45 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationScrollUIElementCommand : ScriptCommand
+    public sealed class UIAutomationScrollUIElementCommand : AUIElementActionCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
-        public string v_TargetElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
+        //public string v_TargetElement { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("ScrollBar Type")]
-        [InputSpecification("", true)]
         [PropertyUISelectionOption("Vertical")]
         [PropertyUISelectionOption("Horizonal")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("ScrollBar Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
+        [PropertyParameterOrder(6000)]
         public string v_ScrollBarType { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Scroll Method")]
-        [InputSpecification("", true)]
         [PropertyUISelectionOption("Scroll Small Down or Right")]
         [PropertyUISelectionOption("Scroll Large Down or Right")]
         [PropertyUISelectionOption("Scroll Small Up or Left")]
         [PropertyUISelectionOption("Scroll Large Up or Left")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Scroll Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Method")]
+        [PropertyParameterOrder(6100)]
         public string v_DirectionAndAmount{ get; set; }
 
         public UIAutomationScrollUIElementCommand()
         {
-            //this.CommandName = "UIAutomationScrollElementCommand";
-            //this.SelectionName = "Scroll Element";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
-            //var scrollbarType = v_ScrollBarType.ExpandValueOrUserVariableAsSelectionItem("v_ScrollBarType", this, engine);
             var scrollbarType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ScrollBarType), engine);
 
-            //var dirAndAmo = v_DirectionAndAmount.ExpandValueOrUserVariableAsSelectionItem("v_DirectionAndAmount", this, engine);
             var dirAndAmo = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_DirectionAndAmount), engine);
-            ScrollAmount amount = ScrollAmount.NoAmount;
+            var amount = ScrollAmount.NoAmount;
             switch (dirAndAmo)
             {
                 case "scroll small down or right":
@@ -85,15 +77,15 @@ namespace taskt.Core.Automation.Commands
                     var parentElement = UIElementControls.GetParentUIElement(targetElement);
                     if (!parentElement.TryGetCurrentPattern(ScrollPattern.Pattern, out scrollPtn))
                     {
-                        throw new Exception("UIElement '" + v_TargetElement + "' does not have ScrollBar");
+                        throw new Exception($"UIElement '{v_TargetElement}' does not have ScrollBar");
                     }
                 }
                 else
                 {
-                    throw new Exception("UIElement '" + v_TargetElement + "' is not ScrollBar and does not have ScrollBar");
+                    throw new Exception($"UIElement '{v_TargetElement}' is not ScrollBar and does not have ScrollBar");
                 }
             }
-            ScrollPattern sp = (ScrollPattern)scrollPtn;
+            var sp = (ScrollPattern)scrollPtn;
             switch (scrollbarType)
             {
                 case "horizonal":

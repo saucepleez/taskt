@@ -2,10 +2,10 @@
 using System.Xml.Serialization;
 using System.Windows.Automation;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
     [Attributes.ClassAttributes.SubGruop("UIElement Action")]
@@ -15,54 +15,74 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationExpandCollapseItemsInUIElementCommand : ScriptCommand
+    public sealed class UIAutomationExpandCollapseItemsInUIElementCommand : AUIElementActionCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
-        public string v_TargetElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
+        //public string v_TargetElement { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Items State")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("", true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("", true)]
         [PropertyUISelectionOption("Expand")]
         [PropertyUISelectionOption("Collapse")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Items State", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "State")]
+        [PropertyParameterOrder(6000)]
         public string v_ItemsState { get; set; }
 
         public UIAutomationExpandCollapseItemsInUIElementCommand()
         {
-            //this.CommandName = "UIAutomationExpandCollapseItemsInElementCommand";
-            //this.SelectionName = "Expand Collapse Items In Element";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
-            //var state = v_ItemsState.ExpandValueOrUserVariableAsSelectionItem("v_ItemsState", this, engine);
-            var state = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ItemsState), engine);
+            //var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
+            //var state = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ItemsState), engine);
 
-            if (targetElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out object exColPtn))
-            {
-                switch (state)
+            //if (targetElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out object exColPtn))
+            //{
+            //    switch (state)
+            //    {
+            //        case "expand":
+            //            ((ExpandCollapsePattern)exColPtn).Expand();
+            //            break;
+            //        case "collapse":
+            //            ((ExpandCollapsePattern)exColPtn).Collapse();
+            //            break;
+            //    }
+            //}
+            //else
+            //{
+            //    throw new Exception($"UIElement '{v_TargetElement}' does not support Expand/Collapse");
+            //}
+
+            this.UIElementAction(engine,
+                new Action<AutomationElement, IntPtr>((targetElement, whnd) =>
                 {
-                    case "expand":
-                        ((ExpandCollapsePattern)exColPtn).Expand();
-                        break;
-                    case "collapse":
-                        ((ExpandCollapsePattern)exColPtn).Collapse();
-                        break;
-                }
-            }
-            else
-            {
-                throw new Exception("UIElement '" + v_TargetElement + "' does not support Expand/Collapse");
-            }
+                    var state = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ItemsState), engine);
+                    if (targetElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out object exColPtn))
+                    {
+                        switch (state)
+                        {
+                            case "expand":
+                                ((ExpandCollapsePattern)exColPtn).Expand();
+                                break;
+                            case "collapse":
+                                ((ExpandCollapsePattern)exColPtn).Collapse();
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"UIElement '{v_TargetElement}' does not support Expand/Collapse");
+                    }
+                })
+            );
         }
     }
 }

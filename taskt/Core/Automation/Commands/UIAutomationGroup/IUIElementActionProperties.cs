@@ -1,6 +1,6 @@
 ﻿namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
-    public interface IUIElementActionProperties : IUIElementCoreProperties
+    public interface IUIElementActionProperties : IDoSomethingUIElementProperties
     {
         /// <summary>
         /// wait time before action

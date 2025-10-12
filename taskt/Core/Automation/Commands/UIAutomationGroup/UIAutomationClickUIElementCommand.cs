@@ -50,123 +50,204 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            if (!string.IsNullOrEmpty(v_WaitTimeBeforeAction))
-            {
-                var wt = this.ExpandValueOrUserVariableAsDecimal(nameof(v_WaitTimeBeforeAction), engine);
-                if (wt > 0) 
+            //if (!string.IsNullOrEmpty(v_WaitTimeBeforeAction))
+            //{
+            //    var wt = this.ExpandValueOrUserVariableAsDecimal(nameof(v_WaitTimeBeforeAction), engine);
+            //    if (wt > 0) 
+            //    {
+            //        int waitTime = (int)(wt * 1000);
+            //        System.Threading.Thread.Sleep(waitTime);
+            //    }
+            //}
+
+            //var targetElement = this.ExpandUserVariableAsUIElement(engine);
+
+            //(var windowName, var wHnd) = EM_CanHandleUIElementExtentionMethods.GetWindowNameAndHandle(targetElement);
+
+            //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindowBeforeAction), engine))
+            //{
+            //    var activateWindow = new ActivateWindowByWindowHandleCommand()
+            //    {
+            //        v_WindowHandle = wHnd.ToString(),
+            //    };
+            //    activateWindow.RunCommand(engine);
+            //}
+
+            //// check empty or zero
+            //bool IsEmptyOrZero(string txt)
+            //{
+            //    txt = txt.Trim();
+            //    if (string.IsNullOrEmpty(txt) || txt == "0")
+            //    {
+            //        return true;
+            //    }
+            //    else
+            //    {
+            //        var exp = txt.ExpandValueOrUserVariable(engine).Trim();
+            //        return (string.IsNullOrEmpty(exp) || exp == "0");
+            //    }
+            //}
+
+            //// check available invoke
+            //var canInvoke = (bool)targetElement.GetCurrentPropertyValue(AutomationElement.IsInvokePatternAvailableProperty);
+
+            //if (canInvoke && IsEmptyOrZero(v_XOffset) && IsEmptyOrZero(v_YOffset))
+            //{
+            //    // try button
+            //    var btn = (InvokePattern)targetElement.GetCurrentPattern(InvokePattern.Pattern);
+            //    btn.Invoke();
+            //}
+            //else
+            //{
+            //    // try mouse click
+
+            //    // move window to left-top
+            //    void MoveWindowToLeftTop()
+            //    {
+            //        var moveWindow = new MoveWindowByWindowHandleCommand()
+            //        {
+            //            v_WindowHandle = wHnd.ToString(),
+            //            v_XPosition = "0",
+            //            v_YPosition = "0",
+            //        };
+            //        moveWindow.RunCommand(engine);
+            //    }
+
+            //    System.Windows.Point point;
+            //    try
+            //    {
+            //        if (!targetElement.TryGetClickablePoint(out point))
+            //        {
+            //            MoveWindowToLeftTop();
+            //            targetElement.TryGetClickablePoint(out point);
+            //        }
+            //        if ((point.X < 0.0) || (point.Y < 0.0))
+            //        {
+            //            MoveWindowToLeftTop();
+
+            //            if (!targetElement.TryGetClickablePoint(out point))
+            //            {
+            //                throw new Exception($"No Clickable Point in UIElement '{v_TargetElement}'");
+            //            }
+            //        }
+            //    }
+            //    catch (Exception)
+            //    {
+            //        throw new Exception($"No Clickable Point in UIElement '{v_TargetElement}'");
+            //    }
+
+            //    var click = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ClickType), engine);
+            //    var xAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_XOffset), engine);
+            //    var yAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffset), engine);
+
+            //    var mouseClick = new MoveMouseCommand()
+            //    {
+            //        v_MouseClick = click,
+            //        v_XMousePosition = (point.X + xAd).ToString(),
+            //        v_YMousePosition = (point.Y + yAd).ToString()
+            //    };
+            //    mouseClick.RunCommand(engine);
+            //}
+
+            //if (!string.IsNullOrEmpty(v_WaitTimeAfterAction))
+            //{
+            //    var wt = this.ExpandValueOrUserVariableAsDecimal(nameof(v_WaitTimeAfterAction), engine);
+            //    if (wt > 0)
+            //    {
+            //        int waitTime = (int)(wt * 1000);
+            //        System.Threading.Thread.Sleep(waitTime);
+            //    }
+            //}
+
+            //if (!string.IsNullOrEmpty(v_WindowNameResult))
+            //{
+            //    windowName.StoreInUserVariable(engine, v_WindowNameResult);
+            //}
+            //if (!string.IsNullOrEmpty(v_WindowHandleResult))
+            //{
+            //    wHnd.StoreInUserVariable(engine, v_WindowHandleResult);
+            //}
+
+            this.UIElementAction(engine,
+                new Action<AutomationElement, IntPtr>((targetElement, whnd) =>
                 {
-                    int waitTime = (int)(wt * 1000);
-                    System.Threading.Thread.Sleep(waitTime);
-                }
-            }
-
-            var targetElement = this.ExpandUserVariableAsUIElement(engine);
-
-            (var windowName, var wHnd) = EM_CanHandleUIElementExtentionMethods.GetWindowNameAndHandle(targetElement);
-
-            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindowBeforeAction), engine))
-            {
-                var activateWindow = new ActivateWindowByWindowHandleCommand()
-                {
-                    v_WindowHandle = wHnd.ToString(),
-                };
-                activateWindow.RunCommand(engine);
-            }
-
-            // check empty or zero
-            bool IsEmptyOrZero(string txt)
-            {
-                txt = txt.Trim();
-                if (string.IsNullOrEmpty(txt) || txt == "0")
-                {
-                    return true;
-                }
-                else
-                {
-                    var exp = txt.ExpandValueOrUserVariable(engine).Trim();
-                    return (string.IsNullOrEmpty(exp) || exp == "0");
-                }
-            }
-
-            // check available invoke
-            var canInvoke = (bool)targetElement.GetCurrentPropertyValue(AutomationElement.IsInvokePatternAvailableProperty);
-
-            if (canInvoke && IsEmptyOrZero(v_XOffset) && IsEmptyOrZero(v_YOffset))
-            {
-                // try button
-                var btn = (InvokePattern)targetElement.GetCurrentPattern(InvokePattern.Pattern);
-                btn.Invoke();
-            }
-            else
-            {
-                // try mouse click
-
-                // move window to left-top
-                void MoveWindowToLeftTop()
-                {
-                    var moveWindow = new MoveWindowByWindowHandleCommand()
+                    // check empty or zero
+                    bool IsEmptyOrZero(string txt)
                     {
-                        v_WindowHandle = wHnd.ToString(),
-                        v_XPosition = "0",
-                        v_YPosition = "0",
-                    };
-                    moveWindow.RunCommand(engine);
-                }
-
-                System.Windows.Point point;
-                try
-                {
-                    if (!targetElement.TryGetClickablePoint(out point))
-                    {
-                        MoveWindowToLeftTop();
-                        targetElement.TryGetClickablePoint(out point);
+                        txt = txt.Trim();
+                        if (string.IsNullOrEmpty(txt) || txt == "0")
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            var exp = txt.ExpandValueOrUserVariable(engine).Trim();
+                            return (string.IsNullOrEmpty(exp) || exp == "0");
+                        }
                     }
-                    if ((point.X < 0.0) || (point.Y < 0.0))
-                    {
-                        MoveWindowToLeftTop();
 
-                        if (!targetElement.TryGetClickablePoint(out point))
+                    // check available invoke
+                    var canInvoke = (bool)targetElement.GetCurrentPropertyValue(AutomationElement.IsInvokePatternAvailableProperty);
+
+                    if (canInvoke && IsEmptyOrZero(v_XOffset) && IsEmptyOrZero(v_YOffset))
+                    {
+                        // try button
+                        var btn = (InvokePattern)targetElement.GetCurrentPattern(InvokePattern.Pattern);
+                        btn.Invoke();
+                    }
+                    else
+                    {
+                        // try mouse click
+
+                        // move window to left-top
+                        void MoveWindowToLeftTop()
+                        {
+                            var moveWindow = new MoveWindowByWindowHandleCommand()
+                            {
+                                v_WindowHandle = whnd.ToString(),
+                                v_XPosition = "0",
+                                v_YPosition = "0",
+                            };
+                            moveWindow.RunCommand(engine);
+                        }
+
+                        System.Windows.Point point;
+                        try
+                        {
+                            if (!targetElement.TryGetClickablePoint(out point))
+                            {
+                                MoveWindowToLeftTop();
+                                targetElement.TryGetClickablePoint(out point);
+                            }
+                            if ((point.X < 0.0) || (point.Y < 0.0))
+                            {
+                                MoveWindowToLeftTop();
+
+                                if (!targetElement.TryGetClickablePoint(out point))
+                                {
+                                    throw new Exception($"No Clickable Point in UIElement '{v_TargetElement}'");
+                                }
+                            }
+                        }
+                        catch (Exception)
                         {
                             throw new Exception($"No Clickable Point in UIElement '{v_TargetElement}'");
                         }
+
+                        var click = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ClickType), engine);
+                        var xAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_XOffset), engine);
+                        var yAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffset), engine);
+
+                        var mouseClick = new MoveMouseCommand()
+                        {
+                            v_MouseClick = click,
+                            v_XMousePosition = (point.X + xAd).ToString(),
+                            v_YMousePosition = (point.Y + yAd).ToString()
+                        };
+                        mouseClick.RunCommand(engine);
                     }
-                }
-                catch (Exception)
-                {
-                    throw new Exception($"No Clickable Point in UIElement '{v_TargetElement}'");
-                }
-
-                var click = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ClickType), engine);
-                var xAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_XOffset), engine);
-                var yAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffset), engine);
-
-                var mouseClick = new MoveMouseCommand()
-                {
-                    v_MouseClick = click,
-                    v_XMousePosition = (point.X + xAd).ToString(),
-                    v_YMousePosition = (point.Y + yAd).ToString()
-                };
-                mouseClick.RunCommand(engine);
-            }
-
-            if (!string.IsNullOrEmpty(v_WaitTimeAfterAction))
-            {
-                var wt = this.ExpandValueOrUserVariableAsDecimal(nameof(v_WaitTimeAfterAction), engine);
-                if (wt > 0)
-                {
-                    int waitTime = (int)(wt * 1000);
-                    System.Threading.Thread.Sleep(waitTime);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(v_WindowNameResult))
-            {
-                windowName.StoreInUserVariable(engine, v_WindowNameResult);
-            }
-            if (!string.IsNullOrEmpty(v_WindowHandleResult))
-            {
-                wHnd.StoreInUserVariable(engine, v_WindowHandleResult);
-            }
+                })
+            );
         }
     }
 }
