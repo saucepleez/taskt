@@ -22,5 +22,10 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_WaitTimeAfterAction))]
         [PropertyParameterOrder(9000)]
         public virtual string v_WaitTimeAfterAction { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_WhenActionIsNotSupported))]
+        [PropertyParameterOrder(11000)]
+        public virtual string v_WhenActionIsNotSupported { get; set; }
     }
 }
