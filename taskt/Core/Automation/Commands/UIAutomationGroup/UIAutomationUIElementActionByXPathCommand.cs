@@ -339,7 +339,7 @@ namespace taskt.Core.Automation.Commands
                             var setTextCmd = new UIAutomationSetTextToUIElementCommand()
                             {
                                 v_TargetElement = myTrgElem.VariableName,
-                                v_TextVariable = p["Text To Set"],
+                                v_TextToSet = p["Text To Set"],
                             };
                             setTextCmd.RunCommand(engine);
                             break;

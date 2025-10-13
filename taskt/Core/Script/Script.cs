@@ -458,6 +458,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_39(doc);
             convertTo3_5_2_42(doc);
             convertTo3_5_2_43(doc);
+            convertTo3_5_2_44(doc);
             return doc;
         }
 
@@ -4661,6 +4662,15 @@ namespace taskt.Core.Script
                             return false;
                     }
                 }), "v_UserVariableName", "v_Result");
+        }
+
+        private static void convertTo3_5_2_44(XDocument doc)
+        {
+            // ClickUIElement v_ActivateWindow -> v_ActivateWindowBeforeAction
+            ChangeAttributeName(doc, "UIAutomationClickUIElementCommand", "v_ActivateWindow", "v_ActivateWindowBeforeAction");
+
+            // UIAutomationSetTextToUIElementCommand v_TextVariable -> v_TextToSet
+            ChangeAttributeName(doc, "UIAutomationSetTextToUIElementCommand", "v_TextVariable", "v_TextToSet");
         }
 
         /// <summary>
