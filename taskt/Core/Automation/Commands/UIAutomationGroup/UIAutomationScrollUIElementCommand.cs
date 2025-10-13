@@ -49,52 +49,107 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
-            var scrollbarType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ScrollBarType), engine);
+            //var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
+            //var scrollbarType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ScrollBarType), engine);
 
-            var dirAndAmo = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_DirectionAndAmount), engine);
-            var amount = ScrollAmount.NoAmount;
-            switch (dirAndAmo)
-            {
-                case "scroll small down or right":
-                    amount = ScrollAmount.SmallIncrement;
-                    break;
-                case "scroll large down or right":
-                    amount = ScrollAmount.LargeIncrement;
-                    break;
-                case "scroll small up or left":
-                    amount = ScrollAmount.SmallDecrement;
-                    break;
-                case "scroll large up or left":
-                    amount = ScrollAmount.LargeDecrement;
-                    break;
-            }
+            //var dirAndAmo = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_DirectionAndAmount), engine);
+            //var amount = ScrollAmount.NoAmount;
+            //switch (dirAndAmo)
+            //{
+            //    case "scroll small down or right":
+            //        amount = ScrollAmount.SmallIncrement;
+            //        break;
+            //    case "scroll large down or right":
+            //        amount = ScrollAmount.LargeIncrement;
+            //        break;
+            //    case "scroll small up or left":
+            //        amount = ScrollAmount.SmallDecrement;
+            //        break;
+            //    case "scroll large up or left":
+            //        amount = ScrollAmount.LargeDecrement;
+            //        break;
+            //}
 
-            if (!targetElement.TryGetCurrentPattern(ScrollPattern.Pattern, out object scrollPtn))
-            {
-                if (targetElement.Current.ControlType == ControlType.ScrollBar)
+            //if (!targetElement.TryGetCurrentPattern(ScrollPattern.Pattern, out object scrollPtn))
+            //{
+            //    if (targetElement.Current.ControlType == ControlType.ScrollBar)
+            //    {
+            //        var parentElement = UIElementControls.GetParentUIElement(targetElement);
+            //        if (!parentElement.TryGetCurrentPattern(ScrollPattern.Pattern, out scrollPtn))
+            //        {
+            //            throw new Exception($"UIElement '{v_TargetElement}' does not have ScrollBar");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        throw new Exception($"UIElement '{v_TargetElement}' is not ScrollBar and does not have ScrollBar");
+            //    }
+            //}
+            //var sp = (ScrollPattern)scrollPtn;
+            //switch (scrollbarType)
+            //{
+            //    case "horizonal":
+            //        sp.ScrollHorizontal(amount);
+            //        break;
+            //    case "vertical":
+            //        sp.ScrollVertical(amount);
+            //        break;
+            //}
+
+            this.UIElementActionAndWait(engine,
+                new Action<AutomationElement, IntPtr>((targetElement, whnd) =>
                 {
-                    var parentElement = UIElementControls.GetParentUIElement(targetElement);
-                    if (!parentElement.TryGetCurrentPattern(ScrollPattern.Pattern, out scrollPtn))
+                    var dirAndAmo = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_DirectionAndAmount), engine);
+                    var amount = ScrollAmount.NoAmount;
+                    switch (dirAndAmo)
                     {
-                        throw new Exception($"UIElement '{v_TargetElement}' does not have ScrollBar");
+                        case "scroll small down or right":
+                            amount = ScrollAmount.SmallIncrement;
+                            break;
+                        case "scroll large down or right":
+                            amount = ScrollAmount.LargeIncrement;
+                            break;
+                        case "scroll small up or left":
+                            amount = ScrollAmount.SmallDecrement;
+                            break;
+                        case "scroll large up or left":
+                            amount = ScrollAmount.LargeDecrement;
+                            break;
                     }
-                }
-                else
-                {
-                    throw new Exception($"UIElement '{v_TargetElement}' is not ScrollBar and does not have ScrollBar");
-                }
-            }
-            var sp = (ScrollPattern)scrollPtn;
-            switch (scrollbarType)
-            {
-                case "horizonal":
-                    sp.ScrollHorizontal(amount);
-                    break;
-                case "vertical":
-                    sp.ScrollVertical(amount);
-                    break;
-            }
+
+                    if (!targetElement.TryGetCurrentPattern(ScrollPattern.Pattern, out object scrollPtn))
+                    {
+                        if (targetElement.Current.ControlType == ControlType.ScrollBar)
+                        {
+                            var parentElement = UIElementControls.GetParentUIElement(targetElement);
+                            if (!parentElement.TryGetCurrentPattern(ScrollPattern.Pattern, out scrollPtn))
+                            {
+                                //throw new Exception($"UIElement '{v_TargetElement}' does not have ScrollBar");
+                                this.ActionNotSupportedProcess("Scroll", engine);
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            //throw new Exception($"UIElement '{v_TargetElement}' is not ScrollBar and does not have ScrollBar");
+                            this.ActionNotSupportedProcess("Scroll", engine);
+                            return;
+                        }
+                    }
+
+                    var sp = (ScrollPattern)scrollPtn;
+                    var scrollbarType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ScrollBarType), engine);
+                    switch (scrollbarType)
+                    {
+                        case "horizonal":
+                            sp.ScrollHorizontal(amount);
+                            break;
+                        case "vertical":
+                            sp.ScrollVertical(amount);
+                            break;
+                    }
+                })
+            );
         }
     }
 }
