@@ -225,13 +225,17 @@ namespace taskt.Core.Automation.Commands
 
                                 if (!targetElement.TryGetClickablePoint(out point))
                                 {
-                                    throw new Exception($"No Clickable Point in UIElement '{v_TargetElement}'");
+                                    //throw new Exception($"No Clickable Point in UIElement '{v_TargetElement}'");
+                                    this.ActionNotSupportedProcess("Click", engine);
+                                    return;
                                 }
                             }
                         }
                         catch (Exception)
                         {
-                            throw new Exception($"No Clickable Point in UIElement '{v_TargetElement}'");
+                            //throw new Exception($"No Clickable Point in UIElement '{v_TargetElement}'");
+                            this.ActionNotSupportedProcess("Click", engine);
+                            return;
                         }
 
                         var click = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ClickType), engine);

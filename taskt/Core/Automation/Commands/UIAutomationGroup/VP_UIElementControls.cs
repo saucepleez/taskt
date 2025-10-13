@@ -45,5 +45,13 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         [PropertyDescription("Activate Window before Action")]
         [PropertyIsOptional(true, "No")]
         public static string v_ActivateWindow { get; }
+
+        /// <summary>
+        /// when this action is not supported
+        /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
+        [PropertyDescription("When Action Is Not Supported")]
+        [PropertyIsOptional(true, "Error")]
+        public static string v_WhenActionIsNotSupported { get; }
     }
 }

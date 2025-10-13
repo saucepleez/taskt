@@ -79,7 +79,8 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        throw new Exception($"UIElement '{v_TargetElement}' does not support Expand/Collapse");
+                        //throw new Exception($"UIElement '{v_TargetElement}' does not support Expand/Collapse");
+                        this.ActionNotSupportedProcess("Expand/Collapse", engine);
                     }
                 })
             );
