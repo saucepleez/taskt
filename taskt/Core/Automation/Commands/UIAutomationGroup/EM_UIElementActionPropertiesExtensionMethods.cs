@@ -48,6 +48,25 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         }
 
         /// <summary>
+        /// action not supported process
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="actionName"></param>
+        /// <param name="engine"></param>
+        /// <exception cref="Exception"></exception>
+        public static void ActionNotSupportedProcess(this IUIElementActionProperties command, string actionName, AutomationEngineInstance engine)
+        {
+            switch(command.ToScriptCommand().ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_WhenActionIsNotSupported), engine))
+            {
+                case "error":
+                    throw new Exception($"UIElement '{command.v_TargetElement}' does Not Support or can not execute {actionName} action");
+
+                case "ignore":
+                    break;
+            }
+        }
+
+        /// <summary>
         /// UIElement action and wait
         /// </summary>
         /// <param name="command"></param>

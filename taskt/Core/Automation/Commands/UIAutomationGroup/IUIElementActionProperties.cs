@@ -16,5 +16,10 @@
         /// activate window before action
         /// </summary>
         string v_ActivateWindowBeforeAction { get; set; }
+
+        /// <summary>
+        /// when UIElement is not supprted this action
+        /// </summary>
+        string v_WhenActionIsNotSupported { get; set; }
     }
 }
