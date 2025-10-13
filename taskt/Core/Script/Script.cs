@@ -4671,6 +4671,9 @@ namespace taskt.Core.Script
 
             // UIAutomationSetTextToUIElementCommand v_TextVariable -> v_TextToSet
             ChangeAttributeName(doc, "UIAutomationSetTextToUIElementCommand", "v_TextVariable", "v_TextToSet");
+
+            // UIAutomationGetSelectedStateFromUIElementCommand v_ResultVariable -> v_Result
+            ChangeAttributeName(doc, "UIAutomationGetSelectedStateFromUIElementCommand", "v_ResultVariable", "v_Result");
         }
 
         /// <summary>

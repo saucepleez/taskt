@@ -369,7 +369,7 @@ namespace taskt.Core.Automation.Commands
                             var getSelectedCmd = new UIAutomationGetSelectedStateFromUIElementCommand()
                             {
                                 v_TargetElement = myTrgElem.VariableName,
-                                v_ResultVariable = p["Apply To Variable"],
+                                v_Result = p["Apply To Variable"],
                             };
                             getSelectedCmd.RunCommand(engine);
                             break;
