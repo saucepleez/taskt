@@ -94,6 +94,7 @@ namespace taskt.Core.Automation.Commands
                         {
                             v_WindowHandle = whnd.ToString(),
                             v_TextToSend = "^{HOME}",
+                            v_WaitTimeAfterKeyEnter = "0",
                         };
                         sendKey.RunCommand(engine);
                         sendKey.v_TextToSend = "^+{END}";
