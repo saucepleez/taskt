@@ -72,5 +72,16 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                 }
             }
         }
+
+        /// <summary>
+        /// get ControlType text
+        /// </summary>
+        /// <param name="elem"></param>
+        /// <returns></returns>
+        public static string GetControlTypeText(AutomationElement elem)
+        {
+            var fullName = elem.Current.ControlType.ProgrammaticName;
+            return fullName.Substring(fullName.LastIndexOf('.') + 1);
+        }
     }
 }
