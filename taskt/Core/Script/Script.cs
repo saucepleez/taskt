@@ -4672,8 +4672,37 @@ namespace taskt.Core.Script
             // UIAutomationSetTextToUIElementCommand v_TextVariable -> v_TextToSet
             ChangeAttributeName(doc, "UIAutomationSetTextToUIElementCommand", "v_TextVariable", "v_TextToSet");
 
-            // UIAutomationGetSelectedStateFromUIElementCommand v_ResultVariable -> v_Result
-            ChangeAttributeName(doc, "UIAutomationGetSelectedStateFromUIElementCommand", "v_ResultVariable", "v_Result");
+            // UIAutomationGetSelectedStateFromUIElementCommand, UIAutomationGetChildrenUIElementsInformationCommand v_ResultVariable -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el)) 
+                {
+                    case "UIAutomationGetSelectedStateFromUIElementCommand":
+                    case "UIAutomationGetChildrenUIElementsInformationCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_ResultVariable", "v_Result");
+
+            // UIAutomationGetSelectionItemsFromUIElementCommand v_ListVariable -> v_Result
+            ChangeAttributeName(doc, "UIAutomationGetSelectionItemsFromUIElementCommand", "v_ListVariable", "v_Result");
+
+            // UIAutomationGetTextFromTableUIElementCommand, UIAutomationGetTextFromUIElementCommand v_TextVariable -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationGetTextFromTableUIElementCommand":
+                    case "UIAutomationGetTextFromUIElementCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_TextVariable", "v_Result");
+
+            // UIAutomationGetUIElementTreeXMLFromUIElementCommand v_XMLVariable -> v_Result
+            ChangeAttributeName(doc, "UIAutomationGetUIElementTreeXMLFromUIElementCommand", "v_XMLVariable", "v_Result");
         }
 
         /// <summary>

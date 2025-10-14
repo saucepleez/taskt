@@ -361,7 +361,7 @@ namespace taskt.Core.Automation.Commands
                             var getTextCmd = new UIAutomationGetTextFromUIElementCommand()
                             {
                                 v_TargetElement = myTrgElem.VariableName,
-                                v_TextVariable = p["Apply To Variable"],
+                                v_Result = p["Apply To Variable"],
                             };
                             getTextCmd.RunCommand(engine);
                             break;
@@ -379,7 +379,7 @@ namespace taskt.Core.Automation.Commands
                                 v_TargetElement = myTrgElem.VariableName,
                                 v_Row = p["Row"],
                                 v_Column = p["Column"],
-                                v_TextVariable = p["Apply To Variable"],
+                                v_Result = p["Apply To Variable"],
                             };
                             getTableCmd.RunCommand(engine);
                             break;

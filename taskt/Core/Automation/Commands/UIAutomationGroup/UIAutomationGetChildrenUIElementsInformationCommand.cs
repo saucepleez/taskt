@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_ResultVariable { get; set; }
+        public string v_Result { get; set; }
 
         public UIAutomationGetChildrenUIElementsInformationCommand()
         {
@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
                 var elem = elems[i];
                 result += "Index: " + i + ", Name: " + elem.Current.Name + ", LocalizedControlType: " + elem.Current.LocalizedControlType + ", ControlType: " + UIElementControls.GetControlTypeText(elem.Current.ControlType) + "\n";
             }
-            result.Trim().StoreInUserVariable(engine, v_ResultVariable);
+            result.Trim().StoreInUserVariable(engine, v_Result);
         }
 
         public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)

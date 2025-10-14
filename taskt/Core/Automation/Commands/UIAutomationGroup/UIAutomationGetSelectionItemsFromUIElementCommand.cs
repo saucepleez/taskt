@@ -23,7 +23,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        public string v_ListVariable { get; set; }
+        public string v_Result { get; set; }
 
         public UIAutomationGetSelectionItemsFromUIElementCommand()
         {
@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
                 res.Add(item.Current.Name);
             }
             //res.StoreInUserVariable(engine, v_ListVariable);
-            this.StoreListInUserVariable(res, nameof(v_ListVariable), engine);
+            this.StoreListInUserVariable(res, nameof(v_Result), engine);
         }
     }
 }

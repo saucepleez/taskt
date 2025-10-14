@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Store")]
-        public string v_XMLVariable { get; set; }
+        public string v_Result { get; set; }
 
         public UIAutomationGetUIElementTreeXMLFromUIElementCommand()
         {
@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
             using(System.IO.StringWriter sw = new System.IO.StringWriter())
             {
                 xml.Save(sw);
-                sw.ToString().StoreInUserVariable(engine, v_XMLVariable);
+                sw.ToString().StoreInUserVariable(engine, v_Result);
             }
         }
     }

@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_TextVariable { get; set; }
+        public string v_Result { get; set; }
 
         public UIAutomationGetTextFromUIElementCommand()
         {
@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
             var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
             string res = UIElementControls.GetTextValue(targetElement);
-            res.StoreInUserVariable(engine, v_TextVariable);
+            res.StoreInUserVariable(engine, v_Result);
         }
     }
 }
