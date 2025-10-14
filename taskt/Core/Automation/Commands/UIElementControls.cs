@@ -958,36 +958,36 @@ namespace taskt.Core.Automation.Commands
 
         #endregion
 
-        public static string GetTextValue(AutomationElement targetElement)
-        {
-            //object patternObj;
-            if (targetElement.TryGetCurrentPattern(RangeValuePattern.Pattern, out object rPtn))
-            {
-                // bar
-                return ((RangeValuePattern)rPtn).Current.Value.ToString();
-            }
-            else if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out object vPtn))
-            {
-                // TextBox
-                return ((ValuePattern)vPtn).Current.Value;
-            }
-            else if (targetElement.TryGetCurrentPattern(TextPattern.Pattern, out object tPtn))
-            {
-                // TextBox Multilune
-                return ((TextPattern)tPtn).DocumentRange.GetText(-1);
-            }
-            else if (targetElement.TryGetCurrentPattern(SelectionPattern.Pattern, out object sPtn))
-            {
-                // combobox
-                AutomationElement selElem = ((SelectionPattern)sPtn).Current.GetSelection()[0];
-                return selElem.Current.Name;
-            }
-            else
-            {
-                // others
-                return targetElement.Current.Name;
-            }
-        }
+        //public static string GetTextValue(AutomationElement targetElement)
+        //{
+        //    //object patternObj;
+        //    if (targetElement.TryGetCurrentPattern(RangeValuePattern.Pattern, out object rPtn))
+        //    {
+        //        // bar
+        //        return ((RangeValuePattern)rPtn).Current.Value.ToString();
+        //    }
+        //    else if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out object vPtn))
+        //    {
+        //        // TextBox
+        //        return ((ValuePattern)vPtn).Current.Value;
+        //    }
+        //    else if (targetElement.TryGetCurrentPattern(TextPattern.Pattern, out object tPtn))
+        //    {
+        //        // TextBox Multilune
+        //        return ((TextPattern)tPtn).DocumentRange.GetText(-1);
+        //    }
+        //    else if (targetElement.TryGetCurrentPattern(SelectionPattern.Pattern, out object sPtn))
+        //    {
+        //        // combobox
+        //        AutomationElement selElem = ((SelectionPattern)sPtn).Current.GetSelection()[0];
+        //        return selElem.Current.Name;
+        //    }
+        //    else
+        //    {
+        //        // others
+        //        return targetElement.Current.Name;
+        //    }
+        //}
 
         public static AutomationElement GetTableUIElement(AutomationElement targetElement, int row, int column)
         {
