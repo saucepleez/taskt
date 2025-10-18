@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using System.Windows.Automation;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,11 +15,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationGetUIElementFromTableUIElementCommand : ScriptCommand
+    public sealed class UIAutomationGetUIElementFromTableUIElementCommand : AGetFromUIElementCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
-        public string v_TargetElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
+        //public string v_TargetElement { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -29,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Row Index", true)]
         [PropertyValidationRule("Row", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Row")]
+        [PropertyParameterOrder(6000)]
         public string v_Row { get; set; }
 
         [XmlAttribute]
@@ -40,10 +42,12 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Column Index", true)]
         [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Column")]
+        [PropertyParameterOrder(6100)]
         public string v_Column { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
+        [PropertyParameterOrder(6200)]
         public string v_Result { get; set; }
 
         public UIAutomationGetUIElementFromTableUIElementCommand()
@@ -52,12 +56,103 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
-            int row = v_Row.ExpandValueOrUserVariableAsInteger("v_Row", engine);
-            int column = v_Column.ExpandValueOrUserVariableAsInteger("v_Column", engine);
+            void ErrorAction()
+            {
+                this.ValueCanNotRetrievedProcess("Table UIElement", new Action(() =>
+                {
+                    "".StoreInUserVariable(engine, v_Result);
+                }), engine);
+            }
 
-            AutomationElement cellElem = UIElementControls.GetTableUIElement(targetElement, row, column);
-            cellElem.StoreInUserVariable(engine, v_Result);
+            this.UIElementAction(engine,
+                new Action<AutomationElement>(targetElement =>
+                {
+                    int rowIndex = v_Row.ExpandValueOrUserVariableAsInteger("v_Row", engine);
+                    int columnIndex = v_Column.ExpandValueOrUserVariableAsInteger("v_Column", engine);
+
+                    AutomationElement ret = null;
+                    if (targetElement.TryGetCurrentPattern(GridPattern.Pattern, out object gridObj))
+                    {
+                        var grid = (GridPattern)gridObj;
+                        var customRows = targetElement.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Custom));
+                        if (customRows.Count > 0)
+                        {
+                            // DataGridView (.net)
+                            try
+                            {
+                                var row = GetInRangeUIElement(customRows, rowIndex, v_Row, "Row");
+                                var cols = row.FindAll(TreeScope.Children, new OrCondition(
+                                            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Header),
+                                            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit)
+                                        )
+                                    );
+                                ret = GetInRangeUIElement(cols, columnIndex, v_Column, "Column");
+                            }
+                            catch
+                            {
+                                ErrorAction();
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            // listView
+                            try
+                            {
+                                var rows = targetElement.FindAll(TreeScope.Children,
+                                        new OrCondition(
+                                            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Header),
+                                            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.DataItem)
+                                        )
+                                    );
+                                var row = GetInRangeUIElement(rows, rowIndex, v_Row, "Row");
+                                var cols = row.FindAll(TreeScope.Children, new OrCondition(
+                                            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.HeaderItem),
+                                            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Text)
+                                        )
+                                    );
+                                ret = GetInRangeUIElement(cols, columnIndex, v_Column, "Column");
+                            }
+                            catch
+                            {
+                                ErrorAction();
+                                return;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ErrorAction();
+                        return;
+                    }
+                    ret.StoreInUserVariable(engine, v_Result);
+                })
+            );
+        }
+
+        /// <summary>
+        /// get in range UIElement
+        /// </summary>
+        /// <param name="elems"></param>
+        /// <param name="index"></param>
+        /// <param name="rawValue"></param>
+        /// <param name="elementType"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static AutomationElement GetInRangeUIElement(AutomationElementCollection elems, int index, string rawValue, string elementType)
+        {
+            if (index < 0)
+            {
+                index += elems.Count;
+            }
+            if (index < 0 || index >= elems.Count)
+            {
+                throw new Exception($"Error. Table {elementType} is Out of Range. Value: '{rawValue}', Expand Value: {index}");
+            }
+            else
+            {
+                return elems[index];
+            }
         }
     }
 }

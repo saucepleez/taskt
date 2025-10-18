@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     public static class EM_GetFromUIElementPropertiesExtensionMethods
     {
         /// <summary>
-        /// value(s) can not retrieved process
+        /// when value(s) can not retrieved from UIElement process
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
