@@ -5,17 +5,16 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
-    [Attributes.ClassAttributes.SubGruop("Search UIElement")]
-    [Attributes.ClassAttributes.CommandSettings("Search UIElement From Table UIElement")]
+    [Attributes.ClassAttributes.SubGruop("Get From UIElement")]
+    [Attributes.ClassAttributes.CommandSettings("Get UIElement From Table UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to get UIElement from Table UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get UIElement from Table UIElement.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationSearchUIElementFromTableUIElementCommand : ScriptCommand
+    public sealed class UIAutomationGetUIElementFromTableUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -45,14 +44,10 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
-        public string v_AutomationElementVariable { get; set; }
+        public string v_Result { get; set; }
 
-        public UIAutomationSearchUIElementFromTableUIElementCommand()
+        public UIAutomationGetUIElementFromTableUIElementCommand()
         {
-            //this.CommandName = "UIAutomationGetElementFromTableElementCommand";
-            //this.SelectionName = "Get Element From Table Element";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
@@ -62,7 +57,7 @@ namespace taskt.Core.Automation.Commands
             int column = v_Column.ExpandValueOrUserVariableAsInteger("v_Column", engine);
 
             AutomationElement cellElem = UIElementControls.GetTableUIElement(targetElement, row, column);
-            cellElem.StoreInUserVariable(engine, v_AutomationElementVariable);
+            cellElem.StoreInUserVariable(engine, v_Result);
         }
     }
 }

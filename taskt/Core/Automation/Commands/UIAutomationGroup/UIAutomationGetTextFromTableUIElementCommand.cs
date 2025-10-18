@@ -68,12 +68,12 @@ namespace taskt.Core.Automation.Commands
 
             using (var cellVar = new InnerScriptVariable(engine))
             {
-                var getCell = new UIAutomationSearchUIElementFromTableUIElementCommand()
+                var getCell = new UIAutomationGetUIElementFromTableUIElementCommand()
                 {
                     v_TargetElement = this.v_TargetElement,
                     v_Row = this.v_Row,
                     v_Column = this.v_Column,
-                    v_AutomationElementVariable = cellVar.VariableName,
+                    v_Result = cellVar.VariableName,
                 };
                 getCell.RunCommand(engine);
 

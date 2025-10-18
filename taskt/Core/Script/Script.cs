@@ -4703,6 +4703,11 @@ namespace taskt.Core.Script
 
             // UIAutomationGetUIElementTreeXMLFromUIElementCommand v_XMLVariable -> v_Result
             ChangeAttributeName(doc, "UIAutomationGetUIElementTreeXMLFromUIElementCommand", "v_XMLVariable", "v_Result");
+
+            // UIAutomationSearchUIElementFromTableUIElementCommand -> UIAutomationGetUIElementFromTableUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchUIElementFromTableUIElementCommand", "UIAutomationGetUIElementFromTableUIElementCommand", "Get UIElement From Table UIElement");
+            // v_AutomationElementVariable -> v_Result
+            ChangeAttributeName(doc, "UIAutomationGetUIElementFromTableUIElementCommand", "v_AutomationElementVariable", "v_Result");
         }
 
         /// <summary>
