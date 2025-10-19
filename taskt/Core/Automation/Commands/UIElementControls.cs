@@ -1026,63 +1026,63 @@ namespace taskt.Core.Automation.Commands
         //    }
         //}
 
-        public static List<AutomationElement> GetSelectionItems(AutomationElement targetElement)
-        {
-            var getListItemFunc = new Func<AutomationElement, List<AutomationElement>>( el => {
-                var elems = el.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.IsSelectionItemPatternAvailableProperty, true));
-                List<AutomationElement> ret = new List<AutomationElement>();
-                foreach (AutomationElement elem in elems)
-                {
-                    ret.Add(elem);
-                }
-                return ret;
-            });
+        //public static List<AutomationElement> GetSelectionItems(AutomationElement targetElement)
+        //{
+        //    var getListItemFunc = new Func<AutomationElement, List<AutomationElement>>( el => {
+        //        var elems = el.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.IsSelectionItemPatternAvailableProperty, true));
+        //        List<AutomationElement> ret = new List<AutomationElement>();
+        //        foreach (AutomationElement elem in elems)
+        //        {
+        //            ret.Add(elem);
+        //        }
+        //        return ret;
+        //    });
 
-            AutomationElement rootElement = targetElement;
+        //    AutomationElement rootElement = targetElement;
 
-            if ((bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsGridPatternAvailableProperty) ||
-                (bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsSelectionPatternAvailableProperty))
-            {
-                // DataGridView-ComboBox, ListBox
-                return getListItemFunc(rootElement);
-            }
-            else
-            {
-                // ComboBox, TreeView
-                bool isCmb = (bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
+        //    if ((bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsGridPatternAvailableProperty) ||
+        //        (bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsSelectionPatternAvailableProperty))
+        //    {
+        //        // DataGridView-ComboBox, ListBox
+        //        return getListItemFunc(rootElement);
+        //    }
+        //    else
+        //    {
+        //        // ComboBox, TreeView
+        //        bool isCmb = (bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
 
-                if (!isCmb)
-                {
-                    rootElement = GetParentUIElement(rootElement);
-                    isCmb = (bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
-                }
+        //        if (!isCmb)
+        //        {
+        //            rootElement = GetParentUIElement(rootElement);
+        //            isCmb = (bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
+        //        }
 
-                if ((bool)isCmb)
-                {
-                    object selPtn = rootElement.GetCurrentPattern(ExpandCollapsePattern.Pattern);
+        //        if ((bool)isCmb)
+        //        {
+        //            object selPtn = rootElement.GetCurrentPattern(ExpandCollapsePattern.Pattern);
 
-                    ExpandCollapsePattern ecPtn = (ExpandCollapsePattern)selPtn;
-                    ecPtn.Expand();
-                    System.Threading.Thread.Sleep(500);
+        //            ExpandCollapsePattern ecPtn = (ExpandCollapsePattern)selPtn;
+        //            ecPtn.Expand();
+        //            System.Threading.Thread.Sleep(500);
 
-                    // dbg
-                    //System.Threading.Thread.Sleep(1000);
-                    //Console.WriteLine("Expanded");
+        //            // dbg
+        //            //System.Threading.Thread.Sleep(1000);
+        //            //Console.WriteLine("Expanded");
 
-                    var ret = getListItemFunc(rootElement);
+        //            var ret = getListItemFunc(rootElement);
 
-                    //if (collapseAfter)
-                    //{
-                    //    ecPtn.Collapse();
-                    //}
-                    return ret;
-                }
-                else
-                {
-                    throw new Exception("This UIElement does not have Selection Items");
-                }
-            }
-        }
+        //            //if (collapseAfter)
+        //            //{
+        //            //    ecPtn.Collapse();
+        //            //}
+        //            return ret;
+        //        }
+        //        else
+        //        {
+        //            throw new Exception("This UIElement does not have Selection Items");
+        //        }
+        //    }
+        //}
 
         #region create XElement methods
 
