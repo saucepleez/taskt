@@ -21,6 +21,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         //public string v_TargetElement { get; set; }
 
+        // TODO: table row/col interface
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDetailSampleUsage("**0**", "Specify the First Row Index")]
