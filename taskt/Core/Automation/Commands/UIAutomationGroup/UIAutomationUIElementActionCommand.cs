@@ -257,7 +257,7 @@ namespace taskt.Core.Automation.Commands
                     v_SelectionMethod = this.v_SelectionMethod,
                     v_TargetWindowIndex = this.v_TargetWindowIndex,
                     v_WaitTimeForWindow = this.v_WaitTimeForWindow,
-                    v_AutomationElementVariable = myWinElem.VariableName,
+                    v_Result = myWinElem.VariableName,
                     v_NameResult = this.v_NameResult,
                     v_HandleResult = this.v_HandleResult,
                 };

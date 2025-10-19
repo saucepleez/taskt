@@ -4710,8 +4710,10 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "UIAutomationSearchUIElementFromTableUIElementCommand", "UIAutomationGetUIElementFromTableUIElementCommand", "Get UIElement From Table UIElement");
             // UIAutomationSearchParentUIElementCommand -> UIAutomationGetParentUIElementCommand
             ChangeCommandName(doc, "UIAutomationSearchParentUIElementCommand", "UIAutomationGetParentUIElementCommand", "Get Parent UIElement");
+            // UIAutomationSearchUIElementFromWindowCommand -> UIAutomationGetWindowUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchUIElementFromWindowCommand", "UIAutomationGetWindowUIElementCommand", "Get Window UIElement");
 
-            // UIAutomationGetUIElementFromTableUIElementCommand, UIAutomationGetParentUIElementCommand
+            // UIAutomationGetUIElementFromTableUIElementCommand, UIAutomationGetParentUIElementCommand, UIAutomationGetWindowUIElementCommand
             // v_AutomationElementVariable -> v_Result
             ChangeAttributeName(doc, new Func<XElement, bool>((el) =>
             {
@@ -4719,6 +4721,7 @@ namespace taskt.Core.Script
                 {
                     case "UIAutomationGetUIElementFromTableUIElementCommand":
                     case "UIAutomationGetParentUIElementCommand":
+                    case "UIAutomationGetWindowUIElementCommand":
                         return true;
                     default:
                         return false;
@@ -4727,9 +4730,6 @@ namespace taskt.Core.Script
 
             // UIAutomationGetSelectionItemsFromUIElementCommand -> UIAutomationGetSelectionItemsValueFromUIElementCommand
             ChangeCommandName(doc, "UIAutomationGetSelectionItemsFromUIElementCommand", "UIAutomationGetSelectionItemsValueFromUIElementCommand", "Get Selection Items Value From UIElement");
-
-            // UIAutomationSearchUIElementFromWindowCommand -> UIAutomationGetWindowUIElementCommand
-            ChangeCommandName(doc, "UIAutomationSearchUIElementFromWindowCommand", "UIAutomationGetWindowUIElementCommand", "Get Window UIElement");
         }
 
         /// <summary>

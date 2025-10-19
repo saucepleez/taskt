@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_OutputUIElementName))]
         [PropertyParameterOrder(5100)]
-        public string v_AutomationElementVariable { get; set; }
+        public string v_Result { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CompareMethod))]
@@ -64,9 +64,9 @@ namespace taskt.Core.Automation.Commands
             {
                 var ret = AutomationElement.FromHandle(whnd);
 
-                if (!string.IsNullOrEmpty(v_AutomationElementVariable))
+                if (!string.IsNullOrEmpty(v_Result))
                 {
-                    ret.StoreInUserVariable(engine, v_AutomationElementVariable);
+                    ret.StoreInUserVariable(engine, v_Result);
                 }
             }));
         }
