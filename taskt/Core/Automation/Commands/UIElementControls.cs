@@ -908,53 +908,53 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        /// <summary>
-        /// get window name from UIElement
-        /// </summary>
-        /// <param name="targetElement"></param>
-        /// <returns></returns>
-        public static string GetWindowName(AutomationElement targetElement)
-        {
-            TreeWalker walker = TreeWalker.RawViewWalker;
+        ///// <summary>
+        ///// get window name from UIElement
+        ///// </summary>
+        ///// <param name="targetElement"></param>
+        ///// <returns></returns>
+        //public static string GetWindowName(AutomationElement targetElement)
+        //{
+        //    TreeWalker walker = TreeWalker.RawViewWalker;
 
-            if (targetElement.Current.ControlType == ControlType.Window)
-            {
-                return targetElement.Current.Name;
-            }
+        //    if (targetElement.Current.ControlType == ControlType.Window)
+        //    {
+        //        return targetElement.Current.Name;
+        //    }
 
-            try
-            {
-                var parent = walker.GetParent(targetElement);
-                while (parent.Current.ControlType != ControlType.Window)
-                {
-                    parent = walker.GetParent(parent);
-                }
-                return parent.Current.Name;
-            }
-            catch
-            {
-                // try other method
-                var windowNames = WindowControls.GetAllWindowTitles();
-                if ((targetElement.Current.NativeWindowHandle != 0) && (windowNames.Contains(targetElement.Current.Name)))
-                {
-                    return targetElement.Current.Name;
-                }
+        //    try
+        //    {
+        //        var parent = walker.GetParent(targetElement);
+        //        while (parent.Current.ControlType != ControlType.Window)
+        //        {
+        //            parent = walker.GetParent(parent);
+        //        }
+        //        return parent.Current.Name;
+        //    }
+        //    catch
+        //    {
+        //        // try other method
+        //        var windowNames = WindowControls.GetAllWindowTitles();
+        //        if ((targetElement.Current.NativeWindowHandle != 0) && (windowNames.Contains(targetElement.Current.Name)))
+        //        {
+        //            return targetElement.Current.Name;
+        //        }
 
-                try
-                {
-                    var parent = walker.GetParent(targetElement);
-                    while((parent.Current.NativeWindowHandle == 0) || (!windowNames.Contains(parent.Current.Name)))
-                    {
-                        parent = walker.GetParent(parent);
-                    }
-                    return parent.Current.Name;
-                }
-                catch
-                {
-                    throw new Exception("Fail Get Window Name from UIElement");
-                }
-            }
-        }
+        //        try
+        //        {
+        //            var parent = walker.GetParent(targetElement);
+        //            while((parent.Current.NativeWindowHandle == 0) || (!windowNames.Contains(parent.Current.Name)))
+        //            {
+        //                parent = walker.GetParent(parent);
+        //            }
+        //            return parent.Current.Name;
+        //        }
+        //        catch
+        //        {
+        //            throw new Exception("Fail Get Window Name from UIElement");
+        //        }
+        //    }
+        //}
 
         #endregion
 
