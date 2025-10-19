@@ -4727,6 +4727,9 @@ namespace taskt.Core.Script
 
             // UIAutomationGetSelectionItemsFromUIElementCommand -> UIAutomationGetSelectionItemsValueFromUIElementCommand
             ChangeCommandName(doc, "UIAutomationGetSelectionItemsFromUIElementCommand", "UIAutomationGetSelectionItemsValueFromUIElementCommand", "Get Selection Items Value From UIElement");
+
+            // UIAutomationSearchUIElementFromWindowCommand -> UIAutomationGetWindowUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchUIElementFromWindowCommand", "UIAutomationGetWindowUIElementCommand", "Get Window UIElement");
         }
 
         /// <summary>

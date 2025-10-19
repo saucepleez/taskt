@@ -250,7 +250,7 @@ namespace taskt.Core.Automation.Commands
 
             using(var myWinElem = new InnerScriptVariable(engine))
             {
-                var winElem = new UIAutomationSearchUIElementFromWindowCommand()
+                var winElem = new UIAutomationGetWindowUIElementCommand()
                 {
                     v_WindowName = this.v_WindowName,
                     v_CheckMethod = this.v_CheckMethod,
