@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
-    [Attributes.ClassAttributes.SubGruop("Search UIElement")]
+    [Attributes.ClassAttributes.SubGruop("Get From UIElement")]
     [Attributes.ClassAttributes.CommandSettings("Get Parent UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to get Parent UIElement from UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Parent UIElement from UIElement.")]
@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
         [PropertyDescription("UIElement Variable Name to Store Parent UIElement")]
         [PropertyParameterOrder(6000)]
-        public string v_AutomationElementVariable { get; set; }
+        public string v_Result { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
@@ -69,13 +69,13 @@ namespace taskt.Core.Automation.Commands
                     try
                     {
                         var p = EM_CanHandleUIElementExtentionMethods.GetParentUIElement(targetElement);
-                        p.StoreInUserVariable(engine, v_AutomationElementVariable);
+                        p.StoreInUserVariable(engine, v_Result);
                     }
                     catch
                     {
                         this.ValueCanNotRetrievedProcess("Parent Element", new Action(() =>
                         {
-                            "".StoreInUserVariable(engine, v_AutomationElementVariable);
+                            "".StoreInUserVariable(engine, v_Result);
                         }), engine);
                     }
                 })

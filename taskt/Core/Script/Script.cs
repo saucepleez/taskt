@@ -4711,8 +4711,19 @@ namespace taskt.Core.Script
             // UIAutomationSearchParentUIElementCommand -> UIAutomationGetParentUIElementCommand
             ChangeCommandName(doc, "UIAutomationSearchParentUIElementCommand", "UIAutomationGetParentUIElementCommand", "Get Parent UIElement");
 
+            // UIAutomationGetUIElementFromTableUIElementCommand, UIAutomationGetParentUIElementCommand
             // v_AutomationElementVariable -> v_Result
-            ChangeAttributeName(doc, "UIAutomationGetUIElementFromTableUIElementCommand", "v_AutomationElementVariable", "v_Result");
+            ChangeAttributeName(doc, new Func<XElement, bool>((el) =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationGetUIElementFromTableUIElementCommand":
+                    case "UIAutomationGetParentUIElementCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_AutomationElementVariable", "v_Result");
 
             // UIAutomationGetSelectionItemsFromUIElementCommand -> UIAutomationGetSelectionItemsValueFromUIElementCommand
             ChangeCommandName(doc, "UIAutomationGetSelectionItemsFromUIElementCommand", "UIAutomationGetSelectionItemsValueFromUIElementCommand", "Get Selection Items Value From UIElement");
