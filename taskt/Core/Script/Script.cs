@@ -11,6 +11,8 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+using Microsoft.Office.Interop.Outlook;
+using SimpleNLG;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -4708,6 +4710,9 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "UIAutomationSearchUIElementFromTableUIElementCommand", "UIAutomationGetUIElementFromTableUIElementCommand", "Get UIElement From Table UIElement");
             // v_AutomationElementVariable -> v_Result
             ChangeAttributeName(doc, "UIAutomationGetUIElementFromTableUIElementCommand", "v_AutomationElementVariable", "v_Result");
+
+            // UIAutomationGetSelectionItemsFromUIElementCommand -> UIAutomationGetSelectionItemsValueFromUIElementCommand
+            ChangeCommandName(doc, "UIAutomationGetSelectionItemsFromUIElementCommand", "UIAutomationGetSelectionItemsValueFromUIElementCommand", "Get Selection Items Value From UIElement");
         }
 
         /// <summary>

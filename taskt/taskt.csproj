@@ -478,11 +478,13 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_GetFromUIElementPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementActionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementCorePropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementSelectionItemsPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ICanHandleUIElement.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IDoSomethingUIElementProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IGetFromUIElementProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementCoreProperties.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementSelectionItemsProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\VP_UIElementControls.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\ActivateWindowsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\AGetFromWindowNamesAsListCommands.cs" />
