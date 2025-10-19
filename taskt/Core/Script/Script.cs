@@ -4708,6 +4708,9 @@ namespace taskt.Core.Script
 
             // UIAutomationSearchUIElementFromTableUIElementCommand -> UIAutomationGetUIElementFromTableUIElementCommand
             ChangeCommandName(doc, "UIAutomationSearchUIElementFromTableUIElementCommand", "UIAutomationGetUIElementFromTableUIElementCommand", "Get UIElement From Table UIElement");
+            // UIAutomationSearchParentUIElementCommand -> UIAutomationGetParentUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchParentUIElementCommand", "UIAutomationGetParentUIElementCommand", "Get Parent UIElement");
+
             // v_AutomationElementVariable -> v_Result
             ChangeAttributeName(doc, "UIAutomationGetUIElementFromTableUIElementCommand", "v_AutomationElementVariable", "v_Result");
 

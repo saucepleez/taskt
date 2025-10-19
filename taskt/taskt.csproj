@@ -1048,7 +1048,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementFromUIElementByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetSelectedStateFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetUIElementFromTableUIElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetSelectionItemsFromUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetSelectionItemsValueFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationExpandCollapseItemsInUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetUIElementTreeXMLFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationScrollUIElementCommand.cs" />
@@ -1057,7 +1057,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSetTextToUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetTextFromTableUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetTextFromUIElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchParentUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetParentUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchChildUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementFromWindowCommand.cs" />
