@@ -887,26 +887,26 @@ namespace taskt.Core.Automation.Commands
             return elems;
         }
 
-        /// <summary>
-        /// get parent element
-        /// </summary>
-        /// <param name="targetElement"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static AutomationElement GetParentUIElement(AutomationElement targetElement)
-        {
-            TreeWalker walker = TreeWalker.RawViewWalker;
+        ///// <summary>
+        ///// get parent element
+        ///// </summary>
+        ///// <param name="targetElement"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public static AutomationElement GetParentUIElement(AutomationElement targetElement)
+        //{
+        //    TreeWalker walker = TreeWalker.RawViewWalker;
 
-            var parent = walker.GetParent(targetElement);
-            if (parent != null)
-            {
-                return parent;
-            }
-            else
-            {
-                throw new Exception("Parent UIElement not exists");
-            }
-        }
+        //    var parent = walker.GetParent(targetElement);
+        //    if (parent != null)
+        //    {
+        //        return parent;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Parent UIElement not exists");
+        //    }
+        //}
 
         ///// <summary>
         ///// get window name from UIElement
