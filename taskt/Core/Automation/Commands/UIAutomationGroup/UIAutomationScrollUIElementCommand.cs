@@ -121,7 +121,8 @@ namespace taskt.Core.Automation.Commands
                     {
                         if (targetElement.Current.ControlType == ControlType.ScrollBar)
                         {
-                            var parentElement = UIElementControls.GetParentUIElement(targetElement);
+                            //var parentElement = UIElementControls.GetParentUIElement(targetElement);
+                            var parentElement = EM_CanHandleUIElementExtentionMethods.GetParentUIElement(targetElement);
                             if (!parentElement.TryGetCurrentPattern(ScrollPattern.Pattern, out scrollPtn))
                             {
                                 //throw new Exception($"UIElement '{v_TargetElement}' does not have ScrollBar");
