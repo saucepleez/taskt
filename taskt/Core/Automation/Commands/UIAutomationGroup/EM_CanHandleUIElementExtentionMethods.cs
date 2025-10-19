@@ -83,5 +83,26 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             var fullName = elem.Current.ControlType.ProgrammaticName;
             return fullName.Substring(fullName.LastIndexOf('.') + 1);
         }
+
+        /// <summary>
+        /// get parent UIElement
+        /// </summary>
+        /// <param name="targetElement"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static AutomationElement GetParentUIElement(AutomationElement targetElement)
+        {
+            var walker = TreeWalker.RawViewWalker;
+
+            var parent = walker.GetParent(targetElement);
+            if (parent != null)
+            {
+                return parent;
+            }
+            else
+            {
+                throw new Exception("Parent UIElement does not exists");
+            }
+        }
     }
 }
