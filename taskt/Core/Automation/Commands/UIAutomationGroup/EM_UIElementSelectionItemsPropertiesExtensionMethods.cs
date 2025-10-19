@@ -45,12 +45,19 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
 
                         if (isCmb)
                         {
-                            object selPtn = curElement.GetCurrentPattern(ExpandCollapsePattern.Pattern);
-                            ExpandCollapsePattern ecPtn = (ExpandCollapsePattern)selPtn;
+                            if (curElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out object selPtn))
+                            {
+                                ExpandCollapsePattern ecPtn = (ExpandCollapsePattern)selPtn;
 
-                            ecPtn.Expand();
-                            System.Threading.Thread.Sleep(500);
-                            items = GetListItems(curElement);
+                                ecPtn.Expand();
+                                System.Threading.Thread.Sleep(500);
+                                items = GetListItems(curElement);
+                            }
+                            else
+                            {
+                                errorFunc();
+                                return;
+                            }
                         }
                         else
                         {
