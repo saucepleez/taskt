@@ -219,7 +219,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// create empty UIElement search parameters
         /// </summary>
         /// <param name="table"></param>
-        private static void CreateEmptySearchParamters(DataTable table)
+        public static void CreateEmptySearchParamters(DataTable table)
         {
             table.Rows.Clear();
             foreach (var n in EM_UIElementSearchParametersPropertiesExtensionMethods.TargetControlProperties)

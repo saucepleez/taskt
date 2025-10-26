@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Automation;
 using System.Windows.Forms;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
@@ -42,8 +40,9 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         public static (IUIElementSearchParametersProperties, DataGridView) GetCommandAndSearchDataGridView(Control ctl)
         {
             var editor = FormUIControls.GetCommandEditorFromControl(ctl);
-            var command = (IUIElementSearchParametersProperties)editor.editingCommand;
-            var dgv = FormUIControls.GetPropertyControl<DataGridView>(editor.editingCommand.ControlsList, nameof(IUIElementSearchParametersProperties.v_SearchParameters));
+            var command = (IUIElementSearchParametersProperties)editor.selectedCommand;
+            //var dgv = FormUIControls.GetPropertyControl<DataGridView>(editor.us.ControlsList, nameof(IUIElementSearchParametersProperties.v_SearchParameters));
+            var dgv = (DataGridView)editor.ParameterBindingControls[nameof(command.v_SearchParameters)];
 
             return (command, dgv);
         }

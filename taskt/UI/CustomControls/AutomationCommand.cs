@@ -57,6 +57,7 @@ namespace taskt.UI.CustomControls
             if (Command.CustomRendering)
             {
                 var renderedControls = Command.Render(editorForm);
+                
 
                 if (renderedControls.Count == 0)
                 {

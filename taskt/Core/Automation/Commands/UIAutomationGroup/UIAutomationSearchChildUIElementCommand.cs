@@ -78,11 +78,11 @@ namespace taskt.Core.Automation.Commands
                 var children = this.SearchChildrenUIElements(elem, engine);
                 
                 var index = v_Index.ExpandValueOrUserVariableAsInteger("v_Index", engine);
-                if (index < children.Count)
+                if (index < 0)
                 {
                     index += children.Count;
                 }
-                if (index >=0 && index < children.Count)
+                if (index >= 0 && index < children.Count)
                 {
                     children[index].StoreInUserVariable(engine, v_Result);
                 }
