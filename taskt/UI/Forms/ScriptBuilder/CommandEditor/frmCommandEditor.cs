@@ -24,38 +24,75 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
 {
     public partial class frmCommandEditor : ThemedForm
     {
-        // list of available commands
+        /// <summary>
+        /// list of available commands
+        /// </summary>
         List<AutomationCommand> commandList = new List<AutomationCommand>();
 
-        // list of variables, assigned from frmScriptBuilder
+        /// <summary>
+        /// list of variables, assigned from frmScriptBuilder
+        /// </summary>
         public List<Core.Script.ScriptVariable> scriptVariables;
 
-        // reference to currently selected command
+        /// <summary>
+        /// reference to currently selected command
+        /// </summary>
         public ScriptCommand selectedCommand;
 
-        // reference to original command
+        /// <summary>
+        /// reference to original command
+        /// </summary>
         public ScriptCommand originalCommand;
 
-        // assigned by frmScriptBuilder to restrict inputs for editing existing commands
+        /// <summary>
+        /// assigned by frmScriptBuilder to restrict inputs for editing existing commands
+        /// </summary>
         public CreationMode creationMode;
 
-        // startup command, assigned from frmScriptBuilder
+        /// <summary>
+        /// startup command, assigned from frmScriptBuilder
+        /// </summary>
         public string defaultStartupCommand;
 
-        // editing command, assigned from frmScriptBuilder when editing a command
+        /// <summary>
+        /// editing command, assigned from frmScriptBuilder when editing a command
+        /// </summary>
         public ScriptCommand editingCommand;
 
-        // track existing commands for visibility
+        /// <summary>
+        /// track existing commands for visibility
+        /// </summary>
         public List<ScriptCommand> configuredCommands;
 
-        // taskt setting
+        /// <summary>
+        /// taskt setting
+        /// </summary>
         public Core.SafeApplicationSettings appSettings;
 
-        // instance counter
+        /// <summary>
+        /// instance counter
+        /// </summary>
         public Core.InstanceCounter instanceList;
 
-        // command tree
+        /// <summary>
+        /// inner parameter binding controls dictionary
+        /// </summary>
+        private Dictionary<string, Control> _parameterBindingControls;
+        /// <summary>
+        /// parameter name and binding control pair
+        /// </summary>
+        public Dictionary<string, Control> ParameterBindingControls
+        {
+            get { return _parameterBindingControls; }
+        }
+
+        /// <summary>
+        /// command tree
+        /// </summary>
         private TreeNode[] treeAllCommands;
+        /// <summary>
+        /// command tree image
+        /// </summary>
         private ImageList treeAllCommandsImage;
 
         public enum CreationMode
@@ -287,6 +324,8 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
             // bind controls to new data source
             userSelectedCommand.Bind(this);
 
+            this._parameterBindingControls = userSelectedCommand.Command.ControlsList;
+
             flw_InputVariables.SuspendLayout();
 
             // clear controls
@@ -446,6 +485,10 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
                 }
             }
         }
+        #endregion
+
+        #region parameters control
+
         #endregion
     }
 }
