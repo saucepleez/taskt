@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
-        public string v_RootElement { get; set; }
+        public string v_TargetElement { get; set; }
 
         [XmlElement]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var targetElement = v_RootElement.ExpandUserVariableAsUIElement(engine);
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
             var elems = UIElementControls.GetChildrenUIElements(targetElement, v_SearchParameters, engine);
 

@@ -461,6 +461,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_42(doc);
             convertTo3_5_2_43(doc);
             convertTo3_5_2_44(doc);
+            convertTo3_5_2_45(doc);
             return doc;
         }
 
@@ -4730,6 +4731,26 @@ namespace taskt.Core.Script
 
             // UIAutomationGetSelectionItemsFromUIElementCommand -> UIAutomationGetSelectionItemsValueFromUIElementCommand
             ChangeCommandName(doc, "UIAutomationGetSelectionItemsFromUIElementCommand", "UIAutomationGetSelectionItemsValueFromUIElementCommand", "Get Selection Items Value From UIElement");
+        }
+
+        private static void convertTo3_5_2_45(XDocument doc)
+        {
+            // UIAutomationSearchChildUIElementCommand, UIAutomationGetChildrenUIElementsInformationCommand
+            // v_RootElement -> v_TargetElement
+            ChangeAttributeName(doc, new Func<XElement, bool>((el) =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationSearchChildUIElementCommand":
+                    case "UIAutomationGetChildrenUIElementsInformationCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_RootElement", "v_TargetElement");
+
+            // UIAutomationSearchChildUIElementCommand v_AutomationElementVariable -> v_Result
+            ChangeAttributeName(doc, "UIAutomationSearchChildUIElementCommand", "v_AutomationElementVariable", "v_Result");
         }
 
         /// <summary>
