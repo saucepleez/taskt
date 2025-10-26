@@ -8,9 +8,10 @@ using taskt.Core.Automation.Commands.UIAutomationGroup;
 
 namespace taskt.Core.Automation.Commands
 {
+    // TODO: create abstract class for SearchChildrenUIElementInfo, SearchChildUIElement
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
-    [Attributes.ClassAttributes.SubGruop("Get From UIElement")]
+    [Attributes.ClassAttributes.SubGruop("Search UIElement")]
     [Attributes.ClassAttributes.CommandSettings("Search Children UIElements Information")]
     [Attributes.ClassAttributes.Description("This command allows you to get Children UIElements Information from UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Children UIElements Information from UIElement.")]
