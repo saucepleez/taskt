@@ -247,7 +247,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         }
 
         /// <summary>
-        /// search children UIElement
+        /// search children UIElement (!!children elements only!!)
         /// </summary>
         /// <param name="command"></param>
         /// <param name="rootElement"></param>
