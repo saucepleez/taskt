@@ -9,13 +9,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
     [Attributes.ClassAttributes.SubGruop("Get From UIElement")]
-    [Attributes.ClassAttributes.CommandSettings("Get Children Elements Information")]
+    [Attributes.ClassAttributes.CommandSettings("Search Children Elements Information")]
     [Attributes.ClassAttributes.Description("This command allows you to get Children UIElements Information from UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Children UIElements Information from UIElement.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationGetChildrenUIElementsInformationCommand : ScriptCommand, IHaveDataTableElements
+    public sealed class UIAutomationSearchChildrenUIElementsInformationCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_Result { get; set; }
 
-        public UIAutomationGetChildrenUIElementsInformationCommand()
+        public UIAutomationSearchChildrenUIElementsInformationCommand()
         {
             //this.CommandName = "UIAutomationGetChildrenElementsInformationCommand";
             //this.SelectionName = "Get Children Elements Information";

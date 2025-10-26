@@ -4751,6 +4751,12 @@ namespace taskt.Core.Script
 
             // UIAutomationSearchChildUIElementCommand v_AutomationElementVariable -> v_Result
             ChangeAttributeName(doc, "UIAutomationSearchChildUIElementCommand", "v_AutomationElementVariable", "v_Result");
+
+            // UIAutomationGetChildrenUIElementsInformationCommand -> UIAutomationSearchChildrenUIElementsInformationCommand
+            ChangeCommandName(doc, "UIAutomationGetChildrenUIElementsInformationCommand", "UIAutomationSearchChildrenUIElementsInformationCommand", "Search Children UIElements Information");
+
+            // UIAutomationSetSelectionStateToUIElementCommand -> UIAutomationSetSelectedStateToUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSetSelectionStateToUIElementCommand", "UIAutomationSetSelectedStateToUIElementCommand", "Set Selected State To UIElement");
         }
 
         /// <summary>
