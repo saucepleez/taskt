@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         //public string v_TargetElement { get; set; }
 
         [XmlElement]
-        [PropertyVirtualProperty(nameof(EM_UIElementSearchParametersPropertiesExtensionMethods), nameof(EM_UIElementSearchParametersPropertiesExtensionMethods.v_SearchParameters))]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SearchParameters))]
         [PropertyParameterOrder(6000)]
         public DataTable v_SearchParameters { get; set; }
 
