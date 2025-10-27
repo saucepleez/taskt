@@ -67,12 +67,12 @@ namespace taskt.Core.Automation.Commands
                     //test if we should exit and throw exception
                     if (DateTime.Now > stopWaiting)
                     {
-                        throw new Exception(targetName + " was not found in time!");
+                        throw new Exception($"{targetName} was not found in time!");
                     }
                     else
                     {
                         //put thread to sleep before iterating
-                        engine.ReportProgress(targetName + " Not Yet Found... " + (int)((stopWaiting - DateTime.Now).TotalSeconds) + "s remain");
+                        engine.ReportProgress($"{targetName} Not Yet Found... {(int)((stopWaiting - DateTime.Now).TotalSeconds)}s remain");
                         System.Threading.Thread.Sleep(1000);
                     }
                 }
