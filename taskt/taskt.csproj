@@ -471,6 +471,7 @@
     <Compile Include="Core\Automation\Commands\ScriptCommandInformation.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADoSomethingUIElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\AGetFromUIElementCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ASearchChildUIElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\AUIElementActionCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\AUIElementCoreCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_CanHandleUIElementExtentionMethods.cs" />

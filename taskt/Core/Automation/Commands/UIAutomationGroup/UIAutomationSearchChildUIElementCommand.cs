@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Data;
 using System.Windows.Automation;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands.UIAutomationGroup;
@@ -17,17 +15,17 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationSearchChildUIElementCommand : ADoSomethingUIElementCommands, IUIElementSearchParametersProperties
+    public sealed class UIAutomationSearchChildUIElementCommand : ASearchChildUIElementCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         //[PropertyDescription("Search Start UIElement Variable")]
         //public string v_TargetElement { get; set; }
 
-        [XmlElement]
-        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SearchParameters))]
-        [PropertyParameterOrder(6000)]
-        public DataTable v_SearchParameters { get; set; }
+        //[XmlElement]
+        //[PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SearchParameters))]
+        //[PropertyParameterOrder(6000)]
+        //public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -49,10 +47,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(7000)]
         public string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_WaitTimeForUIElement))]
-        [PropertyParameterOrder(7100)]
-        public string v_WaitTimeForUIElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_WaitTimeForUIElement))]
+        //[PropertyParameterOrder(7100)]
+        //public string v_WaitTimeForUIElement { get; set; }
 
         public UIAutomationSearchChildUIElementCommand()
         {
@@ -93,17 +91,17 @@ namespace taskt.Core.Automation.Commands
             }));
         }
 
-        public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
-        {
-            UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
-        }
+        //public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
+        //{
+        //    UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
+        //}
 
-        public override void BeforeValidate()
-        {
-            base.BeforeValidate();
+        //public override void BeforeValidate()
+        //{
+        //    base.BeforeValidate();
 
-            var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_SearchParameters));
-            DataTableControls.BeforeValidate_NoRowAdding(dgv, v_SearchParameters);
-        }
+        //    var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_SearchParameters));
+        //    DataTableControls.BeforeValidate_NoRowAdding(dgv, v_SearchParameters);
+        //}
     }
 }
