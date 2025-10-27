@@ -255,6 +255,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <returns></returns>
         public static List<AutomationElement> SearchChildrenUIElements(this IUIElementSearchParametersProperties command, AutomationElement rootElement, AutomationEngineInstance engine)
         {
+            // TODO: use treewalker
             var searchConditions = command.CreateSearchCondition(engine);
 
             if (searchConditions != null)
