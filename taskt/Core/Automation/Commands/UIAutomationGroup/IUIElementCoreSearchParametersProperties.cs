@@ -5,7 +5,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     /// <summary>
     /// UIElement search parameters
     /// </summary>
-    public interface IUIElementSearchParametersProperties : IExpandableProperties, IHaveDataTableElements
+    public interface IUIElementCoreSearchParametersProperties : IExpandableProperties, IHaveDataTableElements
     {
         /// <summary>
         /// UIElement search parameters
@@ -16,5 +16,10 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// wait time for UIElement
         /// </summary>
         string v_WaitTimeForUIElement { get; set; }
+
+        /// <summary>
+        /// maximum number of sibling nodes to search
+        /// </summary>
+        string v_MaxSiblings { get; set; }
     }
 }

@@ -113,6 +113,30 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         public static string v_SearchParameters { get; }
 
         /// <summary>
+        /// Maxinum number of Sibling Node for Search UIElements
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Maxinum number of Sibling Nodes for Search UIElements")]
+        [InputSpecification("Number Greater than or Equal 0")]
+        [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Max Siblings")]
+        [PropertyDetailSampleUsage("**{{{vMax}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Max Siblings")]
+        [PropertyDisplayText(false, "Max Siblings", "s")]
+        [PropertyValidationRule("Max Siblings", PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        public static string v_MaxSiblings { get; }
+
+        /// <summary>
+        /// Maxinum Depth for Search UIElements
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Maxinum Depth for Search UIElements")]
+        [InputSpecification("Number Greater than or Equal 0")]
+        [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Max Depth")]
+        [PropertyDetailSampleUsage("**{{{vMax}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Max Depth")]
+        [PropertyDisplayText(false, "Max Depth", "s")]
+        [PropertyValidationRule("Max Depth", PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        public static string v_MaxDepth { get; }
+
+        /// <summary>
         /// show GUI InspectTool and get InspectTool like result
         /// </summary>
         /// <param name="sender"></param>
@@ -123,7 +147,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             {
                 if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {
-                    (var command, var dgv) = EM_UIElementSearchParametersPropertiesExtensionMethods.GetCommandAndSearchDataGridView((Control)sender);
+                    (var command, var dgv) = EM_UIElementCoreSearchParametersPropertiesExtensionMethods.GetCommandAndSearchDataGridView((Control)sender);
                     command.SearchParametersUpdateProcess(dgv, new Action<DataTable>((tbl) =>
                     {
                         ParseInspectToolResult(fm.InspectResult, tbl);
@@ -139,7 +163,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="e"></param>
         public static void lnkAddEmptyParameter_Click(object sender, EventArgs e)
         {
-            (var command, var dgv) = EM_UIElementSearchParametersPropertiesExtensionMethods.GetCommandAndSearchDataGridView((Control)sender);
+            (var command, var dgv) = EM_UIElementCoreSearchParametersPropertiesExtensionMethods.GetCommandAndSearchDataGridView((Control)sender);
             command.SearchParametersUpdateProcess(dgv, new Action<DataTable>((tbl) =>
             {
                 CreateEmptySearchParamters(tbl);
@@ -157,7 +181,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             {
                 if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {
-                    (var command, var dgv) = EM_UIElementSearchParametersPropertiesExtensionMethods.GetCommandAndSearchDataGridView((Control)sender);
+                    (var command, var dgv) = EM_UIElementCoreSearchParametersPropertiesExtensionMethods.GetCommandAndSearchDataGridView((Control)sender);
                     command.SearchParametersUpdateProcess(dgv, new Action<DataTable>((tbl) =>
                     {
                         ParseInspectToolResult(fm.inspectResult, tbl);
@@ -222,7 +246,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         public static void CreateEmptySearchParamters(DataTable table)
         {
             table.Rows.Clear();
-            foreach (var n in EM_UIElementSearchParametersPropertiesExtensionMethods.TargetControlProperties)
+            foreach (var n in EM_UIElementCoreSearchParametersPropertiesExtensionMethods.TargetControlProperties)
             {
                 table.Rows.Add(false, n, "");
             }

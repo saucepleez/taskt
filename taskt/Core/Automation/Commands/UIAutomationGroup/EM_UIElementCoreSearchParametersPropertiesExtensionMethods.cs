@@ -8,7 +8,7 @@ using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
-    public static class EM_UIElementSearchParametersPropertiesExtensionMethods
+    public static class EM_UIElementCoreSearchParametersPropertiesExtensionMethods
     {
         /// <summary>
         /// UIElement type for Reflection
@@ -37,10 +37,10 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// </summary>
         /// <param name="ctl"></param>
         /// <returns></returns>
-        public static (IUIElementSearchParametersProperties, DataGridView) GetCommandAndSearchDataGridView(Control ctl)
+        public static (IUIElementCoreSearchParametersProperties, DataGridView) GetCommandAndSearchDataGridView(Control ctl)
         {
             var editor = FormUIControls.GetCommandEditorFromControl(ctl);
-            var command = (IUIElementSearchParametersProperties)editor.selectedCommand;
+            var command = (IUIElementCoreSearchParametersProperties)editor.selectedCommand;
             //var dgv = FormUIControls.GetPropertyControl<DataGridView>(editor.us.ControlsList, nameof(IUIElementSearchParametersProperties.v_SearchParameters));
             var dgv = (DataGridView)editor.ParameterBindingControls[nameof(command.v_SearchParameters)];
 
@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="updateFunc"></param>
-        public static void SearchParametersUpdateProcess(this IUIElementSearchParametersProperties command, DataGridView dgv, Action<DataTable> updateFunc)
+        public static void SearchParametersUpdateProcess(this IUIElementCoreSearchParametersProperties command, DataGridView dgv, Action<DataTable> updateFunc)
         {
             updateFunc(command.v_SearchParameters);
             RenderUIElementSearchParameter(dgv);
@@ -121,13 +121,13 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// </summary>
         /// <param name="table"></param>
         /// <param name="engine"></param>
-        /// <returns>when no conditions return null</returns>
-        private static Condition CreateSearchCondition(this IUIElementSearchParametersProperties comamnd, AutomationEngineInstance engine)
+        /// <returns></returns>
+        private static List<PropertyCondition> CreateSearchCondition(this IUIElementCoreSearchParametersProperties comamnd, AutomationEngineInstance engine)
         {
             var table = comamnd.v_SearchParameters;
 
-            //create and populate condition list
-            var conditionList = new List<Condition>();
+            // create and populate condition list
+            var conditionList = new List<PropertyCondition>();
             foreach (DataRow row in table.Rows)
             {
                 var isEnabled = row.Field<string>("Enabled") ?? "false";
@@ -233,17 +233,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                 conditionList.Add(propCondition);
             }
 
-            switch (conditionList.Count)
-            {
-                case 0:
-                    return null;    // no conditions
-
-                case 1:
-                    return conditionList[0];    // 1 condition
-
-                default:
-                    return new AndCondition(conditionList.ToArray());   // 2+ conditions
-            }
+            return conditionList;
         }
 
         /// <summary>
@@ -253,55 +243,102 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="rootElement"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static List<AutomationElement> SearchChildrenUIElements(this IUIElementSearchParametersProperties command, AutomationElement rootElement, AutomationEngineInstance engine)
+        public static List<AutomationElement> SearchChildrenUIElements(this IUIElementCoreSearchParametersProperties command, AutomationElement rootElement, AutomationEngineInstance engine)
         {
             // TODO: use treewalker
             var searchConditions = command.CreateSearchCondition(engine);
 
-            if (searchConditions != null)
+            // MEMO: for specify search direction
+            Func<AutomationElement, TreeWalker, AutomationElement> firstChildFunc = new Func<AutomationElement, TreeWalker, AutomationElement>((el, wa) =>
             {
-                var waitTime = command.ExpandValueOrUserVariableAsWaitTimeForUIElement(engine);
+                return wa.GetFirstChild(el);
+            });
+            Func<AutomationElement, TreeWalker, AutomationElement> nextChildFunc = new Func<AutomationElement, TreeWalker, AutomationElement>((el, wa) =>
+            {
+                return wa.GetNextSibling(el);
+            });
 
-                var r = WaitControls.WaitProcess(waitTime, "Children UIElement", new Func<(bool, object)>(() =>
-                {
-                    var elements = rootElement.FindAll(TreeScope.Children, searchConditions);
-                    if (elements.Count > 0)
-                    {
-                        var ret = new List<AutomationElement>();
-                        foreach (AutomationElement element in elements)
-                        {
-                            ret.Add(element);
-                        }
-                        return (true, ret);
-                    }
-                    else
-                    {
-                        return (false, null);
-                    }
-                }), engine);
-                if (r is List<AutomationElement> list)
-                {
-                    return list;
-                }
-                else
-                {
-                    return new List<AutomationElement>();
-                }
-            }
-            else
+            var waitTime = command.ExpandValueOrUserVariableAsWaitTimeForUIElement(engine);
+
+            var ret = WaitControls.WaitProcess(waitTime, "Children UIElement", new Func<Func<bool>, (bool, object)>((timeOutFunc) =>
             {
                 var walker = TreeWalker.RawViewWalker;
                 var elems = new List<AutomationElement>();
-
-                var node = walker.GetFirstChild(rootElement);
+                var node = firstChildFunc(rootElement, walker);
+                int sibCnt = 0;
                 while (node != null)
                 {
-                    elems.Add(node);
-                    node = walker.GetNextSibling(node);
+                    CheckAndAddProcess(node, searchConditions, elems);
+                    if (timeOutFunc())
+                    {
+                        return (true, elems);
+                    }
+
+                    node = nextChildFunc(rootElement, walker);
+                    sibCnt++;
+                    if (sibCnt >= maxSibling)
+                    {
+                        return (true, elems);
+                    }
                 }
-                return elems;
+                return (true, elems);
+            }), engine);
+
+            if (ret is List<AutomationElement> e)
+            {
+                return e;
             }
         }
+
+        //public static List<AutomationElement> SearchChildrenUIElements(this IUIElementSearchParametersProperties command, AutomationElement rootElement, AutomationEngineInstance engine)
+        //{
+        //    // TODO: use treewalker
+        //    var searchConditions = command.CreateSearchCondition(engine);
+
+        //    if (searchConditions != null)
+        //    {
+        //        var waitTime = command.ExpandValueOrUserVariableAsWaitTimeForUIElement(engine);
+
+        //        var r = WaitControls.WaitProcess(waitTime, "Children UIElement", new Func<(bool, object)>(() =>
+        //        {
+        //            var elements = rootElement.FindAll(TreeScope.Children, searchConditions);
+        //            if (elements.Count > 0)
+        //            {
+        //                var ret = new List<AutomationElement>();
+        //                foreach (AutomationElement element in elements)
+        //                {
+        //                    ret.Add(element);
+        //                }
+        //                return (true, ret);
+        //            }
+        //            else
+        //            {
+        //                return (false, null);
+        //            }
+        //        }), engine);
+        //        if (r is List<AutomationElement> list)
+        //        {
+        //            return list;
+        //        }
+        //        else
+        //        {
+        //            return new List<AutomationElement>();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        var walker = TreeWalker.RawViewWalker;
+        //        var elems = new List<AutomationElement>();
+
+        //        var node = walker.GetFirstChild(rootElement);
+        //        while (node != null)
+        //        {
+        //            elems.Add(node);
+        //            node = walker.GetNextSibling(node);
+        //        }
+        //        return elems;
+        //    }
+        //}
 
         /// <summary>
         /// expand value or user variable as wait time for UIElement
@@ -309,7 +346,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static int ExpandValueOrUserVariableAsWaitTimeForUIElement(this IUIElementSearchParametersProperties command, Engine.AutomationEngineInstance engine)
+        public static int ExpandValueOrUserVariableAsWaitTimeForUIElement(this IUIElementCoreSearchParametersProperties command, Engine.AutomationEngineInstance engine)
         {
             return command.ToScriptCommand().ExpandValueOrUserVariableAsInteger(nameof(command.v_WaitTimeForUIElement), engine);
         }
@@ -323,22 +360,8 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="maxSibling"></param>
         /// <param name="timeoutFunc"></param>
         /// <returns></returns>
-        private static List<AutomationElement> DeepSearchUIElements(AutomationElement rootElement, Condition searchCondition, int maxDepth, int maxSibling, Func<bool> timeoutFunc)
+        private static List<AutomationElement> DeepSearchUIElements(AutomationElement rootElement, List<PropertyCondition> searchCondition, int maxDepth, int maxSibling, Func<bool> timeoutFunc)
         {
-            // cast conditions to PropertyCondition[]
-            PropertyCondition[] conditions;
-            if (searchCondition is AndCondition andConds)
-            {
-                conditions = andConds.GetConditions().Cast<PropertyCondition>().ToArray();
-            }
-            else
-            {
-                conditions = new PropertyCondition[1]
-                {
-                    (PropertyCondition)searchCondition
-                };
-            }
-
             // MEMO: for specify search direction
             Func<AutomationElement, TreeWalker, AutomationElement> firstChildFunc = new Func<AutomationElement, TreeWalker, AutomationElement>((el, wa) =>
             {
@@ -352,12 +375,12 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             var walker = TreeWalker.RawViewWalker;
 
             var ret = new List<AutomationElement>();
-            if (CheckAutomationElementCondition(rootElement, conditions))
+            if (CheckAutomationElementCondition(rootElement, searchCondition))
             {
                 ret.Add(rootElement);
             }
 
-            return DeepSearchUIElements_DepthFirst(rootElement, conditions, 0, maxDepth, maxSibling, walker, firstChildFunc, nextChildFunc, timeoutFunc, ret);
+            return DeepSearchUIElements_DepthFirst(rootElement, searchCondition, 0, maxDepth, maxSibling, walker, firstChildFunc, nextChildFunc, timeoutFunc, ret);
         }
 
         /// <summary>
@@ -374,7 +397,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="timeoutFunc"></param>
         /// <param name="matchedElements">if returns true time-out</param>
         /// <returns></returns>
-        private static List<AutomationElement> DeepSearchUIElements_DepthFirst(AutomationElement rootElement, PropertyCondition[] searchConditions, 
+        private static List<AutomationElement> DeepSearchUIElements_DepthFirst(AutomationElement rootElement, List<PropertyCondition> searchConditions, 
                             int currentDepth, int maxDepath, int maxSibling,
                             TreeWalker walker, 
                             Func<AutomationElement, TreeWalker, AutomationElement> firstChildFunc, Func<AutomationElement, TreeWalker, AutomationElement> nextChildFunc, 
@@ -418,7 +441,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="targetElement"></param>
         /// <param name="conditions"></param>
         /// <param name="matchedElements"></param>
-        private static void CheckAndAddProcess(AutomationElement targetElement, PropertyCondition[] conditions, List<AutomationElement> matchedElements)
+        private static void CheckAndAddProcess(AutomationElement targetElement, List<PropertyCondition> conditions, List<AutomationElement> matchedElements)
         {
             if (CheckAutomationElementCondition(targetElement, conditions))
             {
@@ -432,7 +455,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="targetElement"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        private static bool CheckAutomationElementCondition(AutomationElement targetElement, PropertyCondition[] conditions)
+        private static bool CheckAutomationElementCondition(AutomationElement targetElement, List<PropertyCondition> conditions)
         {
             bool result = true;
             foreach (var c in conditions)
