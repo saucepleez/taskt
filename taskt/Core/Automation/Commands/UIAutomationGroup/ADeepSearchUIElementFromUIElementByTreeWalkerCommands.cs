@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     /// <summary>
     /// for deep search UIElements commands
     /// </summary>
-    public abstract class ADeepSearchUIElementFromUIElementsByTreeWalkerCommands : ACoreSearchUIElementsFromUIElementByTreeWalkerCommands, IUIElementDeepSearchParametersProperties
+    public abstract class ADeepSearchUIElementsFromUIElementByTreeWalkerCommands : ACoreSearchUIElementsFromUIElementByTreeWalkerCommands, IUIElementDeepSearchParametersProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_MaxDepth))]
