@@ -4762,7 +4762,6 @@ namespace taskt.Core.Script
 
         private static void convertTo3_5_2_46(XDocument doc)
         {
-
             // UIAutomationCheckUIElementExistsByXPathCommand, UIAutomationCheckUIElementExistsCommand,
             // UIAutomationSearchUIElementFromUIElementByXPathCommand, UIAutomationSearchUIElementFromUIElementCommand,
             // UIAutomationWaitForUIElementToExistsByXPathCommand, UIAutomationWaitForUIElementToExistsCommand
