@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
-        public string v_WaitTime { get; set; }
+        public string v_WaitTimeForUIElement { get; set; }
 
         //[XmlIgnore]
         //[NonSerialized]

@@ -462,6 +462,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_43(doc);
             convertTo3_5_2_44(doc);
             convertTo3_5_2_45(doc);
+            convertTo3_5_2_46(doc);
             return doc;
         }
 
@@ -4757,6 +4758,47 @@ namespace taskt.Core.Script
 
             // UIAutomationSetSelectionStateToUIElementCommand -> UIAutomationSetSelectedStateToUIElementCommand
             ChangeCommandName(doc, "UIAutomationSetSelectionStateToUIElementCommand", "UIAutomationSetSelectedStateToUIElementCommand", "Set Selected State To UIElement");
+        }
+
+        private static void convertTo3_5_2_46(XDocument doc)
+        {
+
+            // UIAutomationCheckUIElementExistsByXPathCommand, UIAutomationCheckUIElementExistsCommand,
+            // UIAutomationSearchUIElementFromUIElementByXPathCommand, UIAutomationSearchUIElementFromUIElementCommand,
+            // UIAutomationWaitForUIElementToExistsByXPathCommand, UIAutomationWaitForUIElementToExistsCommand
+            // v_WaitTime -> v_WaitTimeForUIElement
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationCheckUIElementExistsByXPathCommand":
+                    case "UIAutomationCheckUIElementExistsCommand":
+                    case "UIAutomationSearchUIElementFromUIElementByXPathCommand":
+                    case "UIAutomationSearchUIElementFromUIElementCommand":
+                    case "UIAutomationWaitForUIElementToExistsByXPathCommand":
+                    case "UIAutomationWaitForUIElementToExistsCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_WaitTime", "v_WaitTimeForUIElement");
+
+            // UIAutomationSearchUIElementAndWindowByXPathCommand, UIAutomationSearchUIElementAndWindowCommand,
+            // UIAutomationUIElementActionByXPathCommand, UIAutomationUIElementActionCommand
+            // v_ElementWaitTime -> v_WaitTimeForUIElement
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationSearchUIElementAndWindowByXPathCommand":
+                    case "UIAutomationSearchUIElementAndWindowCommand":
+                    case "UIAutomationUIElementActionByXPathCommand":
+                    case "UIAutomationUIElementActionCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_ElementWaitTime", "v_WaitTimeForUIElement");
         }
 
         /// <summary>

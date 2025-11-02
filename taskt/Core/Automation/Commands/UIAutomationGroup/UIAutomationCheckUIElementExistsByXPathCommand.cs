@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
-        public string v_WaitTime { get; set; }
+        public string v_WaitTimeForUIElement { get; set; }
 
         public UIAutomationCheckUIElementExistsByXPathCommand()
         {

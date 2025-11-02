@@ -76,7 +76,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
-        public string v_ElementWaitTime { get; set; }
+        public string v_WaitTimeForUIElement { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
@@ -274,7 +274,7 @@ namespace taskt.Core.Automation.Commands
                             {
                                 v_TargetElement = myWinElem.VariableName,
                                 v_SearchParameters = this.v_UIASearchParameters,
-                                v_WaitTime = this.v_ElementWaitTime,
+                                v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
                                 v_Result = p["Apply To Variable"],
                             };
                             chkElem.RunCommand(engine);
@@ -285,7 +285,7 @@ namespace taskt.Core.Automation.Commands
                             {
                                 v_TargetElement = myWinElem.VariableName,
                                 v_SearchParameters = this.v_UIASearchParameters,
-                                v_WaitTime = this.v_ElementWaitTime,
+                                v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
                                 v_AutomationElementVariable = myTrgElem.VariableName,
                             };
                             trgElem.RunCommand(engine);
