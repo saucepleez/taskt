@@ -6,9 +6,9 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
     /// <summary>
-    /// for search UIElement from UIElement by TreeWalker commands
+    /// for search UIElement from UIElements by TreeWalker commands
     /// </summary>
-    public abstract class ACoreSearchUIElementFromUIElementByTreeWalkerCommands : ADoSomethingUIElementCommands, IUIElementCoreSearchParametersProperties
+    public abstract class ACoreSearchUIElementsFromUIElementByTreeWalkerCommands : ADoSomethingUIElementCommands, IUIElementCoreSearchParametersProperties
     {
         [XmlElement]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SearchParameters))]

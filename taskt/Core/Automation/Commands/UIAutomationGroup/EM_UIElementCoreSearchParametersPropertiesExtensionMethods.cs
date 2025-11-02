@@ -121,7 +121,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="table"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        private static List<PropertyCondition> CreateSearchCondition(this IUIElementCoreSearchParametersProperties comamnd, Engine.AutomationEngineInstance engine)
+        public static List<PropertyCondition> CreateSearchCondition(this IUIElementCoreSearchParametersProperties comamnd, Engine.AutomationEngineInstance engine)
         {
             var table = comamnd.v_SearchParameters;
 
