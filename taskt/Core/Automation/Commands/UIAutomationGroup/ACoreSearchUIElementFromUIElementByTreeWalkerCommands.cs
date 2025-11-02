@@ -27,12 +27,12 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_MaxNumberUIElements))]
-        [PropertyParameterOrder(7992)]
+        [PropertyParameterOrder(7995)]
         public string v_MaxNumberUIElements { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SiblingsDirection))]
-        [PropertyParameterOrder(7993)]
+        [PropertyParameterOrder(7996)]
         public string v_SiblingsDirection { get; set; }
 
         public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
