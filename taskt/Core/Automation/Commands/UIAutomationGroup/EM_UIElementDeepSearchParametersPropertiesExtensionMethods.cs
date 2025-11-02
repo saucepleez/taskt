@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="rootElement"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        private static List<AutomationElement> DeepSearchUIElements(this IUIElementDeepSearchParametersProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
+        public static List<AutomationElement> DeepSearchUIElements(this IUIElementDeepSearchParametersProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
         {
             var conditions = command.CreateSearchCondition(engine);
             (var firstChildFunc, var nextChildFunc) = command.GetSiblingNodeFunc(engine);
