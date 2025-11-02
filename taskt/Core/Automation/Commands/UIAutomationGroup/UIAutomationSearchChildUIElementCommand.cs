@@ -58,19 +58,6 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var rootElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
-            //int index = v_Index.ExpandValueOrUserVariableAsInteger("v_Index", engine);
-
-            //var elems = UIElementControls.GetChildrenUIElements(rootElement, v_SearchParameters, engine);
-            //if (elems.Count > 0)
-            //{
-            //    elems[index].StoreInUserVariable(engine, v_Result);
-            //}
-            //else
-            //{
-            //    throw new Exception("UIElement not found");
-            //}
-
             this.UIElementAction(engine, new Action<AutomationElement>((elem) =>
             {
                 var children = this.SearchChildrenUIElements(elem, engine);
@@ -90,18 +77,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }));
         }
-
-        //public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
-        //{
-        //    UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
-        //}
-
-        //public override void BeforeValidate()
-        //{
-        //    base.BeforeValidate();
-
-        //    var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_SearchParameters));
-        //    DataTableControls.BeforeValidate_NoRowAdding(dgv, v_SearchParameters);
-        //}
     }
 }

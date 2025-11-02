@@ -42,20 +42,6 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
-
-            //var elems = UIElementControls.GetChildrenUIElements(targetElement, v_SearchParameters, engine);
-
-            //string result = "";
-
-            //int counts = elems.Count;
-            //for (int i = 0; i < counts; i++)
-            //{
-            //    var elem = elems[i];
-            //    result += "Index: " + i + ", Name: " + elem.Current.Name + ", LocalizedControlType: " + elem.Current.LocalizedControlType + ", ControlType: " + UIElementControls.GetControlTypeText(elem.Current.ControlType) + "\n";
-            //}
-            //result.Trim().StoreInUserVariable(engine, v_Result);
-
             this.UIElementAction(engine, new Action<AutomationElement>((targetElement) =>
             {
                 var elems = this.SearchChildrenUIElements(targetElement, engine);
@@ -71,18 +57,5 @@ namespace taskt.Core.Automation.Commands
                 result.Trim().StoreInUserVariable(engine, v_Result);
             }));
         }
-
-        //public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
-        //{
-        //    UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
-        //}
-
-        //public override void BeforeValidate()
-        //{
-        //    base.BeforeValidate();
-
-        //    var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_SearchParameters));
-        //    DataTableControls.BeforeValidate_NoRowAdding(dgv, v_SearchParameters);
-        //}
     }
 }
