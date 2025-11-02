@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,42 +14,54 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationCheckUIElementExistsCommand : ScriptCommand, IHaveDataTableElements
+    public sealed class UIAutomationCheckUIElementExistsCommand : ADeepSearchUIElementsFromUIElementByTreeWalkerCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
-        public string v_TargetElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
+        //public string v_TargetElement { get; set; }
 
-        [XmlElement]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
-        public DataTable v_SearchParameters { get; set; }
+        //[XmlElement]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
+        //public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the UIElement exists, Result value is **True**")]
+        [PropertyParameterOrder(7000)]
         public string v_Result { get; set; }
+        
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
+        //[PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        //[PropertyIsOptional(true, "0")]
+        //[PropertyFirstValue("0")]
+        //public string v_WaitTimeForUIElement { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
-        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyIsOptional(true, "0")]
-        [PropertyFirstValue("0")]
-        public string v_WaitTimeForUIElement { get; set; }
+        [PropertyIsOptional(true, "1")]
+        public override string v_MaxNumberUIElements { get; set; }
 
         public UIAutomationCheckUIElementExistsCommand()
         {
-            //this.CommandName = "UIAutomationCheckElementExistCommand";
-            //this.SelectionName = "Check Element Exist";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
+            //try
+            //{
+            //    UIElementControls.SearchGUIElement(this, engine);
+            //    true.StoreInUserVariable(engine, v_Result);
+            //}
+            //catch
+            //{
+            //    false.StoreInUserVariable(engine, v_Result);
+            //}
             try
             {
-                UIElementControls.SearchGUIElement(this, engine);
-                true.StoreInUserVariable(engine, v_Result);
+                var targetElement = this.ExpandUserVariableAsUIElement(engine);
+                var elems = this.DeepSearchUIElements(targetElement, engine);
+                (elems.Count > 0).StoreInUserVariable(engine, v_Result);
             }
             catch
             {
@@ -58,18 +69,18 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
-        {
-            //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
-            UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
-        }
+        //public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
+        //{
+        //    //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
+        //    UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
+        //}
 
-        public override void BeforeValidate()
-        {
-            base.BeforeValidate();
+        //public override void BeforeValidate()
+        //{
+        //    base.BeforeValidate();
 
-            var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_SearchParameters));
-            DataTableControls.BeforeValidate_NoRowAdding(dgv, v_SearchParameters);
-        }
+        //    var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_SearchParameters));
+        //    DataTableControls.BeforeValidate_NoRowAdding(dgv, v_SearchParameters);
+        //}
     }
 }
