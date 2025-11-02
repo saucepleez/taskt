@@ -155,6 +155,17 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         public static string v_MaxNumberUIElements { get; }
 
         /// <summary>
+        /// Search Siblings Direction
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Search Siblings Direction")]
+        [PropertyUISelectionOption("First to Last")]
+        [PropertyUISelectionOption("Last to First")]
+        [PropertyIsOptional(true, "First to Last")]
+        [PropertyDisplayText(false, "Direction")]
+        public static string v_SiblingsDirection { get; }
+
+        /// <summary>
         /// show GUI InspectTool and get InspectTool like result
         /// </summary>
         /// <param name="sender"></param>

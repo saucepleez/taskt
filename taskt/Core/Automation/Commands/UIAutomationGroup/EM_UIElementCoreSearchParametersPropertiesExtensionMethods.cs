@@ -244,18 +244,9 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <returns></returns>
         public static List<AutomationElement> SearchChildrenUIElements(this IUIElementCoreSearchParametersProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
         {
-            // TODO: use treewalker
             var searchConditions = command.CreateSearchCondition(engine);
 
-            // MEMO: for specify search direction
-            Func<AutomationElement, TreeWalker, AutomationElement> firstChildFunc = new Func<AutomationElement, TreeWalker, AutomationElement>((el, wa) =>
-            {
-                return wa.GetFirstChild(el);
-            });
-            Func<AutomationElement, TreeWalker, AutomationElement> nextChildFunc = new Func<AutomationElement, TreeWalker, AutomationElement>((el, wa) =>
-            {
-                return wa.GetNextSibling(el);
-            });
+            (var firstChildFunc, var nextChildFunc) = command.GetSiblingNodeFunc(engine);
 
             var waitTime = command.ExpandValueOrUserVariableAsWaitTimeForUIElement(engine);
 
@@ -373,6 +364,42 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             else
             {
                 return new Func<List<AutomationElement>, bool>((e) => (e.Count >= maxElements));
+            }
+        }
+
+        /// <summary>
+        /// get UIElement siblings node search Funcs
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns>(First-Child, Next-Child)</returns>
+        public static (Func<AutomationElement, TreeWalker, AutomationElement>, Func<AutomationElement, TreeWalker, AutomationElement>) GetSiblingNodeFunc(this IUIElementCoreSearchParametersProperties command, Engine.AutomationEngineInstance engine)
+        {
+            switch(command.ToScriptCommand().ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_SiblingsDirection), engine))
+            {
+                case "last to first":
+                    return (
+                            new Func<AutomationElement, TreeWalker, AutomationElement>((e, w) =>
+                            {
+                                return w.GetLastChild(e);
+                            }),
+                            new Func<AutomationElement, TreeWalker, AutomationElement>((e, w) =>
+                            {
+                                return w.GetPreviousSibling(e);
+                            })
+                        );
+                case "fist to last":
+                default:    // default not works
+                    return (
+                            new Func<AutomationElement, TreeWalker, AutomationElement>((e, w) =>
+                            {
+                                return w.GetFirstChild(e);
+                            }),
+                            new Func<AutomationElement, TreeWalker, AutomationElement>((e, w) =>
+                            {
+                                return w.GetNextSibling(e);
+                            })
+                        );
             }
         }
 
