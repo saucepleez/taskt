@@ -11,6 +11,6 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_MaxDepth))]
         [PropertyParameterOrder(7992)]
-        public string v_MaxDepth { get; set; }
+        public virtual string v_MaxDepth { get; set; }
     }
 }

@@ -13,27 +13,27 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         [XmlElement]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SearchParameters))]
         [PropertyParameterOrder(6000)]
-        public DataTable v_SearchParameters { get; set; }
+        public virtual DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_WaitTimeForUIElement))]
         [PropertyParameterOrder(7990)]
-        public string v_WaitTimeForUIElement { get; set; }
+        public virtual string v_WaitTimeForUIElement { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_MaxSiblings))]
         [PropertyParameterOrder(7991)]
-        public string v_MaxSiblings { get; set; }
+        public virtual string v_MaxSiblings { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_MaxNumberUIElements))]
         [PropertyParameterOrder(7995)]
-        public string v_MaxNumberUIElements { get; set; }
+        public virtual string v_MaxNumberUIElements { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SiblingsDirection))]
         [PropertyParameterOrder(7996)]
-        public string v_SiblingsDirection { get; set; }
+        public virtual string v_SiblingsDirection { get; set; }
 
         public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
