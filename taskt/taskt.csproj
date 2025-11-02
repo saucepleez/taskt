@@ -469,7 +469,7 @@
     <Compile Include="Core\Automation\Commands\ListGroup\GetCommonValuesOfListsCommand.cs" />
     <Compile Include="Core\Automation\Commands\ListGroup\CheckValidListIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptCommandInformation.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementFromUIElementByTreeWalkerCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementsFromUIElementByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADoSomethingUIElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\AGetFromUIElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ACoreSearchUIElementsFromUIElementByTreeWalkerCommands.cs" />
