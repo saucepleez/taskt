@@ -264,17 +264,17 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                     CheckAndAddProcess(node, searchConditions, elems);
                     if (timeOutFunc() || maxUIElementsFunc(elems))
                     {
-                        return (true, elems);
+                        return ((elems.Count > 0), elems);
                     }
 
                     node = nextChildFunc(node, walker);
                     sibCnt++;
                     if (maxSiblingsFunc(sibCnt))
                     {
-                        return (true, elems);
+                        return ((elems.Count > 0), elems);
                     }
                 }
-                return (true, elems);
+                return ((elems.Count > 0), elems);
             }), engine);
 
             if (ret is List<AutomationElement> e)

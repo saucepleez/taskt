@@ -31,20 +31,19 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                 EM_UIElementCoreSearchParametersPropertiesExtensionMethods.CheckAndAddProcess(rootElement, conditions, elems);
                 if (timeoutFunc() || maxElementsFunc(elems))
                 {
-                    return (true, elems);
+                    return ((elems.Count > 0), elems);
                 }
 
                 int depth = 1;
                 if (maxDepthFunc(depth))
                 {
-                    return (true, elems);
+                    return ((elems.Count > 0), elems);
                 }
                 else
                 {
                     DeepSearchUIElements_DepthFirst(rootElement, conditions, depth, walker, firstChildFunc, nextChildFunc, maxSiblingsFunc, maxDepthFunc, maxElementsFunc, timeoutFunc, elems);
-                    return (true, elems);
+                    return ((elems.Count > 0), elems);
                 }
-
             }), engine);
 
             if (r is List<AutomationElement> e)
