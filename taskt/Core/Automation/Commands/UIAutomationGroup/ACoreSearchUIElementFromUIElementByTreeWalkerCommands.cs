@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using System.Web;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -25,6 +24,11 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_MaxSiblings))]
         [PropertyParameterOrder(7991)]
         public string v_MaxSiblings { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_MaxNumberUIElements))]
+        [PropertyParameterOrder(7992)]
+        public string v_MaxNumberUIElements { get; set; }
 
         public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {

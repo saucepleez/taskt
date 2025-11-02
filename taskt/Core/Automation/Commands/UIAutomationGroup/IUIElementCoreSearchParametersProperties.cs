@@ -21,5 +21,10 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// maximum number of sibling nodes to search
         /// </summary>
         string v_MaxSiblings { get; set; }
+
+        /// <summary>
+        /// Maxinum Number of UIElements to Search
+        /// </summary>
+        string v_MaxNumberUIElements { get; set; }
     }
 }

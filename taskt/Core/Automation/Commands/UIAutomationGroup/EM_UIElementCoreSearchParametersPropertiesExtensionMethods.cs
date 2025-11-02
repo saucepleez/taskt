@@ -4,7 +4,6 @@ using System.Data;
 using System.Linq;
 using System.Windows.Automation;
 using System.Windows.Forms;
-using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
@@ -122,7 +121,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="table"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        private static List<PropertyCondition> CreateSearchCondition(this IUIElementCoreSearchParametersProperties comamnd, AutomationEngineInstance engine)
+        private static List<PropertyCondition> CreateSearchCondition(this IUIElementCoreSearchParametersProperties comamnd, Engine.AutomationEngineInstance engine)
         {
             var table = comamnd.v_SearchParameters;
 
@@ -243,7 +242,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="rootElement"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static List<AutomationElement> SearchChildrenUIElements(this IUIElementCoreSearchParametersProperties command, AutomationElement rootElement, AutomationEngineInstance engine)
+        public static List<AutomationElement> SearchChildrenUIElements(this IUIElementCoreSearchParametersProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
         {
             // TODO: use treewalker
             var searchConditions = command.CreateSearchCondition(engine);
@@ -260,6 +259,9 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
 
             var waitTime = command.ExpandValueOrUserVariableAsWaitTimeForUIElement(engine);
 
+            var maxSiblingsFunc = command.GetMaxSiblingsFunc(engine);
+            var maxUIElementsFunc = command.GetMaxNumberUIElementsFunc(engine);
+
             var ret = WaitControls.WaitProcess(waitTime, "Children UIElement", new Func<Func<bool>, (bool, object)>((timeOutFunc) =>
             {
                 var walker = TreeWalker.RawViewWalker;
@@ -269,14 +271,14 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                 while (node != null)
                 {
                     CheckAndAddProcess(node, searchConditions, elems);
-                    if (timeOutFunc())
+                    if (timeOutFunc() || maxUIElementsFunc(elems))
                     {
                         return (true, elems);
                     }
 
-                    node = nextChildFunc(rootElement, walker);
+                    node = nextChildFunc(node, walker);
                     sibCnt++;
-                    if (sibCnt >= maxSibling)
+                    if (maxSiblingsFunc(sibCnt))
                     {
                         return (true, elems);
                     }
@@ -288,57 +290,12 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             {
                 return e;
             }
+            else
+            {
+                // not found
+                return new List<AutomationElement>();
+            }
         }
-
-        //public static List<AutomationElement> SearchChildrenUIElements(this IUIElementSearchParametersProperties command, AutomationElement rootElement, AutomationEngineInstance engine)
-        //{
-        //    // TODO: use treewalker
-        //    var searchConditions = command.CreateSearchCondition(engine);
-
-        //    if (searchConditions != null)
-        //    {
-        //        var waitTime = command.ExpandValueOrUserVariableAsWaitTimeForUIElement(engine);
-
-        //        var r = WaitControls.WaitProcess(waitTime, "Children UIElement", new Func<(bool, object)>(() =>
-        //        {
-        //            var elements = rootElement.FindAll(TreeScope.Children, searchConditions);
-        //            if (elements.Count > 0)
-        //            {
-        //                var ret = new List<AutomationElement>();
-        //                foreach (AutomationElement element in elements)
-        //                {
-        //                    ret.Add(element);
-        //                }
-        //                return (true, ret);
-        //            }
-        //            else
-        //            {
-        //                return (false, null);
-        //            }
-        //        }), engine);
-        //        if (r is List<AutomationElement> list)
-        //        {
-        //            return list;
-        //        }
-        //        else
-        //        {
-        //            return new List<AutomationElement>();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        var walker = TreeWalker.RawViewWalker;
-        //        var elems = new List<AutomationElement>();
-
-        //        var node = walker.GetFirstChild(rootElement);
-        //        while (node != null)
-        //        {
-        //            elems.Add(node);
-        //            node = walker.GetNextSibling(node);
-        //        }
-        //        return elems;
-        //    }
-        //}
 
         /// <summary>
         /// expand value or user variable as wait time for UIElement
@@ -349,6 +306,74 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         public static int ExpandValueOrUserVariableAsWaitTimeForUIElement(this IUIElementCoreSearchParametersProperties command, Engine.AutomationEngineInstance engine)
         {
             return command.ToScriptCommand().ExpandValueOrUserVariableAsInteger(nameof(command.v_WaitTimeForUIElement), engine);
+        }
+
+        /// <summary>
+        /// expand value or user variable as Max Siblings
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static int ExpandValueOrUserVariableAsMaxSiblings(this IUIElementCoreSearchParametersProperties command, Engine.AutomationEngineInstance engine)
+        {
+            if (string.IsNullOrEmpty(command.v_MaxSiblings))
+            {
+                command.v_MaxSiblings = "64";
+            }
+            return command.ToScriptCommand().ExpandValueOrUserVariableAsInteger(nameof(command.v_MaxSiblings), engine);
+        }
+
+        /// <summary>
+        /// expand value or user varaible as Max Number of UIElements to search
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static int ExpandValueOrUserVariableAsMaxNumberUIElements(this IUIElementCoreSearchParametersProperties command, Engine.AutomationEngineInstance engine)
+        {
+            if (string.IsNullOrEmpty(command.v_MaxNumberUIElements))
+            {
+                command.v_MaxSiblings = "0";
+            }
+            return command.ToScriptCommand().ExpandValueOrUserVariableAsInteger(nameof(command.v_MaxNumberUIElements), engine);
+        }
+
+        /// <summary>
+        /// get check max siblings function
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns>When Func returns true, max siblings</returns>
+        public static Func<int, bool> GetMaxSiblingsFunc(this IUIElementCoreSearchParametersProperties command, Engine.AutomationEngineInstance engine)
+        {
+            var maxSiblings = command.ExpandValueOrUserVariableAsMaxSiblings(engine);
+            if (maxSiblings == 0)
+            {
+                return new Func<int, bool>((n) => false);
+            }
+            else
+            {
+                return new Func<int, bool>((n) => (n > maxSiblings));
+            }
+        }
+
+        /// <summary>
+        /// get check max number of UIElements function
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns>When Func returns true, max UIElements</returns>
+        public static Func<List<AutomationElement>, bool> GetMaxNumberUIElementsFunc(this IUIElementCoreSearchParametersProperties command, Engine.AutomationEngineInstance engine)
+        {
+            var maxElements = command.ExpandValueOrUserVariableAsMaxNumberUIElements(engine);
+            if (maxElements == 0)
+            {
+                return new Func<List<AutomationElement>, bool>((e) => false);
+            }
+            else
+            {
+                return new Func<List<AutomationElement>, bool>((e) => (e.Count >= maxElements));
+            }
         }
 
         /// <summary>

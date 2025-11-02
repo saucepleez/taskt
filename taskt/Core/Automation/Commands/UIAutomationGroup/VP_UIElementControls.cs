@@ -120,7 +120,9 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         [InputSpecification("Number Greater than or Equal 0")]
         [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Max Siblings")]
         [PropertyDetailSampleUsage("**{{{vMax}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Max Siblings")]
-        [PropertyDisplayText(false, "Max Siblings", "s")]
+        [PropertyDetailSampleUsage("**0**", "Search All Sibling")]
+        [PropertyIsOptional(true, "64")]
+        [PropertyDisplayText(false, "Max Siblings")]
         [PropertyValidationRule("Max Siblings", PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public static string v_MaxSiblings { get; }
 
@@ -132,9 +134,25 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         [InputSpecification("Number Greater than or Equal 0")]
         [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Max Depth")]
         [PropertyDetailSampleUsage("**{{{vMax}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Max Depth")]
-        [PropertyDisplayText(false, "Max Depth", "s")]
+        [PropertyDetailSampleUsage("**0**", "Search to All Depth")]
+        [PropertyIsOptional(true, "16")]
+        [PropertyDisplayText(false, "Max Depth")]
         [PropertyValidationRule("Max Depth", PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public static string v_MaxDepth { get; }
+
+        /// <summary>
+        /// Maxinum Number of UIElements to Search
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Maxinum Number of UIElements to Search")]
+        [InputSpecification("Number Greater than or Equal 0")]
+        [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Max UIElements")]
+        [PropertyDetailSampleUsage("**{{{vMax}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Max UIElements")]
+        [PropertyDetailSampleUsage("**0**", "After checking all UIElements, return the result")]
+        [PropertyIsOptional(true, "0")]
+        [PropertyDisplayText(false, "Max UIElements")]
+        [PropertyValidationRule("Max UIElements", PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        public static string v_MaxNumberUIElements { get; }
 
         /// <summary>
         /// show GUI InspectTool and get InspectTool like result
