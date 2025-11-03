@@ -5,5 +5,6 @@
     /// </summary>
     public interface IUIElementDeepSearchAnyUIElementProperties : IUIElementDeepSearchParametersProperties, IUIElementIndexProperties
     {
+        // nothing
     }
 }
