@@ -14,7 +14,7 @@
             {
                 command.v_TargetUIElementIndex = "0";
             }
-            return command.ToScriptCommand().ExpandValueOrUserVariableAsInteger(nameof(command.v_TargetUIElementIndex), engine);
+            return command.ToScriptCommand().ExpandValueOrUserVariableAsInteger(nameof(command.v_TargetUIElementIndex), "UIElement Index", engine);
         }
     }
 }

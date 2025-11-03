@@ -4798,6 +4798,9 @@ namespace taskt.Core.Script
                         return false;
                 }
             }), "v_ElementWaitTime", "v_WaitTimeForUIElement");
+
+            // UIAutomationSearchChildUIElementCommand v_Index -> v_TargetUIElementIndex
+            ChangeAttributeName(doc, "UIAutomationSearchChildUIElementCommand", "v_Index", "v_TargetUIElementIndex");
         }
 
         /// <summary>
