@@ -30,7 +30,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(7000)]
         public string v_Result { get; set; }
         
-
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         //[PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
