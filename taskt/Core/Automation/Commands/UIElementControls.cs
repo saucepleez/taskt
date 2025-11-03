@@ -426,185 +426,185 @@ namespace taskt.Core.Automation.Commands
 
         #region GUI Search by conditions
 
-        /// <summary>
-        /// create AutomationElement search condition
-        /// </summary>
-        /// <param name="propertyName"></param>
-        /// <param name="propertyValue"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        private static PropertyCondition CreatePropertyCondition(string propertyName, object propertyValue)
-        {
-            var conditionProp = (AutomationProperty)TypeOfAutomationElement.GetField(propertyName + "Property")?.GetValue(null) ??
-                                    throw new Exception("Property '" + propertyName + "' does not Exists");
+        ///// <summary>
+        ///// create AutomationElement search condition
+        ///// </summary>
+        ///// <param name="propertyName"></param>
+        ///// <param name="propertyValue"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //private static PropertyCondition CreatePropertyCondition(string propertyName, object propertyValue)
+        //{
+        //    var conditionProp = (AutomationProperty)TypeOfAutomationElement.GetField(propertyName + "Property")?.GetValue(null) ??
+        //                            throw new Exception("Property '" + propertyName + "' does not Exists");
 
-            switch (propertyName)
-            {
-                case "ControlType":
-                    var controlValue = TypeOfControlType.GetField(propertyValue.ToString())?.GetValue(null) ?? throw new Exception("ControlType '" + propertyValue.ToString() + "' does not Exists");
-                    return new PropertyCondition(conditionProp, controlValue);
+        //    switch (propertyName)
+        //    {
+        //        case "ControlType":
+        //            var controlValue = TypeOfControlType.GetField(propertyValue.ToString())?.GetValue(null) ?? throw new Exception("ControlType '" + propertyValue.ToString() + "' does not Exists");
+        //            return new PropertyCondition(conditionProp, controlValue);
 
-                default:
-                    return new PropertyCondition(conditionProp, propertyValue);
-            }
-        }
+        //        default:
+        //            return new PropertyCondition(conditionProp, propertyValue);
+        //    }
+        //}
 
-        /// <summary>
-        /// create AutomationElement search condition from DataTable
-        /// </summary>
-        /// <param name="table"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        private static Condition CreateSearchCondition(DataTable table, Engine.AutomationEngineInstance engine)
-        {
-            //create and populate condition list
-            var conditionList = new List<Condition>();
-            foreach(DataRow row in table.Rows)
-            {
-                var isEnabled = row.Field<string>("Enabled") ?? "false";
-                if (bool.TryParse(isEnabled, out bool res))
-                {
-                    if (!res)
-                    {
-                        continue;
-                    }
-                }
-                else
-                {
-                    continue;
-                }
+        ///// <summary>
+        ///// create AutomationElement search condition from DataTable
+        ///// </summary>
+        ///// <param name="table"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //private static Condition CreateSearchCondition(DataTable table, Engine.AutomationEngineInstance engine)
+        //{
+        //    //create and populate condition list
+        //    var conditionList = new List<Condition>();
+        //    foreach(DataRow row in table.Rows)
+        //    {
+        //        var isEnabled = row.Field<string>("Enabled") ?? "false";
+        //        if (bool.TryParse(isEnabled, out bool res))
+        //        {
+        //            if (!res)
+        //            {
+        //                continue;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            continue;
+        //        }
 
-                var parameterName = row.Field<string>("ParameterName") ?? "";
-                var parameterValue = (row.Field<string>("ParameterValue") ?? "").ExpandValueOrUserVariable(engine);
+        //        var parameterName = row.Field<string>("ParameterName") ?? "";
+        //        var parameterValue = (row.Field<string>("ParameterValue") ?? "").ExpandValueOrUserVariable(engine);
 
-                // value correction
-                switch (parameterName)
-                {
-                    case "HasKeyboardFocus":
-                    case "IsContentElement":
-                    case "IsControlElement":
-                    case "IsEnabled":
-                    case "IsKeyboardFocusable":
-                    case "IsOffscreen":
-                    case "IsPassword":
-                    case "IsRequiredForForm":
-                        if (string.IsNullOrEmpty(parameterValue))
-                        {
-                            parameterValue = "False";
-                        }
-                        else
-                        {
-                            switch (parameterValue.ToLower())
-                            {
-                                case "yes":
-                                    parameterValue = "True";
-                                    break;
-                                case "no":
-                                    parameterValue = "False";
-                                    break;
-                            }
-                        }
-                        if (!bool.TryParse(parameterValue, out _))
-                        {
-                            throw new Exception($"Invalid ParamterValue. Value must be 'True' or 'False'. ParameterName: '{parameterName}', ParameteValue: '{parameterValue}'");
-                        }
-                        break;
+        //        // value correction
+        //        switch (parameterName)
+        //        {
+        //            case "HasKeyboardFocus":
+        //            case "IsContentElement":
+        //            case "IsControlElement":
+        //            case "IsEnabled":
+        //            case "IsKeyboardFocusable":
+        //            case "IsOffscreen":
+        //            case "IsPassword":
+        //            case "IsRequiredForForm":
+        //                if (string.IsNullOrEmpty(parameterValue))
+        //                {
+        //                    parameterValue = "False";
+        //                }
+        //                else
+        //                {
+        //                    switch (parameterValue.ToLower())
+        //                    {
+        //                        case "yes":
+        //                            parameterValue = "True";
+        //                            break;
+        //                        case "no":
+        //                            parameterValue = "False";
+        //                            break;
+        //                    }
+        //                }
+        //                if (!bool.TryParse(parameterValue, out _))
+        //                {
+        //                    throw new Exception($"Invalid ParamterValue. Value must be 'True' or 'False'. ParameterName: '{parameterName}', ParameteValue: '{parameterValue}'");
+        //                }
+        //                break;
 
-                    case "NativeWindowHandle":
-                    case "ProcessId":
-                        if (string.IsNullOrEmpty(parameterValue))
-                        {
-                            parameterValue = "0";
-                        }
-                        if (!Int32.TryParse(parameterValue, out _))
-                        {
-                            throw new Exception($"Invalid ParamterValue. Value must be Int32 value. ParameterName: '{parameterName}', ParameteValue: '{parameterValue}'");
-                        }
-                        break;
-                }
+        //            case "NativeWindowHandle":
+        //            case "ProcessId":
+        //                if (string.IsNullOrEmpty(parameterValue))
+        //                {
+        //                    parameterValue = "0";
+        //                }
+        //                if (!Int32.TryParse(parameterValue, out _))
+        //                {
+        //                    throw new Exception($"Invalid ParamterValue. Value must be Int32 value. ParameterName: '{parameterName}', ParameteValue: '{parameterValue}'");
+        //                }
+        //                break;
+        //        }
 
-                // DBG
-                //Debug.WriteLine($"Name: '{parameterName}', Value: '{parameterValue}'");
+        //        // DBG
+        //        //Debug.WriteLine($"Name: '{parameterName}', Value: '{parameterValue}'");
 
-                PropertyCondition propCondition = null;
+        //        PropertyCondition propCondition = null;
 
-                switch (parameterName)
-                {
-                    case "HasKeyboardFocus":
-                    case "IsContentElement":
-                    case "IsControlElement":
-                    case "IsEnabled":
-                    case "IsKeyboardFocusable":
-                    case "IsOffscreen":
-                    case "IsPassword":
-                    case "IsRequiredForForm":
-                        propCondition = CreatePropertyCondition(parameterName, bool.Parse(parameterValue));
-                        break;
+        //        switch (parameterName)
+        //        {
+        //            case "HasKeyboardFocus":
+        //            case "IsContentElement":
+        //            case "IsControlElement":
+        //            case "IsEnabled":
+        //            case "IsKeyboardFocusable":
+        //            case "IsOffscreen":
+        //            case "IsPassword":
+        //            case "IsRequiredForForm":
+        //                propCondition = CreatePropertyCondition(parameterName, bool.Parse(parameterValue));
+        //                break;
 
-                    case "NativeWindowHandle":
-                    case "ProcessId":
-                        propCondition = CreatePropertyCondition(parameterName, Int32.Parse(parameterValue));
-                        break;
+        //            case "NativeWindowHandle":
+        //            case "ProcessId":
+        //                propCondition = CreatePropertyCondition(parameterName, Int32.Parse(parameterValue));
+        //                break;
 
-                    case "AcceleratorKey":
-                    case "AccessKey":
-                    case "AutomationId":
-                    case "ClassName":
-                    case "ControlType":
-                    case "FrameworkId":
-                    case "HelpText":
-                    case "ItemStatus":
-                    case "ItemType":
-                    case "LocalizedControlType":
-                    case "Name":
-                        propCondition = CreatePropertyCondition(parameterName, parameterValue);
-                        break;
-                }
+        //            case "AcceleratorKey":
+        //            case "AccessKey":
+        //            case "AutomationId":
+        //            case "ClassName":
+        //            case "ControlType":
+        //            case "FrameworkId":
+        //            case "HelpText":
+        //            case "ItemStatus":
+        //            case "ItemType":
+        //            case "LocalizedControlType":
+        //            case "Name":
+        //                propCondition = CreatePropertyCondition(parameterName, parameterValue);
+        //                break;
+        //        }
 
-                conditionList.Add(propCondition);
-            }
+        //        conditionList.Add(propCondition);
+        //    }
 
-            switch (conditionList.Count)
-            {
-                case 0:
-                    return null;    // no conditions
+        //    switch (conditionList.Count)
+        //    {
+        //        case 0:
+        //            return null;    // no conditions
                     
-                case 1:
-                    return conditionList[0];    // 1 condition
+        //        case 1:
+        //            return conditionList[0];    // 1 condition
                     
-                default:
-                    return new AndCondition(conditionList.ToArray());   // 2+ conditions
-            }
-        }
+        //        default:
+        //            return new AndCondition(conditionList.ToArray());   // 2+ conditions
+        //    }
+        //}
 
-        /// <summary>
-        /// Deep Search GUI Element by Specified Condition
-        /// </summary>
-        /// <param name="rootElement"></param>
-        /// <param name="searchCondition"></param>
-        /// <returns></returns>
-        private static AutomationElement DeepSearchGUIElement(AutomationElement rootElement, Condition searchCondition, DateTime endTime)
-        {
-            TreeWalker walker = TreeWalker.RawViewWalker;
+        ///// <summary>
+        ///// Deep Search GUI Element by Specified Condition
+        ///// </summary>
+        ///// <param name="rootElement"></param>
+        ///// <param name="searchCondition"></param>
+        ///// <returns></returns>
+        //private static AutomationElement DeepSearchGUIElement(AutomationElement rootElement, Condition searchCondition, DateTime endTime)
+        //{
+        //    TreeWalker walker = TreeWalker.RawViewWalker;
 
-            // format conditions
-            PropertyCondition[] conditions;
-            if (searchCondition is AndCondition andConds)
-            {
-                conditions = andConds.GetConditions().Cast<PropertyCondition>().ToArray();
-            }
-            else
-            {
-                conditions = new PropertyCondition[1]
-                {
-                    (PropertyCondition)searchCondition
-                };
-            }
+        //    // format conditions
+        //    PropertyCondition[] conditions;
+        //    if (searchCondition is AndCondition andConds)
+        //    {
+        //        conditions = andConds.GetConditions().Cast<PropertyCondition>().ToArray();
+        //    }
+        //    else
+        //    {
+        //        conditions = new PropertyCondition[1]
+        //        {
+        //            (PropertyCondition)searchCondition
+        //        };
+        //    }
 
-            var ret = WalkerSearch_DepthFirst(rootElement, conditions, walker, endTime);
-            //var ret = WalkerSearch_WidthFirst_Reverse(rootElement, conditions, walker, endTime);
-            return ret;
-        }
+        //    var ret = WalkerSearch_DepthFirst(rootElement, conditions, walker, endTime);
+        //    //var ret = WalkerSearch_WidthFirst_Reverse(rootElement, conditions, walker, endTime);
+        //    return ret;
+        //}
 
         /// <summary>
         /// Search GUI Element used by TreeWalker (Depth First)
@@ -753,139 +753,139 @@ namespace taskt.Core.Automation.Commands
             return ret;
         }
 
-        /// <summary>
-        /// Search GUI Element by specified conditions DataTable
-        /// </summary>
-        /// <param name="rootElement"></param>
-        /// <param name="conditionTable"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        private static AutomationElement SearchGUIElement(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine, DateTime endTime)
-        {
-            Condition searchConditions = CreateSearchCondition(conditionTable, engine);
+        ///// <summary>
+        ///// Search GUI Element by specified conditions DataTable
+        ///// </summary>
+        ///// <param name="rootElement"></param>
+        ///// <param name="conditionTable"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //private static AutomationElement SearchGUIElement(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine, DateTime endTime)
+        //{
+        //    Condition searchConditions = CreateSearchCondition(conditionTable, engine);
 
-            // NOTE: stop hung up
-            //var element = rootElement.FindFirst(TreeScope.Descendants, searchConditions) ??
-            //                rootElement.FindFirst(TreeScope.Subtree, searchConditions) ??
-            //                DeepSearchGUIElement(rootElement, searchConditions);
+        //    // NOTE: stop hung up
+        //    //var element = rootElement.FindFirst(TreeScope.Descendants, searchConditions) ??
+        //    //                rootElement.FindFirst(TreeScope.Subtree, searchConditions) ??
+        //    //                DeepSearchGUIElement(rootElement, searchConditions);
 
-            var element = DeepSearchGUIElement(rootElement, searchConditions, endTime);
+        //    var element = DeepSearchGUIElement(rootElement, searchConditions, endTime);
 
-            // if element not found, don't throw exception here
-            return element;
-        }
+        //    // if element not found, don't throw exception here
+        //    return element;
+        //}
 
-        /// <summary>
-        /// Search GUI Element from specified arguments
-        /// </summary>
-        /// <param name="elem"></param>
-        /// <param name="conditionTable"></param>
-        /// <param name="waitTime"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static AutomationElement SearchGUIElement(AutomationElement elem, DataTable conditionTable, int waitTime, Engine.AutomationEngineInstance engine)
-        {
-            var ret = WaitControls.WaitProcess(waitTime, "AutomationElement",
-                new Func<(bool, object)>(() =>
-                {
-                    var endTime = DateTime.Now.AddSeconds(waitTime);
-                    var e = SearchGUIElement(elem, conditionTable, engine, endTime);
-                    if (e != null)
-                    {
-                        return (true, e);
-                    }
-                    else
-                    {
-                        return (false, null);
-                    }
-                }), engine
-            );
-            if (ret is AutomationElement foundElem)
-            {
-                return foundElem;
-            }
-            else
-            {
-                throw new Exception("AutomationElement Not Found");
-            }
-        }
+        ///// <summary>
+        ///// Search GUI Element from specified arguments
+        ///// </summary>
+        ///// <param name="elem"></param>
+        ///// <param name="conditionTable"></param>
+        ///// <param name="waitTime"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public static AutomationElement SearchGUIElement(AutomationElement elem, DataTable conditionTable, int waitTime, Engine.AutomationEngineInstance engine)
+        //{
+        //    var ret = WaitControls.WaitProcess(waitTime, "AutomationElement",
+        //        new Func<(bool, object)>(() =>
+        //        {
+        //            var endTime = DateTime.Now.AddSeconds(waitTime);
+        //            var e = SearchGUIElement(elem, conditionTable, engine, endTime);
+        //            if (e != null)
+        //            {
+        //                return (true, e);
+        //            }
+        //            else
+        //            {
+        //                return (false, null);
+        //            }
+        //        }), engine
+        //    );
+        //    if (ret is AutomationElement foundElem)
+        //    {
+        //        return foundElem;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("AutomationElement Not Found");
+        //    }
+        //}
 
-        /// <summary>
-        /// Search GUI Element from specified parameter names
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="elementName"></param>
-        /// <param name="conditionName"></param>
-        /// <param name="waitTimeName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static AutomationElement SearchGUIElement(ScriptCommand command, string elementName, string conditionName, string waitTimeName, Engine.AutomationEngineInstance engine)
-        {
-            var elem = command.ExpandUserVariableAsUIElement(elementName, engine);
-            var table = command.ConvertParameterToDataTable(conditionName, engine);
-            var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, engine);
+        ///// <summary>
+        ///// Search GUI Element from specified parameter names
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="elementName"></param>
+        ///// <param name="conditionName"></param>
+        ///// <param name="waitTimeName"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public static AutomationElement SearchGUIElement(ScriptCommand command, string elementName, string conditionName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        //{
+        //    var elem = command.ExpandUserVariableAsUIElement(elementName, engine);
+        //    var table = command.ConvertParameterToDataTable(conditionName, engine);
+        //    var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, engine);
 
-            return SearchGUIElement(elem, table, waitTime, engine);
-        }
+        //    return SearchGUIElement(elem, table, waitTime, engine);
+        //}
 
-        /// <summary>
-        /// Search GUI Element. this method use VirtualProperty to get parameter names
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        public static AutomationElement SearchGUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine)
-        {
-            var elementName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_InputUIElementName)))?.Name ?? "";
-            var conditionName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_SearchParameters)))?.Name ?? "";
-            var waitTimeName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_WaitTime))).Name ?? "";
+        ///// <summary>
+        ///// Search GUI Element. this method use VirtualProperty to get parameter names
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //public static AutomationElement SearchGUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine)
+        //{
+        //    var elementName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_InputUIElementName)))?.Name ?? "";
+        //    var conditionName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_SearchParameters)))?.Name ?? "";
+        //    var waitTimeName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_WaitTime))).Name ?? "";
 
-            return SearchGUIElement(command, elementName, conditionName, waitTimeName, engine);
-        }
+        //    return SearchGUIElement(command, elementName, conditionName, waitTimeName, engine);
+        //}
 
         #endregion
 
         #region search element node
 
-        public static List<AutomationElement> GetChildrenUIElements(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
-        {
-            Condition searchConditions = CreateSearchCondition(conditionTable, engine);
+        //public static List<AutomationElement> GetChildrenUIElements(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
+        //{
+        //    Condition searchConditions = CreateSearchCondition(conditionTable, engine);
 
-            if (searchConditions != null)
-            {
-                AutomationElementCollection elements = rootElement.FindAll(TreeScope.Children, searchConditions);
+        //    if (searchConditions != null)
+        //    {
+        //        AutomationElementCollection elements = rootElement.FindAll(TreeScope.Children, searchConditions);
 
-                // if element not found, don't throw exception here
-                List<AutomationElement> ret = new List<AutomationElement>();
-                foreach (AutomationElement element in elements)
-                {
-                    ret.Add(element);
-                }
-                return ret;
-            }
-            else
-            {
-                return GetAllChildrenUIElements(rootElement);
-            }
-        }
+        //        // if element not found, don't throw exception here
+        //        List<AutomationElement> ret = new List<AutomationElement>();
+        //        foreach (AutomationElement element in elements)
+        //        {
+        //            ret.Add(element);
+        //        }
+        //        return ret;
+        //    }
+        //    else
+        //    {
+        //        return GetAllChildrenUIElements(rootElement);
+        //    }
+        //}
 
-        private static List<AutomationElement> GetAllChildrenUIElements(AutomationElement rootElement)
-        {
-            TreeWalker walker = TreeWalker.RawViewWalker;
+        //private static List<AutomationElement> GetAllChildrenUIElements(AutomationElement rootElement)
+        //{
+        //    TreeWalker walker = TreeWalker.RawViewWalker;
 
-            var elems = new List<AutomationElement>();
+        //    var elems = new List<AutomationElement>();
 
-            var node = walker.GetFirstChild(rootElement);
-            while (node != null)
-            {
-                elems.Add(node);
-                node = walker.GetNextSibling(node);
-            }
+        //    var node = walker.GetFirstChild(rootElement);
+        //    while (node != null)
+        //    {
+        //        elems.Add(node);
+        //        node = walker.GetNextSibling(node);
+        //    }
 
-            return elems;
-        }
+        //    return elems;
+        //}
 
         ///// <summary>
         ///// get parent element
