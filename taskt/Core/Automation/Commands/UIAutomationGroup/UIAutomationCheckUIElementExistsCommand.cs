@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationCheckUIElementExistsCommand : ADeepSearchOneUIElementFromUIElementByTreeWalkerCommands
+    public sealed class UIAutomationCheckUIElementExistsCommand : ADeepSearchAnyUIElementFromUIElementByTreeWalkerCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -60,8 +60,9 @@ namespace taskt.Core.Automation.Commands
             try
             {
                 var targetElement = this.ExpandUserVariableAsUIElement(engine);
+                var index = this.ExpandValueOrUserVariableAsUIElementIndex(engine);
                 var elems = this.DeepSearchUIElements(targetElement, engine);
-                (elems.Count > 0).StoreInUserVariable(engine, v_Result);
+                (elems.Count >= index).StoreInUserVariable(engine, v_Result);
             }
             catch
             {
