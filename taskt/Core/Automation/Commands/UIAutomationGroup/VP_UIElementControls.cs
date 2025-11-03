@@ -166,6 +166,20 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         public static string v_SiblingsDirection { get; }
 
         /// <summary>
+        /// window index for match
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("UIElement Index")]
+        [InputSpecification("UIElement Index", true)]
+        [PropertyDetailSampleUsage("**0**", "Specify the First Window")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "UIElement Index")]
+        [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "UIElement Index")]
+        [PropertyIsOptional(true, "0")]
+        [PropertyFirstValue("0")]
+        [PropertyDisplayText(true, "UIElement Index")]
+        public static string v_TargetUIElementIndex { get; }
+
+        /// <summary>
         /// show GUI InspectTool and get InspectTool like result
         /// </summary>
         /// <param name="sender"></param>

@@ -15,10 +15,67 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <returns></returns>
         public static List<AutomationElement> DeepSearchUIElements(this IUIElementDeepSearchParametersProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
         {
+            //var conditions = command.CreateSearchCondition(engine);
+            //(var firstChildFunc, var nextChildFunc) = command.GetSiblingNodeFunc(engine);
+            //var maxSiblingsFunc = command.GetMaxSiblingsFunc(engine);
+            var foundFunc = new Func<List<AutomationElement>, bool>(elems => (elems.Count > 0));
+            var maxElementsFunc = command.GetMaxNumberUIElementsFunc(engine);
+            //var maxDepthFunc = command.GetMaxDepthFunc(engine);
+
+            return DeepSearchUIElementsCore(command, rootElement, foundFunc, maxElementsFunc, engine);
+
+            //var waitTime = command.ExpandValueOrUserVariableAsWaitTimeForUIElement(engine);
+
+            //var r = WaitControls.WaitProcess(waitTime, "UIElements", new Func<Func<bool>, (bool, object)>((timeoutFunc) =>
+            //{
+            //    var walker = TreeWalker.RawViewWalker;
+
+            //    var elems = new List<AutomationElement>();
+            //    EM_UIElementCoreSearchParametersPropertiesExtensionMethods.CheckAndAddProcess(rootElement, conditions, elems);
+            //    if (timeoutFunc() || maxElementsFunc(elems))
+            //    {
+            //        return ((elems.Count > 0), elems);
+            //    }
+
+            //    int depth = 1;
+            //    if (maxDepthFunc(depth))
+            //    {
+            //        return ((elems.Count > 0), elems);
+            //    }
+            //    else
+            //    {
+            //        DeepSearchUIElements_DepthFirst(rootElement, conditions, depth, walker, firstChildFunc, nextChildFunc, maxSiblingsFunc, maxDepthFunc, maxElementsFunc, timeoutFunc, elems);
+            //        return ((elems.Count > 0), elems);
+            //    }
+            //}), engine);
+
+            //if (r is List<AutomationElement> e)
+            //{
+            //    return e;
+            //}
+            //else
+            //{
+            //    // not found
+            //    return new List<AutomationElement>();
+            //}
+        }
+
+        /// <summary>
+        /// Deep Search UIElements core process
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="rootElement"></param>
+        /// <param name="foundFunc">when func returns true, found</param>
+        /// <param name="maxElementsFunc">when func returns true, max UIElements</param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static List<AutomationElement> DeepSearchUIElementsCore(this IUIElementDeepSearchParametersProperties command, AutomationElement rootElement, 
+                        Func<List<AutomationElement>, bool> foundFunc, Func<List<AutomationElement>, bool> maxElementsFunc,
+                        Engine.AutomationEngineInstance engine)
+        {
             var conditions = command.CreateSearchCondition(engine);
             (var firstChildFunc, var nextChildFunc) = command.GetSiblingNodeFunc(engine);
             var maxSiblingsFunc = command.GetMaxSiblingsFunc(engine);
-            var maxElementsFunc = command.GetMaxNumberUIElementsFunc(engine);
             var maxDepthFunc = command.GetMaxDepthFunc(engine);
 
             var waitTime = command.ExpandValueOrUserVariableAsWaitTimeForUIElement(engine);
@@ -31,18 +88,18 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                 EM_UIElementCoreSearchParametersPropertiesExtensionMethods.CheckAndAddProcess(rootElement, conditions, elems);
                 if (timeoutFunc() || maxElementsFunc(elems))
                 {
-                    return ((elems.Count > 0), elems);
+                    return (foundFunc(elems), elems);
                 }
 
                 int depth = 1;
                 if (maxDepthFunc(depth))
                 {
-                    return ((elems.Count > 0), elems);
+                    return (foundFunc(elems), elems);
                 }
                 else
                 {
                     DeepSearchUIElements_DepthFirst(rootElement, conditions, depth, walker, firstChildFunc, nextChildFunc, maxSiblingsFunc, maxDepthFunc, maxElementsFunc, timeoutFunc, elems);
-                    return ((elems.Count > 0), elems);
+                    return (foundFunc(elems), elems);
                 }
             }), engine);
 
@@ -71,7 +128,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="maxElementsFunc">when Func returns true, max Elements</param>
         /// <param name="timeoutFunc"></param>
         /// <param name="matchedElements"></param>
-        private static void DeepSearchUIElements_DepthFirst(AutomationElement rootElement, List<PropertyCondition> searchConditions,
+        public static void DeepSearchUIElements_DepthFirst(AutomationElement rootElement, List<PropertyCondition> searchConditions,
                             int currentDepth,
                             TreeWalker walker,
                             Func<AutomationElement, TreeWalker, AutomationElement> firstChildFunc, Func<AutomationElement, TreeWalker, AutomationElement> nextChildFunc,

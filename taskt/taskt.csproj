@@ -469,6 +469,7 @@
     <Compile Include="Core\Automation\Commands\ListGroup\GetCommonValuesOfListsCommand.cs" />
     <Compile Include="Core\Automation\Commands\ListGroup\CheckValidListIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptCommandInformation.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchAnyUIElementFromUIElementByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchOneUIElementFromUIElementByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementsFromUIElementByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADoSomethingUIElementCommands.cs" />
@@ -482,9 +483,11 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementActionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementCorePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementCoreSearchParametersPropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementDeepSearchAnyUIElementPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementDeepSearchParametersPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementSelectionItemsPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ICanHandleUIElement.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementDeepSearchAnyUIElementProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementDeepSearchParametersProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IDoSomethingUIElementProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IGetFromUIElementProperties.cs" />
