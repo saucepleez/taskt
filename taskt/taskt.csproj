@@ -515,7 +515,9 @@
     <Compile Include="Core\Automation\Commands\WindowGroup\GetWindowSizesFromWindowNamesAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\GetWindowPositionsFromWindowNamesAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\GetProcessNamesFromWindowNamesAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WindowGroup\IFromWindowHandleResultsProperties.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\IWindowActivateProperties.cs" />
+    <Compile Include="Core\Automation\Commands\WindowGroup\IFromWindowNameResultsProperties.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\SetWindowsStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\ResizeWindowsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\MoveWindowsCommand.cs" />

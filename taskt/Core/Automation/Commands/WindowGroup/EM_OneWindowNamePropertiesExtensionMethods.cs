@@ -25,9 +25,9 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         public static void StoreWindowNameResultInUserVariable(this IOneWindowNameProperties command, string name, AutomationEngineInstance engine)
         {
-            if (!string.IsNullOrEmpty(command.v_NameResult))
+            if (!string.IsNullOrEmpty(command.v_WindowNameResult))
             {
-                name.StoreInUserVariable(engine, command.v_NameResult);
+                name.StoreInUserVariable(engine, command.v_WindowNameResult);
             }
         }
 
@@ -39,9 +39,9 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         public static void StoreWindowHandleResultInUserVariable(this IOneWindowNameProperties command, IntPtr whnd, AutomationEngineInstance engine)
         {
-            if (!string.IsNullOrEmpty(command.v_HandleResult))
+            if (!string.IsNullOrEmpty(command.v_WindowHandleResult))
             {
-                whnd.StoreInUserVariable(engine, command.v_HandleResult);
+                whnd.StoreInUserVariable(engine, command.v_WindowHandleResult);
             }
         }
 

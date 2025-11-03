@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("Variable Name to Store Window Names List")]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List, false)]
-        public override string v_NameResult { get; set; }
+        public override string v_WindowNameResult { get; set; }
 
         /// <summary>
         /// found window handles list
@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("Variable Name to Store Window Handles List")]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List, false)]
-        public override string v_HandleResult { get; set; }
+        public override string v_WindowHandleResult { get; set; }
 
         // todo: add sort order?
     }

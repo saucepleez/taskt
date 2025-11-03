@@ -30,12 +30,12 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
         [PropertyParameterOrder(8100)]
-        public virtual string v_NameResult { get; set; }
+        public virtual string v_WindowNameResult { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
         [PropertyParameterOrder(8200)]
-        public virtual string v_HandleResult { get; set; }
+        public virtual string v_WindowHandleResult { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CaseSensitive))]

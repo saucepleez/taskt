@@ -258,8 +258,8 @@ namespace taskt.Core.Automation.Commands
                     v_TargetWindowIndex = this.v_TargetWindowIndex,
                     v_WaitTimeForWindow = this.v_WaitTimeForWindow,
                     v_Result = myWinElem.VariableName,
-                    v_NameResult = this.v_NameResult,
-                    v_HandleResult = this.v_HandleResult,
+                    v_WindowNameResult = this.v_NameResult,
+                    v_WindowHandleResult = this.v_HandleResult,
                 };
                 winElem.RunCommand(engine);
 

@@ -12,6 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using Microsoft.Office.Interop.Outlook;
+using OpenQA.Selenium.DevTools.V140.WebAuthn;
 using SimpleNLG;
 using System;
 using System.Collections.Generic;
@@ -29,17 +30,24 @@ using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Script
 {
+    /// <summary>
+    /// taskt script file class
+    /// </summary>
     public class Script
     {
         /// <summary>
         /// Contains user-defined variables
         /// </summary>
         public List<ScriptVariable> Variables { get; set; }
+        
         /// <summary>
         /// Contains user-selected commands
         /// </summary>
         public List<ScriptAction> Commands;
 
+        /// <summary>
+        /// script informations
+        /// </summary>
         public ScriptInformation Info;
 
         public Script()
@@ -49,6 +57,7 @@ namespace taskt.Core.Script
             Commands = new List<ScriptAction>();
             Info = new ScriptInformation();
         }
+
         /// <summary>
         /// Returns a new 'Top-Level' command.  
         /// </summary>
@@ -4818,6 +4827,64 @@ namespace taskt.Core.Script
                         return false;
                 }
             }), "v_AutomationElementVariable", "v_Result");
+
+            // ActivateOneWindowCommand, ActivateWindowsCommand, 
+            // CheckWindowNameExistsCommand,
+            // CloseOneWindowCommand, CloseWindowsCommand, 
+            // GetOneProcessNameFromOneWindowNameCommand, GetOneWindowHandleFromOneWindowNameCommand, 
+            // GetOneWindowPositionCommand, GetOneWindowSizeCommand, GetOneWindowStateCommand, 
+            // GetProcessNamesFromWindowNamesAsDataTableCommand, GetProcessNamesFromWindowNamesAsListCommand, 
+            // GetWindowHandlesFromWindowNamesAsDataTableCommand, GetWindowHandlesFromWindowNamesAsListCommand,
+            // GetWindowNamesCommand, 
+            // GetWindowPositionsFromWindowNamesAsDataTableCommand, GetWindowPositionsFromWindowNamesAsListCommand,
+            // GetWindowSizesFromWindowNamesAsDataTableCommand, GetWindowSizesFromWindowNamesAsListCommand,
+            // GetWindowStatesFromWindowNamesAsDataTableCommand, GetWindowStatesFromWindowNamesAsListCommand,
+            // MoveOneWindowCommand, MoveWindowsCommand,
+            // ResizeOneWindowCommand, ResizeWindowsCommand,
+            // SetOneWindowStateCommand, SetWindowsStateCommand,
+            // WaitForWindowToExistsCommand
+            // v_NameResult -> v_WindowNameResult, v_HandleResult -> v_WindowHandleResult
+            ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "ActivateOneWindowCommand":
+                    case "ActivateWindowsCommand":
+                    case "CheckWindowNameExistsCommand":
+                    case "CloseOneWindowCommand":
+                    case "CloseWindowsCommand":
+                    case "GetOneProcessNameFromOneWindowNameCommand":
+                    case "GetOneWindowHandleFromOneWindowNameCommand":
+                    case "GetOneWindowPositionCommand":
+                    case "GetOneWindowSizeCommand":
+                    case "GetOneWindowStateCommand":
+                    case "GetProcessNamesFromWindowNamesAsDataTableCommand":
+                    case "GetProcessNamesFromWindowNamesAsListCommand":
+                    case "GetWindowHandlesFromWindowNamesAsDataTableCommand":
+                    case "GetWindowHandlesFromWindowNamesAsListCommand":
+                    case "GetWindowNamesCommand":
+                    case "GetWindowPositionsFromWindowNamesAsDataTableCommand":
+                    case "GetWindowPositionsFromWindowNamesAsListCommand":
+                    case "GetWindowSizesFromWindowNamesAsDataTableCommand":
+                    case "GetWindowSizesFromWindowNamesAsListCommand":
+                    case "GetWindowStatesFromWindowNamesAsDataTableCommand":
+                    case "GetWindowStatesFromWindowNamesAsListCommand":
+                    case "MoveOneWindowCommand":
+                    case "MoveWindowsCommand":
+                    case "ResizeOneWindowCommand":
+                    case "ResizeWindowsCommand":
+                    case "SetOneWindowStateCommand":
+                    case "SetWindowsStateCommand":
+                    case "WaitForWindowToExistsCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), new List<(string, string)>()
+            {
+                ("v_NameResult", "v_WindowNameResult"),
+                ("v_HandleResult", "v_WindowHandleResult"),
+            });
         }
 
         /// <summary>

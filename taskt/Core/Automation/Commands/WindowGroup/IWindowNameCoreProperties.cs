@@ -1,11 +1,12 @@
 ﻿using taskt.Core.Automation.Commands.TextGroup;
+using taskt.Core.Automation.Commands.WindowGroup;
 
 namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// window name commands core properties
     /// </summary>
-    public interface IWindowNameCoreProperties : ICanHandleWindowName, ITextCheckProperties
+    public interface IWindowNameCoreProperties : IFromWindowNameResultsProperties, ICanHandleWindowName, ITextCheckProperties
     {
         /// <summary>
         /// window name
@@ -23,14 +24,14 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         string v_WaitTimeForWindow { get; set; }
 
-        /// <summary>
-        /// found window name
-        /// </summary>
-        string v_NameResult { get; set; }
+        ///// <summary>
+        ///// found window name
+        ///// </summary>
+        //string v_WindowNameResult { get; set; }
 
-        /// <summary>
-        /// found window handle
-        /// </summary>
-        string v_HandleResult { get; set; }
+        ///// <summary>
+        ///// found window handle
+        ///// </summary>
+        //string v_WindowHandleResult { get; set; }
     }
 }
