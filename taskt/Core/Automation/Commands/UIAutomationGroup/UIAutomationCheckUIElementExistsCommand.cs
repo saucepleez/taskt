@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationCheckUIElementExistsCommand : ADeepSearchUIElementsFromUIElementByTreeWalkerCommands
+    public sealed class UIAutomationCheckUIElementExistsCommand : ADeepSearchOneUIElementFromUIElementByTreeWalkerCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -38,9 +38,9 @@ namespace taskt.Core.Automation.Commands
         //[PropertyFirstValue("0")]
         //public string v_WaitTimeForUIElement { get; set; }
 
-        [XmlAttribute]
-        [PropertyIsOptional(true, "1")]
-        public override string v_MaxNumberUIElements { get; set; }
+        //[XmlAttribute]
+        //[PropertyIsOptional(true, "1")]
+        //public override string v_MaxNumberUIElements { get; set; }
 
         public UIAutomationCheckUIElementExistsCommand()
         {

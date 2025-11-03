@@ -12,7 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationWaitForUIElementToExistsCommand : ADeepSearchUIElementsFromUIElementByTreeWalkerCommands
+    public sealed class UIAutomationWaitForUIElementToExistsCommand : ADeepSearchOneUIElementFromUIElementByTreeWalkerCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
