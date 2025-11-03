@@ -61,5 +61,18 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
 
             return EM_UIElementDeepSearchParametersPropertiesExtensionMethods.DeepSearchUIElementsCore(command, rootElement, foundFunc, maxElementsFunc, engine);
         }
+
+        /// <summary>
+        /// Get UIElement from Deep Search UIElements Result
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="rootElement"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static AutomationElement GetUIElementFromDeepSearchUIElements(this IUIElementDeepSearchAnyUIElementProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
+        {
+            var elems = command.DeepSearchUIElements(rootElement, engine);
+            return command.GetUIElementFromLis(elems, engine);
+        }
     }
 }

@@ -64,19 +64,22 @@ namespace taskt.Core.Automation.Commands
                 var children = this.SearchChildrenUIElements(elem, engine);
 
                 //var index = v_TargetUIElementIndex.ExpandValueOrUserVariableAsInteger("v_Index", engine);
-                var index = this.ExpandValueOrUserVariableAsUIElementIndex(engine);
-                if (index < 0)
-                {
-                    index += children.Count;
-                }
-                if (index >= 0 && index < children.Count)
-                {
-                    children[index].StoreInUserVariable(engine, v_Result);
-                }
-                else
-                {
-                    throw new Exception($"UIElement not found. Index: '{v_TargetUIElementIndex}', Expand Value: '{index}'");
-                }
+                //var index = this.ExpandValueOrUserVariableAsUIElementIndex(engine);
+                //if (index < 0)
+                //{
+                //    index += children.Count;
+                //}
+                //if (index >= 0 && index < children.Count)
+                //{
+                //    children[index].StoreInUserVariable(engine, v_Result);
+                //}
+                //else
+                //{
+                //    throw new Exception($"UIElement not found. Index: '{v_TargetUIElementIndex}', Expand Value: '{index}'");
+                //}
+
+                var e = this.GetUIElementFromLis(children, engine);
+                e.StoreInUserVariable(engine, v_Result);
             }));
         }
     }
