@@ -7,21 +7,6 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     public static class EM_UIElementDeepSearchAnyUIElementPropertiesExtensionMethods
     {
         /// <summary>
-        /// Expand value or user variable as UIElement Index
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        public static int ExpandValueOrUserVariableAsUIElementIndex(this IUIElementDeepSearchAnyUIElementProperties command, Engine.AutomationEngineInstance engine)
-        {
-            if (string.IsNullOrEmpty(command.v_TargetUIElementIndex))
-            {
-                command.v_TargetUIElementIndex = "0";
-            }
-            return command.ToScriptCommand().ExpandValueOrUserVariableAsInteger(nameof(command.v_TargetUIElementIndex), engine);
-        }
-
-        /// <summary>
         /// get Check Found func, max UIElements func
         /// </summary>
         /// <param name="command"></param>

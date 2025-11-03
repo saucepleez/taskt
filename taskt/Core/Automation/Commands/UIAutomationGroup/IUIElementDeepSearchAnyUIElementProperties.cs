@@ -3,11 +3,7 @@
     /// <summary>
     /// deep search UIElements and Get any-one UIElement properties
     /// </summary>
-    public interface IUIElementDeepSearchAnyUIElementProperties : IUIElementDeepSearchParametersProperties
+    public interface IUIElementDeepSearchAnyUIElementProperties : IUIElementDeepSearchParametersProperties, IUIElementIndexProperties
     {
-        /// <summary>
-        /// UIElement Index
-        /// </summary>
-        string v_TargetUIElementIndex { get; set; }
     }
 }

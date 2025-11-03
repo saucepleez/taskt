@@ -484,6 +484,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementCoreSearchParametersPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementDeepSearchAnyUIElementPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementDeepSearchParametersPropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementIndexPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementSelectionItemsPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ICanHandleUIElement.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementDeepSearchAnyUIElementProperties.cs" />
@@ -493,6 +494,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementCoreProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementCoreSearchParametersProperties.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementIndexProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementSelectionItemsProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetWindowUIElementFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSetSelectedStateToUIElementCommand.cs" />
