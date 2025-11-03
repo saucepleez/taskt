@@ -54,11 +54,11 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
-        public string v_NameResult { get; set; }
+        public string v_WindowNameResult { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
-        public string v_HandleResult { get; set; }
+        public string v_WindowHandleResult { get; set; }
 
         public UIAutomationSearchUIElementAndWindowCommand()
         {
@@ -108,8 +108,8 @@ namespace taskt.Core.Automation.Commands
                     v_TargetWindowIndex = this.v_TargetWindowIndex,
                     v_WaitTimeForWindow = this.v_WaitTimeForWindow,
                     v_Result = myVar.VariableName,
-                    v_WindowNameResult = this.v_NameResult,
-                    v_WindowHandleResult = this.v_HandleResult,
+                    v_WindowNameResult = this.v_WindowNameResult,
+                    v_WindowHandleResult = this.v_WindowHandleResult,
                 };
                 winSearch.RunCommand(engine);
 

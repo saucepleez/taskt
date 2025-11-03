@@ -4842,12 +4842,15 @@ namespace taskt.Core.Script
             // MoveOneWindowCommand, MoveWindowsCommand,
             // ResizeOneWindowCommand, ResizeWindowsCommand,
             // SetOneWindowStateCommand, SetWindowsStateCommand,
-            // WaitForWindowToExistsCommand
+            // WaitForWindowToExistsCommand,
+            // UIAutomationSearchUIElementAndWindowByXPathCommand, UIAutomationSearchUIElementAndWindowCommand,
+            // UIAutomationUIElementActionByXPathCommand, UIAutomationUIElementActionCommand
             // v_NameResult -> v_WindowNameResult, v_HandleResult -> v_WindowHandleResult
             ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
             {
                 switch (GetCommandName(el))
                 {
+                    // window commands
                     case "ActivateOneWindowCommand":
                     case "ActivateWindowsCommand":
                     case "CheckWindowNameExistsCommand":
@@ -4876,6 +4879,11 @@ namespace taskt.Core.Script
                     case "SetOneWindowStateCommand":
                     case "SetWindowsStateCommand":
                     case "WaitForWindowToExistsCommand":
+                    // UIElement command
+                    case "UIAutomationSearchUIElementAndWindowByXPathCommand":
+                    case "UIAutomationSearchUIElementAndWindowCommand":
+                    case "UIAutomationUIElementActionByXPathCommand":
+                    case "UIAutomationUIElementActionCommand":
                         return true;
                     default:
                         return false;
