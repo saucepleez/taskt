@@ -15,49 +15,10 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <returns></returns>
         public static List<AutomationElement> DeepSearchUIElements(this IUIElementDeepSearchParametersProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
         {
-            //var conditions = command.CreateSearchCondition(engine);
-            //(var firstChildFunc, var nextChildFunc) = command.GetSiblingNodeFunc(engine);
-            //var maxSiblingsFunc = command.GetMaxSiblingsFunc(engine);
             var foundFunc = new Func<List<AutomationElement>, bool>(elems => (elems.Count > 0));
             var maxElementsFunc = command.GetMaxNumberUIElementsFunc(engine);
-            //var maxDepthFunc = command.GetMaxDepthFunc(engine);
 
             return DeepSearchUIElementsCore(command, rootElement, foundFunc, maxElementsFunc, engine);
-
-            //var waitTime = command.ExpandValueOrUserVariableAsWaitTimeForUIElement(engine);
-
-            //var r = WaitControls.WaitProcess(waitTime, "UIElements", new Func<Func<bool>, (bool, object)>((timeoutFunc) =>
-            //{
-            //    var walker = TreeWalker.RawViewWalker;
-
-            //    var elems = new List<AutomationElement>();
-            //    EM_UIElementCoreSearchParametersPropertiesExtensionMethods.CheckAndAddProcess(rootElement, conditions, elems);
-            //    if (timeoutFunc() || maxElementsFunc(elems))
-            //    {
-            //        return ((elems.Count > 0), elems);
-            //    }
-
-            //    int depth = 1;
-            //    if (maxDepthFunc(depth))
-            //    {
-            //        return ((elems.Count > 0), elems);
-            //    }
-            //    else
-            //    {
-            //        DeepSearchUIElements_DepthFirst(rootElement, conditions, depth, walker, firstChildFunc, nextChildFunc, maxSiblingsFunc, maxDepthFunc, maxElementsFunc, timeoutFunc, elems);
-            //        return ((elems.Count > 0), elems);
-            //    }
-            //}), engine);
-
-            //if (r is List<AutomationElement> e)
-            //{
-            //    return e;
-            //}
-            //else
-            //{
-            //    // not found
-            //    return new List<AutomationElement>();
-            //}
         }
 
         /// <summary>
