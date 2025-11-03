@@ -4801,6 +4801,23 @@ namespace taskt.Core.Script
 
             // UIAutomationSearchChildUIElementCommand v_Index -> v_TargetUIElementIndex
             ChangeAttributeName(doc, "UIAutomationSearchChildUIElementCommand", "v_Index", "v_TargetUIElementIndex");
+
+            // UIAutomationSearchUIElementAndWindowByXPathCommand, UIAutomationSearchUIElementAndWindowCommand,
+            // UIAutomationSearchUIElementFromUIElementByXPathCommand, UIAutomationSearchUIElementFromUIElementCommand
+            // v_AutomationElementVariable -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationSearchUIElementAndWindowByXPathCommand":
+                    case "UIAutomationSearchUIElementAndWindowCommand":
+                    case "UIAutomationSearchUIElementFromUIElementByXPathCommand":
+                    case "UIAutomationSearchUIElementFromUIElementCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_AutomationElementVariable", "v_Result");
         }
 
         /// <summary>

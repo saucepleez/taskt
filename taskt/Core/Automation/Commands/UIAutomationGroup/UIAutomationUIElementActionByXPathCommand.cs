@@ -285,7 +285,7 @@ namespace taskt.Core.Automation.Commands
                                 v_TargetElement = myWinElem.VariableName,
                                 v_SearchXPath = this.v_UIASearchParameters,
                                 v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
-                                v_AutomationElementVariable = myTrgElem.VariableName,
+                                v_Result = myTrgElem.VariableName,
                             };
                             trgElem.RunCommand(engine);
                             break;

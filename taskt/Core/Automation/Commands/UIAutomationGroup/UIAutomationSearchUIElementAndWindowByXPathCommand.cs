@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_OutputUIElementName))]
-        public string v_AutomationElementVariable { get; set; }
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CheckMethod))]
@@ -121,7 +121,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     v_TargetElement = myVar.VariableName,
                     v_SearchXPath = this.v_SearchXPath,
-                    v_AutomationElementVariable = this.v_AutomationElementVariable,
+                    v_Result = this.v_Result,
                     v_WaitTimeForUIElement = this.v_WaitTimeForUIElement
                 };
                 searchElem.RunCommand(engine);
