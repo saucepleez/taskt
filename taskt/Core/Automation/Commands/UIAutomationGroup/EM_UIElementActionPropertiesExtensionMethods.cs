@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Automation;
+using taskt.Core.Automation.Commands.WindowGroup;
 using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
@@ -98,9 +99,10 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             // wait after action
             command.WaitAfterAction(engine);
 
-            // store window name, handle
-            command.StoreWindowNameResultInUserVariable(windowName, engine);
-            command.StoreWindowHandleResultInUserVariable(whnd, engine);
+            //// store window name, handle
+            //command.StoreWindowNameResultInUserVariable(windowName, engine);
+            //command.StoreWindowHandleResultInUserVariable(whnd, engine);
+            command.StoreWindowNameAndWindowHandleResultsInUserVariables(windowName, whnd, engine);
         }
     }
 }

@@ -1,38 +1,39 @@
 ﻿using System;
 using System.Windows.Automation;
+using taskt.Core.Automation.Commands.WindowGroup;
 using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
     public static class EM_DoSomethingUIElementPropertiesExtensionMethods
     {
-        /// <summary>
-        /// store Window name result
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="windowName"></param>
-        /// <param name="engine"></param>
-        public static void StoreWindowNameResultInUserVariable(this IDoSomethingUIElementProperties command, string windowName, AutomationEngineInstance engine)
-        {
-            if (!string.IsNullOrEmpty(command.v_WindowNameResult))
-            {
-                windowName.StoreInUserVariable(engine, command.v_WindowNameResult);
-            }
-        }
+        ///// <summary>
+        ///// store Window name result
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="windowName"></param>
+        ///// <param name="engine"></param>
+        //public static void StoreWindowNameResultInUserVariable(this IDoSomethingUIElementProperties command, string windowName, AutomationEngineInstance engine)
+        //{
+        //    if (!string.IsNullOrEmpty(command.v_WindowNameResult))
+        //    {
+        //        windowName.StoreInUserVariable(engine, command.v_WindowNameResult);
+        //    }
+        //}
 
-        /// <summary>
-        /// store window handle result
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="whnd"></param>
-        /// <param name="engine"></param>
-        public static void StoreWindowHandleResultInUserVariable(this IDoSomethingUIElementProperties command, IntPtr whnd, AutomationEngineInstance engine)
-        {
-            if (!string.IsNullOrEmpty(command.v_WindowHandleResult))
-            {
-                whnd.StoreInUserVariable(engine, command.v_WindowHandleResult);
-            }
-        }
+        ///// <summary>
+        ///// store window handle result
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="whnd"></param>
+        ///// <param name="engine"></param>
+        //public static void StoreWindowHandleResultInUserVariable(this IDoSomethingUIElementProperties command, IntPtr whnd, AutomationEngineInstance engine)
+        //{
+        //    if (!string.IsNullOrEmpty(command.v_WindowHandleResult))
+        //    {
+        //        whnd.StoreInUserVariable(engine, command.v_WindowHandleResult);
+        //    }
+        //}
 
         /// <summary>
         /// UIElement action
@@ -47,14 +48,16 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             // core process
             actionFunc(targetElement);
 
-            if ((!string.IsNullOrEmpty(command.v_WindowNameResult)) || (!string.IsNullOrEmpty(command.v_WindowHandleResult)))
+            //if ((!string.IsNullOrEmpty(command.v_WindowNameResult)) || (!string.IsNullOrEmpty(command.v_WindowHandleResult)))
+            if (command.IsWindowNameOrWindowHandleResultsSpecified())
             {
                 // get window name and window handle
                 (var windowName, var whnd) = EM_CanHandleUIElementExtentionMethods.GetWindowNameAndHandle(targetElement);
 
-                // store window name, handle
-                command.StoreWindowNameResultInUserVariable(windowName, engine);
-                command.StoreWindowHandleResultInUserVariable(whnd, engine);
+                //// store window name, handle
+                //command.StoreWindowNameResultInUserVariable(windowName, engine);
+                //command.StoreWindowHandleResultInUserVariable(whnd, engine);
+                command.StoreWindowNameAndWindowHandleResultsInUserVariables(windowName, whnd, engine);
             }
         }
     }
