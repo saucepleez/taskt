@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Script;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -17,7 +18,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationSearchUIElementAndWindowCommand : ScriptCommand, IHaveDataTableElements
+    public sealed class UIAutomationSearchUIElementAndWindowCommand : ScriptCommand, IOneWindowNameProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
@@ -29,23 +30,28 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_OutputUIElementName))]
+        [PropertyParameterOrder(8000)]
         public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CheckMethod))]
+        [PropertyParameterOrder(8100)]
         public string v_CheckMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_SelectionMethod_Single))]
         [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
+        [PropertyParameterOrder(8200)]
         public string v_SelectionMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
+        [PropertyParameterOrder(8300)]
         public string v_TargetWindowIndex { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
+        [PropertyParameterOrder(8300)]
         public string v_WaitTimeForWindow { get; set; }
 
         [XmlAttribute]
@@ -59,6 +65,16 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
         public string v_WindowHandleResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CaseSensitive))]
+        [PropertyParameterOrder(11000)]
+        public string v_CaseSensitive { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TrimBeforeCheck))]
+        [PropertyParameterOrder(11100)]
+        public string v_TrimBeforeCheck { get; set; }
 
         public UIAutomationSearchUIElementAndWindowCommand()
         {
@@ -110,6 +126,8 @@ namespace taskt.Core.Automation.Commands
                     v_Result = myVar.VariableName,
                     v_WindowNameResult = this.v_WindowNameResult,
                     v_WindowHandleResult = this.v_WindowHandleResult,
+                    v_CaseSensitive = this.v_CaseSensitive,
+                    v_TrimBeforeCheck = this.v_TrimBeforeCheck,
                 };
                 winSearch.RunCommand(engine);
 
