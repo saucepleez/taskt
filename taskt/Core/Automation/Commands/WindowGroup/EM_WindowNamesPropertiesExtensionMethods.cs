@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="names"></param>
         /// <param name="handles"></param>
         /// <param name="engine"></param>
-        public static void StoreWindowNameAndHandleResultInUserVariable(this IWindowNamesProperties command, List<string> names, List<string> handles, AutomationEngineInstance engine)
+        public static void StoreWindowNameAndHandleResultsInUserVariables(this IWindowNamesProperties command, List<string> names, List<string> handles, AutomationEngineInstance engine)
         {
             command.StoreWindowNameResultInUserVariable(names, engine);
             command.StoreWindowHandleResultInUserVariable(handles, engine);
@@ -79,7 +79,7 @@ namespace taskt.Core.Automation.Commands
                 actionFunc(wins);
 
                 (var names, var handles) = ConvertWindowNameAndWindowHandleList(wins);
-                command.StoreWindowNameAndHandleResultInUserVariable(names, handles, engine);
+                command.StoreWindowNameAndHandleResultsInUserVariables(names, handles, engine);
             }
             catch (Exception ex)
             {

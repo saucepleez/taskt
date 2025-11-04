@@ -1,4 +1,5 @@
 ﻿using System;
+using taskt.Core.Automation.Commands.WindowGroup;
 using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
@@ -54,19 +55,19 @@ namespace taskt.Core.Automation.Commands
             return (command.ExpandValueOrUserVariableAsWindowHandle(engine), command.ExpandValueOrUserVariableAsWaitTimeForWindowHandle(engine));
         }
 
-        /// <summary>
-        /// store window title to user variable
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="title"></param>
-        /// <param name="engine"></param>
-        public static void StoreWindowTitleInUserVariable(this IWindowHandleProperties command, string title, AutomationEngineInstance engine)
-        {
-            if (!string.IsNullOrEmpty(command.v_WindowNameResult))
-            {
-                title.StoreInUserVariable(engine, command.v_WindowNameResult);
-            }
-        }
+        ///// <summary>
+        ///// store window title to user variable
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="title"></param>
+        ///// <param name="engine"></param>
+        //public static void StoreWindowTitleInUserVariable(this IWindowHandleProperties command, string title, AutomationEngineInstance engine)
+        //{
+        //    if (!string.IsNullOrEmpty(command.v_WindowNameResult))
+        //    {
+        //        title.StoreInUserVariable(engine, command.v_WindowNameResult);
+        //    }
+        //}
 
         /// <summary>
         /// wait for window handle
@@ -130,7 +131,8 @@ namespace taskt.Core.Automation.Commands
                 
                 actionFunc(whnd);
 
-                command.StoreWindowTitleInUserVariable(title, engine);
+                //command.StoreWindowTitleInUserVariable(title, engine);
+                command.StoreWindowNameResultInUserVariable(title, engine);
             }
             catch (Exception ex)
             {

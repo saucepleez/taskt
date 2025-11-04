@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using taskt.Core.Automation.Commands.WindowGroup;
 using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
@@ -17,33 +18,33 @@ namespace taskt.Core.Automation.Commands
             return ((ScriptCommand)command).ExpandValueOrUserVariableAsInteger(nameof(command.v_TargetWindowIndex), engine);
         }
 
-        /// <summary>
-        /// store window name result
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="name"></param>
-        /// <param name="engine"></param>
-        public static void StoreWindowNameResultInUserVariable(this IOneWindowNameProperties command, string name, AutomationEngineInstance engine)
-        {
-            if (!string.IsNullOrEmpty(command.v_WindowNameResult))
-            {
-                name.StoreInUserVariable(engine, command.v_WindowNameResult);
-            }
-        }
+        ///// <summary>
+        ///// store window name result
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="name"></param>
+        ///// <param name="engine"></param>
+        //public static void StoreWindowNameResultInUserVariable(this IOneWindowNameProperties command, string name, AutomationEngineInstance engine)
+        //{
+        //    if (!string.IsNullOrEmpty(command.v_WindowNameResult))
+        //    {
+        //        name.StoreInUserVariable(engine, command.v_WindowNameResult);
+        //    }
+        //}
 
-        /// <summary>
-        /// store window handle result
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="whnd"></param>
-        /// <param name="engine"></param>
-        public static void StoreWindowHandleResultInUserVariable(this IOneWindowNameProperties command, IntPtr whnd, AutomationEngineInstance engine)
-        {
-            if (!string.IsNullOrEmpty(command.v_WindowHandleResult))
-            {
-                whnd.StoreInUserVariable(engine, command.v_WindowHandleResult);
-            }
-        }
+        ///// <summary>
+        ///// store window handle result
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="whnd"></param>
+        ///// <param name="engine"></param>
+        //public static void StoreWindowHandleResultInUserVariable(this IOneWindowNameProperties command, IntPtr whnd, AutomationEngineInstance engine)
+        //{
+        //    if (!string.IsNullOrEmpty(command.v_WindowHandleResult))
+        //    {
+        //        whnd.StoreInUserVariable(engine, command.v_WindowHandleResult);
+        //    }
+        //}
 
         /// <summary>
         /// wait for window name
@@ -96,8 +97,10 @@ namespace taskt.Core.Automation.Commands
             {
                 (var whnd, var name) = command.WaitForWindowName(engine);
                 actionFunc(whnd, name);
-                command.StoreWindowNameResultInUserVariable(name, engine);
-                command.StoreWindowHandleResultInUserVariable(whnd, engine);
+                //command.StoreWindowNameResultInUserVariable(name, engine);
+                //command.StoreWindowHandleResultInUserVariable(whnd, engine);
+
+                command.StoreWindowNameAndWindowHandleResultsInUserVariables(name, whnd, engine);
             }
             catch (Exception ex)
             {
