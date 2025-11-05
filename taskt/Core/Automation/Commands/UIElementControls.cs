@@ -606,152 +606,152 @@ namespace taskt.Core.Automation.Commands
         //    return ret;
         //}
 
-        /// <summary>
-        /// Search GUI Element used by TreeWalker (Depth First)
-        /// </summary>
-        /// <param name="rootElement"></param>
-        /// <param name="searchConditions"></param>
-        /// <param name="walker"></param>
-        /// <returns></returns>
-        private static AutomationElement WalkerSearch_DepthFirst(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker, DateTime endTime)
-        {
-            AutomationElement node = walker.GetFirstChild(rootElement);
-            AutomationElement ret = null;
+        ///// <summary>
+        ///// Search GUI Element used by TreeWalker (Depth First)
+        ///// </summary>
+        ///// <param name="rootElement"></param>
+        ///// <param name="searchConditions"></param>
+        ///// <param name="walker"></param>
+        ///// <returns></returns>
+        //private static AutomationElement WalkerSearch_DepthFirst(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker, DateTime endTime)
+        //{
+        //    AutomationElement node = walker.GetFirstChild(rootElement);
+        //    AutomationElement ret = null;
 
-            while (node != null)
-            {
-                // DBG
-                //Console.WriteLine($"# Node: {node.Current.Name}");
+        //    while (node != null)
+        //    {
+        //        // DBG
+        //        //Console.WriteLine($"# Node: {node.Current.Name}");
 
-                bool result = true;
-                foreach (var c in searchConditions)
-                {
-                    object p = node.GetCurrentPropertyValue(c.Property);
+        //        bool result = true;
+        //        foreach (var c in searchConditions)
+        //        {
+        //            object p = node.GetCurrentPropertyValue(c.Property);
 
-                    switch (c.Property.ProgrammaticName)
-                    {
-                        case "AutomationElementIdentifiers.ControlTypeProperty":
-                            // ControlType compare
-                            result &= (c.Value.ToString() == ((ControlType)p).Id.ToString());
-                            // DBG
-                            //Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{((ControlType)p).Id.ToString()}'");
-                            break;
+        //            switch (c.Property.ProgrammaticName)
+        //            {
+        //                case "AutomationElementIdentifiers.ControlTypeProperty":
+        //                    // ControlType compare
+        //                    result &= (c.Value.ToString() == ((ControlType)p).Id.ToString());
+        //                    // DBG
+        //                    //Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{((ControlType)p).Id.ToString()}'");
+        //                    break;
 
-                        default:
-                            // normal compare
-                            result &= (c.Value.ToString() == p.ToString());
-                            // DBG
-                            //Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{p.ToString()}'");
-                            break;
-                    }
+        //                default:
+        //                    // normal compare
+        //                    result &= (c.Value.ToString() == p.ToString());
+        //                    // DBG
+        //                    //Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{p.ToString()}'");
+        //                    break;
+        //            }
 
-                    if (!result)
-                    {
-                        break;
-                    }
-                }
+        //            if (!result)
+        //            {
+        //                break;
+        //            }
+        //        }
 
-                if (result)
-                {
-                    ret = node;
-                    break;
-                }
-                // Time up! not found.
-                if (DateTime.Now > endTime)
-                {
-                    break;
-                }
+        //        if (result)
+        //        {
+        //            ret = node;
+        //            break;
+        //        }
+        //        // Time up! not found.
+        //        if (DateTime.Now > endTime)
+        //        {
+        //            break;
+        //        }
 
-                // search child node
-                if (walker.GetFirstChild(node) != null)
-                {
-                    ret = WalkerSearch_DepthFirst(node, searchConditions, walker, endTime);
-                    if (ret != null)
-                    {
-                        break;
-                    }
-                }
+        //        // search child node
+        //        if (walker.GetFirstChild(node) != null)
+        //        {
+        //            ret = WalkerSearch_DepthFirst(node, searchConditions, walker, endTime);
+        //            if (ret != null)
+        //            {
+        //                break;
+        //            }
+        //        }
 
-                // next sibling
-                node = walker.GetNextSibling(node);
-            }
+        //        // next sibling
+        //        node = walker.GetNextSibling(node);
+        //    }
 
-            return ret;
-        }
+        //    return ret;
+        //}
 
-        /// <summary>
-        /// Search GUI Element used by TreeWalker (Depth First, Reverse)
-        /// </summary>
-        /// <param name="rootElement"></param>
-        /// <param name="searchConditions"></param>
-        /// <param name="walker"></param>
-        /// <param name="endTime"></param>
-        /// <returns></returns>
-        private static AutomationElement WalkerSearch_DepthFirst_Reverse(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker, DateTime endTime)
-        {
-            AutomationElement node = walker.GetLastChild(rootElement);
-            AutomationElement ret = null;
+        ///// <summary>
+        ///// Search GUI Element used by TreeWalker (Depth First, Reverse)
+        ///// </summary>
+        ///// <param name="rootElement"></param>
+        ///// <param name="searchConditions"></param>
+        ///// <param name="walker"></param>
+        ///// <param name="endTime"></param>
+        ///// <returns></returns>
+        //private static AutomationElement WalkerSearch_DepthFirst_Reverse(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker, DateTime endTime)
+        //{
+        //    AutomationElement node = walker.GetLastChild(rootElement);
+        //    AutomationElement ret = null;
 
-            while (node != null)
-            {
-                // DBG
-                //Console.WriteLine($"# Node: {node.Current.Name}");
+        //    while (node != null)
+        //    {
+        //        // DBG
+        //        //Console.WriteLine($"# Node: {node.Current.Name}");
 
-                bool result = true;
-                foreach (var c in searchConditions)
-                {
-                    object p = node.GetCurrentPropertyValue(c.Property);
+        //        bool result = true;
+        //        foreach (var c in searchConditions)
+        //        {
+        //            object p = node.GetCurrentPropertyValue(c.Property);
 
-                    switch (c.Property.ProgrammaticName)
-                    {
-                        case "AutomationElementIdentifiers.ControlTypeProperty":
-                            // ControlType compare
-                            result &= (c.Value.ToString() == ((ControlType)p).Id.ToString());
-                            // DBG
-                            //Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{((ControlType)p).Id.ToString()}'");
-                            break;
+        //            switch (c.Property.ProgrammaticName)
+        //            {
+        //                case "AutomationElementIdentifiers.ControlTypeProperty":
+        //                    // ControlType compare
+        //                    result &= (c.Value.ToString() == ((ControlType)p).Id.ToString());
+        //                    // DBG
+        //                    //Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{((ControlType)p).Id.ToString()}'");
+        //                    break;
 
-                        default:
-                            // normal compare
-                            result &= (c.Value.ToString() == p.ToString());
-                            // DBG
-                            //Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{p.ToString()}'");
-                            break;
-                    }
+        //                default:
+        //                    // normal compare
+        //                    result &= (c.Value.ToString() == p.ToString());
+        //                    // DBG
+        //                    //Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{p.ToString()}'");
+        //                    break;
+        //            }
 
-                    if (!result)
-                    {
-                        break;
-                    }
-                }
+        //            if (!result)
+        //            {
+        //                break;
+        //            }
+        //        }
 
-                if (result)
-                {
-                    ret = node;
-                    break;
-                }
-                // Time up! not found.
-                if (DateTime.Now > endTime)
-                {
-                    break;
-                }
+        //        if (result)
+        //        {
+        //            ret = node;
+        //            break;
+        //        }
+        //        // Time up! not found.
+        //        if (DateTime.Now > endTime)
+        //        {
+        //            break;
+        //        }
 
-                // search child node
-                if (walker.GetLastChild(node) != null)
-                {
-                    ret = WalkerSearch_DepthFirst_Reverse(node, searchConditions, walker, endTime);
-                    if (ret != null)
-                    {
-                        break;
-                    }
-                }
+        //        // search child node
+        //        if (walker.GetLastChild(node) != null)
+        //        {
+        //            ret = WalkerSearch_DepthFirst_Reverse(node, searchConditions, walker, endTime);
+        //            if (ret != null)
+        //            {
+        //                break;
+        //            }
+        //        }
 
-                // previous sibling
-                node = walker.GetPreviousSibling(node);
-            }
+        //        // previous sibling
+        //        node = walker.GetPreviousSibling(node);
+        //    }
 
-            return ret;
-        }
+        //    return ret;
+        //}
 
         ///// <summary>
         ///// Search GUI Element by specified conditions DataTable
