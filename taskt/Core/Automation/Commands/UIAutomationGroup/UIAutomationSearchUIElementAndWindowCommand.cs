@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Data;
-using System.Xml.Serialization;
 using System.Windows.Forms;
-using taskt.UI.CustomControls;
+using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using taskt.Core.Script;
 using taskt.Core.Automation.Commands.UIAutomationGroup;
+using taskt.Core.Script;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,19 +17,20 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationSearchUIElementAndWindowCommand : ScriptCommand, IOneWindowNameProperties
+    public sealed class UIAutomationSearchUIElementAndWindowCommand : ADeepSearchAnyUIElementFromSomethingByTreeWalkerCommands, IOneWindowNameProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
+        [PropertyParameterOrder(5000)]
         public string v_WindowName { get; set; }
 
-        [XmlElement]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
-        public DataTable v_SearchParameters { get; set; }
+        //[XmlElement]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
+        //public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_OutputUIElementName))]
-        [PropertyParameterOrder(8000)]
+        [PropertyParameterOrder(6200)]
         public string v_Result { get; set; }
 
         [XmlAttribute]
@@ -54,17 +54,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(8300)]
         public string v_WaitTimeForWindow { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
-        public string v_WaitTimeForUIElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
+        //public string v_WaitTimeForUIElement { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
-        public string v_WindowNameResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
+        //public string v_WindowNameResult { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
-        public string v_WindowHandleResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
+        //public string v_WindowHandleResult { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CaseSensitive))]
@@ -135,8 +135,13 @@ namespace taskt.Core.Automation.Commands
                 {
                     v_TargetElement = myVar.VariableName,
                     v_SearchParameters = this.v_SearchParameters,
+                    v_TargetUIElementIndex = this.v_TargetUIElementIndex,
                     v_Result = this.v_Result,
-                    v_WaitTimeForUIElement = this.v_WaitTimeForUIElement
+                    v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
+                    v_MaxSiblings = this.v_MaxSiblings,
+                    v_MaxDepth = this.v_MaxDepth,
+                    v_MaxNumberUIElements = this.v_MaxNumberUIElements,
+                    v_SiblingsDirection = this.v_SiblingsDirection,
                 };
                 searchElem.RunCommand(engine);
             }
@@ -152,16 +157,16 @@ namespace taskt.Core.Automation.Commands
             ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
         }
 
-        public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
-        {
-            //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
-            UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
-        }
+        //public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
+        //{
+        //    //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
+        //    UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
+        //}
 
-        public override void BeforeValidate()
-        {
-            var dgvSearch = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_SearchParameters));
-            DataTableControls.BeforeValidate(dgvSearch, v_SearchParameters);
-        }
+        //public override void BeforeValidate()
+        //{
+        //    var dgvSearch = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_SearchParameters));
+        //    DataTableControls.BeforeValidate(dgvSearch, v_SearchParameters);
+        //}
     }
 }
