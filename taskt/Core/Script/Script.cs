@@ -4893,6 +4893,9 @@ namespace taskt.Core.Script
                 ("v_NameResult", "v_WindowNameResult"),
                 ("v_HandleResult", "v_WindowHandleResult"),
             });
+
+            // UIAutomationUIElementActionCommand v_UIASearchParameters -> v_SearchParameters
+            ChangeInnerTagName(doc, "UIAutomationUIElementActionCommand", "v_UIASearchParameters", "v_SearchParameters");
         }
 
         /// <summary>
@@ -5484,6 +5487,54 @@ namespace taskt.Core.Script
         private static XDocument ChangeToOtherCommand(XDocument doc, string targetCommand, string newCommand, string newSelectionName, List<(string, string)> attributePairs, List<(string, Action<XAttribute>)> preAttributeFunc = null)
         {
             return ChangeToOtherCommand(doc, GetSearchCommandsFunc(targetCommand), newCommand, newSelectionName, attributePairs, preAttributeFunc);
+        }
+
+        /// <summary>
+        /// change tag name in commands
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="currentTagName"></param>
+        /// <param name="newTagName"></param>
+        private static void ChangeInnerTagNameProcess(List<XElement> commands, string currentTagName, string newTagName)
+        {
+            foreach(var cmd in commands)
+            {
+                var targetElement = cmd.Element(currentTagName);
+                if (targetElement != null)
+                {
+                    var newElement = new XElement(newTagName, targetElement.Attributes(), targetElement.Nodes());
+                    targetElement.ReplaceWith(newElement);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Change inner tag name in Commands
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="currentTagName"></param>
+        /// <param name="newTagName"></param>
+        /// <returns></returns>
+        private static XDocument ChangeInnerTagName(XDocument doc, Func<XElement, bool> searchFunc, string currentTagName, string newTagName)
+        {
+            var commands = doc.Descendants("ScriptCommand")
+                            .Where(searchFunc).ToList();
+            ChangeInnerTagNameProcess(commands, currentTagName, newTagName);
+            return doc;
+        }
+
+        /// <summary>
+        /// change inner tag name in commands
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="targetCommand"></param>
+        /// <param name="currentTagName"></param>
+        /// <param name="newTagName"></param>
+        /// <returns></returns>
+        private static XDocument ChangeInnerTagName(XDocument doc, string targetCommand, string currentTagName, string newTagName)
+        {
+            return ChangeInnerTagName(doc, GetSearchCommandsFunc(targetCommand), currentTagName, newTagName);
         }
     }
 }

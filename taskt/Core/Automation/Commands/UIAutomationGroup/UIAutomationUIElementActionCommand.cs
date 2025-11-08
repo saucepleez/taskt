@@ -8,7 +8,6 @@ using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
     [Attributes.ClassAttributes.SubGruop("UIElement Action")]
@@ -47,7 +46,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlElement]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
-        public DataTable v_UIASearchParameters { get; set; }
+        public DataTable v_SearchParameters { get; set; }
 
         [XmlElement]
         [PropertyDescription("Action Parameters")]
@@ -273,7 +272,7 @@ namespace taskt.Core.Automation.Commands
                             var chkElem = new UIAutomationCheckUIElementExistsCommand()
                             {
                                 v_TargetElement = myWinElem.VariableName,
-                                v_SearchParameters = this.v_UIASearchParameters,
+                                v_SearchParameters = this.v_SearchParameters,
                                 v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
                                 v_Result = p["Apply To Variable"],
                             };
@@ -284,7 +283,7 @@ namespace taskt.Core.Automation.Commands
                             var trgElem = new UIAutomationSearchUIElementFromUIElementCommand()
                             {
                                 v_TargetElement = myWinElem.VariableName,
-                                v_SearchParameters = this.v_UIASearchParameters,
+                                v_SearchParameters = this.v_SearchParameters,
                                 v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
                                 v_Result = myTrgElem.VariableName,
                             };
@@ -584,8 +583,8 @@ namespace taskt.Core.Automation.Commands
             var dgvAction = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_UIAActionParameters));
             DataTableControls.BeforeValidate(dgvAction, v_UIAActionParameters);
 
-            var dgvSearch = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_UIASearchParameters));
-            DataTableControls.BeforeValidate(dgvSearch, v_UIASearchParameters);
+            var dgvSearch = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_SearchParameters));
+            DataTableControls.BeforeValidate(dgvSearch, v_SearchParameters);
         }
 
         //public override string GetDisplayValue()

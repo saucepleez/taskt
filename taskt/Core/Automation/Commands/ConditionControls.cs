@@ -424,7 +424,7 @@ namespace taskt.Core.Automation.Commands
                 var checkUI = new UIAutomationUIElementActionCommand
                 {
                     v_WindowName = windowName,
-                    v_UIASearchParameters = searchTb,
+                    v_SearchParameters = searchTb,
                     v_AutomationType = "Check UIElement Exists",
                     v_UIAActionParameters = actionTb,
                 };
