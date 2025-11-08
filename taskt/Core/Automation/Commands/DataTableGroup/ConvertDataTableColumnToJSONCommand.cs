@@ -75,8 +75,6 @@ namespace taskt.Core.Automation.Commands
                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(EM_CanHandleListExtensionMethods.ExpandUserVariableAsList(myList));
                 json.StoreInUserVariable(engine, v_Result);
             }
-
-            int v = 3;
         }
     }
 }
