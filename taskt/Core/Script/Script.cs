@@ -4897,11 +4897,11 @@ namespace taskt.Core.Script
             // UIAutomationUIElementActionCommand v_UIASearchParameters -> v_SearchParameters
             ChangeInnerTagName(doc, "UIAutomationUIElementActionCommand", "v_UIASearchParameters", "v_SearchParameters");
 
-            // UIAutomationSearchUIElementAndWindowByXPathCommand -> UIAutomationSearchUIElementFromWindowByXPathCommand
-            ChangeCommandName(doc, "UIAutomationSearchUIElementAndWindowByXPathCommand", "UIAutomationSearchUIElementFromWindowByXPathCommand", "Search UIElement From Window By XPath");
+            // UIAutomationSearchUIElementAndWindowByXPathCommand -> UIAutomationSearchUIElementFromWindowNameByXPathCommand
+            ChangeCommandName(doc, "UIAutomationSearchUIElementAndWindowByXPathCommand", "UIAutomationSearchUIElementFromWindowNameByXPathCommand", "Search UIElement From Window Name By XPath");
 
             // UIAutomationSearchUIElementAndWindowCommand -> UIAutomationSearchUIElementFromWindowCommand
-            ChangeCommandName(doc, "UIAutomationSearchUIElementAndWindowCommand", "UIAutomationSearchUIElementFromWindowCommand", "Search UIElement From Window");
+            ChangeCommandName(doc, "UIAutomationSearchUIElementAndWindowCommand", "UIAutomationSearchUIElementFromWindowNameCommand", "Search UIElement From Window Name");
         }
 
         /// <summary>

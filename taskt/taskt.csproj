@@ -488,6 +488,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementDeepSearchParametersPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementIndexPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementSelectionItemsPropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_WindowUIElementResultPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ICanHandleUIElement.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementDeepSearchAnyUIElementProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementDeepSearchParametersProperties.cs" />
@@ -498,6 +499,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementCoreSearchParametersProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementIndexProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementSelectionItemsProperties.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\IWindowUIElementResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetWindowUIElementFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSetSelectedStateToUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\VP_UIElementControls.cs" />
@@ -791,7 +793,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetPropertyValueFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetUIElementPositionCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetUIElementSizeCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementFromWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementFromWindowNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationUIElementActionByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserCheckWebElementExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserClickWebElementCommand.cs" />
@@ -1063,7 +1065,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationClickUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchChildrenUIElementsInformationCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationWaitForUIElementToExistsByXPathCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementFromWindowByXPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementFromWindowNameByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementFromUIElementByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetSelectedStateFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetUIElementFromTableUIElementCommand.cs" />

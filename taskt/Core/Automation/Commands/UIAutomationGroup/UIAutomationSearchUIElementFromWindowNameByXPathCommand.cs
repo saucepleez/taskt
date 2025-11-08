@@ -4,19 +4,21 @@ using System.Windows.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Script;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
+using System.Windows.Automation;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
     [Attributes.ClassAttributes.SubGruop("Search UIElement From Window")]
-    [Attributes.ClassAttributes.CommandSettings("Search UIElement From Window By XPath")]
+    [Attributes.ClassAttributes.CommandSettings("Search UIElement From Window Name By XPath")]
     [Attributes.ClassAttributes.Description("This command allows you to get UIElement from Window Name using by XPath.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get UIElement from Window Name. XPath does not support to use parent and sibling for root element.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationSearchUIElementFromWindowByXPathCommand : ScriptCommand
+    public sealed class UIAutomationSearchUIElementFromWindowNameByXPathCommand : ScriptCommand, IWindowUIElementResultProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
@@ -59,7 +61,11 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
         public string v_WindowHandleResult { get; set; }
 
-        public UIAutomationSearchUIElementFromWindowByXPathCommand()
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_WindowUIElementName))]
+        public string v_WindowUIElement { get;set; }
+
+        public UIAutomationSearchUIElementFromWindowNameByXPathCommand()
         {
         }
 
@@ -88,6 +94,8 @@ namespace taskt.Core.Automation.Commands
                     v_WaitTimeForUIElement = this.v_WaitTimeForUIElement
                 };
                 searchElem.RunCommand(engine);
+
+                this.StoreWindowUIElementInUserVariable((AutomationElement)myVar.VariableValue, engine);
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Automation;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -11,13 +12,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
     [Attributes.ClassAttributes.SubGruop("Search UIElement From Window")]
-    [Attributes.ClassAttributes.CommandSettings("Search UIElement From Window")]
+    [Attributes.ClassAttributes.CommandSettings("Search UIElement From Window Name")]
     [Attributes.ClassAttributes.Description("This command allows you to get UIElement from Window Name.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get UIElement from Window Name.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationSearchUIElementFromWindowCommand : ADeepSearchAnyUIElementFromSomethingByTreeWalkerCommands, IOneWindowNameProperties
+    public sealed class UIAutomationSearchUIElementFromWindowNameCommand : ADeepSearchAnyUIElementFromSomethingByTreeWalkerCommands, IOneWindowNameProperties, IWindowUIElementResultProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
@@ -67,6 +68,11 @@ namespace taskt.Core.Automation.Commands
         //public string v_WindowHandleResult { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_WindowUIElementName))]
+        [PropertyParameterOrder(10200)]
+        public string v_WindowUIElement { get; set; }
+
+        [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CaseSensitive))]
         [PropertyParameterOrder(11000)]
         public string v_CaseSensitive { get; set; }
@@ -76,7 +82,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(11100)]
         public string v_TrimBeforeCheck { get; set; }
 
-        public UIAutomationSearchUIElementFromWindowCommand()
+        public UIAutomationSearchUIElementFromWindowNameCommand()
         {
         }
 
@@ -112,6 +118,8 @@ namespace taskt.Core.Automation.Commands
                     v_SiblingsDirection = this.v_SiblingsDirection,
                 };
                 searchElem.RunCommand(engine);
+
+                this.StoreWindowUIElementInUserVariable((AutomationElement)myVar.VariableValue, engine);
             }
         }
 
