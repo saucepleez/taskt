@@ -61,47 +61,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationSearchUIElementFromWindowByXPathCommand()
         {
-            //this.CommandName = "UIAutomationGetElementFromWindowByXPathCommand";
-            //this.SelectionName = "Get Element From Window By XPath";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var winElem = AutomationElementControls.GetWindowAutomationElement(this, engine);
-
-            //var waitTime = this.ConvertToUserVariableAsInteger(nameof(v_ElementWaitTime), engine);
-            //var xpath = v_SearchXPath.ConvertToUserVariableAsXPath(engine);
-
-            //var elem = AutomationElementControls.SearchGUIElementByXPath(winElem, xpath, waitTime, engine);
-
-            //elem.StoreInUserVariable(engine, v_AutomationElementVariable);
-
-            //var varName = VariableNameControls.GetInnerVariableName(0, engine, false);
-
-            //var winSearch = new UIAutomationSearchUIElementFromWindowCommand()
-            //{
-            //    v_WindowName = this.v_WindowName,
-            //    v_CompareMethod = this.v_CompareMethod,
-            //    v_MatchMethod = this.v_MatchMethod,
-            //    v_TargetWindowIndex = this.v_TargetWindowIndex,
-            //    v_WaitTimeForWindow = this.v_WaitTimeForWindow,
-            //    v_AutomationElementVariable = varName,
-            //    v_NameResult = this.v_NameResult,
-            //    v_HandleResult = this.v_HandleResult,
-            //};
-            //winSearch.RunCommand(engine);
-
-            //var searchElem = new UIAutomationSearchUIElementFromUIElementByXPathCommand()
-            //{
-            //    v_TargetElement = varName,
-            //    v_SearchXPath = this.v_SearchXPath,
-            //    v_AutomationElementVariable = this.v_AutomationElementVariable,
-            //    v_WaitTime = this.v_ElementWaitTime
-            //};
-            //searchElem.RunCommand(engine);
-
             using(var myVar = new InnerScriptVariable(engine))
             {
                 var winSearch = new UIAutomationGetWindowUIElementCommand()
