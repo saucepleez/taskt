@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationSearchChildrenUIElementsInformationCommand : ACoreSearchUIElementsFromUIElementByTreeWalkerCommands
+    public sealed class UIAutomationSearchChildrenUIElementsInformationCommand : ACoreSearchUIElementsFromUIElementByTreeWalkerCommands, IGetUIElementsInformationProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -46,15 +46,17 @@ namespace taskt.Core.Automation.Commands
             {
                 var elems = this.SearchChildrenUIElements(targetElement, engine);
 
-                string result = "";
+                //string result = "";
 
-                int counts = elems.Count;
-                for (int i = 0; i < counts; i++)
-                {
-                    var elem = elems[i];
-                    result += $"Index: {i}, Name: {elem.Current.Name}, LocalizedControlType: {elem.Current.LocalizedControlType}, ControlType: {EM_CanHandleUIElementExtentionMethods.GetControlTypeText(elem)}\n";
-                }
-                result.Trim().StoreInUserVariable(engine, v_Result);
+                //int counts = elems.Count;
+                //for (int i = 0; i < counts; i++)
+                //{
+                //    var elem = elems[i];
+                //    result += $"Index: {i}, Name: {elem.Current.Name}, LocalizedControlType: {elem.Current.LocalizedControlType}, ControlType: {EM_CanHandleUIElementExtentionMethods.GetControlTypeText(elem)}\n";
+                //}
+                //result.Trim().StoreInUserVariable(engine, v_Result);
+
+                this.StoreUIElementsInformationInUserVariable(elems, engine);
             }));
         }
     }
