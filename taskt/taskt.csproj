@@ -503,6 +503,8 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementIndexProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementSelectionItemsProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IWindowUIElementResultProperties.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetWindowHandleFromUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetWindowNameFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetWindowUIElementFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementsFromWindowNameByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementsInformationFromWindowNameCommand.cs" />
