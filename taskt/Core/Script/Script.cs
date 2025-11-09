@@ -4915,7 +4915,7 @@ namespace taskt.Core.Script
                     default:
                         return false;
                 }
-            }), "v_Result", "v_WindowHandleResult", true);
+            }), "v_Result", "v_WindowHandleResult");
 
             // GetWindowNameFromWindowHandleCommand, GetWindowNamesCommand
             // v_Result -> v_WindowNameResult
