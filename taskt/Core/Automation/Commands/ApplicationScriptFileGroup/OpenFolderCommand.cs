@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
                             var getName = new GetWindowNameFromWindowHandleCommand()
                             {
                                 v_WindowHandle = currentHandle.ToString(),
-                                v_Result = name.VariableName,
+                                v_WindowNameResult = name.VariableName,
                             };
                             getName.RunCommand(engine);
                             name.VariableValue.ToString().StoreInUserVariable(engine, v_WindowNameResult);

@@ -4902,6 +4902,34 @@ namespace taskt.Core.Script
 
             // UIAutomationSearchUIElementAndWindowCommand -> UIAutomationSearchUIElementFromWindowCommand
             ChangeCommandName(doc, "UIAutomationSearchUIElementAndWindowCommand", "UIAutomationSearchUIElementFromWindowNameCommand", "Search UIElement From Window Name");
+
+            // GetOneWindowHandleFromOneWindowNameCommand, GetWindowHandlesFromWindowNamesAsListCommand
+            // v_Result -> v_WindowHandleResult
+            OverwriteAttributeValue(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "GetOneWindowHandleFromOneWindowNameCommand":
+                    case "GetWindowHandlesFromWindowNamesAsListCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_Result", "v_WindowHandleResult", true);
+
+            // GetWindowNameFromWindowHandleCommand, GetWindowNamesCommand
+            // v_Result -> v_WindowNameResult
+            OverwriteAttributeValue(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "GetWindowNameFromWindowHandleCommand":
+                    case "GetWindowNamesCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_Result", "v_WindowNameResult");
         }
 
         /// <summary>
@@ -5541,6 +5569,68 @@ namespace taskt.Core.Script
         private static XDocument ChangeInnerTagName(XDocument doc, string targetCommand, string currentTagName, string newTagName)
         {
             return ChangeInnerTagName(doc, GetSearchCommandsFunc(targetCommand), currentTagName, newTagName);
+        }
+
+        /// <summary>
+        /// overwrite attribute value with another existing attribute process
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="targetAttr"></param>
+        /// <param name="overwriteAttr"></param>
+        /// <param name="removeTargetAttr"></param>
+        private static void OverwriteAttributeValueProcess(List<XElement> commands, string targetAttr, string overwriteAttr, bool removeTargetAttr)
+        {
+            foreach (var cmd in commands)
+            {
+                var tAttr = cmd.Attribute(targetAttr);
+                if (tAttr != null)
+                {
+                    var oAttr = cmd.Attribute(overwriteAttr);
+                    if (oAttr != null)
+                    {
+                        oAttr.SetValue(tAttr.Value);
+                    }
+                    else
+                    {
+                        cmd.SetAttributeValue(overwriteAttr, tAttr.Value);
+                    }
+                    if (removeTargetAttr)
+                    {
+                        tAttr.Remove();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// overwrite attribute value with anothre existing attribute
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="targetAttribute"></param>
+        /// <param name="overwriteAttribute"></param>
+        /// <param name="removeTargetAttribute"></param>
+        /// <returns></returns>
+        private static XDocument OverwriteAttributeValue(XDocument doc, Func<XElement, bool> searchFunc, string targetAttribute, string overwriteAttribute, bool removeTargetAttribute = true)
+        {
+            var commands = doc.Descendants("ScriptCommand")
+                            .Where(searchFunc).ToList();
+            OverwriteAttributeValueProcess(commands, targetAttribute, overwriteAttribute, removeTargetAttribute);
+            return doc;
+        }
+
+        /// <summary>
+        /// overwrite attribute value with anothre existing attribute
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="targetCommand"></param>
+        /// <param name="targetAttribute"></param>
+        /// <param name="overwriteAttribute"></param>
+        /// <param name="removeTargetAttribute"></param>
+        /// <returns></returns>
+        private static XDocument OverwriteAttributeValue(XDocument doc, string targetCommand, string targetAttribute, string overwriteAttribute, bool removeTargetAttribute = true)
+        {
+            return OverwriteAttributeValue(doc, GetSearchCommandsFunc(targetCommand), targetAttribute, overwriteAttribute, removeTargetAttribute);
         }
     }
 }

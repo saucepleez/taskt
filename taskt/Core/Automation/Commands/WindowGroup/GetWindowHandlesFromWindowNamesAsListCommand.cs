@@ -18,11 +18,14 @@ namespace taskt.Core.Automation.Commands
     public sealed class GetWindowHandlesFromWindowNamesAsListCommand : GetFromWindowNamesAsListCommands
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
+        [PropertyIsOptional(false)]
+        [PropertyValidationRule("Window Handle", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyParameterOrder(6500)]
-        public string v_Result { get; set; }
+        public override string v_WindowHandleResult { get; set; }
 
         public GetWindowHandlesFromWindowNamesAsListCommand()
         {
@@ -32,12 +35,12 @@ namespace taskt.Core.Automation.Commands
         {
             this.WindowNamesAction(engine, new Action<List<(IntPtr, string)>>(wins =>
             {
-                var res = new List<string>();
-                foreach((var whnd, _) in wins)
-                {
-                    res.Add(whnd.ToString());
-                }
-                this.StoreListInUserVariable(res, nameof(v_Result), engine);
+                //var res = new List<string>();
+                //foreach((var whnd, _) in wins)
+                //{
+                //    res.Add(whnd.ToString());
+                //}
+                //this.StoreListInUserVariable(res, nameof(v_WindowHandleResult), engine);
             }));
         }
     }

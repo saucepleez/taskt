@@ -17,10 +17,10 @@ namespace taskt.Core.Automation.Commands
     public sealed class GetOneWindowHandleFromOneWindowNameCommand : AOneWindowNameCommands
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("Window Handle", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyIsOptional(false)]
         [PropertyParameterOrder(6500)]
-        public string v_Result { get; set; }
+        public override string v_WindowHandleResult { get; set; }
 
         public GetOneWindowHandleFromOneWindowNameCommand()
         {
@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         {
             this.WindowNameAction(engine, new Action<IntPtr, string>((whnd, name) =>
             {
-                whnd.StoreInUserVariable(engine, v_Result);
+                whnd.StoreInUserVariable(engine, v_WindowHandleResult);
             }));
         }
     }

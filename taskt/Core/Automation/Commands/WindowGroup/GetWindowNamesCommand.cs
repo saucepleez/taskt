@@ -31,8 +31,10 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
+        [PropertyIsOptional(false)]
+        [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyParameterOrder(6500)]
-        public string v_Result { get; set; }
+        public override string v_WindowNameResult { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
@@ -60,46 +62,21 @@ namespace taskt.Core.Automation.Commands
 
         public GetWindowNamesCommand()
         {
-            //this.CommandName = "GetWindowNamesCommand";
-            //this.SelectionName = "Get Window Names";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //WindowControls.WindowAction(this, engine,
-            //    new Action<List<(IntPtr, string)>>(wins =>
-            //    {
-            //        //wins.Select(w => w.Item2).ToList().StoreInUserVariable(engine, v_UserVariableName);
-            //        this.StoreListInUserVariable(wins.Select(w => w.Item2).ToList(), nameof(v_UserVariableName), engine);
-            //    }), 
-            //    new Action<Exception>(ex =>
-            //    {
-            //        var whenNotFound = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenWindowNotFound), engine);
-            //        switch (whenNotFound)
-            //        {
-            //            case "ignore":
-            //                //new List<string>().StoreInUserVariable(engine, v_UserVariableName);
-            //                this.StoreListInUserVariable(new List<string>(), nameof(v_UserVariableName), engine);
-            //                break;
-            //            case "error":
-            //                throw ex;
-            //        }
-            //    })
-            //);
-
             this.WindowNamesAction(engine,
                 new Action<List<(IntPtr, string)>>((wins) =>
                 {
-                    this.StoreListInUserVariable(wins.Select(w => w.Item2).ToList(), nameof(v_Result), engine);
+                    //this.StoreListInUserVariable(wins.Select(w => w.Item2).ToList(), nameof(v_WindowNameResult), engine);
                 }),
                 new Action<Exception>((ex) =>
                 {
                     switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenWindowNotFound), engine))
                     {
                         case "set empty":
-                            this.StoreListInUserVariable(new List<string>(), nameof(v_Result), engine);
+                            this.StoreListInUserVariable(new List<string>(), nameof(v_WindowNameResult), engine);
                             break;
                         case "ignore":
                             break;

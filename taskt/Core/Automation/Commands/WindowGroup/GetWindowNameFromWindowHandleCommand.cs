@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -23,10 +21,12 @@ namespace taskt.Core.Automation.Commands
         //public string v_WindowHandle { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [PropertyDescription("Variable Name to Store Window Name")]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //[PropertyDescription("Variable Name to Store Window Name")]
+        [PropertyIsOptional(false)]
+        [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyParameterOrder(5500)]
-        public string v_Result { get; set; }
+        public override string v_WindowNameResult { get; set; }
 
         [XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
@@ -35,8 +35,6 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("WaitTime", PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
         public override string v_WaitTimeForWindow { get; set; }
-
-
 
         public GetWindowNameFromWindowHandleCommand()
         {
@@ -60,7 +58,8 @@ namespace taskt.Core.Automation.Commands
 
             this.WindowHandleAction(engine, new Action<IntPtr>((whnd) =>
             {
-                EM_CanHandleWindowHandleExtentionMethods.GetWindowName(whnd).StoreInUserVariable(engine, v_Result);
+                //EM_CanHandleWindowHandleExtentionMethods.GetWindowName(whnd).StoreInUserVariable(engine, v_Result);
+                // nothing
             }));
         }
     }
