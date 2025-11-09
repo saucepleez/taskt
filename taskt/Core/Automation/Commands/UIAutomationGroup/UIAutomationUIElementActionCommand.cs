@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
@@ -17,11 +18,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationUIElementActionCommand : ScriptCommand, IHaveDataTableElements
+    public sealed class UIAutomationUIElementActionCommand : ADeepSearchAnyUIElementFromWindowNameByTreeWalkerCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
-        public string v_WindowName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
+        //public string v_WindowName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls),  nameof(GeneralPropertyControls.v_ComboBox))]
@@ -42,11 +43,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Wait For UIElement To Exists")]
         [PropertySelectionChangeEvent(nameof(cmbActionType_SelectedItemChange))]
         [PropertyDisplayText(true, "Action")]
+        [PropertyParameterOrder(6200)]
         public string v_AutomationType { get; set; }
 
-        [XmlElement]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
-        public DataTable v_SearchParameters { get; set; }
+        //[XmlElement]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
+        //public DataTable v_SearchParameters { get; set; }
 
         [XmlElement]
         [PropertyDescription("Action Parameters")]
@@ -54,36 +56,37 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(false, false, true, 400, 250)]
         [PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", true)]
         [PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
+        [PropertyParameterOrder(7900)]
         public DataTable v_UIAActionParameters { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CheckMethod))]
-        public string v_CheckMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CheckMethod))]
+        //public string v_CheckMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_SelectionMethod_Single))]
-        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
-        public string v_SelectionMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_SelectionMethod_Single))]
+        //[PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
+        //public string v_SelectionMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
-        public string v_TargetWindowIndex { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
+        //public string v_TargetWindowIndex { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
-        public string v_WaitTimeForWindow { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
+        //public string v_WaitTimeForWindow { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
-        public string v_WaitTimeForUIElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
+        //public string v_WaitTimeForUIElement { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
-        public string v_WindowNameResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
+        //public string v_WindowNameResult { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
-        public string v_WindowHandleResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
+        //public string v_WindowHandleResult { get; set; }
 
         public UIAutomationUIElementActionCommand()
         {
@@ -105,6 +108,8 @@ namespace taskt.Core.Automation.Commands
                     v_Result = myWinElem.VariableName,
                     v_WindowNameResult = this.v_WindowNameResult,
                     v_WindowHandleResult = this.v_WindowHandleResult,
+                    v_CaseSensitive = this.v_CaseSensitive,
+                    v_TrimBeforeCheck = this.v_TrimBeforeCheck,
                 };
                 winElem.RunCommand(engine);
 
@@ -119,8 +124,15 @@ namespace taskt.Core.Automation.Commands
                             {
                                 v_TargetElement = myWinElem.VariableName,
                                 v_SearchParameters = this.v_SearchParameters,
+                                v_TargetUIElementIndex = this.v_TargetUIElementIndex,
                                 v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
                                 v_Result = p["Apply To Variable"],
+                                v_MaxSiblings = this.v_MaxSiblings,
+                                v_SiblingsDirection = this.v_SiblingsDirection,
+                                v_MaxDepth = this.v_MaxDepth,
+                                v_MaxNumberUIElements = this.v_MaxNumberUIElements,
+                                v_WindowNameResult = this.v_WindowNameResult,
+                                v_WindowHandleResult = this.v_WindowHandleResult,
                             };
                             chkElem.RunCommand(engine);
                             return;
@@ -130,8 +142,15 @@ namespace taskt.Core.Automation.Commands
                             {
                                 v_TargetElement = myWinElem.VariableName,
                                 v_SearchParameters = this.v_SearchParameters,
+                                v_TargetUIElementIndex = this.v_TargetUIElementIndex,
                                 v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
                                 v_Result = myTrgElem.VariableName,
+                                v_MaxSiblings = this.v_MaxSiblings,
+                                v_SiblingsDirection = this.v_SiblingsDirection,
+                                v_MaxDepth = this.v_MaxDepth,
+                                v_MaxNumberUIElements = this.v_MaxNumberUIElements,
+                                v_WindowNameResult = this.v_WindowNameResult,
+                                v_WindowHandleResult = this.v_WindowHandleResult,
                             };
                             trgElem.RunCommand(engine);
                             break;
@@ -419,10 +438,10 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            WindowControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
-        }
+        //private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        //{
+        //    WindowControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
+        //}
 
         public override void BeforeValidate()
         {
