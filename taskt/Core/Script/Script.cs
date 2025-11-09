@@ -5123,7 +5123,7 @@ namespace taskt.Core.Script
             XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
             foreach (var cmd in commands)
             {
-                XElement tableParams = cmd.Element(tableParameterName).Element(ns + "diffgram").Element("DocumentElement");
+                XElement tableParams = cmd.Element(tableParameterName)?.Element(ns + "diffgram")?.Element("DocumentElement") ?? null;
                 var table = tableParams?.Elements() ?? new List<XElement>();
                 foreach (XElement row in table)
                 {
@@ -5168,6 +5168,12 @@ namespace taskt.Core.Script
             XNamespace nsMsdata = "urn:schemas-microsoft-com:xml-msdata";
 
             var el = elem.Element(tableParameterName);
+            if (el == null)
+            {
+                // table not found
+                return (null, null, "", null, null);
+            }
+
             var elel = el.Element(nsXs + "schema").Element(nsXs + "element");
 
             // table name
@@ -5326,6 +5332,10 @@ namespace taskt.Core.Script
             foreach(var cmd in cmds)
             {
                 (var table, var before, _, _, var seq) = GetTable(cmd, tableParameterName);
+                if ((table == null) || (before == null))
+                {
+                    continue;
+                }
 
                 foreach (var e in seq)
                 {
