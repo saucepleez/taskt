@@ -472,6 +472,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ACoreSearchUIElementsFromUIElementByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchAnyUIElementFromSomethingByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchAnyUIElementFromUIElementByTreeWalkerCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchAnyUIElementFromWindowNameByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementsFromSomethingByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADoSomethingUIElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\AGetFromUIElementCommands.cs" />
@@ -503,6 +504,8 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementSelectionItemsProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IWindowUIElementResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetWindowUIElementFromWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementsFromWindowNameByTreeWalkerCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementsInformationFromWindowNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementsInformationFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSetSelectedStateToUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\VP_UIElementControls.cs" />
