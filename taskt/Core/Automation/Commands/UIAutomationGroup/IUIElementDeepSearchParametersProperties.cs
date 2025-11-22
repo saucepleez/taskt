@@ -3,11 +3,13 @@
     /// <summary>
     /// deep search UIElement search parameters
     /// </summary>
-    public interface IUIElementDeepSearchParametersProperties : IUIElementCoreSearchParametersProperties
+    public interface IUIElementDeepSearchParametersProperties : IUIElementCoreSearchParametersProperties, IUIElementDeepSearchProperties
     {
-        /// <summary>
-        /// Max depth to Search UIElements
-        /// </summary>
-        string v_MaxDepth { get; set; }
+        // nothing
+
+        ///// <summary>
+        ///// Max depth to Search UIElements
+        ///// </summary>
+        //string v_MaxDepth { get; set; }
     }
 }

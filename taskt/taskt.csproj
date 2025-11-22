@@ -493,6 +493,8 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_WindowUIElementResultPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ICanHandleUIElement.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IGetUIElementsInformationProperties.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementCoreSearchSomewayProperties.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementCoreSearchXPathProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementDeepSearchAnyUIElementProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementDeepSearchParametersProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IDoSomethingUIElementProperties.cs" />
@@ -500,6 +502,8 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementCoreProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementCoreSearchParametersProperties.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementDeepSearchProperties.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementDeepSearchXPathProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementIndexProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementSelectionItemsProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IWindowUIElementResultProperties.cs" />
