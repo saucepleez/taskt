@@ -101,6 +101,9 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             int sibCount = 0;
             while (node != null)
             {
+                // DBG
+                //Console.WriteLine(node.Current.AutomationId);
+
                 EM_UIElementCoreSearchParametersPropertiesExtensionMethods.CheckAndAddProcess(node, searchConditions, matchedElements);
                 if (timeoutFunc() || maxElementsFunc(matchedElements))
                 {
