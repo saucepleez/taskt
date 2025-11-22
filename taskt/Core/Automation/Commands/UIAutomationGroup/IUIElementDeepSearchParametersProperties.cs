@@ -3,7 +3,7 @@
     /// <summary>
     /// deep search UIElement search parameters
     /// </summary>
-    public interface IUIElementDeepSearchParametersProperties : IUIElementCoreSearchParametersProperties, IUIElementDeepSearchProperties
+    public interface IUIElementDeepSearchParametersProperties : IUIElementCoreSearchParametersProperties, IUIElementDeepSearchSomewayProperties
     {
         // nothing
 
