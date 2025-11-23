@@ -191,6 +191,21 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         public static string v_TargetUIElementIndex { get; }
 
         /// <summary>
+        /// xpath property
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Search XPath")]
+        [InputSpecification("Search XPath", true)]
+        [PropertyDetailSampleUsage("**//Button[@Name=\"OK\"]**", "Specify a Button whose **Name** Attribute is **OK** in descendant node of the criteria AutomationElement")]
+        [PropertyDetailSampleUsage("**/Pane[1]/Button[2]**", "Specify the **second** Button of the **first** Pane child node of the child node of the criteria AutomationElement")]
+        [PropertyDetailSampleUsage("**{{{vXPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "XPath")]
+        [Remarks("XPath does not support to use parent, following-sibling, and preceding-sibling for root element.")]
+        [PropertyValidationRule("XPath", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "XPath")]
+        [PropertyCustomUIHelper("GUI Inspect Tool", nameof(UIElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByXPath_Click))]
+        public static string v_XPath { get; }
+
+        /// <summary>
         /// show GUI InspectTool and get InspectTool like result
         /// </summary>
         /// <param name="sender"></param>
@@ -442,6 +457,35 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                     if (isFound)
                     {
                         break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// show GUI Inspect Tool and get XPath
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void lnkGUIInspectTool_UsedByXPath_Click(object sender, EventArgs e)
+        {
+            using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspect())
+            {
+                var trgCtrl = (Control)sender;
+                if (fm.ShowDialog(trgCtrl.FindForm()) == DialogResult.OK)
+                {
+                    object ctrl = trgCtrl.Tag;
+                    if (ctrl is TextBox txt)
+                    {
+                        txt.Text = fm.XPath;
+                    }
+                    else if (ctrl is ComboBox cmb)
+                    {
+                        cmb.Text = fm.XPath;
+                    }
+                    else if (ctrl is DataGridView dgv)
+                    {
+                        dgv.CurrentCell.Value = fm.XPath;
                     }
                 }
             }
