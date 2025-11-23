@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Automation;
 using System.Xml.Linq;
 
@@ -11,6 +7,35 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
     public static class EM_UIElementDeepSearchXPathPropertiesExtensionMethods
     {
+        /// <summary>
+        /// Deep Search UIElement Action
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <param name="targetElement"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="errorFunc"></param>
+        public static void DeepSearchUIElementAction(this IUIElementDeepSearchXPathProperties command, Engine.AutomationEngineInstance engine, AutomationElement targetElement, Action<AutomationElement> actionFunc, Action<Exception> errorFunc = null)
+        {
+            try
+            {
+                var elem = command.DeepSearchUIElementByXPath(targetElement, engine);
+                actionFunc(elem);
+                command.StoreWindowNameAndWindowHandleInUserVariablesFromUIElement(elem, engine);
+            }
+            catch (Exception ex)
+            {
+                if (errorFunc != null)
+                {
+                    errorFunc(ex);
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+        }
+
         /// <summary>
         /// deep search UIElement by XPath
         /// </summary>
@@ -44,7 +69,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             }
             else
             {
-                throw new Exception($"AutomationElement not Found");
+                throw new Exception($"AutomationElement not Found. XPath: '{command.v_SearchXPath}', Expand Value: '{xpath}'");
             }
         }
 
