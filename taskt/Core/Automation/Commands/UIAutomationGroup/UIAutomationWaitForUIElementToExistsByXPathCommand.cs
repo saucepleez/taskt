@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Xml.Serialization;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Windows.Automation;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
     [Attributes.ClassAttributes.SubGruop("Search UIElement")]
@@ -14,31 +13,33 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationWaitForUIElementToExistsByXPathCommand : ScriptCommand
+    public sealed class UIAutomationWaitForUIElementToExistsByXPathCommand : ADeepSearchUIElementFromUIElementByXPathCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
-        public string v_TargetElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
+        //public string v_TargetElement { get; set; }
 
-        [XmlElement]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_XPath))]
-        public string v_SearchXPath { get; set; }
+        //[XmlElement]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_XPath))]
+        //public string v_SearchXPath { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
-        public string v_WaitTimeForUIElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
+        //public string v_WaitTimeForUIElement { get; set; }
 
         public UIAutomationWaitForUIElementToExistsByXPathCommand()
         {
-            //this.CommandName = "UIAutomationWaitForElementExistByXPathCommand";
-            //this.SelectionName = "Wait For Element Exist By XPath";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            UIElementControls.SearchGUIElementByXPath(this, engine);
+            //UIElementControls.SearchGUIElementByXPath(this, engine);
+            var targetElement = this.ExpandUserVariableAsUIElement(engine);
+
+            this.DeepSearchUIElementAction(engine, targetElement, new Action<AutomationElement>(elem =>
+            {
+                // nothing
+            }));
         }
     }
 }

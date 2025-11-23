@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
     [Attributes.ClassAttributes.SubGruop("Search UIElement")]
@@ -14,47 +14,56 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationCheckUIElementExistsByXPathCommand : ScriptCommand
+    public sealed class UIAutomationCheckUIElementExistsByXPathCommand : ADeepSearchUIElementFromUIElementByXPathCommands, IResultProperties
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
-        public string v_TargetElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
+        //public string v_TargetElement { get; set; }
 
-        [XmlElement]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_XPath))]
-        public string v_SearchXPath { get; set; }
+        //[XmlElement]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_XPath))]
+        //public string v_SearchXPath { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the UIElement exists, Result value is **True**")]
+        [PropertyParameterOrder(7000)]
         public string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
-        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyIsOptional(true, "0")]
-        [PropertyFirstValue("0")]
-        public string v_WaitTimeForUIElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
+        //[PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        //[PropertyIsOptional(true, "0")]
+        //[PropertyFirstValue("0")]
+        //public string v_WaitTimeForUIElement { get; set; }
 
         public UIAutomationCheckUIElementExistsByXPathCommand()
         {
-            //this.CommandName = "UIAutomationCheckElementExistByXPathCommand";
-            //this.SelectionName = "Check Element Exist By XPath";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            try
-            {
-                UIElementControls.SearchGUIElementByXPath(this, engine);
-                true.StoreInUserVariable(engine, v_Result);
-            }
-            catch
-            {
-                false.StoreInUserVariable(engine, v_Result);
-            }
+            //try
+            //{
+            //    UIElementControls.SearchGUIElementByXPath(this, engine);
+            //    true.StoreInUserVariable(engine, v_Result);
+            //}
+            //catch
+            //{
+            //    false.StoreInUserVariable(engine, v_Result);
+            //}
+
+            var targetElement = this.ExpandUserVariableAsUIElement(engine);
+            this.DeepSearchUIElementAction(engine, targetElement,
+                new Action<System.Windows.Automation.AutomationElement>(elem =>
+                {
+                    true.StoreInUserVariable(engine, v_Result);
+                }),
+                new Action<Exception>(ex =>
+                {
+                    false.StoreInUserVariable(engine, v_Result);
+                })
+            );
         }
     }
 }
