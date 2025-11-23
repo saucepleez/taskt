@@ -484,7 +484,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\AUIElementCoreCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_CanHandleUIElementExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_CanHandleUIElementXMLExtentionMethods.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIELementCoreSearchSomewayPropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementCoreSearchSomewayPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementCoreSearchXPathPropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementDeepSearchSomewayPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementDeepSearchXPathPropertiesExtensionMethods.cs" />
