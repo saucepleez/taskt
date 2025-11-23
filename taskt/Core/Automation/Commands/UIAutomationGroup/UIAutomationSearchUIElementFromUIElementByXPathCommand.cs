@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
     [Attributes.ClassAttributes.SubGruop("Search UIElement")]
@@ -14,24 +14,25 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationSearchUIElementFromUIElementByXPathCommand : ScriptCommand
+    public sealed class UIAutomationSearchUIElementFromUIElementByXPathCommand : ADeepSearchUIElementFromUIElementByXPathCommands, IResultProperties
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
-        [PropertyDescription("UIElement Variable Name to Search")]
-        public string v_TargetElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
+        //[PropertyDescription("UIElement Variable Name to Search")]
+        //public string v_TargetElement { get; set; }
 
-        [XmlElement]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_XPath))]
-        public string v_SearchXPath { get; set; }
+        //[XmlElement]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_XPath))]
+        //public string v_SearchXPath { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
+        [PropertyParameterOrder(7000)]
         public string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
-        public string v_WaitTimeForUIElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
+        //public string v_WaitTimeForUIElement { get; set; }
 
         //[XmlIgnore]
         //[NonSerialized]
@@ -39,16 +40,18 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationSearchUIElementFromUIElementByXPathCommand()
         {
-            //this.CommandName = "UIAutomationGetElementFromElementByXPathCommand";
-            //this.SelectionName = "Get Element From Element By XPath";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var elem = UIElementControls.SearchGUIElementByXPath(this, engine);
-            elem.StoreInUserVariable(engine, v_Result);
+            //var elem = UIElementControls.SearchGUIElementByXPath(this, engine);
+            //elem.StoreInUserVariable(engine, v_Result);
+
+            var targetElement = this.ExpandUserVariableAsUIElement(engine);
+            this.DeepSearchUIElementAction(engine, targetElement, new Action<System.Windows.Automation.AutomationElement>(elem =>
+            {
+                elem.StoreInUserVariable(engine, v_Result);
+            }));
         }
     }
 }
