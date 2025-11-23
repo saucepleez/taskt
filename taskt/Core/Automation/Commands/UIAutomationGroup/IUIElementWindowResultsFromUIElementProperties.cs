@@ -5,7 +5,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     /// <summary>
     /// for to get window name and handle from UIElement properties
     /// </summary>
-    public interface IUIElementWindowResultsFromUIElementProperties : IFromWindowHandleResultsProperties
+    public interface IUIElementWindowResultsFromUIElementProperties : IFromWindowNameResultsProperties
     {
         // nothing
     }
