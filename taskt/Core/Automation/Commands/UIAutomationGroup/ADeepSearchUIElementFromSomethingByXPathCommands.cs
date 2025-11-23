@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     /// <summary>
     /// for deep search UIElement from something by XPath commands
     /// </summary>
-    public abstract class ADeepSearchUIElementFromSomethingByXPathCommands : ACoreSearchUIElementFromSomethingByXPathCommands, IUIElementDeepSearchSomewayProperties
+    public abstract class ADeepSearchUIElementFromSomethingByXPathCommands : ACoreSearchUIElementFromSomethingByXPathCommands, IUIElementDeepSearchXPathProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_MaxDepth))]
