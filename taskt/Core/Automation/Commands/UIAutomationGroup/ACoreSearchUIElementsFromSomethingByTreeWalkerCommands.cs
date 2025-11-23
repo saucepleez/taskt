@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     /// <summary>
     /// for search UIElements from Something by TreeWalker commands
     /// </summary>
-    public abstract class ACoreSearchUIElementsFromSomethingByTreeWalkerCommands : ScriptCommand, IUIElementCoreSearchParametersProperties, IUIElementWindowResultsFromUIElementProperties
+    public abstract class ACoreSearchUIElementsFromSomethingByTreeWalkerCommands : ScriptCommand, IUIElementCoreSearchParametersProperties
     {
         [XmlElement]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SearchParameters))]

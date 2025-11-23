@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     /// <summary>
     /// for core search UIELement from something by XPath commands
     /// </summary>
-    public abstract class ACoreSearchUIElementFromSomethingByXPathCommands : ScriptCommand, IUIElementCoreSearchXPathProperties, IUIElementWindowResultsFromUIElementProperties
+    public abstract class ACoreSearchUIElementFromSomethingByXPathCommands : ScriptCommand, IUIElementCoreSearchXPathProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_XPath))]

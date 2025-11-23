@@ -3,7 +3,7 @@
     /// <summary>
     /// UIElement core search XPath properties
     /// </summary>
-    public interface IUIElementCoreSearchXPathProperties : IUIElementCoreSearchSomewayProperties
+    public interface IUIElementCoreSearchXPathProperties : IUIElementCoreSearchSomewayProperties, IUIElementWindowResultsFromUIElementProperties
     {
         /// <summary>
         /// UIElement search XPath
