@@ -17,6 +17,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
@@ -4938,8 +4939,21 @@ namespace taskt.Core.Script
             // UIAutomationGetUIElementTreeXMLFromUIElementCommand -> UIAutomationGetUIElementsTreeXMLFromUIElementCommand
             ChangeCommandName(doc, "UIAutomationGetUIElementTreeXMLFromUIElementCommand", "UIAutomationSearchUIElementsTreeXMLFromUIElementCommand", "Search UIElements Tree XML From UIElement");
 
-            // UIAutomationCheckUIElementExistsByXPathCommand v_SearchXPath element to attribute
-            var checkUIElemXPath = GetCommands(doc, "UIAutomationCheckUIElementExistsByXPathCommand");
+            // UIAutomationCheckUIElementExistsByXPathCommand, UIAutomationSearchUIElementFromUIElementByXPathCommand,
+            // UIAutomationWaitForUIElementToExistsByXPathCommand
+            // v_SearchXPath element to attribute
+            var checkUIElemXPath = GetCommands(doc, new Func<XElement, bool>(elem =>
+            {
+                switch (GetCommandName(elem))
+                {
+                    case "UIAutomationCheckUIElementExistsByXPathCommand":
+                    case "UIAutomationSearchUIElementFromUIElementByXPathCommand":
+                    case "UIAutomationWaitForUIElementToExistsByXPathCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }));
             foreach (var command in checkUIElemXPath) 
             {
                 var xpathElem = command.Element("v_SearchXPath");
