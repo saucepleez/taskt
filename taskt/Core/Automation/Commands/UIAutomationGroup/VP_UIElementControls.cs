@@ -202,7 +202,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         [Remarks("XPath does not support to use parent, following-sibling, and preceding-sibling for root element.")]
         [PropertyValidationRule("XPath", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "XPath")]
-        [PropertyCustomUIHelper("GUI Inspect Tool", nameof(UIElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByXPath_Click))]
+        [PropertyCustomUIHelper("GUI Inspect Tool", nameof(VP_UIElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByXPath_Click))]
         public static string v_SearchXPath { get; }
 
         /// <summary>
