@@ -8,7 +8,6 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -19,15 +18,15 @@ namespace taskt.Core.Automation.Commands
     {
         #region fields
 
-        /// <summary>
-        /// UIElement type for Reflection
-        /// </summary>
-        private static readonly Type TypeOfAutomationElement = typeof(AutomationElement);
+        ///// <summary>
+        ///// UIElement type for Reflection
+        ///// </summary>
+        //private static readonly Type TypeOfAutomationElement = typeof(AutomationElement);
 
-        /// <summary>
-        /// ControlType type for Reflection
-        /// </summary>
-        private static readonly Type TypeOfControlType = typeof(ControlType);
+        ///// <summary>
+        ///// ControlType type for Reflection
+        ///// </summary>
+        //private static readonly Type TypeOfControlType = typeof(ControlType);
 
         private static readonly string[] TargetControlTypes = new string[]
         {
@@ -40,184 +39,184 @@ namespace taskt.Core.Automation.Commands
         #endregion
 
         #region VirtualProperties
-        /// <summary>
-        /// input UIElement property
-        /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
-        [PropertyDescription("UIElement Variable Name")]
-        [InputSpecification("UIElement Variable Name", true)]
-        [PropertyDetailSampleUsage("**vElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
-        [PropertyDetailSampleUsage("**{{{vElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.UIElement, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        [PropertyValidationRule("UIElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Element")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyParameterOrder(5000)]
-        public static string v_InputUIElementName { get; }
-
-        /// <summary>
-        /// output UIElement property
-        /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [PropertyDescription("Variable Name to Store UIElement")]
-        [InputSpecification("UIElement Variable Name", true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.UIElement, true)]
-        [PropertyValidationRule("UIElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Element")]
+        ///// <summary>
+        ///// input UIElement property
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
+        //[PropertyDescription("UIElement Variable Name")]
+        //[InputSpecification("UIElement Variable Name", true)]
         //[PropertyDetailSampleUsage("**vElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         //[PropertyDetailSampleUsage("**{{{vElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyParameterOrder(5000)]
-        public static string v_OutputUIElementName { get; }
-
-        /// <summary>
-        /// New output UIElement name
-        /// </summary>
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_OutputUIElementName))]
-        [PropertyDescription("UIElement Variable Name")]
-        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
-        [PropertyDetailSampleUsage("**vNewElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
-        [PropertyDetailSampleUsage("**{{{vNewElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
-        [PropertyValidationRule("New UIElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "New UIElement")]
-        //[InputSpecification("UIElement Variable Name", true)]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         //[PropertyInstanceType(PropertyInstanceType.InstanceType.UIElement, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyParameterOrder(5000)]
-        public static string v_NewOutputUIElementName { get; }
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        //[PropertyValidationRule("UIElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Element")]
+        ////[Remarks("")]
+        ////[PropertyShowSampleUsageInDescription(true)]
+        ////[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_InputUIElementName { get; }
 
-        /// <summary>
-        /// xpath property
-        /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Search XPath")]
-        [InputSpecification("Search XPath", true)]
-        [PropertyDetailSampleUsage("**//Button[@Name=\"OK\"]**", "Specify a Button whose **Name** Attribute is **OK** in descendant node of the criteria AutomationElement")]
-        [PropertyDetailSampleUsage("**/Pane[1]/Button[2]**", "Specify the **second** Button of the **first** Pane child node of the child node of the criteria AutomationElement")]
-        [PropertyDetailSampleUsage("**{{{vXPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "XPath")]
-        [Remarks("XPath does not support to use parent, following-sibling, and preceding-sibling for root element.")]
-        [PropertyValidationRule("XPath", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "XPath")]
-        [PropertyCustomUIHelper("GUI Inspect Tool", nameof(UIElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByXPath_Click))]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyParameterOrder(5000)]
-        public static string v_XPath { get; }
+        ///// <summary>
+        ///// output UIElement property
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //[PropertyDescription("Variable Name to Store UIElement")]
+        //[InputSpecification("UIElement Variable Name", true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.UIElement, true)]
+        //[PropertyValidationRule("UIElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Element")]
+        ////[PropertyDetailSampleUsage("**vElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        ////[PropertyDetailSampleUsage("**{{{vElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        ////[Remarks("")]
+        ////[PropertyShowSampleUsageInDescription(true)]
+        ////[PropertyIsVariablesList(true)]
+        ////[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        ////[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_OutputUIElementName { get; }
 
-        /// <summary>
-        /// Search paramters property
-        /// </summary>
-        [PropertyDescription("Search Parameters")]
-        [PropertyCustomUIHelper("GUI Inspect Tool", nameof(UIElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByInspectResult_Click))]
-        [PropertyCustomUIHelper("Inspect Tool Parser", nameof(UIElementControls) + "+" + nameof(lnkInspectToolParser_Click))]
-        [PropertyCustomUIHelper("Add Empty Parameters", nameof(UIElementControls) + "+" + nameof(lnkAddEmptyParameter_Click))]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Search Paramters", true)]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        [PropertyDataGridViewSetting(false, false, true)]
-        [PropertyDataGridViewColumnSettings("Enabled", "Enabled", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox)]
-        [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
-        [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
-        [PropertyDataGridViewCellEditEvent(nameof(UIElementControls) + "+" + nameof(UIAutomationDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
-        [PropertyDataGridViewCellEditEvent(nameof(UIElementControls) + "+" + nameof(UIAutomationDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
-        [PropertyDataGridViewInitMethod(nameof(UIElementControls) + "+" + nameof(CreateEmptyParamters))]
-        [PropertyParameterOrder(5000)]
-        public static string v_SearchParameters { get; }
+        ///// <summary>
+        ///// New output UIElement name
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_OutputUIElementName))]
+        //[PropertyDescription("UIElement Variable Name")]
+        //[PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
+        //[PropertyDetailSampleUsage("**vNewElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        //[PropertyDetailSampleUsage("**{{{vNewElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        //[PropertyValidationRule("New UIElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "New UIElement")]
+        ////[InputSpecification("UIElement Variable Name", true)]
+        ////[Remarks("")]
+        ////[PropertyShowSampleUsageInDescription(true)]
+        ////[PropertyIsVariablesList(true)]
+        ////[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        ////[PropertyInstanceType(PropertyInstanceType.InstanceType.UIElement, true)]
+        ////[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_NewOutputUIElementName { get; }
 
-        /// <summary>
-        /// AutomationElement wait time
-        /// </summary>
-        [PropertyVirtualProperty(nameof(WaitControls), nameof(WaitControls.v_WaitTime))]
-        [PropertyDescription("Wait Time for the UIElement to Exist (sec)")]
-        [Remarks("Specify how long to Wait before an Error will occur because the UIElement is Not Found.")]
-        [PropertyIsOptional(true, "10")]
-        [PropertyFirstValue("10")]
-        //[InputSpecification("Wait Time", true)]
-        //[PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
-        //[PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
+        ///// <summary>
+        ///// xpath property
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Search XPath")]
+        //[InputSpecification("Search XPath", true)]
+        //[PropertyDetailSampleUsage("**//Button[@Name=\"OK\"]**", "Specify a Button whose **Name** Attribute is **OK** in descendant node of the criteria AutomationElement")]
+        //[PropertyDetailSampleUsage("**/Pane[1]/Button[2]**", "Specify the **second** Button of the **first** Pane child node of the child node of the criteria AutomationElement")]
+        //[PropertyDetailSampleUsage("**{{{vXPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "XPath")]
+        //[Remarks("XPath does not support to use parent, following-sibling, and preceding-sibling for root element.")]
+        //[PropertyValidationRule("XPath", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "XPath")]
+        //[PropertyCustomUIHelper("GUI Inspect Tool", nameof(UIElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByXPath_Click))]
+        ////[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
+        ////[PropertyTextBoxSetting(1, false)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_XPath { get; }
+
+        ///// <summary>
+        ///// Search paramters property
+        ///// </summary>
+        //[PropertyDescription("Search Parameters")]
+        //[PropertyCustomUIHelper("GUI Inspect Tool", nameof(UIElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByInspectResult_Click))]
+        //[PropertyCustomUIHelper("Inspect Tool Parser", nameof(UIElementControls) + "+" + nameof(lnkInspectToolParser_Click))]
+        //[PropertyCustomUIHelper("Add Empty Parameters", nameof(UIElementControls) + "+" + nameof(lnkAddEmptyParameter_Click))]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Search Paramters", true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        //[PropertyDataGridViewSetting(false, false, true)]
+        //[PropertyDataGridViewColumnSettings("Enabled", "Enabled", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox)]
+        //[PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
+        //[PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
+        //[PropertyDataGridViewCellEditEvent(nameof(UIElementControls) + "+" + nameof(UIAutomationDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        //[PropertyDataGridViewCellEditEvent(nameof(UIElementControls) + "+" + nameof(UIAutomationDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        //[PropertyDataGridViewInitMethod(nameof(UIElementControls) + "+" + nameof(CreateEmptyParamters))]
         //[PropertyParameterOrder(5000)]
-        public static string v_WaitTime { get; }
+        //public static string v_SearchParameters { get; }
+
+        ///// <summary>
+        ///// AutomationElement wait time
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(WaitControls), nameof(WaitControls.v_WaitTime))]
+        //[PropertyDescription("Wait Time for the UIElement to Exist (sec)")]
+        //[Remarks("Specify how long to Wait before an Error will occur because the UIElement is Not Found.")]
+        //[PropertyIsOptional(true, "10")]
+        //[PropertyFirstValue("10")]
+        ////[InputSpecification("Wait Time", true)]
+        ////[PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
+        ////[PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
+        ////[PropertyShowSampleUsageInDescription(true)]
+        ////[PropertyTextBoxSetting(1, false)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_WaitTime { get; }
         #endregion
 
         #region variable methods
 
-        /// <summary>
-        /// expand user variable as UIElement
-        /// </summary>
-        /// <param name="variableName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static AutomationElement ExpandUserVariableAsUIElement(this string variableName, Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is AutomationElement e)
-            {
-                return e;
-            }
-            else
-            {
-                throw new Exception($"Variable '{variableName}' is not UIElement");
-            }
-        }
+        ///// <summary>
+        ///// expand user variable as UIElement
+        ///// </summary>
+        ///// <param name="variableName"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public static AutomationElement ExpandUserVariableAsUIElement(this string variableName, Engine.AutomationEngineInstance engine)
+        //{
+        //    Script.ScriptVariable v = variableName.GetRawVariable(engine);
+        //    if (v.VariableValue is AutomationElement e)
+        //    {
+        //        return e;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception($"Variable '{variableName}' is not UIElement");
+        //    }
+        //}
 
-        /// <summary>
-        /// expand user variable as UIElement
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="parameterName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        public static AutomationElement ExpandUserVariableAsUIElement(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
-        {
-            var prop = command.GetProperty(parameterName);
-            var value = prop?.GetValue(command)?.ToString() ?? "";
-            return ExpandUserVariableAsUIElement(value, engine);
-        }
+        ///// <summary>
+        ///// expand user variable as UIElement
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="parameterName"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //public static AutomationElement ExpandUserVariableAsUIElement(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        //{
+        //    var prop = command.GetProperty(parameterName);
+        //    var value = prop?.GetValue(command)?.ToString() ?? "";
+        //    return ExpandUserVariableAsUIElement(value, engine);
+        //}
 
-        /// <summary>
-        /// expand user variable string as XPath
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        public static string ExpandUserVariableAsXPath(this string value, Engine.AutomationEngineInstance engine)
-        {
-            var p = value.ExpandValueOrUserVariable(engine);
-            if (!p.StartsWith("."))
-            {
-                p = "." + p;
-            }
-            return p;
-        }
+        ///// <summary>
+        ///// expand user variable string as XPath
+        ///// </summary>
+        ///// <param name="value"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //public static string ExpandUserVariableAsXPath(this string value, Engine.AutomationEngineInstance engine)
+        //{
+        //    var p = value.ExpandValueOrUserVariable(engine);
+        //    if (!p.StartsWith("."))
+        //    {
+        //        p = "." + p;
+        //    }
+        //    return p;
+        //}
 
-        /// <summary>
-        /// expand variable string as XPath
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="parameterName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        public static string ExpandUserVariableAsXPath(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
-        {
-            var prop = command.GetProperty(parameterName);
-            var value = prop?.GetValue(command)?.ToString() ?? "";
-            return ExpandUserVariableAsXPath(value, engine);
-        }
+        ///// <summary>
+        ///// expand variable string as XPath
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="parameterName"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //public static string ExpandUserVariableAsXPath(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        //{
+        //    var prop = command.GetProperty(parameterName);
+        //    var value = prop?.GetValue(command)?.ToString() ?? "";
+        //    return ExpandUserVariableAsXPath(value, engine);
+        //}
 
         /// <summary>
         /// store AutomationElement
@@ -1086,52 +1085,52 @@ namespace taskt.Core.Automation.Commands
 
         #region create XElement methods
 
-        public static (XElement, Dictionary<string, AutomationElement>) GetElementXml(AutomationElement targetElement)
-        {
-            XElement root = CreateXmlElement(targetElement);
+        //public static (XElement, Dictionary<string, AutomationElement>) GetElementXml(AutomationElement targetElement)
+        //{
+        //    XElement root = CreateXmlElement(targetElement);
 
-            var dic = new Dictionary<string, AutomationElement>()
-            {
-                { root.GetHashCode().ToString(), targetElement }
-            };
+        //    var dic = new Dictionary<string, AutomationElement>()
+        //    {
+        //        { root.GetHashCode().ToString(), targetElement }
+        //    };
 
-            TreeWalker walker = TreeWalker.RawViewWalker;
+        //    TreeWalker walker = TreeWalker.RawViewWalker;
 
-            GetChildNodeFromElement(root, targetElement, dic, walker);
+        //    GetChildNodeFromElement(root, targetElement, dic, walker);
 
-            return (root, dic);
-        }
+        //    return (root, dic);
+        //}
 
-        private static XElement GetChildNodeFromElement(XElement rootNode, AutomationElement rootElement, Dictionary<string, AutomationElement> elemsDic, TreeWalker walker)
-        {
-            var node = walker.GetFirstChild(rootElement);
-            while (node != null)
-            {
-                string hash = node.GetHashCode().ToString();
-                if (elemsDic.ContainsKey(hash))
-                {
-                    int i = 1;
-                    while(elemsDic.ContainsKey(hash + "-" + i))
-                    {
-                        i++;
-                    }
-                    hash += "-" + i;
-                }
+        //private static XElement GetChildNodeFromElement(XElement rootNode, AutomationElement rootElement, Dictionary<string, AutomationElement> elemsDic, TreeWalker walker)
+        //{
+        //    var node = walker.GetFirstChild(rootElement);
+        //    while (node != null)
+        //    {
+        //        string hash = node.GetHashCode().ToString();
+        //        if (elemsDic.ContainsKey(hash))
+        //        {
+        //            int i = 1;
+        //            while(elemsDic.ContainsKey(hash + "-" + i))
+        //            {
+        //                i++;
+        //            }
+        //            hash += "-" + i;
+        //        }
 
-                var childNode = CreateXmlElement(node, hash);
-                rootNode.Add(childNode);
-                elemsDic.Add(hash, node);
+        //        var childNode = CreateXmlElement(node, hash);
+        //        rootNode.Add(childNode);
+        //        elemsDic.Add(hash, node);
 
-                if (walker.GetFirstChild(node) != null)
-                {
-                    GetChildNodeFromElement(childNode, node, elemsDic, walker);
-                }
+        //        if (walker.GetFirstChild(node) != null)
+        //        {
+        //            GetChildNodeFromElement(childNode, node, elemsDic, walker);
+        //        }
 
-                node = walker.GetNextSibling(node);
-            }
+        //        node = walker.GetNextSibling(node);
+        //    }
 
-            return rootNode;
-        }
+        //    return rootNode;
+        //}
 
         private static XElement CreateXmlElement(AutomationElement targetElement, string hash = "")
         {
@@ -1152,54 +1151,54 @@ namespace taskt.Core.Automation.Commands
 
         #region AutomationElement XPath search methods
 
-        public static AutomationElement SearchGUIElementByXPath(AutomationElement rootElement, string xpath, int waitTime, Engine.AutomationEngineInstance engine)
-        {
-            object ret;
-            ret = WaitControls.WaitProcess(waitTime, "AutomationElement",
-                new Func<(bool, object)>(() =>
-                {
-                    (var xml, var dic) = GetElementXml(rootElement);
+        //public static AutomationElement SearchGUIElementByXPath(AutomationElement rootElement, string xpath, int waitTime, Engine.AutomationEngineInstance engine)
+        //{
+        //    object ret;
+        //    ret = WaitControls.WaitProcess(waitTime, "AutomationElement",
+        //        new Func<(bool, object)>(() =>
+        //        {
+        //            (var xml, var dic) = GetElementXml(rootElement);
 
-                    var e = xml.XPathSelectElement(xpath) ?? null;
+        //            var e = xml.XPathSelectElement(xpath) ?? null;
                     
-                    if (e != null)
-                    {
-                        return (true, dic[e.Attribute("Hash").Value]);
-                    }
-                    else
-                    {
-                        return (false, null);
-                    }
-                }), engine
-            );
+        //            if (e != null)
+        //            {
+        //                return (true, dic[e.Attribute("Hash").Value]);
+        //            }
+        //            else
+        //            {
+        //                return (false, null);
+        //            }
+        //        }), engine
+        //    );
 
-            if (ret is AutomationElement elem)
-            {
-                return elem;
-            }
-            else
-            {
-                throw new Exception("UIElement not Found");
-            }
-        }
+        //    if (ret is AutomationElement elem)
+        //    {
+        //        return elem;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("UIElement not Found");
+        //    }
+        //}
 
-        public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, string rootElementName, string xpathName, string waitTimeName, Engine.AutomationEngineInstance engine)
-        {
-            var element = command.ExpandUserVariableAsUIElement(rootElementName, engine);
-            var xpath = command.ExpandUserVariableAsXPath(xpathName, engine);
-            var wait = command.ExpandValueOrUserVariableAsInteger(waitTimeName, engine);
+        //public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, string rootElementName, string xpathName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        //{
+        //    var element = command.ExpandUserVariableAsUIElement(rootElementName, engine);
+        //    var xpath = command.ExpandUserVariableAsXPath(xpathName, engine);
+        //    var wait = command.ExpandValueOrUserVariableAsInteger(waitTimeName, engine);
 
-            return SearchGUIElementByXPath(element, xpath, wait, engine);
-        }
+        //    return SearchGUIElementByXPath(element, xpath, wait, engine);
+        //}
 
-        public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, Engine.AutomationEngineInstance engine)
-        {
-            var elemName = command.GetProperty(new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_InputUIElementName)))?.Name ?? "";
-            var xpathName = command.GetProperty(new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_XPath)))?.Name ?? "";
-            var waitTimeName = command.GetProperty(new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_WaitTime)))?.Name ?? "";
+        //public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, Engine.AutomationEngineInstance engine)
+        //{
+        //    var elemName = command.GetProperty(new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_InputUIElementName)))?.Name ?? "";
+        //    var xpathName = command.GetProperty(new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_XPath)))?.Name ?? "";
+        //    var waitTimeName = command.GetProperty(new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_WaitTime)))?.Name ?? "";
 
-            return SearchGUIElementByXPath(command, elemName, xpathName, waitTimeName, engine);
-        }
+        //    return SearchGUIElementByXPath(command, elemName, xpathName, waitTimeName, engine);
+        //}
 
         #endregion
 
@@ -1467,165 +1466,165 @@ namespace taskt.Core.Automation.Commands
 
         #region events
 
-        /// <summary>
-        /// show GUI Inspect Tool and get XPath
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public static void lnkGUIInspectTool_UsedByXPath_Click(object sender, EventArgs e)
-        {
-            using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspect())
-            {
-                var trgCtrl = (Control)sender;
-                if (fm.ShowDialog(trgCtrl.FindForm()) == DialogResult.OK)
-                {
-                    object ctrl = trgCtrl.Tag;
-                    if (ctrl is TextBox txt)
-                    {
-                        txt.Text = fm.XPath;
-                    }
-                    else if (ctrl is ComboBox cmb)
-                    {
-                        cmb.Text = fm.XPath;
-                    }
-                    else if (ctrl is DataGridView dgv)
-                    {
-                        dgv.CurrentCell.Value = fm.XPath;
-                    }
-                }
-            }
-        }
+        ///// <summary>
+        ///// show GUI Inspect Tool and get XPath
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //public static void lnkGUIInspectTool_UsedByXPath_Click(object sender, EventArgs e)
+        //{
+        //    using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspect())
+        //    {
+        //        var trgCtrl = (Control)sender;
+        //        if (fm.ShowDialog(trgCtrl.FindForm()) == DialogResult.OK)
+        //        {
+        //            object ctrl = trgCtrl.Tag;
+        //            if (ctrl is TextBox txt)
+        //            {
+        //                txt.Text = fm.XPath;
+        //            }
+        //            else if (ctrl is ComboBox cmb)
+        //            {
+        //                cmb.Text = fm.XPath;
+        //            }
+        //            else if (ctrl is DataGridView dgv)
+        //            {
+        //                dgv.CurrentCell.Value = fm.XPath;
+        //            }
+        //        }
+        //    }
+        //}
 
-        private static void dgvUpdateProcess(object sender, Action<DataTable> updateFunc)
-        {
-            var ctrl = ((Control)sender).Tag;
-            if (ctrl is DataGridView dgv)
-            {
-                var propName = dgv.DataBindings[0].BindingMemberInfo.BindingField;
-                var command = (ScriptCommand)dgv.DataBindings[0].DataSource;
-                var propInfo = command.GetType().GetProperty(propName);
-                var source = propInfo.GetValue(command);
-                if (source is DataTable tbl)
-                {
-                    updateFunc(tbl);
-                    RenderSearchParameterDataGridView(dgv);
-                }
-            }
-        }
+        //private static void dgvUpdateProcess(object sender, Action<DataTable> updateFunc)
+        //{
+        //    var ctrl = ((Control)sender).Tag;
+        //    if (ctrl is DataGridView dgv)
+        //    {
+        //        var propName = dgv.DataBindings[0].BindingMemberInfo.BindingField;
+        //        var command = (ScriptCommand)dgv.DataBindings[0].DataSource;
+        //        var propInfo = command.GetType().GetProperty(propName);
+        //        var source = propInfo.GetValue(command);
+        //        if (source is DataTable tbl)
+        //        {
+        //            updateFunc(tbl);
+        //            RenderSearchParameterDataGridView(dgv);
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// show GUI InspectTool and get InspectTool like result
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public static void lnkGUIInspectTool_UsedByInspectResult_Click(object sender, EventArgs e)
-        {
-            using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspect())
-            {
-                if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
-                {
-                    dgvUpdateProcess(sender, new Action<DataTable>((tbl) =>
-                    {
-                        parseInspectToolResult(fm.InspectResult, tbl);
-                    }));
-                }
-            }
-        }
+        ///// <summary>
+        ///// show GUI InspectTool and get InspectTool like result
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //public static void lnkGUIInspectTool_UsedByInspectResult_Click(object sender, EventArgs e)
+        //{
+        //    using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspect())
+        //    {
+        //        if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
+        //        {
+        //            dgvUpdateProcess(sender, new Action<DataTable>((tbl) =>
+        //            {
+        //                parseInspectToolResult(fm.InspectResult, tbl);
+        //            }));
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// set Empty Paramter in DGV
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public static void lnkAddEmptyParameter_Click(object sender, EventArgs e)
-        {
-            dgvUpdateProcess(sender, new Action<DataTable>((tbl) =>
-            {
-                CreateEmptyParamters(tbl);
-            }));
-        }
+        ///// <summary>
+        ///// set Empty Paramter in DGV
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //public static void lnkAddEmptyParameter_Click(object sender, EventArgs e)
+        //{
+        //    dgvUpdateProcess(sender, new Action<DataTable>((tbl) =>
+        //    {
+        //        CreateEmptyParamters(tbl);
+        //    }));
+        //}
 
-        /// <summary>
-        /// show InspectTool Parser and set result
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public static void lnkInspectToolParser_Click(object sender, EventArgs e)
-        {
-            using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInspectParser())
-            {
-                if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
-                {
-                    dgvUpdateProcess(sender, new Action<DataTable>((tbl) =>
-                    {
-                        parseInspectToolResult(fm.inspectResult, tbl);
-                    }));
-                }
-            }
-        }
+        ///// <summary>
+        ///// show InspectTool Parser and set result
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //public static void lnkInspectToolParser_Click(object sender, EventArgs e)
+        //{
+        //    using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInspectParser())
+        //    {
+        //        if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
+        //        {
+        //            dgvUpdateProcess(sender, new Action<DataTable>((tbl) =>
+        //            {
+        //                parseInspectToolResult(fm.inspectResult, tbl);
+        //            }));
+        //        }
+        //    }
+        //}
 
-        public static void UIAutomationDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            var myDGV = (DataGridView)sender;
+        //public static void UIAutomationDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    var myDGV = (DataGridView)sender;
 
-            if (e.RowIndex < 0)
-            {
-                return;
-            }
+        //    if (e.RowIndex < 0)
+        //    {
+        //        return;
+        //    }
 
-            if (e.ColumnIndex >= 0)
-            {
-                if (e.ColumnIndex != 1)
-                {
-                    var targetCell = myDGV.Rows[e.RowIndex].Cells[1];
-                    if (targetCell is DataGridViewTextBoxCell)
-                    {
-                        myDGV.BeginEdit(false);
-                    }
-                    else if (targetCell is DataGridViewComboBoxCell)
-                    {
-                        SendKeys.Send("{F4}");
-                    }
-                }
-            }
-            else
-            {
-                myDGV.EndEdit();
-            }
-        }
+        //    if (e.ColumnIndex >= 0)
+        //    {
+        //        if (e.ColumnIndex != 1)
+        //        {
+        //            var targetCell = myDGV.Rows[e.RowIndex].Cells[1];
+        //            if (targetCell is DataGridViewTextBoxCell)
+        //            {
+        //                myDGV.BeginEdit(false);
+        //            }
+        //            else if (targetCell is DataGridViewComboBoxCell)
+        //            {
+        //                SendKeys.Send("{F4}");
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        myDGV.EndEdit();
+        //    }
+        //}
 
-        public static void UIAutomationDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-        {
-            if (e.ColumnIndex == 1)
-            {
-                e.Cancel = true;
-            }
-        }
+        //public static void UIAutomationDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        //{
+        //    if (e.ColumnIndex == 1)
+        //    {
+        //        e.Cancel = true;
+        //    }
+        //}
         #endregion
 
-        public static void RenderSearchParameterDataGridView(DataGridView dgv)
-        {
-            DataGridViewRow r = null;
-            foreach(DataGridViewRow row in dgv.Rows)
-            {
-                if ((row.Cells[1].Value?.ToString() ?? "") == "ControlType")
-                {
-                    r = row;
-                    break;
-                }
-            }
+        //public static void RenderSearchParameterDataGridView(DataGridView dgv)
+        //{
+        //    DataGridViewRow r = null;
+        //    foreach(DataGridViewRow row in dgv.Rows)
+        //    {
+        //        if ((row.Cells[1].Value?.ToString() ?? "") == "ControlType")
+        //        {
+        //            r = row;
+        //            break;
+        //        }
+        //    }
 
-            if (r != null)
-            {
-                var cmb = new DataGridViewComboBoxCell();
+        //    if (r != null)
+        //    {
+        //        var cmb = new DataGridViewComboBoxCell();
 
-                var fields = typeof(ControlType).GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).Select(f => f.Name).ToList();
+        //        var fields = typeof(ControlType).GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).Select(f => f.Name).ToList();
 
-                cmb.Items.Add("");
-                cmb.Items.AddRange(fields.ToArray());
+        //        cmb.Items.Add("");
+        //        cmb.Items.AddRange(fields.ToArray());
 
-                r.Cells[2] = cmb;
-            }
-        }
+        //        r.Cells[2] = cmb;
+        //    }
+        //}
     }
 }
