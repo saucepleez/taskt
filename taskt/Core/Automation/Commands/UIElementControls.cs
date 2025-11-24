@@ -281,139 +281,139 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void CreateEmptyParamters(DataTable table)
-        {
-            table.Rows.Clear();
-            foreach(var n in TargetControlTypes)
-            {
-                table.Rows.Add(false, n, "");
-            }
-        }
+        //public static void CreateEmptyParamters(DataTable table)
+        //{
+        //    table.Rows.Clear();
+        //    foreach(var n in TargetControlTypes)
+        //    {
+        //        table.Rows.Add(false, n, "");
+        //    }
+        //}
 
-        private static void parseInspectToolResult(string result, DataTable table, ComboBox windowNames = null)
-        {
-            string[] results = result.Split(new[] { "\r\n" }, StringSplitOptions.None);
+        //private static void parseInspectToolResult(string result, DataTable table, ComboBox windowNames = null)
+        //{
+        //    string[] results = result.Split(new[] { "\r\n" }, StringSplitOptions.None);
 
-            if ((results.Length >= 1) && (result != ""))
-            {
-                CreateEmptyParamters(table);
+        //    if ((results.Length >= 1) && (result != ""))
+        //    {
+        //        CreateEmptyParamters(table);
 
-                List<string> ancestors = new List<string>();
-                string currentParam = "";
-                foreach (string res in results)
-                {
-                    string[] spt = res.Split('\t');
-                    string value = (spt.Length >= 2) ? spt[1] : "";
-                    if (value.StartsWith("\"") && value.EndsWith("\""))
-                    {
-                        value = value.Substring(1, value.Length - 2);
-                    }
-                    if (spt[0] != "")
-                    {
-                        string name = spt[0].Substring(0, spt[0].Length - 1);
-                        currentParam = name;
+        //        List<string> ancestors = new List<string>();
+        //        string currentParam = "";
+        //        foreach (string res in results)
+        //        {
+        //            string[] spt = res.Split('\t');
+        //            string value = (spt.Length >= 2) ? spt[1] : "";
+        //            if (value.StartsWith("\"") && value.EndsWith("\""))
+        //            {
+        //                value = value.Substring(1, value.Length - 2);
+        //            }
+        //            if (spt[0] != "")
+        //            {
+        //                string name = spt[0].Substring(0, spt[0].Length - 1);
+        //                currentParam = name;
 
-                        switch (name)
-                        {
-                            case "AcceleratorKey":
-                            case "AccessKey":
-                            case "AutomationId":
-                            case "ClassName":
-                            case "FrameworkId":
-                            case "HasKeyboardFocus":
-                            case "HelpText":
-                            case "IsContentElement":
-                            case "IsControlElement":
-                            case "IsEnabled":
-                            case "IsKeyboardFocusable":
-                            case "IsOffscreen":
-                            case "IsPassword":
-                            case "IsRequiredForForm":
-                            case "ItemStatus":
-                            case "ItemType":
-                            case "LocalizedControlType":
-                            case "Name":
-                            case "NativeWindowHandle":
-                            case "ProcessId":
-                                DataTableControls.SetParameterValue(table, value, name, "ParameterName", "ParameterValue");
-                                break;
+        //                switch (name)
+        //                {
+        //                    case "AcceleratorKey":
+        //                    case "AccessKey":
+        //                    case "AutomationId":
+        //                    case "ClassName":
+        //                    case "FrameworkId":
+        //                    case "HasKeyboardFocus":
+        //                    case "HelpText":
+        //                    case "IsContentElement":
+        //                    case "IsControlElement":
+        //                    case "IsEnabled":
+        //                    case "IsKeyboardFocusable":
+        //                    case "IsOffscreen":
+        //                    case "IsPassword":
+        //                    case "IsRequiredForForm":
+        //                    case "ItemStatus":
+        //                    case "ItemType":
+        //                    case "LocalizedControlType":
+        //                    case "Name":
+        //                    case "NativeWindowHandle":
+        //                    case "ProcessId":
+        //                        DataTableControls.SetParameterValue(table, value, name, "ParameterName", "ParameterValue");
+        //                        break;
 
-                            case "ControlType":
-                                DataTableControls.SetParameterValue(table, parseControlTypeInspectToolResult(value), name, "ParameterName", "ParameterValue");
-                                break;
+        //                    case "ControlType":
+        //                        DataTableControls.SetParameterValue(table, parseControlTypeInspectToolResult(value), name, "ParameterName", "ParameterValue");
+        //                        break;
 
-                            case "Ancestors":
-                                ancestors.Add(value);
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        if (currentParam == "Ancestors")
-                        {
-                            ancestors.Add(value);
-                        }
-                    }
-                    if (windowNames != null)
-                    {
-                        setComboBoxWindowNameFromInspectAncestors(ancestors, windowNames);
-                    }
-                }
-            }
-            else
-            {
-                var f = new UI.Forms.General.frmDialog("No Inspect Tool Results", "Fail Parse", UI.Forms.General.frmDialog.DialogType.OkOnly, 0);
-                f.ShowDialog();
-            }
-        }
+        //                    case "Ancestors":
+        //                        ancestors.Add(value);
+        //                        break;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                if (currentParam == "Ancestors")
+        //                {
+        //                    ancestors.Add(value);
+        //                }
+        //            }
+        //            if (windowNames != null)
+        //            {
+        //                setComboBoxWindowNameFromInspectAncestors(ancestors, windowNames);
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        var f = new UI.Forms.General.frmDialog("No Inspect Tool Results", "Fail Parse", UI.Forms.General.frmDialog.DialogType.OkOnly, 0);
+        //        f.ShowDialog();
+        //    }
+        //}
 
-        private static string parseControlTypeInspectToolResult(string value)
-        {
-            var spt = value.Split(' ');
-            return spt[0].Replace("UIA_", "").Replace("ControlTypeId", "");
-        }
+        //private static string parseControlTypeInspectToolResult(string value)
+        //{
+        //    var spt = value.Split(' ');
+        //    return spt[0].Replace("UIA_", "").Replace("ControlTypeId", "");
+        //}
 
-        private static void setComboBoxWindowNameFromInspectAncestors(List<string> ancestors, ComboBox cmb)
-        {
-            if (ancestors.Count > 0)
-            {
-                string[] windows = new string[cmb.Items.Count];
-                cmb.Items.CopyTo(windows, 0);
+        //private static void setComboBoxWindowNameFromInspectAncestors(List<string> ancestors, ComboBox cmb)
+        //{
+        //    if (ancestors.Count > 0)
+        //    {
+        //        string[] windows = new string[cmb.Items.Count];
+        //        cmb.Items.CopyTo(windows, 0);
 
-                bool isFound = false;
-                foreach (string ancestor in ancestors)
-                {
-                    // get quoted " " text
-                    int pos = ancestor.IndexOf("\"");
-                    if (pos < 0)
-                    {
-                        continue;
-                    }
+        //        bool isFound = false;
+        //        foreach (string ancestor in ancestors)
+        //        {
+        //            // get quoted " " text
+        //            int pos = ancestor.IndexOf("\"");
+        //            if (pos < 0)
+        //            {
+        //                continue;
+        //            }
 
-                    string winName = ancestor.Substring(pos + 1);
-                    pos = winName.IndexOf("\"");
-                    if (pos < 0)
-                    {
-                        continue;
-                    }
-                    winName = winName.Substring(0, pos);
+        //            string winName = ancestor.Substring(pos + 1);
+        //            pos = winName.IndexOf("\"");
+        //            if (pos < 0)
+        //            {
+        //                continue;
+        //            }
+        //            winName = winName.Substring(0, pos);
 
-                    foreach (string win in windows)
-                    {
-                        if (winName == win)
-                        {
-                            cmb.Text = winName;
-                            isFound = true;
-                            break;
-                        }
-                    }
-                    if (isFound)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
+        //            foreach (string win in windows)
+        //            {
+        //                if (winName == win)
+        //                {
+        //                    cmb.Text = winName;
+        //                    isFound = true;
+        //                    break;
+        //                }
+        //            }
+        //            if (isFound)
+        //            {
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
 
         public static string GetControlTypeText(ControlType control)
         {
