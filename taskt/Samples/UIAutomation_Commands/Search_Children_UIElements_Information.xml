@@ -17,7 +17,7 @@
       <ScriptCommand xsi:type="UIAutomationGetWindowUIElementCommand" CommandID="5fc89837-7852-4a6e-ab64-3138839f124e" CommandName="UIAutomationGetWindowUIElementCommand" IsCommented="false" SelectionName="Get Window UIElement" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_CheckMethod="" v_WaitTimeForWindow="60" v_SelectionMethod="" v_TargetWindowIndex="0" v_Result="vWin" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="483e21bd-fe8f-4b28-946a-323fc9072085" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Get groupBox1 UIElement" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="483e21bd-fe8f-4b28-946a-323fc9072085" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Search for the GroupBox UIElement within the vWin child UIElement" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="UIAutomationSearchChildrenUIElementsInformationCommand" CommandID="124f356c-83e1-462c-88ca-5dbb57b62276" CommandName="UIAutomationSearchChildrenUIElementsInformationCommand" IsCommented="false" SelectionName="Search Children UIElements Information" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vWin⦄" v_Result="vElem">
@@ -52,7 +52,7 @@
                 <ParameterValue></ParameterValue>
               </SearchParameters092924.090121>
               <SearchParameters092924.090121 diffgr:id="SearchParameters092924.0901213" msdata:rowOrder="2" diffgr:hasChanges="modified">
-                <Enabled>True</Enabled>
+                <Enabled></Enabled>
                 <ParameterName>AutomationId</ParameterName>
                 <ParameterValue>groupBox1</ParameterValue>
               </SearchParameters092924.090121>
@@ -62,7 +62,7 @@
                 <ParameterValue>WindowsForms10.Window.8.app.0.141b42a_r12_ad1</ParameterValue>
               </SearchParameters092924.090121>
               <SearchParameters092924.090121 diffgr:id="SearchParameters092924.0901215" msdata:rowOrder="4" diffgr:hasChanges="modified">
-                <Enabled>False</Enabled>
+                <Enabled>True</Enabled>
                 <ParameterName>ControlType</ParameterName>
                 <ParameterValue>Group</ParameterValue>
               </SearchParameters092924.090121>
@@ -159,7 +159,7 @@
                 <ParameterValue></ParameterValue>
               </SearchParameters092924.090121>
               <SearchParameters092924.090121 diffgr:id="SearchParameters092924.0901213" msdata:rowOrder="2">
-                <Enabled>True</Enabled>
+                <Enabled></Enabled>
                 <ParameterName>AutomationId</ParameterName>
                 <ParameterValue>groupBox1</ParameterValue>
               </SearchParameters092924.090121>
@@ -169,7 +169,7 @@
                 <ParameterValue>WindowsForms10.Window.8.app.0.141b42a_r12_ad1</ParameterValue>
               </SearchParameters092924.090121>
               <SearchParameters092924.090121 diffgr:id="SearchParameters092924.0901215" msdata:rowOrder="4">
-                <Enabled>False</Enabled>
+                <Enabled>True</Enabled>
                 <ParameterName>ControlType</ParameterName>
                 <ParameterValue>Group</ParameterValue>
               </SearchParameters092924.090121>
@@ -265,9 +265,9 @@
   <Info>
     <TasktVersion>3.5.2.47</TasktVersion>
     <Author />
-    <LastRunTime>2024-09-29T21:05:16.8237213+09:00</LastRunTime>
-    <RunTimes>5</RunTimes>
-    <Revision>8</Revision>
+    <LastRunTime>2025-11-24T21:56:48.6002281+09:00</LastRunTime>
+    <RunTimes>7</RunTimes>
+    <Revision>11</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>
