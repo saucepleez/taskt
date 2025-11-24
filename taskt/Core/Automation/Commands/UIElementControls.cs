@@ -1258,33 +1258,6 @@ namespace taskt.Core.Automation.Commands
 
         private static TreeNode CreateTreeNodeFromAutomationElement(AutomationElement element)
         {
-            //try
-            //{
-            //    // Debug
-            //    var r = element.GetCurrentPropertyValue(AutomationElement.NameProperty, true);
-            //    Console.WriteLine($"{element.Cached.Name}" + ((r == AutomationElement.NotSupported) ? "*" : ""));
-
-            //    var node = new TreeNode
-            //    {
-            //        Text = "\"" + (element.Cached.Name) + "\" " + (element.Cached.LocalizedControlType),
-            //        Tag = element
-            //    };
-            //    return node;
-            //}
-            //catch
-            //{
-            //    var node = new TreeNode
-            //    {
-            //        Text = "\"" + (element.Current.Name) + "\" " + (element.Current.LocalizedControlType),
-            //        Tag = element
-            //    };
-            //    return node;
-            //}
-
-            // Debug
-            //var r = element.GetCurrentPropertyValue(AutomationElement.NameProperty, true);
-            //Console.WriteLine($"{element.Cached.Name}" + ((r == AutomationElement.NotSupported) ? "*" : ""));
-
             var node = new TreeNode
             {
                 Text = "\"" + (element.Current.Name) + "\" " + (element.Current.LocalizedControlType),
