@@ -1095,7 +1095,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetUIElementFromTableUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetSelectionItemsValueFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationExpandCollapseItemsInUIElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetUIElementTreeXMLFromUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementsTreeXMLFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationScrollUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSelectItemInUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSelectUIElementCommand.cs" />

@@ -7,14 +7,14 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
-    [Attributes.ClassAttributes.SubGruop("Get From UIElement")]
-    [Attributes.ClassAttributes.CommandSettings("Get UIElement Tree XML From UIElement")]
-    [Attributes.ClassAttributes.Description("This command allows you to get UIElement Tree XML from UIElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get UIElement Tree XML from UIElement. XML content is based on WinAppDriver UI Recorder.")]
+    [Attributes.ClassAttributes.SubGruop("Search UIElement")]
+    [Attributes.ClassAttributes.CommandSettings("Search UIElements Tree XML From UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to Search UIElements Tree XML from UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Search UIElements Tree XML from UIElement. XML content is based on WinAppDriver UI Recorder.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationGetUIElementTreeXMLFromUIElementCommand : ADoSomethingUIElementCommands, IUIElementCoreSearchSomewayProperties, IUIElementDeepSearchSomewayProperties, IResultProperties
+    public sealed class UIAutomationSearchUIElementsTreeXMLFromUIElementCommand : ADoSomethingUIElementCommands, IUIElementCoreSearchSomewayProperties, IUIElementDeepSearchSomewayProperties, IResultProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(7992)]
         public string v_MaxDepth { get; set; }
 
-        public UIAutomationGetUIElementTreeXMLFromUIElementCommand()
+        public UIAutomationSearchUIElementsTreeXMLFromUIElementCommand()
         {
         }
 

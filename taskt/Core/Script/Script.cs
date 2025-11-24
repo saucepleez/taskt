@@ -4934,6 +4934,9 @@ namespace taskt.Core.Script
         {
             // UIAutomationUIElementActionByXPathCommand v_UIASearchParameters -> v_SearchXPath
             ChangeAttributeName(doc, "UIAutomationUIElementActionByXPathCommand", "v_UIASearchParameters", "v_SearchXPath");
+
+            // UIAutomationGetUIElementTreeXMLFromUIElementCommand -> UIAutomationGetUIElementsTreeXMLFromUIElementCommand
+            ChangeCommandName(doc, "UIAutomationGetUIElementTreeXMLFromUIElementCommand", "UIAutomationSearchUIElementsTreeXMLFromUIElementCommand", "Search UIElements Tree XML From UIElement");
         }
 
         /// <summary>
