@@ -11,9 +11,6 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using Microsoft.Office.Interop.Outlook;
-using OpenQA.Selenium.DevTools.V140.WebAuthn;
-using SimpleNLG;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -472,6 +469,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_44(doc);
             convertTo3_5_2_45(doc);
             convertTo3_5_2_46(doc);
+            convertTo3_5_2_47(doc);
             return doc;
         }
 
@@ -4930,6 +4928,12 @@ namespace taskt.Core.Script
                         return false;
                 }
             }), "v_Result", "v_WindowNameResult");
+        }
+
+        private static void convertTo3_5_2_47(XDocument doc)
+        {
+            // UIAutomationUIElementActionByXPathCommand v_UIASearchParameters -> v_SearchXPath
+            ChangeAttributeName(doc, "UIAutomationUIElementActionByXPathCommand", "v_UIASearchParameters", "v_SearchXPath");
         }
 
         /// <summary>

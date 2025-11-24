@@ -7,7 +7,6 @@ using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
     [Attributes.ClassAttributes.SubGruop("UIElement Action")]
@@ -47,7 +46,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_XPath))]
-        public string v_UIASearchParameters { get; set; }
+        public string v_SearchXPath { get; set; }
 
         [XmlElement]
         [PropertyDescription("Action Parameters")]
@@ -272,7 +271,7 @@ namespace taskt.Core.Automation.Commands
                             var chkElem = new UIAutomationCheckUIElementExistsByXPathCommand()
                             {
                                 v_TargetElement = myWinElem.VariableName,
-                                v_SearchXPath = this.v_UIASearchParameters,
+                                v_SearchXPath = this.v_SearchXPath,
                                 v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
                                 v_Result = p["Apply To Variable"],
                             };
@@ -283,7 +282,7 @@ namespace taskt.Core.Automation.Commands
                             var trgElem = new UIAutomationSearchUIElementFromUIElementByXPathCommand()
                             {
                                 v_TargetElement = myWinElem.VariableName,
-                                v_SearchXPath = this.v_UIASearchParameters,
+                                v_SearchXPath = this.v_SearchXPath,
                                 v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
                                 v_Result = myTrgElem.VariableName,
                             };
