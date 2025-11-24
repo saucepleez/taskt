@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         //public string v_TargetElement { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_NewOutputUIElementName))]
         [PropertyDescription("Variable Name to Store Parent UIElement")]
         [PropertyParameterOrder(6000)]
         public string v_Result { get; set; }

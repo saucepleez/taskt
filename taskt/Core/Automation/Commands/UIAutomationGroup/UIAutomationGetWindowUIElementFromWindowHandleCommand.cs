@@ -2,6 +2,7 @@
 using System.Windows.Automation;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -17,7 +18,7 @@ namespace taskt.Core.Automation.Commands
     public sealed class UIAutomationGetWindowUIElementFromWindowHandleCommand : AWindowHandleCommands
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_OutputUIElementName))]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_OutputUIElementName))]
         [PropertyParameterOrder(5100)]
         public string v_Result { get; set; }
 
