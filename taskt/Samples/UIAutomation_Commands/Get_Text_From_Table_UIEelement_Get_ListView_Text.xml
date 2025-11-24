@@ -5,19 +5,19 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Get Text From Table UIElement get ListView Text Sample" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a7cdfa43-c3e0-4681-8598-3547bb4f31b4" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" />
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a7cdfa43-c3e0-4681-8598-3547bb4f31b4" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Get UIAutomationTester window as UIElement" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromWindowCommand" CommandID="be605cdc-25fa-4680-84ad-ac75afc86c91" CommandName="UIAutomationSearchUIElementFromWindowCommand" IsCommented="false" SelectionName="Search UIElement From Window" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_AutomationElementVariable="vWin" v_CompareMethod="" v_MatchMethod="" v_TargetWindowIndex="0" v_WaitTimeForWindow="60" />
+      <ScriptCommand xsi:type="UIAutomationGetWindowUIElementCommand" CommandID="be605cdc-25fa-4680-84ad-ac75afc86c91" CommandName="UIAutomationGetWindowUIElementCommand" IsCommented="false" SelectionName="Get Window UIElement" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_CheckMethod="" v_WaitTimeForWindow="60" v_SelectionMethod="" v_TargetWindowIndex="0" v_Result="vWin" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Search listView1 as UIElement" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromUIElementCommand" CommandID="ac724675-6c24-4a80-a6ba-aba3f8dc4b10" CommandName="UIAutomationSearchUIElementFromUIElementCommand" IsCommented="false" SelectionName="Search UIElement From UIElement" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vWin⦄" v_AutomationElementVariable="vElem" v_WaitTime="10">
+      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromUIElementCommand" CommandID="ac724675-6c24-4a80-a6ba-aba3f8dc4b10" CommandName="UIAutomationSearchUIElementFromUIElementCommand" IsCommented="false" SelectionName="Search UIElement From UIElement" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_WaitTimeForUIElement="10" v_TargetElement="⦃vWin⦄" v_Result="vElem">
         <v_SearchParameters>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="SearchParameters082123.114629" msdata:UseCurrentLocale="true">
@@ -259,7 +259,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Get Table Cell value (row=1, col=1)" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationGetTextFromTableUIElementCommand" CommandID="dbec1c4f-62a2-4492-96c4-fdc5ac0582c6" CommandName="UIAutomationGetTextFromTableUIElementCommand" IsCommented="false" SelectionName="Get Text From Table UIElement" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vElem⦄" v_Row="1" v_Column="1" v_TextVariable="vText" />
+      <ScriptCommand xsi:type="UIAutomationGetTextFromTableUIElementCommand" CommandID="dbec1c4f-62a2-4492-96c4-fdc5ac0582c6" CommandName="UIAutomationGetTextFromTableUIElementCommand" IsCommented="false" SelectionName="Get Text From Table UIElement" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vElem⦄" v_Row="1" v_Column="1" v_Result="vText" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="c7a75646-f006-4e8e-9da9-530f3c5a6c07" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vText⦄" v_AutoCloseAfter="0" />
@@ -269,11 +269,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.6</TasktVersion>
+    <TasktVersion>3.5.2.47</TasktVersion>
     <Author />
     <LastRunTime>2024-10-05T10:24:54.3059023+09:00</LastRunTime>
     <RunTimes>8</RunTimes>
-    <Revision>4</Revision>
+    <Revision>6</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>
