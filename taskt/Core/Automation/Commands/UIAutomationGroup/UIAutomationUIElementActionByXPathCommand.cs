@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using System.Data;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Script;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -16,14 +17,15 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationUIElementActionByXPathCommand : ScriptCommand, IHaveDataTableElements
+    public sealed class UIAutomationUIElementActionByXPathCommand : ADeepSearchUIElementsFromWindowNameByXPathCommands, IHaveDataTableElements
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
-        public string v_WindowName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
+        //public string v_WindowName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls),  nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyParameterOrder(5500)]
         [PropertyDescription("UIElement Action")]
         [PropertyUISelectionOption("Click UIElement")]
         [PropertyUISelectionOption("Expand Collapse Items In UIElement")]
@@ -44,9 +46,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Action")]
         public string v_AutomationType { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_XPath))]
-        public string v_SearchXPath { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_XPath))]
+        //public string v_SearchXPath { get; set; }
 
         [XmlElement]
         [PropertyDescription("Action Parameters")]
@@ -54,36 +56,37 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(false, false, true, 400, 250)]
         [PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", true)]
         [PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
+        [PropertyParameterOrder(6500)]
         public DataTable v_UIAActionParameters { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CheckMethod))]
-        public string v_CheckMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CheckMethod))]
+        //public string v_CheckMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_SelectionMethod_Single))]
-        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
-        public string v_SelectionMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_SelectionMethod_Single))]
+        //[PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
+        //public string v_SelectionMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
-        public string v_TargetWindowIndex { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
+        //public string v_TargetWindowIndex { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
-        public string v_WaitTimeForWindow { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
+        //public string v_WaitTimeForWindow { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
-        public string v_WaitTimeForUIElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
+        //public string v_WaitTimeForUIElement { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
-        public string v_WindowNameResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
+        //public string v_WindowNameResult { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
-        public string v_WindowHandleResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
+        //public string v_WindowHandleResult { get; set; }
 
         public UIAutomationUIElementActionByXPathCommand()
         {
@@ -92,159 +95,6 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             var elemAction = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_AutomationType), engine);
-
-            //var winElemVar = VariableNameControls.GetInnerVariableName(0, engine);
-            //var winElem = new UIAutomationSearchUIElementFromWindowCommand()
-            //{
-            //    v_WindowName = this.v_WindowName,
-            //    v_CompareMethod = this.v_CompareMethod,
-            //    v_MatchMethod = this.v_MatchMethod,
-            //    v_TargetWindowIndex = this.v_TargetWindowIndex,
-            //    v_WaitTimeForWindow = this.v_WaitTimeForWindow,
-            //    v_AutomationElementVariable = winElemVar,
-            //    v_NameResult = this.v_NameResult,
-            //    v_HandleResult = this.v_HandleResult,
-            //};
-            //winElem.RunCommand(engine);
-
-            //var p = DataTableControls.GetFieldValues(v_UIAActionParameters, "Parameter Name", "Parameter Value", false, engine);
-            //var trgElemVar = VariableNameControls.GetInnerVariableName(1, engine);
-
-            //switch (elemAction)
-            //{
-            //    case "check uielement exists":
-            //        var chkElem = new UIAutomationCheckUIElementExistByXPathCommand()
-            //        {
-            //            v_TargetElement = winElemVar,
-            //            v_SearchXPath = this.v_UIASearchParameters,
-            //            v_WaitTime = this.v_ElementWaitTime,
-            //            v_Result = p["Apply To Variable"],
-            //        };
-            //        chkElem.RunCommand(engine);
-            //        return;
-
-            //    default:
-            //        var trgElem = new UIAutomationSearchUIElementFromUIElementByXPathCommand()
-            //        {
-            //            v_TargetElement = winElemVar,
-            //            v_SearchXPath = this.v_UIASearchParameters,
-            //            v_WaitTime = this.v_ElementWaitTime,
-            //            v_AutomationElementVariable = trgElemVar,
-            //        };
-            //        trgElem.RunCommand(engine);
-            //        break;
-            //}
-
-            //switch (elemAction)
-            //{
-            //    case "click uielement":
-            //        var clickCmd = new UIAutomationClickUIElementCommand()
-            //        {
-            //            v_TargetElement = trgElemVar,
-            //            v_ClickType = p["Click Type"],
-            //            v_XOffset = p["X Offset"],
-            //            v_YOffset = p["Y Offset"],
-            //        };
-            //        clickCmd.RunCommand(engine);
-            //        break;
-            //    case "expand collapse items in uielement":
-            //        var expandCmd = new UIAutomationExpandCollapseItemsInUIElementCommand()
-            //        {
-            //            v_TargetElement = trgElemVar,
-            //            v_ItemsState = p["Items State"],
-            //        };
-            //        expandCmd.RunCommand(engine);
-            //        break;
-            //    case "scroll uielement":
-            //        var scrollCmd = new UIAutomationScrollUIElementCommand()
-            //        {
-            //            v_TargetElement = trgElemVar,
-            //            v_ScrollBarType = p["ScrollBar Type"],
-            //            v_DirectionAndAmount = p["Scroll Method"],
-            //        };
-            //        scrollCmd.RunCommand(engine);
-            //        break;
-            //    case "select uielement":
-            //        var selectCmd = new UIAutomationSelectUIElementCommand()
-            //        {
-            //            v_TargetElement = trgElemVar,
-            //        };
-            //        selectCmd.RunCommand(engine);
-            //        break;
-            //    case "select item in uielement":
-            //        var selectItemCmd = new UIAutomationSelectItemInUIElementCommand()
-            //        {
-            //            v_TargetElement = trgElemVar,
-            //            v_Item = p["Item Value"],
-            //        };
-            //        selectItemCmd.RunCommand(engine);
-            //        break;
-            //    case "set text to uielement":
-            //        var setTextCmd = new UIAutomationSetTextToUIElementCommand()
-            //        {
-            //            v_TargetElement = trgElemVar,
-            //            v_TextVariable = p["Text To Set"],
-            //        };
-            //        setTextCmd.RunCommand(engine);
-            //        break;
-            //    case "get property value from uielement":
-            //        var propValueCmd = new UIAutomationGetPropertyValueFromUIElementCommand()
-            //        {
-            //            v_TargetElement = trgElemVar,
-            //            v_PropertyName = p["Property Name"],
-            //            v_Result = p["Apply To Variable"],
-            //        };
-            //        propValueCmd.RunCommand(engine);
-            //        break;
-            //    case "check uielement exists":
-            //        true.StoreInUserVariable(engine, p["Apply To Variable"]);
-            //        break;
-            //    case "get text from uielement":
-            //        var getTextCmd = new UIAutomationGetTextFromUIElementCommand()
-            //        {
-            //            v_TargetElement = trgElemVar,
-            //            v_TextVariable = p["Apply To Variable"],
-            //        };
-            //        getTextCmd.RunCommand(engine);
-            //        break;
-            //    case "get selected state from uielement":
-            //        var getSelectedCmd = new UIAutomationGetSelectedStateFromUIElementCommand()
-            //        {
-            //            v_TargetElement = trgElemVar,
-            //            v_ResultVariable = p["Apply To Variable"],
-            //        };
-            //        getSelectedCmd.RunCommand(engine);
-            //        break;
-            //    case "get text from table uielement":
-            //        var getTableCmd = new UIAutomationGetTextFromTableUIElementCommand()
-            //        {
-            //            v_TargetElement = trgElemVar,
-            //            v_Row = p["Row"],
-            //            v_Column = p["Column"],
-            //            v_TextVariable = p["Apply To Variable"],
-            //        };
-            //        getTableCmd.RunCommand(engine);
-            //        break;
-            //    case "get uielement position":
-            //        var getElemPosCmd = new UIAutomationGetUIElementPositionCommand()
-            //        {
-            //            v_TargetElement = trgElemVar,
-            //            v_XPosition = p["X Variable"],
-            //            v_YPosition = p["Y Variable"],
-            //            v_PositionBase = p["Base Position"],
-            //        };
-            //        getElemPosCmd.RunCommand(engine);
-            //        break;
-            //    case "get uielement size":
-            //        var getElemSizeCmd = new UIAutomationGetUIElementSizeCommand()
-            //        {
-            //            v_TargetElement = trgElemVar,
-            //            v_Width = p["Width Variable"],
-            //            v_Height = p["Height Variable"],
-            //        };
-            //        getElemSizeCmd.RunCommand(engine);
-            //        break;
-            //}
 
             using(var myWinElem = new InnerScriptVariable(engine))
             {
@@ -258,6 +108,8 @@ namespace taskt.Core.Automation.Commands
                     v_Result = myWinElem.VariableName,
                     v_WindowNameResult = this.v_WindowNameResult,
                     v_WindowHandleResult = this.v_WindowHandleResult,
+                    v_CaseSensitive = this.v_CaseSensitive,
+                    v_TrimBeforeCheck = this.v_TrimBeforeCheck,
                 };
                 winElem.RunCommand(engine);
 
@@ -572,10 +424,10 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            WindowControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
-        }
+        //private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        //{
+        //    WindowControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
+        //}
 
         public override void BeforeValidate()
         {
