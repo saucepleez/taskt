@@ -469,13 +469,13 @@
     <Compile Include="Core\Automation\Commands\ListGroup\GetCommonValuesOfListsCommand.cs" />
     <Compile Include="Core\Automation\Commands\ListGroup\CheckValidListIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptCommandInformation.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ACoreSearchUIElementFromSomethingByXPathCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ACoreSearchUIElementsFromSomethingByXPathCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ACoreSearchUIElementsFromUIElementByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchAnyUIElementFromSomethingByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchAnyUIElementFromUIElementByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchAnyUIElementFromWindowNameByTreeWalkerCommands.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementFromSomethingByXPathCommands.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementFromUIElementByXPathCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementsFromSomethingByXPathCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementsFromUIElementByXPathCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementsFromSomethingByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADoSomethingUIElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\AGetFromUIElementCommands.cs" />
