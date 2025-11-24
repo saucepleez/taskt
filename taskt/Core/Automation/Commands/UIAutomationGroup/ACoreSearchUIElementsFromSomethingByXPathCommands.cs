@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     public abstract class ACoreSearchUIElementsFromSomethingByXPathCommands : ScriptCommand, IUIElementCoreSearchXPathProperties
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_XPath))]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SearchXPath))]
         [PropertyParameterOrder(6000)]
         public virtual string v_SearchXPath { get; set; }
 

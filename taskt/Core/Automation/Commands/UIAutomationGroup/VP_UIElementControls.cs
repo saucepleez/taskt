@@ -203,7 +203,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         [PropertyValidationRule("XPath", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "XPath")]
         [PropertyCustomUIHelper("GUI Inspect Tool", nameof(UIElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByXPath_Click))]
-        public static string v_XPath { get; }
+        public static string v_SearchXPath { get; }
 
         /// <summary>
         /// show GUI InspectTool and get InspectTool like result
