@@ -477,6 +477,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementsFromSomethingByXPathCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementsFromUIElementByXPathCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementsFromSomethingByTreeWalkerCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADeepSearchUIElementsFromWindowNameByXPathCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADoSomethingUIElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\AGetFromUIElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ACoreSearchUIElementsFromSomethingByTreeWalkerCommands.cs" />
