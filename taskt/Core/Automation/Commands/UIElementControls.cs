@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Security;
 using System.Windows.Automation;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.XPath;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
