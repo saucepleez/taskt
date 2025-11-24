@@ -55,7 +55,8 @@
 	</AllowedReferenceRelatedFileExtensions>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>taskt_logo_alt.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
