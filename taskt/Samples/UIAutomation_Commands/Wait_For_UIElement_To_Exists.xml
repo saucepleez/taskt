@@ -8,13 +8,13 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="52a713ba-7b13-48a8-bce7-d9f18918e649" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute UIAutomationTester" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a2efea5c-bb2b-4421-a35d-f61a462545db" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a2efea5c-bb2b-4421-a35d-f61a462545db" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="3e6e9f88-cbcb-4aad-85da-d4a736cd9268" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Get Window UIElement" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromWindowCommand" CommandID="5fc89837-7852-4a6e-ab64-3138839f124e" CommandName="UIAutomationSearchUIElementFromWindowCommand" IsCommented="false" SelectionName="Search UIElement From Window" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_AutomationElementVariable="vWin" v_CompareMethod="" v_MatchMethod="" v_TargetWindowIndex="0" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" />
+      <ScriptCommand xsi:type="UIAutomationGetWindowUIElementCommand" CommandID="5fc89837-7852-4a6e-ab64-3138839f124e" CommandName="UIAutomationGetWindowUIElementCommand" IsCommented="false" SelectionName="Get Window UIElement" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_CheckMethod="" v_WaitTimeForWindow="60" v_SelectionMethod="" v_TargetWindowIndex="0" v_Result="vWin" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="483e21bd-fe8f-4b28-946a-323fc9072085" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Wait for button3" CommandEnabled="true" />
@@ -23,20 +23,18 @@
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="20e3747a-9754-4b88-aa72-f048e0db78ec" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Please Click &quot;tabPage2&quot;" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationWaitForUIElementToExistsByXPathCommand" CommandID="4ce11897-bffc-415c-a3b6-8e6c0f4d7ef7" CommandName="UIAutomationWaitForUIElementToExistsByXPathCommand" IsCommented="false" SelectionName="Wait For UIElement To Exists By XPath" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vWin⦄" v_WaitTime="10">
-        <v_SearchXPath>//Button[@Name="button3"]</v_SearchXPath>
-      </ScriptCommand>
+      <ScriptCommand xsi:type="UIAutomationWaitForUIElementToExistsByXPathCommand" CommandID="4ce11897-bffc-415c-a3b6-8e6c0f4d7ef7" CommandName="UIAutomationWaitForUIElementToExistsByXPathCommand" IsCommented="false" SelectionName="Wait For UIElement To Exists By XPath" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_SearchXPath="//Button[@Name=&quot;button3&quot;]" v_WaitTimeForUIElement="10" v_TargetElement="⦃vWin⦄" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="b08c25ac-e5a3-4708-bb6f-3ad27bea7a1d" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="button3 Exists!" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.6</TasktVersion>
+    <TasktVersion>3.5.2.48</TasktVersion>
     <Author />
-    <LastRunTime>2024-10-06T17:21:39.8336105+09:00</LastRunTime>
-    <RunTimes>8</RunTimes>
-    <Revision>13</Revision>
+    <LastRunTime>2025-11-26T23:15:36.5909865+09:00</LastRunTime>
+    <RunTimes>11</RunTimes>
+    <Revision>20</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>
