@@ -2,7 +2,7 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="588e91a1-fd93-49c7-bbd8-6e4e58bbda1a" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Wait For UIElement To Exists By XPath sample" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="588e91a1-fd93-49c7-bbd8-6e4e58bbda1a" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Wait For UIElement To Exists sample" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="52a713ba-7b13-48a8-bce7-d9f18918e649" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute UIAutomationTester" CommandEnabled="true" />
@@ -23,7 +23,243 @@
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="20e3747a-9754-4b88-aa72-f048e0db78ec" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Please Click &quot;tabPage2&quot;" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationWaitForUIElementToExistsByXPathCommand" CommandID="4ce11897-bffc-415c-a3b6-8e6c0f4d7ef7" CommandName="UIAutomationWaitForUIElementToExistsByXPathCommand" IsCommented="false" SelectionName="Wait For UIElement To Exists By XPath" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_SearchXPath="//Button[@Name=&quot;button3&quot;]" v_WaitTimeForUIElement="10" v_TargetElement="⦃vWin⦄" />
+      <ScriptCommand xsi:type="UIAutomationWaitForUIElementToExistsCommand" CommandID="5b222fdd-2768-4e0a-b602-3ba001f79836" CommandName="UIAutomationWaitForUIElementToExistsCommand" IsCommented="false" SelectionName="Wait For UIElement To Exists" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_WaitTimeForUIElement="10" v_TargetElement="⦃vWin⦄">
+        <v_SearchParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="SearchParameters100624.051727" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="SearchParameters100624.051727">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Enabled" type="xs:string" minOccurs="0" />
+                        <xs:element name="ParameterName" type="xs:string" minOccurs="0" />
+                        <xs:element name="ParameterValue" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517271" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>AcceleratorKey</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517272" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>AccessKey</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517273" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Enabled>True</Enabled>
+                <ParameterName>AutomationId</ParameterName>
+                <ParameterValue>button3</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517274" msdata:rowOrder="3" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ClassName</ParameterName>
+                <ParameterValue>WindowsForms10.BUTTON.app.0.141b42a_r12_ad1</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517275" msdata:rowOrder="4" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ControlType</ParameterName>
+                <ParameterValue>Button</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517276" msdata:rowOrder="5" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>FrameworkId</ParameterName>
+                <ParameterValue>WinForm</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517277" msdata:rowOrder="6" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>HasKeyboardFocus</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517278" msdata:rowOrder="7" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>HelpText</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517279" msdata:rowOrder="8" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsContentElement</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172710" msdata:rowOrder="9" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsControlElement</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172711" msdata:rowOrder="10" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsEnabled</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172712" msdata:rowOrder="11" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsKeyboardFocusable</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172713" msdata:rowOrder="12" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsOffscreen</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172714" msdata:rowOrder="13" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsPassword</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172715" msdata:rowOrder="14" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsRequiredForForm</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172716" msdata:rowOrder="15" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ItemStatus</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172717" msdata:rowOrder="16" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ItemType</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172718" msdata:rowOrder="17" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>LocalizedControlType</ParameterName>
+                <ParameterValue>ボタン</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172719" msdata:rowOrder="18" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>Name</ParameterName>
+                <ParameterValue>button3</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172720" msdata:rowOrder="19" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>NativeWindowHandle</ParameterName>
+                <ParameterValue>3870276</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172721" msdata:rowOrder="20" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ProcessId</ParameterName>
+                <ParameterValue>22896</ParameterValue>
+              </SearchParameters100624.051727>
+            </DocumentElement>
+            <diffgr:before>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517271" msdata:rowOrder="0">
+                <Enabled>False</Enabled>
+                <ParameterName>AcceleratorKey</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517272" msdata:rowOrder="1">
+                <Enabled>False</Enabled>
+                <ParameterName>AccessKey</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517273" msdata:rowOrder="2">
+                <Enabled>True</Enabled>
+                <ParameterName>AutomationId</ParameterName>
+                <ParameterValue>button3</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517274" msdata:rowOrder="3">
+                <Enabled>False</Enabled>
+                <ParameterName>ClassName</ParameterName>
+                <ParameterValue>WindowsForms10.BUTTON.app.0.141b42a_r12_ad1</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517275" msdata:rowOrder="4">
+                <Enabled>False</Enabled>
+                <ParameterName>ControlType</ParameterName>
+                <ParameterValue>Button</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517276" msdata:rowOrder="5">
+                <Enabled>False</Enabled>
+                <ParameterName>FrameworkId</ParameterName>
+                <ParameterValue>WinForm</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517277" msdata:rowOrder="6">
+                <Enabled>False</Enabled>
+                <ParameterName>HasKeyboardFocus</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517278" msdata:rowOrder="7">
+                <Enabled>False</Enabled>
+                <ParameterName>HelpText</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.0517279" msdata:rowOrder="8">
+                <Enabled>False</Enabled>
+                <ParameterName>IsContentElement</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172710" msdata:rowOrder="9">
+                <Enabled>False</Enabled>
+                <ParameterName>IsControlElement</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172711" msdata:rowOrder="10">
+                <Enabled>False</Enabled>
+                <ParameterName>IsEnabled</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172712" msdata:rowOrder="11">
+                <Enabled>False</Enabled>
+                <ParameterName>IsKeyboardFocusable</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172713" msdata:rowOrder="12">
+                <Enabled>False</Enabled>
+                <ParameterName>IsOffscreen</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172714" msdata:rowOrder="13">
+                <Enabled>False</Enabled>
+                <ParameterName>IsPassword</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172715" msdata:rowOrder="14">
+                <Enabled>False</Enabled>
+                <ParameterName>IsRequiredForForm</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172716" msdata:rowOrder="15">
+                <Enabled>False</Enabled>
+                <ParameterName>ItemStatus</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172717" msdata:rowOrder="16">
+                <Enabled>False</Enabled>
+                <ParameterName>ItemType</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172718" msdata:rowOrder="17">
+                <Enabled>False</Enabled>
+                <ParameterName>LocalizedControlType</ParameterName>
+                <ParameterValue>ボタン</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172719" msdata:rowOrder="18">
+                <Enabled>False</Enabled>
+                <ParameterName>Name</ParameterName>
+                <ParameterValue>button3</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172720" msdata:rowOrder="19">
+                <Enabled>False</Enabled>
+                <ParameterName>NativeWindowHandle</ParameterName>
+                <ParameterValue>3870276</ParameterValue>
+              </SearchParameters100624.051727>
+              <SearchParameters100624.051727 diffgr:id="SearchParameters100624.05172721" msdata:rowOrder="20">
+                <Enabled>False</Enabled>
+                <ParameterName>ProcessId</ParameterName>
+                <ParameterValue>22896</ParameterValue>
+              </SearchParameters100624.051727>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_SearchParameters>
+      </ScriptCommand>
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="b08c25ac-e5a3-4708-bb6f-3ad27bea7a1d" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="button3 Exists!" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
@@ -32,9 +268,9 @@
   <Info>
     <TasktVersion>3.5.2.48</TasktVersion>
     <Author />
-    <LastRunTime>2025-11-26T23:15:36.5909865+09:00</LastRunTime>
-    <RunTimes>11</RunTimes>
-    <Revision>20</Revision>
+    <LastRunTime>2024-10-06T17:20:00.6238993+09:00</LastRunTime>
+    <RunTimes>6</RunTimes>
+    <Revision>11</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>
