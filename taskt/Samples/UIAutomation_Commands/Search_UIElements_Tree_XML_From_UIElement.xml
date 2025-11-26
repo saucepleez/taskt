@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="588e91a1-fd93-49c7-bbd8-6e4e58bbda1a" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Search UIElements Tree XML From UIElement sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="52a713ba-7b13-48a8-bce7-d9f18918e649" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute UIAutomationTester" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a2efea5c-bb2b-4421-a35d-f61a462545db" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="3e6e9f88-cbcb-4aad-85da-d4a736cd9268" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Get Window UIElement" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationGetWindowUIElementCommand" CommandID="5fc89837-7852-4a6e-ab64-3138839f124e" CommandName="UIAutomationGetWindowUIElementCommand" IsCommented="false" SelectionName="Get Window UIElement" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_CheckMethod="" v_WaitTimeForWindow="60" v_SelectionMethod="" v_TargetWindowIndex="0" v_Result="vWin" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="483e21bd-fe8f-4b28-946a-323fc9072085" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Get UIElement Tree XML" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationSearchUIElementsTreeXMLFromUIElementCommand" CommandID="399f6f8d-d08e-4de0-9012-24bfc7f08980" CommandName="UIAutomationSearchUIElementsTreeXMLFromUIElementCommand" IsCommented="false" SelectionName="Search UIElements Tree XML From UIElement" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vWin⦄" v_WindowNameResult="" v_WindowHandleResult="" v_Result="vResult" v_WaitTimeForUIElement="10" v_MaxSiblings="" v_MaxDepth="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="7eccbbc4-2deb-4fdb-a20a-8bf2e610f98c" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Show UIElements Information" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="7f31e585-d294-4a2b-a447-c62c56b652b6" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vResult⦄" v_AutoCloseAfter="0" v_FontName="MS Gothic" v_FontSize="10" v_DialogType="" v_DialogTitle="ShowMessage Comamnd" v_WaitForAnswer="Yes" v_DialogResult="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="47c23ecc-eb0b-4d4c-a57f-35458507391a" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="I think it's better to view the result using software like Edge or Chrome " CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="4db1f67e-6fef-44ca-a69e-5159e4d64f51" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="that's convenient for viewing XML." CommandEnabled="true" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.2.48</TasktVersion>
+    <Author />
+    <LastRunTime>2025-11-26T23:19:38.5912557+09:00</LastRunTime>
+    <RunTimes>11</RunTimes>
+    <Revision>19</Revision>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vResult</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vWin</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
