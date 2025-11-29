@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
-    [Attributes.ClassAttributes.SubGruop("Search UIElement")]
+    [Attributes.ClassAttributes.SubGruop("Search UIElement By XPath")]
     [Attributes.ClassAttributes.CommandSettings("Wait For UIElement To Exists By XPath")]
     [Attributes.ClassAttributes.Description("This command allows you to Wait until the UIElement exists using by XPath.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Wait until the UIElement exists using by XPath.")]

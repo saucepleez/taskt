@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
-    [Attributes.ClassAttributes.SubGruop("Search UIElement")]
+    [Attributes.ClassAttributes.SubGruop("Search UIElement By XPath")]
     [Attributes.ClassAttributes.CommandSettings("Search UIElements Tree XML From UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to Search UIElements Tree XML from UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Search UIElements Tree XML from UIElement. XML content is based on WinAppDriver UI Recorder.")]
