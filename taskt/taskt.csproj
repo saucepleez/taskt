@@ -409,6 +409,7 @@
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\IDialogResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\IWaitDialogResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\ShowDialogControls.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelAttachExcelInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGoToCellRCCommand.cs" />
     <Compile Include="Core\Automation\Commands\FileGroup\AFileCopyMoveFileCommands.cs" />
     <Compile Include="Core\Automation\Commands\FileGroup\AFileExistsFilePathBeforeAfterResultCommands.cs" />
