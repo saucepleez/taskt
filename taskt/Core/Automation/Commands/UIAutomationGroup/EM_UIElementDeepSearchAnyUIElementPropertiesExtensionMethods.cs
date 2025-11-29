@@ -72,7 +72,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         public static AutomationElement GetUIElementFromDeepSearchUIElements(this IUIElementDeepSearchAnyUIElementProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
         {
             var elems = command.DeepSearchUIElements(rootElement, engine);
-            return command.GetUIElementFromLis(elems, engine);
+            return command.GetUIElementFromList(elems, engine);
         }
     }
 }

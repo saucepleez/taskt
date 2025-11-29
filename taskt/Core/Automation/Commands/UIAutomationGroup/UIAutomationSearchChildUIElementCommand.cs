@@ -78,7 +78,7 @@ namespace taskt.Core.Automation.Commands
                 //    throw new Exception($"UIElement not found. Index: '{v_TargetUIElementIndex}', Expand Value: '{index}'");
                 //}
 
-                var e = this.GetUIElementFromLis(children, engine);
+                var e = this.GetUIElementFromList(children, engine);
                 e.StoreInUserVariable(engine, v_Result);
             }));
         }

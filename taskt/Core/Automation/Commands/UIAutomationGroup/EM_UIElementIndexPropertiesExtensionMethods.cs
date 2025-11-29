@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="System.Exception"></exception>
-        public static AutomationElement GetUIElementFromLis(this IUIElementIndexProperties command, List<AutomationElement> elems, Engine.AutomationEngineInstance engine)
+        public static AutomationElement GetUIElementFromList(this IUIElementIndexProperties command, List<AutomationElement> elems, Engine.AutomationEngineInstance engine)
         {
             var index = command.ExpandValueOrUserVariableAsUIElementIndex(engine);
             if (index < 0)
