@@ -39,15 +39,41 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(7000)]
         public string v_ReferenceStyle { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WaitControls), nameof(WaitControls.v_WaitTime))]
+        [PropertyDescription("Wait Time for Excel")]
+        [PropertyIsOptional(true, "10")]
+        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Wait Time")]
+        public string v_WaitTimeForExcel { get; set; }
+
         public ExcelAttachExcelInstanceCommand()
         {
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            try
+            if (!string.IsNullOrEmpty(v_WaitTimeForExcel))
             {
-                var newExcelSession = (Microsoft.Office.Interop.Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                v_WaitTimeForExcel = "10";
+            }
+            var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeForExcel), engine);
+
+            var r = WaitControls.WaitProcess(waitTime, "Excel", new Func<(bool, object)>(() =>
+            {
+                try
+                {
+                    var excel = (Microsoft.Office.Interop.Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                    return (true, excel);
+                }
+                catch
+                {
+                    return (false, null);
+                }
+            }), engine);
+
+            if (r is Microsoft.Office.Interop.Excel.Application newExcelSession)
+            {
                 switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReferenceStyle), engine))
                 {
                     case "a1":
@@ -65,10 +91,6 @@ namespace taskt.Core.Automation.Commands
                 {
                     newExcelSession.Hwnd.StoreInUserVariable(engine, v_WindowHandle);
                 }
-            }
-            catch
-            {
-                throw new Exception("Excel Application not found.");
             }
         }
     }
