@@ -33,8 +33,13 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             var targetElement = this.ExpandUserVariableAsUIElement(engine);
-            var elems = this.DeepSearchUIElements(targetElement, engine);
-            this.StoreUIElementsInformationInUserVariable(elems, engine);
+            //var elems = this.DeepSearchUIElements(targetElement, engine);
+            //this.StoreUIElementsInformationInUserVariable(elems, engine);
+
+            this.DeepSearchUIElementsAction(targetElement, engine, new Action<System.Collections.Generic.List<System.Windows.Automation.AutomationElement>>(elems =>
+            {
+                this.StoreUIElementsInformationInUserVariable(elems, engine);
+            }));
         }
     }
 }

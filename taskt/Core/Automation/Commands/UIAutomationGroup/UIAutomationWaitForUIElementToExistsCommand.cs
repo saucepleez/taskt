@@ -35,7 +35,11 @@ namespace taskt.Core.Automation.Commands
             //UIElementControls.SearchGUIElement(this, engine);
 
             var targetElement = this.ExpandUserVariableAsUIElement(engine);
-            this.DeepSearchUIElements(targetElement, engine);
+            //this.DeepSearchUIElements(targetElement, engine);
+            this.DeepSearchUIElementsAction(targetElement, engine, new Action<System.Collections.Generic.List<System.Windows.Automation.AutomationElement>>(elems =>
+            {
+                // nothing
+            }));
         }
 
         //public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)

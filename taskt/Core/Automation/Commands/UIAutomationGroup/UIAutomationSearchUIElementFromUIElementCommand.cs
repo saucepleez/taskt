@@ -44,8 +44,14 @@ namespace taskt.Core.Automation.Commands
             //elem.StoreInUserVariable(engine, v_Result);
 
             var targetElement = this.ExpandUserVariableAsUIElement(engine);
-            var ret = this.GetUIElementFromDeepSearchUIElements(targetElement, engine);
-            ret.StoreInUserVariable(engine, v_Result);
+
+            this.DeepSearchAnyUIElementAction(targetElement, engine, new Action<System.Windows.Automation.AutomationElement>(elem =>
+            {
+                elem.StoreInUserVariable(engine, v_Result);
+            }));
+
+            //var ret = this.GetUIElementFromDeepSearchUIElements(targetElement, engine);
+            //ret.StoreInUserVariable(engine, v_Result);
         }
 
         //public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)

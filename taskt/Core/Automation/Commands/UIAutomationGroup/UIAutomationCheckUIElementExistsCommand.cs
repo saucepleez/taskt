@@ -56,17 +56,30 @@ namespace taskt.Core.Automation.Commands
             //{
             //    false.StoreInUserVariable(engine, v_Result);
             //}
-            try
-            {
-                var targetElement = this.ExpandUserVariableAsUIElement(engine);
-                var index = this.ExpandValueOrUserVariableAsUIElementIndex(engine);
-                var elems = this.DeepSearchUIElements(targetElement, engine);
-                (elems.Count >= index).StoreInUserVariable(engine, v_Result);
-            }
-            catch
-            {
-                false.StoreInUserVariable(engine, v_Result);
-            }
+            //try
+            //{
+            //    var targetElement = this.ExpandUserVariableAsUIElement(engine);
+            //    var index = this.ExpandValueOrUserVariableAsUIElementIndex(engine);
+            //    var elems = this.DeepSearchUIElements(targetElement, engine);
+            //    (elems.Count >= index).StoreInUserVariable(engine, v_Result);
+            //}
+            //catch
+            //{
+            //    false.StoreInUserVariable(engine, v_Result);
+            //}
+
+            var targetElement = this.ExpandUserVariableAsUIElement(engine);
+            this.DeepSearchUIElementsAction(targetElement, engine,
+                new Action<System.Collections.Generic.List<System.Windows.Automation.AutomationElement>>(elems =>
+                {
+                    var index = this.ExpandValueOrUserVariableAsUIElementIndex(engine);
+                    (elems.Count >= index).StoreInUserVariable(engine, v_Result);
+                }),
+                new Action<Exception>(ex =>
+                {
+                    false.StoreInUserVariable(engine, v_Result);
+                })
+            );
         }
 
         //public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
