@@ -1,0 +1,16 @@
+﻿using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+
+namespace taskt.Core.Automation.Commands.UIAutomationGroup
+{
+    /// <summary>
+    /// for UIElement Action from Window something By TreeWalker commands
+    /// </summary>
+    public abstract class AUIElementActionFromWindowSomethingByTreeWalkerCommands : AUIElementActionFromSomethingByTreeWalkerCommands, IWindowUIElementResultProperties
+    {
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_WindowUIElementName))]
+        [PropertyParameterOrder(10200)]
+        public string v_WindowUIElement { get; set; }
+    }
+}

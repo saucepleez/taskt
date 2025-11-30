@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
@@ -204,6 +205,39 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         [PropertyDisplayText(true, "XPath")]
         [PropertyCustomUIHelper("GUI Inspect Tool", nameof(VP_UIElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByXPath_Click))]
         public static string v_SearchXPath { get; }
+
+        /// <summary>
+        /// UIElement Action
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("UIElement Action")]
+        [PropertyUISelectionOption("Click UIElement")]
+        [PropertyUISelectionOption("Expand Collapse Items In UIElement")]
+        [PropertyUISelectionOption("Scroll UIElement")]
+        [PropertyUISelectionOption("Select UIElement")]
+        [PropertyUISelectionOption("Select Item In UIElement")]
+        [PropertyUISelectionOption("Set Text To UIElement")]
+        [PropertyUISelectionOption("Get Property Value From UIElement")]
+        [PropertyUISelectionOption("Check UIElement Exists")]
+        [PropertyUISelectionOption("Get Text From UIElement")]
+        [PropertyUISelectionOption("Get Selected State From UIElement")]
+        [PropertyUISelectionOption("Get Text From Table UIElement")]
+        [PropertyUISelectionOption("Get UIElement Position")]
+        [PropertyUISelectionOption("Get UIElement Size")]
+        [PropertyUISelectionOption("Wait For UIElement To Exists")]
+        //[PropertySelectionChangeEvent(nameof(cmbActionType_SelectedItemChange))]
+        [PropertyDisplayText(true, "Action")]
+        public static string v_AutomationType { get; }
+
+        /// <summary>
+        /// UIElement Action Parameters (actually data type is DataTable)
+        /// </summary>
+        [PropertyDescription("Action Parameters")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDataGridViewSetting(false, false, true, 400, 250)]
+        [PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", true)]
+        [PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
+        public static string v_UIAActionParameters { get; }
 
         /// <summary>
         /// show GUI InspectTool and get InspectTool like result

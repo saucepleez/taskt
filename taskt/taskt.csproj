@@ -483,6 +483,11 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\AGetFromUIElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ACoreSearchUIElementsFromSomethingByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\AUIElementActionCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\AUIElementActionFromSomethingByTreeWalkerCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\AUIElementActionFromSomethingByXPathCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\AUIElementActionFromWindowSomethingByTreeWalkerCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\AUIElementActionFromWindowSomethingByXPathCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\AUIElementActionSomewayCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\AUIElementCoreCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_CanHandleUIElementExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_CanHandleUIElementXMLExtentionMethods.cs" />
@@ -518,6 +523,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementDeepSearchXPathProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementIndexProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementSelectionItemsProperties.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementUIElementActionSomewayProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementWindowResultsFromUIElementProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IWindowUIElementResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetWindowHandleFromUIElementCommand.cs" />
