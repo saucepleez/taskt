@@ -146,7 +146,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Max Depth")]
         [PropertyDetailSampleUsage("**{{{vMax}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Max Depth")]
         [PropertyDetailSampleUsage("**0**", "Search to All Depth")]
-        [PropertyIsOptional(true, "16")]
+        [PropertyIsOptional(true, "32")]
         [PropertyDisplayText(false, "Max Depth")]
         [PropertyValidationRule("Max Depth", PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         public static string v_MaxDepth { get; }

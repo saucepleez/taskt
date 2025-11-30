@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         {
             if (string.IsNullOrEmpty(command.v_MaxDepth))
             {
-                command.v_MaxDepth = "16";
+                command.v_MaxDepth = "32";
             }
             return command.ToScriptCommand().ExpandValueOrUserVariableAsInteger(nameof(command.v_MaxDepth), engine);
         }
