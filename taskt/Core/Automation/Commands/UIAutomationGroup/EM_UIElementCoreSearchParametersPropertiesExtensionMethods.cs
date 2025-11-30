@@ -288,6 +288,35 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             }
         }
 
+        ///// <summary>
+        ///// search children UIElements Action
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="rootElement"></param>
+        ///// <param name="engine"></param>
+        ///// <param name="actionFunc"></param>
+        ///// <param name="errorFunc"></param>
+        //public static void SearchChildrenUIElementsAction(this IUIElementDeepSearchAnyUIElementProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine, Action<List<AutomationElement>> actionFunc, Action<Exception> errorFunc = null)
+        //{
+        //    try
+        //    {
+        //        var elems = command.SearchChildrenUIElements(rootElement, engine);
+        //        actionFunc(elems);
+        //        command.StoreWindowNameAndWindowHandleInUserVariablesFromUIElement(rootElement, engine);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (errorFunc != null)
+        //        {
+        //            errorFunc(ex); 
+        //        }
+        //        else
+        //        {
+        //            throw ex;
+        //        }
+        //    }
+        //}
+
         /// <summary>
         /// expand value or user varaible as Max Number of UIElements to search
         /// </summary>
