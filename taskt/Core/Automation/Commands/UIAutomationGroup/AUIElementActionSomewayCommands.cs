@@ -132,13 +132,6 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                             };
                             scrollCmd.RunCommand(engine);
                             break;
-                        case "select uielement":
-                            var selectCmd = new UIAutomationSelectUIElementCommand()
-                            {
-                                v_TargetElement = myTrgElem.VariableName,
-                            };
-                            selectCmd.RunCommand(engine);
-                            break;
                         case "select item in uielement":
                             var selectItemCmd = new UIAutomationSelectItemInUIElementCommand()
                             {
@@ -147,6 +140,21 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                             };
                             selectItemCmd.RunCommand(engine);
                             break;
+                        case "select uielement":
+                            var selectCmd = new UIAutomationSelectUIElementCommand()
+                            {
+                                v_TargetElement = myTrgElem.VariableName,
+                            };
+                            selectCmd.RunCommand(engine);
+                            break;
+                        case "set selected state to uielement":
+                            var selectStateCmd = new UIAutomationSetSelectedStateToUIElementCommand()
+                            {
+                                v_TargetElement = myTrgElem.VariableName,
+                                v_State = p["Selected State"],
+                            };
+                            selectStateCmd.RunCommand(engine);
+                            break;
                         case "set text to uielement":
                             var setTextCmd = new UIAutomationSetTextToUIElementCommand()
                             {
@@ -154,6 +162,14 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                                 v_TextToSet = p["Text To Set"],
                             };
                             setTextCmd.RunCommand(engine);
+                            break;
+                        case "get parent uielement":
+                            var getPrentCmd = new UIAutomationGetParentUIElementCommand()
+                            {
+                                v_TargetElement = myTrgElem.VariableName,
+                                v_Result = p["Apply To Variable"],
+                            };
+                            getPrentCmd.RunCommand(engine);
                             break;
                         case "get property value from uielement":
                             var propValueCmd = new UIAutomationGetPropertyValueFromUIElementCommand()
@@ -183,6 +199,14 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                             };
                             getSelectedCmd.RunCommand(engine);
                             break;
+                        case "get selection items value from uielement":
+                            var getSelectionItemsCmd = new UIAutomationGetSelectionItemsValueFromUIElementCommand()
+                            {
+                                v_TargetElement = myTrgElem.VariableName,
+                                v_Result = p["Apply To Variable"],
+                            };
+                            getSelectionItemsCmd.RunCommand(engine);
+                            break;
                         case "get text from table uielement":
                             var getTableCmd = new UIAutomationGetTextFromTableUIElementCommand()
                             {
@@ -192,6 +216,16 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                                 v_Result = p["Apply To Variable"],
                             };
                             getTableCmd.RunCommand(engine);
+                            break;
+                        case "get uielement from table uielement":
+                            var getTableElemCmd = new UIAutomationGetUIElementFromTableUIElementCommand()
+                            {
+                                v_TargetElement = myTrgElem.VariableName,
+                                v_Row = p["Row"],
+                                v_Column = p["Column"],
+                                v_Result = p["Apply To Variable"],
+                            };
+                            getTableElemCmd.RunCommand(engine);
                             break;
                         case "get uielement position":
                             var getElemPosCmd = new UIAutomationGetUIElementPositionCommand()
@@ -211,6 +245,22 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                                 v_Height = p["Height Variable"],
                             };
                             getElemSizeCmd.RunCommand(engine);
+                            break;
+                        case "get window handle from uielement":
+                            var getWinHandleCmd = new UIAutomationGetWindowHandleFromUIElementCommand()
+                            {
+                                v_TargetElement = myTrgElem.VariableName,
+                                v_WindowHandleResult = p["Apply To Variable"],
+                            };
+                            getWinHandleCmd.RunCommand(engine);
+                            break;
+                        case "get window name from uielement":
+                            var getWinNameCmd = new UIAutomationGetWindowNameFromUIElementCommand()
+                            {
+                                v_TargetElement = myTrgElem.VariableName,
+                                v_WindowNameResult = p["Apply To Variable"],
+                            };
+                            getWinNameCmd.RunCommand(engine);
                             break;
                     }
                 }
@@ -252,6 +302,10 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                     table.Rows.Add(new string[] { "Item Value", "" });
                     break;
 
+                case "set selected state to uielement":
+                    table.Rows.Add(new string[] { "Selected State", "" });
+                    break;
+
                 case "set text to uielement":
                     table.Rows.Add(new string[] { "Text To Set", "" });
                     break;
@@ -262,6 +316,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                     break;
 
                 case "get text from table uielement":
+                case "get uielement from table uielement":
                     table.Rows.Add(new string[] { "Row", "" });
                     table.Rows.Add(new string[] { "Column", "" });
                     table.Rows.Add(new string[] { "Apply To Variable", "" });
@@ -279,8 +334,12 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                     break;
 
                 case "check uielement exists":
-                case "get text from uielement":
+                case "get parent uielement":
                 case "get selected state from uielement":
+                case "get selection items value from uielement":
+                case "get text from uielement":
+                case "get window handle from uielement":
+                case "get window name from uielement":
                     table.Rows.Add(new string[] { "Apply To Variable", "" });
                     break;
 
@@ -341,6 +400,15 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                     });
                     dgv.Rows[0].Cells[1] = barType;
                     dgv.Rows[1].Cells[1] = scrollMethod;
+                    break;
+                case "set selected state to uielement":
+                    var selectedState = new DataGridViewComboBoxCell();
+                    selectedState.Items.AddRange(new string[]
+                    {
+                        "Selected",
+                        "Unselected"
+                    });
+                    dgv.Rows[0].Cells[1] = selectedState;
                     break;
                 case "get property value from uielement":
                     var propNames = new DataGridViewComboBoxCell();
