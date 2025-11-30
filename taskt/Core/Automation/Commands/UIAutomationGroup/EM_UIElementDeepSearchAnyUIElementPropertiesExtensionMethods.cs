@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Automation;
+using taskt.Core.Automation.Commands.WindowGroup;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
@@ -89,7 +90,11 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             {
                 var elem = GetUIElementFromDeepSearchUIElements(command, rootElement, engine);
                 actionFunc(elem);
-                command.StoreWindowNameAndWindowHandleInUserVariablesFromUIElement(rootElement, engine);
+
+                if (command.IsWindowNameOrWindowHandleResultsSpecified())
+                {
+                    command.StoreWindowNameAndWindowHandleInUserVariablesFromUIElement(rootElement, engine);
+                }
             }
             catch (Exception ex)
             {
