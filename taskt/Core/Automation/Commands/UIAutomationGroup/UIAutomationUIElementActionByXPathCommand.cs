@@ -41,7 +41,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Get UIElement Position")]
         [PropertyUISelectionOption("Get UIElement Size")]
         [PropertyUISelectionOption("Wait For UIElement To Exists")]
-        [PropertyUISelectionOption("Wait For UIElement To Exists")]
         [PropertySelectionChangeEvent(nameof(cmbActionType_SelectedItemChange))]
         [PropertyDisplayText(true, "Action")]
         public string v_AutomationType { get; set; }
