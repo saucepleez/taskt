@@ -45,6 +45,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "10")]
         [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "Wait Time")]
+        [PropertyParameterOrder(9000)]
         public string v_WaitTimeForExcel { get; set; }
 
         public ExcelAttachExcelInstanceCommand()
