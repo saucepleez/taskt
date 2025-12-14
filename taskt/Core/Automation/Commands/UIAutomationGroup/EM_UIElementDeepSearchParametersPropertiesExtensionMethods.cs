@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="rootElement"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static List<AutomationElement> DeepSearchUIElements(this IUIElementDeepSearchParametersProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
+        public static List<AutomationElement> DeepSearchUIElements(this IUIElementDescendantsSearchParametersProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
         {
             var foundFunc = new Func<List<AutomationElement>, bool>(elems => (elems.Count > 0));
             var maxElementsFunc = command.GetMaxNumberUIElementsFunc(engine);
@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="maxElementsFunc">when func returns true, max UIElements</param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static List<AutomationElement> DeepSearchUIElementsCore(this IUIElementDeepSearchParametersProperties command, AutomationElement rootElement, 
+        public static List<AutomationElement> DeepSearchUIElementsCore(this IUIElementDescendantsSearchParametersProperties command, AutomationElement rootElement, 
                         Func<List<AutomationElement>, bool> foundFunc, Func<List<AutomationElement>, bool> maxElementsFunc,
                         Engine.AutomationEngineInstance engine)
         {
@@ -148,7 +148,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="engine"></param>
         /// <param name="actionFunc"></param>
         /// <param name="errorFunc"></param>
-        public static void DeepSearchUIElementsAction(this IUIElementDeepSearchParametersProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine, Action<List<AutomationElement>> actionFunc, Action<Exception> errorFunc = null)
+        public static void DeepSearchUIElementsAction(this IUIElementDescendantsSearchParametersProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine, Action<List<AutomationElement>> actionFunc, Action<Exception> errorFunc = null)
         {
             try
             {

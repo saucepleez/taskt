@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     /// <summary>
     /// for UIElement Action from something by XPath commands
     /// </summary>
-    public abstract class AUIElementActionFromSomethingByXPathCommands : AUIElementActionSomewayCommands, IUIElementCoreSearchXPathProperties, IUIElementDeepSearchXPathProperties
+    public abstract class AUIElementActionFromSomethingByXPathCommands : AUIElementActionSomewayCommands, IUIElementChildrenSearchXPathProperties, IUIElementDescendantsSearchXPathProperties
     {
         [XmlAttribute]
         [PropertyParameterOrder(5500)]

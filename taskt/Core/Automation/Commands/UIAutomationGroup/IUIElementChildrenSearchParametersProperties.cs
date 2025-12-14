@@ -3,9 +3,9 @@
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
     /// <summary>
-    /// UIElement search parameters
+    /// UIElement children search parameters
     /// </summary>
-    public interface IUIElementCoreSearchParametersProperties : IUIElementCoreSearchSomewayProperties, IUIElementWindowResultsFromUIElementProperties, IHaveDataTableElements
+    public interface IUIElementChildrenSearchParametersProperties : IUIElementChildrenSearchSomewayProperties, IUIElementWindowResultsFromUIElementProperties, IHaveDataTableElements
     {
         /// <summary>
         /// UIElement search parameters

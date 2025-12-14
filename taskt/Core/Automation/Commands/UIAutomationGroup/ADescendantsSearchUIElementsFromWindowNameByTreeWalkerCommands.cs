@@ -2,11 +2,15 @@
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 using taskt.UI.CustomControls;
 
-namespace taskt.Core.Automation.Commands.UIAutomationGroup
+namespace taskt.Core.Automation.Commands
 {
-    public abstract class ADeepSearchUIElementsFromWindowNameByXPathCommands : ADeepSearchUIElementsFromSomethingByXPathCommands, IOneWindowNameProperties, IWindowUIElementResultProperties
+    /// <summary>
+    /// for descendants search UIElements from Window Name by TreeWalker commands
+    /// </summary>
+    public abstract class ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands : ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands, IOneWindowNameProperties, IWindowUIElementResultProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]

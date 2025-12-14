@@ -1,9 +1,9 @@
 ﻿namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
     /// <summary>
-    /// for UIElement core search by someway properites
+    /// for UIElement children search by someway properites
     /// </summary>
-    public interface IUIElementCoreSearchSomewayProperties : IExpandableProperties
+    public interface IUIElementChildrenSearchSomewayProperties : IExpandableProperties
     {
         /// <summary>
         /// wait time for UIElement

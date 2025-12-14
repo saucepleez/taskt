@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="targetElement"></param>
         /// <param name="actionFunc"></param>
         /// <param name="errorFunc"></param>
-        public static void DeepSearchUIElementAction(this IUIElementDeepSearchXPathProperties command, Engine.AutomationEngineInstance engine, AutomationElement targetElement, Action<AutomationElement> actionFunc, Action<Exception> errorFunc = null)
+        public static void DeepSearchUIElementAction(this IUIElementDescendantsSearchXPathProperties command, Engine.AutomationEngineInstance engine, AutomationElement targetElement, Action<AutomationElement> actionFunc, Action<Exception> errorFunc = null)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static AutomationElement DeepSearchUIElementByXPath(this IUIElementDeepSearchXPathProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
+        public static AutomationElement DeepSearchUIElementByXPath(this IUIElementDescendantsSearchXPathProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
         {
             var waitTime = command.ExpandValueOrUserVariableAsWaitTimeForUIElement(engine);
 
@@ -80,7 +80,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="targetElement"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (XElement, Dictionary<string, AutomationElement>) DeepCreateUIElementXMLCore(this IUIElementDeepSearchXPathProperties command, AutomationElement targetElement, Func<bool> timeFunc, Engine.AutomationEngineInstance engine)
+        public static (XElement, Dictionary<string, AutomationElement>) DeepCreateUIElementXMLCore(this IUIElementDescendantsSearchXPathProperties command, AutomationElement targetElement, Func<bool> timeFunc, Engine.AutomationEngineInstance engine)
         {
             var siblingFunc = command.GetMaxSiblingsFunc(engine);
             var depthFunc = command.GetMaxDepthFunc(engine);

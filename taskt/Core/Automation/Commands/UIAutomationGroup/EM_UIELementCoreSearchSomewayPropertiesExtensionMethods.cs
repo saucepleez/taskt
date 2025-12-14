@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static int ExpandValueOrUserVariableAsWaitTimeForUIElement(this IUIElementCoreSearchSomewayProperties command, Engine.AutomationEngineInstance engine)
+        public static int ExpandValueOrUserVariableAsWaitTimeForUIElement(this IUIElementChildrenSearchSomewayProperties command, Engine.AutomationEngineInstance engine)
         {
             return command.ToScriptCommand().ExpandValueOrUserVariableAsInteger(nameof(command.v_WaitTimeForUIElement), engine);
         }
@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static int ExpandValueOrUserVariableAsMaxSiblings(this IUIElementCoreSearchSomewayProperties command, Engine.AutomationEngineInstance engine)
+        public static int ExpandValueOrUserVariableAsMaxSiblings(this IUIElementChildrenSearchSomewayProperties command, Engine.AutomationEngineInstance engine)
         {
             if (string.IsNullOrEmpty(command.v_MaxSiblings))
             {
@@ -36,7 +36,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns>When Func returns true, max siblings</returns>
-        public static Func<int, bool> GetMaxSiblingsFunc(this IUIElementCoreSearchSomewayProperties command, Engine.AutomationEngineInstance engine)
+        public static Func<int, bool> GetMaxSiblingsFunc(this IUIElementChildrenSearchSomewayProperties command, Engine.AutomationEngineInstance engine)
         {
             var maxSiblings = command.ExpandValueOrUserVariableAsMaxSiblings(engine);
             if (maxSiblings == 0)

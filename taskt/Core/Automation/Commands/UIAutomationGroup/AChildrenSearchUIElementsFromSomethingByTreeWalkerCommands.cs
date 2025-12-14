@@ -2,14 +2,13 @@
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using taskt.Core.Automation.Commands.WindowGroup;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
     /// <summary>
-    /// for search UIElements from Something by TreeWalker commands
+    /// for children search UIElements from Something by TreeWalker commands
     /// </summary>
-    public abstract class ACoreSearchUIElementsFromSomethingByTreeWalkerCommands : ScriptCommand, IUIElementCoreSearchParametersProperties
+    public abstract class AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands : ScriptCommand, IUIElementChildrenSearchParametersProperties
     {
         [XmlElement]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SearchParameters))]

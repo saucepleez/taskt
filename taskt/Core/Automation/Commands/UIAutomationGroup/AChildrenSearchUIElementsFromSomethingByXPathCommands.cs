@@ -5,9 +5,9 @@ using taskt.Core.Automation.Commands.WindowGroup;
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
     /// <summary>
-    /// for core search UIELement from something by XPath commands
+    /// for children search UIELement from something by XPath commands
     /// </summary>
-    public abstract class ACoreSearchUIElementsFromSomethingByXPathCommands : ScriptCommand, IUIElementCoreSearchXPathProperties
+    public abstract class AChildrenSearchUIElementsFromSomethingByXPathCommands : ScriptCommand, IUIElementChildrenSearchXPathProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SearchXPath))]

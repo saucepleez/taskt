@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationSearchChildUIElementFromUIElementByXPathCommand : ACoreSearchUIElementsFromUIElementByXPathCommands, IResultProperties
+    public sealed class UIAutomationSearchChildUIElementFromUIElementByXPathCommand : AChildrenSearchUIElementsFromUIElementByXPathCommands, IResultProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_NewOutputUIElementName))]

@@ -11,7 +11,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static int ExpandValueOrUserVariableAsMaxDepth(this IUIElementDeepSearchSomewayProperties command, Engine.AutomationEngineInstance engine)
+        public static int ExpandValueOrUserVariableAsMaxDepth(this IUIElementDescendantsSearchSomewayProperties command, Engine.AutomationEngineInstance engine)
         {
             if (string.IsNullOrEmpty(command.v_MaxDepth))
             {
@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns>when Func returns true, max depth</returns>
-        public static Func<int, bool> GetMaxDepthFunc(this IUIElementDeepSearchSomewayProperties command, Engine.AutomationEngineInstance engine)
+        public static Func<int, bool> GetMaxDepthFunc(this IUIElementDescendantsSearchSomewayProperties command, Engine.AutomationEngineInstance engine)
         {
             var maxDepth = command.ExpandValueOrUserVariableAsMaxDepth(engine);
             if (maxDepth == 0)

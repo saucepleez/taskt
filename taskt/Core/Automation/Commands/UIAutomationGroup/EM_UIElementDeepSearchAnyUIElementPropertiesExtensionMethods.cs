@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns>(found-func, max-func)</returns>
-        public static (Func<List<AutomationElement>, bool>, Func<List<AutomationElement>, bool>) GetCheckFoundAndMaxUIElementsFunc(this IUIElementDeepSearchAnyUIElementProperties command, Engine.AutomationEngineInstance engine)
+        public static (Func<List<AutomationElement>, bool>, Func<List<AutomationElement>, bool>) GetCheckFoundAndMaxUIElementsFunc(this IUIElementDescendantsSearchAnyUIElementProperties command, Engine.AutomationEngineInstance engine)
         {
             var index = command.ExpandValueOrUserVariableAsUIElementIndex(engine);
             if (string.IsNullOrEmpty(command.v_MaxNumberUIElements))
@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="rootElement"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static List<AutomationElement> DeepSearchUIElements(this IUIElementDeepSearchAnyUIElementProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
+        public static List<AutomationElement> DeepSearchUIElements(this IUIElementDescendantsSearchAnyUIElementProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
         {
             (var foundFunc, var maxElementsFunc) = command.GetCheckFoundAndMaxUIElementsFunc(engine);
 
@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="rootElement"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static AutomationElement GetUIElementFromDeepSearchUIElements(this IUIElementDeepSearchAnyUIElementProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
+        public static AutomationElement GetUIElementFromDeepSearchUIElements(this IUIElementDescendantsSearchAnyUIElementProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
         {
             var elems = command.DeepSearchUIElements(rootElement, engine);
             return command.GetUIElementFromList(elems, engine);
@@ -84,7 +84,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="engine"></param>
         /// <param name="actionFunc"></param>
         /// <param name="errorFunc"></param>
-        public static void DeepSearchAnyUIElementAction(this IUIElementDeepSearchAnyUIElementProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine, Action<AutomationElement> actionFunc, Action<Exception> errorFunc = null)
+        public static void DeepSearchAnyUIElementAction(this IUIElementDescendantsSearchAnyUIElementProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine, Action<AutomationElement> actionFunc, Action<Exception> errorFunc = null)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="engine"></param>
         /// <param name="actionFunc"></param>
         /// <param name="errorFunc"></param>
-        public static void DeepSearchUIElementsAction(this IUIElementDeepSearchAnyUIElementProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine, Action<List<AutomationElement>> actionFunc, Action<Exception> errorFunc = null)
+        public static void DeepSearchUIElementsAction(this IUIElementDescendantsSearchAnyUIElementProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine, Action<List<AutomationElement>> actionFunc, Action<Exception> errorFunc = null)
         {
             try
             {

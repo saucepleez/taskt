@@ -1,9 +1,9 @@
 ﻿namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
     /// <summary>
-    /// UIElement deep search (someway) parameters
+    /// UIElement descendants search (someway) parameters
     /// </summary>
-    public interface IUIElementDeepSearchSomewayProperties : IExpandableProperties
+    public interface IUIElementDescendantsSearchSomewayProperties : IExpandableProperties
     {
         /// <summary>
         /// Max depth to Search UIElements

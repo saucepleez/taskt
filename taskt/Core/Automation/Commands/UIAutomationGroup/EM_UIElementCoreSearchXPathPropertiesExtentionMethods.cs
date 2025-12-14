@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="value"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static string ExpandValueOrUserVariableAsXPath(this IUIElementCoreSearchXPathProperties command, Engine.AutomationEngineInstance engine)
+        public static string ExpandValueOrUserVariableAsXPath(this IUIElementChildrenSearchXPathProperties command, Engine.AutomationEngineInstance engine)
         {
             var p = command.ToScriptCommand().ExpandValueOrUserVariable(nameof(command.v_SearchXPath), "XPath", engine);
             if (!p.StartsWith("."))
@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="targetElement"></param>
         /// <param name="actionFunc"></param>
         /// <param name="errorFunc"></param>
-        public static void SearchChildrenUIElementAction(this IUIElementCoreSearchXPathProperties command, Engine.AutomationEngineInstance engine, AutomationElement targetElement, Action<AutomationElement> actionFunc, Action<Exception> errorFunc = null)
+        public static void SearchChildrenUIElementAction(this IUIElementChildrenSearchXPathProperties command, Engine.AutomationEngineInstance engine, AutomationElement targetElement, Action<AutomationElement> actionFunc, Action<Exception> errorFunc = null)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static AutomationElement SearchChildrenUIElementByXPath(this IUIElementCoreSearchXPathProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
+        public static AutomationElement SearchChildrenUIElementByXPath(this IUIElementChildrenSearchXPathProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
         {
             var waitTime = command.ExpandValueOrUserVariableAsWaitTimeForUIElement(engine);
 
@@ -118,7 +118,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="waitFunc">when Func returns true, time out</param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (XElement, Dictionary<string, AutomationElement>) CreateChildrenXMLCore(this IUIElementCoreSearchXPathProperties command, AutomationElement rootElement, Func<bool> waitFunc, Engine.AutomationEngineInstance engine)
+        public static (XElement, Dictionary<string, AutomationElement>) CreateChildrenXMLCore(this IUIElementChildrenSearchXPathProperties command, AutomationElement rootElement, Func<bool> waitFunc, Engine.AutomationEngineInstance engine)
         {
             var parentXMLNode = EM_CanHandleUIElementXMLExtentionMethods.CreateXmlElement(rootElement);
             var elemsDic = new Dictionary<string, AutomationElement>()

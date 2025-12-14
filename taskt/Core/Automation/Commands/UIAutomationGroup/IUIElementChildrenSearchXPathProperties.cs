@@ -1,9 +1,9 @@
 ﻿namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
     /// <summary>
-    /// UIElement core search XPath properties
+    /// UIElement children search XPath properties
     /// </summary>
-    public interface IUIElementCoreSearchXPathProperties : IUIElementCoreSearchSomewayProperties, IUIElementWindowResultsFromUIElementProperties
+    public interface IUIElementChildrenSearchXPathProperties : IUIElementChildrenSearchSomewayProperties, IUIElementWindowResultsFromUIElementProperties
     {
         /// <summary>
         /// UIElement search XPath

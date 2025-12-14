@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationSearchUIElementsInformationFromUIElementCommand : ADeepSearchUIElementsFromSomethingByTreeWalkerCommands, IUIElementCoreProperties, IGetUIElementsInformationProperties
+    public sealed class UIAutomationSearchUIElementsInformationFromUIElementCommand : ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands, IUIElementCoreProperties, IGetUIElementsInformationProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_InputUIElementName))]

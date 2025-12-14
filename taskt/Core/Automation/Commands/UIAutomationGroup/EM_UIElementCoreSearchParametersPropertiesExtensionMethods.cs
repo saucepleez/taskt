@@ -36,10 +36,10 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// </summary>
         /// <param name="ctl"></param>
         /// <returns></returns>
-        public static (IUIElementCoreSearchParametersProperties, DataGridView) GetCommandAndSearchDataGridView(Control ctl)
+        public static (IUIElementChildrenSearchParametersProperties, DataGridView) GetCommandAndSearchDataGridView(Control ctl)
         {
             var editor = FormUIControls.GetCommandEditorFromControl(ctl);
-            var command = (IUIElementCoreSearchParametersProperties)editor.selectedCommand;
+            var command = (IUIElementChildrenSearchParametersProperties)editor.selectedCommand;
             //var dgv = FormUIControls.GetPropertyControl<DataGridView>(editor.us.ControlsList, nameof(IUIElementSearchParametersProperties.v_SearchParameters));
             var dgv = (DataGridView)editor.ParameterBindingControls[nameof(command.v_SearchParameters)];
 
@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="updateFunc"></param>
-        public static void SearchParametersUpdateProcess(this IUIElementCoreSearchParametersProperties command, DataGridView dgv, Action<DataTable> updateFunc)
+        public static void SearchParametersUpdateProcess(this IUIElementChildrenSearchParametersProperties command, DataGridView dgv, Action<DataTable> updateFunc)
         {
             updateFunc(command.v_SearchParameters);
             RenderUIElementSearchParameter(dgv);
@@ -121,7 +121,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="table"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static List<PropertyCondition> CreateSearchCondition(this IUIElementCoreSearchParametersProperties comamnd, Engine.AutomationEngineInstance engine)
+        public static List<PropertyCondition> CreateSearchCondition(this IUIElementChildrenSearchParametersProperties comamnd, Engine.AutomationEngineInstance engine)
         {
             var table = comamnd.v_SearchParameters;
 
@@ -242,7 +242,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="rootElement"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static List<AutomationElement> SearchChildrenUIElements(this IUIElementCoreSearchParametersProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
+        public static List<AutomationElement> SearchChildrenUIElements(this IUIElementChildrenSearchParametersProperties command, AutomationElement rootElement, Engine.AutomationEngineInstance engine)
         {
             var searchConditions = command.CreateSearchCondition(engine);
 
@@ -323,7 +323,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static int ExpandValueOrUserVariableAsMaxNumberUIElements(this IUIElementCoreSearchParametersProperties command, Engine.AutomationEngineInstance engine)
+        public static int ExpandValueOrUserVariableAsMaxNumberUIElements(this IUIElementChildrenSearchParametersProperties command, Engine.AutomationEngineInstance engine)
         {
             if (string.IsNullOrEmpty(command.v_MaxNumberUIElements))
             {
@@ -338,7 +338,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns>When Func returns true, max UIElements</returns>
-        public static Func<List<AutomationElement>, bool> GetMaxNumberUIElementsFunc(this IUIElementCoreSearchParametersProperties command, Engine.AutomationEngineInstance engine)
+        public static Func<List<AutomationElement>, bool> GetMaxNumberUIElementsFunc(this IUIElementChildrenSearchParametersProperties command, Engine.AutomationEngineInstance engine)
         {
             var maxElements = command.ExpandValueOrUserVariableAsMaxNumberUIElements(engine);
             if (maxElements == 0)
@@ -357,7 +357,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns>(First-Child, Next-Child)</returns>
-        public static (Func<AutomationElement, TreeWalker, AutomationElement>, Func<AutomationElement, TreeWalker, AutomationElement>) GetSiblingNodeFunc(this IUIElementCoreSearchParametersProperties command, Engine.AutomationEngineInstance engine)
+        public static (Func<AutomationElement, TreeWalker, AutomationElement>, Func<AutomationElement, TreeWalker, AutomationElement>) GetSiblingNodeFunc(this IUIElementChildrenSearchParametersProperties command, Engine.AutomationEngineInstance engine)
         {
             switch(command.ToScriptCommand().ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_SiblingsDirection), engine))
             {

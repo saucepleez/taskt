@@ -4,9 +4,9 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
     /// <summary>
-    /// for Deep Search any-one UIElement from UIElement by TreeWalker commands
+    /// for Descendants Search any-one UIElement from UIElement by TreeWalker commands
     /// </summary>
-    public abstract class ADeepSearchAnyUIElementFromSomethingByTreeWalkerCommands : ADeepSearchUIElementsFromSomethingByTreeWalkerCommands, IUIElementDeepSearchAnyUIElementProperties
+    public abstract class ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands : ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands, IUIElementDescendantsSearchAnyUIElementProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_TargetUIElementIndex))]
