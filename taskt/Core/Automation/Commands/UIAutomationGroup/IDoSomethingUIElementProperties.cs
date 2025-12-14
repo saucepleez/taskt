@@ -1,11 +1,9 @@
-﻿using taskt.Core.Automation.Commands.WindowGroup;
-
-namespace taskt.Core.Automation.Commands.UIAutomationGroup
+﻿namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
     /// <summary>
     /// Get from UIElement or UIElement Action commands properties
     /// </summary>
-    public interface IDoSomethingUIElementProperties : IUIElementCoreProperties, IFromWindowNameResultsProperties
+    public interface IDoSomethingUIElementProperties : IUIElementCoreProperties, IUIElementWindowResultsFromUIElementProperties
     {
         ///// <summary>
         ///// variable name to store Window Name

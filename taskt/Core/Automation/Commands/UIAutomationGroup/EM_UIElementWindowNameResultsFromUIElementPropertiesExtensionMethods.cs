@@ -14,8 +14,11 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="engine"></param>
         public static void StoreWindowNameAndWindowHandleInUserVariablesFromUIElement(this IUIElementWindowResultsFromUIElementProperties command, AutomationElement targetElement, Engine.AutomationEngineInstance engine)
         {
-            (var name, var whnd) = EM_CanHandleUIElementExtentionMethods.GetWindowNameAndHandle(targetElement);
-            command.StoreWindowNameAndWindowHandleResultsInUserVariables(name, whnd, engine);
+            if (command.IsWindowNameOrWindowHandleResultsSpecified())
+            {
+                (var name, var whnd) = EM_CanHandleUIElementExtentionMethods.GetWindowNameAndHandle(targetElement);
+                command.StoreWindowNameAndWindowHandleResultsInUserVariables(name, whnd, engine);
+            }
         }
     }
 }

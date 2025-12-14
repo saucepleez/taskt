@@ -91,10 +91,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                 var elem = GetUIElementFromDeepSearchUIElements(command, rootElement, engine);
                 actionFunc(elem);
 
-                if (command.IsWindowNameOrWindowHandleResultsSpecified())
-                {
-                    command.StoreWindowNameAndWindowHandleInUserVariablesFromUIElement(rootElement, engine);
-                }
+                command.StoreWindowNameAndWindowHandleInUserVariablesFromUIElement(rootElement, engine);
             }
             catch (Exception ex)
             {

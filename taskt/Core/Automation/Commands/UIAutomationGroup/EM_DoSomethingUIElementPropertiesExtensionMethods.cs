@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Automation;
-using taskt.Core.Automation.Commands.WindowGroup;
 using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
@@ -20,17 +19,14 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             // core process
             actionFunc(targetElement);
 
-            //if ((!string.IsNullOrEmpty(command.v_WindowNameResult)) || (!string.IsNullOrEmpty(command.v_WindowHandleResult)))
-            if (command.IsWindowNameOrWindowHandleResultsSpecified())
-            {
-                // get window name and window handle
-                (var windowName, var whnd) = EM_CanHandleUIElementExtentionMethods.GetWindowNameAndHandle(targetElement);
+            //if (command.IsWindowNameOrWindowHandleResultsSpecified())
+            //{
+            //    // get window name and window handle
+            //    (var windowName, var whnd) = EM_CanHandleUIElementExtentionMethods.GetWindowNameAndHandle(targetElement);
 
-                //// store window name, handle
-                //command.StoreWindowNameResultInUserVariable(windowName, engine);
-                //command.StoreWindowHandleResultInUserVariable(whnd, engine);
-                command.StoreWindowNameAndWindowHandleResultsInUserVariables(windowName, whnd, engine);
-            }
+            //    command.StoreWindowNameAndWindowHandleResultsInUserVariables(windowName, whnd, engine);
+            //}
+            command.StoreWindowNameAndWindowHandleInUserVariablesFromUIElement(targetElement, engine);
         }
     }
 }
