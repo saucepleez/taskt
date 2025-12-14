@@ -476,9 +476,12 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADescendantsSearchUIElementsFromSomethingByXPathCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADescendantsSearchUIElementsFromUIElementByXPathCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADescendantsSearchUIElementsFromWindowHandleByXPathCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADescendantsSearchUIElementsFromWindowNameByXPathCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADoSomethingUIElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\AGetFromUIElementCommands.cs" />
@@ -532,6 +535,8 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetWindowUIElementFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchChildUIElementFromUIElementByXPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementFromWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementFromWindowHandleByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementsInformationFromWindowNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementsInformationFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchChildrenUIElementsTreeXMLFromUIElementCommand.cs" />
