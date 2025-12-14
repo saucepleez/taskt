@@ -5,7 +5,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     /// <summary>
     /// UIElement children search parameters
     /// </summary>
-    public interface IUIElementChildrenSearchParametersProperties : IUIElementChildrenSearchSomewayProperties, IUIElementWindowResultsFromUIElementProperties, IHaveDataTableElements
+    public interface IUIElementChildrenSearchParametersProperties : IUIElementChildrenSearchSomewayProperties, IHaveDataTableElements
     {
         /// <summary>
         /// UIElement search parameters

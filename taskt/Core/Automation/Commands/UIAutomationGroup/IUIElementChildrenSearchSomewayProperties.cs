@@ -3,7 +3,7 @@
     /// <summary>
     /// for UIElement children search by someway properites
     /// </summary>
-    public interface IUIElementChildrenSearchSomewayProperties : IExpandableProperties
+    public interface IUIElementChildrenSearchSomewayProperties : IUIElementWindowResultsFromUIElementProperties
     {
         /// <summary>
         /// wait time for UIElement
