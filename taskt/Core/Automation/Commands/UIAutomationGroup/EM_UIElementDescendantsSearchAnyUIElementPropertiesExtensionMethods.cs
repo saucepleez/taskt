@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Automation;
-using taskt.Core.Automation.Commands.WindowGroup;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
