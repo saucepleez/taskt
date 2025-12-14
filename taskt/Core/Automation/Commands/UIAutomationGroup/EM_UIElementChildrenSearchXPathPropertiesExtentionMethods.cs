@@ -54,23 +54,27 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="errorFunc"></param>
         public static void SearchChildrenUIElementAction(this IUIElementChildrenSearchXPathProperties command, Engine.AutomationEngineInstance engine, AutomationElement targetElement, Action<AutomationElement> actionFunc, Action<Exception> errorFunc = null)
         {
-            try
-            {
-                var elem = command.SearchChildrenUIElementByXPath(targetElement, engine);
-                actionFunc(elem);
-                command.StoreWindowNameAndWindowHandleInUserVariablesFromUIElement(elem, engine);
-            }
-            catch (Exception ex)
-            {
-                if (errorFunc != null)
-                {
-                    errorFunc(ex);
-                }
-                else
-                {
-                    throw ex;
-                }
-            }
+            //try
+            //{
+            //    var elem = command.SearchChildrenUIElementByXPath(targetElement, engine);
+            //    actionFunc(elem);
+            //    command.StoreWindowNameAndWindowHandleInUserVariablesFromUIElement(elem, engine);
+            //}
+            //catch (Exception ex)
+            //{
+            //    if (errorFunc != null)
+            //    {
+            //        errorFunc(ex);
+            //    }
+            //    else
+            //    {
+            //        throw ex;
+            //    }
+            //}
+
+            command.SearchAnyUIElementActionCore(engine,
+                new Func<AutomationElement>(() => command.SearchChildrenUIElementByXPath(targetElement, engine)),
+                actionFunc, errorFunc);
         }
 
         /// <summary>

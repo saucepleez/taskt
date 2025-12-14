@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Automation;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
@@ -46,6 +47,35 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             else
             {
                 return new Func<int, bool>((n) => (n > maxSiblings));
+            }
+        }
+
+        /// <summary>
+        /// search someway any-one UIElement Action core
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="errorFunc"></param>
+        public static void SearchAnyUIElementActionCore(this IUIElementChildrenSearchSomewayProperties command, Engine.AutomationEngineInstance engine, Func<AutomationElement> searchFunc, Action<AutomationElement> actionFunc, Action<Exception> errorFunc = null)
+        {
+            try
+            {
+                var elem = searchFunc();
+                actionFunc(elem);
+                command.StoreWindowNameAndWindowHandleInUserVariablesFromUIElement(elem, engine);
+            }
+            catch (Exception ex)
+            {
+                if (errorFunc != null)
+                {
+                    errorFunc(ex);
+                }
+                else
+                {
+                    throw ex;
+                }
             }
         }
     }

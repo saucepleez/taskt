@@ -17,23 +17,27 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="errorFunc"></param>
         public static void DeepSearchUIElementAction(this IUIElementDescendantsSearchXPathProperties command, Engine.AutomationEngineInstance engine, AutomationElement targetElement, Action<AutomationElement> actionFunc, Action<Exception> errorFunc = null)
         {
-            try
-            {
-                var elem = command.DeepSearchUIElementByXPath(targetElement, engine);
-                actionFunc(elem);
-                command.StoreWindowNameAndWindowHandleInUserVariablesFromUIElement(elem, engine);
-            }
-            catch (Exception ex)
-            {
-                if (errorFunc != null)
-                {
-                    errorFunc(ex);
-                }
-                else
-                {
-                    throw ex;
-                }
-            }
+            //try
+            //{
+            //    var elem = command.DeepSearchUIElementByXPath(targetElement, engine);
+            //    actionFunc(elem);
+            //    command.StoreWindowNameAndWindowHandleInUserVariablesFromUIElement(elem, engine);
+            //}
+            //catch (Exception ex)
+            //{
+            //    if (errorFunc != null)
+            //    {
+            //        errorFunc(ex);
+            //    }
+            //    else
+            //    {
+            //        throw ex;
+            //    }
+            //}
+
+            command.SearchAnyUIElementActionCore(engine,
+                new Func<AutomationElement>(() => command.DeepSearchUIElementByXPath(targetElement, engine)),
+                actionFunc, errorFunc);
         }
 
         /// <summary>
