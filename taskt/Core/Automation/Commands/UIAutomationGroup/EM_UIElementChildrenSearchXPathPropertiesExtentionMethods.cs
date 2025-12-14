@@ -6,7 +6,7 @@ using System.Xml.XPath;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
-    public static class EM_UIElementCoreSearchXPathPropertiesExtentionMethods
+    public static class EM_UIElementChildrenSearchXPathPropertiesExtentionMethods
     {
         /// <summary>
         /// expand value or user variable string as XPath

@@ -5,7 +5,7 @@ using taskt.Core.Automation.Commands.WindowGroup;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
-    public static class EM_UIElementDeepSearchAnyUIElementPropertiesExtensionMethods
+    public static class EM_UIElementDescendantsSearchAnyUIElementPropertiesExtensionMethods
     {
         /// <summary>
         /// get Check Found func, max UIElements func
@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         {
             (var foundFunc, var maxElementsFunc) = command.GetCheckFoundAndMaxUIElementsFunc(engine);
 
-            return EM_UIElementDeepSearchParametersPropertiesExtensionMethods.DeepSearchUIElementsCore(command, rootElement, foundFunc, maxElementsFunc, engine);
+            return EM_UIElementDescendantsSearchParametersPropertiesExtensionMethods.DeepSearchUIElementsCore(command, rootElement, foundFunc, maxElementsFunc, engine);
         }
 
         /// <summary>

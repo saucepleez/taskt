@@ -255,7 +255,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             {
                 if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {
-                    (var command, var dgv) = EM_UIElementCoreSearchParametersPropertiesExtensionMethods.GetCommandAndSearchDataGridView((Control)sender);
+                    (var command, var dgv) = EM_UIElementChildrenSearchParametersPropertiesExtensionMethods.GetCommandAndSearchDataGridView((Control)sender);
                     command.SearchParametersUpdateProcess(dgv, new Action<DataTable>((tbl) =>
                     {
                         ParseInspectToolResult(fm.InspectResult, tbl);
@@ -271,7 +271,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <param name="e"></param>
         public static void lnkAddEmptyParameter_Click(object sender, EventArgs e)
         {
-            (var command, var dgv) = EM_UIElementCoreSearchParametersPropertiesExtensionMethods.GetCommandAndSearchDataGridView((Control)sender);
+            (var command, var dgv) = EM_UIElementChildrenSearchParametersPropertiesExtensionMethods.GetCommandAndSearchDataGridView((Control)sender);
             command.SearchParametersUpdateProcess(dgv, new Action<DataTable>((tbl) =>
             {
                 CreateEmptySearchParamters(tbl);
@@ -289,7 +289,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             {
                 if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {
-                    (var command, var dgv) = EM_UIElementCoreSearchParametersPropertiesExtensionMethods.GetCommandAndSearchDataGridView((Control)sender);
+                    (var command, var dgv) = EM_UIElementChildrenSearchParametersPropertiesExtensionMethods.GetCommandAndSearchDataGridView((Control)sender);
                     command.SearchParametersUpdateProcess(dgv, new Action<DataTable>((tbl) =>
                     {
                         ParseInspectToolResult(fm.inspectResult, tbl);
@@ -354,7 +354,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         public static void CreateEmptySearchParamters(DataTable table)
         {
             table.Rows.Clear();
-            foreach (var n in EM_UIElementCoreSearchParametersPropertiesExtensionMethods.TargetControlProperties)
+            foreach (var n in EM_UIElementChildrenSearchParametersPropertiesExtensionMethods.TargetControlProperties)
             {
                 table.Rows.Add(false, n, "");
             }

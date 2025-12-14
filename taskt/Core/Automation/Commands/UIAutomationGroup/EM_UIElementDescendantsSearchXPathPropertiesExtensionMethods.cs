@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
-    public static class EM_UIElementDeepSearchXPathPropertiesExtensionMethods
+    public static class EM_UIElementDescendantsSearchXPathPropertiesExtensionMethods
     {
         /// <summary>
         /// Deep Search UIElement Action
@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             var r = WaitControls.WaitProcess(waitTime, "UIElement", new Func<Func<bool>, (bool, object)>(waitFunc =>
             {
                 (var xml, var dic) = command.DeepCreateUIElementXMLCore(rootElement, waitFunc, engine);
-                var elem = EM_UIElementCoreSearchXPathPropertiesExtentionMethods.SearchUIElementByXPath(xpath, xml, dic);
+                var elem = EM_UIElementChildrenSearchXPathPropertiesExtentionMethods.SearchUIElementByXPath(xpath, xml, dic);
                 if (elem != null)
                 {
                     return (true, elem);

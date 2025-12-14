@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
-    public static class EM_UIElementCoreSearchParametersPropertiesExtensionMethods
+    public static class EM_UIElementChildrenSearchParametersPropertiesExtensionMethods
     {
         /// <summary>
         /// UIElement type for Reflection

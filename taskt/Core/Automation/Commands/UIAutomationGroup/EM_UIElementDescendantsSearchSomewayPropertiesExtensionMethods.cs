@@ -2,7 +2,7 @@
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
-    public static class EM_UIElementDeepSearchSomewayPropertiesExtensionMethods
+    public static class EM_UIElementDescendantsSearchSomewayPropertiesExtensionMethods
     {
 
         /// <summary>

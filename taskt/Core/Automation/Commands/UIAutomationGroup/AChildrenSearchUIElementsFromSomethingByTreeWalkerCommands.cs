@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
 
         public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-            EM_UIElementCoreSearchParametersPropertiesExtensionMethods.RenderUIElementSearchParameter(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
+            EM_UIElementChildrenSearchParametersPropertiesExtensionMethods.RenderUIElementSearchParameter(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
         }
 
         public override void BeforeValidate()

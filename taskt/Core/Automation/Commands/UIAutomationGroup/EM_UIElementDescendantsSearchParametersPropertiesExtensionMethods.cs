@@ -5,7 +5,7 @@ using taskt.Core.Automation.Commands.WindowGroup;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
-    public static class EM_UIElementDeepSearchParametersPropertiesExtensionMethods
+    public static class EM_UIElementDescendantsSearchParametersPropertiesExtensionMethods
     {
         /// <summary>
         /// Deep search UIElements
@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                 var walker = TreeWalker.RawViewWalker;
 
                 var elems = new List<AutomationElement>();
-                EM_UIElementCoreSearchParametersPropertiesExtensionMethods.CheckAndAddProcess(rootElement, conditions, elems);
+                EM_UIElementChildrenSearchParametersPropertiesExtensionMethods.CheckAndAddProcess(rootElement, conditions, elems);
                 if (timeoutFunc() || maxElementsFunc(elems))
                 {
                     return (foundFunc(elems), elems);
@@ -105,7 +105,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                 // DBG
                 //Console.WriteLine(node.Current.AutomationId);
 
-                EM_UIElementCoreSearchParametersPropertiesExtensionMethods.CheckAndAddProcess(node, searchConditions, matchedElements);
+                EM_UIElementChildrenSearchParametersPropertiesExtensionMethods.CheckAndAddProcess(node, searchConditions, matchedElements);
                 if (timeoutFunc() || maxElementsFunc(matchedElements))
                 {
                     return;

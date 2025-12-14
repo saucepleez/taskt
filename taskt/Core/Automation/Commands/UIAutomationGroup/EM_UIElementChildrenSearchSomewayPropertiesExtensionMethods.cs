@@ -2,7 +2,7 @@
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
-    public static class EM_UIElementCoreSearchSomewayPropertiesExtensionMethods
+    public static class EM_UIElementChildrenSearchSomewayPropertiesExtensionMethods
     {
         /// <summary>
         /// expand value or user variable as wait time for UIElement
