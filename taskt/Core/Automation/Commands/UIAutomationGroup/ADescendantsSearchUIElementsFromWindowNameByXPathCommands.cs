@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     /// <summary>
     /// for descendants search UIElements from Window name by XPath commands
     /// </summary>
-    public abstract class ADescendantsSearchUIElementsFromWindowNameByXPathCommands : ADescendantsSearchUIElementsFromSomethingByXPathCommands, IOneWindowNameProperties, IWindowUIElementResultProperties
+    public abstract class ADescendantsSearchUIElementsFromWindowNameByXPathCommands : ADescendantsSearchUIElementsFromSomethingByXPathCommands, IOneWindowNameProperties, IUIElementSearchUIElementFromWindowSomethingByAnywayProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]

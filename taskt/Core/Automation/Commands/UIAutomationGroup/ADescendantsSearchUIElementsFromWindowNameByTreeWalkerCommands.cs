@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for descendants search UIElements from Window Name by TreeWalker commands
     /// </summary>
-    public abstract class ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands : ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands, IOneWindowNameProperties, IWindowUIElementResultProperties
+    public abstract class ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands : ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands, IOneWindowNameProperties, IUIElementSearchUIElementFromWindowSomethingByAnywayProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]

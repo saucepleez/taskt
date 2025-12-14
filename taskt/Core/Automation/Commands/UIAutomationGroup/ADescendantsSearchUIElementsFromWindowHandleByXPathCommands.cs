@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     /// <summary>
     /// for descendants search UIELements From Window Handle by TreeWalker commands
     /// </summary>
-    public abstract class ADescendantsSearchUIElementsFromWindowHandleByXPathCommands : ADescendantsSearchUIElementsFromSomethingByXPathCommands, IWindowHandleProperties, IWindowUIElementResultProperties
+    public abstract class ADescendantsSearchUIElementsFromWindowHandleByXPathCommands : ADescendantsSearchUIElementsFromSomethingByXPathCommands, IWindowHandleProperties, IUIElementSearchUIElementFromWindowSomethingByAnywayProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_InputWindowHandle))]
