@@ -29,38 +29,55 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            using (var winElem = new InnerScriptVariable(engine))
-            {
-                var winSearch = new UIAutomationGetWindowUIElementCommand()
-                {
-                    v_WindowName = this.v_WindowName,
-                    v_CheckMethod = this.v_CheckMethod,
-                    v_SelectionMethod = this.v_SelectionMethod,
-                    v_TargetWindowIndex = this.v_TargetWindowIndex,
-                    v_WaitTimeForWindow = this.v_WaitTimeForWindow,
-                    v_Result = winElem.VariableName,
-                    v_WindowNameResult = this.v_WindowNameResult,
-                    v_WindowHandleResult = this.v_WindowHandleResult,
-                    v_CaseSensitive = this.v_CaseSensitive,
-                    v_TrimBeforeCheck = this.v_TrimBeforeCheck,
-                };
-                winSearch.RunCommand(engine);
+            //using (var winElem = new InnerScriptVariable(engine))
+            //{
+            //    var winSearch = new UIAutomationGetWindowUIElementCommand()
+            //    {
+            //        v_WindowName = this.v_WindowName,
+            //        v_CheckMethod = this.v_CheckMethod,
+            //        v_SelectionMethod = this.v_SelectionMethod,
+            //        v_TargetWindowIndex = this.v_TargetWindowIndex,
+            //        v_WaitTimeForWindow = this.v_WaitTimeForWindow,
+            //        v_Result = winElem.VariableName,
+            //        v_WindowNameResult = this.v_WindowNameResult,
+            //        v_WindowHandleResult = this.v_WindowHandleResult,
+            //        v_CaseSensitive = this.v_CaseSensitive,
+            //        v_TrimBeforeCheck = this.v_TrimBeforeCheck,
+            //    };
+            //    winSearch.RunCommand(engine);
 
-                var searchInfo = new UIAutomationSearchUIElementsInformationFromUIElementCommand()
-                {
-                    v_TargetElement = winElem.VariableName,
-                    v_SearchParameters = this.v_SearchParameters,
-                    v_Result = this.v_Result,
-                    v_MaxSiblings =this.v_MaxSiblings,
-                    v_MaxDepth = this.v_MaxDepth,
-                    v_MaxNumberUIElements = this.v_MaxNumberUIElements,
-                    v_SiblingsDirection = this.v_SiblingsDirection,
-                    v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
-                };
-                searchInfo.RunCommand(engine);
+            //    var searchInfo = new UIAutomationSearchUIElementsInformationFromUIElementCommand()
+            //    {
+            //        v_TargetElement = winElem.VariableName,
+            //        v_SearchParameters = this.v_SearchParameters,
+            //        v_Result = this.v_Result,
+            //        v_MaxSiblings =this.v_MaxSiblings,
+            //        v_MaxDepth = this.v_MaxDepth,
+            //        v_MaxNumberUIElements = this.v_MaxNumberUIElements,
+            //        v_SiblingsDirection = this.v_SiblingsDirection,
+            //        v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
+            //    };
+            //    searchInfo.RunCommand(engine);
 
-                this.StoreWindowUIElementInUserVariable((AutomationElement)winElem.VariableValue, engine);
-            }
+            //    this.StoreWindowUIElementInUserVariable((AutomationElement)winElem.VariableValue, engine);
+            //}
+
+            this.SearchWindowAfterAction(engine,
+                new Func<InnerScriptVariable, ScriptCommand>(winElem =>
+                {
+                    return new UIAutomationSearchUIElementsInformationFromUIElementCommand()
+                    {
+                        v_TargetElement = winElem.VariableName,
+                        v_SearchParameters = this.v_SearchParameters,
+                        v_Result = this.v_Result,
+                        v_MaxSiblings = this.v_MaxSiblings,
+                        v_MaxDepth = this.v_MaxDepth,
+                        v_MaxNumberUIElements = this.v_MaxNumberUIElements,
+                        v_SiblingsDirection = this.v_SiblingsDirection,
+                        v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
+                    };
+                })
+            );
         }
     }
 }
