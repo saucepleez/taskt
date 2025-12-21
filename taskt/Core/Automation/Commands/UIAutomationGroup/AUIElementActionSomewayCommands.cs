@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         {
             var elemAction = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_AutomationType), engine);
 
-            void StoreUIElementResultInUserVarialbe(InnerScriptVariable v, Engine.AutomationEngineInstance egn)
+            void StoreUIElementResultInUserVariable(InnerScriptVariable v, Engine.AutomationEngineInstance egn)
             {
                 if (!string.IsNullOrEmpty(v_TargetUIElement))
                 {
@@ -94,12 +94,12 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                     {
                         case "check uielement exists":
                             existsElemAction(myRootElem, p["Apply To Variable"]);
-                            StoreUIElementResultInUserVarialbe(myTrgElem, engine);
+                            StoreUIElementResultInUserVariable(myTrgElem, engine);
                             return;
 
                         default:
                             searchElemAction(myRootElem, myTrgElem);
-                            StoreUIElementResultInUserVarialbe(myTrgElem, engine);
+                            StoreUIElementResultInUserVariable(myTrgElem, engine);
                             break;
                     }
 
