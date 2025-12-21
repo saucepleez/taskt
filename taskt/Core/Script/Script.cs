@@ -470,6 +470,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_45(doc);
             convertTo3_5_2_46(doc);
             convertTo3_5_2_47(doc);
+            convertTo3_5_2_51(doc);
             return doc;
         }
 
@@ -4962,6 +4963,15 @@ namespace taskt.Core.Script
                     xpathElem.Remove();
                 }
             }
+        }
+
+        private static void convertTo3_5_2_51(XDocument doc)
+        {
+            // UIAutomationUIElementActionCommand -> UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand
+            ChangeCommandName(doc, "UIAutomationUIElementActionCommand", "UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand", "UIElement Action After Search UIElement From Window Name");
+
+            // UIAutomationUIElementActionByXPathCommand -> UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand
+            ChangeCommandName(doc, "UIAutomationUIElementActionByXPathCommand", "UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand", "UIElement Action After Search UIElement By XPath From Window Name");
         }
 
         /// <summary>

@@ -841,7 +841,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetUIElementPositionCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetUIElementSizeCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementFromWindowNameCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationUIElementActionByXPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserCheckWebElementExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserClickWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetHTMLFromWebElementCommand .cs" />
@@ -1277,7 +1277,7 @@
     <Compile Include="Core\Automation\Commands\ScriptGroup\SequenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\ThickAppClickItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\ThickAppGetTextCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationUIElementActionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\ShowUserInputDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\DatabaseRunQueryCommand.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\DateCalculationCommand.cs" />

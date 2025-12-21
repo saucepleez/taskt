@@ -421,7 +421,7 @@ namespace taskt.Core.Automation.Commands
                 actionTb.Columns.Add("Parameter Value");
                 actionTb.Rows.Add("Apply To Variable", myName.VariableName);
 
-                var checkUI = new UIAutomationUIElementActionCommand
+                var checkUI = new UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand
                 {
                     v_WindowName = windowName,
                     v_SearchParameters = searchTb,
