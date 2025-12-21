@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
-using taskt.Core.Automation.Commands;
-using System.Xml.Linq;
 using System.Windows.Automation;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using taskt.Core.Automation.Commands;
 
 /*
  * NOTE: This form is called primarily by frmCommandEditor, so the namespace looks like this
@@ -14,7 +14,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
     public partial class frmGUIInspect : DialogLikeThemedForm
     {
         private XElement xml = null;
-        private taskt.Core.Automation.Engine.AutomationEngineInstance engine;
+        private Core.Automation.Engine.AutomationEngineInstance engine;
 
         public frmGUIInspect()
         {
@@ -28,27 +28,27 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         {
             this.DoubleBuffered = true;
             SupplementFormsEvents.SupplementFormLoad(this);
-            reloadWindowNames();
+            ReloadWindowNames();
         }
         #endregion
 
         #region window name events
         private void btnReload_Click(object sender, EventArgs e)
         {
-            reloadWindowNames();
+            ReloadWindowNames();
         }
         private void cmbWindowList_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cmbWindowList.Text != "")
             {
-                createElementTree();
+                CreateElementTree();
                 tvElements.Focus();
             }
         }
 
-        private void reloadWindowNames()
+        private void ReloadWindowNames()
         {
-            List<string> windows = WindowControls.GetAllWindowTitles();
+            var windows = WindowControls.GetAllWindowTitles();
 
             string currentWindow = cmbWindowList.Text;
 
@@ -77,12 +77,12 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 
             cmbWindowList.Enabled = true;
 
-            createElementTree();
+            CreateElementTree();
 
-            showMessageTimer("Window name updated");
+            ShowMessageTimer("Window Names Updated");
         }
 
-        private void createElementTree()
+        private void CreateElementTree()
         {
             if (cmbWindowList.Text == "")
             {
@@ -113,7 +113,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 
                 txtElementInformation.Text = "";
 
-                showMessageTimer("Element Tree created.");
+                ShowMessageTimer("Element Tree created.");
             }
             catch(Exception ex)
             {
@@ -131,8 +131,8 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             if (e.Node.Parent != null)
             {
                 AutomationElement elem = (AutomationElement)e.Node.Tag;
-                showElementInformation((AutomationElement)e.Node.Tag);
-                highlightElement(elem);
+                ShowElementInformation((AutomationElement)e.Node.Tag);
+                HighlightElement(elem);
             }
             else
             {
@@ -145,12 +145,12 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 
             if (e.Action != TreeViewAction.Unknown)
             {
-                clearAllCheckInTvElements();
+                ClearAllCheckInTvElements();
                 e.Node.Checked = true;
             }
         }
 
-        private void clearAllCheckInTvElements()
+        private void ClearAllCheckInTvElements()
         {
             if (!tvElements.CheckBoxes)
             {
@@ -160,12 +160,12 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             tvElements.BeginUpdate();
 
             tvElements.Nodes[0].Checked = false;
-            clearCheckTreeNode(tvElements.Nodes[0]);
+            ClearCheckTreeNode(tvElements.Nodes[0]);
 
             tvElements.EndUpdate();
         }
 
-        private static void clearCheckTreeNode(TreeNode root)
+        private static void ClearCheckTreeNode(TreeNode root)
         {
             if (root.Nodes.Count == 0)
             {
@@ -177,53 +177,19 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                 node.Checked = false;
                 if (node.Nodes.Count > 0)
                 {
-                    clearCheckTreeNode(node);
+                    ClearCheckTreeNode(node);
                 }
             }
         }
 
-        //private int countCheckedInTvElements()
-        //{
-        //    if (!tvElements.CheckBoxes)
-        //    {
-        //        return 0;
-        //    }
-
-        //    return (tvElements.Nodes[0].Checked ? 1 : 0) + countWalkTvElements(tvElements.Nodes[0]);
-        //}
-
-        //private static int countWalkTvElements(TreeNode root)
-        //{
-        //    if (root.Nodes.Count == 0)
-        //    {
-        //        return (root.Checked ? 1 : 0);
-        //    }
-        //    else
-        //    {
-        //        int sum = 0;
-        //        foreach(TreeNode node in root.Nodes)
-        //        {
-        //            if (node.Checked)
-        //            {
-        //                sum++;
-        //            }
-        //            if (node.Nodes.Count > 0)
-        //            {
-        //                sum += countWalkTvElements(node);
-        //            }
-        //        }
-        //        return sum;
-        //    }
-        //}
-
-        private TreeNode getCheckedNode()
+        private TreeNode GetCheckedNode()
         {
             if (!tvElements.CheckBoxes)
             {
                 return tvElements.Nodes[0];
             }
 
-            TreeNode checkedNode = searchCheckedNode(tvElements.Nodes[0]);
+            TreeNode checkedNode = SearchCheckedNode(tvElements.Nodes[0]);
             if (checkedNode != null)
             {
                 return checkedNode;
@@ -234,7 +200,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             }
         }
 
-        private static TreeNode searchCheckedNode(TreeNode root)
+        private static TreeNode SearchCheckedNode(TreeNode root)
         {
             if (root.Nodes.Count == 0)
             {
@@ -255,7 +221,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                     return node;
                 }
 
-                TreeNode t = searchCheckedNode(node);
+                TreeNode t = SearchCheckedNode(node);
                 if (t != null)
                 {
                     return t;
@@ -284,7 +250,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             {
                 timerElementReload.Stop();
 
-                createElementTree();
+                CreateElementTree();
                 tvElements.Focus();
                 
                 timerElementReload.Start();
@@ -295,31 +261,32 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         #region XPath checkbox events
         private void chkUseNameAttr_CheckedChanged(object sender, EventArgs e)
         {
-            reloadXPath();
-        }
-        private void chkUseAutomationIdAttr_CheckedChanged(object sender, EventArgs e)
-        {
-            reloadXPath();
+            ReloadXPath();
         }
 
-        private void reloadXPath()
+        private void chkUseAutomationIdAttr_CheckedChanged(object sender, EventArgs e)
+        {
+            ReloadXPath();
+        }
+
+        private void ReloadXPath()
         {
             if (tvElements.SelectedNode != null)
             {
                 AutomationElement elem = (AutomationElement)tvElements.SelectedNode.Tag;
-                showElementInformation(elem);
+                ShowElementInformation(elem);
             }
         }
         #endregion
 
         #region node methods
-        private void showElementInformation(AutomationElement elem)
+        private void ShowElementInformation(AutomationElement elem)
         {
             txtElementInformation.Text = UIElementControls.GetInspectResultFromAutomationElement(elem);
 
             if ((chkShowInTree.Checked) && (chkXPathRelative.Checked))
             {
-                TreeNode chk = getCheckedNode();
+                TreeNode chk = GetCheckedNode();
                 AutomationElement curElem = (AutomationElement)chk.Tag;
                 txtXPath.Text = UIElementControls.GetXPath(xml, elem, curElem, chkUseNameAttr.Checked, chkUseAutomationIdAttr.Checked);
             }
@@ -329,7 +296,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             }
         }
 
-        private void highlightElement(AutomationElement elem)
+        private void HighlightElement(AutomationElement elem)
         {
             try
             {
@@ -376,6 +343,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
@@ -389,11 +357,9 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             txtElementInformation.SelectAll();
             Clipboard.SetText(txtElementInformation.Text);
 
-            //lblMessage.Text = "Element Result Copied!!";
-            //lblMessage.Visible = true;
-            //timerLabelShowTime.Start();
-            showMessageTimer("Element Result Copied!!");
+            ShowMessageTimer("Element Result Copied!!");
         }
+
         private void txtXPath_DoubleClick(object sender, EventArgs e)
         {
             txtXPath.SelectAll();
@@ -403,7 +369,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                 //lblMessage.Text = "XPath Copied!!";
                 //lblMessage.Visible = true;
                 //timerLabelShowTime.Start();
-                showMessageTimer("XPath Copied!!");
+                ShowMessageTimer("XPath Copied!!");
             }
         }
 
@@ -412,7 +378,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             lblMessage.Visible = false;
         }
 
-        private void showMessageTimer(string message)
+        private void ShowMessageTimer(string message)
         {
             lblMessage.Text = message;
             lblMessage.Visible = true;
@@ -463,11 +429,12 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             }
             tvElements.Focus();
         }
+
         private void chkXPathRelative_CheckedChanged(object sender, EventArgs e)
         {
             if (tvElements.SelectedNode != null)
             {
-                showElementInformation((AutomationElement)tvElements.SelectedNode.Tag);
+                ShowElementInformation((AutomationElement)tvElements.SelectedNode.Tag);
             }
         }
         #endregion
