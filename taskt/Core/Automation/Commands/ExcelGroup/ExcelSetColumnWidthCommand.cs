@@ -25,6 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vWdith}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyValidationRule("Width", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "Width")]
+        [PropertyParameterOrder(8500)]
         public string v_Width { get; set; }
 
         public ExcelSetColumnWidthCommand()
