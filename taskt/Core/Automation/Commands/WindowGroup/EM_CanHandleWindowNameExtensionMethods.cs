@@ -29,6 +29,14 @@ namespace taskt.Core.Automation.Commands
         private static extern int EnumWindows(EnumWindowsDelegate lpEnumFunc, IntPtr lparam);
 
         /// <summary>
+        /// check window is visible
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        private static extern bool IsWindowVisible(IntPtr hWnd);
+
+        /// <summary>
         /// enum windows
         /// </summary>
         /// <param name="hWnd"></param>
@@ -36,8 +44,11 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         private static bool EnumerateWindow(IntPtr hWnd, IntPtr lParam)
         {
-            var title = EM_CanHandleWindowHandleExtentionMethods.GetWindowName(hWnd);
-            windowHandleNamePair.Add((hWnd, title));
+            if (IsWindowVisible(hWnd))
+            {
+                var title = EM_CanHandleWindowHandleExtentionMethods.GetWindowName(hWnd);
+                windowHandleNamePair.Add((hWnd, title));
+            }
             return true;
         }
 
