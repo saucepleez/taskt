@@ -548,6 +548,8 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSetSelectedStateToUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\VP_UIElementControls.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserAttachWebBrowserInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\ActivateWindowsCommand.cs" />
