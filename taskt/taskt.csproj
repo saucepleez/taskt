@@ -495,6 +495,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\AUIElementCoreCommands.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_CanHandleUIElementExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_CanHandleUIElementXMLExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_GetUIElementsTreeXMLFromSomethingPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementChildrenSearchSomewayPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementChildrenSearchXPathPropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementDescendantsSearchSomewayPropertiesExtensionMethods.cs" />
@@ -515,6 +516,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ICanHandleUIElement.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ICanHandleUIElementXML.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IGetUIElementsInformationProperties.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\IGetUIElementsXMLTreeFromSomethingProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementSearchUIElementFromWindowSomethingByAnywayProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementChildrenSearchSomewayProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementChildrenSearchXPathProperties.cs" />
