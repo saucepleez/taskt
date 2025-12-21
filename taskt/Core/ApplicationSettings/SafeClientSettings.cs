@@ -345,5 +345,29 @@
                 return clientSettings.DisplayParameterOrderInDescription;
             }
         }
+
+        public int GUIInspectMaxSiblings
+        {
+            get
+            {
+                return clientSettings.GUIInspectMaxSiblings;
+            }
+        }
+
+        public int GUIInspectMaxDepth
+        {
+            get
+            {
+                return clientSettings.GUIInspectMaxDepth;
+            }
+        }
+
+        public int GUIInspectSearchTime
+        {
+            get
+            {
+                return clientSettings.GUIInspectSearchTime;
+            }
+        }
     }
 }

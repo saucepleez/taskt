@@ -155,6 +155,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 case "Editor - Command List":
                     showEditorCommandListSettings();
                     break;
+                case "Editor - GUI Inspect Tool":
+                    showEditorGUIInspectToolSettings();
+                    break;
                 case "Editor - Indent":
                     showEditorIndentSettings();
                     break;
@@ -537,6 +540,21 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             createCheckBox("chkMakeSubGroupNameSearchTarget", "Make SubGroup Name a Search Target", newAppSettings.ClientSettings, "SearchTargetSubGroupName", true);
             createCheckBox("chkGreedlySubGroupName", "Show All Commands if SubGroup Name Matches", newAppSettings.ClientSettings, "SearchGreedlySubGroupName", true);
         }
+
+        private void showEditorGUIInspectToolSettings()
+        {
+            removeSettingControls();
+            createLabel("lblTitle", "GUI Inspect Tool", FontSize.Large, true);
+
+            createLabel("lblSearchSettings", "Search Settings", FontSize.NormalBold, true);
+            createLabel("lblMaxSiblings", "Max Siblings", FontSize.Normal, false);
+            createTextBox("txtMaxSiblings", 60, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.GUIInspectMaxSiblings), true);
+            createLabel("lblMaxDepth", "Max Depth", FontSize.Normal, false);
+            createTextBox("txtMaxDepth", 60, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.GUIInspectMaxDepth), true);
+            createLabel("lblSearchTime", "Max Wait Time to Search", FontSize.Normal, false);
+            createTextBox("txtSearchTime", 60, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.GUIInspectSearchTime), true);
+        }
+
         private void showEditorInstanceSettings()
         {
             removeSettingControls();

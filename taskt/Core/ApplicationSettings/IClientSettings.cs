@@ -236,5 +236,20 @@
         /// display parameter order in description (instead of number)
         /// </summary>
         bool DisplayParameterOrderInDescription { get; }
+
+        /// <summary>
+        /// UIElement Max Siblings in GUI Inspect Tool
+        /// </summary>
+        int GUIInspectMaxSiblings { get; }
+
+        /// <summary>
+        /// UIElement Max Depth in GUI Inspect Tool
+        /// </summary>
+        int GUIInspectMaxDepth { get; }
+
+        /// <summary>
+        /// UIElement Max Search Time in GUI Inspect Tool
+        /// </summary>
+        int GUIInspectSearchTime { get; }
     }
 }

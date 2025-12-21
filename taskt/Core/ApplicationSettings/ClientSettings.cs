@@ -165,6 +165,56 @@ namespace taskt.Core
 
         public bool DisplayParameterOrderInDescription { get; set; }
 
+        private int _GUIInspectMaxSiblings;
+
+        public int GUIInspectMaxSiblings
+        {
+            get
+            {
+                return _GUIInspectMaxSiblings;
+            }
+            set
+            {
+                if (value >= 0)
+                {
+                    _GUIInspectMaxSiblings = value;
+                }
+            }
+        }
+
+        private int _GUIInspectMaxDepth;
+
+        public int GUIInspectMaxDepth
+        {
+            get
+            {
+                return _GUIInspectMaxDepth;
+            }
+            set
+            {
+                if (value >= 0)
+                {
+                    _GUIInspectMaxDepth = value;
+                }
+            }
+        }
+
+        private int _GUIInspectSearchTime;
+        public int GUIInspectSearchTime
+        {
+            get
+            {
+                return _GUIInspectSearchTime;
+            }
+            set
+            {
+                if (value >= 0)
+                {
+                    _GUIInspectSearchTime = value;
+                }
+            }
+        }
+
         //private static readonly string InterDefaultBrowserInstanceNameKeyword = "%kwd_default_browser_instance%";
         //private static readonly string InterDefaultStopWatchInstanceNameKeyword = "%kwd_default_stopwatch_instance%";
         //private static readonly string InterDefaultExcelInstanceNameKeyword = "%kwd_default_excel_instance%";
@@ -227,6 +277,10 @@ namespace taskt.Core
             ChangeItemsWithWheelWhenNotForcused = false;
             DisplayNumberBeforeParameterDescription = true;
             DisplayParameterOrderInDescription = false;
+
+            GUIInspectMaxSiblings = 64;
+            GUIInspectMaxDepth = 32;
+            GUIInspectSearchTime = 30;
         }
 
         /// <summary>
