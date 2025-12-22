@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace taskt.Core.Automation.Commands
@@ -65,6 +66,21 @@ namespace taskt.Core.Automation.Commands
             var ret = new List<(IntPtr, string)>(windowHandleNamePair);
             windowHandleNamePair = null;
             return ret;
+        }
+
+        /// <summary>
+        /// get all window names
+        /// </summary>
+        /// <param name="useDistinct"></param>
+        /// <returns></returns>
+        public static List<string> GetAllWindowNames(bool useDistinct = true)
+        {
+            var t = GetAllWindowNamesAndHandles().Select(item => item.Item2);
+            if (useDistinct)
+            {
+                t = t.Distinct();
+            }
+            return t.ToList();
         }
 
         /// <summary>
