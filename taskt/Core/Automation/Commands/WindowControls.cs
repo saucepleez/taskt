@@ -683,15 +683,15 @@ namespace taskt.Core.Automation.Commands
         //    ShowWindowAsync(hWind, WindowState.SW_SHOWNORMAL);
         //}
 
-        /// <summary>
-        /// get active window name (title)
-        /// </summary>
-        /// <returns></returns>
-        public static string GetActiveWindowTitle()
-        {
-            var whnd = GetActiveWindowHandle();
-            return GetWindowTitle(whnd);
-        }
+        ///// <summary>
+        ///// get active window name (title)
+        ///// </summary>
+        ///// <returns></returns>
+        //public static string GetActiveWindowTitle()
+        //{
+        //    var whnd = GetActiveWindowHandle();
+        //    return GetWindowTitle(whnd);
+        //}
         #endregion
 
         #region Func<>

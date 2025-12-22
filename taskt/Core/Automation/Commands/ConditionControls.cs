@@ -389,7 +389,7 @@ namespace taskt.Core.Automation.Commands
             if (windowName == VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine))
             {
                 //windowName = User32.User32Functions.GetActiveWindowTitle();
-                windowName = WindowControls.GetActiveWindowTitle();
+                windowName = EM_CanHandleWindowNameExtensionMethods.GetActiveWindowName();
             }
 
             var searchTb = new DataTable();

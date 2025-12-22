@@ -24,7 +24,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             //create data source from windows
             //cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
-            cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowControls.GetAllWindowTitles().ToArray());
+            //cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowControls.GetAllWindowTitles().ToArray());
+            cboWindowTitle.Items.AddRange(EM_CanHandleWindowNameExtensionMethods.GetAllWindowNames().ToArray());
         }
 
         private void pbRecord_Click(object sender, EventArgs e)
@@ -152,7 +153,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             //handle window refresh requests
             //cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
-            cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowControls.GetAllWindowTitles().ToArray());
+            //cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowControls.GetAllWindowTitles().ToArray());
+            cboWindowTitle.Items.AddRange(EM_CanHandleWindowNameExtensionMethods.GetAllWindowNames().ToArray());
         }
 
         //private void uiBtnOk_Click(object sender, EventArgs e)
