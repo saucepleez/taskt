@@ -909,16 +909,13 @@ namespace taskt.Core.Automation.Commands
                 lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentWindowName.VariableName, settings));
             }
 
-            // TODO: use system variable like keyword
             if (addAllWindows)
             {
-                //lst.Add(settings?.EngineSettings.AllWindowsKeyword ?? "All Windows");
                 lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_AllWindows.VariableName, settings));
             }
             
             if (addDesktop)
             {
-                //lst.Add(settings?.EngineSettings.DesktopKeyword ?? "Desktop");
                 lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_Desktop.VariableName, settings));
             }
 
@@ -948,7 +945,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static IntPtr ConvertProcessIdToWindowHandle(int pid)
         {
-            var whnds = EM_CanHandleWindowNameExtensionMethods.GetAllWindowNamesAndHandles().Select(item => item.Item1).ToList();
+            var whnds = EM_CanHandleWindowHandleExtentionMethods.GetAllWindowHandles();
             foreach(var whnd in whnds)
             {
                 int myPid;
