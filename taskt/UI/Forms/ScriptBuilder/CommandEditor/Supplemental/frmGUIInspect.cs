@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Automation;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using taskt.Core.Automation.Commands;
+using taskt.Core.Script;
 
 /*
  * NOTE: This form is called primarily by frmCommandEditor, so the namespace looks like this
@@ -37,6 +39,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         {
             ReloadWindowNames();
         }
+
         private void cmbWindowList_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cmbWindowList.Text != "")
@@ -48,7 +51,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 
         private void ReloadWindowNames()
         {
-            var windows = WindowControls.GetAllWindowTitles();
+            var windows = EM_CanHandleWindowNameExtensionMethods.GetAllWindowNamesAndHandles().Select(item => item.Item2).Distinct().ToList();
 
             string currentWindow = cmbWindowList.Text;
 
