@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -12,40 +11,40 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         private static List<(IntPtr, string)> windowHandleNamePair = null;
 
-        /// <summary>
-        /// enum window delegate
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <param name="lparam"></param>
-        /// <returns></returns>
-        private delegate bool EnumWindowsDelegate(IntPtr hWnd, IntPtr lparam);
+        ///// <summary>
+        ///// enum window delegate
+        ///// </summary>
+        ///// <param name="hWnd"></param>
+        ///// <param name="lparam"></param>
+        ///// <returns></returns>
+        //private delegate bool EnumWindowsDelegate(IntPtr hWnd, IntPtr lparam);
+
+        ///// <summary>
+        ///// enum all windows
+        ///// </summary>
+        ///// <param name="lpEnumFunc"></param>
+        ///// <param name="lparam"></param>
+        ///// <returns></returns>
+        //[DllImport("user32.dll")]
+        //private static extern int EnumWindows(EnumWindowsDelegate lpEnumFunc, IntPtr lparam);
+
+        ///// <summary>
+        ///// check window is visible
+        ///// </summary>
+        ///// <param name="hWnd"></param>
+        ///// <returns></returns>
+        //[DllImport("user32.dll")]
+        //private static extern bool IsWindowVisible(IntPtr hWnd);
 
         /// <summary>
-        /// enum all windows
-        /// </summary>
-        /// <param name="lpEnumFunc"></param>
-        /// <param name="lparam"></param>
-        /// <returns></returns>
-        [DllImport("user32.dll")]
-        private static extern int EnumWindows(EnumWindowsDelegate lpEnumFunc, IntPtr lparam);
-
-        /// <summary>
-        /// check window is visible
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <returns></returns>
-        [DllImport("user32.dll")]
-        private static extern bool IsWindowVisible(IntPtr hWnd);
-
-        /// <summary>
-        /// enum windows
+        /// enum window names
         /// </summary>
         /// <param name="hWnd"></param>
         /// <param name="lParam"></param>
         /// <returns></returns>
-        private static bool EnumerateWindow(IntPtr hWnd, IntPtr lParam)
+        private static bool EnumerateWindowNames(IntPtr hWnd, IntPtr lParam)
         {
-            if (IsWindowVisible(hWnd))
+            if (EM_CanHandleWindowHandleExtentionMethods.IsWindowVisible(hWnd))
             {
                 var title = EM_CanHandleWindowHandleExtentionMethods.GetWindowName(hWnd);
                 windowHandleNamePair.Add((hWnd, title));
@@ -54,14 +53,14 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get window names
+        /// get window names and handles
         /// </summary>
         /// <returns></returns>
         public static List<(IntPtr, string)> GetAllWindowNamesAndHandles()
         {
             windowHandleNamePair = CreateEmptyWindowNameAndHandleList();
 
-            EnumWindows(new EnumWindowsDelegate(EnumerateWindow), IntPtr.Zero);
+            EM_CanHandleWindowHandleExtentionMethods.EnumWindows(new EM_CanHandleWindowHandleExtentionMethods.EnumWindowsDelegate(EnumerateWindowNames), IntPtr.Zero);
 
             var ret = new List<(IntPtr, string)>(windowHandleNamePair);
             windowHandleNamePair = null;

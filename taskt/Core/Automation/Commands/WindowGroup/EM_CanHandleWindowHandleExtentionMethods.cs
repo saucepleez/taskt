@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -6,6 +7,11 @@ namespace taskt.Core.Automation.Commands
 {
     public class EM_CanHandleWindowHandleExtentionMethods
     {
+        /// <summary>
+        /// templorary window handles list
+        /// </summary>
+        private static List<IntPtr> windowHandle = null;
+
         /// <summary>
         /// check window handle exists
         /// </summary>
@@ -54,6 +60,31 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
+
+        /// <summary>
+        /// enum window delegate
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="lparam"></param>
+        /// <returns></returns>
+        public delegate bool EnumWindowsDelegate(IntPtr hWnd, IntPtr lparam);
+
+        /// <summary>
+        /// enum all windows
+        /// </summary>
+        /// <param name="lpEnumFunc"></param>
+        /// <param name="lparam"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern int EnumWindows(EnumWindowsDelegate lpEnumFunc, IntPtr lparam);
+
+        /// <summary>
+        /// check window is visible
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern bool IsWindowVisible(IntPtr hWnd);
 
         /// <summary>
         /// check window handle exists
@@ -116,6 +147,36 @@ namespace taskt.Core.Automation.Commands
         public static bool IsCurrentWindowHandleKeyword(string str, Engine.AutomationEngineInstance engine)
         {
             return (str == VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowHandle.VariableName, engine));
+        }
+
+        /// <summary>
+        /// enum windows
+        /// </summary>
+        /// <param name="wHnd"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
+        private static bool EnumerateWindowHandle(IntPtr wHnd, IntPtr lParam)
+        {
+            if (IsWindowVisible(wHnd))
+            {
+                windowHandle.Add(wHnd);
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// get all window handles
+        /// </summary>
+        /// <returns></returns>
+        public static List<IntPtr> GetAllWindowHandles()
+        {
+            windowHandle = new List<IntPtr>();
+
+            EnumWindows(new EnumWindowsDelegate(EnumerateWindowHandle), IntPtr.Zero);
+
+            var ret = new List<IntPtr>(windowHandle);
+            windowHandle = null;
+            return ret;
         }
     }
 }
