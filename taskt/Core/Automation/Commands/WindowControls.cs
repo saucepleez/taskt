@@ -832,15 +832,15 @@ namespace taskt.Core.Automation.Commands
 
         #region methods
 
-        /// <summary>
-        /// get current window name
-        /// </summary>
-        /// <returns></returns>
-        public static string GetCurrentWindowName()
-        {
-            var whnd = GetActiveWindowHandle();
-            return GetWindowTitle(whnd);
-        }
+        ///// <summary>
+        ///// get current window name
+        ///// </summary>
+        ///// <returns></returns>
+        //public static string GetCurrentWindowName()
+        //{
+        //    var whnd = GetActiveWindowHandle();
+        //    return GetWindowTitle(whnd);
+        //}
 
         /// <summary>
         /// find window handle from specified from args
@@ -874,23 +874,23 @@ namespace taskt.Core.Automation.Commands
             }
         }
     
-        /// <summary>
-        /// get all window titles
-        /// </summary>
-        /// <returns></returns>
-        public static List<string> GetAllWindowTitles()
-        {
-            return GetAllWindowNamesAndHandles().Select(w => w.Item2).ToList();
-        }
+        ///// <summary>
+        ///// get all window titles
+        ///// </summary>
+        ///// <returns></returns>
+        //public static List<string> GetAllWindowTitles()
+        //{
+        //    return GetAllWindowNamesAndHandles().Select(w => w.Item2).ToList();
+        //}
 
-        /// <summary>
-        /// get all window handles
-        /// </summary>
-        /// <returns></returns>
-        public static List<IntPtr> GetAllWindowHandles()
-        {
-            return GetAllWindowNamesAndHandles().Select(w => w.Item1).ToList();
-        }
+        ///// <summary>
+        ///// get all window handles
+        ///// </summary>
+        ///// <returns></returns>
+        //public static List<IntPtr> GetAllWindowHandles()
+        //{
+        //    return GetAllWindowNamesAndHandles().Select(w => w.Item1).ToList();
+        //}
 
         /// <summary>
         /// get all window names for frmCommandEditor ComboBox
@@ -922,7 +922,7 @@ namespace taskt.Core.Automation.Commands
                 lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_Desktop.VariableName, settings));
             }
 
-            lst.AddRange(GetAllWindowTitles());
+            lst.AddRange(EM_CanHandleWindowNameExtensionMethods.GetAllWindowNames());
 
             return lst;
         }
@@ -948,7 +948,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static IntPtr ConvertProcessIdToWindowHandle(int pid)
         {
-            var whnds = GetAllWindowHandles();
+            var whnds = EM_CanHandleWindowNameExtensionMethods.GetAllWindowNamesAndHandles().Select(item => item.Item1).ToList();
             foreach(var whnd in whnds)
             {
                 int myPid;
@@ -958,7 +958,7 @@ namespace taskt.Core.Automation.Commands
                     return whnd;
                 }
             }
-            throw new Exception("ProcessID: " + pid + " does not found.");
+            throw new Exception($"ProcessID: {pid} does not found.");
         }
         
         //public static Bitmap CaptureWindow(string windowName, Engine.AutomationEngineInstance engine)
@@ -1463,7 +1463,7 @@ namespace taskt.Core.Automation.Commands
             cmb.BeginUpdate();
             cmb.Items.Clear();
 
-            var winList = GetAllWindowTitles();
+            var winList = EM_CanHandleWindowNameExtensionMethods.GetAllWindowNames();
 
             cmb.Items.AddRange(winList.ToArray());
 

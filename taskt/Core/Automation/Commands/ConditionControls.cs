@@ -317,7 +317,7 @@ namespace taskt.Core.Automation.Commands
         {
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
             var searchFunc = WindowControls.GetWindowNameCompareMethod(param["Search Method"]);
-            return (searchFunc(WindowControls.GetCurrentWindowName(), param["Window Name"]));
+            return (searchFunc(EM_CanHandleWindowNameExtensionMethods.GetActiveWindowName(), param["Window Name"]));
         }
         private static bool DetermineStatementTruth_File(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
         {
