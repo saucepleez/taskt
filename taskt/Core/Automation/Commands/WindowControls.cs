@@ -355,8 +355,7 @@ namespace taskt.Core.Automation.Commands
             var whnds = EM_CanHandleWindowHandleExtentionMethods.GetAllWindowHandles();
             foreach (var whnd in whnds)
             {
-                int myPid;
-                GetWindowThreadProcessId(whnd, out myPid);
+                GetWindowThreadProcessId(whnd, out int myPid);
                 if (myPid == pid)
                 {
                     return whnd;
