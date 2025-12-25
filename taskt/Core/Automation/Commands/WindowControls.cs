@@ -74,28 +74,15 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsWindowNamesList(true)]
         [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Window Name")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[Remarks("")]
-        //[PropertyParameterOrder(5000)]
         public static string v_WindowName { get; }
 
         /// <summary>
         /// windows name check(search) method
         /// </summary>
-        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyVirtualProperty(nameof(VP_TextCheckMethodControls), nameof(VP_TextCheckMethodControls.v_CheckMethod))]
         [PropertyDescription("Check Method for the Window Name")]
-        //[PropertyUISelectionOption("Contains")]
-        //[PropertyUISelectionOption("Starts with")]
-        //[PropertyUISelectionOption("Ends with")]
-        //[PropertyUISelectionOption("Exact match")]
         [PropertyIsOptional(true, "Contains")]
         [PropertyDisplayText(true, "Check Method")]
-        //[InputSpecification("", true)]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyParameterOrder(5000)]
         public static string v_CheckMethod { get; }
 
         /// <summary>
@@ -126,30 +113,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("Specify when there are Multiple Matching Windows")]
         [PropertyIsOptional(true, "First")]
         [PropertyDisplayText(true, "Select")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[InputSpecification("", true)]
-        //[PropertyParameterOrder(5000)]
         public static string v_SelectionMethod_Single { get; }
-
-        ///// <summary>
-        ///// match method, please specify PropertySelectionChangeEvent
-        ///// </summary>
-        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_SelectionMethod_Single))]
-        //[PropertyUISelectionOption("All")]
-        //[PropertyDetailSampleUsage("**All**", "Specify the All Windows")]
-        ////[PropertyDescription("Match Method for the Window Name")]
-        ////[PropertyUISelectionOption("First")]
-        ////[PropertyUISelectionOption("Last")]
-        ////[PropertyUISelectionOption("Index")]
-        ////[PropertyDetailSampleUsage("**First**", "Specify the First Window")]
-        ////[PropertyDetailSampleUsage("**Last**", "Specify the Last Window")]
-        ////[PropertyDetailSampleUsage("**Index**", "the Window specifed by Index. **0** means First Window")]
-        ////[Remarks("Specify when there are Multiple Matching Windows")]
-        ////[PropertyIsOptional(true, "First")]
-        ////[InputSpecification("", true)]
-        ////[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        ////[PropertyParameterOrder(5000)]
-        //public static string v_SelectionMethod { get; }
 
         /// <summary>
         /// window index for match
@@ -163,10 +127,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
         [PropertyDisplayText(true, "Window Index")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyParameterOrder(5000)]
         public static string v_TargetWindowIndex { get; }
 
         /// <summary>
@@ -177,12 +137,6 @@ namespace taskt.Core.Automation.Commands
         [Remarks("Specify how long to Wait before an Error will occur because the Window is Not Found.")]
         [PropertyIsOptional(true, "60")]
         [PropertyFirstValue("60")]
-        //[InputSpecification("Wait Time", true)]
-        //[PropertyDetailSampleUsage("**60**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
-        //[PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyParameterOrder(5000)]
         public static string v_WaitTime { get; }
 
         /// <summary>
@@ -216,11 +170,6 @@ namespace taskt.Core.Automation.Commands
         [Remarks("When Match Method is **All**, data type is LIST, otherwise it is BASIC")]
         [PropertyValidationRule("Window Name Result", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "Window Name Result")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyParameterOrder(5000)]
         public static string v_WindowNameResult { get; }
 
         /// <summary>
@@ -236,11 +185,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Window Handle Result", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "Window Handle Result")]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.WindowHandle, true)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyParameterOrder(5000)]
         public static string v_OutputWindowHandle { get; }
 
         /// <summary>
@@ -254,11 +198,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.WindowHandle, true)]
         [PropertyValidationRule("Window Handle Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Window Handle")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        //[PropertyParameterOrder(5000)]
         public static string v_InputWindowHandle { get; }
 
         /// <summary>
@@ -274,10 +213,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Width", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "Width")]
         [PropertyAvailableSystemVariable(SystemVariables.LimitedSystemVariableNames.Window_Size)]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyParameterOrder(5000)]
         public static string v_InputWidth { get; }
 
         /// <summary>
@@ -293,10 +228,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Height", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyAvailableSystemVariable(SystemVariables.LimitedSystemVariableNames.Window_Size)]
         [PropertyDisplayText(true, "Height")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyParameterOrder(5000)]
         public static string v_InputHeight { get; }
 
         /// <summary>
@@ -305,7 +236,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("X horizontal coordinate (pixel) for the Window's Location")]
         [InputSpecification("X Window Location", true)]
-        
         [PropertyDetailSampleUsage("**0**", "Specify X Top Position")]
         [PropertyDetailSampleUsage("**100**", PropertyDetailSampleUsage.ValueType.Value, "X Position")]
         [PropertyDetailSampleUsage("**{{{vXPos}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "X Position")]
@@ -316,9 +246,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("X Position", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyAvailableSystemVariable(SystemVariables.LimitedSystemVariableNames.Window_Position)]
         [PropertyDisplayText(true, "X Position")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyParameterOrder(5000)]
         public static string v_InputXPosition { get; }
 
         /// <summary>
@@ -337,9 +264,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Y Position", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyAvailableSystemVariable(SystemVariables.LimitedSystemVariableNames.Window_Position)]
         [PropertyDisplayText(true, "Y Position")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyParameterOrder(5000)]
         public static string v_InputYPosition { get; }
 
         /// <summary>
