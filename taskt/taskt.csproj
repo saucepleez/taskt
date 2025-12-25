@@ -1609,9 +1609,7 @@
     <Compile Include="UI\Forms\Splash\frmSplash.Designer.cs">
       <DependentUpon>frmSplash.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmThickAppElementRecorder.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmThickAppElementRecorder.cs" />
     <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmThickAppElementRecorder.Designer.cs">
       <DependentUpon>frmThickAppElementRecorder.cs</DependentUpon>
     </Compile>
