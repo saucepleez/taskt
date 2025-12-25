@@ -10,6 +10,7 @@ using taskt.Core;
 using taskt.Core.Automation.Attributes.ClassAttributes;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands;
+using taskt.Core.Automation.Engine;
 using static taskt.Core.Automation.Commands.PropertyControls;
 using static taskt.Core.Automation.Engine.SystemVariables;
 
@@ -559,6 +560,7 @@ namespace taskt.UI.CustomControls
         #endregion
 
         #region combobox
+
         /// <summary>
         /// create ComboBox and binding property, some events, selection items. this method use PropertyIsWindowNamesList, PropertyIsVariableList, PropertyInstanceType, PropertyComboBoxItemMethod, PropertyParameterDirection, PropertyUISelectionOption, PropertySelectionChangeEvent attributes.
         /// </summary>
@@ -582,7 +584,7 @@ namespace taskt.UI.CustomControls
             if (attrIsWin?.isWindowNamesList ?? false)
             {
                 //uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
-                uiOptions.AddRange(WindowControls.GetAllWindowTitles(editor?.appSettings, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
+                uiOptions.AddRange(GetWindowTitlesForComboBox(editor?.appSettings, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
             }
 
             // variable names list & instance name list
@@ -646,6 +648,39 @@ namespace taskt.UI.CustomControls
 
             return CreateDefaultDropdownFor(propertyName, command, uiOptions, changeEvent?.methodName ?? "", firstValue?.firstValue ?? "", editor, propInfo);
         }
+
+        /// <summary>
+        /// get all window names for frmCommandEditor ComboBox
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <param name="addCurrentWindow"></param>
+        /// <param name="addAllWindows"></param>
+        /// <param name="addDesktop"></param>
+        /// <returns></returns>
+        private static List<string> GetWindowTitlesForComboBox(SafeApplicationSettings settings, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
+        {
+            var lst = new List<string>();
+
+            if (addCurrentWindow)
+            {
+                lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentWindowName.VariableName, settings));
+            }
+
+            if (addAllWindows)
+            {
+                lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_AllWindows.VariableName, settings));
+            }
+
+            if (addDesktop)
+            {
+                lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_Desktop.VariableName, settings));
+            }
+
+            lst.AddRange(EM_CanHandleWindowNameExtensionMethods.GetAllWindowNames());
+
+            return lst;
+        }
+
 
         /// <summary>
         /// create ComboBox and binding property, some events, selection items. this method does not support attributes. only specify arguments.
@@ -1380,7 +1415,7 @@ namespace taskt.UI.CustomControls
         public static ComboBox AddWindowNames(this ComboBox cbo, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
         {
             return cbo.AddComoboBoxItems(editor, new Func<List<string>>( () => {
-                return WindowControls.GetAllWindowTitles(editor?.appSettings, addCurrentWindow, addAllWindows, addDesktop);
+                return GetWindowTitlesForComboBox(editor?.appSettings, addCurrentWindow, addAllWindows, addDesktop);
             }));
         }
 

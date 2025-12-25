@@ -364,37 +364,37 @@ namespace taskt.Core.Automation.Commands
             throw new Exception($"ProcessID: {pid} does not found.");
         }
 
-        /// <summary>
-        /// get all window names for frmCommandEditor ComboBox
-        /// </summary>
-        /// <param name="settings"></param>
-        /// <param name="addCurrentWindow"></param>
-        /// <param name="addAllWindows"></param>
-        /// <param name="addDesktop"></param>
-        /// <returns></returns>
-        public static List<string> GetAllWindowTitles(SafeApplicationSettings settings, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
-        {
-            var lst = new List<string>();
+        ///// <summary>
+        ///// get all window names for frmCommandEditor ComboBox
+        ///// </summary>
+        ///// <param name="settings"></param>
+        ///// <param name="addCurrentWindow"></param>
+        ///// <param name="addAllWindows"></param>
+        ///// <param name="addDesktop"></param>
+        ///// <returns></returns>
+        //public static List<string> GetAllWindowTitles(SafeApplicationSettings settings, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
+        //{
+        //    var lst = new List<string>();
 
-            if (addCurrentWindow)
-            {
-                lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentWindowName.VariableName, settings));
-            }
+        //    if (addCurrentWindow)
+        //    {
+        //        lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentWindowName.VariableName, settings));
+        //    }
 
-            if (addAllWindows)
-            {
-                lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_AllWindows.VariableName, settings));
-            }
+        //    if (addAllWindows)
+        //    {
+        //        lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_AllWindows.VariableName, settings));
+        //    }
             
-            if (addDesktop)
-            {
-                lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_Desktop.VariableName, settings));
-            }
+        //    if (addDesktop)
+        //    {
+        //        lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_Desktop.VariableName, settings));
+        //    }
 
-            lst.AddRange(EM_CanHandleWindowNameExtensionMethods.GetAllWindowNames());
+        //    lst.AddRange(EM_CanHandleWindowNameExtensionMethods.GetAllWindowNames());
 
-            return lst;
-        }
+        //    return lst;
+        //}
 
         /// <summary>
         /// store IntPtr In User Variable
