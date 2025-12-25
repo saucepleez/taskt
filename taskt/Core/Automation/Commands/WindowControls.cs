@@ -14,7 +14,6 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class WindowControls
     {
-
         #region fields
 
         /// <summary>
@@ -148,15 +147,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("0")]
         [PropertyDisplayText(false, "Wait Time Between", "s")]
         public static string v_WaitTimeBetweenFindAndAction { get; }
-
-        ///// <summary>
-        ///// window wait time allows 0
-        ///// </summary>
-        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
-        //[PropertyIsOptional(true, "0")]
-        //[PropertyFirstValue("0")]
-        //[PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        //public static string v_ZeroWaitTime { get; }
 
         /// <summary>
         /// window name result
