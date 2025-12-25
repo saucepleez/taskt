@@ -569,18 +569,18 @@ namespace taskt.Core.Automation.Commands
             return true;
         }
 
-        /// <summary>
-        /// get window name from window handle
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <returns></returns>
-        public static string GetWindowTitle(IntPtr hWnd)
-        {
-            int titleLengthA = GetWindowTextLengthW(hWnd);
-            StringBuilder title = new StringBuilder(titleLengthA + 1);
-            GetWindowTextW(hWnd, title, title.Capacity);
-            return title.ToString();
-        }
+        ///// <summary>
+        ///// get window name from window handle
+        ///// </summary>
+        ///// <param name="hWnd"></param>
+        ///// <returns></returns>
+        //public static string GetWindowTitle(IntPtr hWnd)
+        //{
+        //    int titleLengthA = GetWindowTextLengthW(hWnd);
+        //    StringBuilder title = new StringBuilder(titleLengthA + 1);
+        //    GetWindowTextW(hWnd, title, title.Capacity);
+        //    return title.ToString();
+        //}
 
         /// <summary>
         /// get active window handlw
