@@ -5,6 +5,7 @@ using System.Windows.Automation;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -251,8 +252,20 @@ namespace taskt.Core.Automation.Commands
                 // try window handle
                 try
                 {
-                    IntPtr wHnd = WindowControls.FindWindowHandle(windowName, "exact match", engine);
-                    windowElement = AutomationElement.FromHandle(wHnd);
+                    using (var whnd = new InnerScriptVariable(engine))
+                    {
+                        //IntPtr wHnd = WindowControls.FindWindowHandle(windowName, "exact match", engine);
+                        var getWinHnd = new GetOneWindowHandleFromOneWindowNameCommand()
+                        {
+                            v_WindowName = windowName,
+                            v_CheckMethod = "Exact Match",
+                            v_WindowHandleResult = whnd.VariableName,
+                        };
+                        getWinHnd.RunCommand(engine);
+
+                        windowElement = AutomationElement.FromHandle((IntPtr)whnd.VariableValue);
+                    }
+                    
                 }
                 catch
                 {

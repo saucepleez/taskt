@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Script;
 
@@ -305,20 +305,62 @@ namespace taskt.Core.Automation.Commands
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
             try
             {
-                IntPtr wHnd = WindowControls.FindWindowHandle(param["Window Name"], param["Search Method"], engine);
-                return true;
+                //IntPtr wHnd = WindowControls.FindWindowHandle(param["Window Name"], param["Search Method"], engine);
+                using (var res = new InnerScriptVariable(engine))
+                {
+                    var checkWin = new CheckWindowNameExistsCommand()
+                    {
+                        v_WindowName = param["Window Name"],
+                        v_CheckMethod = param["Search Method"],
+                        v_Result = res.VariableName,
+                    };
+                    checkWin.RunCommand(engine);
+
+                    if (bool.TryParse(res.VariableValue.ToString(), out bool r))
+                    {
+                        return r;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                
+                //return true;
             }
             catch
             {
                 return false;
             }
         }
+
         private static bool DetermineStatementTruth_ActiveWindow(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
         {
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
-            var searchFunc = WindowControls.GetWindowNameCompareMethod(param["Search Method"]);
-            return (searchFunc(EM_CanHandleWindowNameExtensionMethods.GetActiveWindowName(), param["Window Name"]));
+
+            //var searchFunc = WindowControls.GetWindowNameCompareMethod(param["Search Method"]);
+            Func<string, string, bool> searchFunc;
+            switch (param["Search Method"].ToLower())
+            {
+                case "starts with":
+                    searchFunc = (a, b) => a.StartsWith(b);
+                    break;
+                case "ends with":
+                    searchFunc = (a, b) => a.EndsWith(b);
+                    break;
+                case "exact match":
+                    searchFunc = (a, b) => (a == b);
+                    break;
+                case "contains":
+                    searchFunc = (a, b) => a.Contains(b);
+                    break;
+                default:
+                    throw new Exception($"Search method '{param["Search Method"]}' is not support.");
+            }
+
+            return searchFunc(EM_CanHandleWindowNameExtensionMethods.GetActiveWindowName(), param["Window Name"]);
         }
+
         private static bool DetermineStatementTruth_File(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
         {
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);

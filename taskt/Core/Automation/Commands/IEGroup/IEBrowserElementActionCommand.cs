@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Script;
 using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
@@ -305,7 +306,25 @@ namespace taskt.Core.Automation.Commands
                                                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 //var ieClientLocation = User32Functions.GetWindowPosition(new IntPtr(browserInstance.HWND));
-                var ieClientLocation = WindowControls.GetWindowRect(new IntPtr(browserInstance.HWND));
+
+                // force get IE pos
+                RECT ieClientLocation;
+                using (var x = new InnerScriptVariable(engine))
+                {
+                    using (var y = new InnerScriptVariable(engine))
+                    {
+                        var getWinPos = new GetWindowPositionFromWindowHandleCommand()
+                        {
+                            v_WindowHandle = browserInstance.HWND.ToString(),
+                            v_XPosition = x.VariableName,
+                            v_YPosition = y.VariableName,
+                        };
+                        getWinPos.RunCommand(engine);
+                        ieClientLocation.left = (int)x.VariableValue;
+                        ieClientLocation.top = (int)y.VariableValue;
+                    }
+                }
+                //var ieClientLocation = WindowControls.GetWindowRect(new IntPtr(browserInstance.HWND));
 
                 MoveMouseCommand newMouseMove = new MoveMouseCommand();
 

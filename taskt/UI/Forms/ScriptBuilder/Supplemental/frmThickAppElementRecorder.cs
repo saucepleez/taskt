@@ -3,7 +3,9 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
+using taskt.Core.Automation.Engine;
 using taskt.Core.Automation.User32;
+using taskt.Core.Script;
 
 /*
  * NOTE: not using ?
@@ -12,17 +14,25 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
     public partial class frmThickAppElementRecorder : UIForm
     {
-        
+        /// <summary>
+        /// for execute script commands
+        /// </summary>
+        private AutomationEngineInstance engine;
+
+        public DataTable searchParameters;
+
+        public string LastItemClicked;
+
         public frmThickAppElementRecorder()
         {
             InitializeComponent();
         }
 
-        public DataTable searchParameters;
-        public string LastItemClicked;
         private void frmThickAppElementRecorder_Load(object sender, EventArgs e)
         {
-            //create data source from windows
+            engine = new AutomationEngineInstance();
+
+            // create data source from windows
             //cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
             //cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowControls.GetAllWindowTitles().ToArray());
             cboWindowTitle.Items.AddRange(EM_CanHandleWindowNameExtensionMethods.GetAllWindowNames().ToArray());
@@ -59,11 +69,31 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             //IntPtr hWnd = User32Functions.FindWindow(windowName);
             try
             {
-                IntPtr hWnd = WindowControls.FindWindowHandle(windowName, "exact match", new Core.Automation.Engine.AutomationEngineInstance());
-                WindowControls.ActivateWindow(hWnd);
-                
-                //User32Functions.SetWindowPosition(hWnd, 0, 0);
-                WindowControls.SetWindowPosition(hWnd, 0, 0);
+                //IntPtr hWnd = WindowControls.FindWindowHandle(windowName, "exact match", new Core.Automation.Engine.AutomationEngineInstance());
+                //WindowControls.ActivateWindow(hWnd);
+
+                using (var whnd = new InnerScriptVariable(engine))
+                {
+                    // activate window
+                    var actWin = new ActivateOneWindowCommand()
+                    {
+                        v_WindowName = windowName,
+                        v_CaseSensitive = "Exact Match",
+                        v_WindowHandleResult = whnd.VariableName,
+                    };
+                    actWin.RunCommand(engine);
+
+                    //User32Functions.SetWindowPosition(hWnd, 0, 0);
+                    //WindowControls.SetWindowPosition(hWnd, 0, 0);
+
+                    var setPos = new MoveWindowByWindowHandleCommand()
+                    {
+                        v_WindowHandle = whnd.VariableValue.ToString(),
+                        v_XPosition = "0",
+                        v_YPosition = "0",
+                    };
+                    setPos.RunCommand(engine);
+                }
 
                 //start global hook and wait for left mouse down event
                 User32Functions.GlobalHook.StartEngineCancellationHook(Keys.F2);
