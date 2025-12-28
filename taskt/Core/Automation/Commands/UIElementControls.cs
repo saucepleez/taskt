@@ -1,5 +1,4 @@
 ﻿using System.Windows.Automation;
-using System.Xml.Linq;
 
 namespace taskt.Core.Automation.Commands
 {
