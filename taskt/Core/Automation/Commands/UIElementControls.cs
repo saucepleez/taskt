@@ -229,69 +229,69 @@ namespace taskt.Core.Automation.Commands
         #endregion
 
 
-        public static AutomationElement GetFromWindowName(string windowName, Engine.AutomationEngineInstance engine)
-        {
-            var windowSearchConditions = new AndCondition(
-                    new PropertyCondition(AutomationElement.NameProperty, windowName),
-                    new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Window)
-                );
+        //public static AutomationElement GetFromWindowName(string windowName, Engine.AutomationEngineInstance engine)
+        //{
+        //    var windowSearchConditions = new AndCondition(
+        //            new PropertyCondition(AutomationElement.NameProperty, windowName),
+        //            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Window)
+        //        );
 
-            var paneSearchConditions = new AndCondition(
-                    new PropertyCondition(AutomationElement.NameProperty, windowName),
-                    new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Pane)
-                );
+        //    var paneSearchConditions = new AndCondition(
+        //            new PropertyCondition(AutomationElement.NameProperty, windowName),
+        //            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Pane)
+        //        );
 
-            var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, windowSearchConditions);
-            if (windowElement == null)
-            {
-                // Pane search
-                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, paneSearchConditions);
-            }
-            if (windowElement == null)
-            {
-                // try window handle
-                try
-                {
-                    using (var whnd = new InnerScriptVariable(engine))
-                    {
-                        //IntPtr wHnd = WindowControls.FindWindowHandle(windowName, "exact match", engine);
-                        var getWinHnd = new GetOneWindowHandleFromOneWindowNameCommand()
-                        {
-                            v_WindowName = windowName,
-                            v_CheckMethod = "Exact Match",
-                            v_WindowHandleResult = whnd.VariableName,
-                        };
-                        getWinHnd.RunCommand(engine);
+        //    var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, windowSearchConditions);
+        //    if (windowElement == null)
+        //    {
+        //        // Pane search
+        //        windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, paneSearchConditions);
+        //    }
+        //    if (windowElement == null)
+        //    {
+        //        // try window handle
+        //        try
+        //        {
+        //            using (var whnd = new InnerScriptVariable(engine))
+        //            {
+        //                //IntPtr wHnd = WindowControls.FindWindowHandle(windowName, "exact match", engine);
+        //                var getWinHnd = new GetOneWindowHandleFromOneWindowNameCommand()
+        //                {
+        //                    v_WindowName = windowName,
+        //                    v_CheckMethod = "Exact Match",
+        //                    v_WindowHandleResult = whnd.VariableName,
+        //                };
+        //                getWinHnd.RunCommand(engine);
 
-                        windowElement = AutomationElement.FromHandle((IntPtr)whnd.VariableValue);
-                    }
+        //                windowElement = AutomationElement.FromHandle((IntPtr)whnd.VariableValue);
+        //            }
                     
-                }
-                catch
-                {
-                    // nothing to do
-                }
-            }
-            if (windowElement == null)
-            {
-                // more deep search window
-                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, windowSearchConditions);
-            }
-            if (windowElement == null)
-            {
-                // more deep search pane
-                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, paneSearchConditions);
-            }
+        //        }
+        //        catch
+        //        {
+        //            // nothing to do
+        //        }
+        //    }
+        //    if (windowElement == null)
+        //    {
+        //        // more deep search window
+        //        windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, windowSearchConditions);
+        //    }
+        //    if (windowElement == null)
+        //    {
+        //        // more deep search pane
+        //        windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, paneSearchConditions);
+        //    }
 
-            if (windowElement == null)
-            {
-                throw new Exception("Window Name '" + windowName + "' not found AutomationElement");
-            }
-            else
-            {
-                return windowElement;
-            }
-        }
+        //    if (windowElement == null)
+        //    {
+        //        throw new Exception("Window Name '" + windowName + "' not found AutomationElement");
+        //    }
+        //    else
+        //    {
+        //        return windowElement;
+        //    }
+        //}
 
         //public static void CreateEmptyParamters(DataTable table)
         //{
@@ -1212,240 +1212,240 @@ namespace taskt.Core.Automation.Commands
 
         #endregion
 
-        public static TreeNode GetElementTreeNode(string windowName, Engine.AutomationEngineInstance engine, out XElement xml)
-        {
-            // cache request
-            var cacheReq = new CacheRequest();
-            cacheReq.Add(AutomationElement.NameProperty);
-            cacheReq.Add(AutomationElement.ControlTypeProperty);
-            cacheReq.Add(AutomationElement.LocalizedControlTypeProperty);
-            cacheReq.TreeScope = TreeScope.Element | TreeScope.Children;
+        //public static TreeNode GetElementTreeNode(string windowName, Engine.AutomationEngineInstance engine, out XElement xml)
+        //{
+        //    // cache request
+        //    var cacheReq = new CacheRequest();
+        //    cacheReq.Add(AutomationElement.NameProperty);
+        //    cacheReq.Add(AutomationElement.ControlTypeProperty);
+        //    cacheReq.Add(AutomationElement.LocalizedControlTypeProperty);
+        //    cacheReq.TreeScope = TreeScope.Element | TreeScope.Children;
 
-            var root = GetFromWindowName(windowName, engine);
+        //    var root = GetFromWindowName(windowName, engine);
 
-            cacheReq.Push();
+        //    cacheReq.Push();
 
-            var walker = TreeWalker.RawViewWalker;
+        //    var walker = TreeWalker.RawViewWalker;
 
-            var tree = CreateTreeNodeFromAutomationElement(root);
-            xml = CreateXmlElement(root);
+        //    var tree = CreateTreeNodeFromAutomationElement(root);
+        //    xml = CreateXmlElement(root);
 
-            GetChildElementTreeNode(tree, xml, root, walker, cacheReq, 1, engine);
+        //    GetChildElementTreeNode(tree, xml, root, walker, cacheReq, 1, engine);
 
-            cacheReq.Pop();
+        //    cacheReq.Pop();
 
-            return tree;
-        }
+        //    return tree;
+        //}
 
-        private static void GetChildElementTreeNode(TreeNode tree, XElement xml, AutomationElement rootElement, TreeWalker walker, CacheRequest cacheRequest, int depth, Engine.AutomationEngineInstance engine)
-        {
-            var node = walker.GetFirstChild(rootElement, cacheRequest);
-            //var node = walker.GetLastChild(rootElement);
+        //private static void GetChildElementTreeNode(TreeNode tree, XElement xml, AutomationElement rootElement, TreeWalker walker, CacheRequest cacheRequest, int depth, Engine.AutomationEngineInstance engine)
+        //{
+        //    var node = walker.GetFirstChild(rootElement, cacheRequest);
+        //    //var node = walker.GetLastChild(rootElement);
 
-            int siblingCount = 0;
-            while(node != null)
-            {
-                var item = CreateTreeNodeFromAutomationElement(node);
-                tree.Nodes.Add(item);
+        //    int siblingCount = 0;
+        //    while(node != null)
+        //    {
+        //        var item = CreateTreeNodeFromAutomationElement(node);
+        //        tree.Nodes.Add(item);
 
-                var childXml = CreateXmlElement(node);
-                xml.Add(childXml);
+        //        var childXml = CreateXmlElement(node);
+        //        xml.Add(childXml);
 
-                if ((walker.GetFirstChild(node, cacheRequest) != null) && (depth < engine.engineSettings.MaxUIElementInpectDepth))
-                //if ((walker.GetLastChild(node) != null) && (depth < engine.engineSettings.MaxUIElementInpectDepth))
-                {
-                    GetChildElementTreeNode(item, childXml, node, walker, cacheRequest, (depth + 1), engine);
-                }
+        //        if ((walker.GetFirstChild(node, cacheRequest) != null) && (depth < engine.engineSettings.MaxUIElementInpectDepth))
+        //        //if ((walker.GetLastChild(node) != null) && (depth < engine.engineSettings.MaxUIElementInpectDepth))
+        //        {
+        //            GetChildElementTreeNode(item, childXml, node, walker, cacheRequest, (depth + 1), engine);
+        //        }
 
-                siblingCount++;
-                if (siblingCount >= engine.engineSettings.MaxUIElementInspectSiblingNodes)
-                {
-                    break;
-                }
+        //        siblingCount++;
+        //        if (siblingCount >= engine.engineSettings.MaxUIElementInspectSiblingNodes)
+        //        {
+        //            break;
+        //        }
 
-                node = walker.GetNextSibling(node, cacheRequest);
-                //node = walker.GetPreviousSibling(node);
-            }
-        }
+        //        node = walker.GetNextSibling(node, cacheRequest);
+        //        //node = walker.GetPreviousSibling(node);
+        //    }
+        //}
         
 
-        private static TreeNode CreateTreeNodeFromAutomationElement(AutomationElement element)
-        {
-            var node = new TreeNode
-            {
-                Text = "\"" + (element.Current.Name) + "\" " + (element.Current.LocalizedControlType),
-                Tag = element
-            };
-            return node;
-        }
+        //private static TreeNode CreateTreeNodeFromAutomationElement(AutomationElement element)
+        //{
+        //    var node = new TreeNode
+        //    {
+        //        Text = "\"" + (element.Current.Name) + "\" " + (element.Current.LocalizedControlType),
+        //        Tag = element
+        //    };
+        //    return node;
+        //}
 
-        public static string GetInspectResultFromAutomationElement(AutomationElement elem)
-        {
-            string res = "";
+        //public static string GetInspectResultFromAutomationElement(AutomationElement elem)
+        //{
+        //    string res = "";
 
-            try
-            {
-                res += "Name:\t\"" + elem.Current.Name + "\"\r\n";
-                res += "ControlType:\t" + GetControlTypeText(elem.Current.ControlType) + "\r\n";
-                res += "LocalizedControlType:\t\"" + elem.Current.LocalizedControlType + "\"\r\n";
-                res += "IsEnabled:\t" + elem.Current.IsEnabled.ToString() + "\r\n";
-                res += "IsOffscreen:\t" + elem.Current.IsOffscreen.ToString() + "\r\n";
-                res += "IsKeyboardFocusable:\t" + elem.Current.IsKeyboardFocusable.ToString() + "\r\n";
-                res += "HasKeyboardFocusable:\t" + elem.Current.HasKeyboardFocus.ToString() + "\r\n";
-                res += "AccessKey:\t\"" + elem.Current.AccessKey + "\"\r\n";
-                res += "ProcessId:\t" + elem.Current.ProcessId.ToString() + "\r\n";
-                res += "AutomationId:\t\"" + elem.Current.AutomationId + "\"\r\n";
-                res += "FrameworkId:\t\"" + elem.Current.FrameworkId + "\"\r\n";
-                res += "ClassName:\t\"" + elem.Current.ClassName + "\"\r\n";
-                res += "IsContentElement:\t" + elem.Current.IsContentElement.ToString() + "\r\n";
-                res += "IsPassword:\t" + elem.Current.IsPassword.ToString() + "\r\n";
+        //    try
+        //    {
+        //        res += "Name:\t\"" + elem.Current.Name + "\"\r\n";
+        //        res += "ControlType:\t" + GetControlTypeText(elem.Current.ControlType) + "\r\n";
+        //        res += "LocalizedControlType:\t\"" + elem.Current.LocalizedControlType + "\"\r\n";
+        //        res += "IsEnabled:\t" + elem.Current.IsEnabled.ToString() + "\r\n";
+        //        res += "IsOffscreen:\t" + elem.Current.IsOffscreen.ToString() + "\r\n";
+        //        res += "IsKeyboardFocusable:\t" + elem.Current.IsKeyboardFocusable.ToString() + "\r\n";
+        //        res += "HasKeyboardFocusable:\t" + elem.Current.HasKeyboardFocus.ToString() + "\r\n";
+        //        res += "AccessKey:\t\"" + elem.Current.AccessKey + "\"\r\n";
+        //        res += "ProcessId:\t" + elem.Current.ProcessId.ToString() + "\r\n";
+        //        res += "AutomationId:\t\"" + elem.Current.AutomationId + "\"\r\n";
+        //        res += "FrameworkId:\t\"" + elem.Current.FrameworkId + "\"\r\n";
+        //        res += "ClassName:\t\"" + elem.Current.ClassName + "\"\r\n";
+        //        res += "IsContentElement:\t" + elem.Current.IsContentElement.ToString() + "\r\n";
+        //        res += "IsPassword:\t" + elem.Current.IsPassword.ToString() + "\r\n";
 
-                res += "AcceleratorKey:\t\"" + elem.Current.AcceleratorKey + "\"\r\n";
-                res += "HelpText:\t\"" + elem.Current.HelpText + "\"\r\n";
-                res += "IsControlElement:\t" + elem.Current.IsControlElement.ToString() + "\r\n";
-                res += "IsRequiredForForm:\t" + elem.Current.IsRequiredForForm.ToString() + "\r\n";
-                res += "ItemStatus:\t\"" + elem.Current.ItemStatus + "\"\r\n";
-                res += "ItemType:\t\"" + elem.Current.ItemType + "\"\r\n";
-                res += "NativeWindowHandle:\t" + elem.Current.NativeWindowHandle.ToString() + "\r\n";
+        //        res += "AcceleratorKey:\t\"" + elem.Current.AcceleratorKey + "\"\r\n";
+        //        res += "HelpText:\t\"" + elem.Current.HelpText + "\"\r\n";
+        //        res += "IsControlElement:\t" + elem.Current.IsControlElement.ToString() + "\r\n";
+        //        res += "IsRequiredForForm:\t" + elem.Current.IsRequiredForForm.ToString() + "\r\n";
+        //        res += "ItemStatus:\t\"" + elem.Current.ItemStatus + "\"\r\n";
+        //        res += "ItemType:\t\"" + elem.Current.ItemType + "\"\r\n";
+        //        res += "NativeWindowHandle:\t" + elem.Current.NativeWindowHandle.ToString() + "\r\n";
 
-                res += "IsDockPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsDockPatternAvailableProperty) + "\r\n";
-                res += "IsExpandCollapsePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty) + "\r\n";
-                res += "IsGridPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsGridPatternAvailableProperty) + "\r\n";
-                res += "IsGridItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsGridItemPatternAvailableProperty) + "\r\n";
-                res += "IsInvokePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsInvokePatternAvailableProperty) + "\r\n";
-                res += "IsMultipleViewPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsMultipleViewPatternAvailableProperty) + "\r\n";
-                res += "IsRangeValuePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsRangeValuePatternAvailableProperty) + "\r\n";
-                res += "IsScrollPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsScrollPatternAvailableProperty) + "\r\n";
-                res += "IsScrollItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsScrollItemPatternAvailableProperty) + "\r\n";
-                res += "IsSelectionPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsSelectionPatternAvailableProperty) + "\r\n";
-                res += "IsSelectionItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsSelectionItemPatternAvailableProperty) + "\r\n";
-                res += "IsTablePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTablePatternAvailableProperty) + "\r\n";
-                res += "IsTableItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTableItemPatternAvailableProperty) + "\r\n";
-                res += "IsTextPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTextPatternAvailableProperty) + "\r\n";
-                res += "IsTogglePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTogglePatternAvailableProperty) + "\r\n";
-                res += "IsTransformPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTransformPatternAvailableProperty) + "\r\n";
-                res += "IsValuePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsValuePatternAvailableProperty) + "\r\n";
-                res += "IsWindowPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsWindowPatternAvailableProperty) + "\r\n";
-            }
-            catch(Exception ex)
-            {
-                res += $"Error: {ex.Message}";
-            }
+        //        res += "IsDockPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsDockPatternAvailableProperty) + "\r\n";
+        //        res += "IsExpandCollapsePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty) + "\r\n";
+        //        res += "IsGridPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsGridPatternAvailableProperty) + "\r\n";
+        //        res += "IsGridItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsGridItemPatternAvailableProperty) + "\r\n";
+        //        res += "IsInvokePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsInvokePatternAvailableProperty) + "\r\n";
+        //        res += "IsMultipleViewPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsMultipleViewPatternAvailableProperty) + "\r\n";
+        //        res += "IsRangeValuePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsRangeValuePatternAvailableProperty) + "\r\n";
+        //        res += "IsScrollPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsScrollPatternAvailableProperty) + "\r\n";
+        //        res += "IsScrollItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsScrollItemPatternAvailableProperty) + "\r\n";
+        //        res += "IsSelectionPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsSelectionPatternAvailableProperty) + "\r\n";
+        //        res += "IsSelectionItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsSelectionItemPatternAvailableProperty) + "\r\n";
+        //        res += "IsTablePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTablePatternAvailableProperty) + "\r\n";
+        //        res += "IsTableItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTableItemPatternAvailableProperty) + "\r\n";
+        //        res += "IsTextPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTextPatternAvailableProperty) + "\r\n";
+        //        res += "IsTogglePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTogglePatternAvailableProperty) + "\r\n";
+        //        res += "IsTransformPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTransformPatternAvailableProperty) + "\r\n";
+        //        res += "IsValuePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsValuePatternAvailableProperty) + "\r\n";
+        //        res += "IsWindowPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsWindowPatternAvailableProperty) + "\r\n";
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        res += $"Error: {ex.Message}";
+        //    }
 
-            return res;
-        }
+        //    return res;
+        //}
 
-        public static string GetXPath(XElement xml, AutomationElement elem, bool useNameAttribute = true, bool useAutomationIdAttribute = false)
-        {
-            string searchPath = "//" + GetControlTypeText(elem.Current.ControlType) + "[@Hash=\"" + elem.GetHashCode() + "\"]";
-            XElement trgElement = xml.XPathSelectElement(searchPath);
+        //public static string GetXPath(XElement xml, AutomationElement elem, bool useNameAttribute = true, bool useAutomationIdAttribute = false)
+        //{
+        //    string searchPath = "//" + GetControlTypeText(elem.Current.ControlType) + "[@Hash=\"" + elem.GetHashCode() + "\"]";
+        //    XElement trgElement = xml.XPathSelectElement(searchPath);
 
-            if (trgElement == null)
-            {
-                return "";
-            }
+        //    if (trgElement == null)
+        //    {
+        //        return "";
+        //    }
 
-            string xpath = "";
-            while (trgElement.Parent != null)
-            {
-                xpath = CreateXPath(trgElement, useNameAttribute, useAutomationIdAttribute) + xpath;
-                trgElement = trgElement.Parent;
-            }
+        //    string xpath = "";
+        //    while (trgElement.Parent != null)
+        //    {
+        //        xpath = CreateXPath(trgElement, useNameAttribute, useAutomationIdAttribute) + xpath;
+        //        trgElement = trgElement.Parent;
+        //    }
 
-            return xpath;
-        }
+        //    return xpath;
+        //}
 
-        public static string GetXPath(XElement xml, AutomationElement trgElem, AutomationElement curElem, bool useNameAttribute = true, bool useAutomationIdAttribute = false)
-        {
-            string searchPath = "//" + GetControlTypeText(trgElem.Current.ControlType) + "[@Hash=\"" + trgElem.GetHashCode() + "\"]";
-            XElement trgElement = xml.XPathSelectElement(searchPath);
+        //public static string GetXPath(XElement xml, AutomationElement trgElem, AutomationElement curElem, bool useNameAttribute = true, bool useAutomationIdAttribute = false)
+        //{
+        //    string searchPath = "//" + GetControlTypeText(trgElem.Current.ControlType) + "[@Hash=\"" + trgElem.GetHashCode() + "\"]";
+        //    XElement trgElement = xml.XPathSelectElement(searchPath);
 
-            searchPath = GetControlTypeText(curElem.Current.ControlType) + "[@Hash=\"" + curElem.GetHashCode() + "\"]";
-            XElement curElement = xml.XPathSelectElement("//" + searchPath);
-            if (curElement == null)
-            {
-                // curElem is root-window-node ?
-                if (xml.Attribute("Hash").Value == curElem.GetHashCode().ToString())
-                {
-                    curElement = xml;
-                }
-            }
+        //    searchPath = GetControlTypeText(curElem.Current.ControlType) + "[@Hash=\"" + curElem.GetHashCode() + "\"]";
+        //    XElement curElement = xml.XPathSelectElement("//" + searchPath);
+        //    if (curElement == null)
+        //    {
+        //        // curElem is root-window-node ?
+        //        if (xml.Attribute("Hash").Value == curElem.GetHashCode().ToString())
+        //        {
+        //            curElement = xml;
+        //        }
+        //    }
 
-            if ((trgElement == null) || (curElement == null))
-            {
-                return "";
-            }
+        //    if ((trgElement == null) || (curElement == null))
+        //    {
+        //        return "";
+        //    }
 
-            string xpath = "";
-            while (trgElement.Parent != null)
-            {
-                xpath = CreateXPath(trgElement, useNameAttribute, useAutomationIdAttribute) + xpath;
-                trgElement = trgElement.Parent;
+        //    string xpath = "";
+        //    while (trgElement.Parent != null)
+        //    {
+        //        xpath = CreateXPath(trgElement, useNameAttribute, useAutomationIdAttribute) + xpath;
+        //        trgElement = trgElement.Parent;
 
-                if (trgElement == curElement)
-                {
-                    break;
-                }
-            }
+        //        if (trgElement == curElement)
+        //        {
+        //            break;
+        //        }
+        //    }
 
-            if (trgElement == curElement)
-            {
-                return "/" + xpath;
-            }
-            else
-            {
-                return "";
-            }
-        }
+        //    if (trgElement == curElement)
+        //    {
+        //        return "/" + xpath;
+        //    }
+        //    else
+        //    {
+        //        return "";
+        //    }
+        //}
 
-        private static string CreateXPath(XElement elemNode, bool useNameAttribute = true, bool useAutomationIdAttribute = false)
-        {
-            XElement parentNode = elemNode.Parent;
+        //private static string CreateXPath(XElement elemNode, bool useNameAttribute = true, bool useAutomationIdAttribute = false)
+        //{
+        //    XElement parentNode = elemNode.Parent;
 
-            string elemType = elemNode.Name.ToString();
-            string elemHash = elemNode.Attribute("Hash").Value;
-            string xpath;
+        //    string elemType = elemNode.Name.ToString();
+        //    string elemHash = elemNode.Attribute("Hash").Value;
+        //    string xpath;
             
-            if (useAutomationIdAttribute && (elemNode.Attribute("AutomationId").Value != ""))
-            {
-                xpath = "/" + elemType + "[@AutomationId=\"" + SecurityElement.Escape(elemNode.Attribute("AutomationId").Value) + "\"]";
-                XElement idNode = parentNode.XPathSelectElement("." + xpath);
-                if (idNode != null)
-                {
-                    if (idNode.Attribute("Hash").Value == elemHash)
-                    {
-                        return xpath;
-                    }
-                }
-            }
+        //    if (useAutomationIdAttribute && (elemNode.Attribute("AutomationId").Value != ""))
+        //    {
+        //        xpath = "/" + elemType + "[@AutomationId=\"" + SecurityElement.Escape(elemNode.Attribute("AutomationId").Value) + "\"]";
+        //        XElement idNode = parentNode.XPathSelectElement("." + xpath);
+        //        if (idNode != null)
+        //        {
+        //            if (idNode.Attribute("Hash").Value == elemHash)
+        //            {
+        //                return xpath;
+        //            }
+        //        }
+        //    }
 
-            if (useNameAttribute && (elemNode.Attribute("Name").Value != ""))
-            {
-                xpath = "/" + elemType + "[@Name=\"" + SecurityElement.Escape(elemNode.Attribute("Name").Value) + "\"]";
-                XElement nameNode = parentNode.XPathSelectElement("." + xpath);
-                if (nameNode != null)
-                {
-                    if (nameNode.Attribute("Hash").Value == elemHash)
-                    {
-                        return xpath;
-                    }
-                }
-            }
+        //    if (useNameAttribute && (elemNode.Attribute("Name").Value != ""))
+        //    {
+        //        xpath = "/" + elemType + "[@Name=\"" + SecurityElement.Escape(elemNode.Attribute("Name").Value) + "\"]";
+        //        XElement nameNode = parentNode.XPathSelectElement("." + xpath);
+        //        if (nameNode != null)
+        //        {
+        //            if (nameNode.Attribute("Hash").Value == elemHash)
+        //            {
+        //                return xpath;
+        //            }
+        //        }
+        //    }
 
-            xpath = "/" + elemType;
-            IEnumerable<XElement> typeNodes = parentNode.XPathSelectElements("." + xpath);
-            int idx = 1;
-            foreach(XElement nd in typeNodes)
-            {
-                if (nd.Attribute("Hash").Value == elemHash)
-                {
-                    return xpath + "[" + idx + "]";
-                }
-                idx++;
-            }
+        //    xpath = "/" + elemType;
+        //    IEnumerable<XElement> typeNodes = parentNode.XPathSelectElements("." + xpath);
+        //    int idx = 1;
+        //    foreach(XElement nd in typeNodes)
+        //    {
+        //        if (nd.Attribute("Hash").Value == elemHash)
+        //        {
+        //            return xpath + "[" + idx + "]";
+        //        }
+        //        idx++;
+        //    }
 
-            throw new Exception("Fail Create UIElement XPath");
-        }
+        //    throw new Exception("Fail Create UIElement XPath");
+        //}
 
         #region events
 
