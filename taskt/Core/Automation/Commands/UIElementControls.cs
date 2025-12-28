@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security;
-using System.Windows.Automation;
-using System.Windows.Forms;
+﻿using System.Windows.Automation;
 using System.Xml.Linq;
-using System.Xml.XPath;
-using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -26,14 +20,14 @@ namespace taskt.Core.Automation.Commands
         ///// </summary>
         //private static readonly Type TypeOfControlType = typeof(ControlType);
 
-        private static readonly string[] TargetControlTypes = new string[]
-        {
-            "AcceleratorKey", "AccessKey", "AutomationId", "ClassName", "ControlType",
-            "FrameworkId", "HasKeyboardFocus", "HelpText", "IsContentElement",
-            "IsControlElement", "IsEnabled", "IsKeyboardFocusable", "IsOffscreen",
-            "IsPassword", "IsRequiredForForm", "ItemStatus", "ItemType",
-            "LocalizedControlType", "Name", "NativeWindowHandle", "ProcessId",
-        };
+        //private static readonly string[] TargetControlTypes = new string[]
+        //{
+        //    "AcceleratorKey", "AccessKey", "AutomationId", "ClassName", "ControlType",
+        //    "FrameworkId", "HasKeyboardFocus", "HelpText", "IsContentElement",
+        //    "IsControlElement", "IsEnabled", "IsKeyboardFocusable", "IsOffscreen",
+        //    "IsPassword", "IsRequiredForForm", "ItemStatus", "ItemType",
+        //    "LocalizedControlType", "Name", "NativeWindowHandle", "ProcessId",
+        //};
         #endregion
 
         #region VirtualProperties
@@ -427,11 +421,11 @@ namespace taskt.Core.Automation.Commands
         //    }
         //}
 
-        public static string GetControlTypeText(ControlType control)
-        {
-            var fullName = control.ProgrammaticName;
-            return fullName.Substring(fullName.LastIndexOf('.') + 1);
-        }
+        //public static string GetControlTypeText(ControlType control)
+        //{
+        //    var fullName = control.ProgrammaticName;
+        //    return fullName.Substring(fullName.LastIndexOf('.') + 1);
+        //}
 
         #region GUI Search by conditions
 
@@ -1142,21 +1136,21 @@ namespace taskt.Core.Automation.Commands
         //    return rootNode;
         //}
 
-        private static XElement CreateXmlElement(AutomationElement targetElement, string hash = "")
-        {
-            XElement node = new XElement(GetControlTypeText(targetElement.Current.ControlType));
+        //private static XElement CreateXmlElement(AutomationElement targetElement, string hash = "")
+        //{
+        //    XElement node = new XElement(GetControlTypeText(targetElement.Current.ControlType));
 
-            var tp = targetElement.Current.GetType();
+        //    var tp = targetElement.Current.GetType();
 
-            foreach (var t in TargetControlTypes)
-            {
-                node.SetAttributeValue(t, tp.GetProperty(t)?.GetValue(targetElement.Current)?.ToString() ?? "");
-            }
+        //    foreach (var t in TargetControlTypes)
+        //    {
+        //        node.SetAttributeValue(t, tp.GetProperty(t)?.GetValue(targetElement.Current)?.ToString() ?? "");
+        //    }
 
-            node.SetAttributeValue("Hash", (hash == "") ? targetElement.GetHashCode().ToString() : hash);
+        //    node.SetAttributeValue("Hash", (hash == "") ? targetElement.GetHashCode().ToString() : hash);
             
-            return node;
-        }
+        //    return node;
+        //}
         #endregion
 
         #region AutomationElement XPath search methods
