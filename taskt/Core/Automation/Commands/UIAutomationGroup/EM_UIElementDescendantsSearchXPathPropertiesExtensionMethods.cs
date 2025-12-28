@@ -99,6 +99,15 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             var walker = TreeWalker.RawViewWalker;
             DeepCreateUIElementXML_DepthFirst(rootXML, targetElement, hashDic, walker, 1, siblingFunc, depthFunc, timeFunc);
 
+            // DBG
+            //Console.WriteLine("!!XML Tree");
+            //foreach(var item in hashDic)
+            //{
+            //    var k = item.Key;
+            //    var v = item.Value;
+            //    Console.WriteLine($"{k} {v.Current.Name} {v.Current.GetHashCode()}");
+            //}
+
             return (rootXML, hashDic);
         }
 
@@ -135,6 +144,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                 var childNode = EM_CanHandleUIElementXMLExtentionMethods.CreateXmlElement(targetElement, hash);
                 parentXMLNode.Add(childNode);
                 elemsDic.Add(hash, targetElement);
+
                 sibCnt++;
                 if (siblingFunc(sibCnt) || timeFunc())
                 {
