@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using OpenQA.Selenium;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 
 namespace taskt.Core.Script
 {
@@ -210,7 +211,7 @@ namespace taskt.Core.Script
                 case "TYPE":
                     return "AUTOMATIONELEMENT";
                 default:
-                    return $"Name: {element.Current.Name}, LocalizedControlType: {element.Current.LocalizedControlType}, ControlType: {Automation.Commands.UIElementControls.GetControlTypeText(element.Current.ControlType)}";
+                    return $"Name: {element.Current.Name}, LocalizedControlType: {element.Current.LocalizedControlType}, ControlType: {EM_CanHandleUIElementExtentionMethods.GetControlTypeText(element)}";
             }
         }
         private string GetDisplayValue(DateTime dt, string requiredProperty)
