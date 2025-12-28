@@ -208,6 +208,8 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             var searchXML = new UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand()
             {
                 v_WindowName = windowName,
+                v_MaxSiblings = App.Taskt_Settings.ClientSettings.GUIInspectMaxSiblings.ToString(),
+                v_MaxDepth = App.Taskt_Settings.ClientSettings.GUIInspectMaxDepth.ToString(),
             };
             (xml, hashTable) = searchXML.DeepCreateUIElementXMLCore(winRoot, waitFunc, engine);
 
