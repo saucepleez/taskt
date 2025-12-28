@@ -324,7 +324,7 @@
             this.chkElementReload.Name = "chkElementReload";
             this.chkElementReload.Size = new System.Drawing.Size(104, 25);
             this.chkElementReload.TabIndex = 2;
-            this.chkElementReload.Text = "Auto Reload (&5s)";
+            this.chkElementReload.Text = "A&uto Reload (5s)";
             this.chkElementReload.UseVisualStyleBackColor = true;
             this.chkElementReload.CheckedChanged += new System.EventHandler(this.chkElementReload_CheckedChanged);
             // 

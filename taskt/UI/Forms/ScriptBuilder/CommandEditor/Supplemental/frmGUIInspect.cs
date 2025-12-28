@@ -36,6 +36,12 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         {
             this.DoubleBuffered = true;
             SupplementFormsEvents.SupplementFormLoad(this);
+
+            // set time interval
+            var searchTime = App.Taskt_Settings.ClientSettings.GUIInspectSearchTime + 1;
+            timerElementReload.Interval = searchTime * 1000;
+            chkElementReload.Text = $"A&uto Reload ({searchTime}s)";
+
             ReloadWindowNames();
         }
         #endregion
@@ -214,7 +220,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             //    Console.WriteLine($"{item.Key}, {v.Current.Name}, {v.Current.GetHashCode()}");
             //}
 
-            var tree = CreateTreeNodeFromAutomationElement(winRoot);
+            var tree = CreateTreeNodeFromUIElement(winRoot);
             CreateTreeNodeFromChildElementsOfUIElemetXML(tree, xml);
             return tree;
         }
@@ -228,7 +234,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         {
             foreach (var element in root.Elements())
             {
-                var node = CreateTreeNodeFromAutomationElement(GetUIElementFromXML(element));
+                var node = CreateTreeNodeFromUIElement(GetUIElementFromXML(element));
                 tree.Nodes.Add(node);
                 if (element.Elements().Count() > 0)
                 {
@@ -286,7 +292,12 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             }
         }
 
-        private static TreeNode CreateTreeNodeFromAutomationElement(AutomationElement element)
+        /// <summary>
+        /// Create treeNode from UIElement
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        private static TreeNode CreateTreeNodeFromUIElement(AutomationElement element)
         {
             var node = new TreeNode
             {
