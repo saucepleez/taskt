@@ -2,7 +2,7 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="UIElement Action sample" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="UIElement Action After Search UIElement From Window Name sample" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="c2702e31-af42-44fe-97a7-42096bd2f452" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="and Click Button" CommandEnabled="true" />
@@ -14,7 +14,55 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Search button1 and Click" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationUIElementActionCommand" CommandID="44db583f-04fb-47b9-8680-b1c6028b8b6e" CommandName="UIAutomationUIElementActionCommand" IsCommented="false" SelectionName="UIElement Action" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WaitTimeForUIElement="10" v_WindowName="UIAutomation Tester" v_CheckMethod="" v_SelectionMethod="First" v_TargetWindowIndex="0" v_WaitTimeForWindow="60" v_AutomationType="Click UIElement">
+      <ScriptCommand xsi:type="UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand" CommandID="44db583f-04fb-47b9-8680-b1c6028b8b6e" CommandName="UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand" IsCommented="false" SelectionName="UIElement Action After Search UIElement From Window Name" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_AutomationType="Click UIElement" v_WaitTimeForUIElement="10" v_WindowName="UIAutomation Tester" v_CheckMethod="" v_SelectionMethod="First" v_TargetWindowIndex="0" v_WaitTimeForWindow="60">
+        <v_UIAActionParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="UIAActionParameters082323.120758" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="UIAActionParameters082323.120758">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                        <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207581" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Click Type</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Left Click</Parameter_x0020_Value>
+              </UIAActionParameters082323.120758>
+              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207582" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>X Offset</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIAActionParameters082323.120758>
+              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207583" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Y Offset</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIAActionParameters082323.120758>
+            </DocumentElement>
+            <diffgr:before>
+              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207581" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Click Type</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Left Click</Parameter_x0020_Value>
+              </UIAActionParameters082323.120758>
+              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207582" msdata:rowOrder="1">
+                <Parameter_x0020_Name>X Offset</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIAActionParameters082323.120758>
+              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207583" msdata:rowOrder="2">
+                <Parameter_x0020_Name>Y Offset</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIAActionParameters082323.120758>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_UIAActionParameters>
         <v_SearchParameters>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="UIASearchParameters082323.120758" msdata:UseCurrentLocale="true">
@@ -250,54 +298,6 @@
             </diffgr:before>
           </diffgr:diffgram>
         </v_SearchParameters>
-        <v_UIAActionParameters>
-          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="UIAActionParameters082323.120758" msdata:UseCurrentLocale="true">
-              <xs:complexType>
-                <xs:choice minOccurs="0" maxOccurs="unbounded">
-                  <xs:element name="UIAActionParameters082323.120758">
-                    <xs:complexType>
-                      <xs:sequence>
-                        <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
-                        <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
-                      </xs:sequence>
-                    </xs:complexType>
-                  </xs:element>
-                </xs:choice>
-              </xs:complexType>
-            </xs:element>
-          </xs:schema>
-          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
-            <DocumentElement>
-              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207581" msdata:rowOrder="0" diffgr:hasChanges="modified">
-                <Parameter_x0020_Name>Click Type</Parameter_x0020_Name>
-                <Parameter_x0020_Value>Left Click</Parameter_x0020_Value>
-              </UIAActionParameters082323.120758>
-              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207582" msdata:rowOrder="1" diffgr:hasChanges="modified">
-                <Parameter_x0020_Name>X Offset</Parameter_x0020_Name>
-                <Parameter_x0020_Value></Parameter_x0020_Value>
-              </UIAActionParameters082323.120758>
-              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207583" msdata:rowOrder="2" diffgr:hasChanges="modified">
-                <Parameter_x0020_Name>Y Offset</Parameter_x0020_Name>
-                <Parameter_x0020_Value></Parameter_x0020_Value>
-              </UIAActionParameters082323.120758>
-            </DocumentElement>
-            <diffgr:before>
-              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207581" msdata:rowOrder="0">
-                <Parameter_x0020_Name>Click Type</Parameter_x0020_Name>
-                <Parameter_x0020_Value>Left Click</Parameter_x0020_Value>
-              </UIAActionParameters082323.120758>
-              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207582" msdata:rowOrder="1">
-                <Parameter_x0020_Name>X Offset</Parameter_x0020_Name>
-                <Parameter_x0020_Value></Parameter_x0020_Value>
-              </UIAActionParameters082323.120758>
-              <UIAActionParameters082323.120758 diffgr:id="UIAActionParameters082323.1207583" msdata:rowOrder="2">
-                <Parameter_x0020_Name>Y Offset</Parameter_x0020_Name>
-                <Parameter_x0020_Value></Parameter_x0020_Value>
-              </UIAActionParameters082323.120758>
-            </diffgr:before>
-          </diffgr:diffgram>
-        </v_UIAActionParameters>
       </ScriptCommand>
     </ScriptAction>
     <ScriptAction>
@@ -305,11 +305,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.48</TasktVersion>
+    <TasktVersion>3.5.2.51</TasktVersion>
     <Author />
     <LastRunTime>2024-10-03T22:38:37.4194118+09:00</LastRunTime>
     <RunTimes>8</RunTimes>
-    <Revision>9</Revision>
+    <Revision>10</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>

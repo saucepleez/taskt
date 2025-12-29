@@ -2,7 +2,7 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="UIElement Action By XPath Sample" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="UIElement Action After Search UIElement By XPath From Window Name Sample" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="f04e08e5-06ec-4b3c-803e-92b532bd7663" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="and Click Button" CommandEnabled="true" />
@@ -14,7 +14,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Search button1 and Click" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationUIElementActionByXPathCommand" CommandID="b6c9fd34-6ddb-4110-8bbd-9cbfd3e8f2b2" CommandName="UIAutomationUIElementActionByXPathCommand" IsCommented="false" SelectionName="UIElement Action By XPath" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_SearchXPath="/Button[@AutomationId=&quot;button1&quot;]" v_WaitTimeForUIElement="10" v_WindowName="UIAutomation Tester" v_CheckMethod="" v_SelectionMethod="" v_TargetWindowIndex="0" v_WaitTimeForWindow="60" v_AutomationType="Click UIElement">
+      <ScriptCommand xsi:type="UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand" CommandID="b6c9fd34-6ddb-4110-8bbd-9cbfd3e8f2b2" CommandName="UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand" IsCommented="false" SelectionName="UIElement Action After Search UIElement By XPath From Window Name" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_AutomationType="Click UIElement" v_WaitTimeForUIElement="10" v_SearchXPath="/Button[@AutomationId=&quot;button1&quot;]" v_WindowName="UIAutomation Tester" v_CheckMethod="" v_SelectionMethod="" v_TargetWindowIndex="0" v_WaitTimeForWindow="60">
         <v_UIAActionParameters>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="UIAActionParameters082323.121218" msdata:UseCurrentLocale="true">
@@ -70,11 +70,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.48</TasktVersion>
+    <TasktVersion>3.5.2.51</TasktVersion>
     <Author />
     <LastRunTime>2024-10-03T22:39:07.3231525+09:00</LastRunTime>
     <RunTimes>9</RunTimes>
-    <Revision>7</Revision>
+    <Revision>8</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>
