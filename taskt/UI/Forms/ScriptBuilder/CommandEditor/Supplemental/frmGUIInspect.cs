@@ -20,10 +20,25 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
     public partial class frmGUIInspect : DialogLikeThemedForm
     {
-        private XElement xml = null;
-        private Dictionary<string, AutomationElement> hashTable = null;
+        /// <summary>
+        /// UIElement XML Tree
+        /// </summary>
+        private XElement windowXMLTree = null;
 
+        /// <summary>
+        /// UIElement item and hash table
+        /// </summary>
+        private Dictionary<string, AutomationElement> uiElementHashTable = null;
+
+        /// <summary>
+        /// for command execute
+        /// </summary>
         private AutomationEngineInstance engine = new AutomationEngineInstance(false);
+
+        /// <summary>
+        /// old mouse cursor position
+        /// </summary>
+        private Point oldCursorPosition = new Point(-1, -1);
 
         public frmGUIInspect()
         {
@@ -37,12 +52,15 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             this.DoubleBuffered = true;
             SupplementFormsEvents.SupplementFormLoad(this);
 
+            // inspect mode
+            cmbInspectMode.SelectedIndex = 0;
+
             // set time interval
             var searchTime = App.Taskt_Settings.ClientSettings.GUIInspectSearchTime + 1;
             timerElementReload.Interval = searchTime * 1000;
             chkElementReload.Text = $"A&uto Reload ({searchTime}s)";
 
-            ReloadWindowNames();
+            ReloadWindowNamesInCmbWindowList();
         }
         #endregion
 
@@ -55,24 +73,33 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         /// <param name="e"></param>
         private void btnReload_Click(object sender, EventArgs e)
         {
-            ReloadWindowNames();
+            ReloadWindowNamesInCmbWindowList();
         }
 
         /// <summary>
-        /// window name changed
+        /// window name changed -> reload uielement tree
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void cmbWindowList_SelectedValueChanged(object sender, EventArgs e)
         {
+            // window name mode only
+            if (cmbInspectMode.SelectedIndex != 0)
+            {
+                return;
+            }
+
             if (cmbWindowList.Text != string.Empty)
             {
-                CreateUIElementXMLTree();
+                CreateUIElementXMLTreeFromWindowName();
                 tvElements.Focus();
             }
         }
 
-        private void ReloadWindowNames()
+        /// <summary>
+        /// reload window names in cmbWindowList
+        /// </summary>
+        private void ReloadWindowNamesInCmbWindowList()
         {
             string currentWindow = cmbWindowList.Text;
 
@@ -82,7 +109,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             cmbWindowList.BeginUpdate();
             cmbWindowList.Items.Clear();
 
-            var windows = EM_CanHandleWindowNameExtensionMethods.GetAllWindowNamesAndHandles().Select(item => item.Item2).Distinct().ToList();
+            var windows = EM_CanHandleWindowNameExtensionMethods.GetAllWindowNames();
             foreach (string win in windows)
             {
                 cmbWindowList.Items.Add(win);
@@ -102,87 +129,46 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 
             cmbWindowList.Enabled = true;
 
-            CreateUIElementXMLTree();
+            //CreateUIElementXMLTreeFromWindowName();
 
             ShowMessageTimer("Window Names Updated");
         }
 
         /// <summary>
-        /// create UIElement XML Tree
+        /// create UIElement XML Tree from window name
         /// </summary>
-        private void CreateUIElementXMLTree()
+        private void CreateUIElementXMLTreeFromWindowName()
         {
-            if (cmbWindowList.Text == string.Empty)
+            StopTimerActionAfterRestoreTimer(new Action(() =>
             {
-                tvElements.Nodes.Clear();
-                xml = null;
-                return;
-            }
+                if (cmbWindowList.Text == string.Empty)
+                {
+                    tvElements.Nodes.Clear();
+                    windowXMLTree = null;
+                    return;
+                }
 
-            string windowName = cmbWindowList.Text;
+                string windowName = cmbWindowList.Text;
 
-            cmbWindowList.Enabled = false;
+                cmbWindowList.Enabled = false;
 
-            try
-            {
-                var nodes = GetTreeNodeFromUIElementXML(windowName, engine);
+                tvElementsReloadProcess(new Func<TreeNode>(() =>
+                {
+                    return CreateXMLTreeAndTreeNodeFromWindowName(windowName, engine);
+                }));
 
-                tvElements.SuspendLayout();
-                tvElements.BeginUpdate();
-
-                tvElements.Nodes.Clear();
-                tvElements.Nodes.Add(nodes);
-
-                tvElements.ExpandAll();
-
-                tvElements.Nodes[0].EnsureVisible();    // move to top
-
-                tvElements.EndUpdate();
-                tvElements.ResumeLayout();
-
-                txtElementInformation.Text = string.Empty;
-
-                ShowMessageTimer("UIElement Tree created.");
-            }
-            catch(Exception ex)
-            {
-                tvElements.Nodes.Clear();
-                txtElementInformation.Text = $"Error: {ex.Message}";
-            }
-
-            cmbWindowList.Enabled = true;
+                cmbWindowList.Enabled = true;
+            }), timerElementReload);
         }
 
         /// <summary>
-        /// get tree node from UIElement xml
+        /// create xml-tree and TreeNode from window name
         /// </summary>
         /// <param name="windowName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        private TreeNode GetTreeNodeFromUIElementXML(string windowName, AutomationEngineInstance engine)
+        private TreeNode CreateXMLTreeAndTreeNodeFromWindowName(string windowName, AutomationEngineInstance engine)
         {
-            //// cache request
-            //var cacheReq = new CacheRequest();
-            //cacheReq.Add(AutomationElement.NameProperty);
-            //cacheReq.Add(AutomationElement.ControlTypeProperty);
-            //cacheReq.Add(AutomationElement.LocalizedControlTypeProperty);
-            //cacheReq.TreeScope = TreeScope.Element | TreeScope.Children;
-
-            //var root = GetFromWindowName(windowName, engine);
-
-            //cacheReq.Push();
-
-            //var walker = TreeWalker.RawViewWalker;
-
-            //var tree = CreateTreeNodeFromAutomationElement(root);
-            //xml = CreateXmlElement(root);
-
-            //GetChildElementTreeNode(tree, xml, root, walker, cacheReq, 1, engine);
-
-            //cacheReq.Pop();
-
-            //return tree;
-
             AutomationElement winRoot;
             using (var winElem = new InnerScriptVariable(engine))
             {
@@ -211,7 +197,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                 v_MaxSiblings = App.Taskt_Settings.ClientSettings.GUIInspectMaxSiblings.ToString(),
                 v_MaxDepth = App.Taskt_Settings.ClientSettings.GUIInspectMaxDepth.ToString(),
             };
-            (xml, hashTable) = searchXML.DeepCreateUIElementXMLCore(winRoot, waitFunc, engine);
+            (windowXMLTree, uiElementHashTable) = searchXML.DeepCreateUIElementXMLCore(winRoot, waitFunc, engine);
 
             // DGB
             //Console.WriteLine("## element list");
@@ -223,7 +209,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             //}
 
             var tree = CreateTreeNodeFromUIElement(winRoot);
-            CreateTreeNodeFromChildElementsOfUIElemetXML(tree, xml);
+            CreateTreeNodeFromChildElementsOfUIElementXML(tree, windowXMLTree);
             return tree;
         }
 
@@ -232,7 +218,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         /// </summary>
         /// <param name="tree"></param>
         /// <param name="root"></param>
-        private void CreateTreeNodeFromChildElementsOfUIElemetXML(TreeNode tree, XElement root)
+        private void CreateTreeNodeFromChildElementsOfUIElementXML(TreeNode tree, XElement root)
         {
             foreach (var element in root.Elements())
             {
@@ -240,7 +226,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                 tree.Nodes.Add(node);
                 if (element.Elements().Count() > 0)
                 {
-                    CreateTreeNodeFromChildElementsOfUIElemetXML(node, element);
+                    CreateTreeNodeFromChildElementsOfUIElementXML(node, element);
                 }
             }
         }
@@ -253,13 +239,13 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         private AutomationElement GetUIElementFromXML(XElement elem)
         {
             var h = elem.Attribute("Hash").Value;
-            if (hashTable.ContainsKey(h))
+            if (uiElementHashTable.ContainsKey(h))
             {
-                return hashTable[h];
+                return uiElementHashTable[h];
             }
             else
             {
-                throw new Exception($"Strange UIElement Hash '{h}'");
+                throw new Exception($"Strange UIElement Specified. Hash '{h}'");
             }
         }
 
@@ -287,7 +273,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         {
             try
             {
-                return hashTable.FirstOrDefault(item => (item.Value == elem)).Key;
+                return uiElementHashTable.FirstOrDefault(item => (item.Value == elem)).Key;
             }
             catch
             {
@@ -303,7 +289,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         private XElement GetXElementFromUIElement(AutomationElement elem)
         {
             var searchPath = $"//{EM_CanHandleUIElementExtentionMethods.GetControlTypeText(elem)}[@Hash=\"{GetUIElementHash(elem)}\"]";
-            return xml.XPathSelectElement(searchPath);
+            return windowXMLTree.XPathSelectElement(searchPath);
         }
 
         /// <summary>
@@ -350,9 +336,9 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             if (curElement == null)
             {
                 // curElem is root-window-node ?
-                if (xml.Attribute("Hash").Value == curElem.GetHashCode().ToString())
+                if (windowXMLTree.Attribute("Hash").Value == curElem.GetHashCode().ToString())
                 {
-                    curElement = xml;
+                    curElement = windowXMLTree;
                 }
             }
 
@@ -550,6 +536,11 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             return null;
         }
 
+        /// <summary>
+        /// chkElementReload check state change -> toggle timerElementReload
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkElementReload_CheckedChanged(object sender, EventArgs e)
         {
             if (chkElementReload.Checked)
@@ -563,16 +554,27 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             }
         }
 
+        /// <summary>
+        /// timerElementReload tick -> reload ui element from window name
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timerElementReload_Tick(object sender, EventArgs e)
         {
             if (cmbWindowList.Text != string.Empty)
             {
-                timerElementReload.Stop();
+                //timerElementReload.Stop();
 
-                CreateUIElementXMLTree();
-                tvElements.Focus();
+                //CreateUIElementXMLTreeFromWindowName();
+                //tvElements.Focus();
                 
-                timerElementReload.Start();
+                //timerElementReload.Start();
+
+                StopTimerActionAfterRestoreTimer(new Action(() =>
+                {
+                    CreateUIElementXMLTreeFromWindowName();
+                    tvElements.Focus();
+                }), timerElementReload);
             }
         }
         #endregion
@@ -592,7 +594,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         {
             if (tvElements.SelectedNode != null)
             {
-                AutomationElement elem = (AutomationElement)tvElements.SelectedNode.Tag;
+                var elem = (AutomationElement)tvElements.SelectedNode.Tag;
                 ShowUIElementInformation(elem);
             }
         }
@@ -851,5 +853,252 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             }
         }
         #endregion
+
+        /// <summary>
+        /// cmbInspect mode change, window name mode or mouse cursor mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmbInspectMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bool enableMouseInspect = false;
+            switch (cmbInspectMode.SelectedIndex)
+            {
+                case 0:
+                    ShowMessageTimer("Please specify Window Name");
+                    break;
+
+                case 1: // mouse cursor
+                    ShowMessageTimer("Move to Target UIElement and Stop Cursor");
+                    enableMouseInspect = true;
+                    break;
+            }
+
+            // enable inspect timer
+            timerMouseMove.Enabled = enableMouseInspect;
+            checkEnableInspect.Visible = enableMouseInspect;
+            checkEnableInspect.Enabled = enableMouseInspect;
+            checkEnableInspect.Checked = enableMouseInspect;
+
+            // UIElement reload timer
+            var enableElementReload = !enableMouseInspect;
+            timerElementReload.Enabled = enableElementReload;
+            chkElementReload.Visible = enableElementReload;
+            chkElementReload.Enabled = enableElementReload;
+        }
+
+        /// <summary>
+        /// mouse cursor check timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerMouseMove_Tick(object sender, EventArgs e)
+        {
+            var p = Cursor.Position;
+            var isNotMoved = (p == oldCursorPosition);
+            oldCursorPosition = p;
+            
+            if (isNotMoved)
+            {
+                StopTimerActionAfterRestoreTimer(new Action(() =>
+                {
+                    var elem = AutomationElement.FromPoint(new System.Windows.Point(p.X, p.Y));
+                    HighlightUIElement(elem);
+
+                    tvElementsReloadProcess(new Func<TreeNode>(() =>
+                    {
+                        return CreateXMLTreeAndTreeNodeFromCursor(p);
+                    }));
+                    
+                }), timerMouseMove);
+            }
+        }
+
+        /// <summary>
+        /// create xml-tree and TreeNode from Mouse cursor position
+        /// </summary>
+        /// <param name="mouseCursorPoint"></param>
+        private TreeNode CreateXMLTreeAndTreeNodeFromCursor(Point mouseCursorPoint)
+        {
+            var point = new System.Windows.Point(mouseCursorPoint.X, mouseCursorPoint.Y);
+            var targetElement = AutomationElement.FromPoint(point);
+            HighlightUIElement(targetElement);
+
+            // get window name, handle
+            (var winName, var whnd) = EM_CanHandleUIElementExtentionMethods.GetWindowNameAndHandle(targetElement);
+            ReloadWindowNamesInCmbWindowList();
+            cmbWindowList.Text = winName;
+
+            var thash = new Dictionary<string, AutomationElement>();
+
+            var walker = TreeWalker.RawViewWalker;
+            
+            var targetChild = targetElement;
+            var parentNode = walker.GetParent(targetElement);
+
+            void AddChildrenXMLProcess(List<XElement> parentNodes, List<XElement> childrenNodes)
+            {
+                if (childrenNodes != null)
+                {
+                    var p = parentNodes[parentNodes.Count - 1];
+                    foreach (var x in childrenNodes)
+                    {
+                        p.Add(x);
+                    }
+                }
+            }
+
+            List<XElement> childXMLs = null;
+            while ((IntPtr)parentNode.Current.NativeWindowHandle != whnd)
+            {
+                // DBG
+                //Console.WriteLine($"#Build Children {parentNode.Current.Name}, {EM_CanHandleUIElementExtentionMethods.GetControlTypeText(parentNode)}");
+
+                var xmls = CreateChildUIElementXMLNodes(parentNode, targetChild, thash, walker);
+
+                AddChildrenXMLProcess(xmls, childXMLs);
+                
+                childXMLs = xmls;
+
+                targetChild = parentNode;
+
+                parentNode = walker.GetParent(parentNode);
+
+                // DGB
+                //Console.WriteLine("Go ParentNode");
+            }
+
+            // now parentNode is Window
+
+            var xxmls = CreateChildUIElementXMLNodes(parentNode, targetChild, thash, walker);
+            AddChildrenXMLProcess(xxmls, childXMLs);
+            childXMLs = xxmls;
+
+            var windowElems = new List<XElement>();
+            AddXMLNodeHashTableProcess(parentNode, windowElems, thash);
+
+            AddChildrenXMLProcess(windowElems, childXMLs);
+
+            windowXMLTree = windowElems[0];
+            uiElementHashTable = thash;
+
+            var tree = CreateTreeNodeFromUIElement(parentNode);
+            CreateTreeNodeFromChildElementsOfUIElementXML(tree, windowXMLTree);
+
+            return tree;
+        }
+
+        /// <summary>
+        /// create child UIElements XML node
+        /// </summary>
+        /// <param name="parentNode"></param>
+        /// <param name="targetChildNode"></param>
+        /// <param name="myHashTable"></param>
+        /// <param name="walker"></param>
+        /// <returns></returns>
+        private static List<XElement> CreateChildUIElementXMLNodes(AutomationElement parentNode, AutomationElement targetChildNode, Dictionary<string, AutomationElement> myHashTable, TreeWalker walker)
+        {
+            var elemList = new List<XElement>();
+
+            var currentChild = walker.GetFirstChild(parentNode);
+            while (currentChild != targetChildNode)
+            {
+                AddXMLNodeHashTableProcess(currentChild, elemList, myHashTable);
+                currentChild = walker.GetNextSibling(currentChild);
+            }
+            // add target child UIElement node
+            AddXMLNodeHashTableProcess(currentChild, elemList, myHashTable);
+
+            return elemList;
+        }
+
+        /// <summary>
+        /// create xml and add hash-table process
+        /// </summary>
+        /// <param name="targetElement"></param>
+        /// <param name="parentXML"></param>
+        /// <param name="myHashTable"></param>
+        private static void AddXMLNodeHashTableProcess(AutomationElement targetElement, List<XElement> elems, Dictionary<string, AutomationElement> myHashTable)
+        {
+            var hash = targetElement.GetHashCode().ToString();
+            if (myHashTable.ContainsKey(hash))
+            {
+                int i = 1;
+                while (myHashTable.ContainsKey($"{hash}-{i}"))
+                {
+                    i++;
+                }
+                hash = $"{hash}-{i}";
+            }
+            myHashTable.Add(hash, targetElement);
+
+            var txml = EM_CanHandleUIElementXMLExtentionMethods.CreateXmlElement(targetElement, hash);
+            elems.Add(txml);
+
+            // DBG
+            //Console.WriteLine($"UIElement added. {targetElement.Current.Name}, {EM_CanHandleUIElementExtentionMethods.GetControlTypeText(targetElement)}");
+        }
+
+        /// <summary>
+        /// checkEnableInspect is changed -> timerMouseMove enable/disabled
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkEnableInspect_CheckedChanged(object sender, EventArgs e)
+        {
+            timerMouseMove.Enabled = checkEnableInspect.Checked;
+
+            checkEnableInspect.Text = "Inspect " + (checkEnableInspect.Checked ? "Enabled" : "Disabled");
+        }
+
+        /// <summary>
+        /// stop timer and call actionFunc after restore timer state
+        /// </summary>
+        /// <param name="actionFunc"></param>
+        /// <param name="tim"></param>
+        private void StopTimerActionAfterRestoreTimer(Action actionFunc, Timer tim)
+        {
+            var timerState = tim.Enabled;
+
+            tim.Enabled = false;
+
+            actionFunc();
+
+            tim.Enabled = timerState;
+        }
+
+        /// <summary>
+        /// tvElements reload process
+        /// </summary>
+        /// <param name="treeNodeFunc"></param>
+        private void tvElementsReloadProcess(Func<TreeNode> treeNodeFunc)
+        {
+            try
+            {
+                var nodes = treeNodeFunc();
+
+                tvElements.SuspendLayout();
+                tvElements.BeginUpdate();
+
+                tvElements.Nodes.Clear();
+                tvElements.Nodes.Add(nodes);
+
+                tvElements.ExpandAll();
+
+                tvElements.Nodes[0].EnsureVisible();    // move to top
+
+                tvElements.EndUpdate();
+                tvElements.ResumeLayout();
+
+                txtElementInformation.Text = string.Empty;
+
+                ShowMessageTimer("UIElement Tree created.");
+            }
+            catch (Exception ex)
+            {
+                tvElements.Nodes.Clear();
+                txtElementInformation.Text = $"UIElement Tree Create Error: {ex.Message}";
+            }
+        }
     }
 }
