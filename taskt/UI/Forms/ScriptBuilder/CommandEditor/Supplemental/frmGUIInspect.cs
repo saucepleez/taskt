@@ -245,37 +245,6 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             }
         }
 
-        //private static void GetChildElementTreeNode(TreeNode tree, XElement xml, AutomationElement rootElement, TreeWalker walker, CacheRequest cacheRequest, int depth, Engine.AutomationEngineInstance engine)
-        //{
-        //    var node = walker.GetFirstChild(rootElement, cacheRequest);
-        //    //var node = walker.GetLastChild(rootElement);
-
-        //    int siblingCount = 0;
-        //    while (node != null)
-        //    {
-        //        var item = CreateTreeNodeFromAutomationElement(node);
-        //        tree.Nodes.Add(item);
-
-        //        var childXml = CreateXmlElement(node);
-        //        xml.Add(childXml);
-
-        //        if ((walker.GetFirstChild(node, cacheRequest) != null) && (depth < engine.engineSettings.MaxUIElementInpectDepth))
-        //        //if ((walker.GetLastChild(node) != null) && (depth < engine.engineSettings.MaxUIElementInpectDepth))
-        //        {
-        //            GetChildElementTreeNode(item, childXml, node, walker, cacheRequest, (depth + 1), engine);
-        //        }
-
-        //        siblingCount++;
-        //        if (siblingCount >= engine.engineSettings.MaxUIElementInspectSiblingNodes)
-        //        {
-        //            break;
-        //        }
-
-        //        node = walker.GetNextSibling(node, cacheRequest);
-        //        //node = walker.GetPreviousSibling(node);
-        //    }
-        //}
-
         /// <summary>
         /// get UIElement from XML Tree
         /// </summary>
