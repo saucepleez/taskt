@@ -49,8 +49,8 @@ namespace taskt.Core
         public bool UseNewParser { get; set; }
         public bool IgnoreFirstVariableMarkerInOutputParameter { get; set; }
         public int MaxFileCounter { get; set; }
-        public int MaxUIElementInpectDepth { get; set; }
-        public int MaxUIElementInspectSiblingNodes { get; set; }
+        //public int MaxUIElementInpectDepth { get; set; }
+        //public int MaxUIElementInspectSiblingNodes { get; set; }
 
         public EngineSettings()
         {
@@ -81,8 +81,8 @@ namespace taskt.Core
             UseNewParser = true;
             IgnoreFirstVariableMarkerInOutputParameter = true;
             MaxFileCounter = 999;
-            MaxUIElementInpectDepth = 256;
-            MaxUIElementInspectSiblingNodes = int.MaxValue;
+            //MaxUIElementInpectDepth = 256;
+            //MaxUIElementInspectSiblingNodes = int.MaxValue;
         }
 
         /// <summary>

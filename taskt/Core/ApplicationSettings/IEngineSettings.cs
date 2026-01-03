@@ -137,14 +137,14 @@
         /// </summary>
         int MaxFileCounter { get; }
 
-        /// <summary>
-        /// max UIElement inspect depth
-        /// </summary>
-        int MaxUIElementInpectDepth { get; }
+        ///// <summary>
+        ///// max UIElement inspect depth
+        ///// </summary>
+        //int MaxUIElementInpectDepth { get; }
 
-        /// <summary>
-        /// max UIElement inspect sibling nodes
-        /// </summary>
-        int MaxUIElementInspectSiblingNodes { get; }
+        ///// <summary>
+        ///// max UIElement inspect sibling nodes
+        ///// </summary>
+        //int MaxUIElementInspectSiblingNodes { get; }
     }
 }
