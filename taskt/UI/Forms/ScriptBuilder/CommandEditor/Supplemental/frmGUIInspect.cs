@@ -633,7 +633,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                 res.Append($"HelpText:\t\"{elem.Current.HelpText}\"\r\n");
                 res.Append($"IsControlElement:\t{elem.Current.IsControlElement}\r\n");
                 res.Append($"IsRequiredForForm:\t{elem.Current.IsRequiredForForm}\r\n");
-                res.Append($"ItemStatus:\t\"{elem.Current.ItemStatus}\r\n");
+                res.Append($"ItemStatus:\t\"{elem.Current.ItemStatus}\"\r\n");
                 res.Append($"ItemType:\t\"{elem.Current.ItemType}\"\r\n");
                 res.Append($"NativeWindowHandle:\t{elem.Current.NativeWindowHandle}\r\n");
 
