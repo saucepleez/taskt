@@ -558,6 +558,7 @@
     <Compile Include="Core\Automation\Commands\WindowGroup\AWindowNamesActionCommnads.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\AWindowNamesCommands.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\AGetFromWindowNamesAsDataTableCommands.cs" />
+    <Compile Include="Core\Automation\Commands\WindowGroup\EM_CanHandleDesktopWindowHandleExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\EM_FromWindowHandlePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\EM_FromWindowNameResultPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\EM_WindowActivatePropertiesExtensionMethods.cs" />
