@@ -251,5 +251,10 @@
         /// UIElement Max Search Time in GUI Inspect Tool
         /// </summary>
         int GUIInspectSearchTime { get; }
+
+        /// <summary>
+        /// UIElement Mouse search interval (ms) in GUI Inspect Tool
+        /// </summary>
+        int GUIInspectMouseInterval { get; }
     }
 }

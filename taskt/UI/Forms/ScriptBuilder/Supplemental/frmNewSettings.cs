@@ -553,6 +553,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             createTextBox("txtMaxDepth", 60, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.GUIInspectMaxDepth), true);
             createLabel("lblSearchTime", "Max Wait Time to Search", FontSize.Normal, false);
             createTextBox("txtSearchTime", 60, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.GUIInspectSearchTime), true);
+            createLabel("lblMouseMoveInterval", "Mouse Cursor Mode Interval (ms). Specify 500 or more", FontSize.Normal, false);
+            createTextBox("txtMouseMoveInterval", 60, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.GUIInspectMouseInterval), true);
         }
 
         private void showEditorInstanceSettings()

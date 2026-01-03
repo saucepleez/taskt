@@ -55,10 +55,12 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             // inspect mode
             cmbInspectMode.SelectedIndex = 0;
 
-            // set time interval
+            // set timer interval
             var searchTime = App.Taskt_Settings.ClientSettings.GUIInspectSearchTime + 1;
             timerElementReload.Interval = searchTime * 1000;
             chkElementReload.Text = $"A&uto Reload ({searchTime}s) Disabled";
+
+            timerMouseMove.Interval = App.Taskt_Settings.ClientSettings.GUIInspectMouseInterval;
 
             ReloadWindowNamesInCmbWindowList();
         }

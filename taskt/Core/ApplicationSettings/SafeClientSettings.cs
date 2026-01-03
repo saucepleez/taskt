@@ -369,5 +369,13 @@
                 return clientSettings.GUIInspectSearchTime;
             }
         }
+
+        public int GUIInspectMouseInterval
+        {
+            get
+            {
+                return clientSettings.GUIInspectMouseInterval;
+            }
+        }
     }
 }
