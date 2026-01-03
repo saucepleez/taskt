@@ -72,7 +72,7 @@ namespace taskt.Core.Automation.Commands
                     //}
                     var sp = EM_CanHandleUIElementScrollBarExtensionMethods.GetScrollPattern(targetElement, new Action(() =>
                     {
-                        this.ValueCanNotRetrievedProcess($"ScrollBar Value", new Action(() =>
+                        this.ValueCanNotRetrievedProcess($"ScrollBar Information", new Action(() =>
                         {
                             "".StoreInUserVariable(engine, v_Result);
                         }), engine);

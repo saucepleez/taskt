@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        this.ValueCanNotRetrievedProcess("Table Value", new Action(() =>
+                        this.ValueCanNotRetrievedProcess("Table Information", new Action(() =>
                         {
                             "".StoreInUserVariable(engine, v_Result);
                         }), engine);
