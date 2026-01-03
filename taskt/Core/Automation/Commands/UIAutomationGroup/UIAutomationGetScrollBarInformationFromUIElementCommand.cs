@@ -9,13 +9,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
     [Attributes.ClassAttributes.SubGruop("Get From UIElement")]
-    [Attributes.ClassAttributes.CommandSettings("Get ScrollBar Value From UIElement")]
-    [Attributes.ClassAttributes.Description("This command allows you to get ScrollBar Value from UIElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get ScrollBar Value from UIElement.")]
+    [Attributes.ClassAttributes.CommandSettings("Get ScrollBar Information From UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to get ScrollBar Information from UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get ScrollBar Information from UIElement.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationGetScrollBarValueFromUIElementCommand : AGetFromUIElementCommands, IResultProperties, ICanHandleUIElementScrollBar
+    public sealed class UIAutomationGetScrollBarInformationFromUIElementCommand : AGetFromUIElementCommands, IResultProperties, ICanHandleUIElementScrollBar
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -23,22 +23,22 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("Value Type")]
+        [PropertyDescription("Information Type")]
         [PropertyUISelectionOption("Horizontally Scrollable")]
         [PropertyUISelectionOption("Horizontal Scroll Percent")]
         [PropertyUISelectionOption("Vertically Scrollable")]
         [PropertyUISelectionOption("Vertical Scroll Percent")]
-        [PropertyValidationRule("Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Type")]
+        [PropertyValidationRule("Information", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Information")]
         [PropertyParameterOrder(6000)]
-        public string v_ValueType { get; set; }
+        public string v_InformationType { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyParameterOrder(7000)]
         public string v_Result { get; set; }
 
-        public UIAutomationGetScrollBarValueFromUIElementCommand()
+        public UIAutomationGetScrollBarInformationFromUIElementCommand()
         {
         }
 
@@ -83,7 +83,7 @@ namespace taskt.Core.Automation.Commands
                     }
 
                     //var sp = (ScrollPattern)scrollPtn;
-                    switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine))
+                    switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InformationType), engine))
                     {
                         case "horizontally scrollable":
                             sp.Current.HorizontallyScrollable.StoreInUserVariable(engine, v_Result);
