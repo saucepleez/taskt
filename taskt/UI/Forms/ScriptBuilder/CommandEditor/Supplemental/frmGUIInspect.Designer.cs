@@ -329,7 +329,7 @@
             this.checkEnableInspect.Appearance = System.Windows.Forms.Appearance.Button;
             this.checkEnableInspect.AutoSize = true;
             this.checkEnableInspect.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.checkEnableInspect.Location = new System.Drawing.Point(392, 5);
+            this.checkEnableInspect.Location = new System.Drawing.Point(391, 6);
             this.checkEnableInspect.Name = "checkEnableInspect";
             this.checkEnableInspect.Size = new System.Drawing.Size(103, 25);
             this.checkEnableInspect.TabIndex = 3;
@@ -342,7 +342,7 @@
             this.chkElementReload.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkElementReload.AutoSize = true;
             this.chkElementReload.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.chkElementReload.Location = new System.Drawing.Point(420, 5);
+            this.chkElementReload.Location = new System.Drawing.Point(406, 5);
             this.chkElementReload.Name = "chkElementReload";
             this.chkElementReload.Size = new System.Drawing.Size(104, 25);
             this.chkElementReload.TabIndex = 2;

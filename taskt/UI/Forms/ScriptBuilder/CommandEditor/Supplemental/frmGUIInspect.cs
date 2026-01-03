@@ -58,7 +58,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             // set time interval
             var searchTime = App.Taskt_Settings.ClientSettings.GUIInspectSearchTime + 1;
             timerElementReload.Interval = searchTime * 1000;
-            chkElementReload.Text = $"A&uto Reload ({searchTime}s)";
+            chkElementReload.Text = $"A&uto Reload ({searchTime}s) Disabled";
 
             ReloadWindowNamesInCmbWindowList();
         }
@@ -543,13 +543,18 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         /// <param name="e"></param>
         private void chkElementReload_CheckedChanged(object sender, EventArgs e)
         {
+            var searchTime = App.Taskt_Settings.ClientSettings.AutoSaveInterval + 1;
+
             if (chkElementReload.Checked)
             {
+                chkElementReload.Text = $"A&uto Reload ({searchTime}s) Enabled";
+
                 timerElementReload.Stop();
                 timerElementReload.Start();
             }
             else
             {
+                chkElementReload.Text = $"A&uto Reload ({searchTime}s) Disabled";
                 timerElementReload.Stop();
             }
         }
@@ -563,13 +568,6 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         {
             if (cmbWindowList.Text != string.Empty)
             {
-                //timerElementReload.Stop();
-
-                //CreateUIElementXMLTreeFromWindowName();
-                //tvElements.Focus();
-                
-                //timerElementReload.Start();
-
                 StopTimerActionAfterRestoreTimer(new Action(() =>
                 {
                     CreateUIElementXMLTreeFromWindowName();
@@ -882,7 +880,8 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 
             // UIElement reload timer
             var enableElementReload = !enableMouseInspect;
-            timerElementReload.Enabled = enableElementReload;
+            timerElementReload.Enabled = false;
+            chkElementReload.Checked = false;
             chkElementReload.Visible = enableElementReload;
             chkElementReload.Enabled = enableElementReload;
         }
@@ -969,16 +968,16 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             }
 
             // now parentNode is Window
-
             var xxmls = CreateChildUIElementXMLNodes(parentNode, targetChild, thash, walker);
             AddChildrenXMLProcess(xxmls, childXMLs);
             childXMLs = xxmls;
 
+            // create Window UIElement xml
             var windowElems = new List<XElement>();
             AddXMLNodeHashTableProcess(parentNode, windowElems, thash);
-
             AddChildrenXMLProcess(windowElems, childXMLs);
 
+            // store global variables
             windowXMLTree = windowElems[0];
             uiElementHashTable = thash;
 
