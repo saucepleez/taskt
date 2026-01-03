@@ -132,7 +132,7 @@ namespace taskt.Core.Automation.Commands
             this.UIElementActionProcess(engine,
                 new Action<InnerScriptVariable>(v =>
                 {
-                    var winElem = new UIAutomationGetWindowUIElementCommand()
+                    var winElem = new UIAutomationGetWindowUIElementFromWindowNameCommand()
                     {
                         v_WindowName = this.v_WindowName,
                         v_CheckMethod = this.v_CheckMethod,

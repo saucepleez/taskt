@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
         {
             using (var winElem = new InnerScriptVariable(engine))
             {
-                var getWin = new UIAutomationGetWindowUIElementCommand()
+                var getWin = new UIAutomationGetWindowUIElementFromWindowNameCommand()
                 {
                     v_WindowName = this.v_WindowName,
                     v_CheckMethod = this.v_CheckMethod,

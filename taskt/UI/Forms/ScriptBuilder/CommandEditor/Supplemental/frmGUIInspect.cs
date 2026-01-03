@@ -175,7 +175,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             using (var winElem = new InnerScriptVariable(engine))
             {
                 // get target window UIElement
-                var getWinElem = new UIAutomationGetWindowUIElementCommand()
+                var getWinElem = new UIAutomationGetWindowUIElementFromWindowNameCommand()
                 {
                     v_WindowName = windowName,
                     v_Result = winElem.VariableName,

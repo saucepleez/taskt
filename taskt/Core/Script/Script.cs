@@ -471,6 +471,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_46(doc);
             convertTo3_5_2_47(doc);
             convertTo3_5_2_51(doc);
+            convertTo3_5_2_53(doc);
             return doc;
         }
 
@@ -4972,6 +4973,12 @@ namespace taskt.Core.Script
 
             // UIAutomationUIElementActionByXPathCommand -> UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand
             ChangeCommandName(doc, "UIAutomationUIElementActionByXPathCommand", "UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand", "UIElement Action After Search UIElement By XPath From Window Name");
+        }
+
+        private static void convertTo3_5_2_53(XDocument doc)
+        {
+            // UIAutomationGetWindowUIElementCommand -> UIAutomationGetWindowUIElementFromWindowNameCommand
+            ChangeCommandName(doc, "UIAutomationGetWindowUIElementCommand", "UIAutomationGetWindowUIElementFromWindowNameCommand", "Get Window UIElement From Window Name");
         }
 
         /// <summary>

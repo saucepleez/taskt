@@ -1132,7 +1132,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetParentUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchChildUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementFromUIElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetWindowUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetWindowUIElementFromWindowNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ValidationControls.cs" />
     <Compile Include="Core\Automation\Commands\VariableNameControls.cs" />
     <Compile Include="Core\Automation\Commands\VariableGroup\GetVariableTypeCommand.cs" />

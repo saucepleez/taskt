@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
             this.SearchWindowAfterActionCore(engine,
                 new Func<InnerScriptVariable, ScriptCommand>(winElem =>
                 {
-                    return new UIAutomationGetWindowUIElementCommand()
+                    return new UIAutomationGetWindowUIElementFromWindowNameCommand()
                     {
                         v_WindowName = this.v_WindowName,
                         v_CheckMethod = this.v_CheckMethod,

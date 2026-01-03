@@ -11,13 +11,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
     [Attributes.ClassAttributes.SubGruop("Window UIElement")]
-    [Attributes.ClassAttributes.CommandSettings("Get Window UIElement")]
+    [Attributes.ClassAttributes.CommandSettings("Get Window UIElement From Window Name")]
     [Attributes.ClassAttributes.Description("This command allows you to get UIElement from Window Name")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get UIElement from Window Name.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationGetWindowUIElementCommand : AOneWindowNameCommands
+    public sealed class UIAutomationGetWindowUIElementFromWindowNameCommand : AOneWindowNameCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
         //public string v_HandleResult { get; set; }
 
-        public UIAutomationGetWindowUIElementCommand()
+        public UIAutomationGetWindowUIElementFromWindowNameCommand()
         {
         }
 
