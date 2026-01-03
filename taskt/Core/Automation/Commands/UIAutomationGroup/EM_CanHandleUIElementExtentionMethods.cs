@@ -111,7 +111,8 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <returns></returns>
         public static string GetControlTypeText(AutomationElement elem)
         {
-            var fullName = elem.Current.ControlType.ProgrammaticName;
+            // MEMO: UIA_AppBarControlTypeId is null, why?
+            var fullName = elem.Current.ControlType?.ProgrammaticName ?? ".UNKNOWN";
             return fullName.Substring(fullName.LastIndexOf('.') + 1);
         }
 

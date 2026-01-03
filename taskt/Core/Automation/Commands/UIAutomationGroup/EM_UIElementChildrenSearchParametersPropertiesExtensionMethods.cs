@@ -81,6 +81,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
 
                 cmb.Items.Add("");
                 cmb.Items.AddRange(fields.ToArray());
+                cmb.Items.Add("UNKNOWN");   // MEMO: when ContolType is null, this value is 'UNKNOWN'
 
                 r.Cells[2] = cmb;
             }
