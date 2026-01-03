@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationScrollUIElementCommand : AUIElementActionCommands
+    public sealed class UIAutomationScrollUIElementCommand : AUIElementActionCommands, ICanHandleUIElementScrollBar
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -117,28 +117,37 @@ namespace taskt.Core.Automation.Commands
                             break;
                     }
 
-                    if (!targetElement.TryGetCurrentPattern(ScrollPattern.Pattern, out object scrollPtn))
+                    //if (!targetElement.TryGetCurrentPattern(ScrollPattern.Pattern, out object scrollPtn))
+                    //{
+                    //    if (targetElement.Current.ControlType == ControlType.ScrollBar)
+                    //    {
+                    //        //var parentElement = UIElementControls.GetParentUIElement(targetElement);
+                    //        var parentElement = EM_CanHandleUIElementExtentionMethods.GetParentUIElement(targetElement);
+                    //        if (!parentElement.TryGetCurrentPattern(ScrollPattern.Pattern, out scrollPtn))
+                    //        {
+                    //            //throw new Exception($"UIElement '{v_TargetElement}' does not have ScrollBar");
+                    //            this.ActionNotSupportedProcess("Scroll", engine);
+                    //            return;
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        //throw new Exception($"UIElement '{v_TargetElement}' is not ScrollBar and does not have ScrollBar");
+                    //        this.ActionNotSupportedProcess("Scroll", engine);
+                    //        return;
+                    //    }
+                    //}
+
+                    var sp = EM_CanHandleUIElementScrollBarExtensionMethods.GetScrollPattern(targetElement, new Action(()=>
                     {
-                        if (targetElement.Current.ControlType == ControlType.ScrollBar)
-                        {
-                            //var parentElement = UIElementControls.GetParentUIElement(targetElement);
-                            var parentElement = EM_CanHandleUIElementExtentionMethods.GetParentUIElement(targetElement);
-                            if (!parentElement.TryGetCurrentPattern(ScrollPattern.Pattern, out scrollPtn))
-                            {
-                                //throw new Exception($"UIElement '{v_TargetElement}' does not have ScrollBar");
-                                this.ActionNotSupportedProcess("Scroll", engine);
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            //throw new Exception($"UIElement '{v_TargetElement}' is not ScrollBar and does not have ScrollBar");
-                            this.ActionNotSupportedProcess("Scroll", engine);
-                            return;
-                        }
+                        this.ActionNotSupportedProcess("Scroll", engine);
+                    }));
+                    if (sp == null)
+                    {
+                        return;
                     }
 
-                    var sp = (ScrollPattern)scrollPtn;
+                    //var sp = (ScrollPattern)scrollPtn;
                     var scrollbarType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ScrollBarType), engine);
                     switch (scrollbarType)
                     {

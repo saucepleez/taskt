@@ -509,12 +509,14 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementChildrenSearchParametersPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementDescendantsSearchAnyUIElementPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementDescendantsSearchParametersPropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_CanHandleUIElementScrollBarExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementIndexPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementSearchUIElementFromWindowSomethingByAnywayPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementSelectionItemsPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementWindowNameResultsFromUIElementPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_WindowUIElementResultPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ICanHandleUIElement.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\ICanHandleUIElementScrollBar.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ICanHandleUIElementXML.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IGetUIElementsInformationProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IGetUIElementsXMLTreeFromSomethingProperties.cs" />
@@ -535,10 +537,12 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementUIElementActionSomewayProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IUIElementWindowResultsFromUIElementProperties.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\IWindowUIElementResultProperties.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetScrollBarValueFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetWindowHandleFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetWindowNameFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationGetWindowUIElementFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationScrollPercentUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchChildUIElementFromUIElementByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationSearchUIElementFromWindowHandleByXPathCommand.cs" />
