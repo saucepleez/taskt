@@ -60,8 +60,8 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// UIElement Action Process
         /// </summary>
         /// <param name="rootElemAction">arg1 is a Variable to Store root UIElement</param>
-        /// <param name="existsElemAction">arg1 is a Varialbe has root UIElement, arg2 is Variable Name to Store Result</param>
-        /// <param name="searchElemAction">arg1 is a Varialbe has root UIElement, arg2 is Variable to Store Target UIElement</param>
+        /// <param name="existsElemAction">arg1 is a Variable has root UIElement, arg2 is Variable Name to Store Result</param>
+        /// <param name="searchElemAction">arg1 is a Variable has root UIElement, arg2 is Variable to Store Target UIElement</param>
         /// <param name="engine"></param>
         protected void UIElementActionProcess(Engine.AutomationEngineInstance engine, Action<InnerScriptVariable> rootElemAction, Action<InnerScriptVariable, string> existsElemAction, Action<InnerScriptVariable, InnerScriptVariable> searchElemAction)
         {
