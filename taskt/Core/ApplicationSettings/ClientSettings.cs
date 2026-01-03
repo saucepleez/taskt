@@ -280,7 +280,7 @@ namespace taskt.Core
 
             GUIInspectMaxSiblings = 64;
             GUIInspectMaxDepth = 32;
-            GUIInspectSearchTime = 30;
+            GUIInspectSearchTime = 5;
         }
 
         /// <summary>
