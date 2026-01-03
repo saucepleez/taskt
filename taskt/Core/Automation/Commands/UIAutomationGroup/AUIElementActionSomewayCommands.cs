@@ -298,7 +298,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         {
             var cmb = FormUIControls.GetPropertyControl<ComboBox>(ControlsList, nameof(v_AutomationType));
             var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_UIAActionParameters));
-            ActionParameterProcess(dgv, cmb.SelectedItem?.ToString() ?? "");
+            SetComboBoxParameterProcess(dgv, cmb.SelectedItem?.ToString() ?? "");
         }
 
         protected void cmbActionType_SelectedItemChange(object sender, EventArgs e)
@@ -450,7 +450,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                     break;
             }
 
-            ActionParameterProcess(dgv, a);
+            SetComboBoxParameterProcess(dgv, a);
         }
 
         /// <summary>
@@ -466,7 +466,12 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             }
         }
 
-        protected static void ActionParameterProcess(DataGridView dgv, string actionType)
+        /// <summary>
+        /// set DataGridView combobox parameter process
+        /// </summary>
+        /// <param name="dgv"></param>
+        /// <param name="actionType"></param>
+        protected static void SetComboBoxParameterProcess(DataGridView dgv, string actionType)
         {
             switch (actionType.ToLower())
             {
