@@ -1082,18 +1082,28 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             {
                 var nodes = treeNodeFunc();
 
-                tvElements.SuspendLayout();
-                tvElements.BeginUpdate();
+                //tvElements.SuspendLayout();
+                //tvElements.BeginUpdate();
 
-                tvElements.Nodes.Clear();
-                tvElements.Nodes.Add(nodes);
+                //tvElements.Nodes.Clear();
+                //tvElements.Nodes.Add(nodes);
 
-                tvElements.ExpandAll();
+                //tvElements.ExpandAll();
 
-                tvElements.Nodes[0].EnsureVisible();    // move to top
+                //tvElements.Nodes[0].EnsureVisible();    // move to top
 
-                tvElements.EndUpdate();
-                tvElements.ResumeLayout();
+                //tvElements.EndUpdate();
+                //tvElements.ResumeLayout();
+
+                tvElementsRenderProcess(new Action(() =>
+                {
+                    tvElements.Nodes.Clear();
+                    tvElements.Nodes.Add(nodes);
+
+                    tvElements.ExpandAll();
+
+                    tvElements.Nodes[0].EnsureVisible();    // move to top
+                }));
 
                 txtElementInformation.Text = string.Empty;
 
@@ -1103,6 +1113,107 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             {
                 tvElements.Nodes.Clear();
                 txtElementInformation.Text = $"UIElement Tree Create Error: {ex.Message}";
+            }
+        }
+
+        /// <summary>
+        /// tvElements render process
+        /// </summary>
+        /// <param name="renderAction"></param>
+        private void tvElementsRenderProcess(Action renderAction)
+        {
+            tvElements.SuspendLayout();
+            tvElements.BeginUpdate();
+
+            renderAction();
+
+            tvElements.EndUpdate();
+            tvElements.ResumeLayout();
+        }
+
+        /// <summary>
+        /// btnXPathEva clicked -> show/hide XPath input box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnXPathEvaluate_Click(object sender, EventArgs e)
+        {
+            using(var fm = new frmInputBox("XPath", "Please Input XPath"))
+            {
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    var xpath = fm.InputValue;
+
+                    if (windowXMLTree != null)
+                    {
+                        //tvElements.SuspendLayout();
+                        //tvElements.BeginUpdate();
+
+                        var xmls = windowXMLTree.XPathSelectElements(xpath);
+                        var elems = new List<AutomationElement>();
+                        foreach(var xelem in xmls)
+                        {
+                            elems.Add(uiElementHashTable[xelem.Attribute("Hash").Value]);
+                        }
+
+                        tvElementsRenderProcess(new Action(() =>
+                        {
+                            ClearHightlightTreeNodeProcess(tvElements.Nodes);
+                            HighlightTreeNodeProcess(tvElements.Nodes, elems);
+                        }));
+
+                        if (xmls == null)
+                        {
+                            ShowMessageTimer("No UIElement(s) found.");
+                        }
+                        else
+                        {
+                            ShowMessageTimer($"{xmls.Count()} UIElement(s) found.");
+                        }
+
+                        //tvElements.EndUpdate();
+                        //tvElements.ResumeLayout();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// clear highlight TreeNode
+        /// </summary>
+        /// <param name="nodes"></param>
+        private static void ClearHightlightTreeNodeProcess(TreeNodeCollection nodes)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                node.BackColor = Color.Transparent;
+                if (node.Nodes.Count > 0)
+                {
+                    ClearHightlightTreeNodeProcess(node.Nodes);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Highlight TreeNode
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <param name="targetElement"></param>
+        /// <param name="isFound"></param>
+        private static void HighlightTreeNodeProcess(TreeNodeCollection nodes, List<AutomationElement> targetElements)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                var tElem = (AutomationElement)node.Tag;
+                if (targetElements.Any(item => item == tElem))
+                {
+                    node.BackColor = Color.Yellow;
+                }
+
+                if (node.Nodes.Count > 0)
+                {
+                    HighlightTreeNodeProcess(node.Nodes, targetElements);
+                }
             }
         }
     }

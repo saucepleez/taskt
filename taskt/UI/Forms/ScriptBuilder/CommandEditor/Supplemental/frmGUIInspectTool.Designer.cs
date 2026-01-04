@@ -35,6 +35,7 @@
             this.cmbInspectMode = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panelXPath = new System.Windows.Forms.Panel();
+            this.btnXPathEvaluate = new System.Windows.Forms.Button();
             this.chkUseAutomationIdAttr = new System.Windows.Forms.CheckBox();
             this.chkUseNameAttr = new System.Windows.Forms.CheckBox();
             this.txtXPath = new System.Windows.Forms.TextBox();
@@ -149,6 +150,7 @@
             // panelXPath
             // 
             this.panelXPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.panelXPath.Controls.Add(this.btnXPathEvaluate);
             this.panelXPath.Controls.Add(this.chkUseAutomationIdAttr);
             this.panelXPath.Controls.Add(this.chkUseNameAttr);
             this.panelXPath.Controls.Add(this.txtXPath);
@@ -158,6 +160,17 @@
             this.panelXPath.Name = "panelXPath";
             this.panelXPath.Size = new System.Drawing.Size(569, 80);
             this.panelXPath.TabIndex = 1;
+            // 
+            // btnXPathEvaluate
+            // 
+            this.btnXPathEvaluate.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnXPathEvaluate.Location = new System.Drawing.Point(408, 47);
+            this.btnXPathEvaluate.Name = "btnXPathEvaluate";
+            this.btnXPathEvaluate.Size = new System.Drawing.Size(68, 23);
+            this.btnXPathEvaluate.TabIndex = 3;
+            this.btnXPathEvaluate.Text = "XPathEval";
+            this.btnXPathEvaluate.UseVisualStyleBackColor = true;
+            this.btnXPathEvaluate.Click += new System.EventHandler(this.btnXPathEvaluate_Click);
             // 
             // chkUseAutomationIdAttr
             // 
@@ -441,13 +454,13 @@
             this.timerMouseMove.Interval = 2000;
             this.timerMouseMove.Tick += new System.EventHandler(this.timerMouseMove_Tick);
             // 
-            // frmGUIInspect
+            // frmGUIInspectTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(569, 499);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "frmGUIInspect";
+            this.Name = "frmGUIInspectTool";
             this.Text = "GUI Inspect Tool";
             this.Load += new System.EventHandler(this.frmGUIInspectTool_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -505,5 +518,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox checkEnableInspect;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnXPathEvaluate;
     }
 }
