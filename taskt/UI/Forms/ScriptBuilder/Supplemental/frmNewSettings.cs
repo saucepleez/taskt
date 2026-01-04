@@ -676,7 +676,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             CreateCheckBox("chkRequireListenerKey", "Require Authentication Key", newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.RequireListenerAuthenticationKey), true);
             CreateLabel("lblAuthenicationKey", "Authentication Key", FontSize.Small, true);
-            TextBox txtAuthKey = CreateTextBox("txtAuthenicationKey", 480, newAppSettings, nameof(newAppSettings.ListenerSettings.AuthKey), true);
+            TextBox txtAuthKey = CreateTextBox("txtAuthenicationKey", 480, newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.AuthKey), true);
             Button btnRegenerateAuthKey = CreateButton("btnRegenerateAuthKey", "Regenerate", 140, true);
 
             btnRegenerateAuthKey.Click += (sender, e) => btnRegenerateAuthKey_Clicked(sender, e, txtAuthKey);
