@@ -924,7 +924,6 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         }
         private void cmbStartUpMode_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            //newAppSettings.ClientSettings.StartupMode = ((ComboBox)sender).Text;
             newAppSettings.GetClientSettings().StartupMode = ((ComboBox)sender).Text;
         }
         #endregion
@@ -934,7 +933,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             string currentFolerPath = newAppSettings.ClientSettings.RootFolder;
 
-            //prompt user to confirm they want to select a new folder
+            // prompt user to confirm they want to select a new folder
             var updateFolderRequest = 
                 MessageBox.Show(
                     "Would you like to change the default root folder that taskt uses to store tasks and information? " + Environment.NewLine + Environment.NewLine +
@@ -942,23 +941,23 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                     "Change Default Root Folder", 
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            //if user does not want to update folder then exit
+            // if user does not want to update folder then exit
             if (updateFolderRequest == DialogResult.No)
             {
                 return;
             }
 
-            //user folder browser to let user select top level folder
+            // user folder browser to let user select top level folder
             using (var fbd = new FolderBrowserDialog())
             {
-                //check if user selected a folder
+                // check if user selected a folder
                 if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    //create references to old and new root folders
+                    // create references to old and new root folders
                     var oldRootFolder = currentFolerPath;
                     var newRootFolder = System.IO.Path.Combine(fbd.SelectedPath, "taskt");
 
-                    //ask user to confirm
+                    // ask user to confirm
                     var confirmNewFolderSelection = 
                         MessageBox.Show(
                             "Please confirm the changes below:" + Environment.NewLine + Environment.NewLine +
@@ -967,25 +966,25 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                             "Change Default Root Folder", 
                             MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
 
-                    //handle if user decides to cancel
+                    // handle if user decides to cancel
                     if (confirmNewFolderSelection == DialogResult.Cancel)
                     {
                         return;
                     }
 
-                    //ask if we should migrate the data
+                    // ask if we should migrate the data
                     var migrateCopyData = 
                         MessageBox.Show(
                             "Would you like to attempt to move the data from the old folder to the new folder?  Please note, depending on how many files you have, this could take a few minutes.", 
                             "Migrate Data?", 
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                    //check if user wants to migrate data
+                    // check if user wants to migrate data
                     if (migrateCopyData == DialogResult.Yes)
                     {
                         try
                         {
-                            //find and copy files
+                            // find and copy files
                             foreach (string dirPath in System.IO.Directory.GetDirectories(oldRootFolder, "*", System.IO.SearchOption.AllDirectories))
                             {
                                 System.IO.Directory.CreateDirectory(dirPath.Replace(oldRootFolder, newRootFolder));
@@ -1000,13 +999,12 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                         }
                         catch (Exception ex)
                         {
-                            //handle any unexpected errors
+                            // handle any unexpected errors
                             MessageBox.Show("An Error Occured during Data Migration Copy: " + ex.ToString());
                         }
                     }
 
-                    //update textbox which will be updated once user selects "Ok"
-                    //newAppSettings.ClientSettings.RootFolder = newRootFolder;
+                    // update textbox which will be updated once user selects "Ok"
                     newAppSettings.GetClientSettings().RootFolder = newRootFolder;
                 }
             }
@@ -1032,24 +1030,6 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
                     var newFullPath = System.IO.Path.GetFullPath(newAttendedTaskFolder);
                     
-                    ////if (newFullPath == Core.Script.Script.GetAutoSaveFolderPath())
-                    //if (newFullPath == Folders.GetAutoSaveFolderPath())
-                    //{
-                    //    MessageBox.Show($"Selected folder is in the same location as the '{Folders.AUTOSAVE_FOLDER_NAME}' folder");
-                    //    return;
-                    //}
-                    ////if (newFullPath == Core.Script.Script.GetRunWithoutSavingFolderPath())
-                    //if (newFullPath == Folders.GetRunWithoutSavingFolderPath())
-                    //{
-                    //    MessageBox.Show($"Selected folder is in the same location as the '{Folders.RUN_WITHOUT_SAVING_FOLDER_NAME}' folder");
-                    //    return;
-                    //}
-                    //if (newFullPath == Folders.GetBeforeConvertedFolderPath())
-                    //{
-                    //    MessageBox.Show($"Selected folder is in the same location as the '{Folders.BEFORE_CONVERTED_FOLDER_NAME}' folder");
-                    //    return;
-                    //}
-
                     foreach((var path, var folderName) in checkPaths)
                     {
                         if (newFullPath == path)
@@ -1067,7 +1047,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         #region Parser Events
         private void VariableMarker_TextChanged(object sender,EventArgs e, TextBox startMarker, TextBox endMaker, Label exampleLabel)
         {
-            exampleLabel.Text = startMarker.Text + "VariableName" + endMaker.Text;
+            exampleLabel.Text = $"{startMarker.Text}VariableName{endMaker.Text}";
         }
         #endregion
 
@@ -1082,8 +1062,6 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
                 if (pulledNewGUID)
                 {
-                    //newAppSettings = new Core.ApplicationSettings();
-                    //newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
                     newAppSettings = ApplicationSettings.GetOrCreateApplicationSettings(App.Taskt_Settings_File_Path);
 
                     txtAddress.Text = newAppSettings.ServerSettings.HTTPGuid.ToString();
@@ -1199,7 +1177,6 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         
         private void btnRegenerateAuthKey_Clicked(object sender, EventArgs e, TextBox txtAuth)
         {
-            //newAppSettings.ListenerSettings.AuthKey = Guid.NewGuid().ToString();
             newAppSettings.GetLocalListenerSettings().AuthKey = Guid.NewGuid().ToString();
             txtAuth.Text = newAppSettings.ListenerSettings.AuthKey;
         }
@@ -1231,7 +1208,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 }
                 else
                 {
-                    lblMetrics.Text = "Metrics Unavailable: " + e.Error.ToString();
+                    lblMetrics.Text = $"Metrics Unavailable: {e.Error}";
                 }
             }
             else
@@ -1254,13 +1231,17 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
                 foreach (var metric in metricsSummary)
                 {
-                    var rootNode = new TreeNode();
-                    rootNode.Text = metric.FileName + " [" + metric.AverageExecutionTime + " avg.]";
+                    var rootNode = new TreeNode
+                    {
+                        Text = $"{metric.FileName} [{metric.AverageExecutionTime} avg.]"
+                    };
 
                     foreach (var metricItem in metric.ExecutionData)
                     {
-                        var subNode = new TreeNode();
-                        subNode.Text = string.Join(" - ", metricItem.LoggedOn.ToString("MM/dd/yy hh:mm"), metricItem.ExecutionTime);
+                        var subNode = new TreeNode
+                        {
+                            Text = $" - {metricItem.LoggedOn.ToString("MM/dd/yy hh:mm")} {metricItem.ExecutionTime}"
+                        };
                         rootNode.Nodes.Add(subNode);
                     }
 
@@ -1292,8 +1273,6 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         #region Documents Events
         private void btnCreateCommandReference_Click(object sender, EventArgs e)
         {
-            //Core.DocumentationGeneration docGeneration = new Core.DocumentationGeneration();
-            //var docsRoot = docGeneration.GenerateMarkdownFiles();
             var docsRoot = DocumentationGeneration.GenerateMarkdownFiles();
             System.Diagnostics.Process.Start(docsRoot);
         }
@@ -1302,8 +1281,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         #region Engine Events
         private void cmdCancellationButton_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Keys key = (Keys)Enum.Parse(typeof(Keys), ((ComboBox)sender).Text);
-            //newAppSettings.EngineSettings.CancellationKey = key;
+            var key = (Keys)Enum.Parse(typeof(Keys), ((ComboBox)sender).Text);
             newAppSettings.GetEngineSettings().CancellationKey = key;
         }
         #endregion
@@ -1311,7 +1289,6 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         #region Editor Events
         private void cmbInstanceSortOrder_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            //newAppSettings.ClientSettings.InstanceNameOrder = ((ComboBox)sender).Text;
             newAppSettings.GetClientSettings().InstanceNameOrder = ((ComboBox)sender).Text;
         }
         #endregion
@@ -1378,7 +1355,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             p.Close();
 
-            Dictionary<string, string> ret = new Dictionary<string, string>()
+            var ret = new Dictionary<string, string>()
             {
                 { "chrome", ParseWebDriverVersion(chromeVersion)},
                 { "edge", ParseWebDriverVersion(edgeVersion)},
