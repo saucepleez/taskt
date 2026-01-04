@@ -249,8 +249,24 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             ComboBox cmbStart = CreateComboBox("cmbStartMode", new string[] { "Builder Mode","Attended Task Mode"}, 200, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.StartupMode), true);
             cmbStart.SelectionChangeCommitted += (sender, e) => cmbStartUpMode_SelectionChangeCommitted(sender, e);
 
-            Button btnAttended = CreateButton("btnLunchAttended", "Launch Attended Mode", 240, true);
-            btnAttended.Click += (sender, e) => btnLaunchAttendedMode_Click(sender, e);
+            //Button btnAttended = CreateButton("btnLunchAttended", "Launch Attended Mode", 240, true);
+            //btnAttended.Click += (sender, e) => btnLaunchAttendedMode_Click(sender, e);
+            //btnAttended.Click += (sender, e) =>
+            //{
+            //    if (MessageBox.Show("Close Settings form to launch Attended Mode.\nIf you have changed the settings, click the 'OK' button to save the changes.\nLaunch Attended Mode now ?", "Settings", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            //    {
+            //        scriptBuilderForm.ShowAttendedModeFormProcess();
+            //        this.Close();
+            //    }
+            //};
+            CreateButton("btnLunchAttended", "Launch Attended Mode", 240, new Action<object, EventArgs>((sender, e) =>
+            {
+                if (MessageBox.Show("Close Settings form to launch Attended Mode.\nIf you have changed the settings, click the 'OK' button to save the changes.\nLaunch Attended Mode now ?", "Settings", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    scriptBuilderForm.ShowAttendedModeFormProcess();
+                    this.Close();
+                }
+            }), true);
         }
 
         private void showApplicationFolderSettings()
@@ -909,6 +925,22 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             flowLayoutSettings.Controls.Add(btn);
             flowLayoutSettings.SetFlowBreak(btn, isBreak);
 
+            return btn;
+        }
+
+        /// <summary>
+        /// create button, attach click event
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="text"></param>
+        /// <param name="width"></param>
+        /// <param name="clickEvent"></param>
+        /// <param name="isBreak"></param>
+        /// <returns></returns>
+        private Button CreateButton(string name, string text, int width, Action<object, EventArgs> clickEvent, bool isBreak = false)
+        {
+            var btn = CreateButton(name, text, width, isBreak);
+            btn.Click += new EventHandler(clickEvent);
             return btn;
         }
         #endregion
