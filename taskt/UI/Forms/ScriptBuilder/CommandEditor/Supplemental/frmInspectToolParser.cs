@@ -3,15 +3,15 @@ using System.Windows.Forms;
 
 namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
-    public partial class frmInspectParser : DialogLikeThemedForm
+    public partial class frmInspectToolParser : DialogLikeThemedForm
     {
-        public frmInspectParser()
+        public frmInspectToolParser()
         {
             InitializeComponent();
             this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
         }
 
-        private void frmInspectParser_Load(object sender, EventArgs e)
+        private void frmInspectToolParser_Load(object sender, EventArgs e)
         {
             SupplementFormsEvents.SupplementFormLoad(this);
         }
@@ -26,13 +26,12 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             this.DialogResult = DialogResult.Cancel;
         }
 
-        public string inspectResult
+        public string InspectResult
         {
             get
             {
                 return this.txtInspectResult.Text.Trim();
             }
         }
-
     }
 }

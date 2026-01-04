@@ -1,6 +1,6 @@
 ﻿namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
-    partial class frmGUIInspect
+    partial class frmGUIInspectTool
     {
         /// <summary>
         /// Required designer variable.
@@ -449,7 +449,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "frmGUIInspect";
             this.Text = "GUI Inspect Tool";
-            this.Load += new System.EventHandler(this.frmGUIInspect_Load);
+            this.Load += new System.EventHandler(this.frmGUIInspectTool_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panelTitle.ResumeLayout(false);
             this.panelTitle.PerformLayout();

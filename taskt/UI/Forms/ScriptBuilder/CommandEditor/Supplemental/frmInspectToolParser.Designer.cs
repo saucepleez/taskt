@@ -1,6 +1,6 @@
 ﻿namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
-    partial class frmInspectParser
+    partial class frmInspectToolParser
     {
         /// <summary>
         /// Required designer variable.
@@ -164,7 +164,7 @@
             this.MinimizeBox = false;
             this.Name = "frmInspectParser";
             this.Text = "Inspect Tool Parser";
-            this.Load += new System.EventHandler(this.frmInspectParser_Load);
+            this.Load += new System.EventHandler(this.frmInspectToolParser_Load);
             this.rootLayout.ResumeLayout(false);
             this.rootLayout.PerformLayout();
             this.panel1.ResumeLayout(false);

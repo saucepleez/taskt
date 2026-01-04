@@ -19,7 +19,7 @@ using static taskt.Core.Automation.Commands.UIAutomationGroup.EM_CanHandleUIElem
  */
 namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
-    public partial class frmGUIInspect : DialogLikeThemedForm
+    public partial class frmGUIInspectTool : DialogLikeThemedForm
     {
         /// <summary>
         /// UIElement XML Tree
@@ -41,14 +41,14 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         /// </summary>
         private Point oldCursorPosition = new Point(-1, -1);
 
-        public frmGUIInspect()
+        public frmGUIInspectTool()
         {
             InitializeComponent();
             this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
         }
 
         #region form events
-        private void frmGUIInspect_Load(object sender, EventArgs e)
+        private void frmGUIInspectTool_Load(object sender, EventArgs e)
         {
             this.DoubleBuffered = true;
             SupplementFormsEvents.SupplementFormLoad(this);

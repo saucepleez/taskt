@@ -1562,11 +1562,11 @@
     <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmImageCapture.Designer.cs">
       <DependentUpon>frmImageCapture.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmGUIInspect.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmGUIInspectTool.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmGUIInspect.Designer.cs">
-      <DependentUpon>frmGUIInspect.cs</DependentUpon>
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmGUIInspectTool.Designer.cs">
+      <DependentUpon>frmGUIInspectTool.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmInputBox.cs">
       <SubType>Form</SubType>
@@ -1574,11 +1574,11 @@
     <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmInputBox.designer.cs">
       <DependentUpon>frmInputBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmInspectParser.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmInspectToolParser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmInspectParser.Designer.cs">
-      <DependentUpon>frmInspectParser.cs</DependentUpon>
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmInspectToolParser.Designer.cs">
+      <DependentUpon>frmInspectToolParser.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmJSONPathHelper.cs">
       <SubType>Form</SubType>
@@ -1785,14 +1785,14 @@
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmScriptVariables.resx">
       <DependentUpon>frmScriptVariables.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmGUIInspect.resx">
-      <DependentUpon>frmGUIInspect.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmGUIInspectTool.resx">
+      <DependentUpon>frmGUIInspectTool.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmInputBox.resx">
       <DependentUpon>frmInputBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmInspectParser.resx">
-      <DependentUpon>frmInspectParser.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmInspectToolParser.resx">
+      <DependentUpon>frmInspectToolParser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmJSONPathHelper.resx">
       <DependentUpon>frmJSONPathHelper.cs</DependentUpon>
