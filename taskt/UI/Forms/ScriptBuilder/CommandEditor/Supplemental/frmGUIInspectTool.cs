@@ -1134,6 +1134,10 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             }
         }
 
+        /// <summary>
+        /// search and highlight UIElement in tvElements
+        /// </summary>
+        /// <param name="xpath"></param>
         private void SearchAndHighlightTvElements(string xpath)
         {
             if (windowXMLTree != null)
