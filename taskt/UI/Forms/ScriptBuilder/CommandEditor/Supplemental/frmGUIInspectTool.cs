@@ -1146,9 +1146,6 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 
                     if (windowXMLTree != null)
                     {
-                        //tvElements.SuspendLayout();
-                        //tvElements.BeginUpdate();
-
                         var xmls = windowXMLTree.XPathSelectElements(xpath);
                         var elems = new List<AutomationElement>();
                         foreach(var xelem in xmls)
@@ -1170,9 +1167,6 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                         {
                             ShowMessageTimer($"{xmls.Count()} UIElement(s) found.");
                         }
-
-                        //tvElements.EndUpdate();
-                        //tvElements.ResumeLayout();
                     }
                 }
             }
