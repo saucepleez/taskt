@@ -100,7 +100,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             flowLayoutSettings.SuspendLayout();
 
-            string newPage = rootNode.Text + " - " + tvSettingsMenu.SelectedNode.Text;
+            string newPage = $"{rootNode.Text} - {tvSettingsMenu.SelectedNode.Text}";
 
             switch (newPage)
             {
@@ -138,9 +138,6 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 case "Automation Engine - Parser":
                     showAutomationEngineParserSettings();
                     break;
-                //case "Automation Engine - UIElement Inspect":
-                //    showAutomationUIElementInspect();
-                //    break;
                 case "Automation Engine - Variable":
                     showAutomationEngineVariableSettings();
                     break;
@@ -245,11 +242,11 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             removeSettingControls();
 
             createLabel("lblTitie", "Start Up", FontSize.Large, true);
-            createCheckBox("chkAntiIdle", "Anti-Idle (while app is open)", newAppSettings.ClientSettings, "AntiIdleWhileOpen", true);
-            CheckBox chkPre = createCheckBox("chkPreLoadCommands", "Load Commands at Startup (Reduces Flicker)", newAppSettings.ClientSettings, "PreloadBuilderCommands", true);
+            createCheckBox("chkAntiIdle", "Anti-Idle (while app is open)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.AntiIdleWhileOpen), true);
+            CheckBox chkPre = createCheckBox("chkPreLoadCommands", "Load Commands at Startup (Reduces Flicker)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.PreloadBuilderCommands), true);
             chkPre.Visible = false;
             createLabel("lblStartMode", "Start Mode:", FontSize.Normal, false);
-            ComboBox cmbStart = createComboBox("cmbStartMode", new string[] { "Builder Mode","Attended Task Mode"}, 200, newAppSettings.ClientSettings, "StartupMode", true);
+            ComboBox cmbStart = createComboBox("cmbStartMode", new string[] { "Builder Mode","Attended Task Mode"}, 200, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.StartupMode), true);
             cmbStart.SelectionChangeCommitted += (sender, e) => cmbStartUpMode_SelectionChangeCommitted(sender, e);
 
             Button btnAttended = createButton("btnLunchAttended", "Launch Attended Mode", 240, true);
@@ -263,12 +260,12 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             createLabel("lblTitle", "Folder", FontSize.Large, true);
             
             createLabel("lblRootFolder", "taskt Root Folder", FontSize.Small, true);
-            TextBox txtAppFolder = createTextBox("txtAppFolderPath", 440, newAppSettings.ClientSettings, "RootFolder", false);
+            TextBox txtAppFolder = createTextBox("txtAppFolderPath", 440, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RootFolder), false);
             Button rootButton = createButton("btnSelectRootFolder", "...", 42, true);
             rootButton.Click += (sender, e) => btnSelectRootFolder_Click(sender, e, txtAppFolder);
 
             createLabel("lblTaskFolder", "Attended Tasks Folder (Default Folder for saving Script Files)", FontSize.Small, true);
-            TextBox txtTasksFolder = createTextBox("txtAttendedTasksFolder", 440, newAppSettings.ClientSettings, "AttendedTasksFolder", false);
+            TextBox txtTasksFolder = createTextBox("txtAttendedTasksFolder", 440, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.AttendedTasksFolder), false);
             Button tasksFolder = createButton("btnSelectTasksFolder", "...", 42, true);
             tasksFolder.Click += (sender, e) => btnSelectAttendedTaskFolder_Click(sender, e, txtTasksFolder);
         }
@@ -278,9 +275,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblTitle", "Debug", FontSize.Large, true);
 
-            createCheckBox("chkShowDebug", "Show Debug Window when Script Execute", newAppSettings.EngineSettings, "ShowDebugWindow", true);
-            createCheckBox("chkAutoCloseDebugWindow", "Automatically Close Debug Window", newAppSettings.EngineSettings, "AutoCloseDebugWindow", true);
-            createCheckBox("chkShowAdvancedDebug", "Show Advanced Debug Logs During Execution", newAppSettings.EngineSettings, "ShowAdvancedDebugOutput", true);
+            createCheckBox("chkShowDebug", "Show Debug Window when Script Execute", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.ShowDebugWindow), true);
+            createCheckBox("chkAutoCloseDebugWindow", "Automatically Close Debug Window", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.AutoCloseDebugWindow), true);
+            createCheckBox("chkShowAdvancedDebug", "Show Advanced Debug Logs During Execution", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.ShowAdvancedDebugOutput), true);
         }
         private void showApplicationMetricSettings()
         {
@@ -288,7 +285,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblTitle", "Script Metric", FontSize.Large, true);
 
-            createCheckBox("chkTrackMetrics", "Track Execution Metrics", newAppSettings.EngineSettings, "TrackExecutionMetrics", true);
+            createCheckBox("chkTrackMetrics", "Track Execution Metrics", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.TrackExecutionMetrics), true);
 
             createLabel("lblTitleMetrics", "Script Execution Metrics (Last 10 per Script)", FontSize.Small, true);
             lblMetrics = createLabel("lblMetrics", "Getting Metrics...", FontSize.Normal, true);
@@ -313,7 +310,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblTitle", "Other", FontSize.Large, true);
 
-            createCheckBox("chkMinimizeToTary", "Minimize to System Tray", newAppSettings.ClientSettings, "MinimizeToTray", true);
+            createCheckBox("chkMinimizeToTary", "Minimize to System Tray", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.MinimizeToTray), true);
 
             createLabel("lblResourceTitle", "Resources Folder", FontSize.NormalBold, true);
             createLabel("lblResource", "If you want to update the WebDriver (chromedriver.exe etc),\nopen the Resources folder and overwrite the file.", FontSize.Small, true);
@@ -349,7 +346,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             createLabel("lblTitle", "Script File", FontSize.Large, true);
 
             createLabel("lblIntermediateTitle", "Intermediate Script File", FontSize.NormalBold, true);
-            createCheckBox("lblScriptIntermediate", "Export Intermediate Script File", newAppSettings.EngineSettings, "ExportIntermediateXML", true);
+            createCheckBox("lblScriptIntermediate", "Export Intermediate Script File", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.ExportIntermediateXML), true);
 
             createLabel("lblAutoSaveTitle", "Auto Save Script File", FontSize.NormalBold, true);
             createCheckBox("lblEnabledAutoSave", "Enable Auto Save Script File", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.EnabledAutoSave), true);
@@ -413,9 +410,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             createLabel("lblTitle", "Parser", FontSize.Large, true);
 
             createLabel("lblStartMarker", "Start Marker:", FontSize.Normal, false);
-            TextBox txtStart = createTextBox("txtStartMarker", 40, newAppSettings.EngineSettings, "VariableStartMarker", false);
+            TextBox txtStart = createTextBox("txtStartMarker", 40, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.VariableStartMarker), false);
             createLabel("lblEndMarker", "End Marker:", FontSize.Normal, false);
-            TextBox txtEnd = createTextBox("txtEndMarker", 40, newAppSettings.EngineSettings, "VariableEndMarker", true);
+            TextBox txtEnd = createTextBox("txtEndMarker", 40, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.VariableEndMarker), true);
             Label lblNotice = createLabel("lblMarkerNotice", "If Start Maker and End Marker are the same,\nthe variable may not expand properly.", FontSize.Small, false);
             lblNotice.Padding = new Padding(0, 4, 0, 0);
             Label lblExample = createLabel("lblVariableExample", newAppSettings.EngineSettings.VariableStartMarker + "VariableName" + newAppSettings.EngineSettings.VariableEndMarker, FontSize.NormalBold, true);
@@ -423,10 +420,10 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             txtStart.TextChanged += (sender, e) => VariableMarker_TextChanged(sender, e, txtStart, txtEnd, lblExample);
             txtEnd.TextChanged += (sender, e) => VariableMarker_TextChanged(sender, e, txtStart, txtEnd, lblExample);
 
-            createCheckBox("chkCalculateAutomatically", "Calculate Automatically", newAppSettings.EngineSettings, "AutoCalcVariables", true);
+            createCheckBox("chkCalculateAutomatically", "Calculate Automatically", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.AutoCalcVariables), true);
 
             createCheckBox("chkUserNewParser", "Use New Parser (beta)", newAppSettings.EngineSettings, "UseNewParser", true);
-            createCheckBox("chkIgnoreFirstMarker", "Ignore First Variable Marker In Output Parameter (Check is strongly recommended)", newAppSettings.EngineSettings, "IgnoreFirstVariableMarkerInOutputParameter", true);
+            createCheckBox("chkIgnoreFirstMarker", "Ignore First Variable Marker In Output Parameter (Check is strongly recommended)", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.IgnoreFirstVariableMarkerInOutputParameter), true);
         }
 
         //private void showAutomationUIElementInspect()
@@ -457,15 +454,15 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             createLabel("lblWindowKeyword", "Window Keyword", FontSize.NormalBold, true);
 
             createLabel("lblCurrentWindow", "Current Window Keyword : Currently Window.CurrentWindowName", FontSize.Small, true);
-            createTextBox("txtCurrentWindow", 400, newAppSettings.EngineSettings, "CurrentWindowKeyword", true);
+            createTextBox("txtCurrentWindow", 400, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.CurrentWindowKeyword), true);
 
             createLabel("lblExcelKeyword", "Excel Keyword", FontSize.NormalBold, true);
             createLabel("lblCurrentSheet", "Current Worksheet Keyword : Currently Excel.CurrentWorksheet", FontSize.Small, true);
-            createTextBox("txtCurrentSheet", 400, newAppSettings.EngineSettings, "CurrentWorksheetKeyword", true);
+            createTextBox("txtCurrentSheet", 400, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.CurrentWorksheetKeyword), true);
             createLabel("lblNextSheet", "Next Worksheet Keyword : Currently Excel.NextWorksheet", FontSize.Small, true);
-            createTextBox("txtNextSheet", 400, newAppSettings.EngineSettings, "NextWorksheetKeyword", true);
+            createTextBox("txtNextSheet", 400, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.NextWorksheetKeyword), true);
             createLabel("lblPreviousSheet", "Previous Worksheet Keyword : Currently Excel.PreviousWorksheet", FontSize.Small, true);
-            createTextBox("txtPreviousSheet", 400, newAppSettings.EngineSettings, "PreviousWorksheetKeyword", true);
+            createTextBox("txtPreviousSheet", 400, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.PreviousWorksheetKeyword), true);
         }
 
         private void showAutomationEngineEngineSettings()
@@ -474,13 +471,13 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblTitle", "Engine", FontSize.Large, true);
 
-            createCheckBox("chkOverrideAppInstance", "Override App Instances", newAppSettings.EngineSettings, "OverrideExistingAppInstances", true);
+            createCheckBox("chkOverrideAppInstance", "Override App Instances", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.OverrideExistingAppInstances), true);
 
             createLabel("lblCommandDelay", "Default delay between executing commands (ms):", FontSize.Normal, false);
-            createTextBox("txtCommandDelay", 80, newAppSettings.EngineSettings, "DelayBetweenCommands", true);
+            createTextBox("txtCommandDelay", 80, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.DelayBetweenCommands), true);
 
             createLabel("lblCancelKey", "End Script Hotkey:", FontSize.Normal, false);
-            ComboBox cmb =createComboBox("cmbCancellationKey", keysList, 240, newAppSettings.EngineSettings, "CancellationKey", true);
+            ComboBox cmb =createComboBox("cmbCancellationKey", keysList, 240, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.CancellationKey), true);
             cmb.SelectionChangeCommitted += (sender, e) => cmdCancellationButton_SelectionChangeCommitted(sender, e);
         }
         private void showAutomationEngineVariableSettings()
@@ -489,7 +486,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblTitle", "Variable", FontSize.Large, true);
 
-            createCheckBox("chkCreateMissingVariable", "Create Missing Variables During Execution", newAppSettings.EngineSettings, "CreateMissingVariablesDuringExecution", true);
+            createCheckBox("chkCreateMissingVariable", "Create Missing Variables During Execution", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.CreateMissingVariablesDuringExecution), true);
         }
         private void showAutomationEngineLogSettings()
         {
@@ -497,7 +494,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblTitle", "Log", FontSize.Large, true);
 
-            createCheckBox("chkEnableLogging", "Enable Diagnostic Logging", newAppSettings.EngineSettings, "EnableDiagnosticLogging", true);
+            createCheckBox("chkEnableLogging", "Enable Diagnostic Logging", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.EnableDiagnosticLogging), true);
         }
         #endregion
 
@@ -520,8 +517,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblTitle", "Menu Bar", FontSize.Large, true);
 
-            createCheckBox("chkUseSlimBar", "Use Slim Menu Bar (required restart)", newAppSettings.ClientSettings, "UseSlimActionBar", true);
-            createCheckBox("chkShowCommandSearch", "Show Command Search Box when taskt is started (required restart)", newAppSettings.ClientSettings, "ShowCommandSearchBar", true);
+            createCheckBox("chkUseSlimBar", "Use Slim Menu Bar (required restart)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.UseSlimActionBar), true);
+            createCheckBox("chkShowCommandSearch", "Show Command Search Box when taskt is started (required restart)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ShowCommandSearchBar), true);
         }
         private void showEditorCommandListSettings()
         {
@@ -530,15 +527,15 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             createLabel("lblTitle", "Command List", FontSize.Large, true);
 
             createLabel("lblGrouping", "Command List", FontSize.NormalBold, true);
-            createCheckBox("chkGroupBySubgroup", "Gruoping by subgroup (Restart required)", newAppSettings.ClientSettings, "GroupingBySubgroup", true);
+            createCheckBox("chkGroupBySubgroup", "Gruoping by subgroup (Restart required)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.GroupingBySubgroup), true);
             createCheckBox("chkSupportIECommands", "Support IE Commands (Restart required)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.SupportIECommand), true);
 
             createLabel("lblSearch", "Command Search", FontSize.NormalBold, true);
 
-            createCheckBox("chkMakeGroupNameSearchTarget", "Make Group Name a Search Target", newAppSettings.ClientSettings, "SearchTargetGroupName", true);
-            createCheckBox("chkGreedlyGroupName", "Show All Commands if Group Name Matches", newAppSettings.ClientSettings, "SearchGreedlyGroupName", true);
-            createCheckBox("chkMakeSubGroupNameSearchTarget", "Make SubGroup Name a Search Target", newAppSettings.ClientSettings, "SearchTargetSubGroupName", true);
-            createCheckBox("chkGreedlySubGroupName", "Show All Commands if SubGroup Name Matches", newAppSettings.ClientSettings, "SearchGreedlySubGroupName", true);
+            createCheckBox("chkMakeGroupNameSearchTarget", "Make Group Name a Search Target", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.SearchTargetGroupName), true);
+            createCheckBox("chkGreedlyGroupName", "Show All Commands if Group Name Matches", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.SearchGreedlyGroupName), true);
+            createCheckBox("chkMakeSubGroupNameSearchTarget", "Make SubGroup Name a Search Target", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.SearchTargetSubGroupName), true);
+            createCheckBox("chkGreedlySubGroupName", "Show All Commands if SubGroup Name Matches", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.SearchGreedlySubGroupName), true);
         }
 
         private void showEditorGUIInspectToolSettings()
@@ -565,25 +562,25 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblSortHeader", "Instance Sort", FontSize.NormalBold, true);
             createLabel("lblSortOrder", "Instance Name Sort Order:", FontSize.Normal, false);
-            ComboBox cmbSort = createComboBox("cmbSortOrder", new string[] { "Creation Frequently", "By Name", "Frequency Of Use", "No Sorting" }, 240, newAppSettings.ClientSettings, "InstanceNameOrder", true);
+            ComboBox cmbSort = createComboBox("cmbSortOrder", new string[] { "Creation Frequently", "By Name", "Frequency Of Use", "No Sorting" }, 240, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.InstanceNameOrder), true);
             cmbSort.Text = newAppSettings.ClientSettings.InstanceNameOrder;
             cmbSort.SelectionChangeCommitted += (sender, e) => cmbInstanceSortOrder_SelectionChangeCommitted(sender, e);
 
             createLabel("lblDefaultInstance", "Default Instance Name", FontSize.NormalBold, true);
             createLabel("lblDefaultDatabase", "Default Database Instance Name", FontSize.Small, true);
-            createTextBox("txtDefaultDatabase", 400, newAppSettings.ClientSettings, "DefaultDBInstanceName", true);
+            createTextBox("txtDefaultDatabase", 400, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DefaultDBInstanceName), true);
             createLabel("lblDefaultExcel", "Default Excel Instance Name", FontSize.Small, true);
-            createTextBox("txtDefaultExcel", 400, newAppSettings.ClientSettings, "DefaultExcelInstanceName", true);
+            createTextBox("txtDefaultExcel", 400, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DefaultExcelInstanceName), true);
             createLabel("lblDefaultNLG", "Default NLG Instance Name", FontSize.Small, true);
-            createTextBox("txtDefaultNLG", 400, newAppSettings.ClientSettings, "DefaultNLGInstanceName", true);
+            createTextBox("txtDefaultNLG", 400, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DefaultNLGInstanceName), true);
             createLabel("lblDefaultStopWatch", "Default StopWatch Instance Name", FontSize.Small, true);
-            createTextBox("txtDefaultStopWatch", 400, newAppSettings.ClientSettings, "DefaultStopWatchInstanceName", true);
+            createTextBox("txtDefaultStopWatch", 400, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DefaultStopWatchInstanceName), true);
             createLabel("lblDefaultWebBrowser", "Default WebBrowser Instance Name", FontSize.Small, true);
-            createTextBox("txtDefaultWebBrowser", 400, newAppSettings.ClientSettings, "DefaultBrowserInstanceName", true);
+            createTextBox("txtDefaultWebBrowser", 400, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DefaultBrowserInstanceName), true);
             createLabel("lblDefaultWord", "Default Word Instance Name", FontSize.Small, true);
-            createTextBox("txtDefaultWord", 400, newAppSettings.ClientSettings, "DefaultWordInstanceName", true);
+            createTextBox("txtDefaultWord", 400, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DefaultWordInstanceName), true);
 
-            createCheckBox("chkDontShowDefaultInstance", "Don't Show Default Instance When Multiple Instance Exists (partial support)", newAppSettings.ClientSettings, "DontShowDefaultInstanceWhenMultipleItemsExists", true);
+            createCheckBox("chkDontShowDefaultInstance", "Don't Show Default Instance When Multiple Instance Exists (partial support)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DontShowDefaultInstanceWhenMultipleItemsExists), true);
         }
         private void showEditorInsertCommandSettings()
         {
@@ -591,10 +588,10 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblTitle", "Insert Command", FontSize.Large, true);
 
-            createCheckBox("chkInsertCommandsInline", "New Commands Insert Below Selected Command", newAppSettings.ClientSettings, "InsertCommandsInline", true);
-            createCheckBox("chkSequenceDragDrop", "Allow Drag and Drop into Sequence Commands", newAppSettings.ClientSettings, "EnableSequenceDragDrop", true);
-            createCheckBox("chkInsertElse", "Insert Else when BeginIf command inserted", newAppSettings.ClientSettings, "InsertElseAutomatically", true);
-            createCheckBox("chkInsertCommentIfLoop", "Insert Comment above If, Loop, Try", newAppSettings.ClientSettings, "InsertCommentIfLoopAbove", true);
+            createCheckBox("chkInsertCommandsInline", "New Commands Insert Below Selected Command", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.InsertCommandsInline), true);
+            createCheckBox("chkSequenceDragDrop", "Allow Drag and Drop into Sequence Commands", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.EnableSequenceDragDrop), true);
+            createCheckBox("chkInsertElse", "Insert Else when BeginIf command inserted", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.InsertElseAutomatically), true);
+            createCheckBox("chkInsertCommentIfLoop", "Insert Comment above If, Loop, Try", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.InsertCommentIfLoopAbove), true);
         }
         private void showEditorMiniMapSettings()
         {
@@ -602,7 +599,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblTitle", "Mini Map", FontSize.Large, true);
 
-            createCheckBox("chkShowMiniMap", "Show Script Mini Map (beta)", newAppSettings.ClientSettings, "ShowScriptMiniMap", true);
+            createCheckBox("chkShowMiniMap", "Show Script Mini Map (beta)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ShowScriptMiniMap), true);
         }
         private void showEditorIndentSettings()
         {
@@ -610,9 +607,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblTitle", "Indent", FontSize.Large, true);
 
-            createCheckBox("chkShowIndentLine", "Show Indent Line", newAppSettings.ClientSettings, "ShowIndentLine", true);
+            createCheckBox("chkShowIndentLine", "Show Indent Line", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ShowIndentLine), true);
             createLabel("lblIndentWidth", "Indent Width (1 to 32):", FontSize.Normal, false);
-            createTextBox("txtIndentWidth", 60, newAppSettings.ClientSettings, "IndentWidth", true);
+            createTextBox("txtIndentWidth", 60, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.IndentWidth), true);
         }
         private void showEditorVariableSettings()
         {
@@ -620,7 +617,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblTitle", "Variable", FontSize.Large, true);
 
-            createCheckBox("chkInsertVariablePosition", "Insert variable at cursor position(Textbox / Combobox)", newAppSettings.ClientSettings, "InsertVariableAtCursor", true);
+            createCheckBox("chkInsertVariablePosition", "Insert variable at cursor position(Textbox / Combobox)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.InsertVariableAtCursor), true);
         }
         private void showEditorValidationSettings()
         {
@@ -628,7 +625,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblTitle", "Validation", FontSize.Large, true);
 
-            createCheckBox("chkSilentValidation", "Don't show Script Command Validation Message", newAppSettings.ClientSettings, "DontShowValidationMessage", true);
+            createCheckBox("chkSilentValidation", "Don't show Script Command Validation Message", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DontShowValidationMessage), true);
         }
         //private void showEditorCommandSearchSettings()
         //{
@@ -644,7 +641,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblTitle", "Status Bar", FontSize.Large, true);
 
-            createCheckBox("chkHideNotifyAutomatically", "Hide Status Bar Automatically (reqired restart)", newAppSettings.ClientSettings, "HideNotifyAutomatically", true);
+            createCheckBox("chkHideNotifyAutomatically", "Hide Status Bar Automatically (reqired restart)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.HideNotifyAutomatically), true);
         }
         private void showEditorCommandEditorSettings()
         {
@@ -671,21 +668,21 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lbmMessage", "Enable this functionality to allow this computer to accept script execution requests from \nother taskt or REST-capable clients.", FontSize.Small, true);
 
-            createCheckBox("chkAutoStartListener", "Start Listening on Startup", newAppSettings.ListenerSettings, "StartListenerOnStartup", true);
-            createCheckBox("chkEnableListening", "Local Listening Enabled", newAppSettings.ListenerSettings, "LocalListeningEnabled", true);
+            createCheckBox("chkAutoStartListener", "Start Listening on Startup", newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.StartListenerOnStartup), true);
+            createCheckBox("chkEnableListening", "Local Listening Enabled", newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.LocalListeningEnabled), true);
 
             createLabel("lblListeningPort", "Listening Port:", FontSize.Normal, false);
-            TextBox txtListeningPort = createTextBox("txtListeningPort", 120, newAppSettings.ListenerSettings, "ListeningPort", true);
+            TextBox txtListeningPort = createTextBox("txtListeningPort", 120, newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.ListeningPort), true);
 
-            createCheckBox("chkRequireListenerKey", "Require Authentication Key", newAppSettings.ListenerSettings, "RequireListenerAuthenticationKey", true);
+            createCheckBox("chkRequireListenerKey", "Require Authentication Key", newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.RequireListenerAuthenticationKey), true);
             createLabel("lblAuthenicationKey", "Authentication Key", FontSize.Small, true);
-            TextBox txtAuthKey = createTextBox("txtAuthenicationKey", 480, newAppSettings, "ListenerSettings.AuthKey", true);
+            TextBox txtAuthKey = createTextBox("txtAuthenicationKey", 480, newAppSettings, nameof(newAppSettings.ListenerSettings.AuthKey), true);
             Button btnRegenerateAuthKey = createButton("btnRegenerateAuthKey", "Regenerate", 140, true);
 
             btnRegenerateAuthKey.Click += (sender, e) => btnRegenerateAuthKey_Clicked(sender, e, txtAuthKey);
 
-            createCheckBox("chkEnableWhitelit", "Enable IP Verification (Seperate with comma)", newAppSettings.ListenerSettings, "EnableWhitelist", true);
-            TextBox txtWhite = createTextBox("txtWhitelist", 480, newAppSettings.ListenerSettings, "IPWhiteList", true);
+            createCheckBox("chkEnableWhitelit", "Enable IP Verification (Seperate with comma)", newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.EnableWhitelist), true);
+            TextBox txtWhite = createTextBox("txtWhitelist", 480, newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.IPWhiteList), true);
             txtWhite.Multiline = true;
             txtWhite.ScrollBars = ScrollBars.Vertical;
             txtWhite.Height = 80;
@@ -708,17 +705,17 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblMessage", "Enable this functionality to connect to a local instance of taskt server for workforce \nmanagement. After testing the connection, the client will be assigned a new GUID \nwhich must be approved by an administrator in the server.", FontSize.Small, true);
 
-            createCheckBox("chkServerEnabled", "Server Connection Enabled", newAppSettings.ServerSettings, "ServerConnectionEnabled", true);
-            createCheckBox("chkAutomaticallyConnect", "Check In On Startup", newAppSettings.ServerSettings, "ConnectToServerOnStartup", true);
+            createCheckBox("chkServerEnabled", "Server Connection Enabled", newAppSettings.ServerSettings, nameof(newAppSettings.ServerSettings.ServerConnectionEnabled), true);
+            createCheckBox("chkAutomaticallyConnect", "Check In On Startup", newAppSettings.ServerSettings, nameof(newAppSettings.ServerSettings.ConnectToServerOnStartup), true);
 
             createLabel("lblServerURL", "HTTPS Server URL", FontSize.NormalBold, true);
             createLabel("lblServerURLex", "Enter the location of the taskt server (ex. https://localhost:60281", FontSize.Normal, true);
-            TextBox txtAddress = createTextBox("txtHttpsAddress", 480, newAppSettings.ServerSettings, "HTTPServerURL", true);
+            TextBox txtAddress = createTextBox("txtHttpsAddress", 480, newAppSettings.ServerSettings, nameof(newAppSettings.ServerSettings.HTTPServerURL), true);
             Button btnTestConnection = createButton("btnTestConnection", "Test Connection", 240, true);
 
             createLabel("lblClientGUID", "Client GUID", FontSize.NormalBold, true);
             createLabel("lblClientGUIDex", "Indicates the GUID the client will use when connecting to taskt server", FontSize.Normal, true);
-            createTextBox("txtGUID", 480, newAppSettings.ServerSettings, "HTTPGuid", true);
+            createTextBox("txtGUID", 480, newAppSettings.ServerSettings, nameof(newAppSettings.ServerSettings.HTTPGuid), true);
             Button btnPublishTask = createButton("btnPublishTask", "Publish Task", 240, true);
 
             lblSocketState = createLabel("lblSocketState", "Socket Status", FontSize.Large, true);
@@ -739,8 +736,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             Button btn = createButton("btnCheckUpdate", "Check For Updates", 200, true);
             btn.Click += (sender, e) => btnCheckUpdate_Click(sender, e);
 
-            createCheckBox("chkUpdate", "Check for update at startup", newAppSettings.ClientSettings, "CheckForUpdateAtStartup", true);
-            createCheckBox("chkSkipBeta", "Skip Beta version", newAppSettings.ClientSettings, "SkipBetaVersionUpdate", true);
+            createCheckBox("chkUpdate", "Check for update at startup", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.CheckForUpdateAtStartup), true);
+            createCheckBox("chkSkipBeta", "Skip Beta version", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.SkipBetaVersionUpdate), true);
         }
         #endregion
 
