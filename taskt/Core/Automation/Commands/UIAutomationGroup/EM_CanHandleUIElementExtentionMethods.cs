@@ -6,6 +6,13 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
     public static class EM_CanHandleUIElementExtentionMethods
     {
+        public enum AutomationElementPropertyValueTypes
+        {
+            String,
+            Bool,
+            Int,
+        }
+
         /// <summary>
         /// check specified object is UIElement
         /// </summary>
@@ -134,6 +141,38 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             else
             {
                 throw new Exception("Parent UIElement does not exists");
+            }
+        }
+
+        /// <summary>
+        /// get property value
+        /// </summary>
+        /// <param name="targetElement"></param>
+        /// <param name="propName"></param>
+        /// <param name="tp"></param>
+        /// <returns></returns>
+        public static string GetPropertyValueAsString(AutomationElement targetElement, AutomationProperty propName, AutomationElementPropertyValueTypes tp)
+        {
+            try
+            {
+                return targetElement.GetCurrentPropertyValue(propName).ToString();
+            }
+            catch
+            {
+                switch (tp)
+                {
+                    case AutomationElementPropertyValueTypes.String:
+                        return string.Empty;
+                        
+                    case AutomationElementPropertyValueTypes.Bool:
+                        return "false";
+                        
+                    case AutomationElementPropertyValueTypes.Int:
+                        return "0";
+
+                    default:
+                        return string.Empty;
+                }
             }
         }
     }

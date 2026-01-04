@@ -1,5 +1,6 @@
 ﻿using System.Windows.Automation;
 using System.Xml.Linq;
+using static taskt.Core.Automation.Commands.UIAutomationGroup.EM_CanHandleUIElementExtentionMethods;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
@@ -33,7 +34,9 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             node.SetAttributeValue("IsRequiredForForm", cur.IsRequiredForForm.ToString());
             node.SetAttributeValue("ItemStatus", cur.ItemStatus);
             node.SetAttributeValue("LocalizedControlType", cur.LocalizedControlType);
-            node.SetAttributeValue("Name", cur.Name);
+
+            node.SetAttributeValue("Name", GetPropertyValueAsString(targetElement, AutomationElement.NameProperty, AutomationElementPropertyValueTypes.String)); ;
+            
             node.SetAttributeValue("NativeWindowHandle", cur.NativeWindowHandle.ToString());
             node.SetAttributeValue("ProcessId", cur.ProcessId.ToString());
 

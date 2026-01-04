@@ -12,6 +12,7 @@ using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Commands.UIAutomationGroup;
 using taskt.Core.Automation.Engine;
 using taskt.Core.Script;
+using static taskt.Core.Automation.Commands.UIAutomationGroup.EM_CanHandleUIElementExtentionMethods;
 
 /*
  * NOTE: This form is called primarily by frmCommandEditor, so the namespace looks like this
@@ -254,14 +255,17 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         /// <summary>
         /// Create treeNode from UIElement
         /// </summary>
-        /// <param name="element"></param>
+        /// <param name="targetElement"></param>
         /// <returns></returns>
-        private static TreeNode CreateTreeNodeFromUIElement(AutomationElement element)
+        private static TreeNode CreateTreeNodeFromUIElement(AutomationElement targetElement)
         {
+            string nameValue = GetPropertyValueAsString(targetElement, AutomationElement.NameProperty, AutomationElementPropertyValueTypes.String);
+            string localTypeValue = GetPropertyValueAsString(targetElement, AutomationElement.LocalizedControlTypeProperty, AutomationElementPropertyValueTypes.String);
+
             var node = new TreeNode
             {
-                Text = $"\"{element.Current.Name}\" {element.Current.LocalizedControlType}",
-                Tag = element
+                Text = $"\"{nameValue}\" {localTypeValue}",
+                Tag = targetElement
             };
             return node;
         }
@@ -614,8 +618,8 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 
             try
             {
-                res.Append($"Name:\t\"{elem.Current.Name}\"\r\n");
-                res.Append($"ControlType:\t{EM_CanHandleUIElementExtentionMethods.GetControlTypeText(elem)}\r\n");
+                res.Append($"Name:\t\"{GetPropertyValueAsString(elem, AutomationElement.NameProperty, AutomationElementPropertyValueTypes.String)}\"\r\n");
+                res.Append($"ControlType:\t{GetControlTypeText(elem)}\r\n");
                 res.Append($"LocalizedControlType:\t\"{elem.Current.LocalizedControlType}\"\r\n");
                 res.Append($"IsEnabled:\t{elem.Current.IsEnabled}\r\n");
                 res.Append($"IsOffscreen:\t{elem.Current.IsOffscreen}\r\n");
