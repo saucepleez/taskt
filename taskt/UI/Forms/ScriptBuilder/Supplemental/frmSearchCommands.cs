@@ -19,10 +19,12 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                     case SearchReplaceMode.Search:
                         searchTab.SelectedIndex = 0;
                         txtSearchKeyword.Focus();
+                        txtSearchKeyword.Select();
                         break;
                     case SearchReplaceMode.Replace:
                         searchTab.SelectedIndex = 1;
                         txtReplaceSearch.Focus();
+                        txtReplaceSearch.Select();
                         break;
                 }
             }
