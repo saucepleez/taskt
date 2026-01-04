@@ -753,7 +753,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             txtElementInformation.SelectAll();
             Clipboard.SetText(txtElementInformation.Text);
 
-            ShowMessageTimer("Element Result Copied!!");
+            ShowMessageTimer("UIElement Inspect Result Copied!!");
         }
 
         private void txtXPath_DoubleClick(object sender, EventArgs e)
@@ -1142,32 +1142,61 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             {
                 if (fm.ShowDialog() == DialogResult.OK)
                 {
-                    var xpath = fm.InputValue;
+                    //var xpath = fm.InputValue;
 
-                    if (windowXMLTree != null)
-                    {
-                        var xmls = windowXMLTree.XPathSelectElements(xpath);
-                        var elems = new List<AutomationElement>();
-                        foreach(var xelem in xmls)
-                        {
-                            elems.Add(uiElementHashTable[xelem.Attribute("Hash").Value]);
-                        }
+                    //if (windowXMLTree != null)
+                    //{
+                    //    var xmls = windowXMLTree.XPathSelectElements(xpath);
+                    //    var elems = new List<AutomationElement>();
+                    //    foreach(var xelem in xmls)
+                    //    {
+                    //        elems.Add(uiElementHashTable[xelem.Attribute("Hash").Value]);
+                    //    }
 
-                        tvElementsRenderProcess(new Action(() =>
-                        {
-                            ClearHightlightTreeNodeProcess(tvElements.Nodes);
-                            HighlightTreeNodeProcess(tvElements.Nodes, elems);
-                        }));
+                    //    tvElementsRenderProcess(new Action(() =>
+                    //    {
+                    //        ClearHightlightTreeNodeProcess(tvElements.Nodes);
+                    //        HighlightTreeNodeProcess(tvElements.Nodes, elems);
+                    //    }));
 
-                        if (xmls == null)
-                        {
-                            ShowMessageTimer("No UIElement(s) found.");
-                        }
-                        else
-                        {
-                            ShowMessageTimer($"{xmls.Count()} UIElement(s) found.");
-                        }
-                    }
+                    //    if (xmls == null)
+                    //    {
+                    //        ShowMessageTimer("No UIElement(s) found.");
+                    //    }
+                    //    else
+                    //    {
+                    //        ShowMessageTimer($"{xmls.Count()} UIElement(s) found.");
+                    //    }
+                    //}
+                    SearchAndHighlightTvElements(fm.InputValue);
+                }
+            }
+        }
+
+        private void SearchAndHighlightTvElements(string xpath)
+        {
+            if (windowXMLTree != null)
+            {
+                var xmls = windowXMLTree.XPathSelectElements(xpath);
+                var elems = new List<AutomationElement>();
+                foreach (var xelem in xmls)
+                {
+                    elems.Add(uiElementHashTable[xelem.Attribute("Hash").Value]);
+                }
+
+                tvElementsRenderProcess(new Action(() =>
+                {
+                    ClearHightlightTreeNodeProcess(tvElements.Nodes);
+                    HighlightTreeNodeProcess(tvElements.Nodes, elems);
+                }));
+
+                if (xmls == null)
+                {
+                    ShowMessageTimer("No UIElement(s) found.");
+                }
+                else
+                {
+                    ShowMessageTimer($"{xmls.Count()} UIElement(s) found.");
                 }
             }
         }
@@ -1207,6 +1236,18 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                 if (node.Nodes.Count > 0)
                 {
                     HighlightTreeNodeProcess(node.Nodes, targetElements);
+                }
+            }
+        }
+
+        private void btnParametersEvaluate_Click(object sender, EventArgs e)
+        {
+            using (var fm = new frmUIElementSearchParameter())
+            {
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    //MessageBox.Show(fm.XPath);
+                    SearchAndHighlightTvElements(fm.XPath);
                 }
             }
         }
