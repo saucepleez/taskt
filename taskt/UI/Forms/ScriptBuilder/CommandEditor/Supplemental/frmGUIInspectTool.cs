@@ -1082,19 +1082,6 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             {
                 var nodes = treeNodeFunc();
 
-                //tvElements.SuspendLayout();
-                //tvElements.BeginUpdate();
-
-                //tvElements.Nodes.Clear();
-                //tvElements.Nodes.Add(nodes);
-
-                //tvElements.ExpandAll();
-
-                //tvElements.Nodes[0].EnsureVisible();    // move to top
-
-                //tvElements.EndUpdate();
-                //tvElements.ResumeLayout();
-
                 tvElementsRenderProcess(new Action(() =>
                 {
                     tvElements.Nodes.Clear();
@@ -1142,32 +1129,6 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             {
                 if (fm.ShowDialog() == DialogResult.OK)
                 {
-                    //var xpath = fm.InputValue;
-
-                    //if (windowXMLTree != null)
-                    //{
-                    //    var xmls = windowXMLTree.XPathSelectElements(xpath);
-                    //    var elems = new List<AutomationElement>();
-                    //    foreach(var xelem in xmls)
-                    //    {
-                    //        elems.Add(uiElementHashTable[xelem.Attribute("Hash").Value]);
-                    //    }
-
-                    //    tvElementsRenderProcess(new Action(() =>
-                    //    {
-                    //        ClearHightlightTreeNodeProcess(tvElements.Nodes);
-                    //        HighlightTreeNodeProcess(tvElements.Nodes, elems);
-                    //    }));
-
-                    //    if (xmls == null)
-                    //    {
-                    //        ShowMessageTimer("No UIElement(s) found.");
-                    //    }
-                    //    else
-                    //    {
-                    //        ShowMessageTimer($"{xmls.Count()} UIElement(s) found.");
-                    //    }
-                    //}
                     SearchAndHighlightTvElements(fm.InputValue);
                 }
             }
@@ -1240,13 +1201,17 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             }
         }
 
+        /// <summary>
+        /// btnParametersEvaluate clicked -> show UIElementSearchParameter form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnParametersEvaluate_Click(object sender, EventArgs e)
         {
             using (var fm = new frmUIElementSearchParameter())
             {
                 if (fm.ShowDialog() == DialogResult.OK)
                 {
-                    //MessageBox.Show(fm.XPath);
                     SearchAndHighlightTvElements(fm.XPath);
                 }
             }
