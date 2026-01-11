@@ -57,17 +57,15 @@ Please note whatever software that taskt is automating can affect the minimum so
  * .NET Framework 4.8
  * (We think it will probably work in Windows Server 2022/2025 :-)
 
-**Attension**: Windows 7, Windows 8.1, Windows Server 2012, Windows Server 2016 are no longer supported.
+**Attension**: Windows 7/8.1/10, Windows Server 2012 are no longer supported.
 
 ## Recommended
- * Windows 10/11/Server 2019 (32bit and 64bit)
+ * Windows 11/Server 2019 (32bit and 64bit)
  * 4GB ram
  * 1GB disk space
  * 2 CPU
  * .NET Framework 4.8
- * (We think it will probably work in Windows Server 2022 :-)
-
-**Attention**: After windows 10 support ends, windows 10 will be removed from the recommended environment.
+ * (We think it will probably work in Windows Server 2022/2025 :-)
 
 [![Open New Issue](https://img.shields.io/badge/Open-New&nbsp;Issue-blue.svg)](https://github.com/saucepleez/taskt/issues/new)
 [![Chat on Gitter](https://img.shields.io/badge/Chat-On&nbsp;Gitter-green.svg)](https://gitter.im/taskt-rpa/Lobby)
