@@ -27,18 +27,27 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         private string prevPage = "";
 
         // Metric
-        private Label lblMetrics = null;
-        private TreeView tvExecutionTimes = null;
-        private Button btnClearMetrics = null;
+        //private Label lblMetrics = null;
+        //private TreeView tvExecutionTimes = null;
+        //private Button btnClearMetrics = null;
+
+        // bgwMetricEvents
+        private DoWorkEventHandler bgwMetricsDoWorkEvent = null;
+        private RunWorkerCompletedEventHandler bgwMetricsRunWorkerCompletedEvent = null;
 
         // Local Listener
-        private Button btnStartListening = null;
-        private Button btnStopListening = null;
-        private Label lblListeningState = null;
+        //private Button btnStartListening = null;
+        //private Button btnStopListening = null;
+        //private Label lblListeningState = null;
 
         // Server
-        private Label lblSocketState = null;
-        private Label lblSocketException = null;
+        //private Label lblSocketState = null;
+        //private Label lblSocketException = null;
+
+        // tmrGetSocketStatus Events
+        private EventHandler tmrGetScoketStatusTickEvent = null;
+        private EventHandler tcpListenerListenStartEvent = null;
+        private EventHandler tcpListenerListenStopEvent = null;
 
         /// <summary>
         /// keyboard keys list
@@ -75,8 +84,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             newAppSettings = ApplicationSettings.GetOrCreateApplicationSettings(App.Taskt_Settings_File_Path);
 
             // Network -> Server
-            Core.Server.LocalTCPListener.ListeningStarted += AutomationTCPListener_ListeningStarted;
-            Core.Server.LocalTCPListener.ListeningStopped += AutomationTCPListener_ListeningStopped;
+            //Core.Server.LocalTCPListener.ListeningStarted += AutomationTCPListener_ListeningStarted;
+            //Core.Server.LocalTCPListener.ListeningStopped += AutomationTCPListener_ListeningStopped;
 
             tvSettingsMenu.ExpandAll();
 
@@ -229,19 +238,44 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 switch (prevPage)
                 {
                     case "Application - Script Metric":
-                        lblMetrics = null;
-                        tvExecutionTimes = null;
-                        btnClearMetrics = null;
+                        //lblMetrics = null;
+                        //tvExecutionTimes = null;
+                        //btnClearMetrics = null;
+                        if (bgwMetricsDoWorkEvent != null)
+                        {
+                            bgwMetrics.DoWork -= bgwMetricsDoWorkEvent;
+                            bgwMetricsDoWorkEvent = null;
+                        }
+                        if (bgwMetricsRunWorkerCompletedEvent != null)
+                        {
+                            bgwMetrics.RunWorkerCompleted -= bgwMetricsRunWorkerCompletedEvent;
+                            bgwMetricsRunWorkerCompletedEvent = null;
+                        }
                         break;
 
                     case "Network - Local Listener":
-                        btnStartListening = null;
-                        btnStopListening = null;
+                        //btnStartListening = null;
+                        //btnStopListening = null;
                         break;
 
                     case "Network - Server":
-                        lblSocketState = null;
-                        lblSocketException = null;
+                        //lblSocketState = null;
+                        //lblSocketException = null;
+                        if (tmrGetScoketStatusTickEvent != null)
+                        {
+                            tmrGetSocketStatus.Tick -= tmrGetScoketStatusTickEvent;
+                            tmrGetScoketStatusTickEvent = null;
+                        }
+                        if (tcpListenerListenStartEvent != null)
+                        {
+                            Core.Server.LocalTCPListener.ListeningStarted -= tcpListenerListenStartEvent;
+                            tcpListenerListenStartEvent = null;
+                        }
+                        if (tcpListenerListenStopEvent != null)
+                        {
+                            Core.Server.LocalTCPListener.ListeningStopped -= tcpListenerListenStopEvent;
+                            tcpListenerListenStopEvent = null;
+                        }
                         break;
                 }
             }
@@ -435,25 +469,87 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             CreateCheckBox("chkTrackMetrics", "Track Execution Metrics", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.TrackExecutionMetrics), true);
 
             CreateLabel("lblTitleMetrics", "Script Execution Metrics (Last 10 per Script)", FontSize.Small, true);
-            lblMetrics = CreateLabel("lblMetrics", "Getting Metrics...", FontSize.Normal, true);
+            var lblMetrics = CreateLabel("lblMetrics", "Getting Metrics...", FontSize.Normal, true);
 
-            var tv = new TreeView
+            var tvExecutionTimes = new TreeView
             {
                 Name = "tvExecutionTimes",
                 Size = new Size(500, 120),
                 Font = new Font("Segoe UI", 12)
             };
-            flowLayoutSettings.Controls.Add(tv);
-
-            tvExecutionTimes = tv;
+            flowLayoutSettings.Controls.Add(tvExecutionTimes);
 
             //btnClearMetrics = CreateButton("btnClearMetrics", "Clear Metrics", 200, true);
             //btnClearMetrics.Click += (sender, e) => btnClearMetrics_Click(sender, e);
-            CreateButton("btnClearMetrics", "Clear Metrics", 200, new Action<object, EventArgs>((sender, e) =>
+            var btnClearMetrics = CreateButton("btnClearMetrics", "Clear Metrics", 200, new Action<object, EventArgs>((sender, e) =>
             {
                 new Metrics().ClearExecutionMetrics();
                 bgwMetrics.RunWorkerAsync();
             }), true);
+
+            // set bgwMetrics events
+            bgwMetricsDoWorkEvent = (sender, e) =>
+            {
+                e.Result = new Metrics().ExecutionMetricsSummary();
+            };
+            bgwMetricsRunWorkerCompletedEvent = (sender, e) =>
+            {
+                //if ((lblMetrics == null) || (tvExecutionTimes == null) || (btnClearMetrics == null))
+                //{
+                //    return;
+                //}
+
+                if (e.Error != null)
+                {
+                    if (e.Error is FileNotFoundException)
+                    {
+                        lblMetrics.Text = "Metrics Unavailable - Metrics are only available after running tasks which will generate metrics logs";
+                    }
+                    else
+                    {
+                        lblMetrics.Text = $"Metrics Unavailable: {e.Error}";
+                    }
+                }
+                else
+                {
+                    var metricsSummary = (List<ExecutionMetric>)(e.Result);
+
+                    if (metricsSummary.Count == 0)
+                    {
+                        lblMetrics.Text = "No Metrics Found";
+                        lblMetrics.Show();
+                        tvExecutionTimes.Hide();
+                        btnClearMetrics.Hide();
+                    }
+                    else
+                    {
+                        lblMetrics.Hide();
+                        tvExecutionTimes.Show();
+                        btnClearMetrics.Show();
+                    }
+
+                    foreach (var metric in metricsSummary)
+                    {
+                        var rootNode = new TreeNode
+                        {
+                            Text = $"{metric.FileName} [{metric.AverageExecutionTime} avg.]"
+                        };
+
+                        foreach (var metricItem in metric.ExecutionData)
+                        {
+                            var subNode = new TreeNode
+                            {
+                                Text = $" - {metricItem.LoggedOn.ToString("MM/dd/yy hh:mm")} {metricItem.ExecutionTime}"
+                            };
+                            rootNode.Nodes.Add(subNode);
+                        }
+
+                        tvExecutionTimes.Nodes.Add(rootNode);
+                    }
+                }
+            };
+            bgwMetrics.DoWork += bgwMetricsDoWorkEvent;
+            bgwMetrics.RunWorkerCompleted += bgwMetricsRunWorkerCompletedEvent;
 
             //get metrics
             bgwMetrics.RunWorkerAsync();
@@ -956,25 +1052,102 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             //btnStartListening = CreateButton("btnStartListening", "Start Listening", 140, false);
             //btnStartListening.Click += (sender, e) => btnStartListening_Click(sender, e, txtListeningPort);
-            btnStartListening = CreateButton("btnStartListening", "Start Listening", 140, new Action<object, EventArgs>((sender, e) =>
+            //var btnStartListening = CreateButton("btnStartListening", "Start Listening", 140, new Action<object, EventArgs>((sender, e) =>
+            //{
+            //    if (int.TryParse(txtListeningPort.Text, out var portNumber))
+            //    {
+            //        DisableListenerButtons();
+            //        Core.Server.LocalTCPListener.StartListening(portNumber);
+            //    }
+            //}));
+            var btnStartListening = CreateButton("btnStartListening", "Start Listening", 140);
+            
+            //btnStopListening = CreateButton("btnEndListening", "Stop Listening", 140, true);
+            //btnStopListening.Click += (sender, e) => btnStopListening_Click(sender, e);
+            //var btnStopListening = CreateButton("btnEndListening", "Stop Listening", 140, new Action<object, EventArgs>((sender, e) =>
+            //{
+            //    DisableListenerButtons();
+            //    Core.Server.LocalTCPListener.StopAutomationListener();
+            //}));
+            var btnStopListening = CreateButton("btnEndListening", "Stop Listening", 140);
+
+            var lblListeningState = CreateLabel("lblListeningState", "Listening on {}", FontSize.Large, true);
+
+            // set button event
+            btnStartListening.Click += (sender, e) =>
             {
                 if (int.TryParse(txtListeningPort.Text, out var portNumber))
                 {
                     DisableListenerButtons();
                     Core.Server.LocalTCPListener.StartListening(portNumber);
                 }
-            }));
-
-            //btnStopListening = CreateButton("btnEndListening", "Stop Listening", 140, true);
-            //btnStopListening.Click += (sender, e) => btnStopListening_Click(sender, e);
-            btnStopListening = CreateButton("btnEndListening", "Stop Listening", 140, new Action<object, EventArgs>((sender, e) =>
+            };
+            btnStopListening.Click += (sender, e) =>
             {
                 DisableListenerButtons();
                 Core.Server.LocalTCPListener.StopAutomationListener();
-            }));
-            
-            lblListeningState = CreateLabel("lblListeningState", "Listening on {}", FontSize.Large, true);
+            };
+
+            // set tcp listener event
+            tcpListenerListenStartEvent = (sender, e) =>
+            {
+                if (this.InvokeRequired)
+                {
+                    var stoppedDelegate = new AutomationTCPListener_StoppedDelegate(tcpListenerListenStartEvent);
+                    Invoke(stoppedDelegate, new object[] { sender, e });
+                }
+                else
+                {
+                    SetupListeningUI();
+                }
+            };
+            tcpListenerListenStopEvent = (sender, e) =>
+            {
+                if (this.InvokeRequired)
+                {
+                    var startedDelegate = new AutomationTCPListener_StoppedDelegate(tcpListenerListenStopEvent);
+                    Invoke(startedDelegate, new object[] { sender, e });
+                }
+                else
+                {
+                    SetupListeningUI();
+                }
+            };
+
             SetupListeningUI();
+
+            // 
+            void DisableListenerButtons()
+            {
+                //if ((btnStartListening == null) || (btnStopListening == null))
+                //{
+                //    return;
+                //}
+                btnStartListening.Enabled = false;
+                btnStopListening.Enabled = false;
+            }
+
+            void SetupListeningUI()
+            {
+                //if ((btnStartListening == null) || (btnStopListening == null) || (lblListeningState == null))
+                //{
+                //    return;
+                //}
+
+                if (Core.Server.LocalTCPListener.IsListening)
+                {
+                    lblListeningState.Text = $"Client is Listening at Endpoint '{Core.Server.LocalTCPListener.GetListeningAddress()}'.";
+                    btnStartListening.Enabled = false;
+                    btnStopListening.Enabled = true;
+                }
+                else
+                {
+                    lblListeningState.Text = $"Client is Not Listening!";
+                    btnStartListening.Enabled = true;
+                    btnStopListening.Enabled = false;
+                }
+                lblListeningState.Show();
+            }
         }
         private void showNetworkServerSettings()
         {
@@ -1032,8 +1205,28 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 }
             }));
             
-            lblSocketState = CreateLabel("lblSocketState", "Socket Status", FontSize.Large, true);
-            lblSocketException = CreateLabel("lblSocketException", "Socket Exception", FontSize.Normal, true);
+            var lblSocketState = CreateLabel("lblSocketState", "Socket Status", FontSize.Large, true);
+            var lblSocketException = CreateLabel("lblSocketException", "Socket Exception", FontSize.Normal, true);
+
+            // set timer event
+            tmrGetScoketStatusTickEvent = (sender, e) =>
+            {
+                if ((lblSocketState == null) || (lblSocketException == null))
+                {
+                    return;
+                }
+                lblSocketState.Text = $"Socket Status: {Core.Server.SocketClient.GetSocketState()}";
+                if (Core.Server.SocketClient.connectionException != string.Empty)
+                {
+                    lblSocketException.Show();
+                    lblSocketException.Text = Core.Server.SocketClient.connectionException;
+                }
+                else
+                {
+                    lblSocketException.Hide();
+                }
+            };
+            tmrGetSocketStatus.Tick += tmrGetScoketStatusTickEvent;
         }
         #endregion
 
@@ -1437,23 +1630,23 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         //        MessageBox.Show("Please open the task in order to publish it.", "Taskt", MessageBoxButtons.OK);
         //    }
         //}
-        private void tmrGetSocketStatus_Tick(object sender, EventArgs e)
-        {
-            if ((lblSocketState == null) || (lblSocketException == null))
-            {
-                return;
-            }
-            lblSocketState.Text = $"Socket Status: {Core.Server.SocketClient.GetSocketState()}";
-            if (Core.Server.SocketClient.connectionException != string.Empty)
-            {
-                lblSocketException.Show();
-                lblSocketException.Text = Core.Server.SocketClient.connectionException;
-            }
-            else
-            {
-                lblSocketException.Hide();
-            }
-        }
+        //private void tmrGetSocketStatus_Tick(object sender, EventArgs e)
+        //{
+        //    if ((lblSocketState == null) || (lblSocketException == null))
+        //    {
+        //        return;
+        //    }
+        //    lblSocketState.Text = $"Socket Status: {Core.Server.SocketClient.GetSocketState()}";
+        //    if (Core.Server.SocketClient.connectionException != string.Empty)
+        //    {
+        //        lblSocketException.Show();
+        //        lblSocketException.Text = Core.Server.SocketClient.connectionException;
+        //    }
+        //    else
+        //    {
+        //        lblSocketException.Hide();
+        //    }
+        //}
         //private void btnStartListening_Click(object sender, EventArgs e, TextBox txtPort)
         //{
         //    if (int.TryParse(txtPort.Text, out var portNumber))
@@ -1467,65 +1660,65 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         //    DisableListenerButtons();
         //    Core.Server.LocalTCPListener.StopAutomationListener();
         //}
-        private void DisableListenerButtons()
-        {
-            if ((btnStartListening == null) || (btnStopListening == null))
-            {
-                return;
-            }
-            btnStartListening.Enabled = false;
-            btnStopListening.Enabled = false;
-        }
-        private void SetupListeningUI()
-        {
-            if ((btnStartListening == null) || (btnStopListening == null) || (lblListeningState == null))
-            {
-                return;
-            }
+        //private void DisableListenerButtons()
+        //{
+        //    if ((btnStartListening == null) || (btnStopListening == null))
+        //    {
+        //        return;
+        //    }
+        //    btnStartListening.Enabled = false;
+        //    btnStopListening.Enabled = false;
+        //}
+        //private void SetupListeningUI()
+        //{
+        //    if ((btnStartListening == null) || (btnStopListening == null) || (lblListeningState == null))
+        //    {
+        //        return;
+        //    }
 
-            if (Core.Server.LocalTCPListener.IsListening)
-            {
-                lblListeningState.Text = $"Client is Listening at Endpoint '{Core.Server.LocalTCPListener.GetListeningAddress()}'.";
-                btnStartListening.Enabled = false;
-                btnStopListening.Enabled = true;
-            }
-            else
-            {
-                lblListeningState.Text = $"Client is Not Listening!";
-                btnStartListening.Enabled = true;
-                btnStopListening.Enabled = false;
-            }
-            lblListeningState.Show();
-        }
+        //    if (Core.Server.LocalTCPListener.IsListening)
+        //    {
+        //        lblListeningState.Text = $"Client is Listening at Endpoint '{Core.Server.LocalTCPListener.GetListeningAddress()}'.";
+        //        btnStartListening.Enabled = false;
+        //        btnStopListening.Enabled = true;
+        //    }
+        //    else
+        //    {
+        //        lblListeningState.Text = $"Client is Not Listening!";
+        //        btnStartListening.Enabled = true;
+        //        btnStopListening.Enabled = false;
+        //    }
+        //    lblListeningState.Show();
+        //}
         #endregion
 
         #region LocalListener Events
         public delegate void AutomationTCPListener_StartedDelegate(object sender, EventArgs e);
         public delegate void AutomationTCPListener_StoppedDelegate(object sender, EventArgs e);
-        private void AutomationTCPListener_ListeningStopped(object sender, EventArgs e)
-        {
-            if (this.InvokeRequired)
-            {
-                var stoppedDelegate = new AutomationTCPListener_StoppedDelegate(AutomationTCPListener_ListeningStopped);
-                Invoke(stoppedDelegate, new object[] { sender, e });
-            }
-            else
-            {
-                SetupListeningUI();
-            }
-        }
-        private void AutomationTCPListener_ListeningStarted(object sender, EventArgs e)
-        {
-            if (this.InvokeRequired)
-            {
-                var startedDelegate = new AutomationTCPListener_StoppedDelegate(AutomationTCPListener_ListeningStarted);
-                Invoke(startedDelegate, new object[] { sender, e });
-            }
-            else
-            {
-                SetupListeningUI();
-            }
-        }
+        //private void AutomationTCPListener_ListeningStopped(object sender, EventArgs e)
+        //{
+        //    if (this.InvokeRequired)
+        //    {
+        //        var stoppedDelegate = new AutomationTCPListener_StoppedDelegate(AutomationTCPListener_ListeningStopped);
+        //        Invoke(stoppedDelegate, new object[] { sender, e });
+        //    }
+        //    else
+        //    {
+        //        SetupListeningUI();
+        //    }
+        //}
+        //private void AutomationTCPListener_ListeningStarted(object sender, EventArgs e)
+        //{
+        //    if (this.InvokeRequired)
+        //    {
+        //        var startedDelegate = new AutomationTCPListener_StoppedDelegate(AutomationTCPListener_ListeningStarted);
+        //        Invoke(startedDelegate, new object[] { sender, e });
+        //    }
+        //    else
+        //    {
+        //        SetupListeningUI();
+        //    }
+        //}
         
         //private void btnRegenerateAuthKey_Clicked(object sender, EventArgs e, TextBox txtAuth)
         //{
@@ -1541,66 +1734,66 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         //    new Core.Metrics().ClearExecutionMetrics();
         //    bgwMetrics.RunWorkerAsync();
         //}
-        private void bgwMetrics_DoWork(object sender, DoWorkEventArgs e)
-        {
-            e.Result = new Metrics().ExecutionMetricsSummary();
-        }
-        private void bgwMetrics_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if ((lblMetrics == null) || (tvExecutionTimes == null) || (btnClearMetrics == null))
-            {
-                return;
-            }
+        //private void bgwMetrics_DoWork(object sender, DoWorkEventArgs e)
+        //{
+        //    e.Result = new Metrics().ExecutionMetricsSummary();
+        //}
+        //private void bgwMetrics_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        //{
+        //    if ((lblMetrics == null) || (tvExecutionTimes == null) || (btnClearMetrics == null))
+        //    {
+        //        return;
+        //    }
 
-            if (e.Error != null)
-            {
-                if (e.Error is FileNotFoundException)
-                {
-                    lblMetrics.Text = "Metrics Unavailable - Metrics are only available after running tasks which will generate metrics logs";
-                }
-                else
-                {
-                    lblMetrics.Text = $"Metrics Unavailable: {e.Error}";
-                }
-            }
-            else
-            {
-                var metricsSummary = (List<ExecutionMetric>)(e.Result);
+        //    if (e.Error != null)
+        //    {
+        //        if (e.Error is FileNotFoundException)
+        //        {
+        //            lblMetrics.Text = "Metrics Unavailable - Metrics are only available after running tasks which will generate metrics logs";
+        //        }
+        //        else
+        //        {
+        //            lblMetrics.Text = $"Metrics Unavailable: {e.Error}";
+        //        }
+        //    }
+        //    else
+        //    {
+        //        var metricsSummary = (List<ExecutionMetric>)(e.Result);
 
-                if (metricsSummary.Count == 0)
-                {
-                    lblMetrics.Text = "No Metrics Found";
-                    lblMetrics.Show();
-                    tvExecutionTimes.Hide();
-                    btnClearMetrics.Hide();
-                }
-                else
-                {
-                    lblMetrics.Hide();
-                    tvExecutionTimes.Show();
-                    btnClearMetrics.Show();
-                }
+        //        if (metricsSummary.Count == 0)
+        //        {
+        //            lblMetrics.Text = "No Metrics Found";
+        //            lblMetrics.Show();
+        //            tvExecutionTimes.Hide();
+        //            btnClearMetrics.Hide();
+        //        }
+        //        else
+        //        {
+        //            lblMetrics.Hide();
+        //            tvExecutionTimes.Show();
+        //            btnClearMetrics.Show();
+        //        }
 
-                foreach (var metric in metricsSummary)
-                {
-                    var rootNode = new TreeNode
-                    {
-                        Text = $"{metric.FileName} [{metric.AverageExecutionTime} avg.]"
-                    };
+        //        foreach (var metric in metricsSummary)
+        //        {
+        //            var rootNode = new TreeNode
+        //            {
+        //                Text = $"{metric.FileName} [{metric.AverageExecutionTime} avg.]"
+        //            };
 
-                    foreach (var metricItem in metric.ExecutionData)
-                    {
-                        var subNode = new TreeNode
-                        {
-                            Text = $" - {metricItem.LoggedOn.ToString("MM/dd/yy hh:mm")} {metricItem.ExecutionTime}"
-                        };
-                        rootNode.Nodes.Add(subNode);
-                    }
+        //            foreach (var metricItem in metric.ExecutionData)
+        //            {
+        //                var subNode = new TreeNode
+        //                {
+        //                    Text = $" - {metricItem.LoggedOn.ToString("MM/dd/yy hh:mm")} {metricItem.ExecutionTime}"
+        //                };
+        //                rootNode.Nodes.Add(subNode);
+        //            }
 
-                    tvExecutionTimes.Nodes.Add(rootNode);
-                }
-            }
-        }
+        //            tvExecutionTimes.Nodes.Add(rootNode);
+        //        }
+        //    }
+        //}
         #endregion
 
         #region Update Events
