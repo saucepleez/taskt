@@ -76,7 +76,8 @@ namespace taskt.Core.Automation.Commands
                     {
                         var grid = (GridPattern)gridObj;
                         //var customRows = targetElement.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Custom));
-                        var customRows = targetElement.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetRowSearchConditionToDataGridView());
+                        //var customRows = targetElement.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetRowSearchConditionToDataGridView());
+                        var customRows = EM_UIElementTableUIElement.GetRowsFromDataGridView(targetElement);
                         if (customRows.Count > 0)
                         {
                             // DataGridView (.net)
@@ -88,7 +89,8 @@ namespace taskt.Core.Automation.Commands
                                 //            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit)
                                 //        )
                                 //    );
-                                var cols = row.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetColumnSearchConditionToDataGridView());
+                                //var cols = row.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetColumnSearchConditionToDataGridView());
+                                var cols = EM_UIElementTableUIElement.GetColumnsFromDataGridView(row);
                                 ret = GetInRangeUIElement(cols, columnIndex, v_Column, "Column");
                             }
                             catch
@@ -112,7 +114,8 @@ namespace taskt.Core.Automation.Commands
                                 //            }
                                 //        )
                                 //    );
-                                var rows = targetElement.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetRowSearchConditionToGridPattern());
+                                //var rows = targetElement.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetRowSearchConditionToGridPattern());
+                                var rows = EM_UIElementTableUIElement.GetRowsFromGridPattern(targetElement);
                                 var row = GetInRangeUIElement(rows, rowIndex, v_Row, "Row");
                                 //var cols = row.FindAll(TreeScope.Children, new OrCondition(
                                 //            new Condition[]
@@ -123,7 +126,8 @@ namespace taskt.Core.Automation.Commands
                                 //            }
                                 //        )
                                 //    );
-                                var cols = row.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetColumnSearchConditionToGridPattern());
+                                //var cols = row.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetColumnSearchConditionToGridPattern());
+                                var cols = EM_UIElementTableUIElement.GetColumnsFromGridPattern(row);
                                 ret = GetInRangeUIElement(cols, columnIndex, v_Column, "Column");
                             }
                             catch
@@ -139,9 +143,11 @@ namespace taskt.Core.Automation.Commands
                         // foobar2000 like table
                         try
                         {
-                            var rows = targetElement.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetRowSearchConditionToSelectionTable());
+                            //var rows = targetElement.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetRowSearchConditionToSelectionTable());
+                            var rows = EM_UIElementTableUIElement.GetRowsFromSelectionTable(targetElement);
                             var row = GetInRangeUIElement(rows, rowIndex, v_Row, "Row");
-                            var cols = row.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetColumnSearchConditionToSelectionTable());
+                            //var cols = row.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetColumnSearchConditionToSelectionTable());
+                            var cols = EM_UIElementTableUIElement.GetColumnsFromSelectionTable(row);
                             if ((cols.Count == 0) && (columnIndex == 0))
                             {
                                 ret = row;
