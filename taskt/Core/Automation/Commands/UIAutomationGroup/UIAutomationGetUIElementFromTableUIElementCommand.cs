@@ -102,14 +102,22 @@ namespace taskt.Core.Automation.Commands
                             {
                                 var rows = targetElement.FindAll(TreeScope.Children,
                                         new OrCondition(
-                                            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Header),
-                                            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.DataItem)
+                                            new Condition[]
+                                            {
+                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Header),
+                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.DataItem),
+                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.ListItem),
+                                            }
                                         )
                                     );
                                 var row = GetInRangeUIElement(rows, rowIndex, v_Row, "Row");
                                 var cols = row.FindAll(TreeScope.Children, new OrCondition(
-                                            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.HeaderItem),
-                                            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Text)
+                                            new Condition[]
+                                            {
+                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.HeaderItem),
+                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Text),
+                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit),
+                                            }
                                         )
                                     );
                                 ret = GetInRangeUIElement(cols, columnIndex, v_Column, "Column");
