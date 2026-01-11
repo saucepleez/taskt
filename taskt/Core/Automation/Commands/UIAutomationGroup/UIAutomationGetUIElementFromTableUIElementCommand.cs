@@ -129,6 +129,46 @@ namespace taskt.Core.Automation.Commands
                             }
                         }
                     }
+                    else if (targetElement.TryGetCurrentPattern(SelectionPattern.Pattern, out object selectObj))
+                    {
+                        var selPattern = (SelectionPattern)selectObj;
+                        // foobar2000 like table
+                        try
+                        {
+                            var rows = targetElement.FindAll(TreeScope.Children,
+                                        new OrCondition(
+                                            new Condition[]
+                                            {
+                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Header),
+                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.ListItem),
+                                            }
+                                        )
+                                    );
+                            var row = GetInRangeUIElement(rows, rowIndex, v_Row, "Row");
+                            var cols = row.FindAll(TreeScope.Children, new OrCondition(
+                                        new Condition[]
+                                        {
+                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.HeaderItem),
+                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Text),
+                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit),
+                                        }
+                                    )
+                                );
+                            if ((cols.Count == 0) && (columnIndex == 0))
+                            {
+                                ret = row;
+                            }
+                            else
+                            {
+                                ret = GetInRangeUIElement(cols, columnIndex, v_Column, "Column");
+                            }
+                        }
+                        catch
+                        {
+                            ErrorAction();
+                            return;
+                        }
+                    }
                     else
                     {
                         ErrorAction();
