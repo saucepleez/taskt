@@ -10,20 +10,20 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation")]
     [Attributes.ClassAttributes.SubGruop("Get From UIElement")]
-    [Attributes.ClassAttributes.CommandSettings("Get Table Texts From Table UIElement As DataTable")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Table Texts from Table UIElement as DataTable.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Table Texts from Table UIElement as DataTable.")]
+    [Attributes.ClassAttributes.CommandSettings("Get Texts From Table UIElement As DataTable")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Texts from Table UIElement as DataTable.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Texts from Table UIElement as DataTable.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationGetTableTextsFromTableUIElementAsDataTableCommand : AGetFromUIElementCommands, IDataTableResultProperties
+    public sealed class UIAutomationGetTextsFromTableUIElementAsDataTableCommand : AGetFromUIElementCommands, IDataTableResultProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
         [PropertyParameterOrder(6000)]
         public string v_Result { get; set; }
 
-        public UIAutomationGetTableTextsFromTableUIElementAsDataTableCommand()
+        public UIAutomationGetTextsFromTableUIElementAsDataTableCommand()
         {
         }
 
