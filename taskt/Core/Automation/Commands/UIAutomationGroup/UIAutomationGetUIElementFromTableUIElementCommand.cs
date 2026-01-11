@@ -75,18 +75,20 @@ namespace taskt.Core.Automation.Commands
                     if (targetElement.TryGetCurrentPattern(GridPattern.Pattern, out object gridObj))
                     {
                         var grid = (GridPattern)gridObj;
-                        var customRows = targetElement.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Custom));
+                        //var customRows = targetElement.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Custom));
+                        var customRows = targetElement.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetRowSearchConditionToDataGridView());
                         if (customRows.Count > 0)
                         {
                             // DataGridView (.net)
                             try
                             {
                                 var row = GetInRangeUIElement(customRows, rowIndex, v_Row, "Row");
-                                var cols = row.FindAll(TreeScope.Children, new OrCondition(
-                                            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Header),
-                                            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit)
-                                        )
-                                    );
+                                //var cols = row.FindAll(TreeScope.Children, new OrCondition(
+                                //            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Header),
+                                //            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit)
+                                //        )
+                                //    );
+                                var cols = row.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetColumnSearchConditionToDataGridView());
                                 ret = GetInRangeUIElement(cols, columnIndex, v_Column, "Column");
                             }
                             catch
@@ -100,26 +102,28 @@ namespace taskt.Core.Automation.Commands
                             // listView
                             try
                             {
-                                var rows = targetElement.FindAll(TreeScope.Children,
-                                        new OrCondition(
-                                            new Condition[]
-                                            {
-                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Header),
-                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.DataItem),
-                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.ListItem),
-                                            }
-                                        )
-                                    );
+                                //var rows = targetElement.FindAll(TreeScope.Children,
+                                //        new OrCondition(
+                                //            new Condition[]
+                                //            {
+                                //                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Header),
+                                //                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.DataItem),
+                                //                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.ListItem),
+                                //            }
+                                //        )
+                                //    );
+                                var rows = targetElement.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetRowSearchConditionToGridPattern());
                                 var row = GetInRangeUIElement(rows, rowIndex, v_Row, "Row");
-                                var cols = row.FindAll(TreeScope.Children, new OrCondition(
-                                            new Condition[]
-                                            {
-                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.HeaderItem),
-                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Text),
-                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit),
-                                            }
-                                        )
-                                    );
+                                //var cols = row.FindAll(TreeScope.Children, new OrCondition(
+                                //            new Condition[]
+                                //            {
+                                //                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.HeaderItem),
+                                //                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Text),
+                                //                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit),
+                                //            }
+                                //        )
+                                //    );
+                                var cols = row.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetColumnSearchConditionToGridPattern());
                                 ret = GetInRangeUIElement(cols, columnIndex, v_Column, "Column");
                             }
                             catch
@@ -135,25 +139,9 @@ namespace taskt.Core.Automation.Commands
                         // foobar2000 like table
                         try
                         {
-                            var rows = targetElement.FindAll(TreeScope.Children,
-                                        new OrCondition(
-                                            new Condition[]
-                                            {
-                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Header),
-                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.ListItem),
-                                            }
-                                        )
-                                    );
+                            var rows = targetElement.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetRowSearchConditionToSelectionTable());
                             var row = GetInRangeUIElement(rows, rowIndex, v_Row, "Row");
-                            var cols = row.FindAll(TreeScope.Children, new OrCondition(
-                                        new Condition[]
-                                        {
-                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.HeaderItem),
-                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Text),
-                                                new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit),
-                                        }
-                                    )
-                                );
+                            var cols = row.FindAll(TreeScope.Children, EM_UIElementTableUIElement.GetColumnSearchConditionToSelectionTable());
                             if ((cols.Count == 0) && (columnIndex == 0))
                             {
                                 ret = row;

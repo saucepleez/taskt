@@ -513,6 +513,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementIndexPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementSearchUIElementFromWindowSomethingByAnywayPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementSelectionItemsPropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementTableUIElement.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_UIElementWindowNameResultsFromUIElementPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\EM_WindowUIElementResultPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\ICanHandleUIElement.cs" />
