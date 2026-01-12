@@ -2,7 +2,7 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="588e91a1-fd93-49c7-bbd8-6e4e58bbda1a" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Search UIElements Information sample" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="588e91a1-fd93-49c7-bbd8-6e4e58bbda1a" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Search UIElements Information From UIElement sample" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="52a713ba-7b13-48a8-bce7-d9f18918e649" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute UIAutomationTester" CommandEnabled="true" />
@@ -14,7 +14,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="3e6e9f88-cbcb-4aad-85da-d4a736cd9268" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Get Window UIElement" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationGetWindowUIElementCommand" CommandID="5fc89837-7852-4a6e-ab64-3138839f124e" CommandName="UIAutomationGetWindowUIElementCommand" IsCommented="false" SelectionName="Get Window UIElement" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_CheckMethod="" v_WaitTimeForWindow="60" v_SelectionMethod="" v_TargetWindowIndex="0" v_Result="vWin" />
+      <ScriptCommand xsi:type="UIAutomationGetWindowUIElementFromWindowNameCommand" CommandID="5fc89837-7852-4a6e-ab64-3138839f124e" CommandName="UIAutomationGetWindowUIElementFromWindowNameCommand" IsCommented="false" SelectionName="Get Window UIElement From Window Name" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_CheckMethod="" v_WaitTimeForWindow="60" v_SelectionMethod="" v_TargetWindowIndex="0" v_Result="vWin" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="483e21bd-fe8f-4b28-946a-323fc9072085" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Search all Checkbox" CommandEnabled="true" />
@@ -266,11 +266,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.48</TasktVersion>
+    <TasktVersion>3.5.2.54</TasktVersion>
     <Author />
     <LastRunTime>2025-11-26T23:14:06.4248773+09:00</LastRunTime>
     <RunTimes>10</RunTimes>
-    <Revision>15</Revision>
+    <Revision>16</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>
