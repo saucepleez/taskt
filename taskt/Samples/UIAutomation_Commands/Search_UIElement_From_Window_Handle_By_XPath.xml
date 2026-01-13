@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Search UIElement From Window Handle By XPath Sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a7cdfa43-c3e0-4681-8598-3547bb4f31b4" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetOneWindowHandleFromOneWindowNameCommand" CommandID="d62bf81d-a2b5-44e3-9a03-5c27ef8d5a5c" CommandName="GetOneWindowHandleFromOneWindowNameCommand" IsCommented="false" SelectionName="Get One Window Handle From One Window Name" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_CheckMethod="" v_WaitTimeForWindow="60" v_WindowNameResult="" v_WindowHandleResult="vHandle" v_CaseSensitive="" v_TrimBeforeCheck="" v_SelectionMethod="" v_TargetWindowIndex="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="f7a320e5-4076-4474-b637-a1f548fe6050" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Search button1" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromWindowHandleByXPathCommand" CommandID="d2287e8f-5b30-462e-a7e1-3e5ae2dc8089" CommandName="UIAutomationSearchUIElementFromWindowHandleByXPathCommand" IsCommented="false" SelectionName="Search UIElement From Window Handle By XPath" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_SearchXPath="//Button[@Name=&quot;button1&quot;]" v_WaitTimeForUIElement="10" v_MaxSiblings="" v_WindowNameResult="" v_WindowHandleResult="" v_MaxDepth="" v_WindowHandle="⦃vHandle⦄" v_WaitTimeForWindow="60" v_WindowUIElement="" v_Result="vElem" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="8e07a1c7-aeeb-4001-a848-1007a3d90bd2" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Click button1" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationClickUIElementCommand" CommandID="a3ffe7d1-8a6d-4e4a-a6f7-a72fccd3ae52" CommandName="UIAutomationClickUIElementCommand" IsCommented="false" SelectionName="Click UIElement" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vElem⦄" v_WindowNameResult="" v_WindowHandleResult="" v_ActivateWindowBeforeAction="" v_WaitTimeBeforeAction="0" v_WaitTimeAfterAction="0" v_WhenActionIsNotSupported="" v_ClickType="Left Click" v_XOffset="0" v_YOffset="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Please exit UIAutomationTester after execution" CommandEnabled="true" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.2.54</TasktVersion>
+    <Author />
+    <LastRunTime>2026-01-13T22:11:36.2114995+09:00</LastRunTime>
+    <RunTimes>12</RunTimes>
+    <Revision>14</Revision>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vElem</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vHandle</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
