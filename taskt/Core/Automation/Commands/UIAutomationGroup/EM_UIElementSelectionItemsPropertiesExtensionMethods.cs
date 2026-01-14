@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenQA.Selenium.BiDi.Log;
+using System;
 using System.Collections.Generic;
 using System.Windows.Automation;
 using taskt.Core.Automation.Engine;
@@ -47,11 +48,29 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                         {
                             if (curElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out object selPtn))
                             {
-                                ExpandCollapsePattern ecPtn = (ExpandCollapsePattern)selPtn;
+                                var ecPtn = (ExpandCollapsePattern)selPtn;
 
                                 ecPtn.Expand();
-                                System.Threading.Thread.Sleep(500);
+                                System.Threading.Thread.Sleep(1000);
                                 items = GetListItems(curElement);
+
+                                if (items.Count == 0)
+                                {
+                                    // selection window is other window
+                                    var pid = targetElement.Current.ProcessId;
+                                    var con = new AndCondition(
+                                            new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.List),
+                                            new PropertyCondition(AutomationElement.ProcessIdProperty, pid)
+                                        );
+                                    var popupListElem = AutomationElement.RootElement.FindFirst(TreeScope.Children, con);
+                                    if (popupListElem != null)
+                                    {
+                                        // DBG
+                                        //Console.WriteLine($"#!# {popupListElem.Current.Name}");
+
+                                        items = GetListItems(popupListElem);
+                                    }
+                                }
                             }
                             else
                             {
