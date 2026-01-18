@@ -49,6 +49,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             var targetElement = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
+            var webDriver = v_WebElement.ExpandUserVariableAsWebDriverFromWebElement("WebDriver", engine);
 
             var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SeleniumSearchType), engine);
             var searchFunc = GetWebElementSearchMethod(searchMethod);
@@ -98,7 +99,7 @@ namespace taskt.Core.Automation.Commands
 
             if (ret is IWebElement resultElem)
             {
-                resultElem.StoreInUserVariable(engine, v_Result);
+                (resultElem, webDriver).StoreInUserVariable(engine, v_Result);
             }
             else
             {
