@@ -247,6 +247,21 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         [PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
         public static string v_UIAActionParameters { get; }
 
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Expand And Activate Window When Selection Items Not Found")]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyValidationRule("Expand", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Expand")]
+        public static string v_ExpandWhenItemsNotFound { get; set; }
+
+        [PropertyVirtualProperty(nameof(WaitControls), nameof(WaitControls.v_WaitTime))]
+        [PropertyDescription("Wait Time After Expand Selection Items")]
+        [PropertyIsOptional(true, "1000")]
+        [PropertyFirstValue("1000")]
+        [PropertyValidationRule("Wait Time After Expand", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Wait Time After Expand")]
+        public static string v_WaitTimeAfterExpand { get; set; }
+
         /// <summary>
         /// show GUI InspectTool and get InspectTool like result
         /// </summary>

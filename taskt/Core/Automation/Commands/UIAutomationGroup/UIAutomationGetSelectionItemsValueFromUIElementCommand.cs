@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UIAutomationGetSelectionItemsValueFromUIElementCommand : AGetFromUIElementCommands, IUIElementSelectionItemsProperties, ICanHandleList
+    public sealed class UIAutomationGetSelectionItemsValueFromUIElementCommand : AGetFromUIElementCommands, IUIElementSelectionItemsProperties, IListResultProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -27,23 +27,22 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(6000)]
         public string v_Result { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_ExpandWhenItemsNotFound))]
+        [PropertyParameterOrder(7000)]
+        public string v_ExpandWhenItemsNotFound { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_WaitTimeAfterExpand))]
+        [PropertyParameterOrder(7100)]
+        public string v_WaitTimeAfterExpand { get; set; }
+
         public UIAutomationGetSelectionItemsValueFromUIElementCommand()
         {
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
-
-            //var items = UIElementControls.GetSelectionItems(targetElement);
-
-            //var res = new List<string>();
-            //foreach(var item in items)
-            //{
-            //    res.Add(item.Current.Name);
-            //}
-            //this.StoreListInUserVariable(res, nameof(v_Result), engine);
-
             this.SelectionItemsAction(engine,
                 new Action<List<AutomationElement>>((items) =>
                 {
@@ -52,7 +51,8 @@ namespace taskt.Core.Automation.Commands
                     {
                         res.Add(item.Current.Name);
                     }
-                    this.StoreListInUserVariable(res, nameof(v_Result), engine);
+                    //this.StoreListInUserVariable(res, nameof(v_Result), engine);
+                    this.StoreListInUserVariable(res, engine);
                 }),
                 new Action(()=>
                 {

@@ -28,9 +28,31 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Yes**", PropertyDetailSampleUsage.ValueType.Value)]
         [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value)]
         [PropertyDetailSampleUsage("**{{{vItem}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value)]
         [PropertyDisplayText(true, "Item")]
         [PropertyParameterOrder(6000)]
         public string v_Item { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Item Value Type")]
+        [PropertyUISelectionOption("Text Value")]
+        [PropertyUISelectionOption("Index")]
+        [PropertyIsOptional(true, "Text Value")]
+        [PropertyValidationRule("Value Type", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Value Type")]
+        [PropertyParameterOrder(6100)]
+        public string v_ItemValueType { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_ExpandWhenItemsNotFound))]
+        [PropertyParameterOrder(7000)]
+        public string v_ExpandWhenItemsNotFound { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_WaitTimeAfterExpand))]
+        [PropertyParameterOrder(7100)]
+        public string v_WaitTimeAfterExpand { get; set; }
 
         public UIAutomationSelectItemInUIElementCommand()
         {
@@ -38,47 +60,47 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
-
-            //var itemName = v_Item.ExpandValueOrUserVariable(engine);
-
-            //var items = UIElementControls.GetSelectionItems(targetElement);
-            //bool isSelected = false;
-            //foreach(var item in items)
-            //{
-            //    if (item.Current.Name == itemName)
-            //    {
-            //        SelectionItemPattern selPtn = (SelectionItemPattern)item.GetCurrentPattern(SelectionItemPattern.Pattern);
-            //        selPtn.Select();
-            //        isSelected = true;
-            //        break;
-            //    }
-            //}
-
-            //if (!isSelected)
-            //{
-            //    throw new Exception("Item '" + v_Item + "' does not exists");
-            //}
-
             this.SelectionItemsAction(engine,
                 new Action<System.Collections.Generic.List<AutomationElement>>((items) =>
                 {
-                    var itemName = v_Item.ExpandValueOrUserVariable(engine);
-
                     bool isSelected = false;
-                    foreach (var item in items)
+
+                    AutomationElement targetItem = null;
+                    switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ItemValueType), engine))
                     {
-                        if (item.Current.Name == itemName)
-                        {
-                            if (item.TryGetCurrentPattern(SelectionItemPattern.Pattern, out object ptn))
+                        case "text value":
+                            var itemName = v_Item.ExpandValueOrUserVariable(engine);
+                            foreach (var item in items)
                             {
-                                var selPtn = (SelectionItemPattern)ptn;
-                                selPtn.Select();
-                                isSelected = true;
+                                if (item.Current.Name == itemName)
+                                {
+                                    targetItem = item;
+                                    break;
+                                }
                             }
                             break;
+                        case "index":
+                            var itemIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_Item), engine);
+                            if (itemIndex < 0)
+                            {
+                                itemIndex += items.Count;
+                            }
+                            if (itemIndex >= 0 && itemIndex < items.Count)
+                            {
+                                targetItem = items[itemIndex];
+                            }
+                            break;
+                    }
+
+                    if (targetItem != null)
+                    {
+                        if (targetItem.TryGetCurrentPattern(SelectionItemPattern.Pattern, out object ptn))
+                        {
+                            ((SelectionItemPattern)ptn).Select();
+                            isSelected = true;
                         }
                     }
+
                     if (!isSelected)
                     {
                         this.ActionNotSupportedProcess("Select Item", engine);

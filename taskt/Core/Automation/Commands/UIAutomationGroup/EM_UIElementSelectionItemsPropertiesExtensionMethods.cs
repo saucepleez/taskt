@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Automation;
 using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands.UIAutomationGroup
 {
@@ -49,8 +50,10 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                             {
                                 var ecPtn = (ExpandCollapsePattern)selPtn;
 
-                                ecPtn.Expand();
-                                System.Threading.Thread.Sleep(1000);
+                                //ecPtn.Expand();
+                                //System.Threading.Thread.Sleep(1000);
+                                command.ExpandAndActivateWindowProcess(curElement, ecPtn, engine);
+
                                 items = GetListItems(curElement);
 
                                 if (items.Count == 0)
@@ -88,6 +91,48 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                     actionFunc(items);
                 })
             );
+        }
+
+        /// <summary>
+        /// expand selection items and activate window process
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        private static void ExpandAndActivateWindowProcess(this IUIElementSelectionItemsProperties command, AutomationElement targetElement, ExpandCollapsePattern expandPattern, AutomationEngineInstance engine)
+        {
+            var cmd = command.ToScriptCommand();
+            if (cmd.ExpandValueOrUserVariableAsYesNo(nameof(command.v_ExpandWhenItemsNotFound), engine))
+            {
+                using (var elemVar = new InnerScriptVariable(engine))
+                {
+                    elemVar.VariableValue = targetElement;
+                    using (var winVar = new InnerScriptVariable(engine))
+                    {
+                        // get window handle
+                        var getHandle = new UIAutomationGetWindowHandleFromUIElementCommand()
+                        {
+                            v_TargetElement = elemVar.VariableName,
+                            v_WindowHandleResult = winVar.VariableName,
+                        };
+                        getHandle.RunCommand(engine);
+
+                        var activateWin = new ActivateWindowByWindowHandleCommand()
+                        {
+                            v_WindowHandle = VariableNameControls.GetWrappedVariableName(winVar.VariableName, engine),
+                        };
+                        activateWin.RunCommand(engine);
+
+                        // expand and wait
+                        if (string.IsNullOrEmpty(command.v_WaitTimeAfterExpand))
+                        {
+                            command.v_WaitTimeAfterExpand = "1000";
+                        }
+                        var waitTime = cmd.ExpandValueOrUserVariableAsInteger(nameof(command.v_WaitTimeAfterExpand), engine);
+                        expandPattern.Expand();
+                        System.Threading.Thread.Sleep(waitTime);
+                    }
+                }
+            }
         }
     }
 }
