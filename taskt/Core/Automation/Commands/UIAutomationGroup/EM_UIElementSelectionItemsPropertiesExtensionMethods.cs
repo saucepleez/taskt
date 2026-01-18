@@ -25,6 +25,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                 new Action<AutomationElement>(targetElement =>
                 {
                     List<AutomationElement> items;
+                    ExpandCollapsePattern ecPtn = null;
 
                     if ((bool)targetElement.GetCurrentPropertyValue(AutomationElement.IsGridPatternAvailableProperty) ||
                         (bool)targetElement.GetCurrentPropertyValue(AutomationElement.IsSelectionPatternAvailableProperty))
@@ -48,10 +49,8 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                         {
                             if (curElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out object selPtn))
                             {
-                                var ecPtn = (ExpandCollapsePattern)selPtn;
+                                ecPtn = (ExpandCollapsePattern)selPtn;
 
-                                //ecPtn.Expand();
-                                //System.Threading.Thread.Sleep(1000);
                                 command.ExpandAndActivateWindowProcess(curElement, ecPtn, engine);
 
                                 items = GetListItems(curElement);
@@ -89,6 +88,12 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
                     }
 
                     actionFunc(items);
+
+                    // collapse after action (when targetElement is expanded)
+                    if (ecPtn != null)
+                    {
+                        ecPtn.Collapse();
+                    }
                 })
             );
         }
