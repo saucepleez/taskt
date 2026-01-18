@@ -24,8 +24,9 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Folder Path Format")]
-        [PropertyUISelectionOption("Folder")]
-        [PropertyUISelectionOption("DriveName")]
+        [PropertyUISelectionOption("Folder Name")]
+        [PropertyUISelectionOption("Parent Folder")]
+        [PropertyUISelectionOption("Drive Name")]
         [PropertyCustomUIHelper("Format Checker", nameof(lnkFormatChecker_Click))]
         [PropertyValidationRule("Format", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Format")]
@@ -50,9 +51,22 @@ namespace taskt.Core.Automation.Commands
             //string folderPath = v_TargetFolderPath.ExpandValueOrUserVariableAsFolderPath(engine);
             var folderPath = this.ExpandValueOrUserVariableAsFolderPath(engine);
 
-            var format = v_Format.ExpandValueOrUserVariable(engine);
+            //var format = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_Format), engine);
+            string cFormat = "";
+            switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_Format), engine))
+            {
+                case "folder name":
+                    cFormat = "FileName";
+                    break;
+                case "parent folder":
+                    cFormat = "Folder";
+                    break;
+                case "drive name":
+                    cFormat = "DriveName";
+                    break;
+            }
 
-            var result = FilePathControls.FormatFileFolderPath(folderPath, format);
+            var result = FilePathControls.ExtractionFilePath(folderPath, cFormat);
             result.StoreInUserVariable(engine, v_Result);
         }
 
