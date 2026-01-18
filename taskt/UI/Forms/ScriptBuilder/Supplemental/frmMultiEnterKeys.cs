@@ -82,10 +82,10 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             using (var fm = CreateVariableSelectForm())
             {
-                if ((fm.ShowDialog() == DialogResult.OK) && (fm.selectedItem != null))
+                if ((fm.ShowDialog() == DialogResult.OK) && (fm.SelectedItem != null))
                 {
                     //string variableName = appSetttings.EngineSettings.wrapVariableMarker((string)fm.selectedItem);
-                    string variableName = VariableNameControls.GetWrappedVariableName((string)fm.selectedItem, appSetttings);
+                    string variableName = VariableNameControls.GetWrappedVariableName((string)fm.SelectedItem, appSetttings);
                     if (appSetttings.ClientSettings.InsertVariableAtCursor)
                     {
                         string currentValue = cmbWindowName.Text;
@@ -124,9 +124,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             using(var fm = CreateVariableSelectForm())
             {
-                if ((fm.ShowDialog() == DialogResult.OK) && (fm.selectedItem != null))
+                if ((fm.ShowDialog() == DialogResult.OK) && (fm.SelectedItem != null))
                 {
-                    ConcatenateVariableName((string)fm.selectedItem, txtTextToSend, appSetttings);
+                    ConcatenateVariableName((string)fm.SelectedItem, txtTextToSend, appSetttings);
                 }
             }
         }
@@ -137,9 +137,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             using (var fm = CreateVariableSelectForm())
             {
-                if ((fm.ShowDialog() == DialogResult.OK) && (fm.selectedItem != null))
+                if ((fm.ShowDialog() == DialogResult.OK) && (fm.SelectedItem != null))
                 {
-                    ConcatenateVariableName((string)fm.selectedItem, txtWaitTimeAfter, appSetttings);
+                    ConcatenateVariableName((string)fm.SelectedItem, txtWaitTimeAfter, appSetttings);
                 }
             }
         }
@@ -196,9 +196,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             using (var fm = CreateVariableSelectForm())
             {
-                if ((fm.ShowDialog() == DialogResult.OK) && (fm.selectedItem != null))
+                if ((fm.ShowDialog() == DialogResult.OK) && (fm.SelectedItem != null))
                 {
-                    string variableName = VariableNameControls.GetWrappedVariableName((string)fm.selectedItem, appSetttings);
+                    string variableName = VariableNameControls.GetWrappedVariableName((string)fm.SelectedItem, appSetttings);
 
                     var ctrl = (Control)((CommandItemControl)sender).Tag;
                     if (ctrl is TextBox txt)

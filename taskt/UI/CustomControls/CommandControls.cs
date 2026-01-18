@@ -1708,7 +1708,7 @@ namespace taskt.UI.CustomControls
                 if (newVariableSelector.ShowDialog(editor) == DialogResult.OK)
                 {
                     //ensure that a variable was actually selected
-                    if (newVariableSelector.selectedItem == null)
+                    if (newVariableSelector.SelectedItem == null)
                     {
                         //return out as nothing was selected
                         MessageBox.Show("There were no variables selected!");
@@ -1727,7 +1727,7 @@ namespace taskt.UI.CustomControls
                         {
                             string str = targetTextbox.Text;
                             int cursorPos = targetTextbox.SelectionStart;
-                            string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.SelectedItem.ToString(), settings.VariableEndMarker);
                             targetTextbox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
                             targetTextbox.Focus();
                             targetTextbox.SelectionStart = cursorPos + ins.Length;
@@ -1735,7 +1735,7 @@ namespace taskt.UI.CustomControls
                         }
                         else
                         {
-                            targetTextbox.Text += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetTextbox.Text += string.Concat(settings.VariableStartMarker, newVariableSelector.SelectedItem.ToString(), settings.VariableEndMarker);
                             targetTextbox.Focus();
                             targetTextbox.SelectionStart = targetTextbox.Text.Length;
                             targetTextbox.SelectionLength = 0;
@@ -1755,7 +1755,7 @@ namespace taskt.UI.CustomControls
                             {
                                 cursorPos = str.Length;
                             }
-                            string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.SelectedItem.ToString(), settings.VariableEndMarker);
                             targetCombobox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
                             targetCombobox.Focus();
                             targetCombobox.SelectionStart = cursorPos + ins.Length;
@@ -1763,7 +1763,7 @@ namespace taskt.UI.CustomControls
                         }
                         else
                         {
-                            targetCombobox.Text += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetCombobox.Text += string.Concat(settings.VariableStartMarker, newVariableSelector.SelectedItem.ToString(), settings.VariableEndMarker);
                             targetCombobox.Focus();
                             targetCombobox.SelectionStart = targetCombobox.Text.Length;
                             targetCombobox.SelectionLength = 0;
@@ -1815,7 +1815,7 @@ namespace taskt.UI.CustomControls
                             source.Rows.Add(source.NewRow());
                         }
                         var targetCell = targetDGV.Rows[rowIndex].Cells[colIndex];
-                        targetCell.Value += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                        targetCell.Value += string.Concat(settings.VariableStartMarker, newVariableSelector.SelectedItem.ToString(), settings.VariableEndMarker);
                     }
                 }
             }

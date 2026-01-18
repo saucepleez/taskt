@@ -194,7 +194,7 @@ namespace taskt.Core.Automation.Commands
             {
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
-                    string selectedItem = frm.selectedItem.ToString();
+                    string selectedItem = frm.SelectedItem.ToString();
                     if (!DataTableControls.SetParameterValue(v_IfActionParameterTable, selectedItem, "Selenium Instance Name", "Parameter Name", "Parameter Value"))
                     {
                         throw new Exception("Fail update Selenium Instance Name");
@@ -225,7 +225,7 @@ namespace taskt.Core.Automation.Commands
             {
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
-                    string selectedItem = frm.selectedItem.ToString();
+                    string selectedItem = frm.SelectedItem.ToString();
                     if (!DataTableControls.SetParameterValue(v_IfActionParameterTable, selectedItem, "Window Name", "Parameter Name", "Parameter Value"))
                     {
                         throw new Exception("Fail update Window Name");
@@ -242,7 +242,7 @@ namespace taskt.Core.Automation.Commands
             {
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
-                    string selectedItem = frm.selectedItem.ToString();
+                    string selectedItem = frm.SelectedItem.ToString();
                     //int currentRow = IfGridViewHelper.CurrentRow.Index;
                     string parameterName = DataTableControls.GetFieldValue(v_IfActionParameterTable, IfGridViewHelper.CurrentRow.Index, "Parameter Name");
 

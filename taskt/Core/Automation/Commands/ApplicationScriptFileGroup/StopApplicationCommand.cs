@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
             {
                 if (fm.ShowDialog() == DialogResult.OK)
                 {
-                    txt.Text = fm.selectedItem.ToString();
+                    txt.Text = fm.SelectedItem.ToString();
                 }
             }
         }
