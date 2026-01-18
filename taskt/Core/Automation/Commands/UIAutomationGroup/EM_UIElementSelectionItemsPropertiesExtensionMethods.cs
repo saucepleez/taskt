@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium.BiDi.Log;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Automation;
 using taskt.Core.Automation.Engine;
