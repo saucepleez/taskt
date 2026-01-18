@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 using System.Windows.Automation;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands.UIAutomationGroup;
+using System.Collections.Generic;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -61,7 +62,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             this.SelectionItemsAction(engine,
-                new Action<System.Collections.Generic.List<AutomationElement>>((items) =>
+                new Action<List<AutomationElement>>((items) =>
                 {
                     bool isSelected = false;
 
@@ -94,9 +95,9 @@ namespace taskt.Core.Automation.Commands
 
                     if (targetItem != null)
                     {
-                        if (targetItem.TryGetCurrentPattern(SelectionItemPattern.Pattern, out object ptn))
+                        if (targetItem.TryGetCurrentPattern(SelectionItemPattern.Pattern, out object siPtn))
                         {
-                            ((SelectionItemPattern)ptn).Select();
+                            ((SelectionItemPattern)siPtn).Select();
                             isSelected = true;
                         }
                     }
