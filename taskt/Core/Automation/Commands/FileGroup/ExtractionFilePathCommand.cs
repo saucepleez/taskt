@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
             var filePath = this.ExpandValueOrUserVariableAsFilePath(engine);
             string format = v_Format.ExpandValueOrUserVariable(engine);
 
-            string result = FilePathControls.FormatFileFolderPath(filePath, format);
+            string result = FilePathControls.ExtractionFilePath(filePath, format);
             result.StoreInUserVariable(engine, v_Result);
         }
 

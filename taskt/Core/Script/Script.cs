@@ -472,6 +472,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_47(doc);
             convertTo3_5_2_51(doc);
             convertTo3_5_2_53(doc);
+            convertTo3_5_2_55(doc);
             return doc;
         }
 
@@ -4979,6 +4980,26 @@ namespace taskt.Core.Script
         {
             // UIAutomationGetWindowUIElementCommand -> UIAutomationGetWindowUIElementFromWindowNameCommand
             ChangeCommandName(doc, "UIAutomationGetWindowUIElementCommand", "UIAutomationGetWindowUIElementFromWindowNameCommand", "Get Window UIElement From Window Name");
+        }
+
+        private static void convertTo3_5_2_55(XDocument doc)
+        {
+            // ExtractionFolderPathCommand
+            var exFolder = GetCommands(doc, "ExtractionFolderPathCommand");
+            foreach (var cmd in exFolder)
+            {
+                var attr = cmd.Attribute("v_Format");
+                var format = attr.Value.ToLower();
+                switch (format)
+                {
+                    case "folder":
+                        cmd.Attribute("v_Format").SetValue("Parent Folder");
+                        break;
+                    case "drivename":
+                        cmd.Attribute("v_Format").SetValue("Drive Name");
+                        break;
+                }
+            }
         }
 
         /// <summary>

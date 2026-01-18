@@ -112,7 +112,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                     }
                     break;
                 case "File Folder":
-                    txtResult.Text = Core.Automation.Commands.FilePathControls.FormatFileFolderPath(value, fmt);
+                    txtResult.Text = Core.Automation.Commands.FilePathControls.ExtractionFilePath(value, fmt);
                     break;
                 default:
                     break;
