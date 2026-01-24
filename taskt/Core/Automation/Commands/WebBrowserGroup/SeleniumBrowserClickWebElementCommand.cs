@@ -168,6 +168,7 @@ namespace taskt.Core.Automation.Commands
                             var scrollX = scrollJson.Value<int>("x");
                             var scrollY = scrollJson.Value<int>("y");
 
+                            // todo: get window position
                             var screenJson = JObject.Parse(
                                                 SeleniumBrowserControls.ExcecuteScript(dr,
                                                     "return JSON.stringify({x: window.screenX, y: window.screenY})"
@@ -207,7 +208,7 @@ namespace taskt.Core.Automation.Commands
                 }), engine,
                 new Action<Exception>(ex =>
                 {
-                    throw new Exception(EM_SeleniumWebElementActionPropertiesExtensionMehtods.GetFailActionMessage("Click"));
+                    throw new Exception($"{EM_SeleniumWebElementActionPropertiesExtensionMehtods.GetFailActionMessage("Click")} Click Type: '{v_ClickType}'");
                 })
             );
         }
