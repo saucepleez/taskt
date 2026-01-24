@@ -67,7 +67,8 @@ namespace taskt.Core.Automation.Commands
                     SeleniumBrowserControls.ExcecuteScript(dr, script);
                 }), engine, new Action<Exception>(ex =>
                 {
-                    throw new Exception("Failed to Scroll To WebElement");
+                    //throw new Exception("Failed to Scroll To WebElement");
+                    throw new Exception(EM_SeleniumWebElementActionPropertiesExtensionMehtods.GetFailActionMessage("Scroll"));
                 })
             );
         }
