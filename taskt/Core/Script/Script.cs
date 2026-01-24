@@ -5015,6 +5015,13 @@ namespace taskt.Core.Script
                 ("v_ScrollToElement", "v_ScrollToWebElement"),
                 ("v_WhenClearNotSupported", "v_WhenFailAction"),
             });
+
+            // SeleniumBrowserClickWebElementCommand
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserClickWebElementCommand", new List<(string, string)>()
+            {
+                ("v_ScrollToElement", "v_ScrollToWebElement"),
+                ("v_WhenFailClick", "v_WhenFailAction"),
+            });
         }
 
         /// <summary>

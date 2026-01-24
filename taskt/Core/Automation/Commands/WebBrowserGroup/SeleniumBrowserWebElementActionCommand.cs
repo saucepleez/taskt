@@ -248,7 +248,7 @@ namespace taskt.Core.Automation.Commands
                                     v_ClickType = parameters["Click Type"],
                                     v_XOffset = parameters["X Offset"],
                                     v_YOffset = parameters["Y Offset"],
-                                    v_ScrollToElement = this.v_ScrollToElement,
+                                    v_ScrollToWebElement = this.v_ScrollToElement,
                                 };
                                 clickElement.RunCommand(engine);
                                 break;
