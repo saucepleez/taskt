@@ -81,7 +81,7 @@ namespace taskt.Core.Automation.Commands
                 var clearText = new SeleniumBrowserClearTextInWebElementCommand
                 {
                     v_WebElement = v_WebElement,
-                    v_WhenClearNotSupported = "Ignore"
+                    v_WhenFailAction = "Ignore"
                 };
                 clearText.RunCommand(engine);
             }

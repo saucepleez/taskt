@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,30 +13,30 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserClearTextInWebElementCommand : ScriptCommand
+    public sealed class SeleniumBrowserClearTextInWebElementCommand : ASeleniumWebElementActionAndScrollCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
-        public string v_WebElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
+        //public string v_WebElement { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("When the WebElement does not support Clear Text")]
-        [PropertyUISelectionOption("Error")]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyIsOptional(true, "Error")]
-        [PropertyDisplayText(false, "")]
-        public string v_WhenClearNotSupported { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        //[PropertyDescription("When the WebElement does not support Clear Text")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyIsOptional(true, "Error")]
+        //[PropertyDisplayText(false, "")]
+        //public string v_WhenFailAction { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ScrollToElement))]
-        [PropertySelectionChangeEvent(nameof(cmbScrollToElement_SelectionChange))]
-        public string v_ScrollToElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ScrollToElement))]
+        //[PropertySelectionChangeEvent(nameof(cmbScrollToElement_SelectionChange))]
+        //public string v_ScrollToWebElement { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        [PropertyIsOptional(true)]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //[PropertyIsOptional(true)]
+        //public string v_InstanceName { get; set; }
 
         public SeleniumBrowserClearTextInWebElementCommand()
         {
@@ -46,37 +44,61 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToElement), engine))
-            {
-                var scroll = new SeleniumBrowserScrollToWebElementCommand
+            //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToWebElement), engine))
+            //{
+            //    var scroll = new SeleniumBrowserScrollToWebElementCommand
+            //    {
+            //        //v_InstanceName = this.v_InstanceName,
+            //        v_WebElement = this.v_WebElement,
+            //        v_WhenFailAction = "ignore"
+            //    };
+            //    scroll.RunCommand(engine);
+            //}
+
+            //var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
+
+            //switch (elem.TagName.ToLower())
+            //{
+            //    case "input":
+            //    case "textarea":
+            //        elem.Clear();
+            //        break;
+            //    default:
+            //        if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFailAction), engine) == "error")
+            //        {
+            //            throw new Exception("Specified WebElement does not support Clear Text. TagName: '" + elem.TagName + "'");
+            //        }
+            //        break;
+            //}
+
+            this.WebElementActionAndScroll(
+                new Action<OpenQA.Selenium.IWebElement, OpenQA.Selenium.IWebDriver>((el, dr) =>
                 {
-                    //v_InstanceName = this.v_InstanceName,
-                    v_WebElement = this.v_WebElement,
-                    v_WhenFailAction = "ignore"
-                };
-                scroll.RunCommand(engine);
-            }
-
-            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
-
-            switch (elem.TagName.ToLower())
-            {
-                case "input":
-                case "textarea":
-                    elem.Clear();
-                    break;
-                default:
-                    if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenClearNotSupported), engine) == "error")
+                    switch (el.TagName.ToLower())
                     {
-                        throw new Exception("Specified WebElement does not support Clear Text. TagName: '" + elem.TagName + "'");
+                        case "input":
+                        case "textarea":
+                            el.Clear();
+                            break;
+                        default:
+                            //if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFailAction), engine) == "error")
+                            //{
+                            //    throw new Exception($"Specified WebElement does not support Clear Text. TagName: '" + elem.TagName + "'");
+                            //}
+                            throw new Exception();
+                            //break;
                     }
-                    break;
-            }
+                }), engine,
+                new Action<Exception>(ex =>
+                {
+                    throw new Exception(EM_SeleniumWebElementActionPropertiesExtensionMehtods.GetFailActionMessage("Clear Text"));
+                })
+            );
         }
 
-        private void cmbScrollToElement_SelectionChange(object sender, EventArgs e)
-        {
-            SeleniumBrowserControls.ScrollToWebElement_SelectionChange((ComboBox)sender, ControlsList, nameof(v_InstanceName));
-        }
+        //private void cmbScrollToElement_SelectionChange(object sender, EventArgs e)
+        //{
+        //    SeleniumBrowserControls.ScrollToWebElement_SelectionChange((ComboBox)sender, ControlsList, nameof(v_InstanceName));
+        //}
     }
 }
