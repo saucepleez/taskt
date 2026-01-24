@@ -40,5 +40,22 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
                 }
             }), engine);
         }
+
+        /// <summary>
+        /// get fail action message
+        /// </summary>
+        /// <param name="actionName"></param>
+        /// <param name="elem"></param>
+        /// <returns></returns>
+        public static string GetFailActionMessage(string actionName, IWebElement elem = null)
+        {
+            var ret = $"Specified WebElement does Not Support {actionName} action.";
+            if (elem != null)
+            {
+                ret+= $"TagName: '{elem.TagName}'";
+            }
+
+            return ret;
+        }
     }
 }
