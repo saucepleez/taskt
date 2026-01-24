@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         [PropertyDetailSampleUsage("**{{{vElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.WebElement, true)]
         [PropertyValidationRule("WebElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Element")]
+        [PropertyDisplayText(true, "WebElement")]
         public static string v_InputWebElementName { get; }
 
         /// <summary>
@@ -27,5 +27,14 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         [PropertyIsOptional(true, "Error")]
         [PropertyDisplayText(false, "When Fail Action")]
         public static string v_WhenFailAction { get; }
+
+        /// <summary>
+        /// scroll to WebElement before Action
+        /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Scroll to WebElement")]
+        [PropertyIsOptional(true, "No")]
+        [PropertyDisplayText(false, "Scroll")]
+        public static string v_ScrollToWebElement { get; }
     }
 }
