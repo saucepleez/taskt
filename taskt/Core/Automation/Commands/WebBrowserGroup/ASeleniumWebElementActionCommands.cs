@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands.WebBrowserGroup
 {
@@ -11,5 +8,9 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
     /// </summary>
     public abstract class ASeleniumWebElementActionCommands : ASeleniumDoSomethingToWebElementCommands, ISeleniumWebElementActionProperties
     {
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WhenFailAction))]
+        [PropertyParameterOrder(10000)]
+        public string v_WhenFailAction { get; set; }
     }
 }

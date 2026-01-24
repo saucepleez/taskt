@@ -473,6 +473,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_51(doc);
             convertTo3_5_2_53(doc);
             convertTo3_5_2_55(doc);
+            convertTo3_5_2_56(doc);
             return doc;
         }
 
@@ -5000,6 +5001,13 @@ namespace taskt.Core.Script
                         break;
                 }
             }
+        }
+
+        private static void convertTo3_5_2_56(XDocument doc)
+        {
+            // change attribute name
+            // SeleniumBrowserScrollToWebElementCommand v_WhenFailScroll -> v_WhenFailAction
+            ChangeAttributeName(doc, "SeleniumBrowserScrollToWebElementCommand", "v_WhenFailScroll", "v_WhenFailAction");
         }
 
         /// <summary>

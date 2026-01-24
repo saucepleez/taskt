@@ -16,7 +16,10 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         {
             var variableName = command.v_WebElement;
             var v = variableName.GetRawVariable(engine);
-            if (IsWebElementAndWebDriverTuple(v, out ValueTuple<IWebElement, IWebDriver> elemDriv))
+            // DBG
+            //Console.WriteLine(v.VariableValue.GetType().FullName);
+
+            if (IsWebElementAndWebDriverTuple(v.VariableValue, out ValueTuple<IWebElement, IWebDriver> elemDriv))
             {
                 return elemDriv;
             }
@@ -71,12 +74,12 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         }
 
         /// <summary>
-        /// WebElement action
+        /// WebElement action (not use try-catch)
         /// </summary>
         /// <param name="command"></param>
         /// <param name="actionFunc"></param>
         /// <param name="engine"></param>
-        public static void WebElementAction(this ISeleniumDoSomethingToWebElementProperties command, Action<IWebElement, IWebDriver> actionFunc, Engine.AutomationEngineInstance engine)
+        public static void WebElementActionCore(this ISeleniumDoSomethingToWebElementProperties command, Action<IWebElement, IWebDriver> actionFunc, Engine.AutomationEngineInstance engine)
         {
             (var el, var dr) = command.ExpandUserVariableAsWebElementAndWebDriver(engine);
 

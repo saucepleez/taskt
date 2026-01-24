@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         /// <param name="errorFunc"></param>
         public static void WebElementAction(this ISeleniumWebElementActionProperties command, Action<IWebElement, IWebDriver> actionFunc, Engine.AutomationEngineInstance engine, Action<Exception> errorFunc = null)
         {
-            command.WebElementAction(new Action<IWebElement, IWebDriver>((el, dr) =>
+            command.WebElementActionCore(new Action<IWebElement, IWebDriver>((el, dr) =>
             {
                 try
                 {

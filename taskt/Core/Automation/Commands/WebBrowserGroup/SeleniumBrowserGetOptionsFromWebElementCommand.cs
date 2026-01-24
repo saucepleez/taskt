@@ -68,9 +68,9 @@ namespace taskt.Core.Automation.Commands
             {
                 var scrollCommand = new SeleniumBrowserScrollToWebElementCommand()
                 {
-                    v_InstanceName = this.v_InstanceName,
+                    //v_InstanceName = this.v_InstanceName,
                     v_WebElement = this.v_WebElement,
-                    v_WhenFailScroll = "ignore"
+                    v_WhenFailAction = "ignore"
                 };
                 scrollCommand.RunCommand(engine);
             }
