@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         {
             var v = str.GetRawVariable(engine);
 
-            if (IsWebElementAndWebDriverTuple(v, out (IWebElement, IWebDriver) webs))
+            if (IsWebElementAndWebDriverTuple(v.VariableValue, out (IWebElement, IWebDriver) webs))
             {
                 return webs;
             }
