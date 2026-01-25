@@ -5036,6 +5036,13 @@ namespace taskt.Core.Script
                 ("v_ScrollToElement", "v_ScrollToWebElement"),
                 ("v_WhenSetNotSupported", "v_WhenFailAction"),
             });
+
+            // SeleniumBrowserSetTextToWebElementCommand
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserSetTextToWebElementCommand", new List<(string, string)>()
+            {
+                ("v_ScrollToElement", "v_ScrollToWebElement"),
+                ("v_WhenSetNotSupported", "v_WhenFailAction"),
+            });
         }
 
         /// <summary>

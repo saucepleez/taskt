@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,47 +15,50 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserSetTextToWebElementCommand : ScriptCommand
+    public sealed class SeleniumBrowserSetTextToWebElementCommand : ASeleniumWebElementActionAndScrollCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
-        public string v_WebElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
+        //public string v_WebElement { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
         [PropertyDescription("Text To Set")]
+        [PropertyParameterOrder(6000)]
         public string v_TextToSet { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Clear Text before Setting Text")]
         [PropertyIsOptional(true, "No")]
+        [PropertyParameterOrder(6100)]
         public string v_ClearTextBeforeSetting { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Encrypted Text")]
         [PropertyIsOptional(true, "No")]
+        [PropertyParameterOrder(6200)]
         public string v_EncryptedText { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("When the WebElement does not support Set Text")]
-        [PropertyUISelectionOption("Error")]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyIsOptional(true, "Error")]
-        [PropertyDisplayText(false, "")]
-        public string v_WhenSetNotSupported { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        //[PropertyDescription("When the WebElement does not support Set Text")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyIsOptional(true, "Error")]
+        //[PropertyDisplayText(false, "")]
+        //public string v_WhenFailAction { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ScrollToElement))]
-        [PropertySelectionChangeEvent(nameof(cmbScrollToElement_SelectionChange))]
-        public string v_ScrollToElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ScrollToElement))]
+        //[PropertySelectionChangeEvent(nameof(cmbScrollToElement_SelectionChange))]
+        //public string v_ScrollToWebElement { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        [PropertyIsOptional(true)]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //[PropertyIsOptional(true)]
+        //public string v_InstanceName { get; set; }
 
         public SeleniumBrowserSetTextToWebElementCommand()
         {
@@ -63,52 +66,79 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToElement), engine))
-            {
-                var scroll = new SeleniumBrowserScrollToWebElementCommand
+            //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToWebElement), engine))
+            //{
+            //    var scroll = new SeleniumBrowserScrollToWebElementCommand
+            //    {
+            //        //v_InstanceName = this.v_InstanceName,
+            //        v_WebElement = this.v_WebElement,
+            //        v_WhenFailAction = "ignore"
+            //    };
+            //    scroll.RunCommand(engine);
+            //}
+
+            //var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
+
+            //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ClearTextBeforeSetting), engine))
+            //{
+            //    var clearText = new SeleniumBrowserClearTextInWebElementCommand
+            //    {
+            //        v_WebElement = v_WebElement,
+            //        v_WhenFailAction = "Ignore"
+            //    };
+            //    clearText.RunCommand(engine);
+            //}
+
+            //var textToSet = v_TextToSet.ExpandValueOrUserVariable(engine);
+
+            //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_EncryptedText), engine))
+            //{
+            //    textToSet = EncryptionServices.DecryptString(textToSet, "TASKT");
+            //}
+
+            //try
+            //{
+            //    elem.SendKeys(textToSet);
+            //}
+            //catch
+            //{
+            //    if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFailAction), engine) == "error")
+            //    {
+            //        throw new Exception("Fail Setting Text. TagName: '" + elem.TagName + "'");
+            //    }
+            //}
+
+            this.WebElementActionAndScroll(
+                new Action<OpenQA.Selenium.IWebElement, OpenQA.Selenium.IWebDriver>((el, dr) =>
                 {
-                    //v_InstanceName = this.v_InstanceName,
-                    v_WebElement = this.v_WebElement,
-                    v_WhenFailAction = "ignore"
-                };
-                scroll.RunCommand(engine);
-            }
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ClearTextBeforeSetting), engine))
+                    {
+                        var clearText = new SeleniumBrowserClearTextInWebElementCommand
+                        {
+                            v_WebElement = v_WebElement,
+                            v_WhenFailAction = "Ignore"
+                        };
+                        clearText.RunCommand(engine);
+                    }
 
-            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
+                    var textToSet = v_TextToSet.ExpandValueOrUserVariable(engine);
 
-            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ClearTextBeforeSetting), engine))
-            {
-                var clearText = new SeleniumBrowserClearTextInWebElementCommand
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_EncryptedText), engine))
+                    {
+                        textToSet = EncryptionServices.DecryptString(textToSet, "TASKT");
+                    }
+                    el.SendKeys(textToSet);
+                }), engine,
+                new Action<Exception>(ex =>
                 {
-                    v_WebElement = v_WebElement,
-                    v_WhenFailAction = "Ignore"
-                };
-                clearText.RunCommand(engine);
-            }
-
-            var textToSet = v_TextToSet.ExpandValueOrUserVariable(engine);
-
-            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_EncryptedText), engine))
-            {
-                textToSet = EncryptionServices.DecryptString(textToSet, "TASKT");
-            }
-
-            try
-            {
-                elem.SendKeys(textToSet);
-            }
-            catch
-            {
-                if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenSetNotSupported), engine) == "error")
-                {
-                    throw new Exception("Fail Setting Text. TagName: '" + elem.TagName + "'");
-                }
-            }
+                    throw new Exception($"{EM_SeleniumWebElementActionPropertiesExtensionMehtods.GetFailActionMessage("Set Text")} Text: '{v_TextToSet}'");
+                })
+            );
         }
 
-        private void cmbScrollToElement_SelectionChange(object sender, EventArgs e)
-        {
-            SeleniumBrowserControls.ScrollToWebElement_SelectionChange((ComboBox)sender, ControlsList, nameof(v_InstanceName));
-        }
+        //private void cmbScrollToElement_SelectionChange(object sender, EventArgs e)
+        //{
+        //    SeleniumBrowserControls.ScrollToWebElement_SelectionChange((ComboBox)sender, ControlsList, nameof(v_InstanceName));
+        //}
     }
 }
