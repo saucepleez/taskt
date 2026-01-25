@@ -5029,6 +5029,13 @@ namespace taskt.Core.Script
                 ("v_ScrollToElement", "v_ScrollToWebElement"),
                 ("v_WhenFailSelectAction", "v_WhenFailAction"),
             });
+
+            // SeleniumBrowserSendSpecialKeystrokesToWebElementCommand
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserSendSpecialKeystrokesToWebElementCommand", new List<(string, string)>()
+            {
+                ("v_ScrollToElement", "v_ScrollToWebElement"),
+                ("v_WhenSetNotSupported", "v_WhenFailAction"),
+            });
         }
 
         /// <summary>
