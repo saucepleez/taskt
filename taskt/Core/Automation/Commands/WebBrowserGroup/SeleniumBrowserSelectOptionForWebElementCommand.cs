@@ -141,9 +141,9 @@ namespace taskt.Core.Automation.Commands
             //}
 
             this.WebElementActionAndScroll(
-                new Action<OpenQA.Selenium.IWebElement, OpenQA.Selenium.IWebDriver>((el, dr) =>
+                new Action<IWebElement, IWebDriver>((el, dr) =>
                 {
-                    if (!el.CheckTagName("select"))
+                    if (this.TagName(el) != "select")
                     {
                         throw new Exception();
                     }
