@@ -115,6 +115,14 @@ namespace taskt.Core.Automation.Commands
         [Remarks("Headless mode does not show WebBrowser window")]
         public string v_HeadlessMode { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Hide Terminal Window")]
+        [PropertyIsOptional(true, "No")]
+        [PropertyFirstValue("No")]
+        [PropertyDisplayText(false, "Hide Terminal")]
+        public string v_HideTerminalWindow { get; set; }
+
         public SeleniumBrowserCreateWebBrowserInstanceCommand()
         {
             //this.CommandName = "SeleniumBrowserCreateCommand";
@@ -132,6 +140,8 @@ namespace taskt.Core.Automation.Commands
             var driverPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath), "Resources");
             var browserPath = v_BrowserPath.ExpandValueOrUserVariable(engine);
             var webDriverPath = v_WebDriverPath.ExpandValueOrUserVariable(engine);
+
+            var hideTerminal = this.ExpandValueOrUserVariableAsYesNo(nameof(v_HideTerminalWindow), engine);
 
             OpenQA.Selenium.DriverService driverService;
             OpenQA.Selenium.IWebDriver webDriver;
@@ -162,6 +172,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(driverPath);
                 }
+                driverService.HideCommandPromptWindow = hideTerminal;
                 
                 webDriver = new OpenQA.Selenium.Chrome.ChromeDriver((OpenQA.Selenium.Chrome.ChromeDriverService)driverService, options);
             }
@@ -188,7 +199,8 @@ namespace taskt.Core.Automation.Commands
                 {
                     driverService = OpenQA.Selenium.Edge.EdgeDriverService.CreateDefaultService(driverPath, "msedgedriver.exe");
                 }
-                
+                driverService.HideCommandPromptWindow = hideTerminal;
+
                 webDriver = new OpenQA.Selenium.Edge.EdgeDriver((OpenQA.Selenium.Edge.EdgeDriverService)driverService, options);
             }
             else if (seleniumEngine == "firefox")
@@ -224,12 +236,15 @@ namespace taskt.Core.Automation.Commands
                 {
                     driverService = OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService(driverPath);
                 }
-                
+                driverService.HideCommandPromptWindow = hideTerminal;
+
                 webDriver = new OpenQA.Selenium.Firefox.FirefoxDriver((OpenQA.Selenium.Firefox.FirefoxDriverService)driverService, options);
             }
             else if (seleniumEngine == "ie")
             {
                 driverService = OpenQA.Selenium.IE.InternetExplorerDriverService.CreateDefaultService(driverPath);
+                driverService.HideCommandPromptWindow = hideTerminal;
+
                 webDriver = new OpenQA.Selenium.IE.InternetExplorerDriver((OpenQA.Selenium.IE.InternetExplorerDriverService)driverService, new OpenQA.Selenium.IE.InternetExplorerOptions());
             }
             else
