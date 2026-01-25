@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenQA.Selenium.Chromium;
+using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -68,11 +69,30 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Web Browser Command Line Options")]
+        [PropertyDescription("Profile Folder Path")]
+        [PropertyIsOptional(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
+        [PropertyValidationRule("Profile", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Profile")]
+        public string v_ProfileFolder { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Use Headless")]
+        [PropertyIsOptional(true, "No")]
+        [PropertyFirstValue("No")]
+        [PropertyDisplayText(false, "")]
+        [Remarks("Headless mode does not show WebBrowser window")]
+        public string v_HeadlessMode { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
+        [PropertyDescription("Web Browser Command Line Options (one option per line)")]
         [InputSpecification("Command Line Options", true)]
         [SampleUsage("user-data-dir=c:\\users\\public\\SeleniumTasktProfile")]
         [Remarks("")]
         [PropertyIsOptional(true)]
+        [PropertyTextBoxSetting(3, true)]
         [PropertyDisplayText(false, "")]
         public string v_SeleniumOptions { get; set; }
 
@@ -108,15 +128,6 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        [PropertyDescription("Use Headless")]
-        [PropertyIsOptional(true, "No")]
-        [PropertyFirstValue("No")]
-        [PropertyDisplayText(false, "")]
-        [Remarks("Headless mode does not show WebBrowser window")]
-        public string v_HeadlessMode { get; set; }
-
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Hide Terminal Window")]
         [PropertyIsOptional(true, "No")]
         [PropertyFirstValue("No")]
@@ -143,26 +154,98 @@ namespace taskt.Core.Automation.Commands
 
             var hideTerminal = this.ExpandValueOrUserVariableAsYesNo(nameof(v_HideTerminalWindow), engine);
 
-            OpenQA.Selenium.DriverService driverService;
-            OpenQA.Selenium.IWebDriver webDriver;
-            if (seleniumEngine == "chrome")
+            string profilePath = string.Empty;
+
+            void SetChromiumOptions(ChromiumOptions options)
             {
-                OpenQA.Selenium.Chrome.ChromeOptions options = new OpenQA.Selenium.Chrome.ChromeOptions();
                 if (!string.IsNullOrEmpty(browserPath))
                 {
                     options.BinaryLocation = browserPath;
                 }
 
-                if (!string.IsNullOrEmpty(v_SeleniumOptions))
+                if (!string.IsNullOrEmpty(v_ProfileFolder))
                 {
-                    var convertedOptions = v_SeleniumOptions.ExpandValueOrUserVariable(engine);
-                    options.AddArguments(convertedOptions);
+                    var profileFolder = v_ProfileFolder.ExpandValueOrUserVariable(engine);
+                    options.AddArgument($"--user-data-dir={profileFolder}");
+                    profilePath = profileFolder;
                 }
 
                 if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_HeadlessMode), engine))
                 {
                     options.AddArgument("--headless");
                 }
+
+                if (!string.IsNullOrEmpty(v_SeleniumOptions))
+                {
+                    var convertedOptions = v_SeleniumOptions.ExpandValueOrUserVariable(engine);
+
+                    var spt = convertedOptions.Replace("\r\n", "\r").Split(new char[] { '\r', '\n' });
+
+                    foreach (var opt in spt)
+                    {
+                        var opt2 = opt;
+                        options.AddArgument(opt2);
+                        if (opt2.StartsWith("user-data-dir=") || opt2.StartsWith("--user-data-dir="))
+                        {
+                            if (opt2.StartsWith("user-data-dir="))
+                            {
+                                profilePath = opt.Substring(14);
+                            }
+                            else
+                            {
+                                profilePath = opt.Substring(16);
+                            }
+                        }
+                    }
+                }
+            }
+
+            OpenQA.Selenium.DriverService driverService;
+            OpenQA.Selenium.IWebDriver webDriver;
+            if (seleniumEngine == "chrome")
+            {
+                OpenQA.Selenium.Chrome.ChromeOptions options = new OpenQA.Selenium.Chrome.ChromeOptions();
+                //if (!string.IsNullOrEmpty(browserPath))
+                //{
+                //    options.BinaryLocation = browserPath;
+                //}
+
+                //if (!string.IsNullOrEmpty(v_ProfileFolder))
+                //{
+                //    var profileFolder = v_ProfileFolder.ExpandValueOrUserVariable(engine);
+                //    options.AddArgument($"user-data-dir={profileFolder}");
+                //    profilePath = profileFolder;
+                //}
+
+                //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_HeadlessMode), engine))
+                //{
+                //    options.AddArgument("--headless");
+                //}
+
+                //if (!string.IsNullOrEmpty(v_SeleniumOptions))
+                //{
+                //    var convertedOptions = v_SeleniumOptions.ExpandValueOrUserVariable(engine);
+
+                //    var spt = convertedOptions.Replace("\r\n", "\r").Split(new char[] { '\r', '\n' });
+
+                //    foreach(var opt in spt)
+                //    {
+                //        var opt2 = opt.Trim();
+                //        options.AddArgument(opt2);
+                //        if (opt2.StartsWith("user-data-dir=") || opt2.StartsWith("--user-data-dir="))
+                //        {
+                //            if (opt2.StartsWith("user-data-dir="))
+                //            {
+                //                profilePath = opt.Substring(14);
+                //            }
+                //            else
+                //            {
+                //                profilePath = opt.Substring(16);
+                //            }
+                //        }
+                //    }
+                //}
+                SetChromiumOptions(options);
 
                 if (!string.IsNullOrEmpty(webDriverPath))
                 {
@@ -180,16 +263,30 @@ namespace taskt.Core.Automation.Commands
             {
                 OpenQA.Selenium.Edge.EdgeOptions options = new OpenQA.Selenium.Edge.EdgeOptions();
 
-                if (!string.IsNullOrEmpty(v_SeleniumOptions))
-                {
-                    var convertedOptions = v_SeleniumOptions.ExpandValueOrUserVariable(engine);
-                    options.AddArguments(convertedOptions);
-                }
+                //if (!string.IsNullOrEmpty(v_ProfileFolder))
+                //{
+                //    var profileFolder = v_ProfileFolder.ExpandValueOrUserVariable(engine);
+                //    options.AddArgument($"--user-data-dir={profileFolder}");
+                //    profilePath = profileFolder;
+                //}
 
-                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_HeadlessMode), engine))
-                {
-                    options.AddArgument("--headless");
-                }
+                //if (!string.IsNullOrEmpty(v_SeleniumOptions))
+                //{
+                //    var convertedOptions = v_SeleniumOptions.ExpandValueOrUserVariable(engine);
+
+                //    var spt = convertedOptions.Replace("\r\n", "\r").Split(new char[] { '\r', '\n' });
+
+                //    foreach (var opt in spt)
+                //    {
+                //        options.AddArgument(opt);
+                //    }
+                //}
+
+                //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_HeadlessMode), engine))
+                //{
+                //    options.AddArgument("--headless");
+                //}
+                SetChromiumOptions(options);
 
                 if (!string.IsNullOrEmpty(webDriverPath))
                 {
@@ -208,24 +305,48 @@ namespace taskt.Core.Automation.Commands
                 OpenQA.Selenium.Firefox.FirefoxOptions options = new OpenQA.Selenium.Firefox.FirefoxOptions();
                 if (!string.IsNullOrEmpty(browserPath))
                 {
-                    //options.BrowserExecutableLocation = browserPath;
                     options.BinaryLocation = browserPath;
                 }
                 else
                 {
-                    //options.BrowserExecutableLocation = @"c:\Program Files\Mozilla Firefox\firefox.exe";
-                    options.BinaryLocation = @"c:\Program Files\Mozilla Firefox\firefox.exe";
+                    options.BinaryLocation = @"C:\Program Files\Mozilla Firefox\firefox.exe";
                 }
 
-                if (!string.IsNullOrEmpty(v_SeleniumOptions))
+                if (!string.IsNullOrEmpty(v_ProfileFolder))
                 {
-                    var convertedOptions = v_SeleniumOptions.ExpandValueOrUserVariable(engine);
-                    options.AddArguments(convertedOptions);
+                    var profileFolder = v_ProfileFolder.ExpandValueOrUserVariable(engine);
+
+                    options.Profile = new OpenQA.Selenium.Firefox.FirefoxProfile(profileFolder);
+                    profilePath = profileFolder;
                 }
 
                 if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_HeadlessMode), engine))
                 {
                     options.AddArgument("-headless");
+                }
+
+                if (!string.IsNullOrEmpty(v_SeleniumOptions))
+                {
+                    var convertedOptions = v_SeleniumOptions.ExpandValueOrUserVariable(engine);
+                    
+                    var spt = convertedOptions.Replace("\r\n", "\r").Split(new char[] { '\r', '\n' });
+
+                    foreach (var opt in spt)
+                    {
+                        var opt2 = opt;
+                        options.AddArgument(opt2);
+                        if (opt2.StartsWith("-profile=") || opt2.StartsWith("--profile="))
+                        {
+                            if (opt2.StartsWith("-profile="))
+                            {
+                                profilePath = opt2.Substring(9);
+                            }
+                            else
+                            {
+                                profilePath = opt2.Substring(10);
+                            }
+                        }
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(webDriverPath))
