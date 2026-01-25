@@ -5022,6 +5022,13 @@ namespace taskt.Core.Script
                 ("v_ScrollToElement", "v_ScrollToWebElement"),
                 ("v_WhenFailClick", "v_WhenFailAction"),
             });
+
+            // SeleniumBrowserSelectOptionForWebElementCommand
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserSelectOptionForWebElementCommand", new List<(string, string)>()
+            {
+                ("v_ScrollToElement", "v_ScrollToWebElement"),
+                ("v_WhenFailSelectAction", "v_WhenFailAction"),
+            });
         }
 
         /// <summary>
