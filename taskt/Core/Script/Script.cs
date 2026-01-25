@@ -5030,19 +5030,40 @@ namespace taskt.Core.Script
                 ("v_WhenFailSelectAction", "v_WhenFailAction"),
             });
 
-            // SeleniumBrowserSendSpecialKeystrokesToWebElementCommand
-            ChangeMultiAttributeNames(doc, "SeleniumBrowserSendSpecialKeystrokesToWebElementCommand", new List<(string, string)>()
-            {
-                ("v_ScrollToElement", "v_ScrollToWebElement"),
-                ("v_WhenSetNotSupported", "v_WhenFailAction"),
-            });
+            //// SeleniumBrowserSendSpecialKeystrokesToWebElementCommand
+            //ChangeMultiAttributeNames(doc, "SeleniumBrowserSendSpecialKeystrokesToWebElementCommand", new List<(string, string)>()
+            //{
+            //    ("v_ScrollToElement", "v_ScrollToWebElement"),
+            //    ("v_WhenSetNotSupported", "v_WhenFailAction"),
+            //});
 
+            //// SeleniumBrowserSetTextToWebElementCommand
+            //ChangeMultiAttributeNames(doc, "SeleniumBrowserSetTextToWebElementCommand", new List<(string, string)>()
+            //{
+            //    ("v_ScrollToElement", "v_ScrollToWebElement"),
+            //    ("v_WhenSetNotSupported", "v_WhenFailAction"),
+            //});
+
+            // SeleniumBrowserSendSpecialKeystrokesToWebElementCommand
             // SeleniumBrowserSetTextToWebElementCommand
-            ChangeMultiAttributeNames(doc, "SeleniumBrowserSetTextToWebElementCommand", new List<(string, string)>()
-            {
-                ("v_ScrollToElement", "v_ScrollToWebElement"),
-                ("v_WhenSetNotSupported", "v_WhenFailAction"),
-            });
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "SeleniumBrowserSendSpecialKeystrokesToWebElementCommand":
+                        case "SeleniumBrowserSetTextToWebElementCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                     ("v_ScrollToElement", "v_ScrollToWebElement"),
+                    ("v_WhenSetNotSupported", "v_WhenFailAction"),
+                }
+            );
         }
 
         /// <summary>
