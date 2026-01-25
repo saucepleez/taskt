@@ -887,7 +887,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetWebElementsCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserSearchWebElementFromWebEelementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserSendSpecialKeystrokesToWebElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserSwitchFrameToWebElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserSwitchToFrameWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserSelectOptionForWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetOptionsFromWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetTextFromWebElementCommand.cs" />

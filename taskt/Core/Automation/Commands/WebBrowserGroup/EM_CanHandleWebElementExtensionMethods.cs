@@ -85,5 +85,15 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         {
             ExtensionMethods.StoreInUserVariable(targetVariable, (elem, driver), engine, false);
         }
+
+        /// <summary>
+        /// get WebElement TagName
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="elem"></param>
+        public static string TagName(this ICanHandleWebElement command, IWebElement elem)
+        {
+            return elem.TagName.ToLower();
+        }
     }
 }

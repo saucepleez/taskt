@@ -287,9 +287,9 @@ namespace taskt.Core.Automation.Commands
                                 getAttribute.RunCommand(engine);
                                 break;
                             case "switch to frame":
-                                var switchToFrame = new SeleniumBrowserSwitchFrameToWebElementCommand()
+                                var switchToFrame = new SeleniumBrowserSwitchToFrameWebElementCommand()
                                 {
-                                    v_InstanceName = this.v_InstanceName,
+                                    //v_InstanceName = this.v_InstanceName,
                                     v_WebElement = myWebElem.VariableName,
                                 };
                                 switchToFrame.RunCommand(engine);

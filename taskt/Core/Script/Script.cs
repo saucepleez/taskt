@@ -5060,10 +5060,19 @@ namespace taskt.Core.Script
                 }),
                 new List<(string, string)>()
                 {
-                     ("v_ScrollToElement", "v_ScrollToWebElement"),
+                    ("v_ScrollToElement", "v_ScrollToWebElement"),
                     ("v_WhenSetNotSupported", "v_WhenFailAction"),
                 }
             );
+
+            // SeleniumBrowserSwitchFrameToWebElementCommand
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserSwitchFrameToWebElementCommand", new List<(string, string)>()
+            {
+                ("v_ScrollToElement", "v_ScrollToWebElement"),
+                ("v_WhenFailSwitch", "v_WhenFailAction"),
+            });
+            // SeleniumBrowserSwitchFrameToWebElementCommand -> SeleniumBrowserSwitchToFrameWebElementCommand
+            ChangeCommandName(doc, "SeleniumBrowserSwitchFrameToWebElementCommand", "SeleniumBrowserSwitchToFrameWebElementCommand", "Switch To Frame WebElement");
         }
 
         /// <summary>
