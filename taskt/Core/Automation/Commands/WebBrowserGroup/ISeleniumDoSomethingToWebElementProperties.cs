@@ -3,7 +3,7 @@
     /// <summary>
     /// do something to WebElement properties
     /// </summary>
-    public interface ISeleniumDoSomethingToWebElementProperties : IExpandableProperties
+    public interface ISeleniumDoSomethingToWebElementProperties : ICanHandleWebElement, IExpandableProperties
     {
         /// <summary>
         /// target WebElement variable name

@@ -3,7 +3,7 @@
     /// <summary>
     /// can handle WebElement
     /// </summary>
-    public interface ICanHandleWebElement
+    public interface ICanHandleWebElement : ICanHandleWebDriver
     {
         // nothing
     }
