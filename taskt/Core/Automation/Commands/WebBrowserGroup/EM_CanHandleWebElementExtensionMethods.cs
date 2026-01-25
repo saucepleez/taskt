@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         {
             var v = str.GetRawVariable(engine);
 
-            if (v.VariableValue is ValueTuple<IWebElement, IWebDriver> webs)
+            if (IsWebElementAndWebDriverTuple(v, out (IWebElement, IWebDriver) webs))
             {
                 return webs;
             }
@@ -53,6 +53,26 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         {
             (_, var d) = command.ExpandUserVariableAsWebElementAndWebDriver(str, parameterName, engine);
             return d;
+        }
+
+        /// <summary>
+        /// check value is WebElement-WebDriver
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="ret"></param>
+        /// <returns></returns>
+        private static bool IsWebElementAndWebDriverTuple(object v, out ValueTuple<IWebElement, IWebDriver> ret)
+        {
+            if (v is ValueTuple<IWebElement, IWebDriver> t)
+            {
+                ret = t;
+                return true;
+            }
+            else
+            {
+                ret = (null, null);
+                return false;
+            }
         }
 
         /// <summary>
