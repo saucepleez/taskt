@@ -474,6 +474,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_53(doc);
             convertTo3_5_2_55(doc);
             convertTo3_5_2_56(doc);
+            convertTo3_5_2_57(doc);
             return doc;
         }
 
@@ -5073,6 +5074,12 @@ namespace taskt.Core.Script
             });
             // SeleniumBrowserSwitchFrameToWebElementCommand -> SeleniumBrowserSwitchToFrameWebElementCommand
             ChangeCommandName(doc, "SeleniumBrowserSwitchFrameToWebElementCommand", "SeleniumBrowserSwitchToFrameWebElementCommand", "Switch To Frame WebElement");
+        }
+
+        private static void convertTo3_5_2_57(XDocument doc)
+        {
+            // SeleniumBrowserCreateWebBrowserInstanceCommand v_EngineType -> v_BrowserType
+            ChangeAttributeName(doc, "SeleniumBrowserCreateWebBrowserInstanceCommand", "v_EngineType", "v_BrowserType");
         }
 
         /// <summary>

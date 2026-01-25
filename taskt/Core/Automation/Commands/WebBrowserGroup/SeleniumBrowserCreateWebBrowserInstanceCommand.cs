@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Chrome")]
         [PropertyFirstValue("Chrome")]
         [PropertyDisplayText(true, "Web Browser Type")]
-        public string v_EngineType { get; set; }
+        public string v_BrowserType { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -146,7 +146,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var seleniumEngine = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_EngineType), engine);
+            var seleniumEngine = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_BrowserType), engine);
 
             var driverPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath), "Resources");
             var browserPath = v_BrowserPath.ExpandValueOrUserVariable(engine);
@@ -373,7 +373,7 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("strange Web Browser");
             }
 
-            //add app instance
+            // add app instance
             var instanceName = v_InstanceName.ExpandValueOrUserVariable(engine);
             engine.AddAppInstance(instanceName, webDriver);
 
@@ -405,7 +405,7 @@ namespace taskt.Core.Automation.Commands
         {
             if (!editor.appSettings.ClientSettings.SupportIECommand)
             {
-                var cmb = ControlsList.GetPropertyControl<ComboBox>(nameof(v_EngineType));
+                var cmb = ControlsList.GetPropertyControl<ComboBox>(nameof(v_BrowserType));
                 for (int i = cmb.Items.Count - 1; i >= 0; i--)
                 {
                     if (cmb.Items[i].ToString() == "IE")

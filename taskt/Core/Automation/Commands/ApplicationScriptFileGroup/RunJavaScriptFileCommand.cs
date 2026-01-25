@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
                 var webInstance = new SeleniumBrowserCreateWebBrowserInstanceCommand()
                 {
                     v_InstanceName = instanceVar,
-                    v_EngineType = "Edge",
+                    v_BrowserType = "Edge",
                     v_HeadlessMode = "Yes",
                 };
                 webInstance.RunCommand(engine);
