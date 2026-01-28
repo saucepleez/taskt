@@ -136,6 +136,16 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "Hide Terminal")]
         public string v_HideTerminalWindow { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Temporary Folder when does not specified")]
+        [PropertyUISelectionOption("User Temp")]
+        [PropertyUISelectionOption("taskt Temporary")]
+        [PropertyIsOptional(true, "User Temp")]
+        [PropertyValidationRule("Temporary Folder", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Temporary Folder")]
+        public string v_TemporaryProfileFolder { get; set; }
+
         public SeleniumBrowserCreateWebBrowserInstanceCommand()
         {
             //this.CommandName = "SeleniumBrowserCreateCommand";
@@ -155,9 +165,23 @@ namespace taskt.Core.Automation.Commands
             //var webDriverPath = v_WebDriverPath.ExpandValueOrUserVariable(engine);
 
             var browserPath = v_BrowserPath.ExpandValueOrUserVariable(engine);
-            
 
             string profilePath = string.Empty;
+
+            string GetTemporaryProfilePath()
+            {
+                var folderName = $"prof-{Guid.NewGuid().ToString()}";
+                switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TemporaryProfileFolder), engine))
+                {
+                    case "user temp":
+                        return Path.Combine(IO.Folders.GetUserTemporaryFolderPath(), folderName);
+                        
+                    case "taskt temporary":
+                        return Path.Combine(IO.Folders.GetTasktTemporaryFolderPath(), folderName);
+                    default:
+                        return string.Empty;
+                }
+            }
 
             void SetChromiumOptions(ChromiumOptions options)
             {   
@@ -200,6 +224,13 @@ namespace taskt.Core.Automation.Commands
                             }
                         }
                     }
+                }
+
+                // profile folder does not specified
+                if (string.IsNullOrEmpty(profilePath))
+                {
+                    profilePath = GetTemporaryProfilePath();
+                    options.AddArgument($"user-data-dir={profilePath}");
                 }
             }
 
@@ -276,7 +307,8 @@ namespace taskt.Core.Automation.Commands
                 {
                     var profileFolder = v_ProfileFolder.ExpandValueOrUserVariable(engine);
 
-                    options.Profile = new OpenQA.Selenium.Firefox.FirefoxProfile(profileFolder);
+                    //options.Profile = new OpenQA.Selenium.Firefox.FirefoxProfile(profileFolder);
+                    options.AddArgument($"-profile={profileFolder}");
                     profilePath = profileFolder;
                 }
 
@@ -306,6 +338,18 @@ namespace taskt.Core.Automation.Commands
                                 profilePath = opt2.Substring(10);
                             }
                         }
+                    }
+                }
+
+                // profile folder does not specified
+                if (string.IsNullOrEmpty(profilePath))
+                {
+                    profilePath = GetTemporaryProfilePath();
+                    //options.Profile = new OpenQA.Selenium.Firefox.FirefoxProfile(profilePath);
+                    options.AddArgument($"-profile={profilePath}");
+                    if (!Directory.Exists(profilePath))
+                    {
+                        Directory.CreateDirectory(profilePath);
                     }
                 }
 
