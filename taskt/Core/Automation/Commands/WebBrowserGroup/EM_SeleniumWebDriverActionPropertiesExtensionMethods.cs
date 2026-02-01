@@ -17,12 +17,11 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         {
             try
             {
-                (var driver, string prof) = command.ExpandValueOrUserVariableAsWebBrowserInstanceAndProfilePath(engine);
-                actionFunc(driver, prof);
+                command.WebDriverActionCore(actionFunc, engine, errorFunc);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                switch(command.ToScriptCommand().ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_WhenFailAction), engine))
+                switch (command.ToScriptCommand().ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_WhenFailAction), engine))
                 {
                     case "error":
                         if (errorFunc != null)
@@ -39,6 +38,31 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
                         break;
                 }
             }
+
+            //try
+            //{
+            //    (var driver, string prof) = command.ExpandValueOrUserVariableAsWebBrowserInstanceAndProfilePath(engine);
+            //    actionFunc(driver, prof);
+            //}
+            //catch (Exception ex) 
+            //{
+            //    switch(command.ToScriptCommand().ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_WhenFailAction), engine))
+            //    {
+            //        case "error":
+            //            if (errorFunc != null)
+            //            {
+            //                errorFunc(ex);
+            //            }
+            //            else
+            //            {
+            //                throw ex;
+            //            }
+            //            break;
+
+            //        case "ignore":
+            //            break;
+            //    }
+            //}
         }
 
         /// <summary>
