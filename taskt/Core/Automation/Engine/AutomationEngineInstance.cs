@@ -229,7 +229,7 @@ namespace taskt.Core.Automation.Engine
                 {
                     this.AppInstances.Add(instance.Key, instance.Value);
                 }
-              
+                
                 // execute commands
                 foreach (var executionCommand in automationScript.Commands)
                 {
