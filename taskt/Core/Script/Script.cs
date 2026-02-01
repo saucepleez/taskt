@@ -5080,6 +5080,20 @@ namespace taskt.Core.Script
         {
             // SeleniumBrowserCreateWebBrowserInstanceCommand v_EngineType -> v_BrowserType
             ChangeAttributeName(doc, "SeleniumBrowserCreateWebBrowserInstanceCommand", "v_EngineType", "v_BrowserType");
+
+            // SeleniumBrowserCheckBrowserInstanceExistsCommand, SeleniumBrowserGetWebBrowserInformationCommand
+            // v_applyToVariableName -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserCheckBrowserInstanceExistsCommand":
+                    case "SeleniumBrowserGetWebBrowserInformationCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_applyToVariableName", "v_Result");
         }
 
         /// <summary>

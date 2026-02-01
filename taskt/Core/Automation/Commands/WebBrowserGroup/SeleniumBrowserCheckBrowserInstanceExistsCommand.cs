@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserCheckBrowserInstanceExistsCommand : ASeleniumDoSomethingToWebDriverCommands
+    public sealed class SeleniumBrowserCheckBrowserInstanceExistsCommand : ASeleniumGetFromWebDriverCommands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When WebBrowser Instance Exists, Result is **True**")]
         [PropertyParameterOrder(6000)]
-        public string v_applyToVariableName { get; set; }
+        public override string v_Result { get; set; }
 
         public SeleniumBrowserCheckBrowserInstanceExistsCommand()
         {
@@ -50,11 +50,11 @@ namespace taskt.Core.Automation.Commands
             try
             {
                 var ins = this.GetWebBrowserIntance(v_InstanceName, engine);
-                (ins != null).StoreInUserVariable(engine, v_applyToVariableName);
+                (ins != null).StoreInUserVariable(engine, v_Result);
             }
             catch
             {
-                false.StoreInUserVariable(engine, v_applyToVariableName);
+                false.StoreInUserVariable(engine, v_Result);
             }
         }
     }

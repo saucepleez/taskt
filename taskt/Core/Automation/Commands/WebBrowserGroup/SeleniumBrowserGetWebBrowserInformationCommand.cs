@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetWebBrowserInformationCommand : ASeleniumWebDriverActionCommands
+    public sealed class SeleniumBrowserGetWebBrowserInformationCommand : ASeleniumGetFromWebDriverCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyParameterOrder(7000)]
-        public string v_applyToVariableName { get; set; }
+        public override string v_Result { get; set; }
 
         public SeleniumBrowserGetWebBrowserInformationCommand()
         {
@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
             //store data
             //info.StoreInUserVariable(engine, v_applyToVariableName);
 
-            this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
+            this.WebDriverActionCore(new Action<OpenQA.Selenium.IWebDriver, string>((seleniumInstance, _) =>
             {
                 var info = string.Empty;
                 switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), engine))
@@ -98,7 +98,7 @@ namespace taskt.Core.Automation.Commands
                         info = Newtonsoft.Json.JsonConvert.SerializeObject(seleniumInstance.WindowHandles);
                         break;
                 }
-                info.StoreInUserVariable(engine, v_applyToVariableName);
+                info.StoreInUserVariable(engine, v_Result);
             }), engine);
         }
     }
