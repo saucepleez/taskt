@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using OpenQA.Selenium;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,11 +16,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserSwitchWebBrowserWindowAndTabCommand : ScriptCommand
+    public sealed class SeleniumBrowserSwitchWebBrowserWindowAndTabCommand : ASeleniumWebDriverActionCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -31,6 +32,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("Window URL")]
         [PropertyValidationRule("Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
+        [PropertyParameterOrder(6000)]
         public string v_WindowMatchType { get; set; }
 
         [XmlAttribute]
@@ -41,6 +43,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("", true)]
         [PropertyIsOptional(true, "Exact Match")]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(7000)]
         public string v_MatchSpecification { get; set; }
 
         [XmlAttribute]
@@ -51,6 +54,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("", true)]
         [PropertyIsOptional(true, "No")]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(8000)]
         public string v_CaseSensitiveMatch { get; set; }
 
         [XmlAttribute]
@@ -64,6 +68,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyValidationRule("Parameter", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Parameter")]
+        [PropertyParameterOrder(9000)]
         public string v_MatchParameter { get; set; }
 
         public SeleniumBrowserSwitchWebBrowserWindowAndTabCommand()
@@ -83,43 +88,79 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
+            //var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
-            var matchType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WindowMatchType), engine);
+            //var matchType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WindowMatchType), engine);
 
-            var exactMatchRequired = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_MatchSpecification), engine);
-            var caseSensitive = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CaseSensitiveMatch), engine);
+            //var exactMatchRequired = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_MatchSpecification), engine);
+            //var caseSensitive = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CaseSensitiveMatch), engine);
 
-            Func<IWebDriver, string, bool> matchFunc = getMatchFunc(matchType, exactMatchRequired, caseSensitive);
+            //var matchFunc = GetMatchFunc(matchType, exactMatchRequired, caseSensitive);
 
-            var matchParam = v_MatchParameter.ExpandValueOrUserVariable(engine);
-            var handles = seleniumInstance.WindowHandles;
-            var currentHandle = seleniumInstance.CurrentWindowHandle;
-            var matchFound = false;
-            foreach (var hndl in handles)
+            //var matchParam = v_MatchParameter.ExpandValueOrUserVariable(engine);
+            //var handles = seleniumInstance.WindowHandles;
+            //var currentHandle = seleniumInstance.CurrentWindowHandle;
+            //var matchFound = false;
+            //foreach (var hndl in handles)
+            //{
+            //    var tempHandle = seleniumInstance.SwitchTo().Window(hndl);
+
+            //    // array ordering is not guaranteed so skip if current window
+            //    if (tempHandle.CurrentWindowHandle == currentHandle)
+            //    {
+            //        continue;
+            //    }
+
+            //    matchFound = matchFunc(tempHandle, matchParam);
+            //    if (matchFound)
+            //    {
+            //        break;
+            //    }
+            //}
+
+            //if (!matchFound)
+            //{
+            //    throw new Exception("Unable to find the specified window!");
+            //}
+
+            this.WebDriverAction(new Action<IWebDriver>(seleniumInstance =>
             {
-                var tempHandle = seleniumInstance.SwitchTo().Window(hndl);
+                var matchType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WindowMatchType), engine);
 
-                //array ordering is not guaranteed so skip if current window
-                if (tempHandle.CurrentWindowHandle == currentHandle)
+                var exactMatchRequired = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_MatchSpecification), engine);
+                var caseSensitive = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CaseSensitiveMatch), engine);
+
+                var matchFunc = GetMatchFunc(matchType, exactMatchRequired, caseSensitive);
+
+                var matchParam = v_MatchParameter.ExpandValueOrUserVariable(engine);
+                var handles = seleniumInstance.WindowHandles;
+                var currentHandle = seleniumInstance.CurrentWindowHandle;
+                var matchFound = false;
+                foreach (var hndl in handles)
                 {
-                    continue;
+                    var tempHandle = seleniumInstance.SwitchTo().Window(hndl);
+
+                    // array ordering is not guaranteed so skip if current window
+                    if (tempHandle.CurrentWindowHandle == currentHandle)
+                    {
+                        continue;
+                    }
+
+                    matchFound = matchFunc(tempHandle, matchParam);
+                    if (matchFound)
+                    {
+                        break;
+                    }
                 }
 
-                matchFound = matchFunc(tempHandle, matchParam);
-                if (matchFound)
+                if (!matchFound)
                 {
-                    break;
+                    throw new Exception("Unable to find the specified window!");
                 }
-            }
-
-            if (!matchFound)
-            {
-                throw new Exception("Unable to find the specified window!");
-            }
+            }), engine);
         }
 
-        private static Func<IWebDriver, string, bool> getMatchFunc(string targetType, string searchType, string caseSensitive)
+        private static Func<IWebDriver, string, bool> GetMatchFunc(string targetType, string searchType, string caseSensitive)
         {
             Func<string, string> caseFunc;
             if (caseSensitive == "yes")

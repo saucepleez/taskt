@@ -1,7 +1,9 @@
 ﻿using OpenQA.Selenium;
 using System;
+using System.IO;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,11 +17,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserTakeScreenshotCommand : ScriptCommand
+    public sealed class SeleniumBrowserTakeScreenshotCommand : ASeleniumWebDriverActionCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -32,6 +34,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         [PropertyValidationRule("Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Folder")]
+        [PropertyParameterOrder(6000)]
         public string v_SeleniumScreenshotPathParameter { get; set; }
 
         [XmlAttribute]
@@ -46,6 +49,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("screenshot_001")]
         [PropertyValidationRule("File Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "File Name")]
+        [PropertyParameterOrder(7000)]
         public string v_SeleniumScreenshotFileNameParameter { get; set; }
 
         public SeleniumBrowserTakeScreenshotCommand()
@@ -61,16 +65,29 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
+            //var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
-            var screenshotPath = v_SeleniumScreenshotPathParameter.ExpandValueOrUserVariable(engine);
-            var screenshotFileName = v_SeleniumScreenshotFileNameParameter.ExpandValueOrUserVariable(engine);
+            //var screenshotPath = v_SeleniumScreenshotPathParameter.ExpandValueOrUserVariable(engine);
+            //var screenshotFileName = v_SeleniumScreenshotFileNameParameter.ExpandValueOrUserVariable(engine);
 
-            // take the screenshot
-            Screenshot image = ((ITakesScreenshot)seleniumInstance).GetScreenshot();
-            // save the screenshot to the entered folder by provided name for the screenshot file name
-            //image.SaveAsFile(screenshotPath + "/" + screenshotFileName + ".png", ScreenshotImageFormat.Png);
-            image.SaveAsFile(screenshotPath + "/" + screenshotFileName + ".png");
+            //// take the screenshot
+            //Screenshot image = ((ITakesScreenshot)seleniumInstance).GetScreenshot();
+            //// save the screenshot to the entered folder by provided name for the screenshot file name
+            ////image.SaveAsFile(screenshotPath + "/" + screenshotFileName + ".png", ScreenshotImageFormat.Png);
+            //image.SaveAsFile(screenshotPath + "/" + screenshotFileName + ".png");
+
+            this.WebDriverAction(new Action<IWebDriver>(seleniumInstance =>
+            {
+                var screenshotPath = v_SeleniumScreenshotPathParameter.ExpandValueOrUserVariable(engine);
+                var screenshotFileName = v_SeleniumScreenshotFileNameParameter.ExpandValueOrUserVariable(engine);
+
+                var saveFilePath = Path.Combine(screenshotPath, $"{screenshotFileName}.png");
+
+                // take the screenshot
+                var image = ((ITakesScreenshot)seleniumInstance).GetScreenshot();
+                // save the screenshot to the entered folder by provided name for the screenshot file name
+                image.SaveAsFile(saveFilePath);
+            }), engine);
         }
     }
 }

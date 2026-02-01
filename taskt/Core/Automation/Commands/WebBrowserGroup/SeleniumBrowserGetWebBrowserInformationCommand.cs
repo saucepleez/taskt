@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser")]
     [Attributes.ClassAttributes.SubGruop("Instance")]
@@ -15,11 +15,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetWebBrowserInformationCommand : ScriptCommand
+    public sealed class SeleniumBrowserGetWebBrowserInformationCommand : ASeleniumWebDriverActionCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -33,10 +33,12 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("")]
         [PropertyValidationRule("Information Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Information Type")]
+        [PropertyParameterOrder(6000)]
         public string v_InfoType { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyParameterOrder(7000)]
         public string v_applyToVariableName { get; set; }
 
         public SeleniumBrowserGetWebBrowserInformationCommand()
@@ -49,31 +51,55 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var seleniumInstance = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstance(v_InstanceName, engine);
+            //var seleniumInstance = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstance(v_InstanceName, engine);
 
-            var requestedInfo = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), engine);
-            string info = "";
-            switch (requestedInfo)
-            {
-                case "window title":
-                    info = seleniumInstance.Title;
-                    break;
-                case "window url":
-                    info = seleniumInstance.Url;
-                    break;
-                case "current handle":
-                    info = seleniumInstance.CurrentWindowHandle;
-                    break;
-                case "html page source":
-                    info = seleniumInstance.PageSource;
-                    break;
-                case "handles json array":
-                    info = Newtonsoft.Json.JsonConvert.SerializeObject(seleniumInstance.WindowHandles);
-                    break;
-            }
+            //var requestedInfo = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), engine);
+            //string info = "";
+            //switch (requestedInfo)
+            //{
+            //    case "window title":
+            //        info = seleniumInstance.Title;
+            //        break;
+            //    case "window url":
+            //        info = seleniumInstance.Url;
+            //        break;
+            //    case "current handle":
+            //        info = seleniumInstance.CurrentWindowHandle;
+            //        break;
+            //    case "html page source":
+            //        info = seleniumInstance.PageSource;
+            //        break;
+            //    case "handles json array":
+            //        info = Newtonsoft.Json.JsonConvert.SerializeObject(seleniumInstance.WindowHandles);
+            //        break;
+            //}
 
             //store data
-            info.StoreInUserVariable(engine, v_applyToVariableName);
+            //info.StoreInUserVariable(engine, v_applyToVariableName);
+
+            this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
+            {
+                var info = string.Empty;
+                switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), engine))
+                {
+                    case "window title":
+                        info = seleniumInstance.Title;
+                        break;
+                    case "window url":
+                        info = seleniumInstance.Url;
+                        break;
+                    case "current handle":
+                        info = seleniumInstance.CurrentWindowHandle;
+                        break;
+                    case "html page source":
+                        info = seleniumInstance.PageSource;
+                        break;
+                    case "handles json array":
+                        info = Newtonsoft.Json.JsonConvert.SerializeObject(seleniumInstance.WindowHandles);
+                        break;
+                }
+                info.StoreInUserVariable(engine, v_applyToVariableName);
+            }), engine);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,14 +15,15 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetWindowAndTabCountCommand : ScriptCommand
+    public sealed class SeleniumBrowserGetWindowAndTabCountCommand : ASeleniumWebDriverActionCommands, IResultProperties
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyParameterOrder(6000)]
         public string v_Result { get; set; }
 
         public SeleniumBrowserGetWindowAndTabCountCommand()
@@ -30,9 +32,14 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var seleniumInstance = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstance(v_InstanceName, engine);
+            //var seleniumInstance = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstance(v_InstanceName, engine);
 
-            seleniumInstance.WindowHandles.Count.StoreInUserVariable(engine, v_Result);
+            //seleniumInstance.WindowHandles.Count.StoreInUserVariable(engine, v_Result);
+
+            this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
+            {
+                seleniumInstance.WindowHandles.Count.StoreInUserVariable(engine, v_Result);
+            }), engine);
         }
     }
 }

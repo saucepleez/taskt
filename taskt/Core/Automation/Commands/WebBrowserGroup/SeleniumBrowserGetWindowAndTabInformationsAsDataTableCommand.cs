@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,14 +15,15 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand : ScriptCommand, IDataTableResultProperties
+    public sealed class SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand : ASeleniumWebDriverActionCommands, IDataTableResultProperties
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
+        [PropertyParameterOrder(6000)]
         public string v_Result { get; set; }
 
         public SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand()
@@ -30,25 +32,46 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var seleniumInstance = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstance(v_InstanceName, engine);
+            //var seleniumInstance = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstance(v_InstanceName, engine);
 
-            var currentHandle = seleniumInstance.CurrentWindowHandle;
+            //var currentHandle = seleniumInstance.CurrentWindowHandle;
 
-            var ret = this.CreateEmptyDataTable();
-            ret.Columns.Add("handle");
-            ret.Columns.Add("url");
-            ret.Columns.Add("title");
+            //var ret = this.CreateEmptyDataTable();
+            //ret.Columns.Add("handle");
+            //ret.Columns.Add("url");
+            //ret.Columns.Add("title");
 
-            var handles = seleniumInstance.WindowHandles;
-            foreach(var handle in handles)
+            //var handles = seleniumInstance.WindowHandles;
+            //foreach(var handle in handles)
+            //{
+            //    seleniumInstance.SwitchTo().Window(handle);
+            //    ret.Rows.Add(new string[] { handle, seleniumInstance.Url, seleniumInstance.Title });
+            //}
+
+            //seleniumInstance.SwitchTo().Window(currentHandle);
+
+            //this.StoreDataTableInUserVariable(ret, engine);
+
+            this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
             {
-                seleniumInstance.SwitchTo().Window(handle);
-                ret.Rows.Add(new string[] { handle, seleniumInstance.Url, seleniumInstance.Title });
-            }
+                var currentHandle = seleniumInstance.CurrentWindowHandle;
 
-            seleniumInstance.SwitchTo().Window(currentHandle);
+                var ret = this.CreateEmptyDataTable();
+                ret.Columns.Add("handle");
+                ret.Columns.Add("url");
+                ret.Columns.Add("title");
 
-            this.StoreDataTableInUserVariable(ret, engine);
+                var handles = seleniumInstance.WindowHandles;
+                foreach (var handle in handles)
+                {
+                    seleniumInstance.SwitchTo().Window(handle);
+                    ret.Rows.Add(new string[] { handle, seleniumInstance.Url, seleniumInstance.Title });
+                }
+
+                seleniumInstance.SwitchTo().Window(currentHandle);
+
+                this.StoreDataTableInUserVariable(ret, engine);
+            }), engine);
         }
     }
 }

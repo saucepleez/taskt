@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,14 +19,14 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserCreateWebBrowserInstanceCommand : ScriptCommand
+    public sealed class SeleniumBrowserCreateWebBrowserInstanceCommand : ASeleniumCreateWebDriverCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
-        [PropertyTextBoxSetting(1, false)]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
+        //[PropertyTextBoxSetting(1, false)]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -39,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Chrome")]
         [PropertyFirstValue("Chrome")]
         [PropertyDisplayText(true, "Web Browser Type")]
+        [PropertyParameterOrder(6000)]
         public string v_BrowserType { get; set; }
 
         //[XmlAttribute]
@@ -66,7 +68,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Maximize**", "Start the WebBrowser in maximized mode")]
         [Remarks("")]
         [PropertyIsOptional(true, "Normal")]
-        [PropertyDisplayText(false, "")]
+        [PropertyDisplayText(false, "Window State")]
+        [PropertyParameterOrder(7000)]
         public string v_BrowserWindowOption { get; set; }
 
         [XmlAttribute]
@@ -76,6 +79,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         [PropertyValidationRule("Profile", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "Profile")]
+        [PropertyParameterOrder(8000)]
         public string v_ProfileFolder { get; set; }
 
         [XmlAttribute]
@@ -85,6 +89,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("No")]
         [PropertyDisplayText(false, "")]
         [Remarks("Headless mode does not show WebBrowser window")]
+        [PropertyParameterOrder(9000)]
         public string v_HeadlessMode { get; set; }
 
         [XmlAttribute]
@@ -96,10 +101,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyTextBoxSetting(3, true)]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(10000)]
         public string v_SeleniumOptions { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
+        [PropertyParameterOrder(11000)]
         public string v_Handle { get; set; }
 
         [XmlAttribute]
@@ -113,6 +120,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [PropertyIsOptional(true, "Empty")]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(12000)]
         public string v_BrowserPath { get; set; }
 
         [XmlAttribute]
@@ -126,6 +134,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [PropertyIsOptional(true, "Empty")]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(13000)]
         public string v_WebDriverPath { get; set; }
 
         [XmlAttribute]
@@ -134,6 +143,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "No")]
         [PropertyFirstValue("No")]
         [PropertyDisplayText(false, "Hide Terminal")]
+        [PropertyParameterOrder(14000)]
         public string v_HideTerminalWindow { get; set; }
 
         [XmlAttribute]
@@ -144,6 +154,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "User Temp")]
         [PropertyValidationRule("Temporary Folder", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "Temporary Folder")]
+        [PropertyParameterOrder(15000)]
         public string v_TemporaryProfileFolder { get; set; }
 
         public SeleniumBrowserCreateWebBrowserInstanceCommand()
@@ -376,12 +387,13 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("strange Web Browser");
+                throw new Exception("Strange Web Browser");
             }
 
             // add app instance
-            var instanceName = v_InstanceName.ExpandValueOrUserVariable(engine);
-            engine.AddAppInstance(instanceName, webDriver);
+            //var instanceName = v_InstanceName.ExpandValueOrUserVariable(engine);
+            //engine.AddAppInstance(instanceName, webDriver);
+            this.CreateWebBrowserInstance(webDriver, profilePath, engine);
 
             //var instanceTracking = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_InstanceTracking), engine);
             //if (instanceTracking != "forget instance")
@@ -403,7 +415,7 @@ namespace taskt.Core.Automation.Commands
                     procId = ProcessControls.GetChildProcessId(procId, 0);
                 }
                 var whnd = WindowControls.ConvertProcessIdToWindowHandle(procId);
-                whnd.ToInt32().StoreInUserVariable(engine, v_Handle);
+                whnd.StoreInUserVariable(engine, v_Handle);
             }
         }
 

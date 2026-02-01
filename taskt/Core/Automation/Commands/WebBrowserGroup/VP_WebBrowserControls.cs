@@ -5,6 +5,30 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
     public static class VP_WebBrowserControls
     {
         /// <summary>
+        /// WebBrowser instance name
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
+        [PropertyDescription("WebBrowser Instance Name")]
+        [InputSpecification("WebBrowser Instance Name", true)]
+        [PropertyDetailSampleUsage("**RPABrowser**", PropertyDetailSampleUsage.ValueType.Value, "WebBrowser Instance")]
+        [PropertyDetailSampleUsage("**{{{vInstance}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "WebBrowser Instance")]
+        [Remarks("Failure to enter the correct instance name or failure to first call **Create Broser** command will cause an error")]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.WebBrowser)]
+        [PropertyValidationRule("WebBrowser Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Instance")]
+        [PropertyFirstValue("%kwd_default_browser_instance%")]
+        public static string v_InputInstanceName { get; }
+
+        /// <summary>
+        /// WebBrowser Instance name
+        /// </summary>
+        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_InputInstanceName))]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        public static string v_OutputInstanceName { get; }
+
+        /// <summary>
         /// input WebElement variable name
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]

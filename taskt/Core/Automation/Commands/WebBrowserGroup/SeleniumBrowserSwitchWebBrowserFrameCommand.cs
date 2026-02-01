@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,11 +15,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserSwitchWebBrowserFrameCommand : ScriptCommand
+    public sealed class SeleniumBrowserSwitchWebBrowserFrameCommand : ASeleniumWebDriverActionCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -39,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("Index")]
         [PropertyValidationRule("Frame Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Frame Type")]
+        [PropertyParameterOrder(6000)]
         public string v_SelectionType { get; set; }
 
         [XmlAttribute]
@@ -49,6 +51,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyFirstValue("0")]
         [PropertyDisplayText(true, "Frame")]
+        [PropertyParameterOrder(7000)]
         public string v_FrameParameter { get; set; }
 
         public SeleniumBrowserSwitchWebBrowserFrameCommand()
@@ -61,37 +64,70 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
+            //var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
-            var selectionType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SelectionType), engine);
-            switch (selectionType)
+            //var selectionType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SelectionType), engine);
+            //switch (selectionType)
+            //{
+            //    case "index":
+            //        if (string.IsNullOrEmpty(v_FrameParameter))
+            //        {
+            //            v_FrameParameter = "0";
+            //        }
+            //        var frameIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_FrameParameter), engine);
+            //        seleniumInstance.SwitchTo().Frame(frameIndex);
+            //        break;
+
+            //    case "name or id":
+            //        var frameName = v_FrameParameter.ExpandValueOrUserVariable(engine);
+            //        seleniumInstance.SwitchTo().Frame(frameName);
+            //        break;
+
+            //    case "parent frame":
+            //        seleniumInstance.SwitchTo().ParentFrame();
+            //        break;
+
+            //    case "default content":
+            //        seleniumInstance.SwitchTo().DefaultContent();
+            //        break;
+
+            //    case "alert":
+            //        seleniumInstance.SwitchTo().Alert();
+            //        break;
+            //}
+
+            this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
             {
-                case "index":
-                    if (string.IsNullOrEmpty(v_FrameParameter))
-                    {
-                        v_FrameParameter = "0";
-                    }
-                    var frameIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_FrameParameter), engine);
-                    seleniumInstance.SwitchTo().Frame(frameIndex);
-                    break;
+                var selectionType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SelectionType), engine);
+                switch (selectionType)
+                {
+                    case "index":
+                        if (string.IsNullOrEmpty(v_FrameParameter))
+                        {
+                            v_FrameParameter = "0";
+                        }
+                        var frameIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_FrameParameter), engine);
+                        seleniumInstance.SwitchTo().Frame(frameIndex);
+                        break;
 
-                case "name or id":
-                    var frameName = v_FrameParameter.ExpandValueOrUserVariable(engine);
-                    seleniumInstance.SwitchTo().Frame(frameName);
-                    break;
+                    case "name or id":
+                        var frameName = v_FrameParameter.ExpandValueOrUserVariable(engine);
+                        seleniumInstance.SwitchTo().Frame(frameName);
+                        break;
 
-                case "parent frame":
-                    seleniumInstance.SwitchTo().ParentFrame();
-                    break;
+                    case "parent frame":
+                        seleniumInstance.SwitchTo().ParentFrame();
+                        break;
 
-                case "default content":
-                    seleniumInstance.SwitchTo().DefaultContent();
-                    break;
+                    case "default content":
+                        seleniumInstance.SwitchTo().DefaultContent();
+                        break;
 
-                case "alert":
-                    seleniumInstance.SwitchTo().Alert();
-                    break;
-            }
+                    case "alert":
+                        seleniumInstance.SwitchTo().Alert();
+                        break;
+                }
+            }), engine);
         }
     }
 }

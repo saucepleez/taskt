@@ -329,9 +329,9 @@ namespace taskt.Core.Automation.Commands
             var vInstance = instanceName.ExpandValueOrUserVariable(engine);
             var browserObject = engine.GetAppInstance(vInstance);
 
-            if (browserObject is IWebDriver wd)
+            if (browserObject is ValueTuple<IWebDriver, string> pair)
             {
-                return wd;
+                return pair.Item1;
             }
             else
             {

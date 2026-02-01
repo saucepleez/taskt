@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumAttachCreateWebBrowserInstanceCommand : ScriptCommand
+    public sealed class SeleniumAttachCreateWebBrowserInstanceCommand : ScriptCommand, ICanHandleWebDriver
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -155,8 +156,9 @@ namespace taskt.Core.Automation.Commands
             }
 
             // add app instance
-            var instanceName = v_InstanceName.ExpandValueOrUserVariable(engine);
-            engine.AddAppInstance(instanceName, webDriver);
+            //var instanceName = v_InstanceName.ExpandValueOrUserVariable(engine);
+            //engine.AddAppInstance(instanceName, webDriver);
+            this.CreateWebBrowserInstance(v_InstanceName, webDriver, string.Empty, engine);
 
             if (!string.IsNullOrEmpty(v_Handle))
             {

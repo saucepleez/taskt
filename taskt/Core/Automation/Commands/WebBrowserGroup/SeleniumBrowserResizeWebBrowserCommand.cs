@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,11 +15,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserResizeWebBrowserCommand : ScriptCommand
+    public sealed class SeleniumBrowserResizeWebBrowserCommand : ASeleniumWebDriverActionCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -29,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("Empty means Current Width")]
         [PropertyIsOptional(true, "Empty and means Current Width")]
         [PropertyDisplayText(true, "Width")]
+        [PropertyParameterOrder(6000)]
         public string v_BrowserWidth { get; set; }
 
         [XmlAttribute]
@@ -40,6 +42,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("Empty means Current Height")]
         [PropertyIsOptional(true, "Empty and means Current Height")]
         [PropertyDisplayText(true, "Height")]
+        [PropertyParameterOrder(6001)]
         public string v_BrowserHeight { get; set; }
 
         public SeleniumBrowserResizeWebBrowserCommand()
@@ -52,30 +55,56 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
+            //var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
-            var currentSize = seleniumInstance.Manage().Window.Size;
+            //var currentSize = seleniumInstance.Manage().Window.Size;
 
-            int width;
-            if (String.IsNullOrEmpty(v_BrowserWidth))
-            {
-                width = currentSize.Width;
-            }
-            else
-            {
-                width = this.ExpandValueOrUserVariableAsInteger(nameof(v_BrowserWidth), engine);
-            }
+            //int width;
+            //if (string.IsNullOrEmpty(v_BrowserWidth))
+            //{
+            //    width = currentSize.Width;
+            //}
+            //else
+            //{
+            //    width = this.ExpandValueOrUserVariableAsInteger(nameof(v_BrowserWidth), engine);
+            //}
 
-            int height;
-            if (String.IsNullOrEmpty(v_BrowserHeight))
+            //int height;
+            //if (string.IsNullOrEmpty(v_BrowserHeight))
+            //{
+            //    height = currentSize.Height;
+            //}
+            //else
+            //{
+            //    height = this.ExpandValueOrUserVariableAsInteger(nameof(v_BrowserHeight), engine);
+            //}
+            //seleniumInstance.Manage().Window.Size = new System.Drawing.Size(width, height);
+
+            this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
             {
-                height = currentSize.Height;
-            }
-            else
-            {
-                height = this.ExpandValueOrUserVariableAsInteger(nameof(v_BrowserHeight), engine);
-            }
-            seleniumInstance.Manage().Window.Size = new System.Drawing.Size(width, height);
+                var currentSize = seleniumInstance.Manage().Window.Size;
+
+                int width;
+                if (string.IsNullOrEmpty(v_BrowserWidth))
+                {
+                    width = currentSize.Width;
+                }
+                else
+                {
+                    width = this.ExpandValueOrUserVariableAsInteger(nameof(v_BrowserWidth), engine);
+                }
+
+                int height;
+                if (string.IsNullOrEmpty(v_BrowserHeight))
+                {
+                    height = currentSize.Height;
+                }
+                else
+                {
+                    height = this.ExpandValueOrUserVariableAsInteger(nameof(v_BrowserHeight), engine);
+                }
+                seleniumInstance.Manage().Window.Size = new System.Drawing.Size(width, height);
+            }), engine);
         }
     }
 }

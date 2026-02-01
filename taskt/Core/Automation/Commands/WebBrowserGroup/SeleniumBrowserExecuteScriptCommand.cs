@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser")]
     [Attributes.ClassAttributes.SubGruop("Web Browser Actions")]
@@ -14,11 +14,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserExecuteScriptCommand : ScriptCommand, ICanHandleFilePath
+    public sealed class SeleniumBrowserExecuteScriptCommand : ASeleniumWebDriverActionCommands, ICanHandleFilePath
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -31,6 +31,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("File")]
         [PropertyIsOptional(true, "Code")]
         [PropertyFirstValue("Code")]
+        [PropertyParameterOrder(6000)]
         public string v_CodeType { get; set; }
 
         [XmlAttribute]
@@ -46,6 +47,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
         [PropertyValidationRule("JavaScript Code", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(7000)]
         public string v_ScriptCode { get; set; }
 
         [XmlAttribute]
@@ -59,6 +61,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("When Value is Less Than or Equals to **0**, this means Waiting until JavaScript is finished.")]
         [PropertyIsOptional(true, "0")]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(8000)]
         public string v_TimeOut { get; set; }
 
         [XmlAttribute]
@@ -70,6 +73,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("The value of the argument can be obtained with 'arguments[0]' in code.")]
         [PropertyIsOptional(true)]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(9000)]
         public string v_Args { get; set; }
 
         [XmlAttribute]
@@ -77,6 +81,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Variable Name to Recieve Result Value")]
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyParameterOrder(9100)]
         public string v_userVariableName { get; set; }
 
         public SeleniumBrowserExecuteScriptCommand()
@@ -92,72 +97,142 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var codeType = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_CodeType), engine);
+            //var codeType = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_CodeType), engine);
 
-            string script = "";
-            if (codeType == "code")
-            {
-                script = v_ScriptCode.ExpandValueOrUserVariable(engine);
-            }
-            else if (codeType == "file")
-            {
-                //string scriptFiile = FilePathControls.FormatFilePath_NoFileCounter(v_ScriptCode, engine, "js", true);
-                //var scriptFile = v_ScriptCode.ExpandValueOrUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "js"), engine);
-                var scriptFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_ScriptCode), new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "js"), engine);
-                script = System.IO.File.ReadAllText(scriptFile);
-            }
-
-            var args = v_Args.ExpandValueOrUserVariable(engine);
-            
-            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
-
-            //configure timeout
-            //var inputTimeout = v_TimeOut.ConvertToUserVariable(sender);
-            //int timeOut;
-            //if (!int.TryParse(inputTimeout, out timeOut))
+            //string script = "";
+            //if (codeType == "code")
             //{
-            //    timeOut = -1;
+            //    script = v_ScriptCode.ExpandValueOrUserVariable(engine);
             //}
-            var timeOut = this.ExpandValueOrUserVariableAsInteger(nameof(v_TimeOut), engine);
+            //else if (codeType == "file")
+            //{
+            //    //string scriptFiile = FilePathControls.FormatFilePath_NoFileCounter(v_ScriptCode, engine, "js", true);
+            //    //var scriptFile = v_ScriptCode.ExpandValueOrUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "js"), engine);
+            //    var scriptFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_ScriptCode), new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "js"), engine);
+            //    script = System.IO.File.ReadAllText(scriptFile);
+            //}
 
-            //set driver timeout
-            if (timeOut > 0)
-            {
-                seleniumInstance.Manage().Timeouts().AsynchronousJavaScript = new TimeSpan(0, 0, timeOut);
-            }
+            //var args = v_Args.ExpandValueOrUserVariable(engine);
+            
+            //var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
+
+            //// configure timeout
+            ////var inputTimeout = v_TimeOut.ConvertToUserVariable(sender);
+            ////int timeOut;
+            ////if (!int.TryParse(inputTimeout, out timeOut))
+            ////{
+            ////    timeOut = -1;
+            ////}
+            //var timeOut = this.ExpandValueOrUserVariableAsInteger(nameof(v_TimeOut), engine);
+
+            //// set driver timeout
+            //if (timeOut > 0)
+            //{
+            //    seleniumInstance.Manage().Timeouts().AsynchronousJavaScript = new TimeSpan(0, 0, timeOut);
+            //}
                
-            //run script
-            OpenQA.Selenium.IJavaScriptExecutor js = (OpenQA.Selenium.IJavaScriptExecutor)seleniumInstance;
+            //// run script
+            //OpenQA.Selenium.IJavaScriptExecutor js = (OpenQA.Selenium.IJavaScriptExecutor)seleniumInstance;
 
-            object result;
-            if (string.IsNullOrEmpty(args))
+            //object result;
+            //if (string.IsNullOrEmpty(args))
+            //{
+            //    if (timeOut > 1)
+            //    {
+            //        result = js.ExecuteAsyncScript(script);
+            //    }
+            //    else
+            //    {
+            //        result = js.ExecuteScript(script);
+            //    }
+            //}
+            //else
+            //{
+            //    if (timeOut > 1)
+            //    {
+            //        result = js.ExecuteAsyncScript(script, args);
+            //    }
+            //    else
+            //    {
+            //        result = js.ExecuteScript(script, args);
+            //    }
+            //}
+
+            //// apply result to variable
+            //if ((result != null) && (!string.IsNullOrEmpty(v_userVariableName)))
+            //{   
+            //    result.ToString().StoreInUserVariable(engine, v_userVariableName);
+            //}
+
+            this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
             {
-                if (timeOut > 1)
+                var codeType = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_CodeType), engine);
+
+                string script = "";
+                switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CodeType), engine))
                 {
-                    result = js.ExecuteAsyncScript(script);
+                    case "code":
+                        script = v_ScriptCode.ExpandValueOrUserVariable(engine);
+                        break;
+                    case "file":
+                        var scriptFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_ScriptCode), new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "js"), engine);
+                        script = System.IO.File.ReadAllText(scriptFile);
+                        break;
+                }
+                //if (codeType == "code")
+                //{
+                //    script = v_ScriptCode.ExpandValueOrUserVariable(engine);
+                //}
+                //else if (codeType == "file")
+                //{
+                //    var scriptFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_ScriptCode), new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "js"), engine);
+                //    script = System.IO.File.ReadAllText(scriptFile);
+                //}
+
+                var args = v_Args.ExpandValueOrUserVariable(engine);
+
+                // configure timeout
+                var timeOut = this.ExpandValueOrUserVariableAsInteger(nameof(v_TimeOut), engine);
+
+                // set driver timeout
+                if (timeOut > 0)
+                {
+                    seleniumInstance.Manage().Timeouts().AsynchronousJavaScript = new TimeSpan(0, 0, timeOut);
+                }
+
+                // run script
+                OpenQA.Selenium.IJavaScriptExecutor js = (OpenQA.Selenium.IJavaScriptExecutor)seleniumInstance;
+
+                object result;
+                if (string.IsNullOrEmpty(args))
+                {
+                    if (timeOut > 1)
+                    {
+                        result = js.ExecuteAsyncScript(script);
+                    }
+                    else
+                    {
+                        result = js.ExecuteScript(script);
+                    }
                 }
                 else
                 {
-                    result = js.ExecuteScript(script);
+                    if (timeOut > 1)
+                    {
+                        result = js.ExecuteAsyncScript(script, args);
+                    }
+                    else
+                    {
+                        result = js.ExecuteScript(script, args);
+                    }
                 }
-            }
-            else
-            {
-                if (timeOut > 1)
-                {
-                    result = js.ExecuteAsyncScript(script, args);
-                }
-                else
-                {
-                    result = js.ExecuteScript(script, args);
-                }
-            }
 
-            //apply result to variable
-            if ((result != null) && (!string.IsNullOrEmpty(v_userVariableName)))
-            {   
-                result.ToString().StoreInUserVariable(engine, v_userVariableName);
-            }
+                // apply result to variable
+                if ((result != null) && (!string.IsNullOrEmpty(v_userVariableName)))
+                {
+                    result.ToString().StoreInUserVariable(engine, v_userVariableName);
+                }
+            }), engine);
         }
     }
 }

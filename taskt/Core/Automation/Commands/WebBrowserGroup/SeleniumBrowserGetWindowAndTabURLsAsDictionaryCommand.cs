@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,14 +15,15 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand : ScriptCommand, IDictionaryResultProperties
+    public sealed class SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand : ASeleniumWebDriverActionCommands, IDictionaryResultProperties
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
+        [PropertyParameterOrder(6000)]
         public string v_Result { get; set; }
 
         public SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand()
@@ -30,22 +32,40 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var seleniumInstance = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstance(v_InstanceName, engine);
+            //var seleniumInstance = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstance(v_InstanceName, engine);
 
-            var currentHandle = seleniumInstance.CurrentWindowHandle;
+            //var currentHandle = seleniumInstance.CurrentWindowHandle;
 
-            var ret = this.CreateEmptyDictionary();
+            //var ret = this.CreateEmptyDictionary();
 
-            var handles = seleniumInstance.WindowHandles;
-            foreach(var handle in handles)
+            //var handles = seleniumInstance.WindowHandles;
+            //foreach(var handle in handles)
+            //{
+            //    seleniumInstance.SwitchTo().Window(handle);
+            //    ret.Add(handle, seleniumInstance.Url);
+            //}
+
+            //seleniumInstance.SwitchTo().Window(currentHandle);
+
+            //this.StoreDictionaryInUserVariable(ret, engine);
+
+            this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
             {
-                seleniumInstance.SwitchTo().Window(handle);
-                ret.Add(handle, seleniumInstance.Url);
-            }
+                var currentHandle = seleniumInstance.CurrentWindowHandle;
 
-            seleniumInstance.SwitchTo().Window(currentHandle);
+                var ret = this.CreateEmptyDictionary();
 
-            this.StoreDictionaryInUserVariable(ret, engine);
+                var handles = seleniumInstance.WindowHandles;
+                foreach (var handle in handles)
+                {
+                    seleniumInstance.SwitchTo().Window(handle);
+                    ret.Add(handle, seleniumInstance.Url);
+                }
+
+                seleniumInstance.SwitchTo().Window(currentHandle);
+
+                this.StoreDictionaryInUserVariable(ret, engine);
+            }), engine);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,11 +15,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserNavigateToURLCommand : ScriptCommand
+    public sealed class SeleniumBrowserNavigateToURLCommand : ASeleniumWebDriverActionCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -30,6 +31,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyValidationRule("URL", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "URL")]
+        [PropertyParameterOrder(6000)]
         public string v_URL { get; set; }
 
         [XmlAttribute]
@@ -44,6 +46,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "True")]
         [Remarks("Choose if you want to use HTTP or HTTPS for navigation. If no protocol is specified in the URL above, taskt will resort to this choice.")]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(7000)]
         public string v_UseHttps { get; set; }
 
         public SeleniumBrowserNavigateToURLCommand()
@@ -59,26 +62,47 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var parsedURL = v_URL.ExpandValueOrUserVariable(engine);
-            if (!parsedURL.StartsWith("http"))
+            //var parsedURL = v_URL.ExpandValueOrUserVariable(engine);
+            //if (!parsedURL.StartsWith("http"))
+            //{
+            //    // check Edge/Chrome/Firefox special
+            //    if (!parsedURL.StartsWith("edge://") &&
+            //        !parsedURL.StartsWith("chrome://") &&
+            //        !parsedURL.StartsWith("about:"))
+            //    {
+            //        if (string.IsNullOrEmpty(v_UseHttps))
+            //        {
+            //            v_UseHttps = "True";
+            //        }
+            //        var useHttps = v_UseHttps.ExpandValueOrUserVariableAsBool("Use HTTPS", engine);
+            //        parsedURL = ((useHttps) ? "https://" : "http://") + parsedURL;
+            //    }
+            //}
+
+            //var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
+
+            //seleniumInstance.Navigate().GoToUrl(parsedURL);
+
+            this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
             {
-                // check Edge/Chrome/Firefox special
-                if (!parsedURL.StartsWith("edge://") &&
-                    !parsedURL.StartsWith("chrome://") &&
-                    !parsedURL.StartsWith("about:"))
+                var parsedURL = v_URL.ExpandValueOrUserVariable(engine);
+                if (!parsedURL.StartsWith("http"))
                 {
-                    if (string.IsNullOrEmpty(v_UseHttps))
+                    // check Edge/Chrome/Firefox special
+                    if (!parsedURL.StartsWith("edge://") &&
+                        !parsedURL.StartsWith("chrome://") &&
+                        !parsedURL.StartsWith("about:"))
                     {
-                        v_UseHttps = "True";
+                        if (string.IsNullOrEmpty(v_UseHttps))
+                        {
+                            v_UseHttps = "True";
+                        }
+                        var useHttps = v_UseHttps.ExpandValueOrUserVariableAsBool("Use HTTPS", engine);
+                        parsedURL = ((useHttps) ? "https://" : "http://") + parsedURL;
                     }
-                    var useHttps = v_UseHttps.ExpandValueOrUserVariableAsBool("Use HTTPS", engine);
-                    parsedURL = ((useHttps) ? "https://" : "http://") + parsedURL;
                 }
-            }
-
-            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
-
-            seleniumInstance.Navigate().GoToUrl(parsedURL);
+                seleniumInstance.Navigate().GoToUrl(parsedURL);
+            }), engine);
         }
     }
 }
