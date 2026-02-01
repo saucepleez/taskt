@@ -14,7 +14,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="41f96d33-6b1b-48b6-ba73-1dcb72d7a922" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Attach WebBrowser" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumAttachCreateWebBrowserInstanceCommand" CommandID="d59fe2bd-330a-486f-bd87-3a2353edcf06" CommandName="SeleniumAttachCreateWebBrowserInstanceCommand" IsCommented="false" SelectionName="Attach Web Browser Instance" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_EngineType="Edge" v_DebuggerAddress="" v_DebuggerPort="" v_Handle="" v_WebDriverPath="" />
+      <ScriptCommand xsi:type="SeleniumAttachCreateWebBrowserInstanceCommand" CommandID="d59fe2bd-330a-486f-bd87-3a2353edcf06" CommandName="SeleniumAttachCreateWebBrowserInstanceCommand" IsCommented="false" SelectionName="Attach Web Browser Instance" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_EngineType="Chrome" v_DebuggerAddress="" v_DebuggerPort="" v_Handle="" v_WebDriverPath="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="e109e6cf-1df6-43fa-b357-a1e457c98a60" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Go website" CommandEnabled="true" />
