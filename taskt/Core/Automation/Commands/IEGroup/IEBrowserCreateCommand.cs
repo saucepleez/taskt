@@ -21,14 +21,14 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyParameterDirection(Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)]
         public string v_InstanceName { get; set; }
 
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Instance Tracking (after task ends)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Forget Instance")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Keep Instance Alive")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify if taskt should remember this instance name after the script has finished executing.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Forget Instance** to forget the instance or **Keep Instance Alive** to allow subsequent tasks to call the instance by name.")]
-        [Attributes.PropertyAttributes.Remarks("Calling the **Close Browser** command or ending the browser session will end the instance.  This command only works during the lifetime of the application.  If the application is closed, the references will be forgetten automatically.")]
-        public string v_InstanceTracking { get; set; }
+        //[XmlAttribute]
+        //[Attributes.PropertyAttributes.PropertyDescription("Instance Tracking (after task ends)")]
+        //[Attributes.PropertyAttributes.PropertyUISelectionOption("Forget Instance")]
+        //[Attributes.PropertyAttributes.PropertyUISelectionOption("Keep Instance Alive")]
+        //[Attributes.PropertyAttributes.InputSpecification("Specify if taskt should remember this instance name after the script has finished executing.")]
+        //[Attributes.PropertyAttributes.SampleUsage("Select **Forget Instance** to forget the instance or **Keep Instance Alive** to allow subsequent tasks to call the instance by name.")]
+        //[Attributes.PropertyAttributes.Remarks("Calling the **Close Browser** command or ending the browser session will end the instance.  This command only works during the lifetime of the application.  If the application is closed, the references will be forgetten automatically.")]
+        //public string v_InstanceTracking { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the URL to navigate to")]
@@ -59,14 +59,14 @@ namespace taskt.Core.Automation.Commands
             {
             }
 
-            //add app instance
+            // add app instance
             engine.AddAppInstance(instanceName, newBrowserSession);
 
-            //handle app instance tracking
-            if (v_InstanceTracking == "Keep Instance Alive")
-            {
-                GlobalAppInstances.AddInstance(instanceName, newBrowserSession);
-            }
+            // handle app instance tracking
+            //if (v_InstanceTracking == "Keep Instance Alive")
+            //{
+            //    GlobalAppInstances.AddInstance(instanceName, newBrowserSession);
+            //}
 
         }
 

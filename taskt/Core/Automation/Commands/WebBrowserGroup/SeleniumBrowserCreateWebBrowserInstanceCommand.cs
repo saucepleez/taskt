@@ -41,19 +41,19 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Web Browser Type")]
         public string v_BrowserType { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("Instance Tracking (After task ends)")]
-        [PropertyUISelectionOption("Forget Instance")]
-        [PropertyUISelectionOption("Keep Instance Alive")]
-        [InputSpecification("Specify if taskt should remember this instance name after the script has finished executing.")]
-        //[SampleUsage("Select **Forget Instance** to  or **Keep Instance Alive** to allow subsequent tasks to call the instance by name.")]
-        [PropertyDetailSampleUsage("**Forget Instance**", "Forget the instance After tasks ends")]
-        [PropertyDetailSampleUsage("**Keep Instance Alive**", "Allow subsequent tasks to call the instance by name")]
-        [Remarks("Calling the **Close Browser** command or ending the browser session will end the instance.  This command only works during the lifetime of the application.  If the application is closed, the references will be forgetten automatically.")]
-        [PropertyIsOptional(true, "Forget Instance")]
-        [PropertyDisplayText(false, "")]
-        public string v_InstanceTracking { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        //[PropertyDescription("Instance Tracking (After task ends)")]
+        //[PropertyUISelectionOption("Forget Instance")]
+        //[PropertyUISelectionOption("Keep Instance Alive")]
+        //[InputSpecification("Specify if taskt should remember this instance name after the script has finished executing.")]
+        ////[SampleUsage("Select **Forget Instance** to  or **Keep Instance Alive** to allow subsequent tasks to call the instance by name.")]
+        //[PropertyDetailSampleUsage("**Forget Instance**", "Forget the instance After tasks ends")]
+        //[PropertyDetailSampleUsage("**Keep Instance Alive**", "Allow subsequent tasks to call the instance by name")]
+        //[Remarks("Calling the **Close Browser** command or ending the browser session will end the instance.  This command only works during the lifetime of the application.  If the application is closed, the references will be forgetten automatically.")]
+        //[PropertyIsOptional(true, "Forget Instance")]
+        //[PropertyDisplayText(false, "")]
+        //public string v_InstanceTracking { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -383,11 +383,11 @@ namespace taskt.Core.Automation.Commands
             var instanceName = v_InstanceName.ExpandValueOrUserVariable(engine);
             engine.AddAppInstance(instanceName, webDriver);
 
-            var instanceTracking = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_InstanceTracking), engine);
-            if (instanceTracking != "forget instance")
-            {
-                GlobalAppInstances.AddInstance(instanceName, webDriver);
-            }
+            //var instanceTracking = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_InstanceTracking), engine);
+            //if (instanceTracking != "forget instance")
+            //{
+            //    GlobalAppInstances.AddInstance(instanceName, webDriver);
+            //}
 
             var browserWindowOption = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_BrowserWindowOption), engine);
             if (browserWindowOption == "maximize")
