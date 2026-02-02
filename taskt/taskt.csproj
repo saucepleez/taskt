@@ -564,6 +564,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumDoSomethingToWebDriverCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumDoSomethingToWebElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetFromWebDriverCommands.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetWindowAndTabInformationCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumWebDriverActionCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumWebElementActionAndScrollCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumWebElementActionCommands.cs" />
