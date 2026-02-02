@@ -65,5 +65,20 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
                 }
             }
         }
+
+        /// <summary>
+        /// general WebDriver action core
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="actionFunc">IWebDriver only, not use profile folder</param>
+        /// <param name="engine"></param>
+        /// <param name="errorFunc"></param>
+        public static void WebDriverActionCore(this ISeleniumDoSomethingToWebDriverProperties command, Action<IWebDriver> actionFunc, AutomationEngineInstance engine, Action<Exception> errorFunc = null)
+        {
+            command.WebDriverActionCore(new Action<IWebDriver, string>((dr, _) =>
+            {
+                actionFunc(dr);
+            }), engine, errorFunc);
+        }
     }
 }
