@@ -24,15 +24,15 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_SearchMethod))]
-        public string v_SeleniumSearchType { get; set; }
+        public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_SearchParameter))]
-        public string v_SeleniumSearchParameter { get; set; }
+        public string v_SearchParameter { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ElementIndex))]
-        public string v_ElementIndex { get; set; }
+        public string v_WebElementIndex { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_OutputWebElementName))]
@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_WaitTime))]
-        public string v_WaitTime { get; set; }
+        public string v_WaitTimeForWebElement { get; set; }
 
         public SeleniumBrowserSearchWebElementFromWebElementCommand()
         {
@@ -51,16 +51,16 @@ namespace taskt.Core.Automation.Commands
             var targetElement = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
             var webDriver = v_WebElement.ExpandUserVariableAsWebDriverFromWebElement("WebDriver", engine);
 
-            var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SeleniumSearchType), engine);
+            var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SearchMethod), engine);
             var searchFunc = GetWebElementSearchMethod(searchMethod);
 
-            var searchParameter = v_SeleniumSearchParameter.ExpandValueOrUserVariable(engine);
-            var waitTime = v_WaitTime.ExpandValueOrUserVariableAsInteger("Wait Time", engine);
+            var searchParameter = v_SearchParameter.ExpandValueOrUserVariable(engine);
+            var waitTime = v_WaitTimeForWebElement.ExpandValueOrUserVariableAsInteger("Wait Time", engine);
 
             int index = 0;
-            if (!string.IsNullOrEmpty(v_ElementIndex))
+            if (!string.IsNullOrEmpty(v_WebElementIndex))
             {
-                index = v_ElementIndex.ExpandValueOrUserVariableAsInteger("Index", engine);
+                index = v_WebElementIndex.ExpandValueOrUserVariableAsInteger("Index", engine);
             }
 
             var ret = WaitControls.WaitProcess(waitTime, "WebElement", new Func<(bool, object)>(() => {

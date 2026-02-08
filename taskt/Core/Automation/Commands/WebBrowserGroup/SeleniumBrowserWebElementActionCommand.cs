@@ -231,11 +231,11 @@ namespace taskt.Core.Automation.Commands
                         var searchElement = new SeleniumBrowserSearchWebElementCommand()
                         {
                             v_InstanceName = this.v_InstanceName,
-                            v_SeleniumSearchType = this.v_SeleniumSearchType,
-                            v_SeleniumSearchParameter = this.v_SeleniumSearchParameter,
-                            v_ElementIndex = this.v_SeleniumElementIndex,
+                            v_SearchMethod = this.v_SeleniumSearchType,
+                            v_SearchParameter = this.v_SeleniumSearchParameter,
+                            v_WebElementIndex = this.v_SeleniumElementIndex,
                             v_Result = myWebElem.VariableName,
-                            v_WaitTime = this.v_WaitTime,
+                            v_WaitTimeForWebElement = this.v_WaitTime,
                         };
                         searchElement.RunCommand(engine);
 
