@@ -42,6 +42,19 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         public static string v_InputWebElementName { get; }
 
         /// <summary>
+        /// output WebElement property
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Store WebElement")]
+        [InputSpecification("WebElement Variable Name", true)]
+        [PropertyDetailSampleUsage("**vElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        [PropertyDetailSampleUsage("**{{{vElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.WebElement, true)]
+        [PropertyValidationRule("WebElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "WebElement")]
+        public static string v_OutputWebElementName { get; }
+
+        /// <summary>
         /// behavior when fail action
         /// </summary>
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
