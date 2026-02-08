@@ -5101,7 +5101,7 @@ namespace taskt.Core.Script
                 switch (GetCommandName(el))
                 {
                     case "SeleniumBrowserSearchWebElementCommand":
-                    case "SeleniumBrowserSearchWebElementFromWebEelementCommand":
+                    case "SeleniumBrowserSearchWebElementFromWebElementCommand":
                         return true;
                     default:
                         return false;
@@ -5112,6 +5112,13 @@ namespace taskt.Core.Script
                 ("v_SeleniumSearchParameter", "v_SearchParameter"),
                 ("v_ElementIndex", "v_WebElementIndex"),
                 ("v_WaitTime", "v_WaitTimeForWebElement"),
+            });
+
+            // SeleniumBrowserGetAttributeFromWebElementCommand
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserGetAttributeFromWebElementCommand", new List<(string, string)>()
+            {
+                ("v_WhenNoAttribute", "v_WhenValueCanNotRetrieved"),
+                ("v_ScrollToElement", "v_ScrollToWebElement"),
             });
         }
 

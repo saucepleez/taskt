@@ -44,8 +44,8 @@ namespace taskt.Core.Automation.Commands
                 v_WebElement = this.v_WebElement,
                 v_AttributeName = "outerHTML",
                 v_Result = this.v_Result,
-                v_ScrollToElement = this.v_ScrollToElement,
-                v_InstanceName = this.v_InstanceName,
+                v_ScrollToWebElement = this.v_ScrollToElement,
+                //v_InstanceName = this.v_InstanceName,
             };
             getAttribute.RunCommand(engine);
         }

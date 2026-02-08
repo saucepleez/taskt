@@ -564,6 +564,8 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumDoSomethingToWebDriverCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumDoSomethingToWebElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetFromWebDriverCommands.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetFromWebElementCommands.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetOneResultFromWebElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetWindowAndTabInformationCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumWebDriverActionCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumWebElementActionAndScrollCommands.cs" />
@@ -572,6 +574,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_CanHandleWebElementExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumDoSomethingToWebBroswerInstancePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumDoSomethingToWebElementPropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumGetFromWebElementPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumSearchWebElementParametersExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumWebDriverActionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumWebElementActionAndScrollPropertiesExtensionMethods.cs" />
@@ -581,6 +584,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ICanHandleWebElement.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumDoSomethingToWebDriverProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumDoSomethingToWebElementProperties.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumGetFromWebElementProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumSearchWebElementParameters.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumWebBrowserInstanceActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumWebDriverActionProperties.cs" />

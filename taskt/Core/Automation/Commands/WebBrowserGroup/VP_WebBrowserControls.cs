@@ -131,5 +131,15 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         [PropertyFirstValue("120")]
         [PropertyDisplayText(false, "Wait Time")]
         public static string v_WaitTimeForWebElement { get; }
+
+        /// <summary>
+        /// when Value(s) can not retrieved
+        /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnoreSetEmpty))]
+        [PropertyDescription("When the Value(s) can not Retrieved")]
+        [PropertyIsOptional(true, "Error")]
+        [PropertyValidationRule("When Value can not Retrieved", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(true, "When can not Retrieved")]
+        public static string v_WhenValueCanNotRetrieved { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,11 +15,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetAttributeFromWebElementCommand : ScriptCommand
+    public sealed class SeleniumBrowserGetAttributeFromWebElementCommand : ASeleniumGetOneResultFromWebElementCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
-        public string v_WebElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
+        //public string v_WebElement { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -28,30 +28,32 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vAttribute}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Attribute")]
         [PropertyValidationRule("Attribute", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Attribute")]
+        [PropertyParameterOrder(6000)]
         public string v_AttributeName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_Result { get; set; }
+        [PropertyParameterOrder(7000)]
+        public override string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("When the WebElement does not have the Attribute")]
-        [PropertyUISelectionOption("Error")]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyIsOptional(true, "Error")]
-        [PropertyDisplayText(false, "")]
-        public string v_WhenNoAttribute { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        //[PropertyDescription("When the WebElement does not have the Attribute")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyIsOptional(true, "Error")]
+        //[PropertyDisplayText(false, "")]
+        //public string v_WhenValueCanNotRetrieved { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ScrollToElement))]
-        [PropertySelectionChangeEvent(nameof(cmbScrollToElement_SelectionChange))]
-        public string v_ScrollToElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ScrollToElement))]
+        //[PropertySelectionChangeEvent(nameof(cmbScrollToElement_SelectionChange))]
+        //public string v_ScrollToWebElement { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        [PropertyIsOptional(true)]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //[PropertyIsOptional(true)]
+        //public string v_InstanceName { get; set; }
 
         public SeleniumBrowserGetAttributeFromWebElementCommand()
         {
@@ -59,43 +61,58 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToElement), engine))
+            //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToWebElement), engine))
+            //{
+            //    var scrollCommand = new SeleniumBrowserScrollToWebElementCommand()
+            //    {
+            //        //v_InstanceName = this.v_InstanceName,
+            //        v_WebElement = this.v_WebElement,
+            //        v_WhenFailAction = "ignore"
+            //    };
+            //    scrollCommand.RunCommand(engine);
+            //}
+
+            //var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
+
+            //var attributeName = v_AttributeName.ExpandValueOrUserVariable(engine);
+
+            //var v = elem.GetAttribute(attributeName);
+
+            //if (v != null)
+            //{
+            //    v.StoreInUserVariable(engine, v_Result);
+            //}
+            //else
+            //{
+            //    if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenValueCanNotRetrieved), engine) == "error")
+            //    {
+            //        throw new Exception("Attribute '" + attributeName + "' does not exists.");
+            //    }
+            //    else
+            //    {
+            //        "".StoreInUserVariable(engine, v_Result);
+            //    }
+            //}
+
+            this.GetFromWebElementAction(new Action<OpenQA.Selenium.IWebElement, OpenQA.Selenium.IWebDriver>((elem, seleniumInstance) =>
             {
-                var scrollCommand = new SeleniumBrowserScrollToWebElementCommand()
+                var attributeName = v_AttributeName.ExpandValueOrUserVariable(engine);
+                var v = elem.GetAttribute(attributeName);
+
+                if (v != null)
                 {
-                    //v_InstanceName = this.v_InstanceName,
-                    v_WebElement = this.v_WebElement,
-                    v_WhenFailAction = "ignore"
-                };
-                scrollCommand.RunCommand(engine);
-            }
-
-            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
-
-            var attributeName = v_AttributeName.ExpandValueOrUserVariable(engine);
-
-            var v = elem.GetAttribute(attributeName);
-
-            if (v != null)
-            {
-                v.StoreInUserVariable(engine, v_Result);
-            }
-            else
-            {
-                if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenNoAttribute), engine) == "error")
-                {
-                    throw new Exception("Attribute '" + attributeName + "' does not exists.");
+                    v.StoreInUserVariable(engine, v_Result);
                 }
                 else
                 {
-                    "".StoreInUserVariable(engine, v_Result);
+                    throw new Exception($"WebElement does not have Attribute. Attribute: '{v_AttributeName}', Expand: '{attributeName}'");
                 }
-            }
+            }), this.StoreEmptyValueToResult, engine);
         }
 
-        private void cmbScrollToElement_SelectionChange(object sender, EventArgs e)
-        {
-            SeleniumBrowserControls.ScrollToWebElement_SelectionChange((ComboBox)sender, ControlsList, nameof(v_InstanceName));
-        }
+        //private void cmbScrollToElement_SelectionChange(object sender, EventArgs e)
+        //{
+        //    SeleniumBrowserControls.ScrollToWebElement_SelectionChange((ComboBox)sender, ControlsList, nameof(v_InstanceName));
+        //}
     }
 }
