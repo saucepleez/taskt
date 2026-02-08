@@ -129,6 +129,10 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
             var searchParameter = script.ExpandValueOrUserVariable(nameof(command.v_SearchParameter), "Search Parameter", engine);
             var waitTime = script.ExpandValueOrUserVariableAsInteger(nameof(command.v_WaitTimeForWebElement), "Wait Time", engine);
 
+            if (string.IsNullOrWhiteSpace(command.v_WebElementIndex))
+            {
+                command.v_WebElementIndex = "0";
+            }
             var index = script.ExpandValueOrUserVariableAsInteger(nameof(command.v_WebElementIndex), "Index", engine);
 
             var searchFunc = command.GetSearchMethodFunc(engine);
