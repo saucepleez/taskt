@@ -18,7 +18,7 @@ namespace taskt.Core.Automation.Commands
     public sealed class SeleniumBrowserCheckBrowserInstanceExistsCommand : ASeleniumGetFromWebDriverCommands
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_InputInstanceName))]
         public override string v_InstanceName { get; set; }
 
         [XmlAttribute]
