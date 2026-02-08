@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetWindowAndTabTitlesAsListCommand : ASeleniumWebDriverActionCommands, IListResultProperties
+    public sealed class SeleniumBrowserGetWindowAndTabTitlesAsListCommand : ASeleniumGetWindowAndTabInformationCommands, IListResultProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -23,8 +23,8 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        [PropertyParameterOrder(6000)]
-        public string v_Result { get; set; }
+        //[PropertyParameterOrder(6000)]
+        public override string v_Result { get; set; }
 
         public SeleniumBrowserGetWindowAndTabTitlesAsListCommand()
         {
@@ -49,20 +49,25 @@ namespace taskt.Core.Automation.Commands
 
             //this.StoreListInUserVariable(ret, engine);
 
-            this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
+            this.WebDriverActionCore(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
             {
-                var currentHandle = seleniumInstance.CurrentWindowHandle;
-
                 var ret = this.CreateEmptyList();
 
-                var handles = seleniumInstance.WindowHandles;
-                foreach (var handle in handles)
-                {
-                    seleniumInstance.SwitchTo().Window(handle);
-                    ret.Add(seleniumInstance.Title);
-                }
+                //var currentHandle = seleniumInstance.CurrentWindowHandle;
 
-                seleniumInstance.SwitchTo().Window(currentHandle);
+                //var handles = seleniumInstance.WindowHandles;
+                //foreach (var handle in handles)
+                //{
+                //    seleniumInstance.SwitchTo().Window(handle);
+                //    ret.Add(seleniumInstance.Title);
+                //}
+
+                //seleniumInstance.SwitchTo().Window(currentHandle);
+
+                SeleniumWindowAndTabAction(seleniumInstance, new Action<string>(handle =>
+                {
+                    ret.Add(seleniumInstance.Title);
+                }));
 
                 this.StoreListInUserVariable(ret, engine);
             }), engine);

@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand : ASeleniumWebDriverActionCommands, IDictionaryResultProperties
+    public sealed class SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand : ASeleniumGetWindowAndTabInformationCommands, IDictionaryResultProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -23,8 +23,8 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
-        [PropertyParameterOrder(6000)]
-        public string v_Result { get; set; }
+        //[PropertyParameterOrder(6000)]
+        public override string v_Result { get; set; }
 
         public SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand()
         {
@@ -49,20 +49,25 @@ namespace taskt.Core.Automation.Commands
 
             //this.StoreDictionaryInUserVariable(ret, engine);
 
-            this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
+            this.WebDriverActionCore(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
             {
-                var currentHandle = seleniumInstance.CurrentWindowHandle;
-
                 var ret = this.CreateEmptyDictionary();
 
-                var handles = seleniumInstance.WindowHandles;
-                foreach (var handle in handles)
-                {
-                    seleniumInstance.SwitchTo().Window(handle);
-                    ret.Add(handle, seleniumInstance.Url);
-                }
+                //var currentHandle = seleniumInstance.CurrentWindowHandle;
 
-                seleniumInstance.SwitchTo().Window(currentHandle);
+                //var handles = seleniumInstance.WindowHandles;
+                //foreach (var handle in handles)
+                //{
+                //    seleniumInstance.SwitchTo().Window(handle);
+                //    ret.Add(handle, seleniumInstance.Url);
+                //}
+
+                //seleniumInstance.SwitchTo().Window(currentHandle);
+
+                SeleniumWindowAndTabAction(seleniumInstance, new Action<string>(handle =>
+                {
+                    ret.Add(handle, seleniumInstance.Url);
+                }));
 
                 this.StoreDictionaryInUserVariable(ret, engine);
             }), engine);

@@ -5094,6 +5094,25 @@ namespace taskt.Core.Script
                         return false;
                 }
             }), "v_applyToVariableName", "v_Result");
+
+            // SeleniumBrowserSearchWebElementCommand, SeleniumBrowserSearchWebElementFromWebEelementCommand
+            ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserSearchWebElementCommand":
+                    case "SeleniumBrowserSearchWebElementFromWebEelementCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), new List<(string, string)>()
+            {
+                ("v_SeleniumSearchType", "v_SearchMethod"),
+                ("v_SeleniumSearchParameter", "v_SearchParameter"),
+                ("v_ElementIndex", "v_WebElementIndex"),
+                ("v_WaitTime", "v_WaitTimeForWebElement"),
+            });
         }
 
         /// <summary>

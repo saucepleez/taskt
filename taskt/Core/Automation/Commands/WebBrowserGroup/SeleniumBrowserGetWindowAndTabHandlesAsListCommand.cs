@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetWindowAndTabHandlesAsListCommand : ASeleniumWebDriverActionCommands, IListResultProperties
+    public sealed class SeleniumBrowserGetWindowAndTabHandlesAsListCommand : ASeleniumGetWindowAndTabInformationCommands, IListResultProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -24,8 +24,8 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        [PropertyParameterOrder(6000)]
-        public string v_Result { get; set; }
+        //[PropertyParameterOrder(6000)]
+        public override string v_Result { get; set; }
 
         public SeleniumBrowserGetWindowAndTabHandlesAsListCommand()
         {
@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
 
             //this.StoreListInUserVariable(seleniumInstance.WindowHandles.ToList(), engine);
 
-            this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
+            this.WebDriverActionCore(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
             {
                 this.StoreListInUserVariable(seleniumInstance.WindowHandles.ToList(), engine);
             }), engine);

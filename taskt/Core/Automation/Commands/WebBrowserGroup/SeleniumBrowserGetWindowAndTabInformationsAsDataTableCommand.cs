@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand : ASeleniumWebDriverActionCommands, IDataTableResultProperties
+    public sealed class SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand : ASeleniumGetWindowAndTabInformationCommands, IDataTableResultProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -23,8 +23,8 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
-        [PropertyParameterOrder(6000)]
-        public string v_Result { get; set; }
+        //[PropertyParameterOrder(6000)]
+        public override string v_Result { get; set; }
 
         public SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand()
         {
@@ -52,23 +52,33 @@ namespace taskt.Core.Automation.Commands
 
             //this.StoreDataTableInUserVariable(ret, engine);
 
-            this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
+            this.WebDriverActionCore(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
             {
-                var currentHandle = seleniumInstance.CurrentWindowHandle;
+                //var currentHandle = seleniumInstance.CurrentWindowHandle;
+
+                //var ret = this.CreateEmptyDataTable();
+                //ret.Columns.Add("handle");
+                //ret.Columns.Add("url");
+                //ret.Columns.Add("title");
+
+                //var handles = seleniumInstance.WindowHandles;
+                //foreach (var handle in handles)
+                //{
+                //    seleniumInstance.SwitchTo().Window(handle);
+                //    ret.Rows.Add(new string[] { handle, seleniumInstance.Url, seleniumInstance.Title });
+                //}
+
+                //seleniumInstance.SwitchTo().Window(currentHandle);
 
                 var ret = this.CreateEmptyDataTable();
                 ret.Columns.Add("handle");
                 ret.Columns.Add("url");
                 ret.Columns.Add("title");
 
-                var handles = seleniumInstance.WindowHandles;
-                foreach (var handle in handles)
+                SeleniumWindowAndTabAction(seleniumInstance, new Action<string>(handle =>
                 {
-                    seleniumInstance.SwitchTo().Window(handle);
                     ret.Rows.Add(new string[] { handle, seleniumInstance.Url, seleniumInstance.Title });
-                }
-
-                seleniumInstance.SwitchTo().Window(currentHandle);
+                }));
 
                 this.StoreDataTableInUserVariable(ret, engine);
             }), engine);
