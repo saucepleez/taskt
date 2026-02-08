@@ -11,6 +11,6 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WhenFailAction))]
         [PropertyParameterOrder(10000)]
-        public string v_WhenFailAction { get; set; }
+        public virtual string v_WhenFailAction { get; set; }
     }
 }

@@ -10,6 +10,6 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_InputWebElementName))]
-        public string v_WebElement { get; set; }
+        public virtual string v_WebElement { get; set; }
     }
 }

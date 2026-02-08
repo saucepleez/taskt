@@ -11,6 +11,6 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_ScrollToWebElement))]
         [PropertyParameterOrder(11000)]
-        public string v_ScrollToWebElement { get; set; }
+        public virtual string v_ScrollToWebElement { get; set; }
     }
 }
