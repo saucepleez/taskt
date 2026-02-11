@@ -7,7 +7,7 @@ using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands.WebBrowserGroup
 {
-    public static class EM_SeleniumSearchParametersCorePropertiesExtensionMethods
+    public static class EM_SeleniumSearchMultiWebElementsParametersPropertiesExtensionMethods
     {
         /// <summary>
         /// get WebElement search func
@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static Func<ISearchContext, string, IReadOnlyCollection<IWebElement>> GetSearchMethodFunc(this ISeleniumSearchWebElementParametersCoreProperties command, AutomationEngineInstance engine)
+        public static Func<ISearchContext, string, IReadOnlyCollection<IWebElement>> GetSearchMethodFunc(this ISeleniumSearchMultiWebElementsParametersProperties command, AutomationEngineInstance engine)
         {
             switch (command.ToScriptCommand().ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_SearchMethod), engine))
             {
@@ -117,14 +117,14 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         }
 
         /// <summary>
-        /// search multi WebElements action
+        /// search multi WebElements
         /// </summary>
         /// <param name="command"></param>
         /// <param name="root"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static List<IWebElement> SearchMultiWebElementsAction(this ISeleniumSearchWebElementParametersCoreProperties command, ISearchContext root, AutomationEngineInstance engine)
+        public static List<IWebElement> SearchMultiWebElements(this ISeleniumSearchMultiWebElementsParametersProperties command, ISearchContext root, AutomationEngineInstance engine)
         {
             var script = command.ToScriptCommand();
             var searchParameter = script.ExpandValueOrUserVariable(nameof(command.v_SearchParameter), "Search Parameter", engine);

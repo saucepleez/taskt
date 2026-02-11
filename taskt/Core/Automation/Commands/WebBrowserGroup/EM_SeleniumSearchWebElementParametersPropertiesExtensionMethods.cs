@@ -114,14 +114,14 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         //}
 
         /// <summary>
-        /// search WebElement action
+        /// search WebElement
         /// </summary>
         /// <param name="command"></param>
         /// <param name="root"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static IWebElement SearchWebElementAction(this ISeleniumSearchWebElementParametersProperties command, ISearchContext root, AutomationEngineInstance engine)
+        public static IWebElement SearchWebElement(this ISeleniumSearchWebElementParametersProperties command, ISearchContext root, AutomationEngineInstance engine)
         {
             var script = command.ToScriptCommand();
             //var searchParameter = script.ExpandValueOrUserVariable(nameof(command.v_SearchParameter), "Search Parameter", engine);
@@ -174,7 +174,7 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
             //    throw new Exception($"WebElement not found. Search Method: '{command.v_SearchMethod}', Search Parameter: '{command.v_SearchParameter}', Index: '{command.v_WebElementIndex}'");
             //}
 
-            var elems = command.SearchMultiWebElementsAction(root, engine);
+            var elems = command.SearchMultiWebElements(root, engine);
             if (elems.Count > 0)
             {
                 if (index < 0)

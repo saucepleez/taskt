@@ -1,6 +1,9 @@
 ﻿namespace taskt.Core.Automation.Commands.WebBrowserGroup
 {
-    public interface ISeleniumSearchWebElementParametersCoreProperties : IExpandableProperties
+    /// <summary>
+    /// for search multi WebElements properties
+    /// </summary>
+    public interface ISeleniumSearchMultiWebElementsParametersProperties : IExpandableProperties
     {
         /// <summary>
         /// WebElement search method

@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
 
             this.WebDriverActionCore(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
             {
-                var elem = this.SearchWebElementAction(seleniumInstance, engine);
+                var elem = this.SearchWebElement(seleniumInstance, engine);
                 //(elem, seleniumInstance).StoreInUserVariable(engine, v_Result);
                 this.StoreWebElementInUserVariable(elem, seleniumInstance, engine);
             }), engine);
