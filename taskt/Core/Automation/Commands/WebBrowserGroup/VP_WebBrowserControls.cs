@@ -140,6 +140,18 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         [PropertyIsOptional(true, "Error")]
         [PropertyValidationRule("When Value can not Retrieved", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "When can not Retrieved")]
-        public static string v_WhenValueCanNotRetrieved { get; set; }
+        public static string v_WhenValueCanNotRetrieved { get; }
+
+        /// <summary>
+        /// attribute name
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Attribute Name")]
+        [PropertyDetailSampleUsage("**textContent**", PropertyDetailSampleUsage.ValueType.Value, "Attribute")]
+        [PropertyDetailSampleUsage("**value**", PropertyDetailSampleUsage.ValueType.Value, "Attribute")]
+        [PropertyDetailSampleUsage("**{{{vAttribute}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Attribute")]
+        [PropertyValidationRule("Attribute", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Attribute")]
+        public static string v_AttributeName { get; }
     }
 }

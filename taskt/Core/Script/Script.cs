@@ -5114,12 +5114,25 @@ namespace taskt.Core.Script
                 ("v_WaitTime", "v_WaitTimeForWebElement"),
             });
 
-            // SeleniumBrowserGetAttributeFromWebElementCommand
-            ChangeMultiAttributeNames(doc, "SeleniumBrowserGetAttributeFromWebElementCommand", new List<(string, string)>()
+            // SeleniumBrowserGetAttributeFromWebElementCommand, SeleniumBrowserGetOptionsFromWebElementCommand
+            ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserGetAttributeFromWebElementCommand":
+                    case "SeleniumBrowserGetOptionsFromWebElementCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), new List<(string, string)>()
             {
                 ("v_WhenNoAttribute", "v_WhenValueCanNotRetrieved"),
                 ("v_ScrollToElement", "v_ScrollToWebElement"),
             });
+
+            // SeleniumBrowserGetHTMLFromWebElementCommand v_ScrollToElement -> v_ScrollToWebElement
+            ChangeAttributeName(doc, "SeleniumBrowserGetHTMLFromWebElementCommand", "v_ScrollToElement", "v_ScrollToWebElement");
         }
 
         /// <summary>

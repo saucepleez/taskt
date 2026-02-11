@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,24 +15,25 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetHTMLFromWebElementCommand : ScriptCommand
+    public sealed class SeleniumBrowserGetHTMLFromWebElementCommand : ASeleniumGetOneResultFromWebElementCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
-        public string v_WebElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
+        //public string v_WebElement { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_Result { get; set; }
+        [PropertyParameterOrder(6000)]
+        public override string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ScrollToElement))]
-        public string v_ScrollToElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ScrollToElement))]
+        //public string v_ScrollToWebElement { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        [PropertyIsOptional(true)]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //[PropertyIsOptional(true)]
+        //public string v_InstanceName { get; set; }
 
         public SeleniumBrowserGetHTMLFromWebElementCommand()
         {
@@ -44,8 +46,9 @@ namespace taskt.Core.Automation.Commands
                 v_WebElement = this.v_WebElement,
                 v_AttributeName = "outerHTML",
                 v_Result = this.v_Result,
-                v_ScrollToWebElement = this.v_ScrollToElement,
-                //v_InstanceName = this.v_InstanceName,
+                v_ScrollToWebElement = this.v_ScrollToWebElement,
+                v_WhenFailAction = this.v_WhenFailAction,
+                v_WhenValueCanNotRetrieved = this.v_WhenValueCanNotRetrieved,
             };
             getAttribute.RunCommand(engine);
         }
