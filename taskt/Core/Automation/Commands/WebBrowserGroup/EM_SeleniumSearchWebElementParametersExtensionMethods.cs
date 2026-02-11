@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static Func<ISearchContext, string, IReadOnlyCollection<IWebElement>> GetSearchMethodFunc(this ISeleniumSearchWebElementParameters command, AutomationEngineInstance engine)
+        public static Func<ISearchContext, string, IReadOnlyCollection<IWebElement>> GetSearchMethodFunc(this ISeleniumSearchWebElementParametersProperties command, AutomationEngineInstance engine)
         {
             switch(command.ToScriptCommand().ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_SearchMethod), engine))
             {
@@ -123,7 +123,7 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static IWebElement SearchWebElementAction(this ISeleniumSearchWebElementParameters command, ISearchContext root, AutomationEngineInstance engine)
+        public static IWebElement SearchWebElementAction(this ISeleniumSearchWebElementParametersProperties command, ISearchContext root, AutomationEngineInstance engine)
         {
             var script = command.ToScriptCommand();
             var searchParameter = script.ExpandValueOrUserVariable(nameof(command.v_SearchParameter), "Search Parameter", engine);

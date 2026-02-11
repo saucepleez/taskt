@@ -585,7 +585,8 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumDoSomethingToWebDriverProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumDoSomethingToWebElementProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumGetFromWebElementProperties.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumSearchWebElementParameters.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumSearchWebElementParametersProperties.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumSearchWebElementParametersCoreProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumWebBrowserInstanceActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumWebDriverActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumWebElementActionAndScrollProperties.cs" />

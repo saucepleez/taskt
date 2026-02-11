@@ -1,9 +1,6 @@
 ﻿namespace taskt.Core.Automation.Commands.WebBrowserGroup
 {
-    /// <summary>
-    /// for WebElement search parameters
-    /// </summary>
-    public interface ISeleniumSearchWebElementParameters : IExpandableProperties
+    public interface ISeleniumSearchWebElementParametersCoreProperties : IExpandableProperties
     {
         /// <summary>
         /// WebElement search method
@@ -14,11 +11,6 @@
         /// WebElement search parameter
         /// </summary>
         string v_SearchParameter { get; set; }
-
-        /// <summary>
-        /// WebElement index
-        /// </summary>
-        string v_WebElementIndex { get; set; }
 
         /// <summary>
         /// Wait time for WebElement
