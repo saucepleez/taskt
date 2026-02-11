@@ -575,7 +575,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumDoSomethingToWebBroswerInstancePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumDoSomethingToWebElementPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumGetFromWebElementPropertiesExtensionMethods.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumSearchWebElementParametersExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumSearchWebElementParametersPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumWebDriverActionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumWebElementActionAndScrollPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumWebElementActionPropertiesExtensionMehtods.cs" />

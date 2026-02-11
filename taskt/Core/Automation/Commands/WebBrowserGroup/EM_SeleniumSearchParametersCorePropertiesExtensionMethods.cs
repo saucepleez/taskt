@@ -2,11 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands.WebBrowserGroup
 {
-    public static class EM_SeleniumSearchWebElementParametersExtensionMethods
+    public static class EM_SeleniumSearchParametersCorePropertiesExtensionMethods
     {
         /// <summary>
         /// get WebElement search func
@@ -15,9 +18,9 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static Func<ISearchContext, string, IReadOnlyCollection<IWebElement>> GetSearchMethodFunc(this ISeleniumSearchWebElementParametersProperties command, AutomationEngineInstance engine)
+        public static Func<ISearchContext, string, IReadOnlyCollection<IWebElement>> GetSearchMethodFunc(this ISeleniumSearchWebElementParametersCoreProperties command, AutomationEngineInstance engine)
         {
-            switch(command.ToScriptCommand().ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_SearchMethod), engine))
+            switch (command.ToScriptCommand().ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_SearchMethod), engine))
             {
                 case "find element by xpath":
                     return new Func<ISearchContext, string, IReadOnlyCollection<IWebElement>>((webDriver, parameter) =>
@@ -116,24 +119,18 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         }
 
         /// <summary>
-        /// search WebElement action
+        /// search multi WebElements action
         /// </summary>
         /// <param name="command"></param>
         /// <param name="root"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static IWebElement SearchWebElementAction(this ISeleniumSearchWebElementParametersProperties command, ISearchContext root, AutomationEngineInstance engine)
+        public static List<IWebElement> SearchMultiWebElementsAction(this ISeleniumSearchWebElementParametersCoreProperties command, ISearchContext root, AutomationEngineInstance engine)
         {
             var script = command.ToScriptCommand();
             var searchParameter = script.ExpandValueOrUserVariable(nameof(command.v_SearchParameter), "Search Parameter", engine);
             var waitTime = script.ExpandValueOrUserVariableAsInteger(nameof(command.v_WaitTimeForWebElement), "Wait Time", engine);
-
-            if (string.IsNullOrWhiteSpace(command.v_WebElementIndex))
-            {
-                command.v_WebElementIndex = "0";
-            }
-            var index = script.ExpandValueOrUserVariableAsInteger(nameof(command.v_WebElementIndex), "Index", engine);
 
             var searchFunc = command.GetSearchMethodFunc(engine);
 
@@ -143,13 +140,9 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
                     var t = searchFunc(root, searchParameter);
                     if (t is ReadOnlyCollection<IWebElement> elems)
                     {
-                        if (index < 0)
+                        if (elems.Count > 0)
                         {
-                            index += elems.Count;
-                        }
-                        if ((index >= 0) && (index < elems.Count))
-                        {
-                            return (true, elems[index]);
+                            return (true, elems);
                         }
                         else
                         {
@@ -167,13 +160,13 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
                 }
             }), engine);
 
-            if (ret is IWebElement resultElem)
+            if (ret is ReadOnlyCollection<IWebElement> resultElems)
             {
-                return resultElem;
+                return resultElems.ToList();
             }
             else
             {
-                throw new Exception($"WebElement not found. Search Method: '{command.v_SearchMethod}', Search Parameter: '{command.v_SearchParameter}', Index: '{command.v_WebElementIndex}'");
+                throw new Exception($"WebElements not found. Search Method: '{command.v_SearchMethod}', Search Parameter: '{command.v_SearchParameter}'");
             }
         }
     }
