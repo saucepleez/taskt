@@ -410,8 +410,8 @@ namespace taskt.Core.Automation.Commands
                 var checkWebElement = new SeleniumBrowserCheckWebElementExistsCommand()
                 {
                     v_InstanceName = param["WebBrowser Instance Name"],
-                    v_SeleniumSearchType = param["Element Search Method"],
-                    v_SeleniumSearchParameter = param["Element Search Parameter"],
+                    v_SearchMethod = param["Element Search Method"],
+                    v_SearchParameter = param["Element Search Parameter"],
                     //v_Result = VariableNameControls.GetInnerVariableName(0, engine),
                     v_Result = res.VariableName,
                 };

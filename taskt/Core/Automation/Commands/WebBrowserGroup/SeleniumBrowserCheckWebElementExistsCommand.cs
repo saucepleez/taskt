@@ -22,15 +22,15 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_SearchMethod))]
-        public string v_SeleniumSearchType { get; set; }
+        public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_SearchParameter))]
-        public string v_SeleniumSearchParameter { get; set; }
+        public string v_SearchParameter { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ElementIndex))]
-        public string v_ElementIndex { get; set; }
+        public string v_WebElementIndex { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
-        public string v_WaitTime { get; set; }
+        public string v_WaitTimeForWebElement { get; set; }
 
         public SeleniumBrowserCheckWebElementExistsCommand()
         {
@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
         {
             try
             {
-                SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElement(this, nameof(v_InstanceName), nameof(v_SeleniumSearchType), nameof(v_SeleniumSearchParameter), nameof(v_ElementIndex), nameof(v_WaitTime), engine);
+                SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElement(this, nameof(v_InstanceName), nameof(v_SearchMethod), nameof(v_SearchParameter), nameof(v_WebElementIndex), nameof(v_WaitTimeForWebElement), engine);
                 true.StoreInUserVariable(engine, v_Result);
             }
             catch

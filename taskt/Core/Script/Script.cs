@@ -5095,13 +5095,15 @@ namespace taskt.Core.Script
                 }
             }), "v_applyToVariableName", "v_Result");
 
-            // SeleniumBrowserSearchWebElementCommand, SeleniumBrowserSearchWebElementFromWebEelementCommand
+            // SeleniumBrowserSearchWebElementCommand, SeleniumBrowserSearchWebElementFromWebEelementCommand,
+            // SeleniumBrowserCheckWebElementExistsCommand,
             ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
             {
                 switch (GetCommandName(el))
                 {
                     case "SeleniumBrowserSearchWebElementCommand":
                     case "SeleniumBrowserSearchWebElementFromWebElementCommand":
+                    case "SeleniumBrowserCheckWebElementExistsCommand":
                         return true;
                     default:
                         return false;
@@ -5144,6 +5146,16 @@ namespace taskt.Core.Script
                         return false;
                 }
             }), "v_ScrollToElement", "v_ScrollToWebElement");
+
+            // SeleniumBrowserGetMatchedWebElementsCommand
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserGetMatchedWebElementsCommand", 
+                new List<(string, string)>()
+                {
+                    ("v_SeleniumSearchType", "v_SearchMethod"),
+                    ("v_SeleniumSearchParameter", "v_SearchParameter"),
+                    ("v_WaitTime", "v_WaitTimeForWebElement"),
+                }
+            );
         }
 
         /// <summary>
