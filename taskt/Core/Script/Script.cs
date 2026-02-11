@@ -5147,8 +5147,19 @@ namespace taskt.Core.Script
                 }
             }), "v_ScrollToElement", "v_ScrollToWebElement");
 
-            // SeleniumBrowserGetMatchedWebElementsCommand
-            ChangeMultiAttributeNames(doc, "SeleniumBrowserGetMatchedWebElementsCommand", 
+            // SeleniumBrowserGetMatchedWebElementsCommand, SeleniumBrowserGetWebElementsCountCommand
+            ChangeMultiAttributeNames(doc, 
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "SeleniumBrowserGetMatchedWebElementsCommand":
+                        case "SeleniumBrowserGetWebElementsCountCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
                 new List<(string, string)>()
                 {
                     ("v_SeleniumSearchType", "v_SearchMethod"),
