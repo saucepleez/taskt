@@ -5096,7 +5096,9 @@ namespace taskt.Core.Script
             }), "v_applyToVariableName", "v_Result");
 
             // SeleniumBrowserSearchWebElementCommand, SeleniumBrowserSearchWebElementFromWebEelementCommand,
-            // SeleniumBrowserCheckWebElementExistsCommand, SeleniumBrowserWaitForWebElementToExistsCommand
+            // SeleniumBrowserCheckWebElementExistsCommand, SeleniumBrowserWaitForWebElementToExistsCommand,
+            // SeleniumBrowserGetAWebElementValuesAsDataTableCommand, SeleniumBrowserGetAWebElementValuesAsDictionaryCommand,
+            // SeleniumBrowserGetAWebElementValuesAsListCommand, SeleniumBrowserGetTableValueAsDataTableCommand
             ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
             {
                 switch (GetCommandName(el))
@@ -5105,6 +5107,10 @@ namespace taskt.Core.Script
                     case "SeleniumBrowserSearchWebElementFromWebElementCommand":
                     case "SeleniumBrowserCheckWebElementExistsCommand":
                     case "SeleniumBrowserWaitForWebElementToExistsCommand":
+                    case "SeleniumBrowserGetAWebElementValuesAsDataTableCommand":
+                    case "SeleniumBrowserGetAWebElementValuesAsDictionaryCommand":
+                    case "SeleniumBrowserGetAWebElementValuesAsListCommand":
+                    case "SeleniumBrowserGetTableValueAsDataTableCommand":
                         return true;
                     default:
                         return false;
@@ -5148,7 +5154,9 @@ namespace taskt.Core.Script
                 }
             }), "v_ScrollToElement", "v_ScrollToWebElement");
 
-            // SeleniumBrowserGetMatchedWebElementsCommand, SeleniumBrowserGetWebElementsCountCommand
+            // SeleniumBrowserGetMatchedWebElementsCommand, SeleniumBrowserGetWebElementsCountCommand,
+            // SeleniumBrowserGetWebElementsValueAsDictionaryCommand, SeleniumBrowserGetWebElementsValueAsListCommand,
+            // SeleniumBrowserGetWebElementsValuesAsDataTableCommand, SeleniumBrowserGetWebElementsValueAsDataTableCommand
             ChangeMultiAttributeNames(doc, 
                 new Func<XElement, bool>(el =>
                 {
@@ -5156,6 +5164,10 @@ namespace taskt.Core.Script
                     {
                         case "SeleniumBrowserGetMatchedWebElementsCommand":
                         case "SeleniumBrowserGetWebElementsCountCommand":
+                        case "SeleniumBrowserGetWebElementsValueAsDictionaryCommand":
+                        case "SeleniumBrowserGetWebElementsValueAsListCommand":
+                        case "SeleniumBrowserGetWebElementsValuesAsDataTableCommand":
+                        case "SeleniumBrowserGetWebElementsValueAsDataTableCommand":
                             return true;
                         default:
                             return false;
