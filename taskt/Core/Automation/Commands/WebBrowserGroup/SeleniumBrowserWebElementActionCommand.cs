@@ -91,10 +91,10 @@ namespace taskt.Core.Automation.Commands
                     var waitCommand = new SeleniumBrowserWaitForWebElementToExistsCommand()
                     {
                         v_InstanceName = this.v_InstanceName,
-                        v_SeleniumSearchType = this.v_SeleniumSearchType,
-                        v_SeleniumSearchParameter = this.v_SeleniumSearchParameter,
-                        v_ElementIndex = this.v_SeleniumElementIndex,
-                        v_WaitTime = this.v_WaitTime,
+                        v_SearchMethod = this.v_SeleniumSearchType,
+                        v_SearchParameter = this.v_SeleniumSearchParameter,
+                        v_WebElementIndex = this.v_SeleniumElementIndex,
+                        v_WaitTimeForWebElement = this.v_WaitTime,
                     };
                     waitCommand.RunCommand(engine);
                     break;

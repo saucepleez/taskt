@@ -5096,7 +5096,7 @@ namespace taskt.Core.Script
             }), "v_applyToVariableName", "v_Result");
 
             // SeleniumBrowserSearchWebElementCommand, SeleniumBrowserSearchWebElementFromWebEelementCommand,
-            // SeleniumBrowserCheckWebElementExistsCommand,
+            // SeleniumBrowserCheckWebElementExistsCommand, SeleniumBrowserWaitForWebElementToExistsCommand
             ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
             {
                 switch (GetCommandName(el))
@@ -5104,6 +5104,7 @@ namespace taskt.Core.Script
                     case "SeleniumBrowserSearchWebElementCommand":
                     case "SeleniumBrowserSearchWebElementFromWebElementCommand":
                     case "SeleniumBrowserCheckWebElementExistsCommand":
+                    case "SeleniumBrowserWaitForWebElementToExistsCommand":
                         return true;
                     default:
                         return false;
