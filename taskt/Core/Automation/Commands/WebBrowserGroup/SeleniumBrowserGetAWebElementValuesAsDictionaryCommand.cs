@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
-        public string v_DictionaryVariableName { get; set; }
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_WaitTime))]
@@ -78,7 +78,7 @@ namespace taskt.Core.Automation.Commands
             );
 
             //newDic.StoreInUserVariable(engine, v_DictionaryVariableName);
-            this.StoreDictionaryInUserVariable(newDic, nameof(v_DictionaryVariableName), engine);
+            this.StoreDictionaryInUserVariable(newDic, nameof(v_Result), engine);
         }
 
         private void SearchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)

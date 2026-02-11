@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        public string v_ListVariableName { get; set; }
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_WaitTime))]
@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
             );
 
             //newList.StoreInUserVariable(engine, v_ListVariableName);
-            this.StoreListInUserVariable(newList, nameof(v_ListVariableName), engine);
+            this.StoreListInUserVariable(newList, nameof(v_Result), engine);
         }
 
 

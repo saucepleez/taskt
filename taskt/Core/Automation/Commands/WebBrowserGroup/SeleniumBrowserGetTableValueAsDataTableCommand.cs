@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
-        public string v_DataTableVariableName { get; set; }
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -141,7 +141,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //newDT.StoreInUserVariable(engine, v_DataTableVariableName);
-            this.StoreDataTableInUserVariable(newDT, nameof(v_DataTableVariableName), engine);
+            this.StoreDataTableInUserVariable(newDT, nameof(v_Result), engine);
         }
 
         private void SearchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)

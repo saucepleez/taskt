@@ -5180,6 +5180,51 @@ namespace taskt.Core.Script
                     ("v_WaitTime", "v_WaitTimeForWebElement"),
                 }
             );
+
+            // SeleniumBrowserGetAWebElementValuesAsDataTableCommand, SeleniumBrowserGetTableValueAsDataTableCommand,
+            // SeleniumBrowserGetWebElementsValueAsDataTableCommand, SeleniumBrowserGetWebElementsValuesAsDataTableCommand
+            // v_DataTableVariableName -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserGetAWebElementValuesAsDataTableCommand":
+                    case "SeleniumBrowserGetTableValueAsDataTableCommand":
+                    case "SeleniumBrowserGetWebElementsValueAsDataTableCommand":
+                    case "SeleniumBrowserGetWebElementsValuesAsDataTableCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_DataTableVariableName", "v_Result");
+
+            // SeleniumBrowserGetAWebElementValuesAsDictionaryCommand, SeleniumBrowserGetWebElementsValueAsDictionaryCommand
+            // v_DictionaryVariableName -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserGetAWebElementValuesAsDictionaryCommand":
+                    case "SeleniumBrowserGetWebElementsValueAsDictionaryCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_DictionaryVariableName", "v_Result");
+
+            // SeleniumBrowserGetAWebElementValuesAsListCommand, SeleniumBrowserGetWebElementsValueAsListCommand
+            // v_ListVariableName -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserGetAWebElementValuesAsListCommand":
+                    case "SeleniumBrowserGetWebElementsValueAsListCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_ListVariableName", "v_Result");
         }
 
         /// <summary>
