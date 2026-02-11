@@ -5131,8 +5131,19 @@ namespace taskt.Core.Script
                 ("v_ScrollToElement", "v_ScrollToWebElement"),
             });
 
-            // SeleniumBrowserGetHTMLFromWebElementCommand v_ScrollToElement -> v_ScrollToWebElement
-            ChangeAttributeName(doc, "SeleniumBrowserGetHTMLFromWebElementCommand", "v_ScrollToElement", "v_ScrollToWebElement");
+            // SeleniumBrowserGetHTMLFromWebElementCommand, SeleniumBrowserGetTextFromWebElementCommand
+            // v_ScrollToElement -> v_ScrollToWebElement
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserGetHTMLFromWebElementCommand":
+                    case "SeleniumBrowserGetTextFromWebElementCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_ScrollToElement", "v_ScrollToWebElement");
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,42 +15,41 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumWebElementPositionCommand : ScriptCommand
+    public sealed class SeleniumWebElementPositionCommand : ASeleniumGetFromWebElementCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
-        public string v_WebElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
+        //public string v_WebElement { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store X Position")]
-        [InputSpecification("X Position")]
         [PropertyIsOptional(true)]
         [PropertyValidationRule("X Position", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "X Position")]
+        [PropertyParameterOrder(6000)]
         public string v_XPosition { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store Y Position")]
-        [InputSpecification("Y Position")]
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Y Position", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "Y Position")]
+        [PropertyParameterOrder(6100)]
         public string v_YPosition { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Base position")]
-        [InputSpecification("", true)]
-        [SampleUsage("")]
-        [Remarks("")]
         [PropertyUISelectionOption("Top Left")]
         [PropertyUISelectionOption("Bottom Right")]
         [PropertyUISelectionOption("Top Right")]
         [PropertyUISelectionOption("Bottom Left")]
         [PropertyUISelectionOption("Center")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Top Left")]
+        [PropertyDisplayText(false, "Base Position")]
+        [PropertyParameterOrder(7000)]
         public string v_PositionBase { get; set; }
 
         public SeleniumWebElementPositionCommand()
@@ -58,44 +58,94 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
+            //var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
-            var loc = elem.Location;
-            var size = elem.Size;
+            //var loc = elem.Location;
+            //var size = elem.Size;
 
-            int x = 0, y = 0;
-            switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PositionBase), engine))
-            {
-                case "top left":
-                    x = loc.X;
-                    y = loc.Y;
-                    break;
-                case "bottom right":
-                    x = loc.X + size.Width;
-                    y = loc.Y + size.Height;
-                    break;
-                case "top right":
-                    x = loc.X + size.Width;
-                    y = loc.Y;
-                    break;
-                case "bottom left":
-                    x = loc.X;
-                    y = loc.Y + size.Height;
-                    break;
-                case "center":
-                    x = (loc.X + size.Width) / 2;
-                    y = (loc.Y + size.Height) / 2;
-                    break;
-            }
+            //int x = 0, y = 0;
+            //switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PositionBase), engine))
+            //{
+            //    case "top left":
+            //        x = loc.X;
+            //        y = loc.Y;
+            //        break;
+            //    case "bottom right":
+            //        x = loc.X + size.Width;
+            //        y = loc.Y + size.Height;
+            //        break;
+            //    case "top right":
+            //        x = loc.X + size.Width;
+            //        y = loc.Y;
+            //        break;
+            //    case "bottom left":
+            //        x = loc.X;
+            //        y = loc.Y + size.Height;
+            //        break;
+            //    case "center":
+            //        x = (loc.X + size.Width) / 2;
+            //        y = (loc.Y + size.Height) / 2;
+            //        break;
+            //}
 
-            if (!string.IsNullOrEmpty(v_XPosition))
+            //if (!string.IsNullOrEmpty(v_XPosition))
+            //{
+            //    x.StoreInUserVariable(engine, v_XPosition);
+            //}
+            //if (!string.IsNullOrEmpty(v_YPosition))
+            //{
+            //    y.StoreInUserVariable(engine, v_YPosition);
+            //}
+
+            this.GetFromWebElementAction(new Action<OpenQA.Selenium.IWebElement, OpenQA.Selenium.IWebDriver>((elem, seleniumInstance) =>
             {
-                x.StoreInUserVariable(engine, v_XPosition);
-            }
-            if (!string.IsNullOrEmpty(v_YPosition))
+                var loc = elem.Location;
+                var size = elem.Size;
+
+                int x = 0, y = 0;
+                switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PositionBase), engine))
+                {
+                    case "top left":
+                        x = loc.X;
+                        y = loc.Y;
+                        break;
+                    case "bottom right":
+                        x = loc.X + size.Width;
+                        y = loc.Y + size.Height;
+                        break;
+                    case "top right":
+                        x = loc.X + size.Width;
+                        y = loc.Y;
+                        break;
+                    case "bottom left":
+                        x = loc.X;
+                        y = loc.Y + size.Height;
+                        break;
+                    case "center":
+                        x = (loc.X + size.Width) / 2;
+                        y = (loc.Y + size.Height) / 2;
+                        break;
+                }
+
+                if (!string.IsNullOrEmpty(v_XPosition))
+                {
+                    x.StoreInUserVariable(engine, v_XPosition);
+                }
+                if (!string.IsNullOrEmpty(v_YPosition))
+                {
+                    y.StoreInUserVariable(engine, v_YPosition);
+                }
+            }), new Action<Engine.AutomationEngineInstance>(e =>
             {
-                y.StoreInUserVariable(engine, v_YPosition);
-            }
+                if (!string.IsNullOrEmpty(v_XPosition))
+                {
+                    string.Empty.StoreInUserVariable(engine, v_XPosition);
+                }
+                if (!string.IsNullOrEmpty(v_YPosition))
+                {
+                    string.Empty.StoreInUserVariable(engine, v_YPosition);
+                }
+            }), engine);
         }
     }
 }
