@@ -17,6 +17,11 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         public static IWebElement SearchWebElement(this ISeleniumSearchWebElementParametersProperties command, ISearchContext root, AutomationEngineInstance engine)
         {
             var script = command.ToScriptCommand();
+
+            if (string.IsNullOrEmpty(command.v_WebElementIndex))
+            {
+                command.v_WebElementIndex = "0";
+            }
             var index = script.ExpandValueOrUserVariableAsInteger(nameof(command.v_WebElementIndex), "Index", engine);
 
             var elems = command.SearchMultiWebElements(root, engine);
