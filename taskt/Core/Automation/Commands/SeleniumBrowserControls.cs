@@ -774,10 +774,10 @@ namespace taskt.Core.Automation.Commands
 
         #region tag methods
 
-        public static bool CheckTagName(this IWebElement elem, string tagName)
-        {
-            return (elem.TagName.ToLower() == tagName.ToLower());
-        }
+        //public static bool CheckTagName(this IWebElement elem, string tagName)
+        //{
+        //    return (elem.TagName.ToLower() == tagName.ToLower());
+        //}
 
         #endregion
 
@@ -801,10 +801,10 @@ namespace taskt.Core.Automation.Commands
             FormUIControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, item.StartsWith("find elements"));
         }
 
-        public static void ScrollToWebElement_SelectionChange(ComboBox scrollParameter, Dictionary<string, Control> controlsList, string instanceParameterName)
-        {
-            FormUIControls.SetVisibleParameterControlGroup(controlsList, instanceParameterName, ((scrollParameter.SelectedItem?.ToString().ToLower() ?? "") != "no"));
-        }
+        //public static void ScrollToWebElement_SelectionChange(ComboBox scrollParameter, Dictionary<string, Control> controlsList, string instanceParameterName)
+        //{
+        //    FormUIControls.SetVisibleParameterControlGroup(controlsList, instanceParameterName, ((scrollParameter.SelectedItem?.ToString().ToLower() ?? "") != "no"));
+        //}
 
         #endregion
     }
