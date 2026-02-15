@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using System;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -11,83 +10,83 @@ namespace taskt.Core.Automation.Commands
     {
         #region Virtual Property
 
-        /// <summary>
-        /// webbrowser instance name
-        /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
-        [PropertyDescription("WebBrowser Instance Name")]
-        [InputSpecification("WebBrowser Instance Name", true)]
-        [PropertyDetailSampleUsage("**RPABrowser**", PropertyDetailSampleUsage.ValueType.Value, "WebBrowser Instance")]
-        [PropertyDetailSampleUsage("**{{{vInstance}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "WebBrowser Instance")]
-        [Remarks("Failure to enter the correct instance name or failure to first call **Create Broser** command will cause an error")]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.WebBrowser)]
-        [PropertyValidationRule("WebBrowser Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Instance")]
-        [PropertyFirstValue("%kwd_default_browser_instance%")]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyParameterOrder(5000)]
-        public static string v_InputInstanceName { get; }
+        ///// <summary>
+        ///// webbrowser instance name
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
+        //[PropertyDescription("WebBrowser Instance Name")]
+        //[InputSpecification("WebBrowser Instance Name", true)]
+        //[PropertyDetailSampleUsage("**RPABrowser**", PropertyDetailSampleUsage.ValueType.Value, "WebBrowser Instance")]
+        //[PropertyDetailSampleUsage("**{{{vInstance}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "WebBrowser Instance")]
+        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Broser** command will cause an error")]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.WebBrowser)]
+        //[PropertyValidationRule("WebBrowser Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Instance")]
+        //[PropertyFirstValue("%kwd_default_browser_instance%")]
+        ////[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        ////[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        ////[PropertyShowSampleUsageInDescription(true)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_InputInstanceName { get; }
 
-        /// <summary>
-        /// search method property
-        /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("Element Search Method")]
-        [PropertyUISelectionOption("Find Element By XPath")]
-        [PropertyUISelectionOption("Find Element By ID")]
-        [PropertyUISelectionOption("Find Element By Name")]
-        [PropertyUISelectionOption("Find Element By Tag Name")]
-        [PropertyUISelectionOption("Find Element By Class Name")]
-        [PropertyUISelectionOption("Find Element By CSS Selector")]
-        [PropertyUISelectionOption("Find Element By Link Text")]
-        [PropertyUISelectionOption("Find Elements By XPath")]
-        [PropertyUISelectionOption("Find Elements By ID")]
-        [PropertyUISelectionOption("Find Elements By Name")]
-        [PropertyUISelectionOption("Find Elements By Tag Name")]
-        [PropertyUISelectionOption("Find Elements By Class Name")]
-        [PropertyUISelectionOption("Find Elements By CSS Selector")]
-        [PropertyUISelectionOption("Find Elements By Link Text")]
-        [Remarks("Select the specific search type that you want to use to isolate the element in the web page.")]
-        [PropertyValidationRule("Search Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Search Method")]
-        //[InputSpecification("", true)]
-        //[PropertyShowSampleUsageInDescription(false)]
-        //[SampleUsage("Select **Find Element By XPath**, **Find Element By ID**, **Find Element By Name**, **Find Element By Tag Name**, **Find Element By Class Name**, **Find Element By CSS Selector**, **Find Element By Link Text**")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyParameterOrder(5000)]
-        public static string v_SearchMethod { get; }
+        ///// <summary>
+        ///// search method property
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        //[PropertyDescription("Element Search Method")]
+        //[PropertyUISelectionOption("Find Element By XPath")]
+        //[PropertyUISelectionOption("Find Element By ID")]
+        //[PropertyUISelectionOption("Find Element By Name")]
+        //[PropertyUISelectionOption("Find Element By Tag Name")]
+        //[PropertyUISelectionOption("Find Element By Class Name")]
+        //[PropertyUISelectionOption("Find Element By CSS Selector")]
+        //[PropertyUISelectionOption("Find Element By Link Text")]
+        //[PropertyUISelectionOption("Find Elements By XPath")]
+        //[PropertyUISelectionOption("Find Elements By ID")]
+        //[PropertyUISelectionOption("Find Elements By Name")]
+        //[PropertyUISelectionOption("Find Elements By Tag Name")]
+        //[PropertyUISelectionOption("Find Elements By Class Name")]
+        //[PropertyUISelectionOption("Find Elements By CSS Selector")]
+        //[PropertyUISelectionOption("Find Elements By Link Text")]
+        //[Remarks("Select the specific search type that you want to use to isolate the element in the web page.")]
+        //[PropertyValidationRule("Search Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Search Method")]
+        ////[InputSpecification("", true)]
+        ////[PropertyShowSampleUsageInDescription(false)]
+        ////[SampleUsage("Select **Find Element By XPath**, **Find Element By ID**, **Find Element By Name**, **Find Element By Tag Name**, **Find Element By Class Name**, **Find Element By CSS Selector**, **Find Element By Link Text**")]
+        ////[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_SearchMethod { get; }
 
-        /// <summary>
-        /// search parameter property
-        /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Element Search Parameter")]
-        [InputSpecification("Element Search Parameter", true)]
-        [PropertyValidationRule("Search Parameter", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Search Parameter")]
-        [Remarks("Specifies the parameter text that matches to the element based on the previously selected search type.")]
-        //[SampleUsage("")]
-        //[PropertyShowSampleUsageInDescription(false)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyParameterOrder(5000)]
-        public static string v_SearchParameter { get; }
+        ///// <summary>
+        ///// search parameter property
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Element Search Parameter")]
+        //[InputSpecification("Element Search Parameter", true)]
+        //[PropertyValidationRule("Search Parameter", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Search Parameter")]
+        //[Remarks("Specifies the parameter text that matches to the element based on the previously selected search type.")]
+        ////[SampleUsage("")]
+        ////[PropertyShowSampleUsageInDescription(false)]
+        ////[PropertyTextBoxSetting(1, false)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_SearchParameter { get; }
 
-        /// <summary>
-        /// element index
-        /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Element Index")]
-        [InputSpecification("Element Index", true)]
-        [PropertyDetailSampleUsage("**0**", "Specify the First Element Index")]
-        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Element Index")]
-        [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Element Index")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyParameterOrder(5000)]
-        public static string v_ElementIndex { get; }
+        ///// <summary>
+        ///// element index
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Element Index")]
+        //[InputSpecification("Element Index", true)]
+        //[PropertyDetailSampleUsage("**0**", "Specify the First Element Index")]
+        //[PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Element Index")]
+        //[PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Element Index")]
+        ////[Remarks("")]
+        ////[PropertyShowSampleUsageInDescription(true)]
+        ////[PropertyTextBoxSetting(1, false)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_ElementIndex { get; }
 
         ///// <summary>
         ///// Attributes Name
@@ -138,21 +137,21 @@ namespace taskt.Core.Automation.Commands
         ////[PropertyParameterOrder(5000)]
         //public static string v_AttributeName { get; }
 
-        /// <summary>
-        /// element wait time
-        /// </summary>
-        [PropertyVirtualProperty(nameof(WaitControls), nameof(WaitControls.v_WaitTime))]
-        [PropertyDescription("Wait Time for the WebElement to Exist (sec)")]
-        [Remarks("Specify how long to Wait before an Error will occur because the WebElement is Not Found.")]
-        [PropertyIsOptional(true, "120")]
-        [PropertyFirstValue("120")]
-        //[InputSpecification("Wait Time", true)]
-        //[PropertyDetailSampleUsage("**120**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
-        //[PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyParameterOrder(5000)]
-        public static string v_WaitTime { get; }
+        ///// <summary>
+        ///// element wait time
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(WaitControls), nameof(WaitControls.v_WaitTime))]
+        //[PropertyDescription("Wait Time for the WebElement to Exist (sec)")]
+        //[Remarks("Specify how long to Wait before an Error will occur because the WebElement is Not Found.")]
+        //[PropertyIsOptional(true, "120")]
+        //[PropertyFirstValue("120")]
+        ////[InputSpecification("Wait Time", true)]
+        ////[PropertyDetailSampleUsage("**120**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
+        ////[PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
+        ////[PropertyShowSampleUsageInDescription(true)]
+        ////[PropertyTextBoxSetting(1, false)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_WaitTime { get; }
 
         ///// <summary>
         ///// input WebElement property
@@ -189,20 +188,20 @@ namespace taskt.Core.Automation.Commands
         ////[PropertyParameterOrder(5000)]
         //public static string v_OutputWebElementName { get; }
 
-        /// <summary>
-        /// scroll to element
-        /// </summary>
-        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        [PropertyDescription("Scroll to WebElement")]
-        [PropertyIsOptional(true, "No")]
-        [PropertyDisplayText(false, "Scroll")]
-        //[InputSpecification("", true)]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyUISelectionOption("Yes")]
-        //[PropertyUISelectionOption("No")]
-        //[PropertyParameterOrder(5000)]
-        public static string v_ScrollToElement { get; }
+        ///// <summary>
+        ///// scroll to element
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        //[PropertyDescription("Scroll to WebElement")]
+        //[PropertyIsOptional(true, "No")]
+        //[PropertyDisplayText(false, "Scroll")]
+        ////[InputSpecification("", true)]
+        ////[Remarks("")]
+        ////[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        ////[PropertyUISelectionOption("Yes")]
+        ////[PropertyUISelectionOption("No")]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_ScrollToElement { get; }
         #endregion
 
         #region methods
