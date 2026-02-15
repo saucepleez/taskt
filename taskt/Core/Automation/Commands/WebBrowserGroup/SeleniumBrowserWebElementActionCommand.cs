@@ -17,23 +17,26 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
-    public sealed class SeleniumBrowserWebElementActionCommand : ScriptCommand, IHaveDataTableElements
+    public sealed class SeleniumBrowserWebElementActionCommand : ASeleniumWebDriverActionCommands, ISeleniumSearchWebElementParametersProperties, IHaveDataTableElements
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchMethod))]
         [PropertySelectionChangeEvent(nameof(cmbSearchType_SelectionChangeCommited))]
+        [PropertyParameterOrder(6000)]
         public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchParameter))]
+        [PropertyParameterOrder(6100)]
         public string v_SearchParameter { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WebElementIndex))]
+        [PropertyParameterOrder(6200)]
         public string v_WebElementIndex { get; set; }
 
         [XmlAttribute]
@@ -54,6 +57,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Select Option")]
         [PropertySelectionChangeEvent(nameof(cmbSeleniumAction_SelectionChangeCommitted))]
         [PropertyValidationRule("WebElement Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyParameterOrder(7000)]
         public string v_WebElementAction { get; set; }
 
         [XmlElement]
@@ -68,14 +72,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        [PropertyParameterOrder(8000)]
         public DataTable v_WebActionParameterTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WaitTimeForWebElement))]
+        [PropertyParameterOrder(10000)]
         public string v_WaitTimeForWebElement { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_ScrollToWebElement))]
+        [PropertyParameterOrder(11000)]
         public string v_ScrollToWebElement { get; set; }
 
         public SeleniumBrowserWebElementActionCommand()
