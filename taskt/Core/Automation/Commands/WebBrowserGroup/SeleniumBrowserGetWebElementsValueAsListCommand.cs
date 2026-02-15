@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,31 +15,31 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetWebElementsValueAsListCommand : ScriptCommand, ICanHandleList
+    public sealed class SeleniumBrowserGetWebElementsValueAsListCommand : ASeleniumGetMultiWebElementsValueAsSomethingCommands, IListResultProperties
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_SearchMethod))]
-        public string v_SearchMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_SearchMethod))]
+        //public string v_SearchMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_SearchParameter))]
-        public string v_SearchParameter { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_SearchParameter))]
+        //public string v_SearchParameter { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_AttributeName))]
-        public string v_AttributeName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_AttributeName))]
+        //public string v_AttributeName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        public string v_Result { get; set; }
+        public override string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_WaitTime))]
-        public string v_WaitTimeForWebElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_WaitTime))]
+        //public string v_WaitTimeForWebElement { get; set; }
 
         public SeleniumBrowserGetWebElementsValueAsListCommand()
         {
@@ -51,19 +51,26 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var _, var elems) = SeleniumBrowserControls.GetSeleniumBrowserInstanceAndElements(this, nameof(v_InstanceName), nameof(v_SeleniumSearchType), nameof(v_SeleniumSearchParameter), engine);
-            (var _, var elems) = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElements(this, nameof(v_InstanceName), nameof(v_SearchMethod), nameof(v_SearchParameter), nameof(v_WaitTimeForWebElement), engine);
+            ////(var _, var elems) = SeleniumBrowserControls.GetSeleniumBrowserInstanceAndElements(this, nameof(v_InstanceName), nameof(v_SeleniumSearchType), nameof(v_SeleniumSearchParameter), engine);
+            //(var _, var elems) = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElements(this, nameof(v_InstanceName), nameof(v_SearchMethod), nameof(v_SearchParameter), nameof(v_WaitTimeForWebElement), engine);
 
-            List<string> newList = new List<string>();
+            //List<string> newList = new List<string>();
 
-            SeleniumBrowserControls.GetElementsAttribute(elems, v_AttributeName, engine, new Action<int, string, string>((idx, name, value) =>
-                {
-                    newList.Add(value);
-                })
-            );
+            //SeleniumBrowserControls.GetElementsAttribute(elems, v_AttributeName, engine, new Action<int, string, string>((idx, name, value) =>
+            //    {
+            //        newList.Add(value);
+            //    })
+            //);
 
-            //newList.StoreInUserVariable(engine, v_ListVariableName);
-            this.StoreListInUserVariable(newList, nameof(v_Result), engine);
+            ////newList.StoreInUserVariable(engine, v_ListVariableName);
+            //this.StoreListInUserVariable(newList, nameof(v_Result), engine);
+
+            var res = this.CreateEmptyList();
+            this.GetMultiWebElementValueAction(new Action<string, string, int>((attrName, attrValue, idx) =>
+            {
+                res.Add(attrValue);
+            }), engine);
+            this.StoreListInUserVariable(res, engine);
         }
     }
 }

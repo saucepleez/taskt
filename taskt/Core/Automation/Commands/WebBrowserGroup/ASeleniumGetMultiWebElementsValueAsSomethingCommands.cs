@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
     /// <summary>
     /// for get multi WebElements value as something commands
     /// </summary>
-    public abstract class ASeleniumGetWebElementsValueAsSomethingCommands : ASeleniumSearchMultiWebElementsFromWebDriverCommands
+    public abstract class ASeleniumGetMultiWebElementsValueAsSomethingCommands : ASeleniumSearchMultiWebElementsFromWebDriverCommands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_AttributeName))]
@@ -35,6 +35,10 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
                     using (var resVar = new InnerScriptVariable(engine))
                     {
                         var attrName = this.ExpandValueOrUserVariable(nameof(v_AttributeName), "Attribute", engine);
+                        if (attrName.StartsWith("@"))
+                        {
+                            attrName = attrName.Substring(1);
+                        }
 
                         var getAttr = new SeleniumBrowserGetAttributeFromWebElementCommand()
                         {
