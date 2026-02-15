@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserScrollToWebElementCommand : ASeleniumWebElementActionCommands
+    public sealed class SeleniumBrowserScrollToWebElementCommand : ASeleniumWebElementActionCommands, ICanExecuteJavaScriptToWebDriver
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -64,7 +64,8 @@ namespace taskt.Core.Automation.Commands
                 new Action<OpenQA.Selenium.IWebElement, OpenQA.Selenium.IWebDriver>((el, dr) =>
                 {
                     var script = $"window.scroll(0, {el.Location.Y})";
-                    SeleniumBrowserControls.ExcecuteScript(dr, script);
+                    //SeleniumBrowserControls.ExcecuteScript(dr, script);
+                    this.ExecuteJavaScript(dr, script);
                 }), engine, new Action<Exception>(ex =>
                 {
                     //throw new Exception("Failed to Scroll To WebElement");

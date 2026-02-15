@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserClickWebElementCommand : ASeleniumWebElementActionAndScrollCommands
+    public sealed class SeleniumBrowserClickWebElementCommand : ASeleniumWebElementActionAndScrollCommands, ICanExecuteJavaScriptToWebDriver
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
@@ -161,16 +161,24 @@ namespace taskt.Core.Automation.Commands
                             break;
 
                         default:
+                            //var scrollJson = JObject.Parse(
+                            //                    SeleniumBrowserControls.ExcecuteScript(dr,
+                            //                        "return JSON.stringify({x: window.scrollX, y: window.scrollY})"
+                            //                    ).ToString());
                             var scrollJson = JObject.Parse(
-                                                SeleniumBrowserControls.ExcecuteScript(dr,
+                                                this.ExecuteJavaScript(dr,
                                                     "return JSON.stringify({x: window.scrollX, y: window.scrollY})"
                                                 ).ToString());
                             var scrollX = scrollJson.Value<int>("x");
                             var scrollY = scrollJson.Value<int>("y");
 
                             // todo: get window position
+                            //var screenJson = JObject.Parse(
+                            //                    SeleniumBrowserControls.ExcecuteScript(dr,
+                            //                        "return JSON.stringify({x: window.screenX, y: window.screenY})"
+                            //                    ).ToString());
                             var screenJson = JObject.Parse(
-                                                SeleniumBrowserControls.ExcecuteScript(dr,
+                                                this.ExecuteJavaScript(dr,
                                                     "return JSON.stringify({x: window.screenX, y: window.screenY})"
                                                 ).ToString());
                             var screenX = screenJson.Value<int>("x");
