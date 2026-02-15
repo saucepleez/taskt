@@ -18,7 +18,7 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         /// attribute names
         /// </summary>
         [XmlElement]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_AttributesName))]
+        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_AttributeNames))]
         [PropertyParameterOrder(7000)]
         public DataTable v_AttributesName { get; set; }
 
