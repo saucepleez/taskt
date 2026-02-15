@@ -12,6 +12,9 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
     /// </summary>
     public abstract class ASeleniumGetMultiWebElementsValueAsSomethingCommands : ASeleniumSearchMultiWebElementsFromWebDriverCommands
     {
+        /// <summary>
+        /// attribute name
+        /// </summary>
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_AttributeName))]
         [PropertyParameterOrder(8000)]
