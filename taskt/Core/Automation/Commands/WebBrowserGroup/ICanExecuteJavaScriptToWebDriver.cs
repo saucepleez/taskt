@@ -6,5 +6,6 @@
     public interface ICanExecuteJavaScriptToWebDriver
     {
         // nothing
+        // TODO: only use Execute JavScript command
     }
 }
