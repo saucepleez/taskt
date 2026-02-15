@@ -26,6 +26,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Attribute Name")]
         [PropertyDetailSampleUsage("**class**", PropertyDetailSampleUsage.ValueType.Value, "Attribute")]
         [PropertyDetailSampleUsage("**{{{vAttribute}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Attribute")]
+        [PropertyDetailSampleUsage("**@tag**", "Get Tab name from WebElement. Use Get Special Value From WebElement command.")]
         [PropertyValidationRule("Attribute", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Attribute")]
         [PropertyParameterOrder(6000)]
@@ -94,20 +95,37 @@ namespace taskt.Core.Automation.Commands
             //    }
             //}
 
-            this.GetFromWebElementAction(new Action<OpenQA.Selenium.IWebElement, OpenQA.Selenium.IWebDriver>((elem, seleniumInstance) =>
+            var attributeName = this.ExpandValueOrUserVariable(nameof(v_AttributeName), "Attribute", engine);
+            if (attributeName.StartsWith("@"))
             {
-                var attributeName = v_AttributeName.ExpandValueOrUserVariable(engine);
-                var v = elem.GetAttribute(attributeName);
+                // get special value
+                var getSpecial = new SeleniumBrowserGetSpecialValueFromWebElementCommand()
+                {
+                    v_WebElement = this.v_WebElement,
+                    v_ValueType = attributeName.Substring(1),
+                    v_Result = this.v_Result,
+                    v_ScrollToWebElement = this.v_ScrollToWebElement,
+                    v_WhenFailAction = this.v_WhenFailAction,
+                    v_WhenValueCanNotRetrieved = this.v_WhenValueCanNotRetrieved,
+                };
+                getSpecial.RunCommand(engine);
+            }
+            else
+            {
+                this.GetFromWebElementAction(new Action<OpenQA.Selenium.IWebElement, OpenQA.Selenium.IWebDriver>((elem, seleniumInstance) =>
+                {
+                    var v = elem.GetAttribute(attributeName);
 
-                if (v != null)
-                {
-                    v.StoreInUserVariable(engine, v_Result);
-                }
-                else
-                {
-                    throw new Exception($"WebElement does not have Attribute. Attribute: '{v_AttributeName}', Expand: '{attributeName}'");
-                }
-            }), this.StoreEmptyValueToResult, engine);
+                    if (v != null)
+                    {
+                        v.StoreInUserVariable(engine, v_Result);
+                    }
+                    else
+                    {
+                        throw new Exception($"WebElement does not have Attribute. Attribute: '{v_AttributeName}', Expand: '{attributeName}'");
+                    }
+                }), this.StoreEmptyValueToResult, engine);
+            }
         }
 
         //private void cmbScrollToElement_SelectionChange(object sender, EventArgs e)
