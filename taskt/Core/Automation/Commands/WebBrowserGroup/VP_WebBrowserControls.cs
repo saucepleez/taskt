@@ -150,6 +150,7 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         [PropertyDetailSampleUsage("**textContent**", PropertyDetailSampleUsage.ValueType.Value, "Attribute")]
         [PropertyDetailSampleUsage("**value**", PropertyDetailSampleUsage.ValueType.Value, "Attribute")]
         [PropertyDetailSampleUsage("**{{{vAttribute}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Attribute")]
+        [PropertyDetailSampleUsage("**@tag**", "Get Tab name from WebElement. Use Get Special Value From WebElement command.")]
         [PropertyValidationRule("Attribute", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Attribute")]
         public static string v_AttributeName { get; }

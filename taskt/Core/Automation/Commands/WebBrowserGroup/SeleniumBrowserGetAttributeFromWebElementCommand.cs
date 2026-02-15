@@ -22,13 +22,14 @@ namespace taskt.Core.Automation.Commands
         //public string v_WebElement { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Attribute Name")]
-        [PropertyDetailSampleUsage("**class**", PropertyDetailSampleUsage.ValueType.Value, "Attribute")]
-        [PropertyDetailSampleUsage("**{{{vAttribute}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Attribute")]
-        [PropertyDetailSampleUsage("**@tag**", "Get Tab name from WebElement. Use Get Special Value From WebElement command.")]
-        [PropertyValidationRule("Attribute", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Attribute")]
+        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_AttributeName))]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Attribute Name")]
+        //[PropertyDetailSampleUsage("**class**", PropertyDetailSampleUsage.ValueType.Value, "Attribute")]
+        //[PropertyDetailSampleUsage("**{{{vAttribute}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Attribute")]
+        //[PropertyDetailSampleUsage("**@tag**", "Get Tab name from WebElement. Use Get Special Value From WebElement command.")]
+        //[PropertyValidationRule("Attribute", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Attribute")]
         [PropertyParameterOrder(6000)]
         public string v_AttributeName { get; set; }
 
