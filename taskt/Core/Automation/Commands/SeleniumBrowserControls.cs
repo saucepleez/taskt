@@ -208,94 +208,94 @@ namespace taskt.Core.Automation.Commands
 
         #region convert store methods
 
-        /// <summary>
-        /// expand user variable as WebElement and WebDriver
-        /// </summary>
-        /// <param name="str"></param>
-        /// <param name="parameterName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static (IWebElement, IWebDriver) ExpandUserVariableAsWebElementAndWebDriver(this string str, string parameterName, Engine.AutomationEngineInstance engine)
-        {
-            var v = str.GetRawVariable(engine);
+        ///// <summary>
+        ///// expand user variable as WebElement and WebDriver
+        ///// </summary>
+        ///// <param name="str"></param>
+        ///// <param name="parameterName"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public static (IWebElement, IWebDriver) ExpandUserVariableAsWebElementAndWebDriver(this string str, string parameterName, Engine.AutomationEngineInstance engine)
+        //{
+        //    var v = str.GetRawVariable(engine);
 
-            if (v.VariableValue is ValueTuple<IWebElement, IWebDriver> webs)
-            {
-                return webs;
-            }
-            else
-            {
-                throw new Exception($"{parameterName} '{str}' is not a WebElement-WebDriver tuple.");
-            }
-        }
+        //    if (v.VariableValue is ValueTuple<IWebElement, IWebDriver> webs)
+        //    {
+        //        return webs;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception($"{parameterName} '{str}' is not a WebElement-WebDriver tuple.");
+        //    }
+        //}
 
-        /// <summary>
-        /// expand user variable as WebElement
-        /// </summary>
-        /// <param name="str"></param>
-        /// <param name="parameterName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static IWebElement ExpandUserVariableAsWebElement(this string str, string parameterName, Engine.AutomationEngineInstance engine)
-        {
-            //var v = str.GetRawVariable(engine);
-            ////var tp = typeof((IWebElement, IWebDriver));
-            ////var vtp = v.VariableValue.GetType();
-            ////if (v.VariableValue is (IWebElement, IWebDriver))
-            ////{
-            ////    return webs.Item1;
-            ////}
-            ////else
-            ////{
-            ////    throw new Exception($"{parameterName} '{str}' is not a WebElement.");
-            ////}
-            ////try
-            ////{
-            ////    var webs = ((IWebElement, IWebDrier))v.VariableValue;
-            ////}
-            ////catch
-            ////{
-            ////    throw new Exception($"{parameterName} '{str}' is not a WebElement.");
-            ////}
-            //if (v.VariableValue is ValueTuple<IWebElement, IWebDriver> webs)
-            //{
-            //    return webs.Item1;
-            //}
-            //else
-            //{
-            //    throw new Exception($"{parameterName} '{str}' is not a WebElement.");
-            //}
+        ///// <summary>
+        ///// expand user variable as WebElement
+        ///// </summary>
+        ///// <param name="str"></param>
+        ///// <param name="parameterName"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public static IWebElement ExpandUserVariableAsWebElement(this string str, string parameterName, Engine.AutomationEngineInstance engine)
+        //{
+        //    //var v = str.GetRawVariable(engine);
+        //    ////var tp = typeof((IWebElement, IWebDriver));
+        //    ////var vtp = v.VariableValue.GetType();
+        //    ////if (v.VariableValue is (IWebElement, IWebDriver))
+        //    ////{
+        //    ////    return webs.Item1;
+        //    ////}
+        //    ////else
+        //    ////{
+        //    ////    throw new Exception($"{parameterName} '{str}' is not a WebElement.");
+        //    ////}
+        //    ////try
+        //    ////{
+        //    ////    var webs = ((IWebElement, IWebDrier))v.VariableValue;
+        //    ////}
+        //    ////catch
+        //    ////{
+        //    ////    throw new Exception($"{parameterName} '{str}' is not a WebElement.");
+        //    ////}
+        //    //if (v.VariableValue is ValueTuple<IWebElement, IWebDriver> webs)
+        //    //{
+        //    //    return webs.Item1;
+        //    //}
+        //    //else
+        //    //{
+        //    //    throw new Exception($"{parameterName} '{str}' is not a WebElement.");
+        //    //}
 
-            (var e, _) = ExpandUserVariableAsWebElementAndWebDriver(str, parameterName, engine);
-            return e;
-        }
+        //    (var e, _) = ExpandUserVariableAsWebElementAndWebDriver(str, parameterName, engine);
+        //    return e;
+        //}
 
-        /// <summary>
-        /// expand user variable as webDriver from WebElement
-        /// </summary>
-        /// <param name="str"></param>
-        /// <param name="parameterName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static IWebDriver ExpandUserVariableAsWebDriverFromWebElement(this string str, string parameterName, Engine.AutomationEngineInstance engine)
-        {
-            //var v = str.GetRawVariable(engine);
+        ///// <summary>
+        ///// expand user variable as webDriver from WebElement
+        ///// </summary>
+        ///// <param name="str"></param>
+        ///// <param name="parameterName"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public static IWebDriver ExpandUserVariableAsWebDriverFromWebElement(this string str, string parameterName, Engine.AutomationEngineInstance engine)
+        //{
+        //    //var v = str.GetRawVariable(engine);
 
-            //if (v.VariableValue is ValueTuple<IWebElement, IWebDriver> webs)
-            //{
-            //    return webs.Item2;
-            //}
-            //else
-            //{
-            //    throw new Exception($"{parameterName} '{str}' is not a WebElement.");
-            //}
+        //    //if (v.VariableValue is ValueTuple<IWebElement, IWebDriver> webs)
+        //    //{
+        //    //    return webs.Item2;
+        //    //}
+        //    //else
+        //    //{
+        //    //    throw new Exception($"{parameterName} '{str}' is not a WebElement.");
+        //    //}
 
-            (_, var d) = ExpandUserVariableAsWebElementAndWebDriver(str, parameterName, engine);
-            return d;
-        }
+        //    (_, var d) = ExpandUserVariableAsWebElementAndWebDriver(str, parameterName, engine);
+        //    return d;
+        //}
 
         /// <summary>
         /// store WebElement (and WebDriver) to user variable
