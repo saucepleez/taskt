@@ -154,5 +154,17 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         [PropertyValidationRule("Attribute", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Attribute")]
         public static string v_AttributeName { get; }
+
+        /// <summary>
+        /// Attribute Names
+        /// </summary>
+        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_AttributeName))]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDescription("Attribute Names")]
+        [InputSpecification("Attribute Names", true)]
+        [PropertyDataGridViewSetting(true, true, true)]
+        [PropertyDataGridViewColumnSettings("AttributeName", "Attribute Name")]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        public static string v_AttributeNames { get; }
     }
 }
