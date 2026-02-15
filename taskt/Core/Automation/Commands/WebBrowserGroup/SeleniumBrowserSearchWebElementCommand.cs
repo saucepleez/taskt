@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_OutputWebElementName))]
-        [PropertyParameterOrder(7000)]
+        [PropertyParameterOrder(8000)]
         public override string v_Result { get; set; }
 
         //[XmlAttribute]
