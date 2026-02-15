@@ -2116,6 +2116,7 @@ rmdir /s /q "$(ProjectDir)$(OutDir)runtimes\linux"
 rmdir /s /q "$(ProjectDir)$(OutDir)runtimes\osx"
 rmdir /s /q "$(ProjectDir)$(OutDir)runtimes\win-arm64"
 del "$(ProjectDir)$(OutDir)tasktOnTheFly.exe"
+powershell -Command "(Get-FileHash \"$(TargetPath)\" -Algorithm SHA256).Hash | Out-File \"$(TargetDir)$(TargetName).sha256.txt\""
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
