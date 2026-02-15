@@ -26,15 +26,15 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchMethod))]
         [PropertySelectionChangeEvent(nameof(cmbSearchType_SelectionChangeCommited))]
-        public string v_SeleniumSearchType { get; set; }
+        public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchParameter))]
-        public string v_SeleniumSearchParameter { get; set; }
+        public string v_SearchParameter { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WebElementIndex))]
-        public string v_SeleniumElementIndex { get; set; }
+        public string v_WebElementIndex { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Select Option")]
         [PropertySelectionChangeEvent(nameof(cmbSeleniumAction_SelectionChangeCommitted))]
         [PropertyValidationRule("WebElement Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        public string v_SeleniumElementAction { get; set; }
+        public string v_WebElementAction { get; set; }
 
         [XmlElement]
         [PropertyDescription("Additional Parameters")]
@@ -72,11 +72,11 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WaitTimeForWebElement))]
-        public string v_WaitTime { get; set; }
+        public string v_WaitTimeForWebElement { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_ScrollToWebElement))]
-        public string v_ScrollToElement { get; set; }
+        public string v_ScrollToWebElement { get; set; }
 
         public SeleniumBrowserWebElementActionCommand()
         {
@@ -84,7 +84,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var actionType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SeleniumElementAction), engine);
+            var actionType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WebElementAction), engine);
             var parameters = DataTableControls.GetFieldValues(v_WebActionParameterTable, "Parameter Name", "Parameter Value", false, engine);
             switch (actionType)
             {
@@ -92,10 +92,10 @@ namespace taskt.Core.Automation.Commands
                     var waitCommand = new SeleniumBrowserWaitForWebElementToExistsCommand()
                     {
                         v_InstanceName = this.v_InstanceName,
-                        v_SearchMethod = this.v_SeleniumSearchType,
-                        v_SearchParameter = this.v_SeleniumSearchParameter,
-                        v_WebElementIndex = this.v_SeleniumElementIndex,
-                        v_WaitTimeForWebElement = this.v_WaitTime,
+                        v_SearchMethod = this.v_SearchMethod,
+                        v_SearchParameter = this.v_SearchParameter,
+                        v_WebElementIndex = this.v_WebElementIndex,
+                        v_WaitTimeForWebElement = this.v_WaitTimeForWebElement,
                     };
                     waitCommand.RunCommand(engine);
                     break;
@@ -103,9 +103,9 @@ namespace taskt.Core.Automation.Commands
                     var getMatching = new SeleniumBrowserGetMatchedWebElementsCommand()
                     {
                         v_InstanceName = this.v_InstanceName,
-                        v_SearchMethod = this.v_SeleniumSearchType,
-                        v_SearchParameter = this.v_SeleniumSearchParameter,
-                        v_WaitTimeForWebElement = this.v_WaitTime,
+                        v_SearchMethod = this.v_SearchMethod,
+                        v_SearchParameter = this.v_SearchParameter,
+                        v_WaitTimeForWebElement = this.v_WaitTimeForWebElement,
                         v_Result = parameters["Variable Name"],
                     };
                     getMatching.RunCommand(engine);
@@ -114,9 +114,9 @@ namespace taskt.Core.Automation.Commands
                     var getCount = new SeleniumBrowserGetWebElementsCountCommand()
                     {
                         v_InstanceName = this.v_InstanceName,
-                        v_SearchMethod = this.v_SeleniumSearchType,
-                        v_SearchParameter = this.v_SeleniumSearchParameter,
-                        v_WaitTimeForWebElement = this.v_WaitTime,
+                        v_SearchMethod = this.v_SearchMethod,
+                        v_SearchParameter = this.v_SearchParameter,
+                        v_WaitTimeForWebElement = this.v_WaitTimeForWebElement,
                         v_Result = parameters["Variable Name"],
                     };
                     getCount.RunCommand(engine);
@@ -232,11 +232,11 @@ namespace taskt.Core.Automation.Commands
                         var searchElement = new SeleniumBrowserSearchWebElementCommand()
                         {
                             v_InstanceName = this.v_InstanceName,
-                            v_SearchMethod = this.v_SeleniumSearchType,
-                            v_SearchParameter = this.v_SeleniumSearchParameter,
-                            v_WebElementIndex = this.v_SeleniumElementIndex,
+                            v_SearchMethod = this.v_SearchMethod,
+                            v_SearchParameter = this.v_SearchParameter,
+                            v_WebElementIndex = this.v_WebElementIndex,
                             v_Result = myWebElem.VariableName,
-                            v_WaitTimeForWebElement = this.v_WaitTime,
+                            v_WaitTimeForWebElement = this.v_WaitTimeForWebElement,
                         };
                         searchElement.RunCommand(engine);
 
@@ -249,7 +249,7 @@ namespace taskt.Core.Automation.Commands
                                     v_ClickType = parameters["Click Type"],
                                     v_XOffset = parameters["X Offset"],
                                     v_YOffset = parameters["Y Offset"],
-                                    v_ScrollToWebElement = this.v_ScrollToElement,
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 clickElement.RunCommand(engine);
                                 break;
@@ -340,7 +340,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-            var cmb = FormUIControls.GetPropertyControl<ComboBox>(ControlsList, nameof(v_SeleniumElementAction));
+            var cmb = FormUIControls.GetPropertyControl<ComboBox>(ControlsList, nameof(v_WebElementAction));
             var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_WebActionParameterTable));
             actionParameterProcess(dgv, cmb.SelectedItem?.ToString() ?? "");
         }
@@ -348,7 +348,7 @@ namespace taskt.Core.Automation.Commands
         private void cmbSearchType_SelectionChangeCommited(object sender, EventArgs e)
         {
             var searchType = ((ComboBox)sender).SelectedItem?.ToString().ToLower() ?? "";
-            FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_SeleniumElementIndex), !searchType.StartsWith("find element "));
+            FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_WebElementIndex), !searchType.StartsWith("find element "));
         }
 
         private void cmbSeleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
@@ -478,7 +478,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [" + v_SeleniumSearchType + " and " + v_SeleniumElementAction + ", Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [" + v_SearchMethod + " and " + v_WebElementAction + ", Instance Name: '" + v_InstanceName + "']";
         }
 
         public override void BeforeValidate()

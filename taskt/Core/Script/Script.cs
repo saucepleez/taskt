@@ -5098,7 +5098,8 @@ namespace taskt.Core.Script
             // SeleniumBrowserSearchWebElementCommand, SeleniumBrowserSearchWebElementFromWebEelementCommand,
             // SeleniumBrowserCheckWebElementExistsCommand, SeleniumBrowserWaitForWebElementToExistsCommand,
             // SeleniumBrowserGetAWebElementValuesAsDataTableCommand, SeleniumBrowserGetAWebElementValuesAsDictionaryCommand,
-            // SeleniumBrowserGetAWebElementValuesAsListCommand, SeleniumBrowserGetTableValueAsDataTableCommand
+            // SeleniumBrowserGetAWebElementValuesAsListCommand, SeleniumBrowserGetTableValueAsDataTableCommand,
+            // SeleniumBrowserWebElementActionCommand
             ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
             {
                 switch (GetCommandName(el))
@@ -5111,6 +5112,7 @@ namespace taskt.Core.Script
                     case "SeleniumBrowserGetAWebElementValuesAsDictionaryCommand":
                     case "SeleniumBrowserGetAWebElementValuesAsListCommand":
                     case "SeleniumBrowserGetTableValueAsDataTableCommand":
+                    case "SeleniumBrowserWebElementActionCommand":
                         return true;
                     default:
                         return false;
@@ -5122,6 +5124,16 @@ namespace taskt.Core.Script
                 ("v_ElementIndex", "v_WebElementIndex"),
                 ("v_WaitTime", "v_WaitTimeForWebElement"),
             });
+
+            // SeleniumBrowserWebElementActionCommand
+            // v_SeleniumElementAction -> v_WebElementAction, v_ScrollToElement -> v_ScrollToWebElement
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserWebElementActionCommand", 
+                new List<(string, string)>()
+                {
+                    ("v_SeleniumElementAction", "v_WebElementAction"),
+                    ("v_ScrollToElement", "v_ScrollToWebElement"),
+                }
+            );
 
             // SeleniumBrowserGetAttributeFromWebElementCommand, SeleniumBrowserGetOptionsFromWebElementCommand
             ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
