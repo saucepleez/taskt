@@ -567,6 +567,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetFromWebElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetOneResultFromWebElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetMultiWebElementsValueAsSomethingCommands.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetOneWebElementValuesAsSomethingCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetWindowAndTabInformationCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumSearchMultiWebElementsFromWebDriverCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumSearchWebElementFromWebDriverCommands.cs" />

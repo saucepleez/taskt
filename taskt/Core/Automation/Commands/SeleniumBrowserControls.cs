@@ -159,40 +159,40 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterOrder(5000)]
         public static string v_WaitTime { get; }
 
-        /// <summary>
-        /// input WebElement property
-        /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
-        [PropertyDescription("WebElement Variable Name")]
-        [InputSpecification("WebElement Variable Name", true)]
-        [PropertyDetailSampleUsage("**vElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
-        [PropertyDetailSampleUsage("**{{{vElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.WebElement, true)]
-        [PropertyValidationRule("WebElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Element")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        //[PropertyParameterOrder(5000)]
-        public static string v_InputWebElementName { get; }
+        ///// <summary>
+        ///// input WebElement property
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
+        //[PropertyDescription("WebElement Variable Name")]
+        //[InputSpecification("WebElement Variable Name", true)]
+        //[PropertyDetailSampleUsage("**vElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        //[PropertyDetailSampleUsage("**{{{vElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.WebElement, true)]
+        //[PropertyValidationRule("WebElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Element")]
+        ////[Remarks("")]
+        ////[PropertyShowSampleUsageInDescription(true)]
+        ////[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        ////[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_InputWebElementName { get; }
 
-        /// <summary>
-        /// output WebElement property
-        /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [PropertyDescription("Variable Name to Store WebElement")]
-        [InputSpecification("WebElement Variable Name", true)]
-        [PropertyDetailSampleUsage("**vElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
-        [PropertyDetailSampleUsage("**{{{vElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.WebElement, true)]
-        [PropertyValidationRule("WebElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "WebElement")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyParameterOrder(5000)]
-        public static string v_OutputWebElementName { get; }
+        ///// <summary>
+        ///// output WebElement property
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //[PropertyDescription("Variable Name to Store WebElement")]
+        //[InputSpecification("WebElement Variable Name", true)]
+        //[PropertyDetailSampleUsage("**vElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        //[PropertyDetailSampleUsage("**{{{vElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.WebElement, true)]
+        //[PropertyValidationRule("WebElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "WebElement")]
+        ////[Remarks("")]
+        ////[PropertyShowSampleUsageInDescription(true)]
+        ////[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        ////[PropertyParameterOrder(5000)]
+        //public static string v_OutputWebElementName { get; }
 
         /// <summary>
         /// scroll to element
@@ -618,41 +618,41 @@ namespace taskt.Core.Automation.Commands
 
         #region Attribute methods
 
-        /// <summary>
-        /// get element attributes specified DataTable
-        /// </summary>
-        /// <param name="elem"></param>
-        /// <param name="attributes"></param>
-        /// <param name="engine"></param>
-        /// <param name="setValueFunc"></param>
-        public static void GetElementAttributes(IWebElement elem, DataTable attributes, Engine.AutomationEngineInstance engine, Action<string, string> setValueFunc)
-        {
-            int rows = attributes.Rows.Count;
-            for (int i = 0; i < rows; i++)
-            {
-                string attrName = (attributes.Rows[i][0]?.ToString() ?? "").ExpandValueOrUserVariable(engine);
-                if (attrName != "")
-                {
-                    setValueFunc(attrName, GetAttribute(elem, attrName, engine));
-                }
-            }
-        }
+        ///// <summary>
+        ///// get element attributes specified DataTable
+        ///// </summary>
+        ///// <param name="elem"></param>
+        ///// <param name="attributes"></param>
+        ///// <param name="engine"></param>
+        ///// <param name="setValueFunc"></param>
+        //public static void GetElementAttributes(IWebElement elem, DataTable attributes, Engine.AutomationEngineInstance engine, Action<string, string> setValueFunc)
+        //{
+        //    int rows = attributes.Rows.Count;
+        //    for (int i = 0; i < rows; i++)
+        //    {
+        //        string attrName = (attributes.Rows[i][0]?.ToString() ?? "").ExpandValueOrUserVariable(engine);
+        //        if (attrName != "")
+        //        {
+        //            setValueFunc(attrName, GetAttribute(elem, attrName, engine));
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// get Elements attribute specified by argument
-        /// </summary>
-        /// <param name="elems"></param>
-        /// <param name="attributeValue"></param>
-        /// <param name="engine"></param>
-        /// <param name="setValueFunc"></param>
-        public static void GetElementsAttribute(List<IWebElement> elems, string attributeValue, Engine.AutomationEngineInstance engine, Action<int, string, string> setValueFunc)
-        {
-            var attr = attributeValue.ExpandValueOrUserVariable(engine);
-            for (int i = 0; i < elems.Count; i++)
-            {
-                setValueFunc(i, attr, GetAttribute(elems[i], attr, engine));
-            }
-        }
+        ///// <summary>
+        ///// get Elements attribute specified by argument
+        ///// </summary>
+        ///// <param name="elems"></param>
+        ///// <param name="attributeValue"></param>
+        ///// <param name="engine"></param>
+        ///// <param name="setValueFunc"></param>
+        //public static void GetElementsAttribute(List<IWebElement> elems, string attributeValue, Engine.AutomationEngineInstance engine, Action<int, string, string> setValueFunc)
+        //{
+        //    var attr = attributeValue.ExpandValueOrUserVariable(engine);
+        //    for (int i = 0; i < elems.Count; i++)
+        //    {
+        //        setValueFunc(i, attr, GetAttribute(elems[i], attr, engine));
+        //    }
+        //}
 
         /// <summary>
         /// get element attribute

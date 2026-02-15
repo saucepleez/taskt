@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Data;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -16,36 +15,36 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetAWebElementValuesAsDataTableCommand : ScriptCommand, ICanHandleDataTable, IHaveDataTableElements
+    public sealed class SeleniumBrowserGetAWebElementValuesAsDataTableCommand : ASeleniumGetOneWebElementValuesAsSomethingCommands, IDataTableResultProperties
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_SearchMethod))]
-        [PropertySelectionChangeEvent(nameof(SearchMethodComboBox_SelectionChangeCommitted))]
-        public string v_SearchMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_SearchMethod))]
+        //[PropertySelectionChangeEvent(nameof(SearchMethodComboBox_SelectionChangeCommitted))]
+        //public string v_SearchMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_SearchParameter))]
-        public string v_SearchParameter { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_SearchParameter))]
+        //public string v_SearchParameter { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ElementIndex))]
-        public string v_WebElementIndex { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ElementIndex))]
+        //public string v_WebElementIndex { get; set; }
 
-        [XmlElement]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_AttributesName))]
-        public DataTable v_AttributesName { get; set; }
+        //[XmlElement]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_AttributesName))]
+        //public DataTable v_AttributesName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
-        public string v_Result { get; set; }
+        public override string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_WaitTime))]
-        public string v_WaitTimeForWebElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_WaitTime))]
+        //public string v_WaitTimeForWebElement { get; set; }
 
         public SeleniumBrowserGetAWebElementValuesAsDataTableCommand()
         {
@@ -57,39 +56,55 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var _, var trgElem) = SeleniumBrowserControls.GetSeleniumBrowserInstanceAndElement(this, nameof(v_InstanceName), nameof(v_SeleniumSearchType), nameof(v_SeleniumSearchParameter), nameof(v_ElementIndex), engine);
-            (var _, var trgElem) = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElement(this, nameof(v_InstanceName), nameof(v_SearchMethod), nameof(v_SearchParameter), nameof(v_WebElementIndex), nameof(v_WaitTimeForWebElement), engine);
+            ////(var _, var trgElem) = SeleniumBrowserControls.GetSeleniumBrowserInstanceAndElement(this, nameof(v_InstanceName), nameof(v_SeleniumSearchType), nameof(v_SeleniumSearchParameter), nameof(v_ElementIndex), engine);
+            //(var _, var trgElem) = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElement(this, nameof(v_InstanceName), nameof(v_SearchMethod), nameof(v_SearchParameter), nameof(v_WebElementIndex), nameof(v_WaitTimeForWebElement), engine);
 
-            DataTable newDT = new DataTable();
+            //DataTable newDT = new DataTable();
 
-            SeleniumBrowserControls.GetElementAttributes(trgElem, v_AttributesName, engine, new Action<string, string>( (name, value) =>
+            //SeleniumBrowserControls.GetElementAttributes(trgElem, v_AttributesName, engine, new Action<string, string>( (name, value) =>
+            //    {
+            //        if (newDT.Rows.Count == 0)
+            //        {
+            //            newDT.Rows.Add();
+            //        }
+
+            //        if (!newDT.Columns.Contains(name))
+            //        {
+            //            newDT.Columns.Add(name);
+            //        }
+            //        newDT.Rows[0][name] = value;
+            //    })
+            //);
+
+            ////newDT.StoreInUserVariable(engine, v_DataTableVariableName);
+            //this.StoreDataTableInUserVariable(newDT, nameof(v_Result), engine);
+
+            var res = this.CreateEmptyDataTable();
+
+            this.GetOneWebElementMultiValuesAction(new Action<string, string, int>((attrName, attrValue, idx) =>
+            {
+                if (res.Rows.Count == 0)
                 {
-                    if (newDT.Rows.Count == 0)
-                    {
-                        newDT.Rows.Add();
-                    }
-
-                    if (!newDT.Columns.Contains(name))
-                    {
-                        newDT.Columns.Add(name);
-                    }
-                    newDT.Rows[0][name] = value;
-                })
-            );
-
-            //newDT.StoreInUserVariable(engine, v_DataTableVariableName);
-            this.StoreDataTableInUserVariable(newDT, nameof(v_Result), engine);
+                    res.Rows.Add();
+                }
+                if (!res.Columns.Contains(attrName))
+                {
+                    res.Columns.Add(attrName);
+                }
+                res.Rows[0][attrName] = attrValue;
+            }), engine);
+            this.StoreDataTableInUserVariable(res, engine);
         }
 
-        private void SearchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            SeleniumBrowserControls.SearchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_WebElementIndex));
-        }
+        //private void SearchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        //{
+        //    SeleniumBrowserControls.SearchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_WebElementIndex));
+        //}
 
-        public override void BeforeValidate()
-        {
-            base.BeforeValidate();
-            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_AttributesName)], v_AttributesName);
-        }
+        //public override void BeforeValidate()
+        //{
+        //    base.BeforeValidate();
+        //    DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_AttributesName)], v_AttributesName);
+        //}
     }
 }
