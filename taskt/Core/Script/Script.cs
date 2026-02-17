@@ -383,6 +383,8 @@ namespace taskt.Core.Script
             // very important!
             // ** DO NOT USE nameof to change command name **
 
+            var versionText = doc.Element("Script").Element("Info")?.Element("TasktVersion")?.Value ?? "0.0.0.0";
+
             fixDataTableSchemaPosition(doc);
             fixToSameCommandNames(doc);
 
@@ -1481,7 +1483,7 @@ namespace taskt.Core.Script
             var commands = GetCommands(doc, "SeleniumBrowserWebElementActionCommand");
             foreach (var cmd in commands)
             {
-                var act = cmd.Attribute("v_SeleniumElementAction").Value;
+                var act = cmd.Attribute("v_SeleniumElementAction")?.Value ?? string.Empty;
                 if (act.ToLower() == "wait for webelement to exist")
                 {
                     cmd.SetAttributeValue("v_SeleniumElementAction", "Wait For WebElement To Exists");
@@ -1635,8 +1637,10 @@ namespace taskt.Core.Script
             // WebElementAction: Set Text (Encrypted Text param)
             cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
             {
+                var elemAction = el.Attribute("v_SeleniumElementAction")?.Value.ToLower() ?? string.Empty;
+
                 return (GetCommandName(el) == "SeleniumBrowserWebElementActionCommand") &&
-                        (el.Attribute("v_SeleniumElementAction").Value.ToLower() == "set text");
+                        (elemAction == "set text");
             }));
             foreach(var cmd in cmds)
             {
