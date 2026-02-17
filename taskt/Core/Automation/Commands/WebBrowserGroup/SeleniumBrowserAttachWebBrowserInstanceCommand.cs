@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Web Browser Type")]
         [PropertyUISelectionOption("Edge")]
         [PropertyUISelectionOption("Chrome")]
-        //[PropertyUISelectionOption("Firefox")]    // Firefox not supported now
+        [PropertyUISelectionOption("Firefox")]    // Firefox not supported now
         [InputSpecification("", true)]
         [Remarks("")]
         [PropertyIsOptional(true, "Chrome")]
@@ -135,21 +135,27 @@ namespace taskt.Core.Automation.Commands
                     webDriver = new OpenQA.Selenium.Edge.EdgeDriver((OpenQA.Selenium.Edge.EdgeDriverService)driverService, edgeOptions);
                     break;
 
-                //case "firefox":
-                //    var ffOptions = new OpenQA.Selenium.Firefox.FirefoxOptions();
-                    
+                case "firefox":
+                    // https://stackoverflow.com/questions/68340118/how-can-i-attach-firefoxdriver-to-a-running-instance-of-firefox
+                    // https://stackoverflow.com/questions/37514778/adding-second-instance-of-firefox-with-marionette-change-port
+                    var ffOptions = new OpenQA.Selenium.Firefox.FirefoxOptions();
 
-                //    if (!string.IsNullOrEmpty(webDriverPath))
-                //    {
-                //        driverService = OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService(System.IO.Path.GetDirectoryName(webDriverPath), System.IO.Path.GetFileName(webDriverPath));
-                //    }
-                //    else
-                //    {
-                //        driverService = OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService(driverPath);
-                //    }
 
-                //    webDriver = new OpenQA.Selenium.Firefox.FirefoxDriver((OpenQA.Selenium.Firefox.FirefoxDriverService)driverService, ffOptions);
-                //    break;
+                    if (!string.IsNullOrEmpty(webDriverPath))
+                    {
+                        driverService = OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService(System.IO.Path.GetDirectoryName(webDriverPath), System.IO.Path.GetFileName(webDriverPath));
+                    }
+                    else
+                    {
+                        driverService = OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService(driverPath);
+                    }
+                    var ffDriver = (OpenQA.Selenium.Firefox.FirefoxDriverService)driverService;
+                    ffDriver.BrowserCommunicationPort = 2828;
+                    ffDriver.ConnectToRunningBrowser = true;
+                    ffDriver.HideCommandPromptWindow = false;
+
+                    webDriver = new OpenQA.Selenium.Firefox.FirefoxDriver((OpenQA.Selenium.Firefox.FirefoxDriverService)driverService, ffOptions);
+                    break;
 
                 default:
                     throw new Exception("Strange Web Browser");
