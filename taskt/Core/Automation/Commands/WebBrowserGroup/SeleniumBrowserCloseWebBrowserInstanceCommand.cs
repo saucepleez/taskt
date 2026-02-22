@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
                     if (Directory.Exists(profilePath))
                     {
                         var isRemove = false;
-                        var isRecycle = false;
+                        var isRecycle = "no";
                         switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_DeleteProfileFolder), engine))
                         {
                             case "yes":
@@ -71,7 +71,7 @@ namespace taskt.Core.Automation.Commands
                                 break;
                             case "recycle bin":
                                 isRemove = true;
-                                isRecycle = true;
+                                isRecycle = "yes";
                                 break;
                         }
                         if (isRemove)
@@ -79,7 +79,7 @@ namespace taskt.Core.Automation.Commands
                             var removeFolder = new DeleteFolderCommand()
                             {
                                 v_TargetFolderPath = profilePath,
-                                v_MoveToRecycleBin = (isRecycle) ? "yes" : "no",
+                                v_MoveToRecycleBin = isRecycle,
                             };
                             removeFolder.RunCommand(engine);
                         }
