@@ -108,7 +108,7 @@ namespace taskt.Core.Automation.Commands
                 var newExtension = v_NewExtension.ExpandValueOrUserVariable(engine);
                 if (!newExtension.StartsWith("."))
                 {
-                    newExtension = "." + newExtension;
+                    newExtension = $".{newExtension}";
                 }
 
                 var newFileOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ExtensionOption), engine);
