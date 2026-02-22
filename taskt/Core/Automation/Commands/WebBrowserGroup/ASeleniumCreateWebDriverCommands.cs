@@ -27,16 +27,6 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         public virtual string v_BrowserType { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
-        [PropertyDescription("Web Browser Command Line Options (one option per line)")]
-        [InputSpecification("Command Line Options", true)]
-        [SampleUsage("user-data-dir=c:\\users\\public\\SeleniumTasktProfile")]
-        [PropertyIsOptional(true)]
-        [PropertyTextBoxSetting(3, true)]
-        [PropertyParameterOrder(10000)]
-        public virtual string v_SeleniumOptions { get; set; }
-
-        [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
         [PropertyParameterOrder(11000)]
         public virtual string v_Handle { get; set; }

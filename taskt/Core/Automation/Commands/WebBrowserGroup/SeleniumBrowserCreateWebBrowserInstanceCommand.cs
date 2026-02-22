@@ -93,17 +93,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(9000)]
         public string v_HeadlessMode { get; set; }
 
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
-        //[PropertyDescription("Web Browser Command Line Options (one option per line)")]
-        //[InputSpecification("Command Line Options", true)]
-        //[SampleUsage("user-data-dir=c:\\users\\public\\SeleniumTasktProfile")]
-        //[Remarks("")]
-        //[PropertyIsOptional(true)]
-        //[PropertyTextBoxSetting(3, true)]
-        //[PropertyDisplayText(false, "")]
-        //[PropertyParameterOrder(10000)]
-        //public string v_SeleniumOptions { get; set; }
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
+        [PropertyDescription("Web Browser Command Line Options (one option per line)")]
+        [InputSpecification("Command Line Options", true)]
+        [SampleUsage("user-data-dir=c:\\users\\public\\SeleniumTasktProfile")]
+        [Remarks("")]
+        [PropertyIsOptional(true)]
+        [PropertyTextBoxSetting(3, true)]
+        [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(10000)]
+        public string v_SeleniumOptions { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]

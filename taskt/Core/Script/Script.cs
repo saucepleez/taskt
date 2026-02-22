@@ -746,6 +746,10 @@ namespace taskt.Core.Script
             {
                 convertTo3_5_2_57(doc);
             }
+            if (IsOldVersion(myVersion, "3.5.2.59"))
+            {
+                convertTo3_5_2_59(doc);
+            }
             return doc;
         }
 
@@ -5517,6 +5521,14 @@ namespace taskt.Core.Script
                         return false;
                 }
             }), "v_ListVariableName", "v_Result");
+        }
+
+        private static void convertTo3_5_2_59(XDocument doc)
+        {
+            // SeleniumAttachCreateWebBrowserInstanceCommand v_EngineType -> v_BrowserType
+            ChangeAttributeName(doc, "SeleniumAttachCreateWebBrowserInstanceCommand", "v_EngineType", "v_BrowserType");
+            // SeleniumAttachCreateWebBrowserInstanceCommand -> SeleniumBrowserAttachCreateWebBrowserInstanceCommand
+            ChangeCommandName(doc, "SeleniumAttachCreateWebBrowserInstanceCommand", "SeleniumBrowserAttachCreateWebBrowserInstanceCommand", "Attach Web Browser Instance");
         }
 
         /// <summary>

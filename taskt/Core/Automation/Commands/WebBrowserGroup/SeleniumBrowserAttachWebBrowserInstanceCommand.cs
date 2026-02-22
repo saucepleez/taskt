@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumAttachCreateWebBrowserInstanceCommand : ScriptCommand, ICanHandleWebDriver
+    public sealed class SeleniumBrowserAttachCreateWebBrowserInstanceCommand : ScriptCommand, ICanHandleWebDriver
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_InputInstanceName))]
@@ -30,13 +30,13 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Web Browser Type")]
         [PropertyUISelectionOption("Edge")]
         [PropertyUISelectionOption("Chrome")]
-        [PropertyUISelectionOption("Firefox")]    // Firefox not supported now
+        [PropertyUISelectionOption("Firefox")]
         [InputSpecification("", true)]
         [Remarks("")]
         [PropertyIsOptional(true, "Chrome")]
         [PropertyFirstValue("Chrome")]
         [PropertyDisplayText(true, "Web Browser Type")]
-        public string v_EngineType { get; set; }
+        public string v_BrowserType { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "")]
         public string v_WebDriverPath { get; set; }
 
-        public SeleniumAttachCreateWebBrowserInstanceCommand()
+        public SeleniumBrowserAttachCreateWebBrowserInstanceCommand()
         {
         }
 
@@ -100,7 +100,7 @@ namespace taskt.Core.Automation.Commands
             OpenQA.Selenium.DriverService driverService;
             OpenQA.Selenium.IWebDriver webDriver;
 
-            var seleniumEngine = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_EngineType), engine);
+            var seleniumEngine = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_BrowserType), engine);
             switch(seleniumEngine)
             {
                 case "chrome":

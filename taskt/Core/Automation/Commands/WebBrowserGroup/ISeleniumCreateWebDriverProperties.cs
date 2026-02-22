@@ -11,11 +11,6 @@
         string v_BrowserType { get; set; }
 
         /// <summary>
-        /// selenium (WebDriver) options
-        /// </summary>
-        string v_SeleniumOptions { get; set; }
-
-        /// <summary>
         /// variable name to store Window Handle
         /// </summary>
         string v_Handle { get; set; }
