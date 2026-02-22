@@ -589,6 +589,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumWebElementResultPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ICanHandleWebDriver.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ICanHandleWebElement.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumCreateWebDriverProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumDoSomethingToWebDriverProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumDoSomethingToWebElementProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ICanExecuteJavaScriptToWebDriver.cs" />

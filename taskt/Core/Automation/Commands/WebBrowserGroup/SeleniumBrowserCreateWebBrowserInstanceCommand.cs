@@ -29,19 +29,20 @@ namespace taskt.Core.Automation.Commands
         //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("Web Browser Type")]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        //[PropertyDescription("Web Browser Type")]
         [PropertyUISelectionOption("Edge")]
         [PropertyUISelectionOption("Chrome")]
         [PropertyUISelectionOption("Firefox")]
         [PropertyUISelectionOption("IE")]
-        [InputSpecification("", true)]
-        [Remarks("")]
-        [PropertyIsOptional(true, "Chrome")]
-        [PropertyFirstValue("Chrome")]
-        [PropertyDisplayText(true, "Web Browser Type")]
-        [PropertyParameterOrder(6000)]
-        public string v_BrowserType { get; set; }
+        //[PropertyUISelectionOptionBehavior(MultiAttributesBehavior.Merge)]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyIsOptional(true, "Chrome")]
+        //[PropertyFirstValue("Chrome")]
+        //[PropertyDisplayText(true, "Web Browser Type")]
+        //[PropertyParameterOrder(6000)]
+        public override string v_BrowserType { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -66,7 +67,7 @@ namespace taskt.Core.Automation.Commands
         //[SampleUsage("Select **Normal** to start the browser in normal mode or **Maximize** to start the browser in maximized mode.")]
         [PropertyDetailSampleUsage("**Normal**", "Start the WebBrowser in Normal mode")]
         [PropertyDetailSampleUsage("**Maximize**", "Start the WebBrowser in maximized mode")]
-        [Remarks("")]
+        //[Remarks("")]
         [PropertyIsOptional(true, "Normal")]
         [PropertyDisplayText(false, "Window State")]
         [PropertyParameterOrder(7000)]
@@ -87,27 +88,27 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Use Headless")]
         [PropertyIsOptional(true, "No")]
         [PropertyFirstValue("No")]
-        [PropertyDisplayText(false, "")]
+        [PropertyDisplayText(false, "Use Headless")]
         [Remarks("Headless mode does not show WebBrowser window")]
         [PropertyParameterOrder(9000)]
         public string v_HeadlessMode { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
-        [PropertyDescription("Web Browser Command Line Options (one option per line)")]
-        [InputSpecification("Command Line Options", true)]
-        [SampleUsage("user-data-dir=c:\\users\\public\\SeleniumTasktProfile")]
-        [Remarks("")]
-        [PropertyIsOptional(true)]
-        [PropertyTextBoxSetting(3, true)]
-        [PropertyDisplayText(false, "")]
-        [PropertyParameterOrder(10000)]
-        public string v_SeleniumOptions { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
+        //[PropertyDescription("Web Browser Command Line Options (one option per line)")]
+        //[InputSpecification("Command Line Options", true)]
+        //[SampleUsage("user-data-dir=c:\\users\\public\\SeleniumTasktProfile")]
+        //[Remarks("")]
+        //[PropertyIsOptional(true)]
+        //[PropertyTextBoxSetting(3, true)]
+        //[PropertyDisplayText(false, "")]
+        //[PropertyParameterOrder(10000)]
+        //public string v_SeleniumOptions { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
-        [PropertyParameterOrder(11000)]
-        public string v_Handle { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
+        //[PropertyParameterOrder(11000)]
+        //public string v_Handle { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -119,32 +120,32 @@ namespace taskt.Core.Automation.Commands
         [Remarks("When path is Empty, taskt try open default path.\nEdge and IE is not supported.\nIf you use a fixed web browser version, use this parameter.")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [PropertyIsOptional(true, "Empty")]
-        [PropertyDisplayText(false, "")]
+        [PropertyDisplayText(false, "Web Browser Binary")]
         [PropertyParameterOrder(12000)]
         public string v_BrowserPath { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Web Driver Binary Path")]
-        [InputSpecification("Web Driver Binary Path", true)]
-        //[SampleUsage("**C:\\temp\\WebDriverPath.exe** or **{{{vPath}}}**")]
-        [PropertyDetailSampleUsage("**C:\\temp\\WebDriverPath.exe**", PropertyDetailSampleUsage.ValueType.Value, "WebDriver Path")]
-        [PropertyDetailSampleUsage("**{{{vBrowserPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "WebDriver Path")]
-        [Remarks("When path is Empty, taskt uses default WebDriver.\nIE is not supported.\nIf you use a fixed web browser version, use this parameter.")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [PropertyIsOptional(true, "Empty")]
-        [PropertyDisplayText(false, "")]
-        [PropertyParameterOrder(13000)]
-        public string v_WebDriverPath { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Web Driver Binary Path")]
+        //[InputSpecification("Web Driver Binary Path", true)]
+        ////[SampleUsage("**C:\\temp\\WebDriverPath.exe** or **{{{vPath}}}**")]
+        //[PropertyDetailSampleUsage("**C:\\temp\\WebDriverPath.exe**", PropertyDetailSampleUsage.ValueType.Value, "WebDriver Path")]
+        //[PropertyDetailSampleUsage("**{{{vBrowserPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "WebDriver Path")]
+        //[Remarks("When path is Empty, taskt uses default WebDriver.\nIE is not supported.\nIf you use a fixed web browser version, use this parameter.")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        //[PropertyIsOptional(true, "Empty")]
+        //[PropertyDisplayText(false, "")]
+        //[PropertyParameterOrder(13000)]
+        //public string v_WebDriverPath { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        [PropertyDescription("Hide Terminal Window")]
-        [PropertyIsOptional(true, "No")]
-        [PropertyFirstValue("No")]
-        [PropertyDisplayText(false, "Hide Terminal")]
-        [PropertyParameterOrder(14000)]
-        public string v_HideTerminalWindow { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        //[PropertyDescription("Hide Terminal Window")]
+        //[PropertyIsOptional(true, "No")]
+        //[PropertyFirstValue("No")]
+        //[PropertyDisplayText(false, "Hide Terminal")]
+        //[PropertyParameterOrder(14000)]
+        //public string v_HideTerminalWindow { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -171,17 +172,13 @@ namespace taskt.Core.Automation.Commands
         {
             var seleniumEngine = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_BrowserType), engine);
 
-            //var driverPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath), "Resources");
-            //
-            //var webDriverPath = v_WebDriverPath.ExpandValueOrUserVariable(engine);
-
             var browserPath = v_BrowserPath.ExpandValueOrUserVariable(engine);
 
             string profilePath = string.Empty;
 
             string GetTemporaryProfilePath()
             {
-                var folderName = $"prof-{Guid.NewGuid().ToString()}";
+                var folderName = $"prof-{Guid.NewGuid()}";
                 switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TemporaryProfileFolder), engine))
                 {
                     case "user temp":
@@ -270,15 +267,6 @@ namespace taskt.Core.Automation.Commands
                 
                 SetChromiumOptions(options);
 
-                //if (!string.IsNullOrEmpty(webDriverPath))
-                //{
-                //    driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(System.IO.Path.GetDirectoryName(webDriverPath), System.IO.Path.GetFileName(webDriverPath));
-                //}
-                //else
-                //{
-                //    driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(driverPath);
-                //}
-                //driverService.HideCommandPromptWindow = hideTerminal;
                 driverService = CreateDriverService(OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService, "chromedriver.exe");
                 
                 webDriver = new OpenQA.Selenium.Chrome.ChromeDriver((OpenQA.Selenium.Chrome.ChromeDriverService)driverService, options);
@@ -289,15 +277,6 @@ namespace taskt.Core.Automation.Commands
 
                 SetChromiumOptions(options);
 
-                //if (!string.IsNullOrEmpty(webDriverPath))
-                //{
-                //    driverService = OpenQA.Selenium.Edge.EdgeDriverService.CreateDefaultService(System.IO.Path.GetDirectoryName(webDriverPath), System.IO.Path.GetFileName(webDriverPath));
-                //}
-                //else
-                //{
-                //    driverService = OpenQA.Selenium.Edge.EdgeDriverService.CreateDefaultService(driverPath, "msedgedriver.exe");
-                //}
-                //driverService.HideCommandPromptWindow = hideTerminal;
                 driverService = CreateDriverService(OpenQA.Selenium.Edge.EdgeDriverService.CreateDefaultService, "msedgedriver.exe");
 
                 webDriver = new OpenQA.Selenium.Edge.EdgeDriver((OpenQA.Selenium.Edge.EdgeDriverService)driverService, options);
@@ -364,15 +343,6 @@ namespace taskt.Core.Automation.Commands
                     }
                 }
 
-                //if (!string.IsNullOrEmpty(webDriverPath))
-                //{
-                //    driverService = OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService(System.IO.Path.GetDirectoryName(webDriverPath), System.IO.Path.GetFileName(webDriverPath));
-                //}
-                //else
-                //{
-                //    driverService = OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService(driverPath);
-                //}
-                //driverService.HideCommandPromptWindow = hideTerminal;
                 driverService = CreateDriverService(OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService, "geckodriver.exe");
 
                 webDriver = new OpenQA.Selenium.Firefox.FirefoxDriver((OpenQA.Selenium.Firefox.FirefoxDriverService)driverService, options);
