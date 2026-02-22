@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands.WebBrowserGroup;
 
 namespace taskt.Core.Automation.Commands
@@ -18,6 +21,16 @@ namespace taskt.Core.Automation.Commands
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
         //public string v_InstanceName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Delete Profile Folder when Specified")]
+        [PropertyUISelectionOption("Recycle Bin")]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyValidationRule("Delete Profile", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(true, "Delete Profile")]
+        [PropertyParameterOrder(7000)]
+        public string v_DeleteProfileFolder { get; set; }
 
         public SeleniumBrowserCloseWebBrowserInstanceCommand()
         {
@@ -44,6 +57,34 @@ namespace taskt.Core.Automation.Commands
 
                 var instanceName = this.GetInstanceNameFromWebBrowserInstance(seleniumInstance, engine);
                 engine.RemoveAppInstance(instanceName);
+
+                if (!string.IsNullOrEmpty(profilePath))
+                {
+                    if (Directory.Exists(profilePath))
+                    {
+                        var isRemove = false;
+                        var isRecycle = false;
+                        switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_DeleteProfileFolder), engine))
+                        {
+                            case "yes":
+                                isRemove = true;
+                                break;
+                            case "recycle bin":
+                                isRemove = true;
+                                isRecycle = true;
+                                break;
+                        }
+                        if (isRemove)
+                        {
+                            var removeFolder = new DeleteFolderCommand()
+                            {
+                                v_TargetFolderPath = profilePath,
+                                v_MoveToRecycleBin = (isRecycle) ? "yes" : "no",
+                            };
+                            removeFolder.RunCommand(engine);
+                        }
+                    }
+                }
             }), engine);
         }
     }
