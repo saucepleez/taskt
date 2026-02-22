@@ -148,7 +148,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("Temporary Folder when does not specified")]
+        [PropertyDescription("Temporary Profile Folder when does not specified")]
         [PropertyUISelectionOption("User Temp")]
         [PropertyUISelectionOption("taskt Temporary")]
         [PropertyIsOptional(true, "User Temp")]
