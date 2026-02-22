@@ -17,6 +17,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
@@ -36,7 +37,7 @@ namespace taskt.Core.Script
         /// Contains user-defined variables
         /// </summary>
         public List<ScriptVariable> Variables { get; set; }
-        
+
         /// <summary>
         /// Contains user-selected commands
         /// </summary>
@@ -97,7 +98,7 @@ namespace taskt.Core.Script
                 {
                     srcCommand.IsDontSavedCommand = false;
                 }
-                
+
                 var command = srcCommand.Clone();
                 command.LineNumber = lineNumber;
 
@@ -131,7 +132,7 @@ namespace taskt.Core.Script
                     // remove last command since loop is ending
                     subCommands.RemoveAt(subCommands.Count - 1);
                 }
-                else if (subCommands.Count == 0) 
+                else if (subCommands.Count == 0)
                 {
                     // add command as a root item
                     script.AddNewParentCommand(command);
@@ -311,7 +312,7 @@ namespace taskt.Core.Script
             var savePath = IO.Folders.GetAutoSaveFolderPath();
             var saveTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
 
-            return (Path.Combine(savePath, "autosave-") + saveTime + ".xml", saveTime);
+            return (Path.Combine(savePath, $"autosave-{saveTime}.xml"), saveTime);
         }
 
         ///// <summary>
@@ -343,7 +344,7 @@ namespace taskt.Core.Script
             //var runPath = GetRunWithoutSavingFolderPath();
             var runPath = IO.Folders.GetRunWithoutSavingFolderPath();
             var saveTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-            return Path.Combine(runPath, "run-") + saveTime + ".xml";
+            return Path.Combine(runPath, $"run-{saveTime}.xml");
         }
 
         /// <summary>
@@ -351,7 +352,7 @@ namespace taskt.Core.Script
         /// </summary>
         public void ReGenerateCommandID()
         {
-            foreach(var command in this.Commands)
+            foreach (var command in this.Commands)
             {
                 ReGenerateCommandIDProcess(command);
             }
@@ -366,11 +367,22 @@ namespace taskt.Core.Script
             script.ScriptCommand.GenerateID();
             if ((script.AdditionalScriptCommands?.Count ?? 0) > 0)
             {
-                foreach(var command in script.AdditionalScriptCommands)
+                foreach (var command in script.AdditionalScriptCommands)
                 {
                     ReGenerateCommandIDProcess(command);
                 }
             }
+        }
+
+        /// <summary>
+        /// check old version
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns>When a is older than b, return true</returns>
+        private static bool IsOldVersion(Version a, string b)
+        {
+            return a.CompareTo(new Version(b)) < 0;
         }
 
         /// <summary>
@@ -384,99 +396,356 @@ namespace taskt.Core.Script
             // ** DO NOT USE nameof to change command name **
 
             var versionText = doc.Element("Script").Element("Info")?.Element("TasktVersion")?.Value ?? "0.0.0.0";
+            var myVersion = new Version(versionText);
 
             fixDataTableSchemaPosition(doc);
             fixToSameCommandNames(doc);
 
-            convertTo3_5_0_45(doc);
-            convertTo3_5_0_46(doc);
-            convertTo3_5_0_47(doc);
-            convertTo3_5_0_50(doc);
-            convertTo3_5_0_51(doc);
-            convertTo3_5_0_52(doc);
-            convertTo3_5_0_57(doc);
-            convertTo3_5_0_67(doc);
-            fixUIAutomationCommandEnableParameterValue(doc);
-            convertTo3_5_0_73(doc);
-            convertTo3_5_0_74(doc);
-            convertTo3_5_0_78(doc);
-            fixUIAutomationSearchEnableParameterValue(doc);
-            convertTo3_5_0_83(doc);
-            convertTo3_5_1_16(doc);
-            convertTo3_5_1_30(doc);
-            convertTo3_5_1_31(doc);
-            convertTo3_5_1_33(doc);
-            convertTo3_5_1_34(doc);
-            convertTo3_5_1_35(doc);
-            convertTo3_5_1_36(doc);
-            convertTo3_5_1_38(doc);
-            convertTo3_5_1_39(doc);
-            fixUIAutomationSearchEnableParameterValue_3_5_1_39(doc);
-            convertTo3_5_1_40(doc);
-            convertTo3_5_1_41(doc);
-            convertTo3_5_1_42(doc);
-            convertTo3_5_1_44(doc);
-            convertTo3_5_1_45(doc);
-            convertTo3_5_1_46(doc);
-            convertTo3_5_1_48(doc);
-            convertTo3_5_1_49(doc);
-            convertTo3_5_1_50(doc);
-            convertTo3_5_1_51(doc);
-            convertTo3_5_1_52(doc);
-            convertTo3_5_1_54(doc);
+            if (IsOldVersion(myVersion, "3.5.0.45"))
+            {
+                convertTo3_5_0_45(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.46"))
+            {
+                convertTo3_5_0_46(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.47"))
+            {
+                convertTo3_5_0_47(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.50"))
+            {
+                convertTo3_5_0_50(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.51"))
+            {
+                convertTo3_5_0_51(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.52"))
+            {
+                convertTo3_5_0_52(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.57"))
+            {
+                convertTo3_5_0_57(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.67"))
+            {
+                convertTo3_5_0_67(doc);
+            }
+            fixUIAutomationCommandEnableColumnParameterValues(doc);
+            if (IsOldVersion(myVersion, "3.5.0.73"))
+            {
+                convertTo3_5_0_73(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.74"))
+            {
+                convertTo3_5_0_74(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.78"))
+            {
+                convertTo3_5_0_78(doc);
+            }
+            fixUIAutomationSearchEnableColumnParameterValues(doc);
+            if (IsOldVersion(myVersion, "3.5.0.83"))
+            {
+                convertTo3_5_0_83(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.16"))
+            {
+                convertTo3_5_1_16(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.30"))
+            {
+                convertTo3_5_1_30(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.31"))
+            {
+                convertTo3_5_1_31(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.33"))
+            {
+                convertTo3_5_1_33(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.34"))
+            {
+                convertTo3_5_1_34(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.35"))
+            {
+                convertTo3_5_1_35(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.36"))
+            {
+                convertTo3_5_1_36(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.38"))
+            {
+
+                convertTo3_5_1_38(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.39"))
+            {
+                convertTo3_5_1_39(doc);
+            }
+            fixUIAutomationSearchEnableColumnParameterValues_3_5_1_39(doc);
+            if (IsOldVersion(myVersion, "3.5.1.40"))
+            {
+                convertTo3_5_1_40(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.41"))
+            {
+                convertTo3_5_1_41(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.42"))
+            {
+                convertTo3_5_1_42(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.44"))
+            {
+                convertTo3_5_1_44(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.45"))
+            {
+                convertTo3_5_1_45(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.46"))
+            {
+                convertTo3_5_1_46(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.48"))
+            {
+                convertTo3_5_1_48(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.49"))
+            {
+                convertTo3_5_1_49(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.50"))
+            {
+                convertTo3_5_1_50(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.51"))
+            {
+                convertTo3_5_1_51(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.52"))
+            {
+                convertTo3_5_1_52(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.54"))
+            {
+                convertTo3_5_1_54(doc);
+            }
             fixUIAutomationSearchEnableParameterValue_v3_5_1_56(doc);
-            convertTo3_5_1_56(doc);
-            convertTo3_5_1_58(doc);
-            convertTo3_5_1_62(doc);
-            convertTo3_5_1_72(doc);
-            convertTo3_5_1_74(doc);
-            convertTo3_5_1_75(doc, engine);
-            convertTo3_5_1_77(doc, engine);
-            convertTo3_5_1_79(doc, engine);
-            convertTo3_5_1_80(doc);
-            convertTo3_5_1_81(doc, engine);
-            convertTo3_5_1_83(doc);
-            convertTo3_5_1_84(doc);
-            convertTo3_5_1_86(doc);
-            convertTo3_5_1_87(doc);
-            convertTo3_5_1_88(doc);
-            convertTo3_5_1_89(doc);
-            convertTo3_5_1_91(doc);
-            convertTo3_5_1_92(doc);
-            convertTo3_5_1_93(doc);
-            convertTo3_5_1_96(doc);
-            convertTo3_5_1_98(doc);
-            convertTo3_5_2_0(doc);
-            convertTo3_5_2_1(doc);
-            convertTo3_5_2_6(doc);
-            convertTo3_5_2_11(doc);
-            convertTo3_5_2_13(doc);
-            convertTo3_5_2_14(doc);
-            convertTo3_5_2_15(doc);
-            convertTo3_5_2_16(doc);
-            convertTo3_5_2_17(doc);
-            convertTo3_5_2_18(doc);
-            convertTo3_5_2_19(doc);
-            convertTo3_5_2_20(doc);
-            convertTo3_5_2_21(doc);
-            convertTo3_5_2_22(doc);
-            convertTo3_5_2_23(doc);
-            convertTo3_5_2_24(doc);
-            convertTo3_5_2_25(doc);
-            convertTo3_5_2_31(doc);
-            convertTo3_5_2_38(doc);
-            convertTo3_5_2_39(doc);
-            convertTo3_5_2_42(doc);
-            convertTo3_5_2_43(doc);
-            convertTo3_5_2_44(doc);
-            convertTo3_5_2_45(doc);
-            convertTo3_5_2_46(doc);
-            convertTo3_5_2_47(doc);
-            convertTo3_5_2_51(doc);
-            convertTo3_5_2_53(doc);
-            convertTo3_5_2_55(doc);
-            convertTo3_5_2_56(doc);
-            convertTo3_5_2_57(doc);
+            if (IsOldVersion(myVersion, "3.5.1.56"))
+            {
+                convertTo3_5_1_56(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.58"))
+            {
+                convertTo3_5_1_58(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.62"))
+            {
+                convertTo3_5_1_62(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.72"))
+            {
+                convertTo3_5_1_72(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.74"))
+            {
+                convertTo3_5_1_74(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.75"))
+            {
+                convertTo3_5_1_75(doc, engine);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.77"))
+            {
+                convertTo3_5_1_77(doc, engine);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.79"))
+            {
+                convertTo3_5_1_79(doc, engine);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.80"))
+            {
+                convertTo3_5_1_80(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.81"))
+            {
+                convertTo3_5_1_81(doc, engine);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.83"))
+            {
+                convertTo3_5_1_83(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.84"))
+            {
+                convertTo3_5_1_84(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.86"))
+            {
+                convertTo3_5_1_86(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.87"))
+            {
+                convertTo3_5_1_87(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.88"))
+            {
+                convertTo3_5_1_88(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.89"))
+            {
+                convertTo3_5_1_89(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.91"))
+            {
+                convertTo3_5_1_91(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.92"))
+            {
+                convertTo3_5_1_92(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.93"))
+            {
+                convertTo3_5_1_93(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.96"))
+            {
+                convertTo3_5_1_96(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.98"))
+            {
+                convertTo3_5_1_98(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.0"))
+            {
+                convertTo3_5_2_0(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.1"))
+            {
+                convertTo3_5_2_1(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.6"))
+            {
+                convertTo3_5_2_6(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.11"))
+            {
+                convertTo3_5_2_11(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.13"))
+            {
+                convertTo3_5_2_13(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.14"))
+            {
+                convertTo3_5_2_14(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.15"))
+            {
+                convertTo3_5_2_15(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.16"))
+            {
+                convertTo3_5_2_16(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.17"))
+            {
+                convertTo3_5_2_17(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.18"))
+            {
+                convertTo3_5_2_18(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.19"))
+            {
+                convertTo3_5_2_19(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.20"))
+            {
+                convertTo3_5_2_20(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.21"))
+            {
+                convertTo3_5_2_21(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.22"))
+            {
+                convertTo3_5_2_22(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.23"))
+            {
+                convertTo3_5_2_23(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.24"))
+            {
+                convertTo3_5_2_24(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.25"))
+            {
+                convertTo3_5_2_25(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.31"))
+            {
+                convertTo3_5_2_31(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.38"))
+            {
+                convertTo3_5_2_38(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.39"))
+            {
+                convertTo3_5_2_39(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.42"))
+            {
+                convertTo3_5_2_42(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.43"))
+            {
+                convertTo3_5_2_43(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.44"))
+            {
+                convertTo3_5_2_44(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.45"))
+            {
+                convertTo3_5_2_45(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.46"))
+            {
+                convertTo3_5_2_46(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.47"))
+            {
+                convertTo3_5_2_47(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.51"))
+            {
+                convertTo3_5_2_51(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.53"))
+            {
+                convertTo3_5_2_53(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.55"))
+            {
+                convertTo3_5_2_55(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.56"))
+            {
+                convertTo3_5_2_56(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.57"))
+            {
+                convertTo3_5_2_57(doc);
+            }
             return doc;
         }
 
@@ -550,7 +819,7 @@ namespace taskt.Core.Script
             XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
 
             var commands = doc.Descendants("ScriptCommand");
-            foreach(var cmd in commands)
+            foreach (var cmd in commands)
             {
                 var commandName = cmd.Attribute("CommandName");
                 var xsiType = cmd.Attribute(ns + "type");
@@ -564,7 +833,8 @@ namespace taskt.Core.Script
         private static void convertTo3_5_0_45(XDocument doc)
         {
             // change "Start with" -> "Starts with", "End with" -> "Ends with"
-            ChangeAttributeValue(doc, new Func<XElement, bool>( el => {
+            ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
+            {
                 switch (GetCommandName(el))
                 {
                     case "ActivateWindowCommand":
@@ -585,7 +855,8 @@ namespace taskt.Core.Script
                     default:
                         return false;
                 }
-            }), "v_SearchMethod", new Action<XAttribute>( attr => {
+            }), "v_SearchMethod", new Action<XAttribute>(attr =>
+            {
                 switch (attr?.Value.ToLower() ?? "")
                 {
                     case "start with":
@@ -647,7 +918,7 @@ namespace taskt.Core.Script
             // change "Start with" -> "Starts with", "End with" -> "Ends with"
             ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
             {
-                switch(GetCommandName(el))
+                switch (GetCommandName(el))
                 {
                     case "GetFilesCommand":
                     case "GetFoldersCommand":
@@ -656,7 +927,8 @@ namespace taskt.Core.Script
                     default:
                         return false;
                 }
-            }), "v_SearchMethod", new Action<XAttribute>(attr => {
+            }), "v_SearchMethod", new Action<XAttribute>(attr =>
+            {
                 switch (attr?.Value.ToLower() ?? "")
                 {
                     case "start with":
@@ -675,7 +947,7 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "CheckStringCommand", "CheckTextCommand", "Check Text");
 
             // ModifyVariableCommand -> ModifyTextCommand
-            ChangeCommandName(doc, new Func<XElement, bool>( el => 
+            ChangeCommandName(doc, new Func<XElement, bool>(el =>
             {
                 switch (GetCommandName(el))
                 {
@@ -713,7 +985,7 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "SeleniumBrowserGetAElementValuesAsDataTableCommand", "SeleniumBrowserGetAnElementValuesAsDataTableCommand", "Get An Element Values As DataTable");
         }
 
-        private static void fixUIAutomationCommandEnableParameterValue(XDocument doc)
+        private static void fixUIAutomationCommandEnableColumnParameterValues(XDocument doc)
         {
             // UI Automation Boolean Fix
             ChangeTableCellValue(doc, "UIAutomationCommand", "v_UIASearchParameters", "Enabled", new Action<XElement>(c =>
@@ -839,7 +1111,7 @@ namespace taskt.Core.Script
             }), "v_LoopActionParameterTable", modFunc);
         }
 
-        private static void fixUIAutomationSearchEnableParameterValue(XDocument doc)
+        private static void fixUIAutomationSearchEnableColumnParameterValues(XDocument doc)
         {
             // UI Automation Boolean Fix
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
@@ -1076,7 +1348,7 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "Format Folder PathCommand", "FormatFolderPathCommand", "Format Folder Path");
         }
 
-        private static void fixUIAutomationSearchEnableParameterValue_3_5_1_39(XDocument doc)
+        private static void fixUIAutomationSearchEnableColumnParameterValues_3_5_1_39(XDocument doc)
         {
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
@@ -1196,7 +1468,7 @@ namespace taskt.Core.Script
             var copyCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() == "copy file")).ToList();
             ChangeCommandNameProcess(moveCommands, "MoveFileCommand", "Move File");
             ChangeCommandNameProcess(copyCommands, "CopyFileCommand", "Copy File");
-            foreach(var cmd in commands)
+            foreach (var cmd in commands)
             {
                 cmd.Attribute("v_OperationType").Remove();
             }
@@ -1335,7 +1607,7 @@ namespace taskt.Core.Script
 
             // change new SeleniumBrowserWebElementActionCommand
             var commands = GetCommands(doc, "SeleniumBrowserWebElementActionCommand");
-            foreach(var cmd in commands)
+            foreach (var cmd in commands)
             {
                 var elementAction = cmd.Element("v_SeleniumElementAction");
                 string act = "";
@@ -1476,7 +1748,7 @@ namespace taskt.Core.Script
             }
         }
 
-        private static void convertTo3_5_1_50(XDocument doc) 
+        private static void convertTo3_5_1_50(XDocument doc)
         {
             // WebElement Action: Wait For WebElement To Exists
             // WebElement Action: fix parameter table
@@ -1578,7 +1850,7 @@ namespace taskt.Core.Script
 
             // UIAutomationUIElementActionCommand : UIElement Action name, v_WindowName to Attribute
             var cmds = GetCommands(doc, "UIAutomationUIElementActionCommand");
-            foreach(var cmd in cmds)
+            foreach (var cmd in cmds)
             {
                 var act = cmd.Attribute("v_AutomationType").Value.ToLower();
                 string newAct = act.ToLower();
@@ -1642,13 +1914,13 @@ namespace taskt.Core.Script
                 return (GetCommandName(el) == "SeleniumBrowserWebElementActionCommand") &&
                         (elemAction == "set text");
             }));
-            foreach(var cmd in cmds)
+            foreach (var cmd in cmds)
             {
                 (var table, _, _, _, _) = GetTable(cmd, "v_WebActionParameterTable");
                 var rows = table?.Elements()?.ToList() ?? new List<XElement>();
                 //var beforeRows = before?.Elements()?.ToList() ?? new List<XElement>();
 
-                foreach(var row in rows)
+                foreach (var row in rows)
                 {
                     if (row.Element("Parameter_x0020_Name").Value == "Encrypted Text")
                     {
@@ -2051,7 +2323,7 @@ namespace taskt.Core.Script
 
             // SendAdvancedKeyStrokesCommand strange element "v_KeyUpDefault"
             var cmds = GetCommands(doc, "SendAdvancedKeyStrokesCommand");
-            foreach(var cmd in cmds)
+            foreach (var cmd in cmds)
             {
                 var elem = cmd.Element("v_KeyUpDefault");
                 var attr = cmd.Attribute("v_KeyUpDefault");
@@ -2499,8 +2771,9 @@ namespace taskt.Core.Script
         private static void convertTo3_5_1_83(XDocument doc)
         {
             // ExcelSetRowValuesFromDataTableCommand, ExcelSetColumnValuesFromDataTableCommand v_WhenItemNotEnough
-            ChangeAttributeName(doc, 
-                new Func<XElement, bool>(el => {
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
                     switch (GetCommandName(el))
                     {
                         case "ExcelSetRowValuesFromDataTableCommand":
@@ -2509,12 +2782,13 @@ namespace taskt.Core.Script
                         default:
                             return false;
                     }
-                    
+
                 }), "v_IfDataTableNotEnough", "v_WhenItemNotEnough");
 
             // ExcelSetRowValuesFromDictionaryCommand, ExcelSetColumnValuesFromDictionaryCommand v_WhenItemNotEnough
-            ChangeAttributeName(doc, 
-                new Func<XElement, bool>(el => {
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
                     switch (GetCommandName(el))
                     {
                         case "ExcelSetRowValuesFromDictionaryCommand":
@@ -2526,8 +2800,9 @@ namespace taskt.Core.Script
                 }), "v_IfDictionaryNotEnough", "v_WhenItemNotEnough");
 
             // ExcelSetRowValuesFromListCommand, ExcelSetColumnValuesFromListCommand v_WhenItemNotEnough
-            ChangeAttributeName(doc, 
-                new Func<XElement, bool>(el => {
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
                     switch (GetCommandName(el))
                     {
                         case "ExcelSetRowValuesFromListCommand":
@@ -2595,7 +2870,7 @@ namespace taskt.Core.Script
                 new List<(string, Action<XAttribute>)>()
                 {
                     (
-                        "v_Option", 
+                        "v_Option",
                         new Action<XAttribute>(attr =>
                         {
                             if (attr.Value.ToLower() == "column name")
@@ -2750,7 +3025,7 @@ namespace taskt.Core.Script
                 }), "v_InputData", "v_Dictionary");
 
             // AddDictionaryItemCommand, CreateDictionaryCommand v_DictionaryName -> v_Dictionary
-            ChangeAttributeName(doc, 
+            ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
                     switch (GetCommandName(el))
@@ -3265,7 +3540,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc, "ReplaceDataTableValueCommand", "v_TargetType", "v_ValueType");
 
             // ReplaceDictionaryCommand, ReplaceListCommand v_NewValue
-            ChangeAttributeName(doc, 
+            ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
                     switch (GetCommandName(el))
@@ -3397,7 +3672,7 @@ namespace taskt.Core.Script
 
             // separate JSONPath
             var rmv = GetCommands(doc, "RemoveJSONObjectPropertyCommand");
-            foreach(var c in rmv)
+            foreach (var c in rmv)
             {
                 var attrPath = c.Attribute("v_JsonExtractor");
                 var attrProp = c.Attribute("v_PropertyName");
@@ -3409,7 +3684,7 @@ namespace taskt.Core.Script
                     var idx = path.LastIndexOf('.');
                     var newProp = path.Substring(idx + 1);
                     var newPath = path.Substring(0, idx);
-                    
+
                     if (attrProp != null)
                     {
                         attrProp.SetValue(newProp);
@@ -3433,7 +3708,7 @@ namespace taskt.Core.Script
         private static void convertTo3_5_2_0(XDocument doc)
         {
             var htmlCommands = GetCommands(doc, "ShowHTMLInputDialogCommand");
-            foreach(var cmd in htmlCommands)
+            foreach (var cmd in htmlCommands)
             {
                 var html = cmd.Attribute("v_InputHTML").Value;
                 html = html.Replace("window.external.Ok()", "chrome.webview.hostObjects.fm.OK()")
@@ -3561,8 +3836,8 @@ namespace taskt.Core.Script
                         default:
                             return false;
                     }
-                }), new List<(string, string)>() 
-                { 
+                }), new List<(string, string)>()
+                {
                     ("v_SearchMethod", "v_CompareMethod"),
                     ("v_UserVariableName", "v_Result"),
                 }
@@ -3615,7 +3890,7 @@ namespace taskt.Core.Script
             // TextGetIndexOf, TextGetLastIndexOf v_SearchStartIndex
             var idxCmds = GetCommands(doc, new Func<XElement, bool>(el =>
             {
-                switch (GetCommandName(el)) 
+                switch (GetCommandName(el))
                 {
                     case "TextGetIndexOfCommand":
                     case "TextGetLastIndexOfCommand":
@@ -3624,7 +3899,7 @@ namespace taskt.Core.Script
                         return false;
                 }
             }));
-            foreach(var cmd in idxCmds)
+            foreach (var cmd in idxCmds)
             {
                 if (cmd.Attribute("v_SearchStartPosition") == null)
                 {
@@ -3664,16 +3939,17 @@ namespace taskt.Core.Script
         private static void convertTo3_5_2_16(XDocument doc)
         {
             XNamespace xs = "http://www.w3.org/2001/XMLSchema";
-            int GetColumnsCount(XElement elem) 
+            int GetColumnsCount(XElement elem)
             {
                 return elem.Element(xs + "schema").Element(xs + "element").Element(xs + "complexType")
                                 .Element(xs + "choice").Element(xs + "element").Element(xs + "complexType")
                                 .Element(xs + "sequence").Elements(xs + "element").Count();
-            };
+            }
+            ;
 
             // Execute REAT API v_RESTParameters <-> v_AdvancedParameters
             var rest = GetCommands(doc, "HTTPExecuteRESTAPICommand");
-            
+
             foreach (var cmd in rest)
             {
                 var advParams = cmd.Element("v_AdvancedParameters");
@@ -3758,7 +4034,7 @@ namespace taskt.Core.Script
                     {
                         return false;
                     }
-                }), 
+                }),
                 "SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand", "Get Window And Tab Handles As JSON",
                 new List<(string, string)>()
                 {
@@ -3887,7 +4163,7 @@ namespace taskt.Core.Script
             // Folder/GetFilesPathAsListCommand commands v_WaitForFolder -> v_WaitTimeForFolder
             ChangeAttributeName(doc, new Func<XElement, bool>(elem =>
                 {
-                    switch(GetCommandName(elem)) 
+                    switch (GetCommandName(elem))
                     {
                         case "CheckFolderExistsCommand":
                         case "CreateFolderCommand":
@@ -4070,7 +4346,7 @@ namespace taskt.Core.Script
                     }
                 })
             );
-            foreach (var cmd in copyMove) 
+            foreach (var cmd in copyMove)
             {
                 var attrDel = cmd.Attribute("v_DeleteExisting");
                 if (attrDel != null)
@@ -4178,7 +4454,7 @@ namespace taskt.Core.Script
                 }
             }
 
-            foreach(var cmd in fmts)
+            foreach (var cmd in fmts)
             {
                 var attrType = cmd.Attribute("v_FormatType");
                 if (attrType != null)
@@ -4503,7 +4779,7 @@ namespace taskt.Core.Script
             // v_WaitTimeBeforeCapture -> v_WaitTimeBetweenFindAndAction
             var takes = GetCommands(doc, "TakeScreenshotCommand").ToList();
             ChangeAttributeNameProcess(takes, "v_ActivateWindowBeforeCapture", "v_ActivateBeforeAction");
-            foreach(var cmd in takes)
+            foreach (var cmd in takes)
             {
                 var attr_wbc = cmd.Attribute("v_WaitTimeBeforeCapture");
                 if (attr_wbc != null)
@@ -4649,13 +4925,13 @@ namespace taskt.Core.Script
                         case "GetWindowStatesFromWindowNamesAsDataTableCommand":
                         case "GetWindowStatesFromWindowNamesAsListCommand":
                         // multi window actions
-                        case "ActivateWindowsCommand":  
+                        case "ActivateWindowsCommand":
                         case "CloseWindowsCommand":
                         case "MoveWindowsCommand":
                         case "ResizeWindowsCommand":
                         case "SetWindowsStateCommand":
                         // one window name actions
-                        case "WaitForWindowToExistsCommand":    
+                        case "WaitForWindowToExistsCommand":
                             return true;
 
                         default:
@@ -4695,7 +4971,7 @@ namespace taskt.Core.Script
             // UIAutomationGetSelectedStateFromUIElementCommand, UIAutomationGetChildrenUIElementsInformationCommand v_ResultVariable -> v_Result
             ChangeAttributeName(doc, new Func<XElement, bool>(el =>
             {
-                switch (GetCommandName(el)) 
+                switch (GetCommandName(el))
                 {
                     case "UIAutomationGetSelectedStateFromUIElementCommand":
                     case "UIAutomationGetChildrenUIElementsInformationCommand":
@@ -4962,7 +5238,7 @@ namespace taskt.Core.Script
                         return false;
                 }
             }));
-            foreach (var command in checkUIElemXPath) 
+            foreach (var command in checkUIElemXPath)
             {
                 var xpathElem = command.Element("v_SearchXPath");
                 if (xpathElem != null)
@@ -5131,7 +5407,7 @@ namespace taskt.Core.Script
 
             // SeleniumBrowserWebElementActionCommand
             // v_SeleniumElementAction -> v_WebElementAction, v_ScrollToElement -> v_ScrollToWebElement
-            ChangeMultiAttributeNames(doc, "SeleniumBrowserWebElementActionCommand", 
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserWebElementActionCommand",
                 new List<(string, string)>()
                 {
                     ("v_SeleniumElementAction", "v_WebElementAction"),
@@ -5173,7 +5449,7 @@ namespace taskt.Core.Script
             // SeleniumBrowserGetMatchedWebElementsCommand, SeleniumBrowserGetWebElementsCountCommand,
             // SeleniumBrowserGetWebElementsValueAsDictionaryCommand, SeleniumBrowserGetWebElementsValueAsListCommand,
             // SeleniumBrowserGetWebElementsValuesAsDataTableCommand, SeleniumBrowserGetWebElementsValueAsDataTableCommand
-            ChangeMultiAttributeNames(doc, 
+            ChangeMultiAttributeNames(doc,
                 new Func<XElement, bool>(el =>
                 {
                     switch (GetCommandName(el))
@@ -5493,7 +5769,7 @@ namespace taskt.Core.Script
             {
                 rowName = elel.Attribute(nsMsdata + "MainDataTable")?.Value;
             }
-            
+
             // xs:sequence
             var seq = elel.Element(nsXs + "complexType").Element(nsXs + "choice").Element(nsXs + "element").Element(nsXs + "complexType").Element(nsXs + "sequence");
 
@@ -5640,7 +5916,7 @@ namespace taskt.Core.Script
         private static void ChangeTableColumnNames(XDocument doc, string commandName, string tableParameterName, List<(string currentColumnName, string newColumnName)> changes)
         {
             var cmds = GetCommands(doc, commandName);
-            foreach(var cmd in cmds)
+            foreach (var cmd in cmds)
             {
                 (var table, var before, _, _, var seq) = GetTable(cmd, tableParameterName);
                 if ((table == null) || (before == null))
@@ -5754,7 +6030,7 @@ namespace taskt.Core.Script
         /// <param name="attributePairs">(targetAttributeName, newAttributeName)</param>
         private static void ChangeMultiAttributeNamesProcess(List<XElement> commands, List<(string, string)> attributePairs)
         {
-            foreach((var targetAttribute, var newAttribute) in attributePairs)
+            foreach ((var targetAttribute, var newAttribute) in attributePairs)
             {
                 ChangeAttributeNameProcess(commands, targetAttribute, newAttribute);
             }
@@ -5800,7 +6076,7 @@ namespace taskt.Core.Script
             // attribute values
             if (preAttributeFunc != null)
             {
-                foreach((var attr, var func) in preAttributeFunc)
+                foreach ((var attr, var func) in preAttributeFunc)
                 {
                     ChangeAttributeValueProcess(commands, attr, func);
                 }
@@ -5852,7 +6128,7 @@ namespace taskt.Core.Script
         /// <param name="newTagName"></param>
         private static void ChangeInnerTagNameProcess(List<XElement> commands, string currentTagName, string newTagName)
         {
-            foreach(var cmd in commands)
+            foreach (var cmd in commands)
             {
                 var targetElement = cmd.Element(currentTagName);
                 if (targetElement != null)
