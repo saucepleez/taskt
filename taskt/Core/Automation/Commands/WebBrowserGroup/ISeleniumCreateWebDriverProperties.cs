@@ -11,11 +11,6 @@
         string v_BrowserType { get; set; }
 
         /// <summary>
-        /// variable name to store Window Handle
-        /// </summary>
-        string v_Handle { get; set; }
-
-        /// <summary>
         /// WebDriver binary path
         /// </summary>
         string v_WebDriverPath { get; set; }

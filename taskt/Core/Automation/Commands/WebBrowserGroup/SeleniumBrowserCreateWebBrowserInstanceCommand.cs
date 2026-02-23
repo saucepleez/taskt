@@ -105,10 +105,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(10000)]
         public string v_SeleniumOptions { get; set; }
 
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
-        //[PropertyParameterOrder(11000)]
-        //public string v_Handle { get; set; }
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
+        [PropertyParameterOrder(11000)]
+        public string v_Handle { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -242,23 +242,6 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            //DriverService CreateDriverService(Func<string, string, DriverService> driverFunc, string webDriverName)
-            //{
-            //    var driverPath = this.ExpandValueOrUserVariable(nameof(v_WebDriverPath), "Web Driver Binary", engine);
-            //    DriverService ret;
-            //    if (string.IsNullOrEmpty(driverPath))
-            //    {
-            //        ret = driverFunc(IO.Folders.GetResourcesFolderPath(), webDriverName);
-            //    }
-            //    else
-            //    {
-            //        ret = driverFunc(Path.GetDirectoryName(driverPath), Path.GetFileName(driverPath));
-            //    }
-            //    var hideTerminal = this.ExpandValueOrUserVariableAsYesNo(nameof(v_HideTerminalWindow), engine);
-            //    ret.HideCommandPromptWindow = hideTerminal;
-            //    return ret;
-            //}
-
             DriverService driverService = null;
             IWebDriver webDriver = null;
 
@@ -269,7 +252,6 @@ namespace taskt.Core.Automation.Commands
 
                     SetChromiumOptions(chromeOptions);
 
-                    //driverService = CreateWebDriverService(OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService, "chromedriver.exe", engine);
                     driverService = CreateWebDriverService(seleniumEngine, engine);
 
                     webDriver = new OpenQA.Selenium.Chrome.ChromeDriver((OpenQA.Selenium.Chrome.ChromeDriverService)driverService, chromeOptions);
@@ -279,7 +261,6 @@ namespace taskt.Core.Automation.Commands
                     OpenQA.Selenium.Edge.EdgeOptions edgeOptions = new OpenQA.Selenium.Edge.EdgeOptions();
                     SetChromiumOptions(edgeOptions);
 
-                    //driverService = CreateWebDriverService(OpenQA.Selenium.Edge.EdgeDriverService.CreateDefaultService, "msedgedriver.exe", engine);
                     driverService = CreateWebDriverService(seleniumEngine, engine);
 
                     webDriver = new OpenQA.Selenium.Edge.EdgeDriver((OpenQA.Selenium.Edge.EdgeDriverService)driverService, edgeOptions);
@@ -300,7 +281,6 @@ namespace taskt.Core.Automation.Commands
                     {
                         var profileFolder = v_ProfileFolder.ExpandValueOrUserVariable(engine);
 
-                        //options.Profile = new OpenQA.Selenium.Firefox.FirefoxProfile(profileFolder);
                         ffOptions.AddArgument($"-profile={profileFolder}");
                         profilePath = profileFolder;
                     }
@@ -338,7 +318,6 @@ namespace taskt.Core.Automation.Commands
                     if (string.IsNullOrEmpty(profilePath))
                     {
                         profilePath = GetTemporaryProfilePath();
-                        //options.Profile = new OpenQA.Selenium.Firefox.FirefoxProfile(profilePath);
                         ffOptions.AddArgument($"-profile={profilePath}");
                         if (!Directory.Exists(profilePath))
                         {
@@ -346,16 +325,12 @@ namespace taskt.Core.Automation.Commands
                         }
                     }
 
-                    //driverService = CreateWebDriverService(OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService, "geckodriver.exe", engine);
                     driverService = CreateWebDriverService(seleniumEngine, engine);
 
                     webDriver = new OpenQA.Selenium.Firefox.FirefoxDriver((OpenQA.Selenium.Firefox.FirefoxDriverService)driverService, ffOptions);
                     break;
 
                 case "ie":
-                    //driverService = OpenQA.Selenium.IE.InternetExplorerDriverService.CreateDefaultService(driverPath);
-                    //driverService.HideCommandPromptWindow = hideTerminal;
-                    //driverService = CreateWebDriverService(OpenQA.Selenium.IE.InternetExplorerDriverService.CreateDefaultService, "IEDriverServer.exe", engine);
                     driverService = CreateWebDriverService(seleniumEngine, engine);
 
                     webDriver = new OpenQA.Selenium.IE.InternetExplorerDriver((OpenQA.Selenium.IE.InternetExplorerDriverService)driverService, new OpenQA.Selenium.IE.InternetExplorerOptions());
@@ -363,8 +338,6 @@ namespace taskt.Core.Automation.Commands
             }
 
             // add app instance
-            //var instanceName = v_InstanceName.ExpandValueOrUserVariable(engine);
-            //engine.AddAppInstance(instanceName, webDriver);
             this.CreateWebBrowserInstance(webDriver, profilePath, engine);
 
             //var instanceTracking = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_InstanceTracking), engine);
