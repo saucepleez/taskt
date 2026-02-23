@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserCreateWebBrowserInstanceCommand : ASeleniumCreateWebDriverCommands
+    public sealed class SeleniumBrowserCreateWebBrowserInstanceCommand : ASeleniumCreateWebDriverCommands, ICanHandleWindowHandle
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -108,7 +108,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
         [PropertyParameterOrder(11000)]
-        public string v_Handle { get; set; }
+        public string v_WindowHandleResult { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -352,7 +352,7 @@ namespace taskt.Core.Automation.Commands
                 webDriver.Manage().Window.Maximize();
             }
 
-            if (!string.IsNullOrEmpty(v_Handle))
+            if (!string.IsNullOrEmpty(v_WindowHandleResult))
             {
                 var procId = ProcessControls.GetChildProcessId(driverService.ProcessId, 1);
                 if (seleniumEngine == "firefox")
@@ -360,7 +360,7 @@ namespace taskt.Core.Automation.Commands
                     procId = ProcessControls.GetChildProcessId(procId, 0);
                 }
                 var whnd = WindowControls.ConvertProcessIdToWindowHandle(procId);
-                whnd.StoreInUserVariable(engine, v_Handle);
+                whnd.StoreInUserVariable(engine, v_WindowHandleResult);
             }
         }
 

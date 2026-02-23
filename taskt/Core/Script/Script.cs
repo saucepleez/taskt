@@ -5529,6 +5529,9 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc, "SeleniumAttachCreateWebBrowserInstanceCommand", "v_EngineType", "v_BrowserType");
             // SeleniumAttachCreateWebBrowserInstanceCommand -> SeleniumBrowserAttachCreateWebBrowserInstanceCommand
             ChangeCommandName(doc, "SeleniumAttachCreateWebBrowserInstanceCommand", "SeleniumBrowserAttachCreateWebBrowserInstanceCommand", "Attach Web Browser Instance");
+
+            // SeleniumBrowserCreateWebBrowserInstanceCommand v_Handle -> v_WindowHandleResult
+            ChangeAttributeName(doc, "SeleniumBrowserCreateWebBrowserInstanceCommand", "v_Handle", "v_WindowHandleResult");
         }
 
         /// <summary>
