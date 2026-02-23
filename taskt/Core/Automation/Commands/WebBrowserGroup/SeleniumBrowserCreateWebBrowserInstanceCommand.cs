@@ -242,122 +242,124 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            DriverService CreateDriverService(Func<string, string, DriverService> driverFunc, string webDriverName)
+            //DriverService CreateDriverService(Func<string, string, DriverService> driverFunc, string webDriverName)
+            //{
+            //    var driverPath = this.ExpandValueOrUserVariable(nameof(v_WebDriverPath), "Web Driver Binary", engine);
+            //    DriverService ret;
+            //    if (string.IsNullOrEmpty(driverPath))
+            //    {
+            //        ret = driverFunc(IO.Folders.GetResourcesFolderPath(), webDriverName);
+            //    }
+            //    else
+            //    {
+            //        ret = driverFunc(Path.GetDirectoryName(driverPath), Path.GetFileName(driverPath));
+            //    }
+            //    var hideTerminal = this.ExpandValueOrUserVariableAsYesNo(nameof(v_HideTerminalWindow), engine);
+            //    ret.HideCommandPromptWindow = hideTerminal;
+            //    return ret;
+            //}
+
+            DriverService driverService = null;
+            IWebDriver webDriver = null;
+
+            switch (seleniumEngine)
             {
-                var driverPath = this.ExpandValueOrUserVariable(nameof(v_WebDriverPath), "Web Driver Binary", engine);
-                DriverService ret;
-                if (string.IsNullOrEmpty(driverPath))
-                {
-                    ret = driverFunc(IO.Folders.GetResourcesFolderPath(), webDriverName);
-                }
-                else
-                {
-                    ret = driverFunc(Path.GetDirectoryName(driverPath), Path.GetFileName(driverPath));
-                }
-                var hideTerminal = this.ExpandValueOrUserVariableAsYesNo(nameof(v_HideTerminalWindow), engine);
-                ret.HideCommandPromptWindow = hideTerminal;
-                return ret;
-            }
+                case "chrome":
+                    OpenQA.Selenium.Chrome.ChromeOptions chromeOptions = new OpenQA.Selenium.Chrome.ChromeOptions();
 
-            DriverService driverService;
-            IWebDriver webDriver;
-            if (seleniumEngine == "chrome")
-            {
-                OpenQA.Selenium.Chrome.ChromeOptions options = new OpenQA.Selenium.Chrome.ChromeOptions();
-                
-                SetChromiumOptions(options);
+                    SetChromiumOptions(chromeOptions);
 
-                driverService = CreateDriverService(OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService, "chromedriver.exe");
-                
-                webDriver = new OpenQA.Selenium.Chrome.ChromeDriver((OpenQA.Selenium.Chrome.ChromeDriverService)driverService, options);
-            }
-            else if (seleniumEngine == "edge")
-            {
-                OpenQA.Selenium.Edge.EdgeOptions options = new OpenQA.Selenium.Edge.EdgeOptions();
+                    //driverService = CreateWebDriverService(OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService, "chromedriver.exe", engine);
+                    driverService = CreateWebDriverService(seleniumEngine, engine);
 
-                SetChromiumOptions(options);
+                    webDriver = new OpenQA.Selenium.Chrome.ChromeDriver((OpenQA.Selenium.Chrome.ChromeDriverService)driverService, chromeOptions);
+                    break;
 
-                driverService = CreateDriverService(OpenQA.Selenium.Edge.EdgeDriverService.CreateDefaultService, "msedgedriver.exe");
+                case "edge":
+                    OpenQA.Selenium.Edge.EdgeOptions edgeOptions = new OpenQA.Selenium.Edge.EdgeOptions();
+                    SetChromiumOptions(edgeOptions);
 
-                webDriver = new OpenQA.Selenium.Edge.EdgeDriver((OpenQA.Selenium.Edge.EdgeDriverService)driverService, options);
-            }
-            else if (seleniumEngine == "firefox")
-            {
-                OpenQA.Selenium.Firefox.FirefoxOptions options = new OpenQA.Selenium.Firefox.FirefoxOptions();
-                if (!string.IsNullOrEmpty(browserPath))
-                {
-                    options.BinaryLocation = browserPath;
-                }
-                else
-                {
-                    options.BinaryLocation = @"C:\Program Files\Mozilla Firefox\firefox.exe";
-                }
+                    //driverService = CreateWebDriverService(OpenQA.Selenium.Edge.EdgeDriverService.CreateDefaultService, "msedgedriver.exe", engine);
+                    driverService = CreateWebDriverService(seleniumEngine, engine);
 
-                if (!string.IsNullOrEmpty(v_ProfileFolder))
-                {
-                    var profileFolder = v_ProfileFolder.ExpandValueOrUserVariable(engine);
+                    webDriver = new OpenQA.Selenium.Edge.EdgeDriver((OpenQA.Selenium.Edge.EdgeDriverService)driverService, edgeOptions);
+                    break;
 
-                    //options.Profile = new OpenQA.Selenium.Firefox.FirefoxProfile(profileFolder);
-                    options.AddArgument($"-profile={profileFolder}");
-                    profilePath = profileFolder;
-                }
-
-                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_HeadlessMode), engine))
-                {
-                    options.AddArgument("-headless");
-                }
-
-                if (!string.IsNullOrEmpty(v_SeleniumOptions))
-                {
-                    var convertedOptions = v_SeleniumOptions.ExpandValueOrUserVariable(engine);
-                    
-                    var spt = convertedOptions.Replace("\r\n", "\r").Split(new char[] { '\r', '\n' });
-
-                    foreach (var opt in spt)
+                case "firefox":
+                    OpenQA.Selenium.Firefox.FirefoxOptions ffOptions = new OpenQA.Selenium.Firefox.FirefoxOptions();
+                    if (!string.IsNullOrEmpty(browserPath))
                     {
-                        var opt2 = opt;
-                        options.AddArgument(opt2);
-                        if (opt2.StartsWith("-profile=") || opt2.StartsWith("--profile="))
+                        ffOptions.BinaryLocation = browserPath;
+                    }
+                    else
+                    {
+                        ffOptions.BinaryLocation = @"C:\Program Files\Mozilla Firefox\firefox.exe";
+                    }
+
+                    if (!string.IsNullOrEmpty(v_ProfileFolder))
+                    {
+                        var profileFolder = v_ProfileFolder.ExpandValueOrUserVariable(engine);
+
+                        //options.Profile = new OpenQA.Selenium.Firefox.FirefoxProfile(profileFolder);
+                        ffOptions.AddArgument($"-profile={profileFolder}");
+                        profilePath = profileFolder;
+                    }
+
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_HeadlessMode), engine))
+                    {
+                        ffOptions.AddArgument("-headless");
+                    }
+
+                    if (!string.IsNullOrEmpty(v_SeleniumOptions))
+                    {
+                        var convertedOptions = v_SeleniumOptions.ExpandValueOrUserVariable(engine);
+
+                        var spt = convertedOptions.Replace("\r\n", "\r").Split(new char[] { '\r', '\n' });
+
+                        foreach (var opt in spt)
                         {
-                            if (opt2.StartsWith("-profile="))
+                            var opt2 = opt;
+                            ffOptions.AddArgument(opt2);
+                            if (opt2.StartsWith("-profile=") || opt2.StartsWith("--profile="))
                             {
-                                profilePath = opt2.Substring(9);
-                            }
-                            else
-                            {
-                                profilePath = opt2.Substring(10);
+                                if (opt2.StartsWith("-profile="))
+                                {
+                                    profilePath = opt2.Substring(9);
+                                }
+                                else
+                                {
+                                    profilePath = opt2.Substring(10);
+                                }
                             }
                         }
                     }
-                }
 
-                // profile folder does not specified
-                if (string.IsNullOrEmpty(profilePath))
-                {
-                    profilePath = GetTemporaryProfilePath();
-                    //options.Profile = new OpenQA.Selenium.Firefox.FirefoxProfile(profilePath);
-                    options.AddArgument($"-profile={profilePath}");
-                    if (!Directory.Exists(profilePath))
+                    // profile folder does not specified
+                    if (string.IsNullOrEmpty(profilePath))
                     {
-                        Directory.CreateDirectory(profilePath);
+                        profilePath = GetTemporaryProfilePath();
+                        //options.Profile = new OpenQA.Selenium.Firefox.FirefoxProfile(profilePath);
+                        ffOptions.AddArgument($"-profile={profilePath}");
+                        if (!Directory.Exists(profilePath))
+                        {
+                            Directory.CreateDirectory(profilePath);
+                        }
                     }
-                }
 
-                driverService = CreateDriverService(OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService, "geckodriver.exe");
+                    //driverService = CreateWebDriverService(OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService, "geckodriver.exe", engine);
+                    driverService = CreateWebDriverService(seleniumEngine, engine);
 
-                webDriver = new OpenQA.Selenium.Firefox.FirefoxDriver((OpenQA.Selenium.Firefox.FirefoxDriverService)driverService, options);
-            }
-            else if (seleniumEngine == "ie")
-            {
-                //driverService = OpenQA.Selenium.IE.InternetExplorerDriverService.CreateDefaultService(driverPath);
-                //driverService.HideCommandPromptWindow = hideTerminal;
-                driverService = CreateDriverService(OpenQA.Selenium.IE.InternetExplorerDriverService.CreateDefaultService, "IEDriverServer.exe");
+                    webDriver = new OpenQA.Selenium.Firefox.FirefoxDriver((OpenQA.Selenium.Firefox.FirefoxDriverService)driverService, ffOptions);
+                    break;
 
-                webDriver = new OpenQA.Selenium.IE.InternetExplorerDriver((OpenQA.Selenium.IE.InternetExplorerDriverService)driverService, new OpenQA.Selenium.IE.InternetExplorerOptions());
-            }
-            else
-            {
-                throw new Exception("Strange Web Browser");
+                case "ie":
+                    //driverService = OpenQA.Selenium.IE.InternetExplorerDriverService.CreateDefaultService(driverPath);
+                    //driverService.HideCommandPromptWindow = hideTerminal;
+                    //driverService = CreateWebDriverService(OpenQA.Selenium.IE.InternetExplorerDriverService.CreateDefaultService, "IEDriverServer.exe", engine);
+                    driverService = CreateWebDriverService(seleniumEngine, engine);
+
+                    webDriver = new OpenQA.Selenium.IE.InternetExplorerDriver((OpenQA.Selenium.IE.InternetExplorerDriverService)driverService, new OpenQA.Selenium.IE.InternetExplorerOptions());
+                    break;
             }
 
             // add app instance

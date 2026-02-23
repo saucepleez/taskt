@@ -1,4 +1,7 @@
-﻿using System.Xml.Serialization;
+﻿using OpenQA.Selenium;
+using System;
+using System.IO;
+using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands.WebBrowserGroup
@@ -52,5 +55,57 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         [PropertyDisplayText(false, "Hide Terminal")]
         [PropertyParameterOrder(14000)]
         public virtual string v_HideTerminalWindow { get; set; }
+
+        /// <summary>
+        /// create WebDriver Searvice
+        /// </summary>
+        /// <param name="driverFunc"></param>
+        /// <param name="webDriverName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        protected DriverService CreateWebDriverService(Func<string, string, DriverService> driverFunc, string webDriverName, Engine.AutomationEngineInstance engine)
+        {
+            var driverPath = this.ExpandValueOrUserVariable(nameof(v_WebDriverPath), "Web Driver Binary", engine);
+            DriverService ret;
+            if (string.IsNullOrEmpty(driverPath))
+            {
+                ret = driverFunc(IO.Folders.GetResourcesFolderPath(), webDriverName);
+            }
+            else
+            {
+                ret = driverFunc(Path.GetDirectoryName(driverPath), Path.GetFileName(driverPath));
+            }
+            var hideTerminal = this.ExpandValueOrUserVariableAsYesNo(nameof(v_HideTerminalWindow), engine);
+            ret.HideCommandPromptWindow = hideTerminal;
+            return ret;
+        }
+
+        /// <summary>
+        /// create web driver service
+        /// </summary>
+        /// <param name="browserType"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        protected DriverService CreateWebDriverService(string browserType, Engine.AutomationEngineInstance engine)
+        {
+            switch (browserType.ToLower())
+            {
+                case "chrome":
+                    return CreateWebDriverService(OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService, "chromedriver.exe", engine);
+
+                case "edge":
+                    return CreateWebDriverService(OpenQA.Selenium.Edge.EdgeDriverService.CreateDefaultService, "msedgedriver.exe", engine);
+
+                case "firefox":
+                    return CreateWebDriverService(OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService, "geckodriver.exe", engine);
+
+                case "ie":
+                    return CreateWebDriverService(OpenQA.Selenium.IE.InternetExplorerDriverService.CreateDefaultService, "IEDriverServer.exe", engine);
+
+                default:
+                    throw new Exception($"Strange Web Browser type. Type: '{browserType}'");
+            }
+        }
     }
 }
