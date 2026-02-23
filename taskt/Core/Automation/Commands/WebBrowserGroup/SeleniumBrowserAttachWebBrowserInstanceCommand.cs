@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Debugger Address")]
+        [PropertyDescription("Debugger Address (Edge/Chrome only)")]
         [PropertyIsOptional(true, "127.0.0.1")]
         [PropertyValidationRule("Debugger Address", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "Address")]
@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Debugger Port")]
+        [PropertyDescription("Debugger Port (Edge/Chrome only)")]
         [PropertyIsOptional(true, "9222")]
         [PropertyValidationRule("Debugger Port", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "Port")]
@@ -77,26 +77,26 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var driverPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath), "Resources");
+            string GetDebuggerInfo()
+            {
+                if (string.IsNullOrEmpty(v_DebuggerAddress))
+                {
+                    v_DebuggerAddress = "127.0.0.1";
+                }
+                var address = this.ExpandValueOrUserVariable(nameof(v_DebuggerAddress), "Debugger Address", engine);
+
+                if (string.IsNullOrEmpty(v_DebuggerPort))
+                {
+                    v_DebuggerPort = "9222";
+                }
+                var port = this.ExpandValueOrUserVariableAsInteger(nameof(v_DebuggerPort), engine);
+                if (port < 0 || port > 65535)
+                {
+                    throw new Exception($"Strange Debugger Port. Port: '{v_DebuggerPort}', Expand Value: '{port}'");
+                }
+                return $"{address}:{port}";
+            }
             
-            //var webDriverPath = v_WebDriverPath.ExpandValueOrUserVariable(engine);
-
-            if (string.IsNullOrEmpty(v_DebuggerAddress))
-            {
-                v_DebuggerAddress = "127.0.0.1";
-            }
-            var address = this.ExpandValueOrUserVariable(nameof(v_DebuggerAddress), "Debugger Address", engine);
-
-            if (string.IsNullOrEmpty(v_DebuggerPort))
-            {
-                v_DebuggerPort = "9222";
-            }
-            var port = this.ExpandValueOrUserVariableAsInteger(nameof(v_DebuggerPort), engine);
-            if (port < 0 || port > 65535)
-            {
-                throw new Exception($"Strange Debugger Port. Port: '{v_DebuggerPort}', Expand Value: '{port}'");
-            }
-            var debugger = $"{address}:{port}";
 
             OpenQA.Selenium.DriverService driverService = null;
             OpenQA.Selenium.IWebDriver webDriver = null;
@@ -107,17 +107,9 @@ namespace taskt.Core.Automation.Commands
                 case "chrome":
                     var chromeOptions = new OpenQA.Selenium.Chrome.ChromeOptions
                     {
-                        DebuggerAddress = debugger
+                        DebuggerAddress = GetDebuggerInfo(),
                     };
 
-                    //if (!string.IsNullOrEmpty(webDriverPath))
-                    //{
-                    //    driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(System.IO.Path.GetDirectoryName(webDriverPath), System.IO.Path.GetFileName(webDriverPath));
-                    //}
-                    //else
-                    //{
-                    //    driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(driverPath);
-                    //}
                     driverService = CreateWebDriverService(seleniumEngine, engine);
 
                     webDriver = new OpenQA.Selenium.Chrome.ChromeDriver((OpenQA.Selenium.Chrome.ChromeDriverService)driverService, chromeOptions);
@@ -126,17 +118,9 @@ namespace taskt.Core.Automation.Commands
                 case "edge":
                     var edgeOptions = new OpenQA.Selenium.Edge.EdgeOptions
                     {
-                        DebuggerAddress = debugger
+                        DebuggerAddress = GetDebuggerInfo(),
                     };
 
-                    //if (!string.IsNullOrEmpty(webDriverPath))
-                    //{
-                    //    driverService = OpenQA.Selenium.Edge.EdgeDriverService.CreateDefaultService(System.IO.Path.GetDirectoryName(webDriverPath), System.IO.Path.GetFileName(webDriverPath));
-                    //}
-                    //else
-                    //{
-                    //    driverService = OpenQA.Selenium.Edge.EdgeDriverService.CreateDefaultService(driverPath, "msedgedriver.exe");
-                    //}
                     driverService = CreateWebDriverService(seleniumEngine, engine);
 
                     webDriver = new OpenQA.Selenium.Edge.EdgeDriver((OpenQA.Selenium.Edge.EdgeDriverService)driverService, edgeOptions);
@@ -147,39 +131,17 @@ namespace taskt.Core.Automation.Commands
                     // https://stackoverflow.com/questions/37514778/adding-second-instance-of-firefox-with-marionette-change-port
                     var ffOptions = new OpenQA.Selenium.Firefox.FirefoxOptions();
 
-                    //if (!string.IsNullOrEmpty(webDriverPath))
-                    //{
-                    //    driverService = OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService(System.IO.Path.GetDirectoryName(webDriverPath), System.IO.Path.GetFileName(webDriverPath));
-                    //}
-                    //else
-                    //{
-                    //    driverService = OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService(driverPath);
-                    //}
                     driverService = CreateWebDriverService(seleniumEngine, engine);
                     var ffDriver = (OpenQA.Selenium.Firefox.FirefoxDriverService)driverService;
                     ffDriver.BrowserCommunicationPort = 2828;
                     ffDriver.ConnectToRunningBrowser = true;
-                    //ffDriver.HideCommandPromptWindow = false;
 
                     webDriver = new OpenQA.Selenium.Firefox.FirefoxDriver((OpenQA.Selenium.Firefox.FirefoxDriverService)driverService, ffOptions);
                     break;
             }
 
             // add app instance
-            //var instanceName = v_InstanceName.ExpandValueOrUserVariable(engine);
-            //engine.AddAppInstance(instanceName, webDriver);
             this.CreateWebBrowserInstance(v_InstanceName, webDriver, string.Empty, engine);
-
-            if (!string.IsNullOrEmpty(v_Handle))
-            {
-                var procId = ProcessControls.GetChildProcessId(driverService.ProcessId, 1);
-                if (seleniumEngine == "firefox")
-                {
-                    procId = ProcessControls.GetChildProcessId(procId, 0);
-                }
-                var whnd = WindowControls.ConvertProcessIdToWindowHandle(procId);
-                whnd.StoreInUserVariable(engine, v_Handle);
-            }
         }
     }
 }
