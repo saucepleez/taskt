@@ -5532,6 +5532,9 @@ namespace taskt.Core.Script
 
             // SeleniumBrowserCreateWebBrowserInstanceCommand v_Handle -> v_WindowHandleResult
             ChangeAttributeName(doc, "SeleniumBrowserCreateWebBrowserInstanceCommand", "v_Handle", "v_WindowHandleResult");
+
+            // SeleniumBrowserExecuteScriptCommand v_userVariableName -> v_Result
+            ChangeAttributeName(doc, "SeleniumBrowserExecuteScriptCommand", "v_userVariableName", "v_Result");
         }
 
         /// <summary>

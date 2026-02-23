@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyParameterOrder(9100)]
-        public string v_userVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public SeleniumBrowserExecuteScriptCommand()
         {
@@ -228,9 +228,9 @@ namespace taskt.Core.Automation.Commands
                 }
 
                 // apply result to variable
-                if ((result != null) && (!string.IsNullOrEmpty(v_userVariableName)))
+                if ((result != null) && (!string.IsNullOrEmpty(v_Result)))
                 {
-                    result.ToString().StoreInUserVariable(engine, v_userVariableName);
+                    result.ToString().StoreInUserVariable(engine, v_Result);
                 }
             }), engine);
         }
