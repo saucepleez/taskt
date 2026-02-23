@@ -29,11 +29,6 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         [PropertyParameterOrder(6000)]
         public virtual string v_BrowserType { get; set; }
 
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
-        //[PropertyParameterOrder(11000)]
-        //public virtual string v_Handle { get; set; }
-
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Web Driver Binary Path")]
