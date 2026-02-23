@@ -97,7 +97,6 @@ namespace taskt.Core.Automation.Commands
                 return $"{address}:{port}";
             }
             
-
             OpenQA.Selenium.DriverService driverService = null;
             OpenQA.Selenium.IWebDriver webDriver = null;
 
