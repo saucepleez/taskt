@@ -5535,6 +5535,9 @@ namespace taskt.Core.Script
 
             // SeleniumBrowserExecuteScriptCommand v_userVariableName -> v_Result
             ChangeAttributeName(doc, "SeleniumBrowserExecuteScriptCommand", "v_userVariableName", "v_Result");
+
+            // SeleniumBrowserExecuteScriptCommand -> SeleniumBrowserExecuteJavaScriptCommand
+            ChangeCommandName(doc, "SeleniumBrowserExecuteScriptCommand", "SeleniumBrowserExecuteJavaScriptCommand", "Execute JavaScript");
         }
 
         /// <summary>

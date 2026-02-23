@@ -68,7 +68,7 @@ namespace taskt.Core.Automation.Commands
                 };
                 webInstance.RunCommand(engine);
 
-                var executeJS = new SeleniumBrowserExecuteScriptCommand()
+                var executeJS = new SeleniumBrowserExecuteJavaScriptCommand()
                 {
                     v_InstanceName = instanceVar,
                     v_CodeType = "File",

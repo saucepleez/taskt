@@ -8,13 +8,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser")]
     [Attributes.ClassAttributes.SubGruop("Web Browser Actions")]
-    [Attributes.ClassAttributes.CommandSettings("Execute Script")]
+    [Attributes.ClassAttributes.CommandSettings("Execute JavaScript")]
     [Attributes.ClassAttributes.Description("This command allows you to execute a script in a Selenium web browser session.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserExecuteScriptCommand : ASeleniumWebDriverActionCommands, ICanHandleFilePath
+    public sealed class SeleniumBrowserExecuteJavaScriptCommand : ASeleniumWebDriverActionCommands, ICanHandleFilePath
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -84,7 +84,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(9100)]
         public string v_Result { get; set; }
 
-        public SeleniumBrowserExecuteScriptCommand()
+        public SeleniumBrowserExecuteJavaScriptCommand()
         {
             //this.CommandName = "SeleniumBrowserExecuteScriptCommand";
             //this.SelectionName = "Execute Script";
