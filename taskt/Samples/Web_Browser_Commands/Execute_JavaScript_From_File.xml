@@ -2,7 +2,7 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="871bf4d7-4a47-4fff-9131-a7ea0814ee52" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Execute JavaScript File sample" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="871bf4d7-4a47-4fff-9131-a7ea0814ee52" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Execute JavaScript From File sample" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="053191a7-41e1-453c-8920-1fbbd786fb93" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute Edge" CommandEnabled="true" />
@@ -20,7 +20,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="234a57c8-8686-439a-9ca7-beb2da56c19b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Set Neme textbox value" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserExecuteJavaScriptCommand" CommandID="d6e30d53-4a72-40a9-9a22-24b6d00c18b7" CommandName="SeleniumBrowserExecuteJavaScriptCommand" IsCommented="false" SelectionName="Execute JavaScript" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_CodeType="File" v_ScriptCode="⦃Folder.SamplesPath⦄\Resources\sample_form.js" v_TimeOut="" v_Args="" v_Result="" />
+      <ScriptCommand xsi:type="SeleniumBrowserExecuteJavaScriptFromFileCommand" CommandID="d6e30d53-4a72-40a9-9a22-24b6d00c18b7" CommandName="SeleniumBrowserExecuteJavaScriptFromFileCommand" IsCommented="false" SelectionName="Execute JavaScript From File" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_FilePath="⦃Folder.SamplesPath⦄\Resources\sample_form.js" v_Arguments="" v_Result="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="112cf754-919d-4aa1-85d6-81ae458f0648" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Check Edge" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
@@ -33,11 +33,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.59</TasktVersion>
+    <TasktVersion>3.5.2.60</TasktVersion>
     <Author />
     <LastRunTime>2024-10-20T10:29:04.2890693+09:00</LastRunTime>
     <RunTimes>5</RunTimes>
-    <Revision>11</Revision>
+    <Revision>12</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>
