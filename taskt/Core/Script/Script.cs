@@ -750,6 +750,10 @@ namespace taskt.Core.Script
             {
                 convertTo3_5_2_59(doc);
             }
+            if (IsOldVersion(myVersion, "3.5.2.60"))
+            {
+                convertTo3_5_2_60(doc);
+            }
             return doc;
         }
 
@@ -5542,6 +5546,12 @@ namespace taskt.Core.Script
 
             // SeleniumBrowserExecuteScriptCommand -> SeleniumBrowserExecuteJavaScriptCommand
             ChangeCommandName(doc, "SeleniumBrowserExecuteScriptCommand", "SeleniumBrowserExecuteJavaScriptCommand", "Execute JavaScript");
+        }
+
+        private static void convertTo3_5_2_60(XDocument doc)
+        {
+            // SeleniumBrowserExecuteJavaScriptCommand v_Args -> v_Arguments
+            ChangeAttributeName(doc, "SeleniumBrowserExecuteJavaScriptCommand", "v_Args", "v_Arguments");
         }
 
         /// <summary>

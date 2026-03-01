@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
                     v_InstanceName = instanceVar,
                     v_CodeType = "File",
                     v_ScriptCode = filePath,
-                    v_Args = this.v_Arguments,
+                    v_Arguments = this.v_Arguments,
                     v_Result = this.v_Result,
                 };
                 executeJS.RunCommand(engine);

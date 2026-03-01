@@ -50,19 +50,19 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(7000)]
         public string v_ScriptCode { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Timeout in Seconds")]
-        [InputSpecification("Timeout in Seconds", true)]
-        //[SampleUsage("**0** or **10** or **{{{vWaitTime}}}**")]
-        [PropertyDetailSampleUsage("**0**", "Specify **0** for Timeout. This means Waiting until JavaScript is finished.")]
-        [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Timeout")]
-        [PropertyDetailSampleUsage("**{{{vWaitTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Timeout")]
-        [Remarks("When Value is Less Than or Equals to **0**, this means Waiting until JavaScript is finished.")]
-        [PropertyIsOptional(true, "0")]
-        [PropertyDisplayText(false, "")]
-        [PropertyParameterOrder(8000)]
-        public string v_TimeOut { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Timeout in Seconds")]
+        //[InputSpecification("Timeout in Seconds", true)]
+        ////[SampleUsage("**0** or **10** or **{{{vWaitTime}}}**")]
+        //[PropertyDetailSampleUsage("**0**", "Specify **0** for Timeout. This means Waiting until JavaScript is finished.")]
+        //[PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Timeout")]
+        //[PropertyDetailSampleUsage("**{{{vWaitTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Timeout")]
+        //[Remarks("When Value is Less Than or Equals to **0**, this means Waiting until JavaScript is finished.")]
+        //[PropertyIsOptional(true, "0")]
+        //[PropertyDisplayText(false, "")]
+        //[PropertyParameterOrder(8000)]
+        //public string v_TimeOut { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyDisplayText(false, "")]
         [PropertyParameterOrder(9000)]
-        public string v_Args { get; set; }
+        public string v_Arguments { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
@@ -97,78 +97,11 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var codeType = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_CodeType), engine);
-
-            //string script = "";
-            //if (codeType == "code")
-            //{
-            //    script = v_ScriptCode.ExpandValueOrUserVariable(engine);
-            //}
-            //else if (codeType == "file")
-            //{
-            //    //string scriptFiile = FilePathControls.FormatFilePath_NoFileCounter(v_ScriptCode, engine, "js", true);
-            //    //var scriptFile = v_ScriptCode.ExpandValueOrUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "js"), engine);
-            //    var scriptFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_ScriptCode), new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "js"), engine);
-            //    script = System.IO.File.ReadAllText(scriptFile);
-            //}
-
-            //var args = v_Args.ExpandValueOrUserVariable(engine);
-            
-            //var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
-
-            //// configure timeout
-            ////var inputTimeout = v_TimeOut.ConvertToUserVariable(sender);
-            ////int timeOut;
-            ////if (!int.TryParse(inputTimeout, out timeOut))
-            ////{
-            ////    timeOut = -1;
-            ////}
-            //var timeOut = this.ExpandValueOrUserVariableAsInteger(nameof(v_TimeOut), engine);
-
-            //// set driver timeout
-            //if (timeOut > 0)
-            //{
-            //    seleniumInstance.Manage().Timeouts().AsynchronousJavaScript = new TimeSpan(0, 0, timeOut);
-            //}
-               
-            //// run script
-            //OpenQA.Selenium.IJavaScriptExecutor js = (OpenQA.Selenium.IJavaScriptExecutor)seleniumInstance;
-
-            //object result;
-            //if (string.IsNullOrEmpty(args))
-            //{
-            //    if (timeOut > 1)
-            //    {
-            //        result = js.ExecuteAsyncScript(script);
-            //    }
-            //    else
-            //    {
-            //        result = js.ExecuteScript(script);
-            //    }
-            //}
-            //else
-            //{
-            //    if (timeOut > 1)
-            //    {
-            //        result = js.ExecuteAsyncScript(script, args);
-            //    }
-            //    else
-            //    {
-            //        result = js.ExecuteScript(script, args);
-            //    }
-            //}
-
-            //// apply result to variable
-            //if ((result != null) && (!string.IsNullOrEmpty(v_userVariableName)))
-            //{   
-            //    result.ToString().StoreInUserVariable(engine, v_userVariableName);
-            //}
-
             this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
             {
                 var codeType = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_CodeType), engine);
 
-                string script = "";
+                string script = string.Empty;
                 switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CodeType), engine))
                 {
                     case "code":
@@ -179,58 +112,59 @@ namespace taskt.Core.Automation.Commands
                         script = System.IO.File.ReadAllText(scriptFile);
                         break;
                 }
-                //if (codeType == "code")
+
+                var args = v_Arguments.ExpandValueOrUserVariable(engine);
+
+                //// run script
+                //OpenQA.Selenium.IJavaScriptExecutor js = (OpenQA.Selenium.IJavaScriptExecutor)seleniumInstance;
+
+                //object result;
+                //if (string.IsNullOrEmpty(args))
                 //{
-                //    script = v_ScriptCode.ExpandValueOrUserVariable(engine);
+                //    if (timeOut > 1)
+                //    {
+                //        result = js.ExecuteAsyncScript(script);
+                //    }
+                //    else
+                //    {
+                //        result = js.ExecuteScript(script);
+                //    }
                 //}
-                //else if (codeType == "file")
+                //else
                 //{
-                //    var scriptFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_ScriptCode), new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "js"), engine);
-                //    script = System.IO.File.ReadAllText(scriptFile);
+                //    if (timeOut > 1)
+                //    {
+                //        result = js.ExecuteAsyncScript(script, args);
+                //    }
+                //    else
+                //    {
+                //        result = js.ExecuteScript(script, args);
+                //    }
                 //}
 
-                var args = v_Args.ExpandValueOrUserVariable(engine);
-
-                // configure timeout
-                var timeOut = this.ExpandValueOrUserVariableAsInteger(nameof(v_TimeOut), engine);
-
-                // set driver timeout
-                if (timeOut > 0)
-                {
-                    seleniumInstance.Manage().Timeouts().AsynchronousJavaScript = new TimeSpan(0, 0, timeOut);
-                }
+                //// apply result to variable
+                //if ((result != null) && (!string.IsNullOrEmpty(v_Result)))
+                //{
+                //    result.ToString().StoreInUserVariable(engine, v_Result);
+                //}
 
                 // run script
-                OpenQA.Selenium.IJavaScriptExecutor js = (OpenQA.Selenium.IJavaScriptExecutor)seleniumInstance;
+                var js = (OpenQA.Selenium.IJavaScriptExecutor)seleniumInstance;
 
                 object result;
                 if (string.IsNullOrEmpty(args))
                 {
-                    if (timeOut > 1)
-                    {
-                        result = js.ExecuteAsyncScript(script);
-                    }
-                    else
-                    {
-                        result = js.ExecuteScript(script);
-                    }
+                    result = js.ExecuteScript(script);
                 }
                 else
                 {
-                    if (timeOut > 1)
-                    {
-                        result = js.ExecuteAsyncScript(script, args);
-                    }
-                    else
-                    {
-                        result = js.ExecuteScript(script, args);
-                    }
+                    result = js.ExecuteScript(script, args);
                 }
 
                 // apply result to variable
-                if ((result != null) && (!string.IsNullOrEmpty(v_Result)))
+                if (!string.IsNullOrEmpty(v_Result))
                 {
-                    result.ToString().StoreInUserVariable(engine, v_Result);
+                    (result?.ToString() ?? string.Empty).StoreInUserVariable(engine, v_Result);
                 }
             }), engine);
         }
