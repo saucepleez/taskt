@@ -5552,6 +5552,33 @@ namespace taskt.Core.Script
         {
             // SeleniumBrowserExecuteJavaScriptCommand v_Args -> v_Arguments
             ChangeAttributeName(doc, "SeleniumBrowserExecuteJavaScriptCommand", "v_Args", "v_Arguments");
+
+            // SeleniumBrowserExecuteJavaScriptCommand -> SeleniumBrowserExecuteJavaScriptFromFileCommand
+            ChangeToOtherCommand(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserExecuteJavaScriptCommand":
+                        var typeAttr = el.Attribute("v_CodeType");
+                        if (typeAttr != null)
+                        {
+                            var v = typeAttr.Value.ToLower();
+                            return (v == "file");
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                        
+                    default:
+                        return false;
+                }
+            }), "SeleniumBrowserExecuteJavaScriptFromFileCommand", "Execute JavaScript From File", 
+                new List<(string, string)>()
+                {
+                    ("v_ScriptCode", "v_FilePath"),
+                }
+            );
         }
 
         /// <summary>
