@@ -5396,7 +5396,6 @@ namespace taskt.Core.Script
                     case "SeleniumBrowserGetAWebElementValuesAsDictionaryCommand":
                     case "SeleniumBrowserGetAWebElementValuesAsListCommand":
                     case "SeleniumBrowserGetTableValueAsDataTableCommand":
-                    case "SeleniumBrowserWebElementActionCommand":
                         return true;
                     default:
                         return false;
@@ -5410,12 +5409,18 @@ namespace taskt.Core.Script
             });
 
             // SeleniumBrowserWebElementActionCommand
+            // v_SeleniumSearchType -> v_SearchMethod, v_SeleniumSearchParameter -> v_SearchParameter
+            // v_SeleniumElementIndex -> v_WebElementIndex, v_SeleniumElementAction -> v_WebElementAction
             // v_SeleniumElementAction -> v_WebElementAction, v_ScrollToElement -> v_ScrollToWebElement
             ChangeMultiAttributeNames(doc, "SeleniumBrowserWebElementActionCommand",
                 new List<(string, string)>()
                 {
+                    ("v_SeleniumSearchType", "v_SearchMethod"),
+                    ("v_SeleniumSearchParameter", "v_SearchParameter"),
+                    ("v_SeleniumElementIndex", "v_WebElementIndex"),
                     ("v_SeleniumElementAction", "v_WebElementAction"),
                     ("v_ScrollToElement", "v_ScrollToWebElement"),
+                    ("v_WaitTime", "v_WaitTimeForWebElement"),
                 }
             );
 
