@@ -1314,7 +1314,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserNavigateForwardCommand.cs" />
     <Compile Include="Core\Automation\Commands\IEGroup\IEBrowserNavigateURLCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserNavigateToURLCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserRefreshCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserRefreshWebBrowserCommand.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\SetWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\MiscGroup\SMTPSendEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFileGroup\StartApplicationCommand.cs" />

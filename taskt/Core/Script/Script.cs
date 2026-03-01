@@ -5579,6 +5579,9 @@ namespace taskt.Core.Script
                     ("v_ScriptCode", "v_FilePath"),
                 }
             );
+
+            // SeleniumBrowserRefreshCommand -> SeleniumBrowserRefreshWebBrowserCommand
+            ChangeCommandName(doc, "SeleniumBrowserRefreshCommand", "SeleniumBrowserRefreshWebBrowserCommand", "Refresh Web Browser");
         }
 
         /// <summary>
