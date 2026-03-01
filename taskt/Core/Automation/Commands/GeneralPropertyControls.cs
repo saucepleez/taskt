@@ -87,6 +87,14 @@ namespace taskt.Core.Automation.Commands
         public static string v_Result { get; }
 
         /// <summary>
+        /// specify variable name to store result (optional)
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        public static string v_OptionalResult { get; set; }
+
+        /// <summary>
         /// input instance (variable) name for specify the variable
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -101,22 +109,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Variable")]
         public static string v_InputInstanceName { get; }
-
-        ///// <summary>
-        ///// combobox has Error
-        ///// </summary>
-        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        //[PropertyUISelectionOption("Error")]
-        //[PropertyDetailSampleUsage("**Error**", "Rise an Error")]
-        //public static string v_ComboBoxHasError { get; }
-
-        ///// <summary>
-        ///// combobox has Error and Ignore
-        ///// </summary>
-        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBoxHasError))]
-        //[PropertyUISelectionOption("Ignore")]
-        //[PropertyDetailSampleUsage("**Ignore**", "Nothing To Do")]
-        //public static string v_ComboBoxHasErrorIgnore { get; }
 
         #endregion
     }
