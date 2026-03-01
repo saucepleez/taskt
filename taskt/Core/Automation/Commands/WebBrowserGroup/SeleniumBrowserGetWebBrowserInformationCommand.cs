@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser")]
-    [Attributes.ClassAttributes.SubGruop("Instance")]
+    [Attributes.ClassAttributes.SubGruop("Get From Web Browser")]
     [Attributes.ClassAttributes.CommandSettings("Get Web Browser Information")]
     [Attributes.ClassAttributes.Description("This command allows you to Get Web Browser Information.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get Web Browser Information.")]
