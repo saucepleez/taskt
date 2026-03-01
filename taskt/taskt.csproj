@@ -1278,7 +1278,7 @@
     <Compile Include="Core\Automation\Commands\FolderGroup\RenameFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFileGroup\LoadScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserSwitchWebBrowserFrameCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserTakeScreenshotCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserTakeScreenshotOfWebBrowserCommand.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouseGroup\EnterShortcutKeyCommand.cs" />
     <Compile Include="Core\Automation\Commands\EngineGroup\SetEnginePreferenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\ErrorGroup\ThrowExceptionCommand.cs" />

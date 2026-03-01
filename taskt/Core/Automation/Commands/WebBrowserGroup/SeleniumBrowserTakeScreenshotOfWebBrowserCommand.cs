@@ -10,14 +10,14 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser")]
     [Attributes.ClassAttributes.SubGruop("Web Browser Actions")]
-    [Attributes.ClassAttributes.CommandSettings("Take Screenshot")]
+    [Attributes.ClassAttributes.CommandSettings("Take Screenshot Of Web Browser")]
     [Attributes.ClassAttributes.Description("This command allows you to take a screenshot in Selenium web browser session.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to take a screenshot from the current displayed webpage within the web browser.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserTakeScreenshotCommand : ASeleniumWebDriverActionCommands
+    public sealed class SeleniumBrowserTakeScreenshotOfWebBrowserCommand : ASeleniumWebDriverActionCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(7000)]
         public string v_SeleniumScreenshotFileNameParameter { get; set; }
 
-        public SeleniumBrowserTakeScreenshotCommand()
+        public SeleniumBrowserTakeScreenshotOfWebBrowserCommand()
         {
             //this.CommandName = "SeleniumBrowserTakeScreenshotCommand";
             //this.SelectionName = "Take Screenshot";

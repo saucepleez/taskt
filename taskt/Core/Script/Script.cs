@@ -5582,6 +5582,9 @@ namespace taskt.Core.Script
 
             // SeleniumBrowserRefreshCommand -> SeleniumBrowserRefreshWebBrowserCommand
             ChangeCommandName(doc, "SeleniumBrowserRefreshCommand", "SeleniumBrowserRefreshWebBrowserCommand", "Refresh Web Browser");
+
+            // SeleniumBrowserTakeScreenshotCommand -> SeleniumBrowserTakeScreenshotOfWebBrowserCommand
+            ChangeCommandName(doc, "SeleniumBrowserTakeScreenshotCommand", "SeleniumBrowserTakeScreenshotOfWebBrowserCommand", "Take Screenshot Of Web Browser");
         }
 
         /// <summary>
