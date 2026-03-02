@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("JavaScript File")]
         [PropertyDetailSampleUsage("**c:\\js\\mycode.js**", "Specify the JavaScript File Path")]
         [PropertyDetailSampleUsage("**{{{vFile}}}**", "Specify the Variable Value **vCode** for JavaScript Code or JavaScript File Path")]
-        [PropertyParameterOrder(7000)]
+        [PropertyParameterOrder(6000)]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("The value of the argument can be obtained with 'arguments[0]' in code.")]
         [PropertyIsOptional(true)]
         [PropertyDisplayText(false, "Arguments")]
-        [PropertyParameterOrder(9000)]
+        [PropertyParameterOrder(7000)]
         public string v_Arguments { get; set; }
 
         [XmlAttribute]
@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Variable Name to Recieve Result Value")]
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyParameterOrder(9100)]
+        [PropertyParameterOrder(8000)]
         public string v_Result { get; set; }
 
         public SeleniumBrowserExecuteJavaScriptFromFileCommand()

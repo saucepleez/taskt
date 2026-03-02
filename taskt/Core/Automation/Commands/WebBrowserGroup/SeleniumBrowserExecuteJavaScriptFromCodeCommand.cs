@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
         [PropertyValidationRule("JavaScript Code", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(false, "")]
-        [PropertyParameterOrder(7000)]
+        [PropertyParameterOrder(6000)]
         public string v_ScriptCode { get; set; }
 
         //[XmlAttribute]
@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("The value of the argument can be obtained with 'arguments[0]' in code.")]
         [PropertyIsOptional(true)]
         [PropertyDisplayText(false, "Arguments")]
-        [PropertyParameterOrder(9000)]
+        [PropertyParameterOrder(7000)]
         public string v_Arguments { get; set; }
 
         [XmlAttribute]
@@ -81,7 +81,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Variable Name to Recieve Result Value")]
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyParameterOrder(9100)]
+        [PropertyParameterOrder(8000)]
         public string v_Result { get; set; }
 
         public SeleniumBrowserExecuteJavaScriptFromCodeCommand()
