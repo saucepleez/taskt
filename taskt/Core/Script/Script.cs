@@ -750,9 +750,13 @@ namespace taskt.Core.Script
             {
                 convertTo3_5_2_59(doc);
             }
-            if (IsOldVersion(myVersion, "3.5.2.60"))
+            if (IsOldVersion(myVersion, "3.5.2.61"))    // this method use <= 3.5.2.60
             {
                 convertTo3_5_2_60(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.61"))
+            {
+                convertTo3_5_2_61(doc);
             }
             return doc;
         }
@@ -5585,6 +5589,12 @@ namespace taskt.Core.Script
 
             // SeleniumBrowserTakeScreenshotCommand -> SeleniumBrowserTakeScreenshotOfWebBrowserCommand
             ChangeCommandName(doc, "SeleniumBrowserTakeScreenshotCommand", "SeleniumBrowserTakeScreenshotOfWebBrowserCommand", "Take Screenshot Of Web Browser");
+        }
+
+        private static void convertTo3_5_2_61(XDocument doc)
+        {
+            // SeleniumBrowserExecuteJavaScriptCommand -> SeleniumBrowserExecuteJavaScriptFromCodeCommand
+            ChangeCommandName(doc, "SeleniumBrowserExecuteJavaScriptCommand", "SeleniumBrowserExecuteJavaScriptFromCodeCommand", "Execute JavaScript From Code");
         }
 
         /// <summary>

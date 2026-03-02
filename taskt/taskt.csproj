@@ -1311,7 +1311,7 @@
     <Compile Include="Core\Automation\Commands\ApplicationScriptFileGroup\RunBatchScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\IEGroup\IEBrowserElementActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserWebElementActionCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserExecuteJavaScriptCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserExecuteJavaScriptFromCodeCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserNavigateBackCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserNavigateForwardCommand.cs" />
     <Compile Include="Core\Automation\Commands\IEGroup\IEBrowserNavigateURLCommand.cs" />
