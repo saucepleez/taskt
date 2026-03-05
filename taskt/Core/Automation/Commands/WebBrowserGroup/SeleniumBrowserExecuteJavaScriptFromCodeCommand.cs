@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserExecuteJavaScriptFromCodeCommand : ASeleniumWebDriverActionCommands, ICanExecuteJavaScriptToWebDriver
+    public sealed class SeleniumBrowserExecuteJavaScriptFromCodeCommand : ASeleniumExecuteJavaScriptCommands, ICanExecuteJavaScriptToWebDriver
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -64,25 +64,25 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterOrder(8000)]
         //public string v_TimeOut { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Arguments")]
-        [InputSpecification("Arguments", true)]
-        [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Argument")]
-        [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Argument")]
-        [Remarks("The value of the argument can be obtained with 'arguments[0]' in code.")]
-        [PropertyIsOptional(true)]
-        [PropertyDisplayText(false, "Arguments")]
-        [PropertyParameterOrder(7000)]
-        public string v_Arguments { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Arguments")]
+        //[InputSpecification("Arguments", true)]
+        //[PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Argument")]
+        //[PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Argument")]
+        //[Remarks("The value of the argument can be obtained with 'arguments[0]' in code.")]
+        //[PropertyIsOptional(true)]
+        //[PropertyDisplayText(false, "Arguments")]
+        //[PropertyParameterOrder(7000)]
+        //public string v_Arguments { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [PropertyDescription("Variable Name to Recieve Result Value")]
-        [PropertyIsOptional(true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyParameterOrder(8000)]
-        public string v_Result { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //[PropertyDescription("Variable Name to Recieve Result Value")]
+        //[PropertyIsOptional(true)]
+        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        //[PropertyParameterOrder(8000)]
+        //public string v_Result { get; set; }
 
         public SeleniumBrowserExecuteJavaScriptFromCodeCommand()
         {
@@ -114,7 +114,7 @@ namespace taskt.Core.Automation.Commands
                 //}
 
                 var script = v_ScriptCode.ExpandValueOrUserVariable(engine);
-                var args = v_Arguments.ExpandValueOrUserVariable(engine);
+                //var args = v_Arguments.ExpandValueOrUserVariable(engine);
 
                 //// run script
                 //OpenQA.Selenium.IJavaScriptExecutor js = (OpenQA.Selenium.IJavaScriptExecutor)seleniumInstance;
@@ -149,24 +149,26 @@ namespace taskt.Core.Automation.Commands
                 //    result.ToString().StoreInUserVariable(engine, v_Result);
                 //}
 
-                // run script
-                var js = (OpenQA.Selenium.IJavaScriptExecutor)seleniumInstance;
+                //// run script
+                //var js = (OpenQA.Selenium.IJavaScriptExecutor)seleniumInstance;
 
-                object result;
-                if (string.IsNullOrEmpty(args))
-                {
-                    result = js.ExecuteScript(script);
-                }
-                else
-                {
-                    result = js.ExecuteScript(script, args);
-                }
+                //object result;
+                //if (string.IsNullOrEmpty(args))
+                //{
+                //    result = js.ExecuteScript(script);
+                //}
+                //else
+                //{
+                //    result = js.ExecuteScript(script, args);
+                //}
 
-                // apply result to variable
-                if (!string.IsNullOrEmpty(v_Result))
-                {
-                    (result?.ToString() ?? string.Empty).StoreInUserVariable(engine, v_Result);
-                }
+                //// apply result to variable
+                //if (!string.IsNullOrEmpty(v_Result))
+                //{
+                //    (result?.ToString() ?? string.Empty).StoreInUserVariable(engine, v_Result);
+                //}
+
+                this.ExecuteJavaScript(seleniumInstance, script);
             }), engine);
         }
     }
