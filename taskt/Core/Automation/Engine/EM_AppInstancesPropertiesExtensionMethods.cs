@@ -100,6 +100,34 @@ namespace taskt.Core.Automation.Engine
         }
 
         /// <summary>
+        /// get App Instance name
+        /// </summary>
+        /// <param name="me"></param>
+        /// <param name="instance"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static string GetAppInstanceName(this IAppInstancesProperties me, object instance)
+        {
+            string name = string.Empty;
+            foreach(var kv in me.AppInstances)
+            {
+                if (kv.Value == instance)
+                {
+                    name = kv.Key;
+                    break;
+                }
+            }
+            if (!string.IsNullOrEmpty(name))
+            {
+                return name;
+            }
+            else
+            {
+                throw new Exception("Instance not found.");
+            }
+        }
+
+        /// <summary>
         /// create new instance name (not dup)
         /// </summary>
         /// <param name="me"></param>
