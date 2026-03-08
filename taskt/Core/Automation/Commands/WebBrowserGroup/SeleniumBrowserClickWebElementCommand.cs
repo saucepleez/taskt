@@ -80,20 +80,6 @@ namespace taskt.Core.Automation.Commands
                             break;
 
                         default:
-                            //var scrollJson = JObject.Parse(
-                            //                    this.ExecuteJavaScript(dr,
-                            //                        "return JSON.stringify({x: window.scrollX, y: window.scrollY})"
-                            //                    ).ToString());
-                            //var scrollX = scrollJson.Value<int>("x");
-                            //var scrollY = scrollJson.Value<int>("y");
-
-                            //var screenJson = JObject.Parse(
-                            //                    this.ExecuteJavaScript(dr,
-                            //                        "return JSON.stringify({x: window.screenX, y: window.screenY})"
-                            //                    ).ToString());
-                            //var screenX = screenJson.Value<int>("x");
-                            //var screenY = screenJson.Value<int>("y");
-
                             int baseX, baseY;
                             using (var vX = new InnerScriptVariable(engine))
                             {
@@ -120,8 +106,6 @@ namespace taskt.Core.Automation.Commands
                             var offsetX = this.ExpandValueOrUserVariableAsInteger(nameof(v_XOffset), engine);
                             var offsetY = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffset), engine);
 
-                            //var clickX = elementLocation.X - scrollX + screenX + offsetX;
-                            //var clickY = elementLocation.Y - scrollY + screenY + offsetY;
                             var clickX = elementLocation.X + baseX + offsetX;
                             var clickY = elementLocation.Y + baseY + offsetY;
 
