@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Engine
 
         public Dictionary<string, Script.Script> PreloadedTasks { get; set; }
 
-        
+
         public ErrorHandlingCommand ErrorHandler;
 
         public WhenErrorOccurs WhenErrorOccursBehavior { get; set; }
