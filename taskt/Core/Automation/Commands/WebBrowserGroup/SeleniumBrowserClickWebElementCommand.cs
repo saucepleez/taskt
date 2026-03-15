@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserClickWebElementCommand : ASeleniumWebElementActionAndScrollCommands, ICanExecuteJavaScriptToWebDriver
+    public sealed class SeleniumBrowserClickWebElementCommand : ASeleniumWebElementActionAndScrollCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
@@ -80,34 +80,54 @@ namespace taskt.Core.Automation.Commands
                             break;
 
                         default:
-                            int baseX, baseY;
+                            //int baseX, baseY;
+                            //using (var vX = new InnerScriptVariable(engine))
+                            //{
+                            //    using (var vY = new InnerScriptVariable(engine))
+                            //    {
+                            //        var insName = this.GetInstanceNameFromWebBrowserInstance(dr, engine);
+
+                            //        var getPos = new SeleniumBrowserGetWebBrowserPositionCommand()
+                            //        {
+                            //            v_InstanceName = insName,
+                            //            v_PositionType = "Viewport",
+                            //            v_XPosition = vX.VariableName,
+                            //            v_YPosition = vY.VariableName,
+                            //        };
+                            //        getPos.RunCommand(engine);
+
+                            //        baseX = int.Parse(vX.VariableValue.ToString());
+                            //        baseY = int.Parse(vY.VariableValue.ToString());
+                            //    }
+                            //}
+
+                            //var elementLocation = el.Location;
+
+                            int elemX, elemY;
                             using (var vX = new InnerScriptVariable(engine))
                             {
                                 using (var vY = new InnerScriptVariable(engine))
                                 {
-                                    var insName = this.GetInstanceNameFromWebBrowserInstance(dr, engine);
-
-                                    var getPos = new SeleniumBrowserGetWebBrowserPositionCommand()
+                                    var getPos = new SeleniumWebElementPositionCommand()
                                     {
-                                        v_InstanceName = insName,
-                                        v_PositionType = "Viewport",
+                                        v_WebElement = this.v_WebElement,
                                         v_XPosition = vX.VariableName,
                                         v_YPosition = vY.VariableName,
+                                        v_PositionType = "Screen",
                                     };
                                     getPos.RunCommand(engine);
-
-                                    baseX = int.Parse(vX.VariableValue.ToString());
-                                    baseY = int.Parse(vY.VariableValue.ToString());
+                                    elemX = int.Parse(vX.VariableValue.ToString());
+                                    elemY = int.Parse(vY.VariableValue.ToString());
                                 }
                             }
-
-                            var elementLocation = el.Location;
 
                             var offsetX = this.ExpandValueOrUserVariableAsInteger(nameof(v_XOffset), engine);
                             var offsetY = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffset), engine);
 
-                            var clickX = elementLocation.X + baseX + offsetX;
-                            var clickY = elementLocation.Y + baseY + offsetY;
+                            //var clickX = elementLocation.X + baseX + offsetX;
+                            //var clickY = elementLocation.Y + baseY + offsetY;
+                            var clickX = elemX + offsetX;
+                            var clickY = elemY + offsetY;
 
                             var clickCommand = new MoveMouseCommand()
                             {
