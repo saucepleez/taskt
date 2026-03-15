@@ -8,45 +8,39 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="053191a7-41e1-453c-8920-1fbbd786fb93" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute Edge" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserCreateWebBrowserInstanceCommand" CommandID="50b75ff4-9161-49e1-8757-cede74b8a991" CommandName="SeleniumBrowserCreateWebBrowserInstanceCommand" IsCommented="false" SelectionName="Create Web Browser Instance" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_EngineType="Edge" v_InstanceTracking="" v_BrowserWindowOption="" v_SeleniumOptions="" v_Handle="" v_BrowserPath="" v_WebDriverPath="" v_HeadlessMode="No" />
+      <ScriptCommand xsi:type="SeleniumBrowserCreateWebBrowserInstanceCommand" CommandID="50b75ff4-9161-49e1-8757-cede74b8a991" CommandName="SeleniumBrowserCreateWebBrowserInstanceCommand" IsCommented="false" SelectionName="Create Web Browser Instance" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_BrowserType="Edge" v_WebDriverPath="" v_BrowserWindowOption="" v_HeadlessMode="No" v_SeleniumOptions="" v_WindowHandleResult="" v_BrowserPath="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="4b04f96e-064d-4ebe-a8cc-9ebd0123185b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Move to https://rcktrncn.githu.io/rpa-web/" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserNavigateURLCommand" CommandID="3add5e2d-aa3e-442e-a030-1fc2bafa5055" CommandName="SeleniumBrowserNavigateURLCommand" IsCommented="false" SelectionName="Navigate to URL" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_URL="https://rcktrncn.github.io/rpa-web/" v_UseHttps="" />
+      <ScriptCommand xsi:type="SeleniumBrowserNavigateToURLCommand" CommandID="3add5e2d-aa3e-442e-a030-1fc2bafa5055" CommandName="SeleniumBrowserNavigateToURLCommand" IsCommented="false" SelectionName="Navigate To URL" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_URL="https://rcktrncn.github.io/rpa-web/" v_UseHttps="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="20c8b970-0e6d-4b94-af2b-afe48ecd2617" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Get Web Browser Informations" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserGetWebBrowserInfoCommand" CommandID="063884f8-3d76-447f-b6a7-356c0e3e1ea5" CommandName="SeleniumBrowserGetWebBrowserInfoCommand" IsCommented="false" SelectionName="Get Web Browser Info" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_InfoType="Window Title" v_applyToVariableName="vTitle" />
+      <ScriptCommand xsi:type="SeleniumBrowserGetWebBrowserInformationCommand" CommandID="063884f8-3d76-447f-b6a7-356c0e3e1ea5" CommandName="SeleniumBrowserGetWebBrowserInformationCommand" IsCommented="false" SelectionName="Get Web Browser Information" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_Result="vTitle" v_InfoType="Window Title" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserGetWebBrowserInfoCommand" CommandID="0170eaf2-db3b-43ac-9087-0ae62584f8ce" CommandName="SeleniumBrowserGetWebBrowserInfoCommand" IsCommented="false" SelectionName="Get Web Browser Info" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_InfoType="Window URL" v_applyToVariableName="vURL" />
+      <ScriptCommand xsi:type="SeleniumBrowserGetWebBrowserInformationCommand" CommandID="0170eaf2-db3b-43ac-9087-0ae62584f8ce" CommandName="SeleniumBrowserGetWebBrowserInformationCommand" IsCommented="false" SelectionName="Get Web Browser Information" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_Result="vURL" v_InfoType="Window URL" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserGetWebBrowserInfoCommand" CommandID="08f936c7-3209-4869-b85a-b4e364001688" CommandName="SeleniumBrowserGetWebBrowserInfoCommand" IsCommented="false" SelectionName="Get Web Browser Info" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_InfoType="HTML Page Source" v_applyToVariableName="vSource" />
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="40d835fe-a0b1-408c-b940-4a38162b6b70" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Title: ⦃vTitle⦄&#xD;&#xA;URL: ⦃vURL⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="40d835fe-a0b1-408c-b940-4a38162b6b70" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Title: ⦃vTitle⦄&#xD;&#xA;URL: ⦃vURL⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="30b65654-4491-4b05-8fe9-e32736163778" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Close Edge" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="e55a23c6-4c45-42cf-9cbf-0e62ff2230b2" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vSource⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
-    </ScriptAction>
-    <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="30b65654-4491-4b05-8fe9-e32736163778" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" v_Comment="Close Edge" CommandEnabled="true" />
-    </ScriptAction>
-    <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserCloseWebBrowserInstanceCommand" CommandID="98221321-73ba-4d01-b13d-0f72692c2e19" CommandName="SeleniumBrowserCloseWebBrowserInstanceCommand" IsCommented="false" SelectionName="Close Web Browser Instance" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" />
+      <ScriptCommand xsi:type="SeleniumBrowserCloseWebBrowserInstanceCommand" CommandID="98221321-73ba-4d01-b13d-0f72692c2e19" CommandName="SeleniumBrowserCloseWebBrowserInstanceCommand" IsCommented="false" SelectionName="Close Web Browser Instance" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" />
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.10</TasktVersion>
+    <TasktVersion>3.5.2.61</TasktVersion>
     <Author />
     <LastRunTime>2024-10-13T18:56:48.7031393+09:00</LastRunTime>
     <RunTimes>3</RunTimes>
-    <Revision>7</Revision>
+    <Revision>9</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>
@@ -57,10 +51,6 @@
     </ScriptVariable>
     <ScriptVariable>
       <VariableName>vURL</VariableName>
-      <VariableValue xsi:type="xsd:string"></VariableValue>
-    </ScriptVariable>
-    <ScriptVariable>
-      <VariableName>vSource</VariableName>
       <VariableValue xsi:type="xsd:string"></VariableValue>
     </ScriptVariable>
   </Variables>
