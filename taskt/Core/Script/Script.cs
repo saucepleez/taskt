@@ -4034,25 +4034,25 @@ namespace taskt.Core.Script
 
         private static void convertTo3_5_2_18(XDocument doc)
         {
-            // SeleniumBrowserGetWebBrowserInformationCommand Handles JSON Array -> SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand
-            ChangeToOtherCommand(doc, new Func<XElement, bool>(elem =>
-                {
-                    if ((GetCommandName(elem) == "SeleniumBrowserGetWebBrowserInformationCommand") &&
-                        (elem.Attribute("v_InfoType").Value.ToLower() == "handles json array"))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }),
-                "SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand", "Get Window And Tab Handles As JSON",
-                new List<(string, string)>()
-                {
-                    ("v_applyToVariableName", "v_Result"),
-                }
-            );
+            //// SeleniumBrowserGetWebBrowserInformationCommand Handles JSON Array -> SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand
+            //ChangeToOtherCommand(doc, new Func<XElement, bool>(elem =>
+            //    {
+            //        if ((GetCommandName(elem) == "SeleniumBrowserGetWebBrowserInformationCommand") &&
+            //            (elem.Attribute("v_InfoType").Value.ToLower() == "handles json array"))
+            //        {
+            //            return true;
+            //        }
+            //        else
+            //        {
+            //            return false;
+            //        }
+            //    }),
+            //    "SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand", "Get Window And Tab Handles As JSON",
+            //    new List<(string, string)>()
+            //    {
+            //        ("v_applyToVariableName", "v_Result"),
+            //    }
+            //);
 
             // File Commands v_SourceFilePath -> v_TargetFilePath
             ChangeAttributeName(doc, new Func<XElement, bool>(elem =>
@@ -5616,6 +5616,31 @@ namespace taskt.Core.Script
 
             // SeleniumBrowserGetAWebElementValuesAsDataTableCommand -> SeleniumBrowserGetOneWebElementValuesAsDataTableCommand
             ChangeCommandName(doc, "SeleniumBrowserGetAWebElementValuesAsDataTableCommand", "SeleniumBrowserGetOneWebElementValuesAsDataTableCommand", "Get One WebElement Values As DataTable");
+
+            // SeleniumBrowserGetWebBrowserInformationCommand -> new commands
+            var getBrowserInfo = GetCommands(doc, "SeleniumBrowserGetWebBrowserInformationCommand");
+            var getHTML = new List<XElement>();
+            var getJSONHandle = new List<XElement>();
+            foreach(var cmd in getBrowserInfo)
+            {
+                var attr = cmd.Attribute("v_InfoType");
+                if (attr != null)
+                {
+                    switch (attr.Value.ToLower())
+                    {
+                        case "html page source":
+                            getHTML.Add(cmd);
+                            break;
+                        case "handles json array":
+                            getJSONHandle.Add(cmd);
+                            break;
+                    }
+                }
+            }
+            // SeleniumBrowserGetWebBrowserInformationCommand -> SeleniumBrowserGetWebBrowserHTMLSourceCommand
+            ChangeToOtherCommandProcess(getHTML, "SeleniumBrowserGetWebBrowserHTMLSourceCommand", "Get Web Browser HTML Source", new List<(string, string)>());
+            // SeleniumBrowserGetWebBrowserInformationCommand -> SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand
+            ChangeToOtherCommandProcess(getJSONHandle, "SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand", "Get Window And Tab Handles As JSON", new List<(string, string)>());
         }
 
         /// <summary>
