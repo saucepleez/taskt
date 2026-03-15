@@ -5601,6 +5601,21 @@ namespace taskt.Core.Script
 
             // SeleniumWebElementSizeCommand -> SeleniumBrowserGetWebElementSizeCommand
             ChangeCommandName(doc, "SeleniumWebElementSizeCommand", "SeleniumBrowserGetWebElementSizeCommand", "Get WebElement Size");
+
+            // SeleniumBrowserGetMatchedWebElementsCommand -> SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetMatchedWebElementsCommand", "SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand", "Get Matched WebElements HTML As List");
+
+            // SeleniumBrowserGetTableValueAsDataTableCommand -> SeleniumBrowserGetTableValuesAsDataTableCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetTableValueAsDataTableCommand", "SeleniumBrowserGetTableValuesAsDataTableCommand", "Get Table Values As DataTable");
+
+            // SeleniumBrowserGetAWebElementValuesAsDictionaryCommand -> SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAWebElementValuesAsDictionaryCommand", "SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand", "Get One WebElement Values As Dictionary");
+
+            // SeleniumBrowserGetAWebElementValuesAsListCommand -> SeleniumBrowserGetOneWebElementValuesAsListCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAWebElementValuesAsListCommand", "SeleniumBrowserGetOneWebElementValuesAsListCommand", "Get One WebElement Values As List");
+
+            // SeleniumBrowserGetAWebElementValuesAsDataTableCommand -> SeleniumBrowserGetOneWebElementValuesAsDataTableCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAWebElementValuesAsDataTableCommand", "SeleniumBrowserGetOneWebElementValuesAsDataTableCommand", "Get One WebElement Values As DataTable");
         }
 
         /// <summary>

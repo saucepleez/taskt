@@ -9,14 +9,14 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser")]
     [Attributes.ClassAttributes.SubGruop("Search WebElement")]
-    [Attributes.ClassAttributes.CommandSettings("Get Matched WebElements")]
+    [Attributes.ClassAttributes.CommandSettings("Get Matched WebElements HTML As List")]
     [Attributes.ClassAttributes.Description("This command allows you to get Matched WebElements HTML.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Matched WebElements HTML.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetMatchedWebElementsCommand : ASeleniumSearchMultiWebElementsFromWebDriverCommands, IListResultProperties
+    public sealed class SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand : ASeleniumSearchMultiWebElementsFromWebDriverCommands, IListResultProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_WaitTime))]
         //public string v_WaitTimeForWebElement { get; set; }
 
-        public SeleniumBrowserGetMatchedWebElementsCommand()
+        public SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand()
         {
         }
 

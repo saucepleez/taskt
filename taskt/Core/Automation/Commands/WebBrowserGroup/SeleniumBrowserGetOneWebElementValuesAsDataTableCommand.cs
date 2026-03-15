@@ -2,21 +2,20 @@
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands.WebBrowserGroup;
-using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser")]
     [Attributes.ClassAttributes.SubGruop("Scraping")]
-    [Attributes.ClassAttributes.CommandSettings("Get A WebElement Values As List")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Attributes value for a WebElement As List.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Attributes value for a WebElement As List.")]
+    [Attributes.ClassAttributes.CommandSettings("Get One WebElement Values As DataTable")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Attributes value for One WebElement As DataTable.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Attributes value for One WebElement As DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetAWebElementValuesAsListCommand : ASeleniumGetOneWebElementValuesAsSomethingCommands, IListResultProperties
+    public sealed class SeleniumBrowserGetOneWebElementValuesAsDataTableCommand : ASeleniumGetOneWebElementValuesAsSomethingCommands, IDataTableResultProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -40,19 +39,15 @@ namespace taskt.Core.Automation.Commands
         //public DataTable v_AttributesName { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
         public override string v_Result { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_WaitTime))]
         //public string v_WaitTimeForWebElement { get; set; }
 
-        public SeleniumBrowserGetAWebElementValuesAsListCommand()
+        public SeleniumBrowserGetOneWebElementValuesAsDataTableCommand()
         {
-            //this.CommandName = "SeleniumBrowserGetAnElementValuesAsListCommand";
-            //this.SelectionName = "Get An Element Values As List";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
@@ -60,40 +55,42 @@ namespace taskt.Core.Automation.Commands
             ////(var _, var trgElem) = SeleniumBrowserControls.GetSeleniumBrowserInstanceAndElement(this, nameof(v_InstanceName), nameof(v_SeleniumSearchType), nameof(v_SeleniumSearchParameter), nameof(v_ElementIndex), engine);
             //(var _, var trgElem) = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElement(this, nameof(v_InstanceName), nameof(v_SearchMethod), nameof(v_SearchParameter), nameof(v_WebElementIndex), nameof(v_WaitTimeForWebElement), engine);
 
-            //List<string> newList = new List<string>();
+            //DataTable newDT = new DataTable();
 
-            //SeleniumBrowserControls.GetElementAttributes(trgElem, v_AttributesName, engine, new Action<string, string>((name, value) =>
+            //SeleniumBrowserControls.GetElementAttributes(trgElem, v_AttributesName, engine, new Action<string, string>( (name, value) =>
             //    {
-            //        newList.Add(value);
+            //        if (newDT.Rows.Count == 0)
+            //        {
+            //            newDT.Rows.Add();
+            //        }
+
+            //        if (!newDT.Columns.Contains(name))
+            //        {
+            //            newDT.Columns.Add(name);
+            //        }
+            //        newDT.Rows[0][name] = value;
             //    })
             //);
 
-            ////newList.StoreInUserVariable(engine, v_ListVariableName);
-            //this.StoreListInUserVariable(newList, nameof(v_Result), engine);
+            ////newDT.StoreInUserVariable(engine, v_DataTableVariableName);
+            //this.StoreDataTableInUserVariable(newDT, nameof(v_Result), engine);
 
-            using (var dic = new InnerScriptVariable(engine))
+            var res = this.CreateEmptyDataTable();
+
+            this.GetOneWebElementMultiValuesAction(new Action<string, string, int>((attrName, attrValue, idx) =>
             {
-                var getAsDic = new SeleniumBrowserGetAWebElementValuesAsDictionaryCommand()
+                if (res.Rows.Count == 0)
                 {
-                    v_InstanceName = this.v_InstanceName,
-                    v_SearchMethod = this.v_SearchMethod,
-                    v_SearchParameter = this.v_SearchParameter,
-                    v_WebElementIndex = this.v_WebElementIndex,
-                    v_AttributesName = this.v_AttributesName,
-                    v_Result = dic.VariableName,
-                    v_WaitTimeForWebElement = this.v_WaitTimeForWebElement,
-                };
-                getAsDic.RunCommand(engine);
-
-                var convToList = new ConvertDictionaryToListCommand()
+                    res.Rows.Add();
+                }
+                if (!res.Columns.Contains(attrName))
                 {
-                    v_Dictionary = dic.VariableName,
-                    v_Result = this.v_Result,
-                };
-                convToList.RunCommand(engine);
-            }
+                    res.Columns.Add(attrName);
+                }
+                res.Rows[0][attrName] = attrValue;
+            }), engine);
+            this.StoreDataTableInUserVariable(res, engine);
         }
-
 
         //private void SearchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         //{

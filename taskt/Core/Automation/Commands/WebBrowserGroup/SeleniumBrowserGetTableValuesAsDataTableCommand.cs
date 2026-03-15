@@ -10,14 +10,14 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser")]
     [Attributes.ClassAttributes.SubGruop("Scraping")]
-    [Attributes.ClassAttributes.CommandSettings("Get Table Value As DataTable")]
+    [Attributes.ClassAttributes.CommandSettings("Get Table Values As DataTable")]
     [Attributes.ClassAttributes.Description("This command allows you to get a Table Values As DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a Table Values As DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetTableValueAsDataTableCommand : ASeleniumSearchWebElementFromWebDriverCommands, IDataTableResultProperties
+    public sealed class SeleniumBrowserGetTableValuesAsDataTableCommand : ASeleniumSearchWebElementFromWebDriverCommands, IDataTableResultProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -67,12 +67,8 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_WaitTime))]
         //public string v_WaitTimeForWebElement { get; set; }
 
-        public SeleniumBrowserGetTableValueAsDataTableCommand()
+        public SeleniumBrowserGetTableValuesAsDataTableCommand()
         {
-            //this.CommandName = "SeleniumBrowserGetTableValueAsDataTableCommand";
-            //this.SelectionName = "Get Table Value As DataTable";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)

@@ -107,7 +107,7 @@ namespace taskt.Core.Automation.Commands
                     waitCommand.RunCommand(engine);
                     break;
                 case "get matching webelements":
-                    var getMatching = new SeleniumBrowserGetMatchedWebElementsCommand()
+                    var getMatching = new SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand()
                     {
                         v_InstanceName = this.v_InstanceName,
                         v_SearchMethod = this.v_SearchMethod,
