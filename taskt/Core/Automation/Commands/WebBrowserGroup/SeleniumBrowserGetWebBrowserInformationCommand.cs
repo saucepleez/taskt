@@ -43,40 +43,10 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserGetWebBrowserInformationCommand()
         {
-            //this.CommandName = "SeleniumBrowserInfoCommand";
-            //this.SelectionName = "Get Browser Info";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var seleniumInstance = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstance(v_InstanceName, engine);
-
-            //var requestedInfo = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), engine);
-            //string info = "";
-            //switch (requestedInfo)
-            //{
-            //    case "window title":
-            //        info = seleniumInstance.Title;
-            //        break;
-            //    case "window url":
-            //        info = seleniumInstance.Url;
-            //        break;
-            //    case "current handle":
-            //        info = seleniumInstance.CurrentWindowHandle;
-            //        break;
-            //    case "html page source":
-            //        info = seleniumInstance.PageSource;
-            //        break;
-            //    case "handles json array":
-            //        info = Newtonsoft.Json.JsonConvert.SerializeObject(seleniumInstance.WindowHandles);
-            //        break;
-            //}
-
-            //store data
-            //info.StoreInUserVariable(engine, v_applyToVariableName);
-
             this.WebDriverActionCore(new Action<OpenQA.Selenium.IWebDriver, string>((seleniumInstance, _) =>
             {
                 var info = string.Empty;

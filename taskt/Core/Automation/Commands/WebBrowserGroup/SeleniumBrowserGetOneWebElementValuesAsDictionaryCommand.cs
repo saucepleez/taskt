@@ -48,10 +48,6 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand()
         {
-            //this.CommandName = "SeleniumBrowserGetAnElementValuesAsDictionaryCommand";
-            //this.SelectionName = "Get An Element Values As Dictionary";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)

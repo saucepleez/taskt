@@ -49,10 +49,6 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserGetOneWebElementValuesAsListCommand()
         {
-            //this.CommandName = "SeleniumBrowserGetAnElementValuesAsListCommand";
-            //this.SelectionName = "Get An Element Values As List";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
