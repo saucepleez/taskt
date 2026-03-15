@@ -59,6 +59,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Screen")]
         [PropertyUISelectionOption("Viewport")]
         [PropertyIsOptional(true, "Viewport")]
+        [PropertyDisplayText(true, "Type")]
         [PropertyParameterOrder(7100)]
         public string v_PositionType { get; set; }
 
