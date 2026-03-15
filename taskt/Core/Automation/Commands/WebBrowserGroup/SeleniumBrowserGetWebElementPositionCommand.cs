@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumWebElementPositionCommand : ASeleniumGetFromWebElementCommands, IPositionProperties
+    public sealed class SeleniumBrowserGetWebElementPositionCommand : ASeleniumGetFromWebElementCommands, IPositionProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
@@ -62,7 +62,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(7100)]
         public string v_PositionType { get; set; }
 
-        public SeleniumWebElementPositionCommand()
+        public SeleniumBrowserGetWebElementPositionCommand()
         {
         }
 

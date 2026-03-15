@@ -207,7 +207,7 @@ namespace taskt.Core.Automation.Commands
                                 getOptions.RunCommand(engine);
                                 break;
                             case "get webelement position":
-                                var getPos = new SeleniumWebElementPositionCommand()
+                                var getPos = new SeleniumBrowserGetWebElementPositionCommand()
                                 {
                                     v_WebElement = myWebElem.VariableName,
                                     v_XPosition = parameters["X Variable"],
@@ -217,7 +217,7 @@ namespace taskt.Core.Automation.Commands
                                 getPos.RunCommand(engine);
                                 break;
                             case "get webelement size":
-                                var getSize = new SeleniumWebElementSizeCommand()
+                                var getSize = new SeleniumBrowserGetWebElementSizeCommand()
                                 {
                                     v_WebElement = myWebElem.VariableName,
                                     v_Width = parameters["Width Variable"],

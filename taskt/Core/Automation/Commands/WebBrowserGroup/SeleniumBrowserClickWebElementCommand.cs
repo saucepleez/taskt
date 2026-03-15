@@ -108,7 +108,7 @@ namespace taskt.Core.Automation.Commands
                             {
                                 using (var vY = new InnerScriptVariable(engine))
                                 {
-                                    var getPos = new SeleniumWebElementPositionCommand()
+                                    var getPos = new SeleniumBrowserGetWebElementPositionCommand()
                                     {
                                         v_WebElement = this.v_WebElement,
                                         v_XPosition = vX.VariableName,

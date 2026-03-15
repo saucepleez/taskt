@@ -5595,6 +5595,12 @@ namespace taskt.Core.Script
         {
             // SeleniumBrowserExecuteJavaScriptCommand -> SeleniumBrowserExecuteJavaScriptFromCodeCommand
             ChangeCommandName(doc, "SeleniumBrowserExecuteJavaScriptCommand", "SeleniumBrowserExecuteJavaScriptFromCodeCommand", "Execute JavaScript From Code");
+
+            // SeleniumWebElementPositionCommand -> SeleniumBrowserGetWebElementPositionCommand
+            ChangeCommandName(doc, "SeleniumWebElementPositionCommand", "SeleniumBrowserGetWebElementPositionCommand", "Get WebElement Position");
+
+            // SeleniumWebElementSizeCommand -> SeleniumBrowserGetWebElementSizeCommand
+            ChangeCommandName(doc, "SeleniumWebElementSizeCommand", "SeleniumBrowserGetWebElementSizeCommand", "Get WebElement Size");
         }
 
         /// <summary>

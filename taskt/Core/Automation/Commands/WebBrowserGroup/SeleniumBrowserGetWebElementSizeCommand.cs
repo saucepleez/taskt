@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumWebElementSizeCommand : ASeleniumGetFromWebElementCommands, ISizeProperties
+    public sealed class SeleniumBrowserGetWebElementSizeCommand : ASeleniumGetFromWebElementCommands, ISizeProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(6100)]
         public string v_Height { get; set; }
 
-        public SeleniumWebElementSizeCommand()
+        public SeleniumBrowserGetWebElementSizeCommand()
         {
         }
 
