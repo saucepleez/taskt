@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("taskt")]
-[assembly: AssemblyCopyright("Copyright ©2025")]
+[assembly: AssemblyCopyright("Copyright ©2026")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
