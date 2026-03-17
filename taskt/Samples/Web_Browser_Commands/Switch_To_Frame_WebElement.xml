@@ -2,22 +2,22 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="871bf4d7-4a47-4fff-9131-a7ea0814ee52" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Switch Web Browser Frame sample" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="871bf4d7-4a47-4fff-9131-a7ea0814ee52" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Switch To Frame WebElement sample" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="053191a7-41e1-453c-8920-1fbbd786fb93" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute Edge" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserCreateWebBrowserInstanceCommand" CommandID="50b75ff4-9161-49e1-8757-cede74b8a991" CommandName="SeleniumBrowserCreateWebBrowserInstanceCommand" IsCommented="false" SelectionName="Create Web Browser Instance" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_EngineType="Edge" v_InstanceTracking="" v_BrowserWindowOption="" v_SeleniumOptions="" v_Handle="" v_BrowserPath="" v_WebDriverPath="" v_HeadlessMode="No" />
+      <ScriptCommand xsi:type="SeleniumBrowserCreateWebBrowserInstanceCommand" CommandID="50b75ff4-9161-49e1-8757-cede74b8a991" CommandName="SeleniumBrowserCreateWebBrowserInstanceCommand" IsCommented="false" SelectionName="Create Web Browser Instance" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_BrowserType="Edge" v_WebDriverPath="" v_BrowserWindowOption="" v_HeadlessMode="No" v_SeleniumOptions="" v_WindowHandleResult="" v_BrowserPath="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="4b04f96e-064d-4ebe-a8cc-9ebd0123185b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Move to https://rcktrncn.githu.io/rpa-web/" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserNavigateURLCommand" CommandID="3add5e2d-aa3e-442e-a030-1fc2bafa5055" CommandName="SeleniumBrowserNavigateURLCommand" IsCommented="false" SelectionName="Navigate to URL" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_URL="https://rcktrncn.github.io/rpa-web/" v_UseHttps="" />
+      <ScriptCommand xsi:type="SeleniumBrowserNavigateToURLCommand" CommandID="3add5e2d-aa3e-442e-a030-1fc2bafa5055" CommandName="SeleniumBrowserNavigateToURLCommand" IsCommented="false" SelectionName="Navigate To URL" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_URL="https://rcktrncn.github.io/rpa-web/" v_UseHttps="" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserWebElementActionCommand" CommandID="38da824d-1832-463b-bd67-3848fe526f26" CommandName="SeleniumBrowserWebElementActionCommand" IsCommented="false" SelectionName="WebElement Action" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_SeleniumSearchType="Find Element By XPath" v_SeleniumSearchParameter="//a[@href=&quot;frame.html&quot;]" v_SeleniumElementIndex="" v_SeleniumElementAction="Click WebElement" v_WaitTime="120" v_ScrollToElement="">
+      <ScriptCommand xsi:type="SeleniumBrowserWebElementActionCommand" CommandID="38da824d-1832-463b-bd67-3848fe526f26" CommandName="SeleniumBrowserWebElementActionCommand" IsCommented="false" SelectionName="WebElement Action" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_SearchMethod="Find Element By XPath" v_SearchParameter="//a[@href=&quot;frame.html&quot;]" v_WebElementIndex="" v_WebElementAction="Click WebElement" v_WaitTimeForWebElement="120" v_ScrollToWebElement="">
         <v_WebActionParameterTable>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="WebActionParameterTable102024.112722" msdata:UseCurrentLocale="true">
@@ -72,16 +72,16 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="418c514a-1b2f-4d53-a7ae-af36d93338a2" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Switch to Frame whose name attribute is &quot;menu-frame&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserSearchWebElementCommand" CommandID="a83edefc-aa9f-4118-9e27-94d0d7343acf" CommandName="SeleniumBrowserSearchWebElementCommand" IsCommented="false" SelectionName="Search WebElement" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_SeleniumSearchType="Find Element By XPath" v_SeleniumSearchParameter="//frame[@id=&quot;menu_frame&quot;]" v_ElementIndex="" v_Result="vFrame" v_WaitTime="120" />
+      <ScriptCommand xsi:type="SeleniumBrowserSearchWebElementCommand" CommandID="a83edefc-aa9f-4118-9e27-94d0d7343acf" CommandName="SeleniumBrowserSearchWebElementCommand" IsCommented="false" SelectionName="Search WebElement" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_Result="vFrame" v_SearchMethod="Find Element By XPath" v_SearchParameter="//frame[@id=&quot;menu_frame&quot;]" v_WaitTimeForWebElement="120" v_WebElementIndex="" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserSwitchFrameToWebElementCommand" CommandID="16192ace-c082-4805-9aa6-ec7b38071fae" CommandName="SeleniumBrowserSwitchFrameToWebElementCommand" IsCommented="false" SelectionName="Switch Frame To WebElement" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_WebElement="⦃vFrame⦄" v_WhenFailSwitch="" v_ScrollToElement="" />
+      <ScriptCommand xsi:type="SeleniumBrowserSwitchToFrameWebElementCommand" CommandID="16192ace-c082-4805-9aa6-ec7b38071fae" CommandName="SeleniumBrowserSwitchToFrameWebElementCommand" IsCommented="false" SelectionName="Switch To Frame WebElement" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_WebElement="⦃vFrame⦄" v_WhenFailAction="" v_ScrollToWebElement="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="134cd16d-83ff-4df9-a228-2e849e845c4f" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Click link &quot;B&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserWebElementActionCommand" CommandID="0e160288-08d7-4d77-8c16-55fafb9267d0" CommandName="SeleniumBrowserWebElementActionCommand" IsCommented="false" SelectionName="WebElement Action" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_SeleniumSearchType="Find Element By XPath" v_SeleniumSearchParameter="//a[@href=&quot;frame_b.html&quot;]" v_SeleniumElementIndex="" v_SeleniumElementAction="Click WebElement" v_WaitTime="120" v_ScrollToElement="">
+      <ScriptCommand xsi:type="SeleniumBrowserWebElementActionCommand" CommandID="0e160288-08d7-4d77-8c16-55fafb9267d0" CommandName="SeleniumBrowserWebElementActionCommand" IsCommented="false" SelectionName="WebElement Action" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_SearchMethod="Find Element By XPath" v_SearchParameter="//a[@href=&quot;frame_b.html&quot;]" v_WebElementIndex="" v_WebElementAction="Click WebElement" v_WaitTimeForWebElement="120" v_ScrollToWebElement="">
         <v_WebActionParameterTable>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="WebActionParameterTable102024.112829" msdata:UseCurrentLocale="true">
@@ -136,7 +136,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="24389c8f-5438-4742-8aa7-1456cba03655" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" v_Comment="Click link &quot;Back to Home&quot;, No longer a frame." CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserWebElementActionCommand" CommandID="9ff782c2-4fc0-4693-9b9b-562ccf14222a" CommandName="SeleniumBrowserWebElementActionCommand" IsCommented="false" SelectionName="WebElement Action" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_SeleniumSearchType="Find Element By XPath" v_SeleniumSearchParameter="//a[@href=&quot;index.html&quot;]" v_SeleniumElementIndex="" v_SeleniumElementAction="Click WebElement" v_WaitTime="120" v_ScrollToElement="">
+      <ScriptCommand xsi:type="SeleniumBrowserWebElementActionCommand" CommandID="9ff782c2-4fc0-4693-9b9b-562ccf14222a" CommandName="SeleniumBrowserWebElementActionCommand" IsCommented="false" SelectionName="WebElement Action" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_SearchMethod="Find Element By XPath" v_SearchParameter="//a[@href=&quot;index.html&quot;]" v_WebElementIndex="" v_WebElementAction="Click WebElement" v_WaitTimeForWebElement="120" v_ScrollToWebElement="">
         <v_WebActionParameterTable>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="WebActionParameterTable102024.112946" msdata:UseCurrentLocale="true">
@@ -194,7 +194,7 @@
       <ScriptCommand xsi:type="SeleniumBrowserSwitchWebBrowserFrameCommand" CommandID="a3e5c545-312d-4c79-bece-eab688b6c5c7" CommandName="SeleniumBrowserSwitchWebBrowserFrameCommand" IsCommented="false" SelectionName="Switch Web Browser Frame" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_SelectionType="Parent Frame" v_FrameParameter="0" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserWebElementActionCommand" CommandID="9143c65f-873d-4e84-83d3-55e692746f2a" CommandName="SeleniumBrowserWebElementActionCommand" IsCommented="false" SelectionName="WebElement Action" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_SeleniumSearchType="Find Element By XPath" v_SeleniumSearchParameter="//a[@href=&quot;simple_page.html&quot;]" v_SeleniumElementIndex="" v_SeleniumElementAction="Click WebElement" v_WaitTime="120" v_ScrollToElement="">
+      <ScriptCommand xsi:type="SeleniumBrowserWebElementActionCommand" CommandID="9143c65f-873d-4e84-83d3-55e692746f2a" CommandName="SeleniumBrowserWebElementActionCommand" IsCommented="false" SelectionName="WebElement Action" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_SearchMethod="Find Element By XPath" v_SearchParameter="//a[@href=&quot;simple_page.html&quot;]" v_WebElementIndex="" v_WebElementAction="Click WebElement" v_WaitTimeForWebElement="120" v_ScrollToWebElement="">
         <v_WebActionParameterTable>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="WebActionParameterTable102024.113210" msdata:UseCurrentLocale="true">
@@ -253,11 +253,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.9</TasktVersion>
+    <TasktVersion>3.5.2.61</TasktVersion>
     <Author />
-    <LastRunTime>2024-10-26T17:39:13.6226753+09:00</LastRunTime>
-    <RunTimes>5</RunTimes>
-    <Revision>9</Revision>
+    <LastRunTime>2026-03-17T21:45:28.3326766+09:00</LastRunTime>
+    <RunTimes>6</RunTimes>
+    <Revision>11</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>
