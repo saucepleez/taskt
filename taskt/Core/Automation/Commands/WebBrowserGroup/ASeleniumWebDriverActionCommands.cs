@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
         [PropertyDescription("When Fail Action")]
         [PropertyDisplayText(false, "When Fail Action")]
+        [PropertyValidationRule("When Fail Action", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyIsOptional(true, "Error")]
         [PropertyParameterOrder(10000)]
         public virtual string v_WhenFailAction { get; set; }
     }
