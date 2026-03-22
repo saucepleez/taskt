@@ -9,5 +9,7 @@
         /// selection method
         /// </summary>
         string v_SelectionMethod { get; set; }
+
+        // index property name is v_Target***Index
     }
 }
