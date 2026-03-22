@@ -168,7 +168,8 @@ namespace taskt.Core.Automation.Commands
                 //    (result?.ToString() ?? string.Empty).StoreInUserVariable(engine, v_Result);
                 //}
 
-                this.ExecuteJavaScript(seleniumInstance, script);
+                //this.ExecuteJavaScript(seleniumInstance, script);
+                this.ExecuteJavaScriptProcess(seleniumInstance, script, engine);
             }), engine);
         }
     }
