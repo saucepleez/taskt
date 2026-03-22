@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Match Specification")]
         [PropertyUISelectionOption("Exact Match")]
-        [PropertyUISelectionOption("Contains Match")]
+        [PropertyUISelectionOption("Contains")]
         [PropertyIsOptional(true, "Exact Match")]
         [PropertyDisplayText(false, "")]
         [PropertyParameterOrder(7000)]
@@ -137,7 +137,7 @@ namespace taskt.Core.Automation.Commands
                         return (caseFunc(a) == caseFunc(b));
                     });
                     break;
-                case "contains match":
+                case "contains":
                     compFunc = new Func<string, string, bool>((a, b) =>
                     {
                         return caseFunc(a).Contains(caseFunc(b));

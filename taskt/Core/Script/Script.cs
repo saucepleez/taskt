@@ -5675,6 +5675,19 @@ namespace taskt.Core.Script
                     }
                 })
             );
+
+            // SeleniumBrowserSwitchWebBrowserWindowAndTabCommand v_CheckMethod value
+            ChangeAttributeValue(doc, "SeleniumBrowserSwitchWebBrowserWindowAndTabCommand", "v_CheckMethod",
+                new Action<XAttribute>(attr =>
+                {
+                    switch (attr.Value.ToLower())
+                    {
+                        case "contains match":
+                            attr.SetValue("Contains");
+                            break;
+                    }
+                })
+            );
         }
 
         /// <summary>
