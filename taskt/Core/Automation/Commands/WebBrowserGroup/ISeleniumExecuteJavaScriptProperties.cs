@@ -3,7 +3,7 @@
     /// <summary>
     /// selenium Execute JavaScript properties
     /// </summary>
-    public interface ISeleniumExecuteJavaScriptProperties : ISeleniumWebDriverActionProperties, IResultProperties
+    public interface ISeleniumExecuteJavaScriptProperties : ISeleniumWebDriverActionProperties, IResultProperties, ICanExecuteJavaScriptToWebDriver
     {
         /// <summary>
         /// arguments

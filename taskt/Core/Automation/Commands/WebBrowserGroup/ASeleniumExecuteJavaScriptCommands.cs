@@ -37,16 +37,26 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
             var args = v_Arguments.ExpandValueOrUserVariable(engine);
 
             // run script
-            var js = (IJavaScriptExecutor)seleniumInstance;
+            //var js = (IJavaScriptExecutor)seleniumInstance;
+
+            //object result;
+            //if (string.IsNullOrEmpty(args))
+            //{
+            //    result = js.ExecuteScript(script);
+            //}
+            //else
+            //{
+            //    result = js.ExecuteScript(script, args);
+            //}
 
             object result;
             if (string.IsNullOrEmpty(args))
             {
-                result = js.ExecuteScript(script);
+                result = this.ExecuteJavaScript(seleniumInstance, script);
             }
             else
             {
-                result = js.ExecuteScript(script, args);
+                result = this.ExecuteJavaScript(seleniumInstance, script, args);
             }
 
             // apply result to variable
