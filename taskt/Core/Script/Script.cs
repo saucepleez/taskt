@@ -758,6 +758,10 @@ namespace taskt.Core.Script
             {
                 convertTo3_5_2_61(doc);
             }
+            if (IsOldVersion(myVersion, "3.5.2.62"))
+            {
+                convertTo3_5_2_62(doc);
+            }
             return doc;
         }
 
@@ -5641,6 +5645,36 @@ namespace taskt.Core.Script
             ChangeToOtherCommandProcess(getHTML, "SeleniumBrowserGetWebBrowserHTMLSourceCommand", "Get Web Browser HTML Source", new List<(string, string)>());
             // SeleniumBrowserGetWebBrowserInformationCommand -> SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand
             ChangeToOtherCommandProcess(getJSONHandle, "SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand", "Get Window And Tab Handles As JSON", new List<(string, string)>());
+        }
+
+        private static void convertTo3_5_2_62(XDocument doc)
+        {
+            // SeleniumBrowserSwitchWebBrowserWindowAndTabCommand paremeters
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserSwitchWebBrowserWindowAndTabCommand",
+                new List<(string, string)>()
+                {
+                    ("v_WindowMatchType", "v_CheckTarget"),
+                    ("v_MatchSpecification", "v_CheckMethod"),
+                    ("v_CaseSensitiveMatch", "v_CaseSensitive"),
+                    ("v_MatchParameter", "v_CheckText"),
+                }
+            );
+
+            // SeleniumBrowserSwitchWebBrowserWindowAndTabCommand v_CheckTarget value
+            ChangeAttributeValue(doc, "SeleniumBrowserSwitchWebBrowserWindowAndTabCommand", "v_CheckTarget",
+                new Action<XAttribute>(attr =>
+                {
+                    switch (attr.Value.ToLower())
+                    {
+                        case "window url":
+                            attr.SetValue("URL");
+                            break;
+                        case "window title":
+                            attr.SetValue("Page Title");
+                            break;
+                    }
+                })
+            );
         }
 
         /// <summary>

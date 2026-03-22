@@ -25,37 +25,34 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Type of Match to Make")]
-        [PropertyUISelectionOption("Window URL")]
-        [PropertyUISelectionOption("Window Title")]
+        [PropertyUISelectionOption("URL")]
+        [PropertyUISelectionOption("Page Title")]
         [PropertyUISelectionOption("Handle")]
-        [InputSpecification("", true)]
-        [PropertyFirstValue("Window URL")]
-        [PropertyValidationRule("Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Type")]
+        [PropertyFirstValue("URL")]
+        [PropertyValidationRule("Target", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Target")]
         [PropertyParameterOrder(6000)]
-        public string v_WindowMatchType { get; set; }
+        public string v_CheckTarget { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Match Specification")]
         [PropertyUISelectionOption("Exact Match")]
         [PropertyUISelectionOption("Contains Match")]
-        [InputSpecification("", true)]
         [PropertyIsOptional(true, "Exact Match")]
         [PropertyDisplayText(false, "")]
         [PropertyParameterOrder(7000)]
-        public string v_MatchSpecification { get; set; }
+        public string v_CheckMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Search is Case-Sensitive")]
         [PropertyUISelectionOption("Yes")]
         [PropertyUISelectionOption("No")]
-        [InputSpecification("", true)]
         [PropertyIsOptional(true, "No")]
         [PropertyDisplayText(false, "")]
         [PropertyParameterOrder(8000)]
-        public string v_CaseSensitiveMatch { get; set; }
+        public string v_CaseSensitive { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -69,70 +66,24 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Parameter", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Parameter")]
         [PropertyParameterOrder(9000)]
-        public string v_MatchParameter { get; set; }
+        public string v_CheckText { get; set; }
 
         public SeleniumBrowserSwitchWebBrowserWindowAndTabCommand()
         {
-            //this.CommandName = "SeleniumBrowserSwitchWindowCommand";
-            //this.SelectionName = "Switch Browser Window";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
-
-            //this.v_InstanceName = "";
-
-            //set defaults
-            //this.v_WindowMatchType = "Window URL";
-            //this.v_MatchSpecification = "Exact Match";
-            //this.v_CaseSensitiveMatch = "Yes";
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
-
-            //var matchType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WindowMatchType), engine);
-
-            //var exactMatchRequired = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_MatchSpecification), engine);
-            //var caseSensitive = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CaseSensitiveMatch), engine);
-
-            //var matchFunc = GetMatchFunc(matchType, exactMatchRequired, caseSensitive);
-
-            //var matchParam = v_MatchParameter.ExpandValueOrUserVariable(engine);
-            //var handles = seleniumInstance.WindowHandles;
-            //var currentHandle = seleniumInstance.CurrentWindowHandle;
-            //var matchFound = false;
-            //foreach (var hndl in handles)
-            //{
-            //    var tempHandle = seleniumInstance.SwitchTo().Window(hndl);
-
-            //    // array ordering is not guaranteed so skip if current window
-            //    if (tempHandle.CurrentWindowHandle == currentHandle)
-            //    {
-            //        continue;
-            //    }
-
-            //    matchFound = matchFunc(tempHandle, matchParam);
-            //    if (matchFound)
-            //    {
-            //        break;
-            //    }
-            //}
-
-            //if (!matchFound)
-            //{
-            //    throw new Exception("Unable to find the specified window!");
-            //}
-
             this.WebDriverAction(new Action<IWebDriver>(seleniumInstance =>
             {
-                var matchType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WindowMatchType), engine);
+                var matchType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CheckTarget), engine);
 
-                var exactMatchRequired = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_MatchSpecification), engine);
-                var caseSensitive = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CaseSensitiveMatch), engine);
+                var exactMatchRequired = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CheckMethod), engine);
+                var caseSensitive = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CaseSensitive), engine);
 
                 var matchFunc = GetMatchFunc(matchType, exactMatchRequired, caseSensitive);
 
-                var matchParam = v_MatchParameter.ExpandValueOrUserVariable(engine);
+                var matchParam = v_CheckText.ExpandValueOrUserVariable(engine);
                 var handles = seleniumInstance.WindowHandles;
                 var currentHandle = seleniumInstance.CurrentWindowHandle;
                 var matchFound = false;
@@ -197,13 +148,13 @@ namespace taskt.Core.Automation.Commands
             Func<IWebDriver, string, bool> retFunc = null;
             switch(targetType)
             {
-                case "window url":
+                case "url":
                     retFunc = new Func<IWebDriver, string, bool>((iw, str) =>
                     {
                         return compFunc(iw.Url, str);
                     });
                     break;
-                case "window title":
+                case "page title":
                     retFunc = new Func<IWebDriver, string, bool>((iw, str) =>
                     {
                         return compFunc(iw.Title, str);
