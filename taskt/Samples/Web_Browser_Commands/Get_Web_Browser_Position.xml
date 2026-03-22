@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="871bf4d7-4a47-4fff-9131-a7ea0814ee52" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Get Web Browser Position sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="053191a7-41e1-453c-8920-1fbbd786fb93" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute Edge" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserCreateWebBrowserInstanceCommand" CommandID="50b75ff4-9161-49e1-8757-cede74b8a991" CommandName="SeleniumBrowserCreateWebBrowserInstanceCommand" IsCommented="false" SelectionName="Create Web Browser Instance" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_BrowserType="Edge" v_WebDriverPath="" v_BrowserWindowOption="" v_HeadlessMode="No" v_SeleniumOptions="" v_WindowHandleResult="" v_BrowserPath="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="4b52ce0f-98ff-4e66-a08f-6b57bba35e00" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Get Position (Window)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserGetWebBrowserPositionCommand" CommandID="b10b51f0-e2ae-473b-82fb-6c86ef5cb93f" CommandName="SeleniumBrowserGetWebBrowserPositionCommand" IsCommented="false" SelectionName="Get Web Browser Position" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_WhenFailAction="" v_XPosition="x" v_YPosition="y" v_PositionType="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="2a3b33ca-3676-435c-8007-987831de8f4e" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="x: ⦃x⦄, y: ⦃y⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="fdeaeeda-dbe8-49e9-a11b-d5726e52e042" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Get Position (Viewport)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserGetWebBrowserPositionCommand" CommandID="fc1b2f6b-e214-4b8e-9039-b55c818f8769" CommandName="SeleniumBrowserGetWebBrowserPositionCommand" IsCommented="false" SelectionName="Get Web Browser Position" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_WhenFailAction="" v_XPosition="x" v_YPosition="y" v_PositionType="Viewport" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="364c928c-9a71-47c9-9172-0db1844a4060" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="x: ⦃x⦄, y: ⦃y⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="30b65654-4491-4b05-8fe9-e32736163778" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Close Edge" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserCloseWebBrowserInstanceCommand" CommandID="98221321-73ba-4d01-b13d-0f72692c2e19" CommandName="SeleniumBrowserCloseWebBrowserInstanceCommand" IsCommented="false" SelectionName="Close Web Browser Instance" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.2.61</TasktVersion>
+    <Author />
+    <LastRunTime>2026-03-22T11:24:10.7522672+09:00</LastRunTime>
+    <RunTimes>7</RunTimes>
+    <Revision>13</Revision>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>x</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>y</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
