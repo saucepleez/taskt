@@ -707,61 +707,62 @@ namespace taskt.Core.Automation.Commands
 
         #region WebElement methods
 
-        public static string CreateXPath(IWebElement elem)
-        {
-            // MEMO: it's probably works fine. :-)
+        //public static string CreateXPath(IWebElement elem)
+        //{
+        //    // MEMO: it's probably works fine. :-)
+        //    string path = string.Empty;
 
-            string path = string.Empty;
+        //    var curElem = elem;
+        //    var curElemId = curElem.ToString();
 
-            var curElem = elem;
-            var curElemId = curElem.ToString();
+        //    // DBG
+        //    //Debug.WriteLine($"curElem: {curElem.ToString()}, {curElem.GetHashCode()}");
 
-            // DBG
-            //Debug.WriteLine($"curElem: {curElem.ToString()}, {curElem.GetHashCode()}");
+        //    var pElem = curElem.FindElement(By.XPath("parent::*"));
+        //    while (true)
+        //    {
+        //        var cTag = curElem.TagName.ToLower();
 
-            var pElem = curElem.FindElement(By.XPath("parent::*"));
-            while (true)
-            {
-                var cElems = pElem.FindElements(By.XPath($"{curElem.TagName.ToLower()}"));
-                if (cElems.Count > 1)
-                {
-                    int index = 1;
-                    foreach (var e in cElems)
-                    {
-                        if (e.ToString() == curElemId)
-                        {
-                            break;
-                        }
-                        index++;
-                    }
-                    path = $"/{curElem.TagName.ToLower()}[{index}]{path}";
-                }
-                else
-                {
-                    path = $"/{curElem.TagName.ToLower()}{path}";
-                }
+        //        var cElems = pElem.FindElements(By.XPath($"{cTag}"));
+        //        if (cElems.Count > 1)
+        //        {
+        //            int index = 1;
+        //            foreach (var e in cElems)
+        //            {
+        //                if (e.ToString() == curElemId)
+        //                {
+        //                    break;
+        //                }
+        //                index++;
+        //            }
+        //            path = $"/{cTag}[{index}]{path}";
+        //        }
+        //        else
+        //        {
+        //            path = $"/{cTag}{path}";
+        //        }
 
-                // DGB
-                //Debug.WriteLine($"totyu: {path}");
+        //        // DGB
+        //        //Debug.WriteLine($"totyu: {path}");
 
-                if (curElem.TagName.ToLower() == "body")
-                {
-                    path = $"/html{path}";
-                    break;
-                }
-                else
-                {
-                    curElem = pElem;
-                    curElemId = curElem.ToString();
-                    pElem = curElem.FindElement(By.XPath("parent::*"));
-                }
-            }
+        //        if (cTag == "body")
+        //        {
+        //            path = $"/html{path}";
+        //            break;
+        //        }
+        //        else
+        //        {
+        //            curElem = pElem;
+        //            curElemId = curElem.ToString();
+        //            pElem = curElem.FindElement(By.XPath("parent::*"));
+        //        }
+        //    }
 
-            // DBG
-            //Debug.WriteLine($"XPath: {path}");
+        //    // DBG
+        //    //Debug.WriteLine($"XPath: {path}");
 
-            return path;
-        }
+        //    return path;
+        //}
 
         #endregion
 
