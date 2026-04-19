@@ -606,6 +606,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumWebElementResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserAttachWebBrowserInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserExecuteJavaScriptFromFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetWebElementSelectorFromWebElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetSpecialValueFromWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetCSSSelectorFromWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetXPathFromWebElementCommand.cs" />

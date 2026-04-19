@@ -16,20 +16,20 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserGetCSSSelectorFromWebElementCommand : ASeleniumGetOneResultFromWebElementCommands
+    public sealed class SeleniumBrowserGetCSSSelectorFromWebElementCommand : ASeleniumGetWebElementSelectorFromWebElementCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [PropertyParameterOrder(6000)]
-        public override string v_Result { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //[PropertyParameterOrder(6000)]
+        //public override string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        [PropertyDescription("Believe ID Attribute")]
-        [PropertyIsOptional(true, "No")]
-        [PropertyDisplayText(false, "Believe ID")]
-        [PropertyParameterOrder(7000)]
-        public string v_BeliveIDAttribute { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        //[PropertyDescription("Believe ID Attribute")]
+        //[PropertyIsOptional(true, "No")]
+        //[PropertyDisplayText(false, "Believe ID")]
+        //[PropertyParameterOrder(7000)]
+        //public string v_BeliveIDAttribute { get; set; }
 
         public SeleniumBrowserGetCSSSelectorFromWebElementCommand()
         {
