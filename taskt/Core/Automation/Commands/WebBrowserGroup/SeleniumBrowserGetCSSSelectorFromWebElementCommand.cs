@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
                         }
                         else
                         {
-                            addPath = (index == 1) ? $"{cTag}:first-child" : $"{cTag}:nth-child({index})";
+                            addPath = $"{cTag}:nth-of-type({index})";
                         }
                         path = (path.Length > 0) ? $"{addPath} > {path}" : addPath;
                     }
