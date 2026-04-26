@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserClickWebElementCommand : ASeleniumWebElementActionAndScrollCommands
+    public sealed class SeleniumBrowserClickWebElementCommand : ASeleniumWebElementActionAndScrollCommands, ICanExecuteJavaScriptToWebDriver
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
@@ -76,33 +76,30 @@ namespace taskt.Core.Automation.Commands
                     switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ClickType), engine))
                     {
                         case "invoke click":
-                            el.Click();
+                            try
+                            {
+                                el.Click();
+                            }
+                            catch
+                            {
+                                using(var path = new InnerScriptVariable(engine))
+                                {
+                                    var getCSSPath = new SeleniumBrowserGetCSSSelectorFromWebElementCommand()
+                                    {
+                                        v_WebElement = this.v_WebElement,
+                                        v_Result = path.VariableName,
+                                    };
+                                    getCSSPath.RunCommand(engine);
+
+                                    this.ExecuteJavaScript(dr, @"
+const elem = document.querySelector(arguments[0]);
+elem.click();
+", path.VariableValue.ToString());
+                                }
+                            }
                             break;
 
                         default:
-                            //int baseX, baseY;
-                            //using (var vX = new InnerScriptVariable(engine))
-                            //{
-                            //    using (var vY = new InnerScriptVariable(engine))
-                            //    {
-                            //        var insName = this.GetInstanceNameFromWebBrowserInstance(dr, engine);
-
-                            //        var getPos = new SeleniumBrowserGetWebBrowserPositionCommand()
-                            //        {
-                            //            v_InstanceName = insName,
-                            //            v_PositionType = "Viewport",
-                            //            v_XPosition = vX.VariableName,
-                            //            v_YPosition = vY.VariableName,
-                            //        };
-                            //        getPos.RunCommand(engine);
-
-                            //        baseX = int.Parse(vX.VariableValue.ToString());
-                            //        baseY = int.Parse(vY.VariableValue.ToString());
-                            //    }
-                            //}
-
-                            //var elementLocation = el.Location;
-
                             int elemX, elemY;
                             using (var vX = new InnerScriptVariable(engine))
                             {
@@ -124,8 +121,6 @@ namespace taskt.Core.Automation.Commands
                             var offsetX = this.ExpandValueOrUserVariableAsInteger(nameof(v_XOffset), engine);
                             var offsetY = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffset), engine);
 
-                            //var clickX = elementLocation.X + baseX + offsetX;
-                            //var clickY = elementLocation.Y + baseY + offsetY;
                             var clickX = elemX + offsetX;
                             var clickY = elemY + offsetY;
 
