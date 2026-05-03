@@ -605,6 +605,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumWebElementActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumWebElementResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserAttachWebBrowserInstanceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserRemoveWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserExecuteJavaScriptFromFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetWebElementSelectorFromWebElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetSpecialValueFromWebElementCommand.cs" />
@@ -613,6 +614,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetWebBrowserHTMLSourceCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetWebBrowserSizeCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetWebBrowserPositionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserSearchShadowDOMWebElementFromWebEelementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\VP_WebBrowserControls.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\ActivateWindowsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\AGetFromWindowNamesAsListCommands.cs" />
