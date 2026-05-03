@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using System;
-using System.Runtime.CompilerServices;
 using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands.WebBrowserGroup
