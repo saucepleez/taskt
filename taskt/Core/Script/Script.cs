@@ -762,6 +762,10 @@ namespace taskt.Core.Script
             {
                 convertTo3_5_2_62(doc);
             }
+            if (IsOldVersion(myVersion, "3.5.2.64"))
+            {
+                convertTo3_5_2_64(doc);
+            }
             return doc;
         }
 
@@ -5688,6 +5692,36 @@ namespace taskt.Core.Script
                     }
                 })
             );
+        }
+
+        private static void convertTo3_5_2_64(XDocument doc)
+        {
+            var cmds = GetCommands(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserSearchWebElementFromWebElementCommand":
+                    case "SeleniumBrowserWaitForWebElementToExistsCommand":
+                    case "SeleniumBrowserWebElementActionCommand":
+                    case "SeleniumBrowserCheckWebElementExistsCommand":
+                    case "SeleniumBrowserGetTableValuesAsDataTableCommand":
+                    case "SeleniumBrowserSearchWebElementCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }));
+            foreach(var cmd in cmds)
+            {
+                var indexAttr = cmd.Attribute("v_WebElementIndex");
+                if (indexAttr != null)
+                {
+                    if (!string.IsNullOrEmpty(indexAttr.Value))
+                    {
+                        cmd.SetAttributeValue("v_SelectionMethod", "Index");
+                    }
+                }
+            }
         }
 
         /// <summary>
