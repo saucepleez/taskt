@@ -3,7 +3,7 @@
     /// <summary>
     /// for WebElement search parameters
     /// </summary>
-    public interface ISeleniumSearchWebElementParametersProperties : ISeleniumSearchMultiWebElementsParametersProperties, IExpandableProperties
+    public interface ISeleniumSearchWebElementParametersProperties : ISeleniumSearchMultiWebElementsParametersProperties, ISelectionMethodProperties, IExpandableProperties
     {
         ///// <summary>
         ///// WebElement search method

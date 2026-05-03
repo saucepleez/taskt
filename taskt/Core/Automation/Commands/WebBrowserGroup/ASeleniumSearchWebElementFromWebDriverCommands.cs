@@ -11,8 +11,13 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
     public abstract class ASeleniumSearchWebElementFromWebDriverCommands : ASeleniumSearchMultiWebElementsFromWebDriverCommands, ISeleniumSearchWebElementParametersProperties
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WebElementIndex))]
+        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SelectionMethod))]
         [PropertyParameterOrder(7000)]
+        public string v_SelectionMethod { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WebElementIndex))]
+        [PropertyParameterOrder(7100)]
         public string v_WebElementIndex { get; set; }
 
         /// <summary>

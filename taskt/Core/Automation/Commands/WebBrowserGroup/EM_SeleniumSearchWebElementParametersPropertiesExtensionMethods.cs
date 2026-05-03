@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System;
+using System.Runtime.CompilerServices;
 using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands.WebBrowserGroup
@@ -18,11 +19,22 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         {
             var script = command.ToScriptCommand();
 
-            if (string.IsNullOrEmpty(command.v_WebElementIndex))
+            int index = 0;
+            switch(script.ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_SelectionMethod), engine))
             {
-                command.v_WebElementIndex = "0";
+                case "first":
+                    break;
+                case "last":
+                    index = -1;
+                    break;
+                case "index":
+                    if (string.IsNullOrEmpty(command.v_WebElementIndex))
+                    {
+                        command.v_WebElementIndex = "0";
+                    }
+                    index = script.ExpandValueOrUserVariableAsInteger(nameof(command.v_WebElementIndex), "Index", engine);
+                    break;
             }
-            var index = script.ExpandValueOrUserVariableAsInteger(nameof(command.v_WebElementIndex), "Index", engine);
 
             var elems = command.SearchMultiWebElements(root, engine);
             if (elems.Count > 0)

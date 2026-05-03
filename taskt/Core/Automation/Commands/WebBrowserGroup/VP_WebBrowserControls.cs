@@ -110,6 +110,21 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         public static string v_SearchParameter { get; }
 
         /// <summary>
+        /// WebElement selection method
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Selection Method for the WebElement")]
+        [PropertyUISelectionOption("First")]
+        [PropertyUISelectionOption("Last")]
+        [PropertyUISelectionOption("Index")]
+        [PropertyDetailSampleUsage("**First**", "Specify the WebElement")]
+        [PropertyDetailSampleUsage("**Last**", "Specify the WebElement")]
+        [PropertyDetailSampleUsage("**Index**", "the Window specifed by Index. **0** means WebElement")]
+        [PropertyIsOptional(true, "First")]
+        [PropertyDisplayText(true, "Select")]
+        public static string v_SelectionMethod { get; }
+
+        /// <summary>
         /// WebElement index
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]

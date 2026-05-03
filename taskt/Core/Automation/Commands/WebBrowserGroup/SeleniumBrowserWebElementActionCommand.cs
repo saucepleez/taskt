@@ -35,8 +35,13 @@ namespace taskt.Core.Automation.Commands
         public string v_SearchParameter { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WebElementIndex))]
+        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SelectionMethod))]
         [PropertyParameterOrder(6200)]
+        public string v_SelectionMethod { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WebElementIndex))]
+        [PropertyParameterOrder(6300)]
         public string v_WebElementIndex { get; set; }
 
         [XmlAttribute]
