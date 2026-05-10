@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         //public string v_Value { get; set; }
 
         [XmlAttribute]
-        //[PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
+        [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the Item Exists, the Result is **True**")]
         public override string v_Result { get; set; }
 
