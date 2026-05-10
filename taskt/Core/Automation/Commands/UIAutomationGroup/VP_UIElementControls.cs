@@ -201,7 +201,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "UIElement Index")]
         [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "UIElement Index")]
         [PropertyIsOptional(true, "0")]
-        [PropertyFirstValue("0")]
+        //[PropertyFirstValue("")]
         [PropertyDisplayText(true, "UIElement Index")]
         public static string v_TargetUIElementIndex { get; }
 
