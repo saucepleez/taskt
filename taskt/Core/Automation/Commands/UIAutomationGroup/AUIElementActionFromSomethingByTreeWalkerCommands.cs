@@ -15,12 +15,17 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_TargetUIElementIndex))]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SelectionMethod))]
         [PropertyParameterOrder(6100)]
+        public string v_SelectionMethod { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_TargetUIElementIndex))]
+        [PropertyParameterOrder(6200)]
         public string v_TargetUIElementIndex { get; set; }
 
         [XmlAttribute]
-        [PropertyParameterOrder(6200)]
+        [PropertyParameterOrder(6300)]
         public override string v_AutomationType { get; set; }
 
         [XmlElement]

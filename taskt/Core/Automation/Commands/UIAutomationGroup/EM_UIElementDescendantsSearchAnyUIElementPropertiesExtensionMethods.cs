@@ -14,18 +14,30 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <returns>(found-func, max-func)</returns>
         public static (Func<List<AutomationElement>, bool>, Func<List<AutomationElement>, bool>) GetCheckFoundAndMaxUIElementsFunc(this IUIElementDescendantsSearchAnyUIElementProperties command, Engine.AutomationEngineInstance engine)
         {
-            var index = command.ExpandValueOrUserVariableAsUIElementIndex(engine);
-            if (string.IsNullOrEmpty(command.v_MaxNumberUIElements))
+            int index = 1;
+            switch(command.ToScriptCommand().ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_SelectionMethod), engine))
             {
-                if (index >= 0)
-                {
-                    command.v_MaxNumberUIElements = (index + 1).ToString();
-                }
-                else
-                {
-                    command.v_MaxNumberUIElements = "0";    // all UIElements
-                }
+                case "first":
+                    break;
+                case "last":
+                    index = 0;  // all UIElements
+                    break;
+                case "index":
+                    index = command.ExpandValueOrUserVariableAsUIElementIndex(engine);
+                    if (string.IsNullOrEmpty(command.v_MaxNumberUIElements))
+                    {
+                        if (index >= 0)
+                        {
+                            command.v_MaxNumberUIElements = (index + 1).ToString();
+                        }
+                        else
+                        {
+                            command.v_MaxNumberUIElements = "0";    // all UIElements
+                        }
+                    }
+                    break;
             }
+            
             // max uielements
             var maxFunc = command.GetMaxNumberUIElementsFunc(engine);
 

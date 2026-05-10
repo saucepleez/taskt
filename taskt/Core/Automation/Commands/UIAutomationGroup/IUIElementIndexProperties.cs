@@ -3,7 +3,7 @@
     /// <summary>
     /// UIElement Index properties
     /// </summary>
-    public interface IUIElementIndexProperties : IExpandableProperties
+    public interface IUIElementIndexProperties : ISelectionMethodProperties, IExpandableProperties
     {
         /// <summary>
         /// UIElement Index

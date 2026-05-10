@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_TargetUIElementIndex))]
-        [PropertyParameterOrder(6100)]
+        [PropertyParameterOrder(6200)]
         public virtual string v_TargetUIElementIndex { get; set; }
     }
 }

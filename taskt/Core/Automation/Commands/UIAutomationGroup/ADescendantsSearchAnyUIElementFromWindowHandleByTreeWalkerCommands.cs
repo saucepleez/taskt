@@ -9,8 +9,13 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
     public abstract class ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands : ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands, IUIElementIndexProperties
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_TargetUIElementIndex))]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SelectionMethod))]
         [PropertyParameterOrder(6100)]
+        public virtual string v_SelectionMethod { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_TargetUIElementIndex))]
+        [PropertyParameterOrder(6200)]
         public virtual string v_TargetUIElementIndex { get; set; }
     }
 }

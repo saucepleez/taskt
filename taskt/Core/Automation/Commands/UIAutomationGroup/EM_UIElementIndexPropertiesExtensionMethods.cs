@@ -30,7 +30,18 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         /// <exception cref="System.Exception"></exception>
         public static AutomationElement GetUIElementFromList(this IUIElementIndexProperties command, List<AutomationElement> elems, Engine.AutomationEngineInstance engine)
         {
-            var index = command.ExpandValueOrUserVariableAsUIElementIndex(engine);
+            int index = 0;
+            switch(command.ToScriptCommand().ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_SelectionMethod), engine))
+            {
+                case "first":
+                    break;
+                case "last":
+                    index = -1;
+                    break;
+                case "index":
+                    index = command.ExpandValueOrUserVariableAsUIElementIndex(engine);
+                    break;
+            }
             if (index < 0)
             {
                 index += elems.Count;
@@ -41,7 +52,7 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
             }
             else
             {
-                throw new System.Exception($"UIElement does not Exists. Index: {command.v_TargetUIElementIndex}, Expand Value: {index}");
+                throw new System.Exception($"UIElement does not Exists. Method: '{command.v_SelectionMethod}', Index: {command.v_TargetUIElementIndex}, Expand Value: {index}");
             }
         }
     }

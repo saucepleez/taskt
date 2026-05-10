@@ -177,6 +177,21 @@ namespace taskt.Core.Automation.Commands.UIAutomationGroup
         public static string v_SiblingsDirection { get; }
 
         /// <summary>
+        /// UIElement selection method
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Selection Method for the UIElement")]
+        [PropertyUISelectionOption("First")]
+        [PropertyUISelectionOption("Last")]
+        [PropertyUISelectionOption("Index")]
+        [PropertyDetailSampleUsage("**First**", "Specify the First UIElement")]
+        [PropertyDetailSampleUsage("**Last**", "Specify the Last UIElement")]
+        [PropertyDetailSampleUsage("**Index**", "the Window specifed by Index. **0** means UIElement")]
+        [PropertyIsOptional(true, "First")]
+        [PropertyDisplayText(true, "Select")]
+        public static string v_SelectionMethod { get; }
+
+        /// <summary>
         /// window index for match
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]

@@ -28,6 +28,11 @@ namespace taskt.Core.Automation.Commands
         //public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SelectionMethod))]
+        [PropertyParameterOrder(6100)]
+        public string v_SelectionMethod { get; set; }
+        
+        [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_TargetUIElementIndex))]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         //[PropertyDescription("Child UIElement Index")]
@@ -39,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyShowSampleUsageInDescription(true)]
         //[PropertyValidationRule("Index", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         //[PropertyDisplayText(true, "Index")]
-        [PropertyParameterOrder(6100)]
+        [PropertyParameterOrder(6200)]
         public string v_TargetUIElementIndex { get; set; }
 
         [XmlAttribute]
