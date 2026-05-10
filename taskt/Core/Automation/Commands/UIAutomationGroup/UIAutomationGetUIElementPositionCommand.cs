@@ -4,6 +4,7 @@ using System.Windows.Automation;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands.UIAutomationGroup;
+using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -51,6 +52,16 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Top Left")]
         [PropertyParameterOrder(6300)]
         public string v_PositionBase { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Coordinate Reference")]
+        [PropertyUISelectionOption("Desktop")]
+        [PropertyUISelectionOption("Application")]
+        [PropertyIsOptional(true, "Desktop")]
+        [PropertyValidationRule("Coordinate", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyParameterOrder(7000)]
+        public string v_CoordinateReference { get; set; }
 
         public UIAutomationGetUIElementPositionCommand()
         {
@@ -142,6 +153,37 @@ namespace taskt.Core.Automation.Commands
                             x = (rct.Right - rct.Left) / 2.0;
                             y = (rct.Bottom - rct.Top) / 2.0;
                             break;
+                    }
+
+                    if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CoordinateReference), engine) == "application")
+                    {
+                        // application position
+                        using (var whnd = new InnerScriptVariable(engine))
+                        {
+                            var getWhnd = new UIAutomationGetWindowHandleFromUIElementCommand()
+                            {
+                                v_TargetElement = this.v_TargetElement,
+                                v_WindowHandleResult = whnd.VariableName,
+                            };
+                            getWhnd.RunCommand(engine);
+
+                            using (var wx = new InnerScriptVariable(engine))
+                            {
+                                using (var wy = new InnerScriptVariable(engine))
+                                {
+                                    var getPos = new GetWindowPositionFromWindowHandleCommand()
+                                    {
+                                        v_WindowHandle = whnd.VariableValue.ToString(),
+                                        v_XPosition = wx.VariableName,
+                                        v_YPosition = wy.VariableName,
+                                    };
+                                    getPos.RunCommand(engine);
+
+                                    x -= int.Parse(wx.VariableValue.ToString());
+                                    y -= int.Parse(wy.VariableValue.ToString());
+                                }
+                            }
+                        }
                     }
 
                     if (!string.IsNullOrEmpty(v_XPosition))
