@@ -106,6 +106,7 @@ namespace taskt.Core.Automation.Commands
                         v_InstanceName = this.v_InstanceName,
                         v_SearchMethod = this.v_SearchMethod,
                         v_SearchParameter = this.v_SearchParameter,
+                        v_SelectionMethod = this.v_SelectionMethod,
                         v_WebElementIndex = this.v_WebElementIndex,
                         v_WaitTimeForWebElement = this.v_WaitTimeForWebElement,
                     };
@@ -141,6 +142,7 @@ namespace taskt.Core.Automation.Commands
                             v_InstanceName = this.v_InstanceName,
                             v_SearchMethod = this.v_SearchMethod,
                             v_SearchParameter = this.v_SearchParameter,
+                            v_SelectionMethod = this.v_SelectionMethod,
                             v_WebElementIndex = this.v_WebElementIndex,
                             v_Result = myWebElem.VariableName,
                             v_WaitTimeForWebElement = this.v_WaitTimeForWebElement,
