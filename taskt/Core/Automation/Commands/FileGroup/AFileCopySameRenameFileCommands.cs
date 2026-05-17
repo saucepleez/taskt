@@ -126,6 +126,16 @@ namespace taskt.Core.Automation.Commands
                                 newFileName += newExtension;
                             }
                         }
+                        else
+                        {
+                            // may contains extension
+                            var newExtCheck = Path.GetExtension(newFileName);
+                            var currentExt = Path.GetExtension(currentFileName);
+                            if (newExtCheck != currentExt)
+                            {
+                                newFileName += currentExt;
+                            }
+                        }
                         break;
                     case "force combine new extension":
                         newFileName += newExtension;
