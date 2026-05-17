@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_OutputUIElementName))]
-        [PropertyParameterOrder(6200)]
+        [PropertyParameterOrder(6300)]
         public string v_Result { get; set; }
 
         public UIAutomationSearchUIElementFromWindowHandleCommand()

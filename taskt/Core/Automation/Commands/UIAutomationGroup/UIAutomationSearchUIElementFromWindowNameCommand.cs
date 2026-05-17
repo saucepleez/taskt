@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Automation;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands.UIAutomationGroup;
@@ -28,9 +27,20 @@ namespace taskt.Core.Automation.Commands
         //public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_OutputUIElementName))]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_SelectionMethod))]
         [PropertyParameterOrder(6200)]
+        public override string v_SelectionMethod{ get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(VP_UIElementControls), nameof(VP_UIElementControls.v_OutputUIElementName))]
+        [PropertyParameterOrder(6300)]
         public string v_Result { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_SelectionMethod_Single))]
+        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
+        [PropertyParameterOrder(8200)]
+        public string v_WindowSelectionMethod { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CheckMethod))]
@@ -120,6 +130,9 @@ namespace taskt.Core.Automation.Commands
             //    this.StoreWindowUIElementInUserVariable((AutomationElement)winElem.VariableValue, engine);
             //}
 
+            // SearchWindowAfterAction uses v_SelectionMethod for search window
+            var uiSelection = this.v_SelectionMethod;
+            this.v_SelectionMethod = this.v_WindowSelectionMethod;
             this.SearchWindowAfterAction(engine,
                 new Func<InnerScriptVariable, ScriptCommand>(winElem =>
                 {
@@ -127,6 +140,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         v_TargetElement = winElem.VariableName,
                         v_SearchParameters = this.v_SearchParameters,
+                        v_SelectionMethod = uiSelection,
                         v_TargetUIElementIndex = this.v_TargetUIElementIndex,
                         v_Result = this.v_Result,
                         v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,

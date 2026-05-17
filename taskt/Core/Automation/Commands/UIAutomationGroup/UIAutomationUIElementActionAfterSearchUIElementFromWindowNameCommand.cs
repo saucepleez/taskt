@@ -101,7 +101,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_SelectionMethod_Single))]
         [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
         [PropertyParameterOrder(8200)]
-        public string v_SelectionMethod { get; set; }
+        public string v_WindowSelectionMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
@@ -136,7 +136,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         v_WindowName = this.v_WindowName,
                         v_CheckMethod = this.v_CheckMethod,
-                        v_SelectionMethod = this.v_SelectionMethod,
+                        v_SelectionMethod = this.v_WindowSelectionMethod,
                         v_TargetWindowIndex = this.v_TargetWindowIndex,
                         v_WaitTimeForWindow = this.v_WaitTimeForWindow,
                         v_Result = v.VariableName,
@@ -153,6 +153,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         v_TargetElement = v.VariableName,
                         v_SearchParameters = this.v_SearchParameters,
+                        v_SelectionMethod = this.v_SelectionMethod,
                         v_TargetUIElementIndex = this.v_TargetUIElementIndex,
                         v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
                         v_Result = r,
@@ -171,6 +172,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         v_TargetElement = v.VariableName,
                         v_SearchParameters = this.v_SearchParameters,
+                        v_SelectionMethod = this.v_SelectionMethod,
                         v_TargetUIElementIndex = this.v_TargetUIElementIndex,
                         v_WaitTimeForUIElement = this.v_WaitTimeForUIElement,
                         v_Result = r.VariableName,
