@@ -63,6 +63,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Get WebElement Size")]
         [PropertyUISelectionOption("Get CSS Selector")]
         [PropertyUISelectionOption("Get XPath")]
+        [PropertyUISelectionOption("Get HTML")]
+        [PropertyUISelectionOption("Get Special Value")]
         [PropertySelectionChangeEvent(nameof(cmbSeleniumAction_SelectionChangeCommitted))]
         [PropertyValidationRule("WebElement Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyParameterOrder(7000)]
@@ -269,6 +271,23 @@ namespace taskt.Core.Automation.Commands
                                 };
                                 getXPath.RunCommand(engine);
                                 break;
+                            case "get html":
+                                var getHTML = new SeleniumBrowserGetHTMLFromWebElementCommand()
+                                {
+                                    v_WebElement = myWebElem.VariableName,
+                                    v_Result = parameters["Variable Name"],
+                                };
+                                getHTML.RunCommand(engine);
+                                break;
+                            case "get special value":
+                                var getSpecial = new SeleniumBrowserGetSpecialValueFromWebElementCommand()
+                                {
+                                    v_WebElement = myWebElem.VariableName,
+                                    v_ValueType = parameters["Value Type"],
+                                    v_Result = parameters["Variable Name"],
+                                };
+                                getSpecial.RunCommand(engine);
+                                break;
                         }
                     }
                     break;
@@ -302,6 +321,7 @@ namespace taskt.Core.Automation.Commands
                 case "get matching webelements html as list":
                 case "get css selector":
                 case "get xpath":
+                case "get html":
                     // only variable name
                     v_WebActionParameterTable.Rows.Add("Variable Name");
                     break;
@@ -342,6 +362,11 @@ namespace taskt.Core.Automation.Commands
                     v_WebActionParameterTable.Rows.Add("Height Variable");
                     break;
 
+                case "get special value":
+                    v_WebActionParameterTable.Rows.Add("Value Type");
+                    v_WebActionParameterTable.Rows.Add("Variable Name");
+                    break;
+
                 case "clear webelement":
                 case "switch to frame":
                 case "remove webelement":
@@ -360,17 +385,37 @@ namespace taskt.Core.Automation.Commands
             switch (actionType.ToLower())
             {
                 case "set text":
-                    var clearBefore = new DataGridViewComboBoxCell();
-                    clearBefore.Items.AddRange(new string[] { "", "Yes", "No" });
-                    var encrypted = new DataGridViewComboBoxCell();
-                    encrypted.Items.AddRange(new string[] { "", "Yes", "No" });
-                    dgv.Rows[1].Cells[1] = clearBefore;
-                    dgv.Rows[2].Cells[1] = encrypted;
+                    //var clearBefore = new DataGridViewComboBoxCell();
+                    //clearBefore.Items.AddRange(new string[] { "", "Yes", "No" });
+                    //var encrypted = new DataGridViewComboBoxCell();
+                    //encrypted.Items.AddRange(new string[] { "", "Yes", "No" });
+                    dgv.Rows[1].Cells[1] = CreateComboBox(new string[]
+                    {
+                        "", 
+                        "Yes", 
+                        "No",
+                    });
+                    dgv.Rows[2].Cells[1] = CreateComboBox(new string[]
+                    {
+                        "",
+                        "Yes",
+                        "No",
+                    });
                     break;
 
                 case "select option":
-                    var selectionType = new DataGridViewComboBoxCell();
-                    selectionType.Items.AddRange(new string[] {
+                    //var selectionType = new DataGridViewComboBoxCell();
+                    //selectionType.Items.AddRange(new string[] {
+                    //    "Select By Index",
+                    //    "Select By Text",
+                    //    "Select By Value",
+                    //    "Deselect By Index",
+                    //    "Deselect By Text",
+                    //    "Deselect By Value",
+                    //    "Deselect All",
+                    //});
+                    dgv.Rows[0].Cells[1] = CreateComboBox(new string[]
+                    {
                         "Select By Index",
                         "Select By Text",
                         "Select By Value",
@@ -379,12 +424,26 @@ namespace taskt.Core.Automation.Commands
                         "Deselect By Value",
                         "Deselect All",
                     });
-                    dgv.Rows[0].Cells[1] = selectionType;
                     break;
 
                 case "click webelement":
-                    var clickType = new DataGridViewComboBoxCell();
-                    clickType.Items.AddRange(new string[]
+                    //var clickType = new DataGridViewComboBoxCell();
+                    //clickType.Items.AddRange(new string[]
+                    //{
+                    //    "Left Click",
+                    //    "Middle Click",
+                    //    "Right Click",
+                    //    "Left Down",
+                    //    "Middle Down",
+                    //    "Right Down",
+                    //    "Left Up",
+                    //    "Middle Up",
+                    //    "Right Up",
+                    //    "Double Left Click",
+                    //    "None",
+                    //    "Invoke Click",
+                    //});
+                    dgv.Rows[0].Cells[1] = CreateComboBox(new string[]
                     {
                         "Left Click",
                         "Middle Click",
@@ -399,12 +458,19 @@ namespace taskt.Core.Automation.Commands
                         "None",
                         "Invoke Click",
                     });
-                    dgv.Rows[0].Cells[1] = clickType;
                     break;
 
                 case "get webelement position":
-                    var basePosCmd = new DataGridViewComboBoxCell();
-                    basePosCmd.Items.AddRange(new string[]
+                    //var basePosCmd = new DataGridViewComboBoxCell();
+                    //basePosCmd.Items.AddRange(new string[]
+                    //{
+                    //    "Top Left",
+                    //    "Bottom Right",
+                    //    "Top Right",
+                    //    "Bottom Left",
+                    //    "Center",
+                    //});
+                    dgv.Rows[2].Cells[1] = CreateComboBox(new string[]
                     {
                         "Top Left",
                         "Bottom Right",
@@ -412,16 +478,63 @@ namespace taskt.Core.Automation.Commands
                         "Bottom Left",
                         "Center",
                     });
-                    dgv.Rows[2].Cells[1] = basePosCmd;
-                    var posTypes = new DataGridViewComboBoxCell();
-                    posTypes.Items.AddRange(new string[]
+                    //var posTypes = new DataGridViewComboBoxCell();
+                    //posTypes.Items.AddRange(new string[]
+                    //{
+                    //    "Screen",
+                    //    "Viewport",
+                    //});
+                    dgv.Rows[3].Cells[1] = CreateComboBox(new string[]
                     {
                         "Screen",
                         "Viewport",
                     });
-                    dgv.Rows[3].Cells[1] = posTypes;
+                    break;
+
+                case "get special value":
+                    //var specialValueTypeCmd = new DataGridViewComboBoxCell();
+                    //specialValueTypeCmd.Items.AddRange(new string[]
+                    //{
+                    //    "Enabled",
+                    //    "Displayed",
+                    //    "Selected",
+                    //    "Text",
+                    //    "Tag",
+                    //    "X Position",
+                    //    "Y Position",
+                    //    "Width",
+                    //    "Height",
+                    //    "Location",
+                    //    "Size",
+                    //});
+                    dgv.Rows[0].Cells[1] = CreateComboBox(new string[]
+                    {
+                        "Enabled",
+                        "Displayed",
+                        "Selected",
+                        "Text",
+                        "Tag",
+                        "X Position",
+                        "Y Position",
+                        "Width",
+                        "Height",
+                        "Location",
+                        "Size",
+                    });
                     break;
             }
+        }
+
+        /// <summary>
+        /// create combobox cell for dgv
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        private static DataGridViewComboBoxCell CreateComboBox(string[] items)
+        {
+            var cmb = new DataGridViewComboBoxCell();
+            cmb.Items.AddRange(items);
+            return cmb;
         }
 
         public override string GetDisplayValue()
