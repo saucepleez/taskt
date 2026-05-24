@@ -51,15 +51,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Clear Text")]
         [PropertyUISelectionOption("Set Text")]
         [PropertyUISelectionOption("Get Text")]
+        [PropertyUISelectionOption("Get Options")]
+        [PropertyUISelectionOption("Select Option")]
         [PropertyUISelectionOption("Get Attribute")]
-        [PropertyUISelectionOption("Get Matching WebElements HTML As List")]
+        [PropertyUISelectionOption("Remove WebElement")]
         [PropertyUISelectionOption("Wait For WebElement To Exists")]
         [PropertyUISelectionOption("Switch To Frame")]
+        [PropertyUISelectionOption("Get Matching WebElements HTML As List")]
         [PropertyUISelectionOption("Get WebElements Count")]
         [PropertyUISelectionOption("Get WebElement Position")]
         [PropertyUISelectionOption("Get WebElement Size")]
-        [PropertyUISelectionOption("Get Options")]
-        [PropertyUISelectionOption("Select Option")]
+        [PropertyUISelectionOption("Get CSS Selector")]
+        [PropertyUISelectionOption("Get XPath")]
         [PropertySelectionChangeEvent(nameof(cmbSeleniumAction_SelectionChangeCommitted))]
         [PropertyValidationRule("WebElement Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyParameterOrder(7000)]
@@ -187,6 +190,24 @@ namespace taskt.Core.Automation.Commands
                                 };
                                 getText.RunCommand(engine);
                                 break;
+                            case "get options":
+                                var getOptions = new SeleniumBrowserGetOptionsFromWebElementCommand()
+                                {
+                                    v_WebElement = myWebElem.VariableName,
+                                    v_AttributeName = parameters["Attribute Name"],
+                                    v_Result = parameters["Variable Name"],
+                                };
+                                getOptions.RunCommand(engine);
+                                break;
+                            case "select option":
+                                var selectOption = new SeleniumBrowserSelectOptionForWebElementCommand()
+                                {
+                                    v_WebElement = myWebElem.VariableName,
+                                    v_SelectionType = parameters["Selection Type"],
+                                    v_SelectionValue = parameters["Selection Parameter"],
+                                };
+                                selectOption.RunCommand(engine);
+                                break;
                             case "get attribute":
                                 var getAttribute = new SeleniumBrowserGetAttributeFromWebElementCommand()
                                 {
@@ -196,6 +217,13 @@ namespace taskt.Core.Automation.Commands
                                 };
                                 getAttribute.RunCommand(engine);
                                 break;
+                            case "remove webelement":
+                                var removeElem = new SeleniumBrowserRemoveWebElementCommand()
+                                {
+                                    v_WebElement = myWebElem.VariableName,
+                                };
+                                removeElem.RunCommand(engine);
+                                break;
                             case "switch to frame":
                                 var switchToFrame = new SeleniumBrowserSwitchToFrameWebElementCommand()
                                 {
@@ -203,15 +231,6 @@ namespace taskt.Core.Automation.Commands
                                     v_WebElement = myWebElem.VariableName,
                                 };
                                 switchToFrame.RunCommand(engine);
-                                break;
-                            case "get options":
-                                var getOptions = new SeleniumBrowserGetOptionsFromWebElementCommand()
-                                {
-                                    v_WebElement = myWebElem.VariableName,
-                                    v_AttributeName = parameters["Attribute Name"],
-                                    v_Result = parameters["Variable Name"],
-                                };
-                                getOptions.RunCommand(engine);
                                 break;
                             case "get webelement position":
                                 var getPos = new SeleniumBrowserGetWebElementPositionCommand()
@@ -233,14 +252,22 @@ namespace taskt.Core.Automation.Commands
                                 };
                                 getSize.RunCommand(engine);
                                 break;
-                            case "select option":
-                                var selectOption = new SeleniumBrowserSelectOptionForWebElementCommand()
+                            
+                            case "get css selector":
+                                var getCSSSel = new SeleniumBrowserGetCSSSelectorFromWebElementCommand()
                                 {
                                     v_WebElement = myWebElem.VariableName,
-                                    v_SelectionType = parameters["Selection Type"],
-                                    v_SelectionValue = parameters["Selection Parameter"],
+                                    v_Result = parameters["Variable Name"],
                                 };
-                                selectOption.RunCommand(engine);
+                                getCSSSel.RunCommand(engine);
+                                break;
+                            case "get xpath":
+                                var getXPath = new SeleniumBrowserGetXPathFromWebElementCommand()
+                                {
+                                    v_WebElement = myWebElem.VariableName,
+                                    v_Result = parameters["Variable Name"],
+                                };
+                                getXPath.RunCommand(engine);
                                 break;
                         }
                     }
@@ -272,7 +299,9 @@ namespace taskt.Core.Automation.Commands
             {
                 case "get text":
                 case "get webelements count":
-                case "get matching webelements":
+                case "get matching webelements html as list":
+                case "get css selector":
+                case "get xpath":
                     // only variable name
                     v_WebActionParameterTable.Rows.Add("Variable Name");
                     break;
@@ -315,6 +344,7 @@ namespace taskt.Core.Automation.Commands
 
                 case "clear webelement":
                 case "switch to frame":
+                case "remove webelement":
                 case "wait for webelement to exist":
                 default:
                     // no parameters
