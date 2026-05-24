@@ -171,6 +171,7 @@ namespace taskt.Core.Automation.Commands
                                 var clearElement = new SeleniumBrowserClearTextInWebElementCommand()
                                 {
                                     v_WebElement = myWebElem.VariableName,
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 clearElement.RunCommand(engine);
                                 break;
@@ -181,6 +182,7 @@ namespace taskt.Core.Automation.Commands
                                     v_TextToSet = parameters["Text To Set"],
                                     v_ClearTextBeforeSetting = parameters["Clear Element Before Setting Text"],
                                     v_EncryptedText = parameters["Encrypted Text"],
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 setText.RunCommand(engine);
                                 break;
@@ -189,6 +191,7 @@ namespace taskt.Core.Automation.Commands
                                 {
                                     v_WebElement = myWebElem.VariableName,
                                     v_Result = parameters["Variable Name"],
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 getText.RunCommand(engine);
                                 break;
@@ -198,6 +201,7 @@ namespace taskt.Core.Automation.Commands
                                     v_WebElement = myWebElem.VariableName,
                                     v_AttributeName = parameters["Attribute Name"],
                                     v_Result = parameters["Variable Name"],
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 getOptions.RunCommand(engine);
                                 break;
@@ -207,6 +211,7 @@ namespace taskt.Core.Automation.Commands
                                     v_WebElement = myWebElem.VariableName,
                                     v_SelectionType = parameters["Selection Type"],
                                     v_SelectionValue = parameters["Selection Parameter"],
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 selectOption.RunCommand(engine);
                                 break;
@@ -216,6 +221,7 @@ namespace taskt.Core.Automation.Commands
                                     v_WebElement = myWebElem.VariableName,
                                     v_AttributeName = parameters["Attribute Name"],
                                     v_Result = parameters["Variable Name"],
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 getAttribute.RunCommand(engine);
                                 break;
@@ -223,6 +229,7 @@ namespace taskt.Core.Automation.Commands
                                 var removeElem = new SeleniumBrowserRemoveWebElementCommand()
                                 {
                                     v_WebElement = myWebElem.VariableName,
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 removeElem.RunCommand(engine);
                                 break;
@@ -231,6 +238,7 @@ namespace taskt.Core.Automation.Commands
                                 {
                                     //v_InstanceName = this.v_InstanceName,
                                     v_WebElement = myWebElem.VariableName,
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 switchToFrame.RunCommand(engine);
                                 break;
@@ -242,6 +250,7 @@ namespace taskt.Core.Automation.Commands
                                     v_YPosition = parameters["Y Variable"],
                                     v_PositionBase = parameters["Base Position"],
                                     v_PositionType = parameters["Position Type"],
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 getPos.RunCommand(engine);
                                 break;
@@ -251,6 +260,7 @@ namespace taskt.Core.Automation.Commands
                                     v_WebElement = myWebElem.VariableName,
                                     v_Width = parameters["Width Variable"],
                                     v_Height = parameters["Height Variable"],
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 getSize.RunCommand(engine);
                                 break;
@@ -260,6 +270,7 @@ namespace taskt.Core.Automation.Commands
                                 {
                                     v_WebElement = myWebElem.VariableName,
                                     v_Result = parameters["Variable Name"],
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 getCSSSel.RunCommand(engine);
                                 break;
@@ -268,6 +279,7 @@ namespace taskt.Core.Automation.Commands
                                 {
                                     v_WebElement = myWebElem.VariableName,
                                     v_Result = parameters["Variable Name"],
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 getXPath.RunCommand(engine);
                                 break;
@@ -276,6 +288,7 @@ namespace taskt.Core.Automation.Commands
                                 {
                                     v_WebElement = myWebElem.VariableName,
                                     v_Result = parameters["Variable Name"],
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 getHTML.RunCommand(engine);
                                 break;
@@ -285,6 +298,7 @@ namespace taskt.Core.Automation.Commands
                                     v_WebElement = myWebElem.VariableName,
                                     v_ValueType = parameters["Value Type"],
                                     v_Result = parameters["Variable Name"],
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
                                 };
                                 getSpecial.RunCommand(engine);
                                 break;
