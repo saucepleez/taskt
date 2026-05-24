@@ -220,6 +220,7 @@ namespace taskt.Core.Automation.Commands
                                     v_XPosition = parameters["X Variable"],
                                     v_YPosition = parameters["Y Variable"],
                                     v_PositionBase = parameters["Base Position"],
+                                    v_PositionType = parameters["Position Type"],
                                 };
                                 getPos.RunCommand(engine);
                                 break;
@@ -304,6 +305,7 @@ namespace taskt.Core.Automation.Commands
                     v_WebActionParameterTable.Rows.Add("X Variable");
                     v_WebActionParameterTable.Rows.Add("Y Variable");
                     v_WebActionParameterTable.Rows.Add("Base Position", "");
+                    v_WebActionParameterTable.Rows.Add("Position Type", "");
                     break;
 
                 case "get webelement size":
@@ -381,6 +383,13 @@ namespace taskt.Core.Automation.Commands
                         "Center",
                     });
                     dgv.Rows[2].Cells[1] = basePosCmd;
+                    var posTypes = new DataGridViewComboBoxCell();
+                    posTypes.Items.AddRange(new string[]
+                    {
+                        "Screen",
+                        "Viewport",
+                    });
+                    dgv.Rows[3].Cells[1] = posTypes;
                     break;
             }
         }
