@@ -10,14 +10,14 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser")]
-    [Attributes.ClassAttributes.SubGruop("WebElement Action")]
-    [Attributes.ClassAttributes.CommandSettings("WebElement Action")]
+    [Attributes.ClassAttributes.SubGruop("Search And Action")]
+    [Attributes.ClassAttributes.CommandSettings("WebElement Action After Search WebElement")]
     [Attributes.ClassAttributes.Description("This command allows you to close a Selenium web browser session.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to manipulate, set, or get data on a webpage within the web browser.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
-    public sealed class SeleniumBrowserWebElementActionCommand : ASeleniumWebDriverActionCommands, ISeleniumSearchWebElementParametersProperties, IHaveDataTableElements
+    public sealed class SeleniumBrowserWebElementActionAfterSearchWebElementCommand : ASeleniumWebDriverActionCommands, ISeleniumSearchWebElementParametersProperties, IHaveDataTableElements
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_InputInstanceName))]
@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Set Text")]
         [PropertyUISelectionOption("Get Text")]
         [PropertyUISelectionOption("Get Attribute")]
-        [PropertyUISelectionOption("Get Matching WebElements")]
+        [PropertyUISelectionOption("Get Matching WebElements HTML As List")]
         [PropertyUISelectionOption("Wait For WebElement To Exists")]
         [PropertyUISelectionOption("Switch To Frame")]
         [PropertyUISelectionOption("Get WebElements Count")]
@@ -90,7 +90,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(11000)]
         public string v_ScrollToWebElement { get; set; }
 
-        public SeleniumBrowserWebElementActionCommand()
+        public SeleniumBrowserWebElementActionAfterSearchWebElementCommand()
         {
         }
 
@@ -112,7 +112,7 @@ namespace taskt.Core.Automation.Commands
                     };
                     waitCommand.RunCommand(engine);
                     break;
-                case "get matching webelements":
+                case "get matching webelements html as list":
                     var getMatching = new SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand()
                     {
                         v_InstanceName = this.v_InstanceName,

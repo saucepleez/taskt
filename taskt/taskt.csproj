@@ -1319,7 +1319,7 @@
     <Compile Include="Core\Automation\Commands\ApplicationScriptFileGroup\RunCSharpCodeCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFileGroup\RunBatchScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\IEGroup\IEBrowserElementActionCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserWebElementActionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserWebElementActionAfterSearchWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserExecuteJavaScriptFromCodeCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserNavigateBackCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserNavigateForwardCommand.cs" />

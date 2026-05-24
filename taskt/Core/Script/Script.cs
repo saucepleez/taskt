@@ -765,6 +765,10 @@ namespace taskt.Core.Script
             {
                 convertTo3_5_2_64(doc);
             }
+            if (IsOldVersion(myVersion, "3.5.2.65"))
+            {
+                convertTo3_5_2_65(doc);
+            }
             return doc;
         }
 
@@ -5779,6 +5783,24 @@ namespace taskt.Core.Script
                 }
             }
             uiCmds = null;
+        }
+
+        private static void convertTo3_5_2_65(XDocument doc)
+        {
+            // SeleniumBrowserWebElementActionCommand -> SeleniumBrowserWebElementActionAfterSearchWebElementCommand
+            ChangeCommandName(doc, "SeleniumBrowserWebElementActionCommand", "SeleniumBrowserWebElementActionAfterSearchWebElementCommand", "WebElement Action After Search WebElement");
+
+            // SeleniumBrowserWebElementActionAfterSearchWebElementCommand
+            // Get Matching WebElements -> Get Matching WebElements HTML As List
+            ChangeAttributeValue(doc, "SeleniumBrowserWebElementActionAfterSearchWebElementCommand", "v_WebElementAction",
+                new Action<XAttribute>(attr =>
+                {
+                    if (attr.Value.ToLower() == "get matching webelements")
+                    {
+                        attr.SetValue("Get Matching WebElements HTML As List");
+                    }
+                })
+            );
         }
 
         /// <summary>
