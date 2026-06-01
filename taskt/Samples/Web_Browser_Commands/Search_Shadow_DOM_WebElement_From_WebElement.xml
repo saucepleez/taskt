@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="a7847d63-f15b-47ee-97db-e805c2be5f2a" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Search Shadow DOM WebElement From WebElement sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="a9266b84-087c-4865-ac36-06205d0617ff" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute Edge" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserCreateWebBrowserInstanceCommand" CommandID="3f8ca1d2-4873-43a0-bfe9-74657ca2a12d" CommandName="SeleniumBrowserCreateWebBrowserInstanceCommand" IsCommented="false" SelectionName="Create Web Browser Instance" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_BrowserType="Edge" v_WebDriverPath="" v_HideTerminalWindow="No" v_BrowserWindowOption="" v_ProfileFolder="" v_HeadlessMode="No" v_SeleniumOptions="" v_WindowHandleResult="" v_BrowserPath="" v_TemporaryProfileFolder="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="ceca4f4d-6395-4c21-bb57-dc9d88b0fcd9" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="This page link is Shadow DOM WebElement" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserNavigateToURLCommand" CommandID="2da2797c-c065-4283-809f-323bb1aa2649" CommandName="SeleniumBrowserNavigateToURLCommand" IsCommented="false" SelectionName="Navigate To URL" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_WhenFailAction="" v_URL="https://rcktrncn.github.io/rpa-web/shadow_dom.html" v_UseHttps="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="4a548660-4e30-486c-b3ba-a05402742fdd" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="div[@id=&quot;shadow&quot;] has Shadow DOM" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserSearchWebElementCommand" CommandID="943a137d-9306-4b89-94a5-75b5c32512cc" CommandName="SeleniumBrowserSearchWebElementCommand" IsCommented="false" SelectionName="Search WebElement" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_Result="vDiv" v_SearchMethod="Find Elements By XPath" v_SearchParameter="//div[@id=&quot;shadow&quot;]" v_WaitTimeForWebElement="120" v_SelectionMethod="" v_WebElementIndex="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e20a7fea-87c6-4533-a003-d161332c7bfa" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Search Link in Shadow DOM, only CSS Selector can be used" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand" CommandID="d8d4d34f-d7c7-4d44-86a9-29aaf1f57ae5" CommandName="SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand" IsCommented="false" SelectionName="Search Shadow DOM WebElement From WebElement" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_WebElement="⦃vDiv⦄" v_SearchMethod="Find Elements By CSS Selector" v_SearchParameter="a[href]" v_SelectionMethod="" v_WebElementIndex="" v_Result="vShadowLink" v_WaitTimeForWebElement="120" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2bce7fd3-88d4-4e2e-a364-f1cca694489c" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Click Link" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserClickWebElementCommand" CommandID="fae6b9a3-ca34-4212-a4bd-256f3c53e6b7" CommandName="SeleniumBrowserClickWebElementCommand" IsCommented="false" SelectionName="Click WebElement" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_WebElement="⦃vShadowLink⦄" v_WhenFailAction="" v_ScrollToWebElement="" v_ClickType="Invoke Click" v_XOffset="2" v_YOffset="2" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserCloseWebBrowserInstanceCommand" CommandID="ab950f92-b701-4fac-9841-273ac1ca7a3a" CommandName="SeleniumBrowserCloseWebBrowserInstanceCommand" IsCommented="false" SelectionName="Close Web Browser Instance" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_WhenFailAction="" v_DeleteProfileFolder="" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.2.65</TasktVersion>
+    <Author />
+    <LastRunTime>2026-06-01T22:53:41.0972615+09:00</LastRunTime>
+    <RunTimes>3</RunTimes>
+    <Revision>6</Revision>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vDiv</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vShadowLink</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
