@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="a6a532bf-16f9-47dd-a1b1-559af7d97fd1" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Get XPath From WebElement sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="617c50e6-9e1f-4ff8-8cac-1937e61e24ba" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute Edge" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserCreateWebBrowserInstanceCommand" CommandID="f1d8df11-5921-409e-9373-7ff78ad7dcc4" CommandName="SeleniumBrowserCreateWebBrowserInstanceCommand" IsCommented="false" SelectionName="Create Web Browser Instance" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_BrowserType="Chrome" v_WebDriverPath="" v_HideTerminalWindow="No" v_BrowserWindowOption="" v_ProfileFolder="" v_HeadlessMode="No" v_SeleniumOptions="" v_WindowHandleResult="" v_BrowserPath="" v_TemporaryProfileFolder="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserNavigateToURLCommand" CommandID="87dd5114-6ceb-4133-9e7a-3d6f5bc7bc24" CommandName="SeleniumBrowserNavigateToURLCommand" IsCommented="false" SelectionName="Navigate To URL" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_WhenFailAction="" v_URL="https://rcktrncn.github.io/rpa-web/sample_form.html" v_UseHttps="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserSearchWebElementCommand" CommandID="189181d4-5215-4ca5-81de-d4c98bfcc7fc" CommandName="SeleniumBrowserSearchWebElementCommand" IsCommented="false" SelectionName="Search WebElement" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Search &quot;Yes&quot; radio button" CommandEnabled="true" v_InstanceName="RPABrowser" v_Result="vElem" v_SearchMethod="Find Elements By XPath" v_SearchParameter="//input[@id=&quot;i_know_taskt_yes&quot;]" v_WaitTimeForWebElement="120" v_SelectionMethod="" v_WebElementIndex="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="04748a03-23fc-4b64-9e0f-e53328739794" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Get XPath" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserGetXPathFromWebElementCommand" CommandID="429146b9-fbcd-4da6-8579-541c6a9349a8" CommandName="SeleniumBrowserGetXPathFromWebElementCommand" IsCommented="false" SelectionName="Get XPath From WebElement" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_WebElement="⦃vElem⦄" v_WhenFailAction="" v_ScrollToWebElement="" v_WhenValueCanNotRetrieved="" v_Result="vPath" v_BeliveIDAttribute="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="9207c6e3-9c95-4d64-8741-240aa6acb148" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="XPath&#xD;&#xA;⦃vPath⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" v_DialogType="" v_DialogTitle="ShowMessage Comamnd" v_WaitForAnswer="Yes" v_DialogResult="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="c4827e2d-75f5-46ff-922c-8a9b425f181d" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Get XPath" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserGetXPathFromWebElementCommand" CommandID="12ebe4fd-e6cc-410f-a73b-fb4087fceb93" CommandName="SeleniumBrowserGetXPathFromWebElementCommand" IsCommented="false" SelectionName="Get XPath From WebElement" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_WebElement="⦃vElem⦄" v_WhenFailAction="" v_ScrollToWebElement="" v_WhenValueCanNotRetrieved="" v_Result="vPath" v_BeliveIDAttribute="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="8b002eef-07b6-40e0-971c-3bb83c6a2d62" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="XPath (Belive ID Attribute)&#xD;&#xA;⦃vPath⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" v_DialogType="" v_DialogTitle="ShowMessage Comamnd" v_WaitForAnswer="Yes" v_DialogResult="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserCloseWebBrowserInstanceCommand" CommandID="62bc8cbc-ccb2-496a-bcea-94d6b38f155f" CommandName="SeleniumBrowserCloseWebBrowserInstanceCommand" IsCommented="false" SelectionName="Close Web Browser Instance" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPABrowser" v_WhenFailAction="" v_DeleteProfileFolder="" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.2.65</TasktVersion>
+    <Author />
+    <LastRunTime>2026-06-01T22:07:11.6256414+09:00</LastRunTime>
+    <RunTimes>4</RunTimes>
+    <Revision>6</Revision>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vElem</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vPath</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
