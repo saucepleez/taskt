@@ -325,7 +325,7 @@ namespace taskt.Core.Automation.Commands
         {
             var cmb = FormUIControls.GetPropertyControl<ComboBox>(ControlsList, nameof(v_WebElementAction));
             var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_WebActionParameterTable));
-            actionParameterProcess(dgv, cmb.SelectedItem?.ToString() ?? "");
+            ActionParameterProcess(dgv, cmb.SelectedItem?.ToString() ?? "");
         }
 
         private void cmbSearchType_SelectionChangeCommited(object sender, EventArgs e)
@@ -411,18 +411,14 @@ namespace taskt.Core.Automation.Commands
             }
             dgv.DataSource = v_WebActionParameterTable;
 
-            actionParameterProcess(dgv, actionType);
+            ActionParameterProcess(dgv, actionType);
         }
 
-        private static void actionParameterProcess(DataGridView dgv, string actionType)
+        private static void ActionParameterProcess(DataGridView dgv, string actionType)
         {
             switch (actionType.ToLower())
             {
                 case "set text":
-                    //var clearBefore = new DataGridViewComboBoxCell();
-                    //clearBefore.Items.AddRange(new string[] { "", "Yes", "No" });
-                    //var encrypted = new DataGridViewComboBoxCell();
-                    //encrypted.Items.AddRange(new string[] { "", "Yes", "No" });
                     dgv.Rows[1].Cells[1] = CreateComboBox(new string[]
                     {
                         "", 
@@ -438,16 +434,6 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "select option":
-                    //var selectionType = new DataGridViewComboBoxCell();
-                    //selectionType.Items.AddRange(new string[] {
-                    //    "Select By Index",
-                    //    "Select By Text",
-                    //    "Select By Value",
-                    //    "Deselect By Index",
-                    //    "Deselect By Text",
-                    //    "Deselect By Value",
-                    //    "Deselect All",
-                    //});
                     dgv.Rows[0].Cells[1] = CreateComboBox(new string[]
                     {
                         "Select By Index",
@@ -485,22 +471,6 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "click webelement":
-                    //var clickType = new DataGridViewComboBoxCell();
-                    //clickType.Items.AddRange(new string[]
-                    //{
-                    //    "Left Click",
-                    //    "Middle Click",
-                    //    "Right Click",
-                    //    "Left Down",
-                    //    "Middle Down",
-                    //    "Right Down",
-                    //    "Left Up",
-                    //    "Middle Up",
-                    //    "Right Up",
-                    //    "Double Left Click",
-                    //    "None",
-                    //    "Invoke Click",
-                    //});
                     dgv.Rows[0].Cells[1] = CreateComboBox(new string[]
                     {
                         "Left Click",
@@ -519,15 +489,6 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "get webelement position":
-                    //var basePosCmd = new DataGridViewComboBoxCell();
-                    //basePosCmd.Items.AddRange(new string[]
-                    //{
-                    //    "Top Left",
-                    //    "Bottom Right",
-                    //    "Top Right",
-                    //    "Bottom Left",
-                    //    "Center",
-                    //});
                     dgv.Rows[2].Cells[1] = CreateComboBox(new string[]
                     {
                         "Top Left",
@@ -536,12 +497,6 @@ namespace taskt.Core.Automation.Commands
                         "Bottom Left",
                         "Center",
                     });
-                    //var posTypes = new DataGridViewComboBoxCell();
-                    //posTypes.Items.AddRange(new string[]
-                    //{
-                    //    "Screen",
-                    //    "Viewport",
-                    //});
                     dgv.Rows[3].Cells[1] = CreateComboBox(new string[]
                     {
                         "Screen",
@@ -550,21 +505,6 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "get special value":
-                    //var specialValueTypeCmd = new DataGridViewComboBoxCell();
-                    //specialValueTypeCmd.Items.AddRange(new string[]
-                    //{
-                    //    "Enabled",
-                    //    "Displayed",
-                    //    "Selected",
-                    //    "Text",
-                    //    "Tag",
-                    //    "X Position",
-                    //    "Y Position",
-                    //    "Width",
-                    //    "Height",
-                    //    "Location",
-                    //    "Size",
-                    //});
                     dgv.Rows[0].Cells[1] = CreateComboBox(new string[]
                     {
                         "Enabled",
