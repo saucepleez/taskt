@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
-    public sealed class SeleniumBrowserWebElementActionAfterSearchWebElementCommand : ASeleniumWebDriverActionCommands, ISeleniumSearchWebElementParametersProperties, IHaveDataTableElements
+    public sealed class SeleniumBrowserWebElementActionAfterSearchWebElementCommand : ASeleniumWebDriverActionCommands, ISeleniumSearchWebElementParametersProperties, ISeleniumSendSpecialKeystrokesProperties, IHaveDataTableElements
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_InputInstanceName))]
@@ -54,6 +54,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Get Options")]
         [PropertyUISelectionOption("Select Option")]
         [PropertyUISelectionOption("Get Attribute")]
+        [PropertyUISelectionOption("Send Special Keystrokes")]
         [PropertyUISelectionOption("Remove WebElement")]
         [PropertyUISelectionOption("Wait For WebElement To Exists")]
         [PropertyUISelectionOption("Switch To Frame")]
@@ -225,6 +226,18 @@ namespace taskt.Core.Automation.Commands
                                 };
                                 getAttribute.RunCommand(engine);
                                 break;
+                            case "send special keystrokes":
+                                var sendKeys = new SeleniumBrowserSendSpecialKeystrokesToWebElementCommand()
+                                {
+                                    v_WebElement = myWebElem.VariableName,
+                                    v_SendKey = parameters["Send Key"],
+                                    v_ControlKey = parameters["Use Control Key"],
+                                    v_ShiftKey = parameters["Use Shift Key"],
+                                    v_AltKey = parameters["Use Alt Key"],
+                                    v_ScrollToWebElement = this.v_ScrollToWebElement,
+                                };
+                                sendKeys.RunCommand(engine);
+                                break;
                             case "remove webelement":
                                 var removeElem = new SeleniumBrowserRemoveWebElementCommand()
                                 {
@@ -358,6 +371,13 @@ namespace taskt.Core.Automation.Commands
                     v_WebActionParameterTable.Rows.Add("Selection Parameter");
                     break;
 
+                case "send special keystrokes":
+                    v_WebActionParameterTable.Rows.Add("Send Key");
+                    v_WebActionParameterTable.Rows.Add("Use Control Key");
+                    v_WebActionParameterTable.Rows.Add("Use Shift Key");
+                    v_WebActionParameterTable.Rows.Add("Use Alt Key");
+                    break;
+
                 case "click webelement":
                     v_WebActionParameterTable.Rows.Add(new string[] { "Click Type", "Invoke Click" });
                     v_WebActionParameterTable.Rows.Add("X Offset");
@@ -438,6 +458,30 @@ namespace taskt.Core.Automation.Commands
                         "Deselect By Value",
                         "Deselect All",
                     });
+                    break;
+
+                case "send special keystrokes":
+                    {
+                        dgv.Rows[0].Cells[1] = CreateComboBox(
+                            EM_SeleniumSendSpecialKeystrokesPropetiesExtensionMethods.GetSpecialKeysList(
+                                new SeleniumBrowserSendSpecialKeystrokesToWebElementCommand()).ToArray()
+                        );
+                        dgv.Rows[1].Cells[1] = CreateComboBox(new string[]
+                        {
+                            "Yes",
+                            "No",
+                        });
+                        dgv.Rows[2].Cells[1] = CreateComboBox(new string[]
+                        {
+                            "Yes",
+                            "No",
+                        });
+                        dgv.Rows[3].Cells[1] = CreateComboBox(new string[]
+                        {
+                            "Yes",
+                            "No",
+                        });
+                    }
                     break;
 
                 case "click webelement":
