@@ -585,6 +585,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumGetFromWebElementPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumSearchMultiWebElementsParametersPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumSearchWebElementParametersPropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumSendSpecialKeystrokesPropetiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumWebDriverActionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumWebElementActionAndScrollPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\EM_SeleniumWebElementActionPropertiesExtensionMehtods.cs" />
@@ -599,6 +600,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumGetFromWebElementProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumSearchWebElementParametersProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumSearchMultiWebElementsParametersProperties.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumSendSpecialKeystrokesProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumWebBrowserInstanceActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumWebDriverActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumWebElementActionAndScrollProperties.cs" />

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands.WebBrowserGroup;
@@ -17,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserSendSpecialKeystrokesToWebElementCommand : ASeleniumWebElementActionAndScrollCommands
+    public sealed class SeleniumBrowserSendSpecialKeystrokesToWebElementCommand : ASeleniumWebElementActionAndScrollCommands, ISeleniumSendSpecialKeystrokesProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
@@ -174,13 +173,16 @@ namespace taskt.Core.Automation.Commands
         //}
 
         /// <summary>
-        /// OpenQAのキー一覧を取得する
+        /// Get key list of OpenQA
         /// </summary>
         /// <returns></returns>
         private List<string> CreateSendKeyList()
         {
-            var fields = typeof(OpenQA.Selenium.Keys).GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
-            return fields.Select(f => f.Name).ToList();
+            //var fields = typeof(OpenQA.Selenium.Keys).GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+            //return fields.Select(f => f.Name).ToList();
+
+            // call extention method
+            return this.GetSpecialKeysList();
         }
     }
 }
