@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -350,55 +351,102 @@ namespace taskt.Core.Automation.Commands
                 case "get xpath":
                 case "get html":
                     // only variable name
-                    v_WebActionParameterTable.Rows.Add("Variable Name");
+                    //v_WebActionParameterTable.Rows.Add("Variable Name");
+                    AddDataTableRows(v_WebActionParameterTable, new string[] { "Variable Name" });
                     break;
 
                 case "get options":
                 case "get attribute":
                     // attribute, variable name
-                    v_WebActionParameterTable.Rows.Add("Attribute Name");
-                    v_WebActionParameterTable.Rows.Add("Variable Name");
+                    //v_WebActionParameterTable.Rows.Add("Attribute Name");
+                    //v_WebActionParameterTable.Rows.Add("Variable Name");
+                    AddDataTableRows(v_WebActionParameterTable, new string[]
+                    {
+                        "Attribute Name",
+                        "Variable Name",
+                    });
                     break;
 
                 case "set text":
-                    v_WebActionParameterTable.Rows.Add("Text To Set");
-                    v_WebActionParameterTable.Rows.Add("Clear Element Before Setting Text");
-                    v_WebActionParameterTable.Rows.Add("Encrypted Text");
+                    //v_WebActionParameterTable.Rows.Add("Text To Set");
+                    //v_WebActionParameterTable.Rows.Add("Clear Element Before Setting Text");
+                    //v_WebActionParameterTable.Rows.Add("Encrypted Text");
+                    AddDataTableRows(v_WebActionParameterTable, new string[]
+                    {
+                        "Text To Set",
+                        "Clear Element Before Setting Text",
+                        "Encrypted Text",
+                    });
                     break;
 
                 case "select option":
-                    v_WebActionParameterTable.Rows.Add(new string[] { "Selection Type", "Select By Value" });
-                    v_WebActionParameterTable.Rows.Add("Selection Parameter");
+                    //v_WebActionParameterTable.Rows.Add(new string[] { "Selection Type", "Select By Value" });
+                    //v_WebActionParameterTable.Rows.Add("Selection Parameter");
+                    AddDataTableRows(v_WebActionParameterTable, new Dictionary<string, string>()
+                    {
+                        { "Selection Type", "Select By Value" },
+                        { "Selection Parameter", string.Empty },
+                    });
                     break;
 
                 case "send special keystrokes":
-                    v_WebActionParameterTable.Rows.Add("Send Key");
-                    v_WebActionParameterTable.Rows.Add("Use Control Key");
-                    v_WebActionParameterTable.Rows.Add("Use Shift Key");
-                    v_WebActionParameterTable.Rows.Add("Use Alt Key");
+                    //v_WebActionParameterTable.Rows.Add("Send Key");
+                    //v_WebActionParameterTable.Rows.Add("Use Control Key");
+                    //v_WebActionParameterTable.Rows.Add("Use Shift Key");
+                    //v_WebActionParameterTable.Rows.Add("Use Alt Key");
+                    AddDataTableRows(v_WebActionParameterTable, new string[]
+                    {
+                        "Send Key",
+                        "Use Control Key",
+                        "Use Shift Key",
+                        "Use Alt Key",
+                    });
                     break;
 
                 case "click webelement":
-                    v_WebActionParameterTable.Rows.Add(new string[] { "Click Type", "Invoke Click" });
-                    v_WebActionParameterTable.Rows.Add("X Offset");
-                    v_WebActionParameterTable.Rows.Add("Y Offset");
+                    //v_WebActionParameterTable.Rows.Add(new string[] { "Click Type", "Invoke Click" });
+                    //v_WebActionParameterTable.Rows.Add("X Offset");
+                    //v_WebActionParameterTable.Rows.Add("Y Offset");
+                    AddDataTableRows(v_WebActionParameterTable, new Dictionary<string, string>()
+                    {
+                        { "Click Type", "Invoke Click" },
+                        { "X Offset", string.Empty },
+                        { "Y Offset", string.Empty },
+                    });
                     break;
 
                 case "get webelement position":
-                    v_WebActionParameterTable.Rows.Add("X Variable");
-                    v_WebActionParameterTable.Rows.Add("Y Variable");
-                    v_WebActionParameterTable.Rows.Add("Base Position", "");
-                    v_WebActionParameterTable.Rows.Add("Position Type", "");
+                    //v_WebActionParameterTable.Rows.Add("X Variable");
+                    //v_WebActionParameterTable.Rows.Add("Y Variable");
+                    //v_WebActionParameterTable.Rows.Add("Base Position", "");
+                    //v_WebActionParameterTable.Rows.Add("Position Type", "");
+                    AddDataTableRows(v_WebActionParameterTable, new string[]
+                    {
+                        "X Variable",
+                        "Y Variable",
+                        "Base Position", 
+                        "Position Type", 
+                    });
                     break;
 
                 case "get webelement size":
-                    v_WebActionParameterTable.Rows.Add("Width Variable");
-                    v_WebActionParameterTable.Rows.Add("Height Variable");
+                    //v_WebActionParameterTable.Rows.Add("Width Variable");
+                    //v_WebActionParameterTable.Rows.Add("Height Variable");
+                    AddDataTableRows(v_WebActionParameterTable, new string[]
+                    {
+                        "Width Variable",
+                        "Height Variable",
+                    });
                     break;
 
                 case "get special value":
-                    v_WebActionParameterTable.Rows.Add("Value Type");
-                    v_WebActionParameterTable.Rows.Add("Variable Name");
+                    //v_WebActionParameterTable.Rows.Add("Value Type");
+                    //v_WebActionParameterTable.Rows.Add("Variable Name");
+                    AddDataTableRows(v_WebActionParameterTable, new string[]
+                    {
+                        "Value Type",
+                        "Variable Name",
+                    });
                     break;
 
                 case "clear webelement":
@@ -414,23 +462,49 @@ namespace taskt.Core.Automation.Commands
             ActionParameterProcess(dgv, actionType);
         }
 
+        /// <summary>
+        /// add rows in ActionParameters
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="rows"></param>
+        private static void AddDataTableRows(DataTable table, Dictionary<string, string> rows)
+        {
+            foreach(var kv in rows)
+            {
+                table.Rows.Add(kv.Key, kv.Value);
+            }
+        }
+
+        /// <summary>
+        /// add rows in ActionParameters
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="rows"></param>
+        private static void AddDataTableRows(DataTable table, string[] rows)
+        {
+            var dic = new Dictionary<string, string>();
+            foreach (var item in rows)
+            {
+                dic.Add(item, string.Empty);
+            }
+            AddDataTableRows(table, dic);
+        }
+
         private static void ActionParameterProcess(DataGridView dgv, string actionType)
         {
             switch (actionType.ToLower())
             {
                 case "set text":
-                    dgv.Rows[1].Cells[1] = CreateComboBox(new string[]
                     {
-                        "", 
-                        "Yes", 
-                        "No",
-                    });
-                    dgv.Rows[2].Cells[1] = CreateComboBox(new string[]
-                    {
-                        "",
-                        "Yes",
-                        "No",
-                    });
+                        var yn = new string[]
+                        {
+                            "",
+                            "Yes",
+                            "No",
+                        };
+                        dgv.Rows[1].Cells[1] = CreateComboBox(yn);
+                        dgv.Rows[2].Cells[1] = CreateComboBox(yn);
+                    }
                     break;
 
                 case "select option":
@@ -448,25 +522,19 @@ namespace taskt.Core.Automation.Commands
 
                 case "send special keystrokes":
                     {
+                        var yn = new string[]
+                        {
+                            "",
+                            "Yes",
+                            "No",
+                        };
                         dgv.Rows[0].Cells[1] = CreateComboBox(
                             EM_SeleniumSendSpecialKeystrokesPropetiesExtensionMethods.GetSpecialKeysList(
                                 new SeleniumBrowserSendSpecialKeystrokesToWebElementCommand()).ToArray()
                         );
-                        dgv.Rows[1].Cells[1] = CreateComboBox(new string[]
-                        {
-                            "Yes",
-                            "No",
-                        });
-                        dgv.Rows[2].Cells[1] = CreateComboBox(new string[]
-                        {
-                            "Yes",
-                            "No",
-                        });
-                        dgv.Rows[3].Cells[1] = CreateComboBox(new string[]
-                        {
-                            "Yes",
-                            "No",
-                        });
+                        dgv.Rows[1].Cells[1] = CreateComboBox(yn);
+                        dgv.Rows[2].Cells[1] = CreateComboBox(yn);
+                        dgv.Rows[3].Cells[1] = CreateComboBox(yn);
                     }
                     break;
 
