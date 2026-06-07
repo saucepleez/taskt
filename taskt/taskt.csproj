@@ -1217,7 +1217,7 @@
     <Compile Include="Core\Automation\Commands\_RemovedCommands\GetWindowPositionCommand.cs" />
     <Compile Include="Core\Automation\Commands\WordControls.cs" />
     <Compile Include="Core\Automation\Commands\WordGroup\WordCheckWordInstanceExistsCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserCheckBrowserInstanceExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserCheckWebBrowserInstanceExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelCheckExcelInstanceExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\GetWindowNamesCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\CheckWindowNameExistsCommand.cs" />

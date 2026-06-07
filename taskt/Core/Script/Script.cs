@@ -769,6 +769,10 @@ namespace taskt.Core.Script
             {
                 convertTo3_5_2_65(doc);
             }
+            if (IsOldVersion(myVersion, "3.5.2.66"))
+            {
+                convertTo3_5_2_66(doc);
+            }
             return doc;
         }
 
@@ -5801,6 +5805,12 @@ namespace taskt.Core.Script
                     }
                 })
             );
+        }
+
+        private static void convertTo3_5_2_66(XDocument doc)
+        {
+            // SeleniumBrowserCheckBrowserInstanceExistsCommand -> SeleniumBrowserCheckWebBrowserInstanceExistsCommand
+            ChangeCommandName(doc, "SeleniumBrowserCheckBrowserInstanceExistsCommand", "SeleniumBrowserCheckWebBrowserInstanceExistsCommand", "Check Web Browser Instance Exists");
         }
 
         /// <summary>

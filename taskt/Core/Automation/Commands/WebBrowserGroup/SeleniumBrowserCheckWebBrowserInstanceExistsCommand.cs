@@ -8,14 +8,14 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser")]
     [Attributes.ClassAttributes.SubGruop("Instance")]
-    [Attributes.ClassAttributes.CommandSettings("Check Browser Instance Exists")]
-    [Attributes.ClassAttributes.Description("This command returns existance of browser instance.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close an open instance of Excel.")]
+    [Attributes.ClassAttributes.CommandSettings("Check Web Browser Instance Exists")]
+    [Attributes.ClassAttributes.Description("This command returns existance of Web Browser instance.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check Web Browser Instance existance.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserCheckBrowserInstanceExistsCommand : ASeleniumGetFromWebDriverCommands
+    public sealed class SeleniumBrowserCheckWebBrowserInstanceExistsCommand : ASeleniumGetFromWebDriverCommands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_InputInstanceName))]
@@ -27,26 +27,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(6000)]
         public override string v_Result { get; set; }
 
-        public SeleniumBrowserCheckBrowserInstanceExistsCommand()
+        public SeleniumBrowserCheckWebBrowserInstanceExistsCommand()
         {
-            //this.CommandName = "SeleniumBrowserCheckBrowserInstanceExistsCommand";
-            //this.SelectionName = "Check Browser Instance Exists";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
-
-            //this.v_InstanceName = "";
         }
+
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //try
-            //{
-            //    var _ = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
-            //    true.StoreInUserVariable(engine, v_applyToVariableName);
-            //}
-            //catch
-            //{
-            //    false.StoreInUserVariable(engine, v_applyToVariableName);
-            //}
             try
             {
                 var ins = this.GetWebBrowserIntance(v_InstanceName, engine);
