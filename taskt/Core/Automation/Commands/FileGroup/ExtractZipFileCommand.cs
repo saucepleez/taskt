@@ -155,12 +155,12 @@ namespace taskt.Core.Automation.Commands
                     if (string.IsNullOrEmpty(vPassword))
                     {
                         //password not required
-                        reader = ReaderFactory.Open(stream);
+                        reader = ReaderFactory.OpenReader(stream);
                     }
                     else
                     {
                         //password required
-                        reader = ReaderFactory.Open(stream, new ReaderOptions() { Password = vPassword });
+                        reader = ReaderFactory.OpenReader(stream, new ReaderOptions() { Password = vPassword });
                     }
            
                     while (reader.MoveToNextEntry())
