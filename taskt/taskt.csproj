@@ -610,6 +610,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ISeleniumWebElementResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserAttachWebBrowserInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserCheckWebElementExistsFromWebElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserRemoveWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserExecuteJavaScriptFromFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetWebElementSelectorFromWebElementCommands.cs" />
