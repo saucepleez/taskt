@@ -1,6 +1,0 @@
-@startuml
-AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands --> ScriptCommand
-AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands --> IUIElementChildrenSearchParametersProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

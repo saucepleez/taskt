@@ -1,5 +1,0 @@
-digraph "SetVariableIndexCommand" {
-"SetVariableIndexCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

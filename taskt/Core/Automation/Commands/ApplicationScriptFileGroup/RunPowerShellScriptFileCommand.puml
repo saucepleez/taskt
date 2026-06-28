@@ -1,8 +1,0 @@
-@startuml
-RunPowerShellScriptFileCommand --> ARunScriptFileCommands
-ARunScriptFileCommands --> AScriptFileCommands
-AScriptFileCommands --> ScriptCommand
-AScriptFileCommands --> IFileExistsFilePathProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

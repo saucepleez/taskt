@@ -1,7 +1,0 @@
-digraph "ExtractionFolderPathCommand" {
-"ExtractionFolderPathCommand" -> "AFolderFolderPathCommands";
-"AFolderFolderPathCommands" -> "ScriptCommand";
-"AFolderFolderPathCommands" -> "IFolderPathProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

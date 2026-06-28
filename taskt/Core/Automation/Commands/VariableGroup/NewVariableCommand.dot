@@ -1,5 +1,0 @@
-digraph "NewVariableCommand" {
-"NewVariableCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

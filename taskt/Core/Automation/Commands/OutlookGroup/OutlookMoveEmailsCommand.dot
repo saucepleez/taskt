@@ -1,5 +1,0 @@
-digraph "OutlookMoveEmailsCommand" {
-"OutlookMoveEmailsCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

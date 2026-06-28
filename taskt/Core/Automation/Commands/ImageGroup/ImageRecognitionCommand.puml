@@ -1,5 +1,0 @@
-@startuml
-ImageRecognitionCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

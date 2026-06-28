@@ -1,5 +1,0 @@
-@startuml
-SMTPSendEmailCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

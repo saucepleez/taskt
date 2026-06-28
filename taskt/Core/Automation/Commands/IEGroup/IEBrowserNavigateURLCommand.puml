@@ -1,5 +1,0 @@
-@startuml
-IEBrowserNavigateURLCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

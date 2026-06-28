@@ -1,4 +1,0 @@
-digraph "SafeDocumentGenerationClientSettings" {
-"SafeDocumentGenerationClientSettings" -> "SafeClientSettings";
-"SafeClientSettings" -> "IClientSettings";
-}

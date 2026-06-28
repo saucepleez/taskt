@@ -1,8 +1,0 @@
-@startuml
-ASeleniumGetFromWebDriverCommands --> ASeleniumDoSomethingToWebDriverCommands
-ASeleniumGetFromWebDriverCommands --> IResultProperties
-ASeleniumDoSomethingToWebDriverCommands --> ScriptCommand
-ASeleniumDoSomethingToWebDriverCommands --> ISeleniumDoSomethingToWebDriverProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

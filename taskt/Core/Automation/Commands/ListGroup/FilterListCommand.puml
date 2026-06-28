@@ -1,9 +1,0 @@
-@startuml
-FilterListCommand --> AListCreateFromListCommands
-FilterListCommand --> IFilterValueProperties
-FilterListCommand --> IHaveDataTableElements
-AListCreateFromListCommands --> ScriptCommand
-AListCreateFromListCommands --> IListCreateFromListProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

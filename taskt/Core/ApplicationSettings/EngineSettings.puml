@@ -1,3 +1,0 @@
-@startuml
-EngineSettings --> IEngineSettings
-@enduml

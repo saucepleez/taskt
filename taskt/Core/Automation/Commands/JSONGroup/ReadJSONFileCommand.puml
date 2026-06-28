@@ -1,6 +1,0 @@
-@startuml
-ReadJSONFileCommand --> ScriptCommand
-ReadJSONFileCommand --> IFileExistsFilePathProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

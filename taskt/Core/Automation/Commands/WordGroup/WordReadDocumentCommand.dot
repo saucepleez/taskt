@@ -1,5 +1,0 @@
-digraph "WordReadDocumentCommand" {
-"WordReadDocumentCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

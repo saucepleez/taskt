@@ -1,8 +1,0 @@
-digraph "frmJSONPathHelper" {
-"frmJSONPathHelper" -> "DialogLikeThemedForm";
-"frmJSONPathHelper" -> "DialogLikeThemedForm";
-"DialogLikeThemedForm" -> "ThemedForm";
-"DialogLikeThemedForm" -> "ThemedForm";
-"ThemedForm" -> "Form";
-"ThemedForm" -> "Form";
-}

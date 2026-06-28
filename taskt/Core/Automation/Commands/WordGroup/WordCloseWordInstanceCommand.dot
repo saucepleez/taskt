@@ -1,5 +1,0 @@
-digraph "WordCloseWordInstanceCommand" {
-"WordCloseWordInstanceCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

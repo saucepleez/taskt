@@ -1,3 +1,0 @@
-@startuml
-ApplicationSettings --> IApplicationSettings
-@enduml

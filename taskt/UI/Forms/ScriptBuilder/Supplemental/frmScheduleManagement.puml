@@ -1,5 +1,0 @@
-@startuml
-frmScheduleManagement --> UIForm
-frmScheduleManagement --> UIForm
-UIForm --> Form
-@enduml

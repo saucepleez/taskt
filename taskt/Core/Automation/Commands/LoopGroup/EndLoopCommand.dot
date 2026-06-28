@@ -1,6 +1,0 @@
-digraph "EndLoopCommand" {
-"EndLoopCommand" -> "ScriptCommand";
-"EndLoopCommand" -> "IEndOfStacturedCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

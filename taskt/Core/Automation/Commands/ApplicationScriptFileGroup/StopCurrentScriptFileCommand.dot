@@ -1,5 +1,0 @@
-digraph "StopCurrentScriptFileCommand" {
-"StopCurrentScriptFileCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

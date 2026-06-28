@@ -1,5 +1,0 @@
-digraph "FormatNumberCommand" {
-"FormatNumberCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

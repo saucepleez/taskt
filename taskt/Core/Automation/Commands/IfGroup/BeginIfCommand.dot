@@ -1,7 +1,0 @@
-digraph "BeginIfCommand" {
-"BeginIfCommand" -> "ScriptCommand";
-"BeginIfCommand" -> "IHaveDataTableElements";
-"BeginIfCommand" -> "IHaveIfAdditionalCommands";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

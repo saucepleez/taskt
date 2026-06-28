@@ -1,7 +1,0 @@
-@startuml
-DatabaseExecuteQueryCommand --> ScriptCommand
-DatabaseExecuteQueryCommand --> ICanHandleDataTable
-DatabaseExecuteQueryCommand --> IHaveDataTableElements
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

@@ -1,6 +1,0 @@
-@startuml
-MailKitGetEMailAttachmentsNameCommand --> ScriptCommand
-MailKitGetEMailAttachmentsNameCommand --> ICanHandleList
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

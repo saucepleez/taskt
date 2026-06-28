@@ -1,6 +1,0 @@
-@startuml
-AWindowNameCoreCommands --> ScriptCommand
-AWindowNameCoreCommands --> IWindowNameCoreProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

@@ -1,6 +1,0 @@
-digraph "ReadTextFileCommand" {
-"ReadTextFileCommand" -> "ScriptCommand";
-"ReadTextFileCommand" -> "IFileExistsFilePathProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

@@ -1,5 +1,0 @@
-digraph "RegExExtractionTextCommand" {
-"RegExExtractionTextCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

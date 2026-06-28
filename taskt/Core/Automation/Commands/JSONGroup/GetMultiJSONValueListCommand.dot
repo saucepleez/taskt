@@ -1,5 +1,0 @@
-digraph "GetMultiJSONValueListCommand" {
-"GetMultiJSONValueListCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

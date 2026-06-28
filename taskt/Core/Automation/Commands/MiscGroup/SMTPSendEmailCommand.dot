@@ -1,5 +1,0 @@
-digraph "SMTPSendEmailCommand" {
-"SMTPSendEmailCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

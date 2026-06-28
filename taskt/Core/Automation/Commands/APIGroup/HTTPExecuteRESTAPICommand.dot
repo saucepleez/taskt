@@ -1,6 +1,0 @@
-digraph "HTTPExecuteRESTAPICommand" {
-"HTTPExecuteRESTAPICommand" -> "ScriptCommand";
-"HTTPExecuteRESTAPICommand" -> "IHaveDataTableElements";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

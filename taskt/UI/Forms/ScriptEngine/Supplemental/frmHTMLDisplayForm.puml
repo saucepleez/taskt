@@ -1,4 +1,0 @@
-@startuml
-frmHTMLDisplayForm --> Form
-frmHTMLDisplayForm --> Form
-@enduml

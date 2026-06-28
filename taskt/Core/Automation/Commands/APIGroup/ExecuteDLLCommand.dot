@@ -1,6 +1,0 @@
-digraph "ExecuteDLLCommand" {
-"ExecuteDLLCommand" -> "ScriptCommand";
-"ExecuteDLLCommand" -> "IHaveDataTableElements";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

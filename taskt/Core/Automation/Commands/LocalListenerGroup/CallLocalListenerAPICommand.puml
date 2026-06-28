@@ -1,5 +1,0 @@
-@startuml
-CallLocalListenerAPICommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

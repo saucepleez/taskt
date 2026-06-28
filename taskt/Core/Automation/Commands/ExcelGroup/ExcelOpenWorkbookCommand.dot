@@ -1,8 +1,0 @@
-digraph "ExcelOpenWorkbookCommand" {
-"ExcelOpenWorkbookCommand" -> "AExcelInstanceCommands";
-"ExcelOpenWorkbookCommand" -> "IFileExistsFilePathProperties";
-"AExcelInstanceCommands" -> "ScriptCommand";
-"AExcelInstanceCommands" -> "IExcelInstanceProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

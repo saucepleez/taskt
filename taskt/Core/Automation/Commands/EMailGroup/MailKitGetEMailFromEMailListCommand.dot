@@ -1,5 +1,0 @@
-digraph "MailKitGetEMailFromEMailListCommand" {
-"MailKitGetEMailFromEMailListCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

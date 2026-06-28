@@ -1,9 +1,0 @@
-digraph "SetListItemCommand" {
-"SetListItemCommand" -> "AListIndexCommands";
-"AListIndexCommands" -> "AListInputListCommands";
-"AListIndexCommands" -> "IListIndexProperties";
-"AListInputListCommands" -> "ScriptCommand";
-"AListInputListCommands" -> "IListProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

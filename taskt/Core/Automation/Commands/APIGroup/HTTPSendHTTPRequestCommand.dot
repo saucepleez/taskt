@@ -1,5 +1,0 @@
-digraph "HTTPSendHTTPRequestCommand" {
-"HTTPSendHTTPRequestCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

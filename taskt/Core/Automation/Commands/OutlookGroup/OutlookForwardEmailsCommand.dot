@@ -1,5 +1,0 @@
-digraph "OutlookForwardEmailsCommand" {
-"OutlookForwardEmailsCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

@@ -1,5 +1,0 @@
-@startuml
-UploadBotStoreDataCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

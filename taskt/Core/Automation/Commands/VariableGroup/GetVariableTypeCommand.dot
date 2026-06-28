@@ -1,5 +1,0 @@
-digraph "GetVariableTypeCommand" {
-"GetVariableTypeCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

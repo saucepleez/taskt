@@ -1,6 +1,0 @@
-digraph "FinallyCommand" {
-"FinallyCommand" -> "ScriptCommand";
-"FinallyCommand" -> "IDelimitersOfStructuredCommands";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

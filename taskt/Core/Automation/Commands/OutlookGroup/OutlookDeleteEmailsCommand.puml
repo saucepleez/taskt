@@ -1,5 +1,0 @@
-@startuml
-OutlookDeleteEmailsCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

@@ -1,8 +1,0 @@
-digraph "ShowFolderDialogCommand" {
-"ShowFolderDialogCommand" -> "AShowFileFolderDialogCommands";
-"AShowFileFolderDialogCommands" -> "ScriptCommand";
-"AShowFileFolderDialogCommands" -> "IWaitDialogResultProperties";
-"AShowFileFolderDialogCommands" -> "ICanHandleFolderPath";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

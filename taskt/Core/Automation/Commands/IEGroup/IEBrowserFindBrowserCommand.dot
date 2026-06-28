@@ -1,5 +1,0 @@
-digraph "IEBrowserFindBrowserCommand" {
-"IEBrowserFindBrowserCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

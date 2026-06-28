@@ -1,8 +1,0 @@
-digraph "ExtractZipFileCommand" {
-"ExtractZipFileCommand" -> "ScriptCommand";
-"ExtractZipFileCommand" -> "ICanHandleList";
-"ExtractZipFileCommand" -> "ICanHandleFilePath";
-"ExtractZipFileCommand" -> "ICanHandleFolderPath";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

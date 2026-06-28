@@ -1,5 +1,0 @@
-@startuml
-WordCloseWordInstanceCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

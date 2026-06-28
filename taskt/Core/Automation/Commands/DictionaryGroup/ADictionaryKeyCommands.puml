@@ -1,8 +1,0 @@
-@startuml
-ADictionaryKeyCommands --> ADictionaryInputDictionaryCommands
-ADictionaryKeyCommands --> IDictionaryKeyProperties
-ADictionaryInputDictionaryCommands --> ScriptCommand
-ADictionaryInputDictionaryCommands --> IDictionaryProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

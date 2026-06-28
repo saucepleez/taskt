@@ -1,6 +1,0 @@
-@startuml
-MailKitGetAddressesAsDictionaryCommand --> ScriptCommand
-MailKitGetAddressesAsDictionaryCommand --> ICanHandleDictionary
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

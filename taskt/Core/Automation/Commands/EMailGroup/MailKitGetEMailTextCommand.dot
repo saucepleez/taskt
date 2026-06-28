@@ -1,6 +1,0 @@
-digraph "MailKitGetEMailTextCommand" {
-"MailKitGetEMailTextCommand" -> "ScriptCommand";
-"MailKitGetEMailTextCommand" -> "ICanHandleDateTime";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

@@ -1,3 +1,0 @@
-@startuml
-ACommandPropertyAttribute --> Attribute
-@enduml

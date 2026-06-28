@@ -1,3 +1,0 @@
-@startuml
-ClientSettings --> IClientSettings
-@enduml

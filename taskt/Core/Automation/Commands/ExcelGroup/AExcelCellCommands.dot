@@ -1,8 +1,0 @@
-digraph "AExcelCellCommands" {
-"AExcelCellCommands" -> "AExcelInstanceCommands";
-"AExcelCellCommands" -> "IExcelCellProperties";
-"AExcelInstanceCommands" -> "ScriptCommand";
-"AExcelInstanceCommands" -> "IExcelInstanceProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

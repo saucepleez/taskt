@@ -1,8 +1,0 @@
-digraph "AddDataTableColumnCommand" {
-"AddDataTableColumnCommand" -> "ADataTableBothDataTableCommands";
-"ADataTableBothDataTableCommands" -> "ADataTableInputDataTableCommands";
-"ADataTableInputDataTableCommands" -> "ScriptCommand";
-"ADataTableInputDataTableCommands" -> "IDataTableProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

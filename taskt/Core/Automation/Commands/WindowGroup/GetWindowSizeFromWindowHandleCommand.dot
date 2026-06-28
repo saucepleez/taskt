@@ -1,8 +1,0 @@
-digraph "GetWindowSizeFromWindowHandleCommand" {
-"GetWindowSizeFromWindowHandleCommand" -> "AWindowHandleCommands";
-"GetWindowSizeFromWindowHandleCommand" -> "IWindowSizeProperties";
-"AWindowHandleCommands" -> "ScriptCommand";
-"AWindowHandleCommands" -> "IWindowHandleProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

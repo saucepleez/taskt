@@ -1,6 +1,0 @@
-digraph "WordSaveDocumentAsCommand" {
-"WordSaveDocumentAsCommand" -> "ScriptCommand";
-"WordSaveDocumentAsCommand" -> "ICanHandleFilePath";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

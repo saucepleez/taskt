@@ -1,4 +1,0 @@
-@startuml
-SafeFrmScriptBuilderClientSettings --> SafeClientSettings
-SafeClientSettings --> IClientSettings
-@enduml

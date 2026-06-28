@@ -1,8 +1,0 @@
-digraph "ADescendantsSearchUIElementsFromSomethingByXPathCommands" {
-"ADescendantsSearchUIElementsFromSomethingByXPathCommands" -> "AChildrenSearchUIElementsFromSomethingByXPathCommands";
-"ADescendantsSearchUIElementsFromSomethingByXPathCommands" -> "IUIElementDescendantsSearchXPathProperties";
-"AChildrenSearchUIElementsFromSomethingByXPathCommands" -> "ScriptCommand";
-"AChildrenSearchUIElementsFromSomethingByXPathCommands" -> "IUIElementChildrenSearchXPathProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

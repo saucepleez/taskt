@@ -1,4 +1,0 @@
-@startuml
-CommandGroupControl --> UserControl
-CommandGroupControl --> UserControl
-@enduml

@@ -1,6 +1,0 @@
-@startuml
-FinallyCommand --> ScriptCommand
-FinallyCommand --> IDelimitersOfStructuredCommands
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

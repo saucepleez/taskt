@@ -1,6 +1,0 @@
-@startuml
-GetCommonValuesOfListsCommand --> ScriptCommand
-GetCommonValuesOfListsCommand --> ICanHandleList
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

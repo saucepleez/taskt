@@ -1,4 +1,0 @@
-digraph "SafeFrmScriptBuilderClientSettings" {
-"SafeFrmScriptBuilderClientSettings" -> "SafeClientSettings";
-"SafeClientSettings" -> "IClientSettings";
-}

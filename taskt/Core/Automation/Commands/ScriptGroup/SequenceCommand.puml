@@ -1,6 +1,0 @@
-@startuml
-SequenceCommand --> ScriptCommand
-SequenceCommand --> IHaveSequenceAdditionalCommands
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

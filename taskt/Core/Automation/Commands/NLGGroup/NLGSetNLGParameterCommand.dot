@@ -1,5 +1,0 @@
-digraph "NLGSetNLGParameterCommand" {
-"NLGSetNLGParameterCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

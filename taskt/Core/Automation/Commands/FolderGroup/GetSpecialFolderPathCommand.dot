@@ -1,5 +1,0 @@
-digraph "GetSpecialFolderPathCommand" {
-"GetSpecialFolderPathCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

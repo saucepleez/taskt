@@ -1,5 +1,0 @@
-digraph "ModifyTextCommand" {
-"ModifyTextCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

@@ -1,6 +1,0 @@
-@startuml
-ConcatenateListsCommand --> ScriptCommand
-ConcatenateListsCommand --> ICanHandleList
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

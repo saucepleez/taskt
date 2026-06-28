@@ -1,5 +1,0 @@
-digraph "IEBrowserCreateCommand" {
-"IEBrowserCreateCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

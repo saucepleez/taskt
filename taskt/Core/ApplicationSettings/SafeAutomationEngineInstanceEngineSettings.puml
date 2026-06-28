@@ -1,4 +1,0 @@
-@startuml
-SafeAutomationEngineInstanceEngineSettings --> SafeEngineSettings
-SafeEngineSettings --> IEngineSettings
-@enduml

@@ -1,5 +1,0 @@
-digraph "DatabaseDefineConnectionCommand" {
-"DatabaseDefineConnectionCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

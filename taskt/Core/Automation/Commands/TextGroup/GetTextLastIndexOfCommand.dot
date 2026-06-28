@@ -1,5 +1,0 @@
-digraph "GetTextLastIndexOfCommand" {
-"GetTextLastIndexOfCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

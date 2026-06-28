@@ -1,8 +1,0 @@
-digraph "frmEngineContextViewer" {
-"frmEngineContextViewer" -> "DialogLikeThemedForm";
-"frmEngineContextViewer" -> "DialogLikeThemedForm";
-"DialogLikeThemedForm" -> "ThemedForm";
-"DialogLikeThemedForm" -> "ThemedForm";
-"ThemedForm" -> "Form";
-"ThemedForm" -> "Form";
-}

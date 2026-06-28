@@ -1,8 +1,0 @@
-@startuml
-ExcelSaveAsCommand --> AExcelInstanceCommands
-ExcelSaveAsCommand --> ICanHandleFilePath
-AExcelInstanceCommands --> ScriptCommand
-AExcelInstanceCommands --> IExcelInstanceProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

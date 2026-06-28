@@ -1,6 +1,0 @@
-digraph "frmScriptEngine" {
-"frmScriptEngine" -> "ThemedForm";
-"frmScriptEngine" -> "ThemedForm";
-"ThemedForm" -> "Form";
-"ThemedForm" -> "Form";
-}

@@ -1,4 +1,0 @@
-digraph "CommandGroupControl" {
-"CommandGroupControl" -> "UserControl";
-"CommandGroupControl" -> "UserControl";
-}

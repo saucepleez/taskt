@@ -1,5 +1,0 @@
-digraph "SubstringTextCommand" {
-"SubstringTextCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

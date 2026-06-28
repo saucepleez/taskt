@@ -1,7 +1,0 @@
-digraph "BeginMultiIfCommand" {
-"BeginMultiIfCommand" -> "ScriptCommand";
-"BeginMultiIfCommand" -> "IHaveDataTableElements";
-"BeginMultiIfCommand" -> "IHaveIfAdditionalCommands";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

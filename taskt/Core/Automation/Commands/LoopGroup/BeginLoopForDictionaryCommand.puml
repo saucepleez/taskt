@@ -1,8 +1,0 @@
-@startuml
-BeginLoopForDictionaryCommand --> ADictionaryInputDictionaryCommands
-BeginLoopForDictionaryCommand --> IHaveLoopAdditionalCommands
-ADictionaryInputDictionaryCommands --> ScriptCommand
-ADictionaryInputDictionaryCommands --> IDictionaryProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

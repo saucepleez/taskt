@@ -1,4 +1,0 @@
-@startuml
-frmAttendedMode --> Form
-frmAttendedMode --> Form
-@enduml

@@ -1,8 +1,0 @@
-@startuml
-frmMultiEnterKeys --> DialogLikeThemedForm
-frmMultiEnterKeys --> DialogLikeThemedForm
-DialogLikeThemedForm --> ThemedForm
-DialogLikeThemedForm --> ThemedForm
-ThemedForm --> Form
-ThemedForm --> Form
-@enduml

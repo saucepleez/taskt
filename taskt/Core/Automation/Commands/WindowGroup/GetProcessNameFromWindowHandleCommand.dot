@@ -1,7 +1,0 @@
-digraph "GetProcessNameFromWindowHandleCommand" {
-"GetProcessNameFromWindowHandleCommand" -> "AWindowHandleCommands";
-"AWindowHandleCommands" -> "ScriptCommand";
-"AWindowHandleCommands" -> "IWindowHandleProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

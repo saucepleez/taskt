@@ -1,6 +1,0 @@
-@startuml
-WordSaveDocumentAsCommand --> ScriptCommand
-WordSaveDocumentAsCommand --> ICanHandleFilePath
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

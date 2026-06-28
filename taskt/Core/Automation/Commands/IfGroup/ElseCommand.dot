@@ -1,6 +1,0 @@
-digraph "ElseCommand" {
-"ElseCommand" -> "ScriptCommand";
-"ElseCommand" -> "IDelimitersOfStructuredCommands";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

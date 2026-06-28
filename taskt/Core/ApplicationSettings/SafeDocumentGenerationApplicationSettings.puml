@@ -1,4 +1,0 @@
-@startuml
-SafeDocumentGenerationApplicationSettings --> SafeApplicationSettings
-SafeApplicationSettings --> IApplicationSettings
-@enduml

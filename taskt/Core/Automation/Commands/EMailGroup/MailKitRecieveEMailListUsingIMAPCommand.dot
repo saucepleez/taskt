@@ -1,5 +1,0 @@
-digraph "MailKitRecieveEMailListUsingIMAPCommand" {
-"MailKitRecieveEMailListUsingIMAPCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

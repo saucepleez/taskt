@@ -1,8 +1,0 @@
-digraph "ConvertColorCommand" {
-"ConvertColorCommand" -> "ScriptCommand";
-"ConvertColorCommand" -> "ICanHandleColor";
-"ConvertColorCommand" -> "IDictionaryResultProperties";
-"ConvertColorCommand" -> "IDataTableResultProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

@@ -1,5 +1,0 @@
-digraph "ACompileCSharpSomethingCommands" {
-"ACompileCSharpSomethingCommands" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

@@ -1,6 +1,0 @@
-@startuml
-ExtractionTextCommand --> ScriptCommand
-ExtractionTextCommand --> IHaveDataTableElements
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

@@ -1,4 +1,0 @@
-digraph "ScriptCommand" {
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

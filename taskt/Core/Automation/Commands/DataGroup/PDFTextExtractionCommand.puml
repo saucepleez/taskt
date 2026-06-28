@@ -1,5 +1,0 @@
-@startuml
-PDFTextExtractionCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

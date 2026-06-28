@@ -1,5 +1,0 @@
-@startuml
-OutlookMoveEmailsCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

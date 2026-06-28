@@ -1,4 +1,0 @@
-digraph "SafeWebSocketApplicationSettings" {
-"SafeWebSocketApplicationSettings" -> "SafeApplicationSettings";
-"SafeApplicationSettings" -> "IApplicationSettings";
-}

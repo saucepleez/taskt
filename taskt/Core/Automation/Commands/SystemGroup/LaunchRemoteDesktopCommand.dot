@@ -1,5 +1,0 @@
-digraph "LaunchRemoteDesktopCommand" {
-"LaunchRemoteDesktopCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

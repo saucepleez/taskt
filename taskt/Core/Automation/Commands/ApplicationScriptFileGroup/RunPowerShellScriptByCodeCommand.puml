@@ -1,6 +1,0 @@
-@startuml
-RunPowerShellScriptByCodeCommand --> ARunScriptByCodeCommands
-ARunScriptByCodeCommands --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

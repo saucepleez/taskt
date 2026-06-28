@@ -1,6 +1,0 @@
-@startuml
-ConcatenateDictionaryCommand --> ScriptCommand
-ConcatenateDictionaryCommand --> ICanHandleDictionary
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

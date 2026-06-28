@@ -1,5 +1,0 @@
-digraph "WordCreateWordInstanceCommand" {
-"WordCreateWordInstanceCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

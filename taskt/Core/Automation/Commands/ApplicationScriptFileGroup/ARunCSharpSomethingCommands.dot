@@ -1,6 +1,0 @@
-digraph "ARunCSharpSomethingCommands" {
-"ARunCSharpSomethingCommands" -> "ACompileCSharpSomethingCommands";
-"ACompileCSharpSomethingCommands" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

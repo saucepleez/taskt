@@ -1,5 +1,0 @@
-@startuml
-frmDisplayManager --> UIForm
-frmDisplayManager --> UIForm
-UIForm --> Form
-@enduml

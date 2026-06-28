@@ -1,5 +1,0 @@
-digraph "CountWordInTextCommand" {
-"CountWordInTextCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

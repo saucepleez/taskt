@@ -1,8 +1,0 @@
-@startuml
-frmAbout --> DialogLikeThemedForm
-frmAbout --> DialogLikeThemedForm
-DialogLikeThemedForm --> ThemedForm
-DialogLikeThemedForm --> ThemedForm
-ThemedForm --> Form
-ThemedForm --> Form
-@enduml

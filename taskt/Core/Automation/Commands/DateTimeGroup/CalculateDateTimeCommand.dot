@@ -1,9 +1,0 @@
-digraph "CalculateDateTimeCommand" {
-"CalculateDateTimeCommand" -> "ACalculateDateTimeCommands";
-"ACalculateDateTimeCommands" -> "ADateTimeConvertCommands";
-"ACalculateDateTimeCommands" -> "IDateTimeResultProperties";
-"ADateTimeConvertCommands" -> "ScriptCommand";
-"ADateTimeConvertCommands" -> "IDateTimeConvertProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

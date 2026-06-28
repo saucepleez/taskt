@@ -1,9 +1,0 @@
-@startuml
-CloseWindowByWindowHandle --> AWindowHandleActionCommands
-AWindowHandleActionCommands --> AWindowHandleCommands
-AWindowHandleActionCommands --> IWindowHandleActionPropeties
-AWindowHandleCommands --> ScriptCommand
-AWindowHandleCommands --> IWindowHandleProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

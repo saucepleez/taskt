@@ -1,5 +1,0 @@
-digraph "frmDLLExplorer" {
-"frmDLLExplorer" -> "UIForm";
-"frmDLLExplorer" -> "UIForm";
-"UIForm" -> "Form";
-}

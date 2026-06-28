@@ -1,5 +1,0 @@
-digraph "ExcelCreateDataTableFromExcelFile" {
-"ExcelCreateDataTableFromExcelFile" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

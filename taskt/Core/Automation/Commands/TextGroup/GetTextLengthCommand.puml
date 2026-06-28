@@ -1,5 +1,0 @@
-@startuml
-GetTextLengthCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

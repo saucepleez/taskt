@@ -1,4 +1,0 @@
-@startuml
-ThemedForm --> Form
-ThemedForm --> Form
-@enduml

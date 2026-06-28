@@ -1,7 +1,0 @@
-digraph "CreateColorFromHexCommand" {
-"CreateColorFromHexCommand" -> "AColorCreateCommands";
-"AColorCreateCommands" -> "ScriptCommand";
-"AColorCreateCommands" -> "IColorCreateProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

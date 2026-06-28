@@ -1,5 +1,0 @@
-digraph "GetPowerCommand" {
-"GetPowerCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

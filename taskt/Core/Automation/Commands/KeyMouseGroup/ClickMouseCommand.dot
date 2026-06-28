@@ -1,5 +1,0 @@
-digraph "ClickMouseCommand" {
-"ClickMouseCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

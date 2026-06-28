@@ -1,7 +1,0 @@
-digraph "ExcelAddWorkbookCommand" {
-"ExcelAddWorkbookCommand" -> "AExcelInstanceCommands";
-"AExcelInstanceCommands" -> "ScriptCommand";
-"AExcelInstanceCommands" -> "IExcelInstanceProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

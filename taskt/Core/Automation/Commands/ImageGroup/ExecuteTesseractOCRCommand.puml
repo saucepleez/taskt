@@ -1,6 +1,0 @@
-@startuml
-ExecuteTesseractOCRCommand --> ScriptCommand
-ExecuteTesseractOCRCommand --> IFileExistsFilePathProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

@@ -1,5 +1,0 @@
-@startuml
-CountWordInTextCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

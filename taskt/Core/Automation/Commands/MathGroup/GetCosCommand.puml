@@ -1,9 +1,0 @@
-@startuml
-GetCosCommand --> ATrignometricCommands
-ATrignometricCommands --> AMathValueResultCommands
-ATrignometricCommands --> ITrignometricProperties
-AMathValueResultCommands --> ScriptCommand
-AMathValueResultCommands --> IMathValueResultProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

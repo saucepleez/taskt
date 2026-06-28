@@ -1,7 +1,0 @@
-@startuml
-CheckTextCommand --> ScriptCommand
-CheckTextCommand --> ITextCheckProperties
-CheckTextCommand --> IResultProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

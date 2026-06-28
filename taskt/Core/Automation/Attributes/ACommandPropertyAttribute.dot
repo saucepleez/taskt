@@ -1,3 +1,0 @@
-digraph "ACommandPropertyAttribute" {
-"ACommandPropertyAttribute" -> "Attribute";
-}

@@ -1,6 +1,0 @@
-@startuml
-RunBatchScriptByCodeCommand --> ARunScriptByCodeCommands
-ARunScriptByCodeCommands --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

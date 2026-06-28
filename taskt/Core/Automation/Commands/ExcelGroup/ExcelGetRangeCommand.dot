@@ -1,7 +1,0 @@
-digraph "ExcelGetRangeCommand" {
-"ExcelGetRangeCommand" -> "AExcelInstanceCommands";
-"AExcelInstanceCommands" -> "ScriptCommand";
-"AExcelInstanceCommands" -> "IExcelInstanceProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

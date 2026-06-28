@@ -1,4 +1,0 @@
-@startuml
-InnerScriptVariable --> ScriptVariable
-InnerScriptVariable --> IDisposable
-@enduml

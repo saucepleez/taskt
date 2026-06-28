@@ -1,8 +1,0 @@
-@startuml
-CreateListCommand --> AListInputListCommands
-CreateListCommand --> IHaveDataTableElements
-AListInputListCommands --> ScriptCommand
-AListInputListCommands --> IListProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

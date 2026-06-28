@@ -1,3 +1,0 @@
-digraph "SafeLocalListenerSettings" {
-"SafeLocalListenerSettings" -> "ILocalListenerSettings";
-}

@@ -1,7 +1,0 @@
-@startuml
-BeginMultiIfCommand --> ScriptCommand
-BeginMultiIfCommand --> IHaveDataTableElements
-BeginMultiIfCommand --> IHaveIfAdditionalCommands
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

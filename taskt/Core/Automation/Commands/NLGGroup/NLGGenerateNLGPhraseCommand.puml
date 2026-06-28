@@ -1,5 +1,0 @@
-@startuml
-NLGGenerateNLGPhraseCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

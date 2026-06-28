@@ -1,5 +1,0 @@
-@startuml
-ClearClipboardTextCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

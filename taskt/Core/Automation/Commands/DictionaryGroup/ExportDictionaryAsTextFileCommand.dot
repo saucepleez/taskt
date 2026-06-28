@@ -1,7 +1,0 @@
-digraph "ExportDictionaryAsTextFileCommand" {
-"ExportDictionaryAsTextFileCommand" -> "ADictionaryInputDictionaryCommands";
-"ADictionaryInputDictionaryCommands" -> "ScriptCommand";
-"ADictionaryInputDictionaryCommands" -> "IDictionaryProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

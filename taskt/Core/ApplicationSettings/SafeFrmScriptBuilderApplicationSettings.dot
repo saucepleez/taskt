@@ -1,4 +1,0 @@
-digraph "SafeFrmScriptBuilderApplicationSettings" {
-"SafeFrmScriptBuilderApplicationSettings" -> "SafeApplicationSettings";
-"SafeApplicationSettings" -> "IApplicationSettings";
-}

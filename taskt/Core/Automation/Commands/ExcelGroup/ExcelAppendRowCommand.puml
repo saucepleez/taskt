@@ -1,9 +1,0 @@
-@startuml
-ExcelAppendRowCommand --> AExcelColumnSpecifiedCommands
-AExcelColumnSpecifiedCommands --> AExcelInstanceCommands
-AExcelColumnSpecifiedCommands --> IExcelColumnSpecifiedProperties
-AExcelInstanceCommands --> ScriptCommand
-AExcelInstanceCommands --> IExcelInstanceProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

@@ -1,5 +1,0 @@
-digraph "UploadBotStoreDataCommand" {
-"UploadBotStoreDataCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

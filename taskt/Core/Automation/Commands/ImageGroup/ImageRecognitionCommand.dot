@@ -1,5 +1,0 @@
-digraph "ImageRecognitionCommand" {
-"ImageRecognitionCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

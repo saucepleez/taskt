@@ -1,5 +1,0 @@
-digraph "IEBrowserNavigateURLCommand" {
-"IEBrowserNavigateURLCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

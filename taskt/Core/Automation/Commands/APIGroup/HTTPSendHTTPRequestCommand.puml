@@ -1,5 +1,0 @@
-@startuml
-HTTPSendHTTPRequestCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

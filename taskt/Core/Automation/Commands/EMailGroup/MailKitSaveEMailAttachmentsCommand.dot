@@ -1,5 +1,0 @@
-digraph "MailKitSaveEMailAttachmentsCommand" {
-"MailKitSaveEMailAttachmentsCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

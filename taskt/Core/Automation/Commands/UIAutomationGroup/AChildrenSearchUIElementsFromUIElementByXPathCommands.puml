@@ -1,8 +1,0 @@
-@startuml
-AChildrenSearchUIElementsFromUIElementByXPathCommands --> AChildrenSearchUIElementsFromSomethingByXPathCommands
-AChildrenSearchUIElementsFromUIElementByXPathCommands --> IDoSomethingUIElementProperties
-AChildrenSearchUIElementsFromSomethingByXPathCommands --> ScriptCommand
-AChildrenSearchUIElementsFromSomethingByXPathCommands --> IUIElementChildrenSearchXPathProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

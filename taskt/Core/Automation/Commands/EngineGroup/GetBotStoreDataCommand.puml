@@ -1,5 +1,0 @@
-@startuml
-GetBotStoreDataCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

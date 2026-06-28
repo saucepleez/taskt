@@ -1,8 +1,0 @@
-digraph "frmCommandList" {
-"frmCommandList" -> "DialogLikeThemedForm";
-"frmCommandList" -> "DialogLikeThemedForm";
-"DialogLikeThemedForm" -> "ThemedForm";
-"DialogLikeThemedForm" -> "ThemedForm";
-"ThemedForm" -> "Form";
-"ThemedForm" -> "Form";
-}

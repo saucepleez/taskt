@@ -1,5 +1,0 @@
-digraph "EncryptDecryptTextCommand" {
-"EncryptDecryptTextCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

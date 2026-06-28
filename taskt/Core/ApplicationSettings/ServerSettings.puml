@@ -1,3 +1,0 @@
-@startuml
-ServerSettings --> IServerSettings
-@enduml

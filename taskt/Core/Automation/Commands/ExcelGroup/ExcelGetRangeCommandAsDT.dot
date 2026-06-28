@@ -1,5 +1,0 @@
-digraph "ExcelGetRangeCommandAsDT" {
-"ExcelGetRangeCommandAsDT" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

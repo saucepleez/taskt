@@ -1,6 +1,0 @@
-digraph "SplitTextCommand" {
-"SplitTextCommand" -> "ScriptCommand";
-"SplitTextCommand" -> "ICanHandleList";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

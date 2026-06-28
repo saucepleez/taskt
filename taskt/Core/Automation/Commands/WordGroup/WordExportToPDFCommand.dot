@@ -1,5 +1,0 @@
-digraph "WordExportToPDFCommand" {
-"WordExportToPDFCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

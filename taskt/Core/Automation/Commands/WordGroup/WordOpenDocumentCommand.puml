@@ -1,6 +1,0 @@
-@startuml
-WordOpenDocumentCommand --> ScriptCommand
-WordOpenDocumentCommand --> IFileExistsFilePathProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

@@ -1,5 +1,0 @@
-digraph "CheckNumberCommand" {
-"CheckNumberCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

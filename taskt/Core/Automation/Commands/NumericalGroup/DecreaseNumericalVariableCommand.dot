@@ -1,5 +1,0 @@
-digraph "DecreaseNumericalVariableCommand" {
-"DecreaseNumericalVariableCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

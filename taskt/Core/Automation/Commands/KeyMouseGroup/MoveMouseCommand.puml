@@ -1,5 +1,0 @@
-@startuml
-MoveMouseCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

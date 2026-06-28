@@ -1,6 +1,0 @@
-@startuml
-ARunCSharpSomethingCommands --> ACompileCSharpSomethingCommands
-ACompileCSharpSomethingCommands --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

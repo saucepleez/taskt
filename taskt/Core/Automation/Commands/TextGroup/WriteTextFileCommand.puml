@@ -1,6 +1,0 @@
-@startuml
-WriteTextFileCommand --> ScriptCommand
-WriteTextFileCommand --> ICanHandleFilePath
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

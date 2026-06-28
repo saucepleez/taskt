@@ -1,4 +1,0 @@
-digraph "SafeAutomationEngineInstanceApplicationSettings" {
-"SafeAutomationEngineInstanceApplicationSettings" -> "SafeApplicationSettings";
-"SafeApplicationSettings" -> "IApplicationSettings";
-}

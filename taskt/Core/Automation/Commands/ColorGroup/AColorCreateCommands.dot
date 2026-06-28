@@ -1,6 +1,0 @@
-digraph "AColorCreateCommands" {
-"AColorCreateCommands" -> "ScriptCommand";
-"AColorCreateCommands" -> "IColorCreateProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

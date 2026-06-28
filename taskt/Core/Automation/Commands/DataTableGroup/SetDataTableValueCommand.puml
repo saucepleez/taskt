@@ -1,9 +1,0 @@
-@startuml
-SetDataTableValueCommand --> ADataTableColumnRowCommands
-ADataTableColumnRowCommands --> ADataTableInputDataTableCommands
-ADataTableColumnRowCommands --> IDataTableColumnRowPositionProperties
-ADataTableInputDataTableCommands --> ScriptCommand
-ADataTableInputDataTableCommands --> IDataTableProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

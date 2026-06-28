@@ -1,6 +1,0 @@
-digraph "AJSONInputJSONCommands" {
-"AJSONInputJSONCommands" -> "ScriptCommand";
-"AJSONInputJSONCommands" -> "IJSONInputJSONProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

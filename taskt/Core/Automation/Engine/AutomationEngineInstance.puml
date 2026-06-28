@@ -1,4 +1,0 @@
-@startuml
-AutomationEngineInstance --> IAppInstancesProperties
-AutomationEngineInstance --> IScriptVariableListProperties
-@enduml

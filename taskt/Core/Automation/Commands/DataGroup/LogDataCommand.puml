@@ -1,6 +1,0 @@
-@startuml
-LogDataCommand --> ScriptCommand
-LogDataCommand --> ICanHandleFileName
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

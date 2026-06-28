@@ -1,5 +1,0 @@
-digraph "GetEnvironmentVariableCommand" {
-"GetEnvironmentVariableCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

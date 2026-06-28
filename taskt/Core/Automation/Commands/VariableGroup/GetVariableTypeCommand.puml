@@ -1,5 +1,0 @@
-@startuml
-GetVariableTypeCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

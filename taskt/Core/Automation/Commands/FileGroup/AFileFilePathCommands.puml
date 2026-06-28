@@ -1,6 +1,0 @@
-@startuml
-AFileFilePathCommands --> ScriptCommand
-AFileFilePathCommands --> IFilePathProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

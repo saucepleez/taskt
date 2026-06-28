@@ -1,5 +1,0 @@
-digraph "WordAddDocumentCommand" {
-"WordAddDocumentCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

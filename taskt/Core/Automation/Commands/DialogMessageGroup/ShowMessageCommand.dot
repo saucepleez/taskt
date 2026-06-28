@@ -1,6 +1,0 @@
-digraph "ShowMessageCommand" {
-"ShowMessageCommand" -> "ScriptCommand";
-"ShowMessageCommand" -> "IDialogResultProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

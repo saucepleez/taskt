@@ -1,5 +1,0 @@
-@startuml
-ExcelGetRangeCommandAsDT --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

@@ -1,9 +1,0 @@
-@startuml
-UIAutomationGetWindowUIElementFromWindowNameCommand --> AOneWindowNameCommands
-AOneWindowNameCommands --> AWindowNameCoreCommands
-AOneWindowNameCommands --> IOneWindowNameProperties
-AWindowNameCoreCommands --> ScriptCommand
-AWindowNameCoreCommands --> IWindowNameCoreProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

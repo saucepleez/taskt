@@ -1,6 +1,0 @@
-digraph "ASeleniumDoSomethingToWebDriverCommands" {
-"ASeleniumDoSomethingToWebDriverCommands" -> "ScriptCommand";
-"ASeleniumDoSomethingToWebDriverCommands" -> "ISeleniumDoSomethingToWebDriverProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

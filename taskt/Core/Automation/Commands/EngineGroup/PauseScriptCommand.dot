@@ -1,5 +1,0 @@
-digraph "PauseScriptCommand" {
-"PauseScriptCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

@@ -1,6 +1,0 @@
-digraph "GetDateTimeDifferencesCommand" {
-"GetDateTimeDifferencesCommand" -> "ScriptCommand";
-"GetDateTimeDifferencesCommand" -> "ICanHandleDateTime";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

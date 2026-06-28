@@ -1,6 +1,0 @@
-digraph "BeginNumberOfTimesLoopCommand" {
-"BeginNumberOfTimesLoopCommand" -> "ScriptCommand";
-"BeginNumberOfTimesLoopCommand" -> "IHaveLoopAdditionalCommands";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

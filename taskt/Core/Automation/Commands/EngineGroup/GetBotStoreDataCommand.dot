@@ -1,5 +1,0 @@
-digraph "GetBotStoreDataCommand" {
-"GetBotStoreDataCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

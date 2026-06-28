@@ -1,6 +1,0 @@
-@startuml
-AUIElementCoreCommands --> ScriptCommand
-AUIElementCoreCommands --> IUIElementCoreProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

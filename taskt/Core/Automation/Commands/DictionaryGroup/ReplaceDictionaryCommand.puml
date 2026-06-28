@@ -1,9 +1,0 @@
-@startuml
-ReplaceDictionaryCommand --> ADictionaryInputDictionaryCommands
-ReplaceDictionaryCommand --> IReplaceValueProperties
-ReplaceDictionaryCommand --> IHaveDataTableElements
-ADictionaryInputDictionaryCommands --> ScriptCommand
-ADictionaryInputDictionaryCommands --> IDictionaryProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

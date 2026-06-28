@@ -1,6 +1,0 @@
-@startuml
-EndTryCommand --> ScriptCommand
-EndTryCommand --> IEndOfStacturedCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

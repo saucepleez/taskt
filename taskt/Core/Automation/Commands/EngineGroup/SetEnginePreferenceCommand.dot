@@ -1,5 +1,0 @@
-digraph "SetEnginePreferenceCommand" {
-"SetEnginePreferenceCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

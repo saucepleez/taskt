@@ -1,8 +1,0 @@
-digraph "BeginLoopForListCommand" {
-"BeginLoopForListCommand" -> "AListInputListCommands";
-"BeginLoopForListCommand" -> "IHaveLoopAdditionalCommands";
-"AListInputListCommands" -> "ScriptCommand";
-"AListInputListCommands" -> "IListProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

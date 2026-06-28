@@ -1,5 +1,0 @@
-@startuml
-frmSequenceRecorder --> UIForm
-frmSequenceRecorder --> UIForm
-UIForm --> Form
-@enduml

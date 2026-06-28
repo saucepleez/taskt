@@ -1,4 +1,0 @@
-@startuml
-SafeHttpServerClientApplicationSettings --> SafeApplicationSettings
-SafeApplicationSettings --> IApplicationSettings
-@enduml

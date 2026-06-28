@@ -1,6 +1,0 @@
-@startuml
-WordAppendDataTableCommand --> ScriptCommand
-WordAppendDataTableCommand --> ICanHandleDataTable
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

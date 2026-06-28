@@ -1,5 +1,0 @@
-digraph "MailKitSendEMailCommand" {
-"MailKitSendEMailCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

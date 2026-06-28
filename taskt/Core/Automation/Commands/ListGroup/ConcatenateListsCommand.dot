@@ -1,6 +1,0 @@
-digraph "ConcatenateListsCommand" {
-"ConcatenateListsCommand" -> "ScriptCommand";
-"ConcatenateListsCommand" -> "ICanHandleList";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

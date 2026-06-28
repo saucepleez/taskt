@@ -1,6 +1,0 @@
-@startuml
-ShowMessageCommand --> ScriptCommand
-ShowMessageCommand --> IDialogResultProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

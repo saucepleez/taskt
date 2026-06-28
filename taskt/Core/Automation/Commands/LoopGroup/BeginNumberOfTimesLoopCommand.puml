@@ -1,6 +1,0 @@
-@startuml
-BeginNumberOfTimesLoopCommand --> ScriptCommand
-BeginNumberOfTimesLoopCommand --> IHaveLoopAdditionalCommands
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

@@ -1,7 +1,0 @@
-digraph "ExcelCreateDictionaryFromExcelFile" {
-"ExcelCreateDictionaryFromExcelFile" -> "ScriptCommand";
-"ExcelCreateDictionaryFromExcelFile" -> "ICanHandleDictionary";
-"ExcelCreateDictionaryFromExcelFile" -> "ICanHandleList";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

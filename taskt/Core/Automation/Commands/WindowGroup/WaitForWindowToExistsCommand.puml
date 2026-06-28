@@ -1,7 +1,0 @@
-@startuml
-WaitForWindowToExistsCommand --> AWindowNameCoreCommands
-AWindowNameCoreCommands --> ScriptCommand
-AWindowNameCoreCommands --> IWindowNameCoreProperties
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

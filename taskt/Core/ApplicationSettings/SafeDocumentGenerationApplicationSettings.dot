@@ -1,4 +1,0 @@
-digraph "SafeDocumentGenerationApplicationSettings" {
-"SafeDocumentGenerationApplicationSettings" -> "SafeApplicationSettings";
-"SafeApplicationSettings" -> "IApplicationSettings";
-}

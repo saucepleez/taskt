@@ -1,5 +1,0 @@
-digraph "ThrowExceptionCommand" {
-"ThrowExceptionCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

@@ -1,6 +1,0 @@
-digraph "CreateShortcutCommand" {
-"CreateShortcutCommand" -> "ScriptCommand";
-"CreateShortcutCommand" -> "ICanHandleFilePath";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

@@ -1,5 +1,0 @@
-digraph "ReplaceTextCommand" {
-"ReplaceTextCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

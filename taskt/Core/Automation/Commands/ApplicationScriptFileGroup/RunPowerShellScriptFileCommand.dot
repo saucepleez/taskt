@@ -1,8 +1,0 @@
-digraph "RunPowerShellScriptFileCommand" {
-"RunPowerShellScriptFileCommand" -> "ARunScriptFileCommands";
-"ARunScriptFileCommands" -> "AScriptFileCommands";
-"AScriptFileCommands" -> "ScriptCommand";
-"AScriptFileCommands" -> "IFileExistsFilePathProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

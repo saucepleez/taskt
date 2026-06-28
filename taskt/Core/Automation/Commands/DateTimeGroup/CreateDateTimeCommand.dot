@@ -1,7 +1,0 @@
-digraph "CreateDateTimeCommand" {
-"CreateDateTimeCommand" -> "ADateTimeCreateCommands";
-"ADateTimeCreateCommands" -> "ScriptCommand";
-"ADateTimeCreateCommands" -> "IDateTimeCreateProperties";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

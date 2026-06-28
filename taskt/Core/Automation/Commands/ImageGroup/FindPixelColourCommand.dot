@@ -1,5 +1,0 @@
-digraph "FindPixelColourCommand" {
-"FindPixelColourCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

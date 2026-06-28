@@ -1,6 +1,0 @@
-digraph "ExtractionTextCommand" {
-"ExtractionTextCommand" -> "ScriptCommand";
-"ExtractionTextCommand" -> "IHaveDataTableElements";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

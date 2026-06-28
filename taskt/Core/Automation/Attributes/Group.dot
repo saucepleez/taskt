@@ -1,3 +1,0 @@
-digraph "Group" {
-"Group" -> "Attribute";
-}

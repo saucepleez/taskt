@@ -1,5 +1,0 @@
-digraph "RemoteAPICommand" {
-"RemoteAPICommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

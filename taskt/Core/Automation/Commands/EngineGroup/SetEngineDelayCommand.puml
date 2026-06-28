@@ -1,5 +1,0 @@
-@startuml
-SetEngineDelayCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml

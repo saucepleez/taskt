@@ -1,5 +1,0 @@
-digraph "NextLoopCommand" {
-"NextLoopCommand" -> "ScriptCommand";
-"ScriptCommand" -> "IUIParameterProperties";
-"ScriptCommand" -> "ICommandIDProperties";
-}

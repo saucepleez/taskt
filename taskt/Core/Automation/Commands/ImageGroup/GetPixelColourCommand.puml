@@ -1,5 +1,0 @@
-@startuml
-GetPixelColourCommand --> ScriptCommand
-ScriptCommand --> IUIParameterProperties
-ScriptCommand --> ICommandIDProperties
-@enduml
