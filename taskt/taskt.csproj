@@ -626,6 +626,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetWebBrowserPositionCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserSearchShadowDOMWebElementFromWebEelementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\VP_WebBrowserControls.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\ActivateWindowsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\AGetFromWindowNamesAsListCommands.cs" />
