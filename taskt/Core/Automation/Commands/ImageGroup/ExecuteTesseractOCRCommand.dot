@@ -1,0 +1,6 @@
+digraph "ExecuteTesseractOCRCommand" {
+"ExecuteTesseractOCRCommand" -> "ScriptCommand";
+"ExecuteTesseractOCRCommand" -> "IFileExistsFilePathProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

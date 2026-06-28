@@ -1,0 +1,10 @@
+digraph "AFileExistsFilePathBeforeAfterResultCommands" {
+"AFileExistsFilePathBeforeAfterResultCommands" -> "AFileExistsFilePathCommands";
+"AFileExistsFilePathBeforeAfterResultCommands" -> "IFileExistsFilePathBeforeAfterPathResultProperties";
+"AFileExistsFilePathCommands" -> "AFileFilePathCommands";
+"AFileExistsFilePathCommands" -> "IFileExistsFilePathProperties";
+"AFileFilePathCommands" -> "ScriptCommand";
+"AFileFilePathCommands" -> "IFilePathProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

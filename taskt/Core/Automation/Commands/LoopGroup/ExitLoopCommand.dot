@@ -1,0 +1,5 @@
+digraph "ExitLoopCommand" {
+"ExitLoopCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

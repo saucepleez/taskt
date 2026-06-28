@@ -1,0 +1,7 @@
+digraph "BeginMultiLoopCommand" {
+"BeginMultiLoopCommand" -> "ScriptCommand";
+"BeginMultiLoopCommand" -> "IHaveDataTableElements";
+"BeginMultiLoopCommand" -> "IHaveLoopAdditionalCommands";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

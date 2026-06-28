@@ -1,0 +1,10 @@
+digraph "GetFormattedDateTimeFromCalculatedTextDateTimeCommand" {
+"GetFormattedDateTimeFromCalculatedTextDateTimeCommand" -> "AGetFormattedDateTimeFromCalculatedDateTimeCommands";
+"AGetFormattedDateTimeFromCalculatedDateTimeCommands" -> "ACalculateDateTimeCommands";
+"ACalculateDateTimeCommands" -> "ADateTimeConvertCommands";
+"ACalculateDateTimeCommands" -> "IDateTimeResultProperties";
+"ADateTimeConvertCommands" -> "ScriptCommand";
+"ADateTimeConvertCommands" -> "IDateTimeConvertProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

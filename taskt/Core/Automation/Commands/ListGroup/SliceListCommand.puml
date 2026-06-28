@@ -1,0 +1,7 @@
+@startuml
+SliceListCommand --> AListCreateFromListCommands
+AListCreateFromListCommands --> ScriptCommand
+AListCreateFromListCommands --> IListCreateFromListProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

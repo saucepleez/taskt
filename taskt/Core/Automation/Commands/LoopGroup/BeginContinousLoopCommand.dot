@@ -1,0 +1,6 @@
+digraph "BeginContinousLoopCommand" {
+"BeginContinousLoopCommand" -> "ScriptCommand";
+"BeginContinousLoopCommand" -> "IHaveLoopAdditionalCommands";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

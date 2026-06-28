@@ -1,0 +1,8 @@
+digraph "BeginLoopForDataTableCommand" {
+"BeginLoopForDataTableCommand" -> "ADataTableInputDataTableCommands";
+"BeginLoopForDataTableCommand" -> "IHaveLoopAdditionalCommands";
+"ADataTableInputDataTableCommands" -> "ScriptCommand";
+"ADataTableInputDataTableCommands" -> "IDataTableProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

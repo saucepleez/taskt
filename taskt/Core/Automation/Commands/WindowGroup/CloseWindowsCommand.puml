@@ -1,0 +1,12 @@
+@startuml
+CloseWindowsCommand --> AWindowNamesActionCommnads
+AWindowNamesActionCommnads --> AWindowNamesCommands
+AWindowNamesActionCommnads --> IWindowNamesActionProperties
+AWindowNamesCommands --> AWindowNameCoreCommands
+AWindowNamesCommands --> IWindowNamesProperties
+AWindowNamesCommands --> ICanHandleList
+AWindowNameCoreCommands --> ScriptCommand
+AWindowNameCoreCommands --> IWindowNameCoreProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

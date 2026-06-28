@@ -1,0 +1,12 @@
+digraph "UIAutomationGetTextsFromTableUIElementAsDataTableCommand" {
+"UIAutomationGetTextsFromTableUIElementAsDataTableCommand" -> "AGetFromUIElementCommands";
+"UIAutomationGetTextsFromTableUIElementAsDataTableCommand" -> "IDataTableResultProperties";
+"AGetFromUIElementCommands" -> "ADoSomethingUIElementCommands";
+"AGetFromUIElementCommands" -> "IGetFromUIElementProperties";
+"ADoSomethingUIElementCommands" -> "AUIElementCoreCommands";
+"ADoSomethingUIElementCommands" -> "IDoSomethingUIElementProperties";
+"AUIElementCoreCommands" -> "ScriptCommand";
+"AUIElementCoreCommands" -> "IUIElementCoreProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

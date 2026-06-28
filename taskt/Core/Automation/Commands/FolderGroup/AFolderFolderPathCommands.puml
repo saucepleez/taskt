@@ -1,0 +1,6 @@
+@startuml
+AFolderFolderPathCommands --> ScriptCommand
+AFolderFolderPathCommands --> IFolderPathProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

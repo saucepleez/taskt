@@ -1,0 +1,8 @@
+digraph "frmSearchCommands" {
+"frmSearchCommands" -> "DialogLikeThemedForm";
+"frmSearchCommands" -> "DialogLikeThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"ThemedForm" -> "Form";
+"ThemedForm" -> "Form";
+}

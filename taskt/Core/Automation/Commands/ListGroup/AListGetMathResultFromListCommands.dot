@@ -1,0 +1,10 @@
+digraph "AListGetMathResultFromListCommands" {
+"AListGetMathResultFromListCommands" -> "AListGetFromListCommands";
+"AListGetMathResultFromListCommands" -> "IListGetMathResultFromListProperties";
+"AListGetFromListCommands" -> "AListInputListCommands";
+"AListGetFromListCommands" -> "IListGetFromListProperties";
+"AListInputListCommands" -> "ScriptCommand";
+"AListInputListCommands" -> "IListProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

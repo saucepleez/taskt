@@ -1,0 +1,12 @@
+digraph "SeleniumBrowserExecuteJavaScriptFromFileCommand" {
+"SeleniumBrowserExecuteJavaScriptFromFileCommand" -> "ASeleniumExecuteJavaScriptCommands";
+"SeleniumBrowserExecuteJavaScriptFromFileCommand" -> "ICanHandleFilePath";
+"ASeleniumExecuteJavaScriptCommands" -> "ASeleniumWebDriverActionCommands";
+"ASeleniumExecuteJavaScriptCommands" -> "ISeleniumExecuteJavaScriptProperties";
+"ASeleniumWebDriverActionCommands" -> "ASeleniumDoSomethingToWebDriverCommands";
+"ASeleniumWebDriverActionCommands" -> "ISeleniumWebDriverActionProperties";
+"ASeleniumDoSomethingToWebDriverCommands" -> "ScriptCommand";
+"ASeleniumDoSomethingToWebDriverCommands" -> "ISeleniumDoSomethingToWebDriverProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

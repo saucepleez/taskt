@@ -1,0 +1,6 @@
+@startuml
+ShowHTMLInputDialogCommand --> ScriptCommand
+ShowHTMLInputDialogCommand --> IWaitDialogResultProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

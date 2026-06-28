@@ -1,0 +1,8 @@
+digraph "frmAddVariable" {
+"frmAddVariable" -> "DialogLikeThemedForm";
+"frmAddVariable" -> "DialogLikeThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"ThemedForm" -> "Form";
+"ThemedForm" -> "Form";
+}

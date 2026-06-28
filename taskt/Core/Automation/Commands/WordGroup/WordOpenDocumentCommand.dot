@@ -1,0 +1,6 @@
+digraph "WordOpenDocumentCommand" {
+"WordOpenDocumentCommand" -> "ScriptCommand";
+"WordOpenDocumentCommand" -> "IFileExistsFilePathProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

@@ -1,0 +1,7 @@
+@startuml
+ExcelCheckExcelInstanceExistsCommand --> AExcelInstanceCommands
+AExcelInstanceCommands --> ScriptCommand
+AExcelInstanceCommands --> IExcelInstanceProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

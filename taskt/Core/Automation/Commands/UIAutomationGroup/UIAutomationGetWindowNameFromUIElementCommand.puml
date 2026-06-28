@@ -1,0 +1,11 @@
+@startuml
+UIAutomationGetWindowNameFromUIElementCommand --> AGetFromUIElementCommands
+AGetFromUIElementCommands --> ADoSomethingUIElementCommands
+AGetFromUIElementCommands --> IGetFromUIElementProperties
+ADoSomethingUIElementCommands --> AUIElementCoreCommands
+ADoSomethingUIElementCommands --> IDoSomethingUIElementProperties
+AUIElementCoreCommands --> ScriptCommand
+AUIElementCoreCommands --> IUIElementCoreProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

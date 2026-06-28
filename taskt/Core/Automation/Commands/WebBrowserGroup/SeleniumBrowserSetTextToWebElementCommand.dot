@@ -1,0 +1,11 @@
+digraph "SeleniumBrowserSetTextToWebElementCommand" {
+"SeleniumBrowserSetTextToWebElementCommand" -> "ASeleniumWebElementActionAndScrollCommands";
+"ASeleniumWebElementActionAndScrollCommands" -> "ASeleniumWebElementActionCommands";
+"ASeleniumWebElementActionAndScrollCommands" -> "ISeleniumWebElementActionAndScrollProperties";
+"ASeleniumWebElementActionCommands" -> "ASeleniumDoSomethingToWebElementCommands";
+"ASeleniumWebElementActionCommands" -> "ISeleniumWebElementActionProperties";
+"ASeleniumDoSomethingToWebElementCommands" -> "ScriptCommand";
+"ASeleniumDoSomethingToWebElementCommands" -> "ISeleniumDoSomethingToWebElementProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

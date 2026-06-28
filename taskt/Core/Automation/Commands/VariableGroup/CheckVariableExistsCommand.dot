@@ -1,0 +1,5 @@
+digraph "CheckVariableExistsCommand" {
+"CheckVariableExistsCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

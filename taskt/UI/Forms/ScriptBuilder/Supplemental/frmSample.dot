@@ -1,0 +1,8 @@
+digraph "frmSample" {
+"frmSample" -> "DialogLikeThemedForm";
+"frmSample" -> "DialogLikeThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"ThemedForm" -> "Form";
+"ThemedForm" -> "Form";
+}

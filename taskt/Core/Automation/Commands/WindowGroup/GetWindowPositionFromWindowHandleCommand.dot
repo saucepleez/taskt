@@ -1,0 +1,8 @@
+digraph "GetWindowPositionFromWindowHandleCommand" {
+"GetWindowPositionFromWindowHandleCommand" -> "AWindowHandleCommands";
+"GetWindowPositionFromWindowHandleCommand" -> "IWindowPositionProperties";
+"AWindowHandleCommands" -> "ScriptCommand";
+"AWindowHandleCommands" -> "IWindowHandleProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

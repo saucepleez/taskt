@@ -1,0 +1,10 @@
+digraph "UIAutomationSearchUIElementsTreeXMLFromUIElementCommand" {
+"UIAutomationSearchUIElementsTreeXMLFromUIElementCommand" -> "ADoSomethingUIElementCommands";
+"UIAutomationSearchUIElementsTreeXMLFromUIElementCommand" -> "IGetUIElementsXMLTreeFromSomethingProperties";
+"ADoSomethingUIElementCommands" -> "AUIElementCoreCommands";
+"ADoSomethingUIElementCommands" -> "IDoSomethingUIElementProperties";
+"AUIElementCoreCommands" -> "ScriptCommand";
+"AUIElementCoreCommands" -> "IUIElementCoreProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

@@ -1,0 +1,6 @@
+@startuml
+AColorCreateCommands --> ScriptCommand
+AColorCreateCommands --> IColorCreateProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

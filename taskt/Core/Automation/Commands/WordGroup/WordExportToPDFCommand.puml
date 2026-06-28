@@ -1,0 +1,5 @@
+@startuml
+WordExportToPDFCommand --> ScriptCommand
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

@@ -1,0 +1,5 @@
+digraph "ConcatenateTextVariableCommand" {
+"ConcatenateTextVariableCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

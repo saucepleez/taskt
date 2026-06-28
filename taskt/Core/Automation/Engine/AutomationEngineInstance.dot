@@ -1,0 +1,4 @@
+digraph "AutomationEngineInstance" {
+"AutomationEngineInstance" -> "IAppInstancesProperties";
+"AutomationEngineInstance" -> "IScriptVariableListProperties";
+}

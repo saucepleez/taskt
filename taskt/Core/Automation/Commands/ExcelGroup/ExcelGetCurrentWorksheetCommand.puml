@@ -1,0 +1,7 @@
+@startuml
+ExcelGetCurrentWorksheetCommand --> AExcelInstanceCommands
+AExcelInstanceCommands --> ScriptCommand
+AExcelInstanceCommands --> IExcelInstanceProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

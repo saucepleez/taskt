@@ -1,0 +1,6 @@
+digraph "RunJavaScriptByCodeCommand" {
+"RunJavaScriptByCodeCommand" -> "ARunScriptByCodeCommands";
+"ARunScriptByCodeCommands" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

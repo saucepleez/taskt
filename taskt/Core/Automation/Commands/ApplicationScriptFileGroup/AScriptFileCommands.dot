@@ -1,0 +1,6 @@
+digraph "AScriptFileCommands" {
+"AScriptFileCommands" -> "ScriptCommand";
+"AScriptFileCommands" -> "IFileExistsFilePathProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

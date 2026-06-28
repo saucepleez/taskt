@@ -1,0 +1,6 @@
+digraph "ShowHTMLInputDialogCommand" {
+"ShowHTMLInputDialogCommand" -> "ScriptCommand";
+"ShowHTMLInputDialogCommand" -> "IWaitDialogResultProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

@@ -1,0 +1,7 @@
+digraph "CheckWindowHandleExistsCommand" {
+"CheckWindowHandleExistsCommand" -> "AWindowHandleCommands";
+"AWindowHandleCommands" -> "ScriptCommand";
+"AWindowHandleCommands" -> "IWindowHandleProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

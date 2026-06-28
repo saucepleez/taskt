@@ -1,0 +1,6 @@
+digraph "RunPowerShellScriptByCodeCommand" {
+"RunPowerShellScriptByCodeCommand" -> "ARunScriptByCodeCommands";
+"ARunScriptByCodeCommands" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

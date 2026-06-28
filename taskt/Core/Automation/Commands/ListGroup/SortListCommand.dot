@@ -1,0 +1,7 @@
+digraph "SortListCommand" {
+"SortListCommand" -> "AListCreateFromListCommands";
+"AListCreateFromListCommands" -> "ScriptCommand";
+"AListCreateFromListCommands" -> "IListCreateFromListProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

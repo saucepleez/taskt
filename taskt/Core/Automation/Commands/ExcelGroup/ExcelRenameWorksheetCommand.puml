@@ -1,0 +1,8 @@
+@startuml
+ExcelRenameWorksheetCommand --> AExcelInstanceCommands
+ExcelRenameWorksheetCommand --> IExcelWorksheetCopyRenameProperties
+AExcelInstanceCommands --> ScriptCommand
+AExcelInstanceCommands --> IExcelInstanceProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

@@ -1,0 +1,11 @@
+digraph "SeleniumBrowserGetWebBrowserPositionCommand" {
+"SeleniumBrowserGetWebBrowserPositionCommand" -> "ASeleniumWebDriverActionCommands";
+"SeleniumBrowserGetWebBrowserPositionCommand" -> "IPositionProperties";
+"SeleniumBrowserGetWebBrowserPositionCommand" -> "ICanExecuteJavaScriptToWebDriver";
+"ASeleniumWebDriverActionCommands" -> "ASeleniumDoSomethingToWebDriverCommands";
+"ASeleniumWebDriverActionCommands" -> "ISeleniumWebDriverActionProperties";
+"ASeleniumDoSomethingToWebDriverCommands" -> "ScriptCommand";
+"ASeleniumDoSomethingToWebDriverCommands" -> "ISeleniumDoSomethingToWebDriverProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

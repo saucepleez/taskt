@@ -1,0 +1,6 @@
+digraph "MailKitSaveEMailCommand" {
+"MailKitSaveEMailCommand" -> "ScriptCommand";
+"MailKitSaveEMailCommand" -> "ICanHandleFilePath";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

@@ -1,0 +1,4 @@
+@startuml
+SafeWebSocketServerSettings --> SafeServerSettings
+SafeServerSettings --> IServerSettings
+@enduml

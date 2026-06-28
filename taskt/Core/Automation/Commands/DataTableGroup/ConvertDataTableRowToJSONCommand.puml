@@ -1,0 +1,11 @@
+@startuml
+ConvertDataTableRowToJSONCommand --> ADataTableGetFromDataTableRowCommands
+ADataTableGetFromDataTableRowCommands --> ADataTableRowCommands
+ADataTableGetFromDataTableRowCommands --> IResultProperties
+ADataTableRowCommands --> ADataTableInputDataTableCommands
+ADataTableRowCommands --> IDataTableRowProperties
+ADataTableInputDataTableCommands --> ScriptCommand
+ADataTableInputDataTableCommands --> IDataTableProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

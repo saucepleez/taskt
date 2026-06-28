@@ -1,0 +1,12 @@
+@startuml
+ExcelSetRowValuesFromListCommand --> AExcelRowRangeSetCommands
+ExcelSetRowValuesFromListCommand --> ICanHandleList
+AExcelRowRangeSetCommands --> AExcelRowRangeCommands
+AExcelRowRangeSetCommands --> IExcelRowRangeSetProperties
+AExcelRowRangeCommands --> AExcelInstanceCommands
+AExcelRowRangeCommands --> IExcelRowRangeProperties
+AExcelInstanceCommands --> ScriptCommand
+AExcelInstanceCommands --> IExcelInstanceProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+BeginLoopForComplexDataTypesCommand --> ScriptCommand
+BeginLoopForComplexDataTypesCommand --> IHaveLoopAdditionalCommands
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

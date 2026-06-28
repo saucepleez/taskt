@@ -1,0 +1,6 @@
+@startuml
+ExecuteDLLCommand --> ScriptCommand
+ExecuteDLLCommand --> IHaveDataTableElements
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

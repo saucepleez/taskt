@@ -1,0 +1,12 @@
+digraph "ConvertDataTableRowToDictionaryCommand" {
+"ConvertDataTableRowToDictionaryCommand" -> "ADataTableGetFromDataTableRowCommands";
+"ConvertDataTableRowToDictionaryCommand" -> "IDictionaryResultProperties";
+"ADataTableGetFromDataTableRowCommands" -> "ADataTableRowCommands";
+"ADataTableGetFromDataTableRowCommands" -> "IResultProperties";
+"ADataTableRowCommands" -> "ADataTableInputDataTableCommands";
+"ADataTableRowCommands" -> "IDataTableRowProperties";
+"ADataTableInputDataTableCommands" -> "ScriptCommand";
+"ADataTableInputDataTableCommands" -> "IDataTableProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

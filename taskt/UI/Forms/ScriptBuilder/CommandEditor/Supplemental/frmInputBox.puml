@@ -1,0 +1,4 @@
+@startuml
+frmInputBox --> Form
+frmInputBox --> Form
+@enduml

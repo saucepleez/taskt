@@ -1,0 +1,10 @@
+digraph "ConvertDictionaryToDataTableCommand" {
+"ConvertDictionaryToDataTableCommand" -> "ADictionaryGetFromDictionaryCommands";
+"ConvertDictionaryToDataTableCommand" -> "IDataTableResultProperties";
+"ADictionaryGetFromDictionaryCommands" -> "ADictionaryInputDictionaryCommands";
+"ADictionaryGetFromDictionaryCommands" -> "IDictionaryGetFromDictionaryProperties";
+"ADictionaryInputDictionaryCommands" -> "ScriptCommand";
+"ADictionaryInputDictionaryCommands" -> "IDictionaryProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

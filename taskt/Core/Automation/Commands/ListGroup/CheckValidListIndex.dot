@@ -1,0 +1,9 @@
+digraph "CheckValidListIndex" {
+"CheckValidListIndex" -> "AListIndexCommands";
+"AListIndexCommands" -> "AListInputListCommands";
+"AListIndexCommands" -> "IListIndexProperties";
+"AListInputListCommands" -> "ScriptCommand";
+"AListInputListCommands" -> "IListProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

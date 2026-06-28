@@ -1,0 +1,5 @@
+digraph "frmScheduleManagement" {
+"frmScheduleManagement" -> "UIForm";
+"frmScheduleManagement" -> "UIForm";
+"UIForm" -> "Form";
+}

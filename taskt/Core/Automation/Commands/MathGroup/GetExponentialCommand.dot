@@ -1,0 +1,5 @@
+digraph "GetExponentialCommand" {
+"GetExponentialCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

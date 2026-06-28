@@ -1,0 +1,12 @@
+digraph "ResizeOneWindowCommand" {
+"ResizeOneWindowCommand" -> "AOneWindowNameActionCommands";
+"ResizeOneWindowCommand" -> "IWindowSizeProperties";
+"AOneWindowNameActionCommands" -> "AOneWindowNameCommands";
+"AOneWindowNameActionCommands" -> "IOneWindowNameActionProperties";
+"AOneWindowNameCommands" -> "AWindowNameCoreCommands";
+"AOneWindowNameCommands" -> "IOneWindowNameProperties";
+"AWindowNameCoreCommands" -> "ScriptCommand";
+"AWindowNameCoreCommands" -> "IWindowNameCoreProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

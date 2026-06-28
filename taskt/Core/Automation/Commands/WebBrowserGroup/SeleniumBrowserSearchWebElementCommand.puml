@@ -1,0 +1,15 @@
+@startuml
+SeleniumBrowserSearchWebElementCommand --> ASeleniumSearchWebElementFromWebDriverCommands
+SeleniumBrowserSearchWebElementCommand --> ISeleniumSearchWebElementParametersProperties
+SeleniumBrowserSearchWebElementCommand --> ISeleniumWebElementResultProperties
+ASeleniumSearchWebElementFromWebDriverCommands --> ASeleniumSearchMultiWebElementsFromWebDriverCommands
+ASeleniumSearchWebElementFromWebDriverCommands --> ISeleniumSearchWebElementParametersProperties
+ASeleniumSearchMultiWebElementsFromWebDriverCommands --> ASeleniumGetFromWebDriverCommands
+ASeleniumSearchMultiWebElementsFromWebDriverCommands --> ISeleniumSearchMultiWebElementsParametersProperties
+ASeleniumGetFromWebDriverCommands --> ASeleniumDoSomethingToWebDriverCommands
+ASeleniumGetFromWebDriverCommands --> IResultProperties
+ASeleniumDoSomethingToWebDriverCommands --> ScriptCommand
+ASeleniumDoSomethingToWebDriverCommands --> ISeleniumDoSomethingToWebDriverProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

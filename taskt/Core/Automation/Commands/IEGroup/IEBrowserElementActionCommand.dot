@@ -1,0 +1,5 @@
+digraph "IEBrowserElementActionCommand" {
+"IEBrowserElementActionCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

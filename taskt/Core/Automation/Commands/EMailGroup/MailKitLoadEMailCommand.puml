@@ -1,0 +1,6 @@
+@startuml
+MailKitLoadEMailCommand --> ScriptCommand
+MailKitLoadEMailCommand --> IFileExistsFilePathProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

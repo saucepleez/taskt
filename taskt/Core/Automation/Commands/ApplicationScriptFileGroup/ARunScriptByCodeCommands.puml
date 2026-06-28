@@ -1,0 +1,5 @@
+@startuml
+ARunScriptByCodeCommands --> ScriptCommand
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+frmScriptBuilder --> Form
+@enduml

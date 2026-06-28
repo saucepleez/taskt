@@ -1,0 +1,8 @@
+digraph "GetWindowStateFromWindowHandleCommand" {
+"GetWindowStateFromWindowHandleCommand" -> "AWindowHandleCommands";
+"GetWindowStateFromWindowHandleCommand" -> "IWindowStateProperties";
+"AWindowHandleCommands" -> "ScriptCommand";
+"AWindowHandleCommands" -> "IWindowHandleProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

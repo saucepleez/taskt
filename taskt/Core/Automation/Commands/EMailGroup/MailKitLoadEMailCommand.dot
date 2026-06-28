@@ -1,0 +1,6 @@
+digraph "MailKitLoadEMailCommand" {
+"MailKitLoadEMailCommand" -> "ScriptCommand";
+"MailKitLoadEMailCommand" -> "IFileExistsFilePathProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

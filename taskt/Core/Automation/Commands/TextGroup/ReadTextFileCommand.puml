@@ -1,0 +1,6 @@
+@startuml
+ReadTextFileCommand --> ScriptCommand
+ReadTextFileCommand --> IFileExistsFilePathProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

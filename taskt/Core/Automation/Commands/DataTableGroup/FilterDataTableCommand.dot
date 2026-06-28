@@ -1,0 +1,7 @@
+digraph "FilterDataTableCommand" {
+"FilterDataTableCommand" -> "ADataTableCreateFromDataTableCommands";
+"ADataTableCreateFromDataTableCommands" -> "ScriptCommand";
+"ADataTableCreateFromDataTableCommands" -> "IDataTableCreateFromDataTableProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

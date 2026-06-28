@@ -1,0 +1,8 @@
+@startuml
+SeleniumBrowserWaitForWebElementToExistsCommand --> ASeleniumDoSomethingToWebDriverCommands
+SeleniumBrowserWaitForWebElementToExistsCommand --> ISeleniumSearchWebElementParametersProperties
+ASeleniumDoSomethingToWebDriverCommands --> ScriptCommand
+ASeleniumDoSomethingToWebDriverCommands --> ISeleniumDoSomethingToWebDriverProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

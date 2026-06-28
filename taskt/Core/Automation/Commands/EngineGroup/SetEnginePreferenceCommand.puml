@@ -1,0 +1,5 @@
+@startuml
+SetEnginePreferenceCommand --> ScriptCommand
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

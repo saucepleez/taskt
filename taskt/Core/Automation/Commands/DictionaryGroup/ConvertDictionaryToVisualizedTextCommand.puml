@@ -1,0 +1,9 @@
+@startuml
+ConvertDictionaryToVisualizedTextCommand --> ADictionaryGetFromDictionaryCommands
+ADictionaryGetFromDictionaryCommands --> ADictionaryInputDictionaryCommands
+ADictionaryGetFromDictionaryCommands --> IDictionaryGetFromDictionaryProperties
+ADictionaryInputDictionaryCommands --> ScriptCommand
+ADictionaryInputDictionaryCommands --> IDictionaryProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

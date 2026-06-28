@@ -1,0 +1,12 @@
+digraph "ExcelGetColumnValuesAsListCommand" {
+"ExcelGetColumnValuesAsListCommand" -> "AExcelColumnRangeGetCommands";
+"ExcelGetColumnValuesAsListCommand" -> "IListResultProperties";
+"AExcelColumnRangeGetCommands" -> "AExcelColumnRangeCommands";
+"AExcelColumnRangeGetCommands" -> "IExcelColumnRangeGetProperties";
+"AExcelColumnRangeCommands" -> "AExcelInstanceCommands";
+"AExcelColumnRangeCommands" -> "IExcelColumnRangeProperties";
+"AExcelInstanceCommands" -> "ScriptCommand";
+"AExcelInstanceCommands" -> "IExcelInstanceProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

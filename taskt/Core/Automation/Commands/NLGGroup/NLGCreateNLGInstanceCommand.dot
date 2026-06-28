@@ -1,0 +1,5 @@
+digraph "NLGCreateNLGInstanceCommand" {
+"NLGCreateNLGInstanceCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

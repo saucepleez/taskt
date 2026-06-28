@@ -1,0 +1,10 @@
+digraph "AListGetFromValueCommands" {
+"AListGetFromValueCommands" -> "AListGetFromListCommands";
+"AListGetFromValueCommands" -> "IListGetFromValueProperties";
+"AListGetFromListCommands" -> "AListInputListCommands";
+"AListGetFromListCommands" -> "IListGetFromListProperties";
+"AListInputListCommands" -> "ScriptCommand";
+"AListInputListCommands" -> "IListProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

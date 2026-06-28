@@ -1,0 +1,4 @@
+digraph "SafeWebSocketServerSettings" {
+"SafeWebSocketServerSettings" -> "SafeServerSettings";
+"SafeServerSettings" -> "IServerSettings";
+}

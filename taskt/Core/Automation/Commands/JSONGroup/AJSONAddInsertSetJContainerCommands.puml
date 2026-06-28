@@ -1,0 +1,10 @@
+@startuml
+AJSONAddInsertSetJContainerCommands --> AJSONJSONPathCommands
+AJSONAddInsertSetJContainerCommands --> IJSONValueActionProperties
+AJSONJSONPathCommands --> AJSONInputJSONCommands
+AJSONJSONPathCommands --> IJSONJSONPathProperties
+AJSONInputJSONCommands --> ScriptCommand
+AJSONInputJSONCommands --> IJSONInputJSONProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

@@ -1,0 +1,4 @@
+@startuml
+frmImageCapture --> Form
+frmImageCapture --> Form
+@enduml

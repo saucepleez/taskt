@@ -1,0 +1,7 @@
+digraph "RunCSharpFileCommand" {
+"RunCSharpFileCommand" -> "ARunCSharpSomethingCommands";
+"ARunCSharpSomethingCommands" -> "ACompileCSharpSomethingCommands";
+"ACompileCSharpSomethingCommands" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

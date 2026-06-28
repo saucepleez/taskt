@@ -1,0 +1,10 @@
+digraph "SeleniumBrowserCreateWebBrowserInstanceCommand" {
+"SeleniumBrowserCreateWebBrowserInstanceCommand" -> "ASeleniumCreateWebDriverCommands";
+"SeleniumBrowserCreateWebBrowserInstanceCommand" -> "ICanHandleWindowHandle";
+"ASeleniumCreateWebDriverCommands" -> "ASeleniumDoSomethingToWebDriverCommands";
+"ASeleniumCreateWebDriverCommands" -> "ISeleniumCreateWebDriverProperties";
+"ASeleniumDoSomethingToWebDriverCommands" -> "ScriptCommand";
+"ASeleniumDoSomethingToWebDriverCommands" -> "ISeleniumDoSomethingToWebDriverProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

@@ -1,0 +1,10 @@
+@startuml
+GetListItemCommand --> AListIndexCommands
+GetListItemCommand --> IResultProperties
+AListIndexCommands --> AListInputListCommands
+AListIndexCommands --> IListIndexProperties
+AListInputListCommands --> ScriptCommand
+AListInputListCommands --> IListProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

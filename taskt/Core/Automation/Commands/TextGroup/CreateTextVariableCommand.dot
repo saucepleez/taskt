@@ -1,0 +1,5 @@
+digraph "CreateTextVariableCommand" {
+"CreateTextVariableCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

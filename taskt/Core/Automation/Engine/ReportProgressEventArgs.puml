@@ -1,0 +1,3 @@
+@startuml
+ReportProgressEventArgs --> EventArgs
+@enduml

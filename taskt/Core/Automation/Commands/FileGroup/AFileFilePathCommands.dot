@@ -1,0 +1,6 @@
+digraph "AFileFilePathCommands" {
+"AFileFilePathCommands" -> "ScriptCommand";
+"AFileFilePathCommands" -> "IFilePathProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

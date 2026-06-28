@@ -1,0 +1,5 @@
+digraph "ShowEngineContextCommand" {
+"ShowEngineContextCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

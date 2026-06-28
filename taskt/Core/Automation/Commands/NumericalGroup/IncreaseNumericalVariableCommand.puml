@@ -1,0 +1,5 @@
+@startuml
+IncreaseNumericalVariableCommand --> ScriptCommand
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

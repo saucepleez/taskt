@@ -1,0 +1,10 @@
+digraph "AExcelColumnRowRangeGetCommands" {
+"AExcelColumnRowRangeGetCommands" -> "AExcelColumnRowRangeCommands";
+"AExcelColumnRowRangeGetCommands" -> "IExcelColumnRowRangeGetProperties";
+"AExcelColumnRowRangeCommands" -> "AExcelInstanceCommands";
+"AExcelColumnRowRangeCommands" -> "IExcelColumnRowRangeProperties";
+"AExcelInstanceCommands" -> "ScriptCommand";
+"AExcelInstanceCommands" -> "IExcelInstanceProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

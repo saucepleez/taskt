@@ -1,0 +1,4 @@
+@startuml
+SafeAutomationEngineInstanceApplicationSettings --> SafeApplicationSettings
+SafeApplicationSettings --> IApplicationSettings
+@enduml

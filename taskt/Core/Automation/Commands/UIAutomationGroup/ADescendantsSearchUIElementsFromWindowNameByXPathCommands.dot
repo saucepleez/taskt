@@ -1,0 +1,11 @@
+digraph "ADescendantsSearchUIElementsFromWindowNameByXPathCommands" {
+"ADescendantsSearchUIElementsFromWindowNameByXPathCommands" -> "ADescendantsSearchUIElementsFromSomethingByXPathCommands";
+"ADescendantsSearchUIElementsFromWindowNameByXPathCommands" -> "IOneWindowNameProperties";
+"ADescendantsSearchUIElementsFromWindowNameByXPathCommands" -> "IUIElementSearchUIElementFromWindowSomethingByAnywayProperties";
+"ADescendantsSearchUIElementsFromSomethingByXPathCommands" -> "AChildrenSearchUIElementsFromSomethingByXPathCommands";
+"ADescendantsSearchUIElementsFromSomethingByXPathCommands" -> "IUIElementDescendantsSearchXPathProperties";
+"AChildrenSearchUIElementsFromSomethingByXPathCommands" -> "ScriptCommand";
+"AChildrenSearchUIElementsFromSomethingByXPathCommands" -> "IUIElementChildrenSearchXPathProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

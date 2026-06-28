@@ -1,0 +1,6 @@
+digraph "MailKitGetAddressesAsDataTableCommand" {
+"MailKitGetAddressesAsDataTableCommand" -> "ScriptCommand";
+"MailKitGetAddressesAsDataTableCommand" -> "ICanHandleDataTable";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

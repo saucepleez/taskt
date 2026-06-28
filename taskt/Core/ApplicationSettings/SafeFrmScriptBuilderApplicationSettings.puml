@@ -1,0 +1,4 @@
+@startuml
+SafeFrmScriptBuilderApplicationSettings --> SafeApplicationSettings
+SafeApplicationSettings --> IApplicationSettings
+@enduml

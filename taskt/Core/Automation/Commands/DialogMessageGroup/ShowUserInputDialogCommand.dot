@@ -1,0 +1,7 @@
+digraph "ShowUserInputDialogCommand" {
+"ShowUserInputDialogCommand" -> "ScriptCommand";
+"ShowUserInputDialogCommand" -> "IWaitDialogResultProperties";
+"ShowUserInputDialogCommand" -> "IHaveDataTableElements";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

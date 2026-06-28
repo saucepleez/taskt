@@ -1,0 +1,10 @@
+digraph "AddDictionaryItemCommand" {
+"AddDictionaryItemCommand" -> "ADictionaryAddCreateCommands";
+"AddDictionaryItemCommand" -> "IHaveDataTableElements";
+"ADictionaryAddCreateCommands" -> "ADictionaryInputDictionaryCommands";
+"ADictionaryAddCreateCommands" -> "IDictionaryAddCreateProperties";
+"ADictionaryInputDictionaryCommands" -> "ScriptCommand";
+"ADictionaryInputDictionaryCommands" -> "IDictionaryProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

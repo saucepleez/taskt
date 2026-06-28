@@ -1,0 +1,8 @@
+digraph "ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands" {
+"ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands" -> "AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands";
+"ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands" -> "IUIElementDescendantsSearchParametersProperties";
+"AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands" -> "ScriptCommand";
+"AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands" -> "IUIElementChildrenSearchParametersProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

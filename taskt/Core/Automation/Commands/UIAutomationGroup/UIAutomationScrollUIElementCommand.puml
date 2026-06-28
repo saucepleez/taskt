@@ -1,0 +1,12 @@
+@startuml
+UIAutomationScrollUIElementCommand --> AUIElementActionCommands
+UIAutomationScrollUIElementCommand --> ICanHandleUIElementScrollBar
+AUIElementActionCommands --> ADoSomethingUIElementCommands
+AUIElementActionCommands --> IUIElementActionProperties
+ADoSomethingUIElementCommands --> AUIElementCoreCommands
+ADoSomethingUIElementCommands --> IDoSomethingUIElementProperties
+AUIElementCoreCommands --> ScriptCommand
+AUIElementCoreCommands --> IUIElementCoreProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

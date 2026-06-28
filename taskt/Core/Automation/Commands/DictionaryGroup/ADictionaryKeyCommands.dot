@@ -1,0 +1,8 @@
+digraph "ADictionaryKeyCommands" {
+"ADictionaryKeyCommands" -> "ADictionaryInputDictionaryCommands";
+"ADictionaryKeyCommands" -> "IDictionaryKeyProperties";
+"ADictionaryInputDictionaryCommands" -> "ScriptCommand";
+"ADictionaryInputDictionaryCommands" -> "IDictionaryProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

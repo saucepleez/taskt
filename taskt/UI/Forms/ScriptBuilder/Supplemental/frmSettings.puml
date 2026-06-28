@@ -1,0 +1,6 @@
+@startuml
+frmSettings --> ThemedForm
+frmSettings --> ThemedForm
+ThemedForm --> Form
+ThemedForm --> Form
+@enduml

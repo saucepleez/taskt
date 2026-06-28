@@ -1,0 +1,13 @@
+digraph "ConvertJSONToDictionaryCommand" {
+"ConvertJSONToDictionaryCommand" -> "AJSONGetFromJContainerCommands";
+"ConvertJSONToDictionaryCommand" -> "IDictionaryResultProperties";
+"AJSONGetFromJContainerCommands" -> "AJSONGetFromJSONCommands";
+"AJSONGetFromJContainerCommands" -> "IJSONInputJContainer";
+"AJSONGetFromJContainerCommands" -> "IJSONJSONPathProperties";
+"AJSONGetFromJSONCommands" -> "AJSONInputJSONCommands";
+"AJSONGetFromJSONCommands" -> "IResultProperties";
+"AJSONInputJSONCommands" -> "ScriptCommand";
+"AJSONInputJSONCommands" -> "IJSONInputJSONProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

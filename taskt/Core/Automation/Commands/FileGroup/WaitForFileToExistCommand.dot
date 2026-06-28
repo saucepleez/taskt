@@ -1,0 +1,11 @@
+digraph "WaitForFileToExistCommand" {
+"WaitForFileToExistCommand" -> "AFileExistsFilePathPathResultCommands";
+"AFileExistsFilePathPathResultCommands" -> "AFileExistsFilePathCommands";
+"AFileExistsFilePathPathResultCommands" -> "IFileExistsFilePathPathResultProperties";
+"AFileExistsFilePathCommands" -> "AFileFilePathCommands";
+"AFileExistsFilePathCommands" -> "IFileExistsFilePathProperties";
+"AFileFilePathCommands" -> "ScriptCommand";
+"AFileFilePathCommands" -> "IFilePathProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

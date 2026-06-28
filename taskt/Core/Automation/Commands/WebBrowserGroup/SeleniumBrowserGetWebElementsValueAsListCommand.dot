@@ -1,0 +1,13 @@
+digraph "SeleniumBrowserGetWebElementsValueAsListCommand" {
+"SeleniumBrowserGetWebElementsValueAsListCommand" -> "ASeleniumGetMultiWebElementsValueAsSomethingCommands";
+"SeleniumBrowserGetWebElementsValueAsListCommand" -> "IListResultProperties";
+"ASeleniumGetMultiWebElementsValueAsSomethingCommands" -> "ASeleniumSearchMultiWebElementsFromWebDriverCommands";
+"ASeleniumSearchMultiWebElementsFromWebDriverCommands" -> "ASeleniumGetFromWebDriverCommands";
+"ASeleniumSearchMultiWebElementsFromWebDriverCommands" -> "ISeleniumSearchMultiWebElementsParametersProperties";
+"ASeleniumGetFromWebDriverCommands" -> "ASeleniumDoSomethingToWebDriverCommands";
+"ASeleniumGetFromWebDriverCommands" -> "IResultProperties";
+"ASeleniumDoSomethingToWebDriverCommands" -> "ScriptCommand";
+"ASeleniumDoSomethingToWebDriverCommands" -> "ISeleniumDoSomethingToWebDriverProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

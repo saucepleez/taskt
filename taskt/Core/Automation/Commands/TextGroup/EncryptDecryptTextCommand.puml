@@ -1,0 +1,5 @@
+@startuml
+EncryptDecryptTextCommand --> ScriptCommand
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

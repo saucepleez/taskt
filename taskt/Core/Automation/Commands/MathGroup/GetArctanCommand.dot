@@ -1,0 +1,9 @@
+digraph "GetArctanCommand" {
+"GetArctanCommand" -> "ATrignometricCommands";
+"ATrignometricCommands" -> "AMathValueResultCommands";
+"ATrignometricCommands" -> "ITrignometricProperties";
+"AMathValueResultCommands" -> "ScriptCommand";
+"AMathValueResultCommands" -> "IMathValueResultProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

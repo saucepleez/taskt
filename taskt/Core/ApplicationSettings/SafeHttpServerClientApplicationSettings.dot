@@ -1,0 +1,4 @@
+digraph "SafeHttpServerClientApplicationSettings" {
+"SafeHttpServerClientApplicationSettings" -> "SafeApplicationSettings";
+"SafeApplicationSettings" -> "IApplicationSettings";
+}

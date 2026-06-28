@@ -1,0 +1,3 @@
+digraph "ApplicationSettings" {
+"ApplicationSettings" -> "IApplicationSettings";
+}

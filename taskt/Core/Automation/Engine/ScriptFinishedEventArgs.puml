@@ -1,0 +1,3 @@
+@startuml
+ScriptFinishedEventArgs --> EventArgs
+@enduml

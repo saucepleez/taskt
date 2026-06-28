@@ -1,0 +1,10 @@
+@startuml
+AFileNumberedFileCommands --> AFolderExistsFolderPathCommands
+AFileNumberedFileCommands --> ICanHandleFileName
+AFolderExistsFolderPathCommands --> AFolderFolderPathCommands
+AFolderExistsFolderPathCommands --> IFolderExistsFolderPathProperties
+AFolderFolderPathCommands --> ScriptCommand
+AFolderFolderPathCommands --> IFolderPathProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

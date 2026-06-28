@@ -1,0 +1,9 @@
+digraph "SeleniumBrowserRefreshWebBrowserCommand" {
+"SeleniumBrowserRefreshWebBrowserCommand" -> "ASeleniumWebDriverActionCommands";
+"ASeleniumWebDriverActionCommands" -> "ASeleniumDoSomethingToWebDriverCommands";
+"ASeleniumWebDriverActionCommands" -> "ISeleniumWebDriverActionProperties";
+"ASeleniumDoSomethingToWebDriverCommands" -> "ScriptCommand";
+"ASeleniumDoSomethingToWebDriverCommands" -> "ISeleniumDoSomethingToWebDriverProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

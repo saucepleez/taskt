@@ -1,0 +1,10 @@
+@startuml
+FilterDataTableColumnByRowValueCommand --> ADataTableCreateFromDataTableCommands
+FilterDataTableColumnByRowValueCommand --> IDataTableRowPositionProperties
+FilterDataTableColumnByRowValueCommand --> IFilterValueProperties
+FilterDataTableColumnByRowValueCommand --> IHaveDataTableElements
+ADataTableCreateFromDataTableCommands --> ScriptCommand
+ADataTableCreateFromDataTableCommands --> IDataTableCreateFromDataTableProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

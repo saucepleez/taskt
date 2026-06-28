@@ -1,0 +1,5 @@
+digraph "PingCommand" {
+"PingCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

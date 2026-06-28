@@ -1,0 +1,5 @@
+digraph "CommentCommand" {
+"CommentCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

@@ -1,0 +1,6 @@
+digraph "frmSettings" {
+"frmSettings" -> "ThemedForm";
+"frmSettings" -> "ThemedForm";
+"ThemedForm" -> "Form";
+"ThemedForm" -> "Form";
+}

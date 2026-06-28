@@ -1,0 +1,7 @@
+@startuml
+GetListWithDuplicateItemsRemoved --> AListCreateFromListCommands
+AListCreateFromListCommands --> ScriptCommand
+AListCreateFromListCommands --> IListCreateFromListProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

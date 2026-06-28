@@ -1,0 +1,13 @@
+digraph "MoveFileCommand" {
+"MoveFileCommand" -> "AFileCopyMoveFileCommands";
+"AFileCopyMoveFileCommands" -> "AFileExistsFilePathBeforeAfterResultCommands";
+"AFileCopyMoveFileCommands" -> "ICanHandleFolderPath";
+"AFileExistsFilePathBeforeAfterResultCommands" -> "AFileExistsFilePathCommands";
+"AFileExistsFilePathBeforeAfterResultCommands" -> "IFileExistsFilePathBeforeAfterPathResultProperties";
+"AFileExistsFilePathCommands" -> "AFileFilePathCommands";
+"AFileExistsFilePathCommands" -> "IFileExistsFilePathProperties";
+"AFileFilePathCommands" -> "ScriptCommand";
+"AFileFilePathCommands" -> "IFilePathProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

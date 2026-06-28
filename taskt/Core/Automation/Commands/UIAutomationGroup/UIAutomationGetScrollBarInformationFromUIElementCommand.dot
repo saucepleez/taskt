@@ -1,0 +1,13 @@
+digraph "UIAutomationGetScrollBarInformationFromUIElementCommand" {
+"UIAutomationGetScrollBarInformationFromUIElementCommand" -> "AGetFromUIElementCommands";
+"UIAutomationGetScrollBarInformationFromUIElementCommand" -> "IResultProperties";
+"UIAutomationGetScrollBarInformationFromUIElementCommand" -> "ICanHandleUIElementScrollBar";
+"AGetFromUIElementCommands" -> "ADoSomethingUIElementCommands";
+"AGetFromUIElementCommands" -> "IGetFromUIElementProperties";
+"ADoSomethingUIElementCommands" -> "AUIElementCoreCommands";
+"ADoSomethingUIElementCommands" -> "IDoSomethingUIElementProperties";
+"AUIElementCoreCommands" -> "ScriptCommand";
+"AUIElementCoreCommands" -> "IUIElementCoreProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

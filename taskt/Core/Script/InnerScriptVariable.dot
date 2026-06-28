@@ -1,0 +1,4 @@
+digraph "InnerScriptVariable" {
+"InnerScriptVariable" -> "ScriptVariable";
+"InnerScriptVariable" -> "IDisposable";
+}

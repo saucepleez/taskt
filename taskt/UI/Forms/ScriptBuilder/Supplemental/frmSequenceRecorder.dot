@@ -1,0 +1,5 @@
+digraph "frmSequenceRecorder" {
+"frmSequenceRecorder" -> "UIForm";
+"frmSequenceRecorder" -> "UIForm";
+"UIForm" -> "Form";
+}

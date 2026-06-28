@@ -1,0 +1,5 @@
+@startuml
+LaunchRemoteDesktopCommand --> ScriptCommand
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

@@ -1,0 +1,11 @@
+digraph "RemoveDictionaryItemCommand" {
+"RemoveDictionaryItemCommand" -> "ADictionaryKeyActionCommands";
+"ADictionaryKeyActionCommands" -> "ADictionaryKeyCommands";
+"ADictionaryKeyActionCommands" -> "IDictionaryKeyActionProperties";
+"ADictionaryKeyCommands" -> "ADictionaryInputDictionaryCommands";
+"ADictionaryKeyCommands" -> "IDictionaryKeyProperties";
+"ADictionaryInputDictionaryCommands" -> "ScriptCommand";
+"ADictionaryInputDictionaryCommands" -> "IDictionaryProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

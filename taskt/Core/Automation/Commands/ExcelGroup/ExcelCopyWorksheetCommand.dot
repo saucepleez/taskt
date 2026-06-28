@@ -1,0 +1,8 @@
+digraph "ExcelCopyWorksheetCommand" {
+"ExcelCopyWorksheetCommand" -> "AExcelInstanceCommands";
+"ExcelCopyWorksheetCommand" -> "IExcelWorksheetCopyRenameProperties";
+"AExcelInstanceCommands" -> "ScriptCommand";
+"AExcelInstanceCommands" -> "IExcelInstanceProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

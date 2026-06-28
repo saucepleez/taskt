@@ -1,0 +1,10 @@
+digraph "ConvertDictionaryToListCommand" {
+"ConvertDictionaryToListCommand" -> "ADictionaryGetFromDictionaryCommands";
+"ConvertDictionaryToListCommand" -> "IListResultProperties";
+"ADictionaryGetFromDictionaryCommands" -> "ADictionaryInputDictionaryCommands";
+"ADictionaryGetFromDictionaryCommands" -> "IDictionaryGetFromDictionaryProperties";
+"ADictionaryInputDictionaryCommands" -> "ScriptCommand";
+"ADictionaryInputDictionaryCommands" -> "IDictionaryProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

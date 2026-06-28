@@ -1,0 +1,5 @@
+@startuml
+MailKitGetEMailFromEMailListCommand --> ScriptCommand
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

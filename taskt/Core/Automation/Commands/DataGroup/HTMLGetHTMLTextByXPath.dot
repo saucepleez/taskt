@@ -1,0 +1,5 @@
+digraph "HTMLGetHTMLTextByXPath" {
+"HTMLGetHTMLTextByXPath" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

@@ -1,0 +1,5 @@
+digraph "ARunScriptByCodeCommands" {
+"ARunScriptByCodeCommands" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

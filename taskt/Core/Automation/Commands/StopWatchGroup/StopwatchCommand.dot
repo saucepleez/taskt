@@ -1,0 +1,5 @@
+digraph "StopwatchCommand" {
+"StopwatchCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

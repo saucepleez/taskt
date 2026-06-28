@@ -1,0 +1,5 @@
+digraph "SystemActionCommand" {
+"SystemActionCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

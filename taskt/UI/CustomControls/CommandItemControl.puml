@@ -1,0 +1,4 @@
+@startuml
+CommandItemControl --> UserControl
+CommandItemControl --> UserControl
+@enduml

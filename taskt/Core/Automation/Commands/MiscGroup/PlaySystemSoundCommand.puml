@@ -1,0 +1,5 @@
+@startuml
+PlaySystemSoundCommand --> ScriptCommand
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

@@ -1,0 +1,12 @@
+digraph "SetOneWindowStateCommand" {
+"SetOneWindowStateCommand" -> "AOneWindowNameActionCommands";
+"SetOneWindowStateCommand" -> "IWindowStateProperties";
+"AOneWindowNameActionCommands" -> "AOneWindowNameCommands";
+"AOneWindowNameActionCommands" -> "IOneWindowNameActionProperties";
+"AOneWindowNameCommands" -> "AWindowNameCoreCommands";
+"AOneWindowNameCommands" -> "IOneWindowNameProperties";
+"AWindowNameCoreCommands" -> "ScriptCommand";
+"AWindowNameCoreCommands" -> "IWindowNameCoreProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

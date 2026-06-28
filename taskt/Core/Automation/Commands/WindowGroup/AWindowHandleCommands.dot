@@ -1,0 +1,6 @@
+digraph "AWindowHandleCommands" {
+"AWindowHandleCommands" -> "ScriptCommand";
+"AWindowHandleCommands" -> "IWindowHandleProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

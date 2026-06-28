@@ -1,0 +1,7 @@
+digraph "CreateDateTimeFromTextCommand" {
+"CreateDateTimeFromTextCommand" -> "ADateTimeCreateCommands";
+"ADateTimeCreateCommands" -> "ScriptCommand";
+"ADateTimeCreateCommands" -> "IDateTimeCreateProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

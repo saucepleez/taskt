@@ -1,0 +1,6 @@
+digraph "frmCommandEditor" {
+"frmCommandEditor" -> "ThemedForm";
+"frmCommandEditor" -> "ThemedForm";
+"ThemedForm" -> "Form";
+"ThemedForm" -> "Form";
+}

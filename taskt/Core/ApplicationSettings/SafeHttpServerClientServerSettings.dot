@@ -1,0 +1,4 @@
+digraph "SafeHttpServerClientServerSettings" {
+"SafeHttpServerClientServerSettings" -> "SafeServerSettings";
+"SafeServerSettings" -> "IServerSettings";
+}

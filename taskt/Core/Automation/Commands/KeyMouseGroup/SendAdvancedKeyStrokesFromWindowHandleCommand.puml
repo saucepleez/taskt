@@ -1,0 +1,10 @@
+@startuml
+SendAdvancedKeyStrokesFromWindowHandleCommand --> AWindowHandleActionCommands
+SendAdvancedKeyStrokesFromWindowHandleCommand --> ISendAdvancedKeyStrokesProperties
+AWindowHandleActionCommands --> AWindowHandleCommands
+AWindowHandleActionCommands --> IWindowHandleActionPropeties
+AWindowHandleCommands --> ScriptCommand
+AWindowHandleCommands --> IWindowHandleProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

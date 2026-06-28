@@ -1,0 +1,5 @@
+digraph "MailKitRecieveEMailListUsingPOPCommand" {
+"MailKitRecieveEMailListUsingPOPCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

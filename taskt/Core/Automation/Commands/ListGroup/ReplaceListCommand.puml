@@ -1,0 +1,10 @@
+@startuml
+ReplaceListCommand --> AListBothListCommands
+ReplaceListCommand --> IReplaceValueProperties
+ReplaceListCommand --> IHaveDataTableElements
+AListBothListCommands --> AListInputListCommands
+AListInputListCommands --> ScriptCommand
+AListInputListCommands --> IListProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

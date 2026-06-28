@@ -1,0 +1,13 @@
+@startuml
+UIAutomationGetSelectionItemsValueFromUIElementCommand --> AGetFromUIElementCommands
+UIAutomationGetSelectionItemsValueFromUIElementCommand --> IUIElementSelectionItemsProperties
+UIAutomationGetSelectionItemsValueFromUIElementCommand --> IListResultProperties
+AGetFromUIElementCommands --> ADoSomethingUIElementCommands
+AGetFromUIElementCommands --> IGetFromUIElementProperties
+ADoSomethingUIElementCommands --> AUIElementCoreCommands
+ADoSomethingUIElementCommands --> IDoSomethingUIElementProperties
+AUIElementCoreCommands --> ScriptCommand
+AUIElementCoreCommands --> IUIElementCoreProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

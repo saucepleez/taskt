@@ -1,0 +1,10 @@
+digraph "BeginLoopForDataTableRowAsDictionaryCommand" {
+"BeginLoopForDataTableRowAsDictionaryCommand" -> "ADataTableGetFromDataTableCommands";
+"BeginLoopForDataTableRowAsDictionaryCommand" -> "IHaveLoopAdditionalCommands";
+"ADataTableGetFromDataTableCommands" -> "ADataTableInputDataTableCommands";
+"ADataTableGetFromDataTableCommands" -> "IDataTableGetFromDataTable";
+"ADataTableInputDataTableCommands" -> "ScriptCommand";
+"ADataTableInputDataTableCommands" -> "IDataTableProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

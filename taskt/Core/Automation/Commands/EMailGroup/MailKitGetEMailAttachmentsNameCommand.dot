@@ -1,0 +1,6 @@
+digraph "MailKitGetEMailAttachmentsNameCommand" {
+"MailKitGetEMailAttachmentsNameCommand" -> "ScriptCommand";
+"MailKitGetEMailAttachmentsNameCommand" -> "ICanHandleList";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

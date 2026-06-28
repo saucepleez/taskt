@@ -1,0 +1,10 @@
+@startuml
+UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand --> AOneWindowNameCommands
+UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand --> IGetUIElementsXMLTreeFromSomethingProperties
+AOneWindowNameCommands --> AWindowNameCoreCommands
+AOneWindowNameCommands --> IOneWindowNameProperties
+AWindowNameCoreCommands --> ScriptCommand
+AWindowNameCoreCommands --> IWindowNameCoreProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

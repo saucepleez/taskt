@@ -1,0 +1,10 @@
+digraph "AExcelRCLocationActionCommands" {
+"AExcelRCLocationActionCommands" -> "AExcelRCLocationCommands";
+"AExcelRCLocationActionCommands" -> "IExcelRCLocationActionProperties";
+"AExcelRCLocationCommands" -> "AExcelInstanceCommands";
+"AExcelRCLocationCommands" -> "IExcelRCLocationProperties";
+"AExcelInstanceCommands" -> "ScriptCommand";
+"AExcelInstanceCommands" -> "IExcelInstanceProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

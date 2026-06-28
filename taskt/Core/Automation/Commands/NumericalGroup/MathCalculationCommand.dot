@@ -1,0 +1,5 @@
+digraph "MathCalculationCommand" {
+"MathCalculationCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

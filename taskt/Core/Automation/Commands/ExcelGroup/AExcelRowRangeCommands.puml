@@ -1,0 +1,8 @@
+@startuml
+AExcelRowRangeCommands --> AExcelInstanceCommands
+AExcelRowRangeCommands --> IExcelRowRangeProperties
+AExcelInstanceCommands --> ScriptCommand
+AExcelInstanceCommands --> IExcelInstanceProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

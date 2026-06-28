@@ -1,0 +1,4 @@
+digraph "frmImageCapture" {
+"frmImageCapture" -> "Form";
+"frmImageCapture" -> "Form";
+}

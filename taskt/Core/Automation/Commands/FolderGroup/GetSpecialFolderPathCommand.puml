@@ -1,0 +1,5 @@
+@startuml
+GetSpecialFolderPathCommand --> ScriptCommand
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

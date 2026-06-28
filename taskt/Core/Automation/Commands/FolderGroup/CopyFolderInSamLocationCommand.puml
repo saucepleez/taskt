@@ -1,0 +1,14 @@
+@startuml
+CopyFolderInSamLocationCommand --> AFolderCopySameRenameFolderCommands
+CopyFolderInSamLocationCommand --> IFolderCopyFolderProperties
+AFolderCopySameRenameFolderCommands --> AFolderExistsFolderBeforeAfterResultCommands
+AFolderCopySameRenameFolderCommands --> ICanHandleFolderName
+AFolderExistsFolderBeforeAfterResultCommands --> AFolderExistsFolderPathCommands
+AFolderExistsFolderBeforeAfterResultCommands --> IFolderExistsFolderPathBeforeAfterPathResultProperties
+AFolderExistsFolderPathCommands --> AFolderFolderPathCommands
+AFolderExistsFolderPathCommands --> IFolderExistsFolderPathProperties
+AFolderFolderPathCommands --> ScriptCommand
+AFolderFolderPathCommands --> IFolderPathProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

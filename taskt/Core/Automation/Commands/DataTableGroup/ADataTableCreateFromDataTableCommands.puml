@@ -1,0 +1,6 @@
+@startuml
+ADataTableCreateFromDataTableCommands --> ScriptCommand
+ADataTableCreateFromDataTableCommands --> IDataTableCreateFromDataTableProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

@@ -1,0 +1,6 @@
+digraph "BeginLoopForComplexDataTypesCommand" {
+"BeginLoopForComplexDataTypesCommand" -> "ScriptCommand";
+"BeginLoopForComplexDataTypesCommand" -> "IHaveLoopAdditionalCommands";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

@@ -1,0 +1,3 @@
+digraph "ServerSettings" {
+"ServerSettings" -> "IServerSettings";
+}

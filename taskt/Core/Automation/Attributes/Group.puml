@@ -1,0 +1,3 @@
+@startuml
+Group --> Attribute
+@enduml

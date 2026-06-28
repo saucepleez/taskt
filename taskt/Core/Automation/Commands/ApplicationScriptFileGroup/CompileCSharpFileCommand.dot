@@ -1,0 +1,8 @@
+digraph "CompileCSharpFileCommand" {
+"CompileCSharpFileCommand" -> "ACompileCSharpSomethingCommands";
+"CompileCSharpFileCommand" -> "ICanHandleFileName";
+"CompileCSharpFileCommand" -> "ICanHandleFilePath";
+"ACompileCSharpSomethingCommands" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

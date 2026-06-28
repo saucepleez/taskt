@@ -1,0 +1,10 @@
+digraph "FilterDataTableRowByColumnValueCommand" {
+"FilterDataTableRowByColumnValueCommand" -> "ADataTableCreateFromDataTableCommands";
+"FilterDataTableRowByColumnValueCommand" -> "IDataTableColumnPositionProperties";
+"FilterDataTableRowByColumnValueCommand" -> "IFilterValueProperties";
+"FilterDataTableRowByColumnValueCommand" -> "IHaveDataTableElements";
+"ADataTableCreateFromDataTableCommands" -> "ScriptCommand";
+"ADataTableCreateFromDataTableCommands" -> "IDataTableCreateFromDataTableProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

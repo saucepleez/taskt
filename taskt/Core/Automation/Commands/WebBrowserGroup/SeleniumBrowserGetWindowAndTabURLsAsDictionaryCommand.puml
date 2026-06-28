@@ -1,0 +1,11 @@
+@startuml
+SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand --> ASeleniumGetWindowAndTabInformationCommands
+SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand --> IDictionaryResultProperties
+ASeleniumGetWindowAndTabInformationCommands --> ASeleniumGetFromWebDriverCommands
+ASeleniumGetFromWebDriverCommands --> ASeleniumDoSomethingToWebDriverCommands
+ASeleniumGetFromWebDriverCommands --> IResultProperties
+ASeleniumDoSomethingToWebDriverCommands --> ScriptCommand
+ASeleniumDoSomethingToWebDriverCommands --> ISeleniumDoSomethingToWebDriverProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

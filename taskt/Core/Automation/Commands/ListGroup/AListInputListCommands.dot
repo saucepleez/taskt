@@ -1,0 +1,6 @@
+digraph "AListInputListCommands" {
+"AListInputListCommands" -> "ScriptCommand";
+"AListInputListCommands" -> "IListProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

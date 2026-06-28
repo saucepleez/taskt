@@ -1,0 +1,8 @@
+digraph "frmFormatChecker" {
+"frmFormatChecker" -> "DialogLikeThemedForm";
+"frmFormatChecker" -> "DialogLikeThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"ThemedForm" -> "Form";
+"ThemedForm" -> "Form";
+}

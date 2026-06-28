@@ -1,0 +1,5 @@
+digraph "ClearClipboardTextCommand" {
+"ClearClipboardTextCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

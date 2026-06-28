@@ -1,0 +1,8 @@
+@startuml
+frmKeysBuilder --> DialogLikeThemedForm
+frmKeysBuilder --> DialogLikeThemedForm
+DialogLikeThemedForm --> ThemedForm
+DialogLikeThemedForm --> ThemedForm
+ThemedForm --> Form
+ThemedForm --> Form
+@enduml

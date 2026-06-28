@@ -1,0 +1,11 @@
+digraph "GetArcsinCommand" {
+"GetArcsinCommand" -> "AInverseTrignometricCommands";
+"AInverseTrignometricCommands" -> "ATrignometricCommands";
+"AInverseTrignometricCommands" -> "IInverseTrignometricProperties";
+"ATrignometricCommands" -> "AMathValueResultCommands";
+"ATrignometricCommands" -> "ITrignometricProperties";
+"AMathValueResultCommands" -> "ScriptCommand";
+"AMathValueResultCommands" -> "IMathValueResultProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

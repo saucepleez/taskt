@@ -1,0 +1,6 @@
+@startuml
+HTTPExecuteRESTAPICommand --> ScriptCommand
+HTTPExecuteRESTAPICommand --> IHaveDataTableElements
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

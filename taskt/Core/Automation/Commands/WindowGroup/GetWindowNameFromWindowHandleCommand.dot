@@ -1,0 +1,7 @@
+digraph "GetWindowNameFromWindowHandleCommand" {
+"GetWindowNameFromWindowHandleCommand" -> "AWindowHandleCommands";
+"AWindowHandleCommands" -> "ScriptCommand";
+"AWindowHandleCommands" -> "IWindowHandleProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

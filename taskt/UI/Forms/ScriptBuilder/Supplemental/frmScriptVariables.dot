@@ -1,0 +1,8 @@
+digraph "frmScriptVariables" {
+"frmScriptVariables" -> "DialogLikeThemedForm";
+"frmScriptVariables" -> "DialogLikeThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"ThemedForm" -> "Form";
+"ThemedForm" -> "Form";
+}

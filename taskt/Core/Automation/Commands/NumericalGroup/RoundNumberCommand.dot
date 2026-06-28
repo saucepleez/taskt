@@ -1,0 +1,5 @@
+digraph "RoundNumberCommand" {
+"RoundNumberCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

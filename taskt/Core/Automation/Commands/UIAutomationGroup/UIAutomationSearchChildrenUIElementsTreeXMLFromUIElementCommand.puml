@@ -1,0 +1,11 @@
+@startuml
+UIAutomationSearchChildrenUIElementsTreeXMLFromUIElementCommand --> ADoSomethingUIElementCommands
+UIAutomationSearchChildrenUIElementsTreeXMLFromUIElementCommand --> IUIElementChildrenSearchSomewayProperties
+UIAutomationSearchChildrenUIElementsTreeXMLFromUIElementCommand --> IResultProperties
+ADoSomethingUIElementCommands --> AUIElementCoreCommands
+ADoSomethingUIElementCommands --> IDoSomethingUIElementProperties
+AUIElementCoreCommands --> ScriptCommand
+AUIElementCoreCommands --> IUIElementCoreProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

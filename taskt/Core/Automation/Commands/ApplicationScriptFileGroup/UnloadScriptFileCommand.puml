@@ -1,0 +1,7 @@
+@startuml
+UnloadScriptFileCommand --> AScriptFileCommands
+AScriptFileCommands --> ScriptCommand
+AScriptFileCommands --> IFileExistsFilePathProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

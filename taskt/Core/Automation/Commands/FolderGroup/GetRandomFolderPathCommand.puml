@@ -1,0 +1,11 @@
+@startuml
+GetRandomFolderPathCommand --> AFolderExistsFolderPathPathResultCommands
+AFolderExistsFolderPathPathResultCommands --> AFolderExistsFolderPathCommands
+AFolderExistsFolderPathPathResultCommands --> IFolderExistsFolderPathPathResultProperties
+AFolderExistsFolderPathCommands --> AFolderFolderPathCommands
+AFolderExistsFolderPathCommands --> IFolderExistsFolderPathProperties
+AFolderFolderPathCommands --> ScriptCommand
+AFolderFolderPathCommands --> IFolderPathProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

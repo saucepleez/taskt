@@ -1,0 +1,12 @@
+@startuml
+SeleniumBrowserWebElementActionAfterSearchWebElementCommand --> ASeleniumWebDriverActionCommands
+SeleniumBrowserWebElementActionAfterSearchWebElementCommand --> ISeleniumSearchWebElementParametersProperties
+SeleniumBrowserWebElementActionAfterSearchWebElementCommand --> ISeleniumSendSpecialKeystrokesProperties
+SeleniumBrowserWebElementActionAfterSearchWebElementCommand --> IHaveDataTableElements
+ASeleniumWebDriverActionCommands --> ASeleniumDoSomethingToWebDriverCommands
+ASeleniumWebDriverActionCommands --> ISeleniumWebDriverActionProperties
+ASeleniumDoSomethingToWebDriverCommands --> ScriptCommand
+ASeleniumDoSomethingToWebDriverCommands --> ISeleniumDoSomethingToWebDriverProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

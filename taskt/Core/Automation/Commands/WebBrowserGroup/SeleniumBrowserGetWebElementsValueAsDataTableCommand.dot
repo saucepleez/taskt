@@ -1,0 +1,13 @@
+digraph "SeleniumBrowserGetWebElementsValueAsDataTableCommand" {
+"SeleniumBrowserGetWebElementsValueAsDataTableCommand" -> "ASeleniumGetMultiWebElementsValueAsSomethingCommands";
+"SeleniumBrowserGetWebElementsValueAsDataTableCommand" -> "IDataTableResultProperties";
+"ASeleniumGetMultiWebElementsValueAsSomethingCommands" -> "ASeleniumSearchMultiWebElementsFromWebDriverCommands";
+"ASeleniumSearchMultiWebElementsFromWebDriverCommands" -> "ASeleniumGetFromWebDriverCommands";
+"ASeleniumSearchMultiWebElementsFromWebDriverCommands" -> "ISeleniumSearchMultiWebElementsParametersProperties";
+"ASeleniumGetFromWebDriverCommands" -> "ASeleniumDoSomethingToWebDriverCommands";
+"ASeleniumGetFromWebDriverCommands" -> "IResultProperties";
+"ASeleniumDoSomethingToWebDriverCommands" -> "ScriptCommand";
+"ASeleniumDoSomethingToWebDriverCommands" -> "ISeleniumDoSomethingToWebDriverProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

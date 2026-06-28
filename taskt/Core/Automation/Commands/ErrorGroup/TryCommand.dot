@@ -1,0 +1,6 @@
+digraph "TryCommand" {
+"TryCommand" -> "ScriptCommand";
+"TryCommand" -> "IHaveErrorAdditionalCommands";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

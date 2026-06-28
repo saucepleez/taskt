@@ -1,0 +1,7 @@
+@startuml
+BeginLoopCommand --> ScriptCommand
+BeginLoopCommand --> IHaveDataTableElements
+BeginLoopCommand --> IHaveLoopAdditionalCommands
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

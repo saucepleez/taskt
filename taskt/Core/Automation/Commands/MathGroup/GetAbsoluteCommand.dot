@@ -1,0 +1,7 @@
+digraph "GetAbsoluteCommand" {
+"GetAbsoluteCommand" -> "AMathValueResultCommands";
+"AMathValueResultCommands" -> "ScriptCommand";
+"AMathValueResultCommands" -> "IMathValueResultProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

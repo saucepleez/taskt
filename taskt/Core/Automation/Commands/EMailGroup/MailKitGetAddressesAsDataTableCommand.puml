@@ -1,0 +1,6 @@
+@startuml
+MailKitGetAddressesAsDataTableCommand --> ScriptCommand
+MailKitGetAddressesAsDataTableCommand --> ICanHandleDataTable
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

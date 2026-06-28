@@ -1,0 +1,5 @@
+@startuml
+frmDLLExplorer --> UIForm
+frmDLLExplorer --> UIForm
+UIForm --> Form
+@enduml

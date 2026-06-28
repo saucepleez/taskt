@@ -1,0 +1,6 @@
+digraph "ConcatenateDictionaryCommand" {
+"ConcatenateDictionaryCommand" -> "ScriptCommand";
+"ConcatenateDictionaryCommand" -> "ICanHandleDictionary";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

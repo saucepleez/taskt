@@ -1,0 +1,6 @@
+digraph "LogDataCommand" {
+"LogDataCommand" -> "ScriptCommand";
+"LogDataCommand" -> "ICanHandleFileName";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

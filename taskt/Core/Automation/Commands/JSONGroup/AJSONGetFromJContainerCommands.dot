@@ -1,0 +1,11 @@
+digraph "AJSONGetFromJContainerCommands" {
+"AJSONGetFromJContainerCommands" -> "AJSONGetFromJSONCommands";
+"AJSONGetFromJContainerCommands" -> "IJSONInputJContainer";
+"AJSONGetFromJContainerCommands" -> "IJSONJSONPathProperties";
+"AJSONGetFromJSONCommands" -> "AJSONInputJSONCommands";
+"AJSONGetFromJSONCommands" -> "IResultProperties";
+"AJSONInputJSONCommands" -> "ScriptCommand";
+"AJSONInputJSONCommands" -> "IJSONInputJSONProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

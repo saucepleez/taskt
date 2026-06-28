@@ -1,0 +1,8 @@
+digraph "SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand" {
+"SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand" -> "ASeleniumDoSomethingToWebElementCommands";
+"SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand" -> "ISeleniumSearchWebElementParametersProperties";
+"ASeleniumDoSomethingToWebElementCommands" -> "ScriptCommand";
+"ASeleniumDoSomethingToWebElementCommands" -> "ISeleniumDoSomethingToWebElementProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

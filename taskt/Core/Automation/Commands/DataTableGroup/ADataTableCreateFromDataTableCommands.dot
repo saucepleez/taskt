@@ -1,0 +1,6 @@
+digraph "ADataTableCreateFromDataTableCommands" {
+"ADataTableCreateFromDataTableCommands" -> "ScriptCommand";
+"ADataTableCreateFromDataTableCommands" -> "IDataTableCreateFromDataTableProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

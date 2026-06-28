@@ -1,0 +1,3 @@
+digraph "SafeServerSettings" {
+"SafeServerSettings" -> "IServerSettings";
+}

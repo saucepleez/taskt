@@ -1,0 +1,10 @@
+@startuml
+BeginLoopForDataTableRowAsDataTableCommand --> ADataTableGetFromDataTableCommands
+BeginLoopForDataTableRowAsDataTableCommand --> IHaveLoopAdditionalCommands
+ADataTableGetFromDataTableCommands --> ADataTableInputDataTableCommands
+ADataTableGetFromDataTableCommands --> IDataTableGetFromDataTable
+ADataTableInputDataTableCommands --> ScriptCommand
+ADataTableInputDataTableCommands --> IDataTableProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

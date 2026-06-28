@@ -1,0 +1,8 @@
+digraph "FormatDateTimeByUnixTimeCommand" {
+"FormatDateTimeByUnixTimeCommand" -> "AFormatDateTimeCommands";
+"AFormatDateTimeCommands" -> "ADateTimeConvertCommands";
+"ADateTimeConvertCommands" -> "ScriptCommand";
+"ADateTimeConvertCommands" -> "IDateTimeConvertProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

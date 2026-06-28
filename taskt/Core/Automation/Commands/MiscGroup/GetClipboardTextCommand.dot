@@ -1,0 +1,5 @@
+digraph "GetClipboardTextCommand" {
+"GetClipboardTextCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

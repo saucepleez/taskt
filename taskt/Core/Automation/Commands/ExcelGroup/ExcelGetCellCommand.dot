@@ -1,0 +1,11 @@
+digraph "ExcelGetCellCommand" {
+"ExcelGetCellCommand" -> "AExcelCellActionCommands";
+"AExcelCellActionCommands" -> "AExcelCellCommands";
+"AExcelCellActionCommands" -> "IExcelCellActionProperties";
+"AExcelCellCommands" -> "AExcelInstanceCommands";
+"AExcelCellCommands" -> "IExcelCellProperties";
+"AExcelInstanceCommands" -> "ScriptCommand";
+"AExcelInstanceCommands" -> "IExcelInstanceProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

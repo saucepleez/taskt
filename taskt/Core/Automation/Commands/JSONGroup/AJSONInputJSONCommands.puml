@@ -1,0 +1,6 @@
+@startuml
+AJSONInputJSONCommands --> ScriptCommand
+AJSONInputJSONCommands --> IJSONInputJSONProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

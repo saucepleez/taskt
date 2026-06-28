@@ -1,0 +1,7 @@
+@startuml
+CreateDateTimeFromUnixTimeCommand --> ADateTimeCreateCommands
+ADateTimeCreateCommands --> ScriptCommand
+ADateTimeCreateCommands --> IDateTimeCreateProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

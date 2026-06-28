@@ -1,0 +1,7 @@
+digraph "ExtractionFilePathCommand" {
+"ExtractionFilePathCommand" -> "AFileFilePathCommands";
+"AFileFilePathCommands" -> "ScriptCommand";
+"AFileFilePathCommands" -> "IFilePathProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

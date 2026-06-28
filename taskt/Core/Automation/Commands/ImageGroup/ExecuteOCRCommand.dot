@@ -1,0 +1,6 @@
+digraph "ExecuteOCRCommand" {
+"ExecuteOCRCommand" -> "ScriptCommand";
+"ExecuteOCRCommand" -> "IFileExistsFilePathProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

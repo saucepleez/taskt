@@ -1,0 +1,6 @@
+digraph "ADataTableInputDataTableCommands" {
+"ADataTableInputDataTableCommands" -> "ScriptCommand";
+"ADataTableInputDataTableCommands" -> "IDataTableProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

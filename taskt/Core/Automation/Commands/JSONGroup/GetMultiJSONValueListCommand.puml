@@ -1,0 +1,5 @@
+@startuml
+GetMultiJSONValueListCommand --> ScriptCommand
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

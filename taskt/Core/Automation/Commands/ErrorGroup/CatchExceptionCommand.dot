@@ -1,0 +1,6 @@
+digraph "CatchExceptionCommand" {
+"CatchExceptionCommand" -> "ScriptCommand";
+"CatchExceptionCommand" -> "IDelimitersOfStructuredCommands";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

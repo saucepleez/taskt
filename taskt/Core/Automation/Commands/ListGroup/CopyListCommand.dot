@@ -1,0 +1,7 @@
+digraph "CopyListCommand" {
+"CopyListCommand" -> "AListCreateFromListCommands";
+"AListCreateFromListCommands" -> "ScriptCommand";
+"AListCreateFromListCommands" -> "IListCreateFromListProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

@@ -1,0 +1,6 @@
+@startuml
+BeginContinousLoopCommand --> ScriptCommand
+BeginContinousLoopCommand --> IHaveLoopAdditionalCommands
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

@@ -1,0 +1,4 @@
+@startuml
+SafeWebSocketApplicationSettings --> SafeApplicationSettings
+SafeApplicationSettings --> IApplicationSettings
+@enduml

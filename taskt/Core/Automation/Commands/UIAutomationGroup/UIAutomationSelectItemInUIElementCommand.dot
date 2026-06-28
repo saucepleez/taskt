@@ -1,0 +1,12 @@
+digraph "UIAutomationSelectItemInUIElementCommand" {
+"UIAutomationSelectItemInUIElementCommand" -> "AUIElementActionCommands";
+"UIAutomationSelectItemInUIElementCommand" -> "IUIElementSelectionItemsProperties";
+"AUIElementActionCommands" -> "ADoSomethingUIElementCommands";
+"AUIElementActionCommands" -> "IUIElementActionProperties";
+"ADoSomethingUIElementCommands" -> "AUIElementCoreCommands";
+"ADoSomethingUIElementCommands" -> "IDoSomethingUIElementProperties";
+"AUIElementCoreCommands" -> "ScriptCommand";
+"AUIElementCoreCommands" -> "IUIElementCoreProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

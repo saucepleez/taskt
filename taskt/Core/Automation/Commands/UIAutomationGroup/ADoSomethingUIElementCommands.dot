@@ -1,0 +1,8 @@
+digraph "ADoSomethingUIElementCommands" {
+"ADoSomethingUIElementCommands" -> "AUIElementCoreCommands";
+"ADoSomethingUIElementCommands" -> "IDoSomethingUIElementProperties";
+"AUIElementCoreCommands" -> "ScriptCommand";
+"AUIElementCoreCommands" -> "IUIElementCoreProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

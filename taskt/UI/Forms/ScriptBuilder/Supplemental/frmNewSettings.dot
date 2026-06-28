@@ -1,0 +1,8 @@
+digraph "frmNewSettings" {
+"frmNewSettings" -> "DialogLikeThemedForm";
+"frmNewSettings" -> "DialogLikeThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"ThemedForm" -> "Form";
+"ThemedForm" -> "Form";
+}

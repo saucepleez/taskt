@@ -1,0 +1,5 @@
+digraph "CallLocalListenerAPICommand" {
+"CallLocalListenerAPICommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

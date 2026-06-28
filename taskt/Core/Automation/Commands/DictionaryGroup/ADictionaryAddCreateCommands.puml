@@ -1,0 +1,8 @@
+@startuml
+ADictionaryAddCreateCommands --> ADictionaryInputDictionaryCommands
+ADictionaryAddCreateCommands --> IDictionaryAddCreateProperties
+ADictionaryInputDictionaryCommands --> ScriptCommand
+ADictionaryInputDictionaryCommands --> IDictionaryProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

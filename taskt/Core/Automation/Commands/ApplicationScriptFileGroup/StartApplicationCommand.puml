@@ -1,0 +1,6 @@
+@startuml
+StartApplicationCommand --> ScriptCommand
+StartApplicationCommand --> ICanHandleFilePath
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

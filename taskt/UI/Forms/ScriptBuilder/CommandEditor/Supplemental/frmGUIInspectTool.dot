@@ -1,0 +1,8 @@
+digraph "frmGUIInspectTool" {
+"frmGUIInspectTool" -> "DialogLikeThemedForm";
+"frmGUIInspectTool" -> "DialogLikeThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"ThemedForm" -> "Form";
+"ThemedForm" -> "Form";
+}

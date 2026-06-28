@@ -1,0 +1,7 @@
+digraph "BeginLoopCommand" {
+"BeginLoopCommand" -> "ScriptCommand";
+"BeginLoopCommand" -> "IHaveDataTableElements";
+"BeginLoopCommand" -> "IHaveLoopAdditionalCommands";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

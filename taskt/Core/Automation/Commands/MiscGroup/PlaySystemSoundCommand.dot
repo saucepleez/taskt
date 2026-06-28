@@ -1,0 +1,5 @@
+digraph "PlaySystemSoundCommand" {
+"PlaySystemSoundCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

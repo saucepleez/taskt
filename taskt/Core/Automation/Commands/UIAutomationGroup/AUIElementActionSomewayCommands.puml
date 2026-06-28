@@ -1,0 +1,7 @@
+@startuml
+AUIElementActionSomewayCommands --> ScriptCommand
+AUIElementActionSomewayCommands --> IUIElementUIElementActionSomewayProperties
+AUIElementActionSomewayCommands --> IFromWindowNameResultsProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

@@ -1,0 +1,5 @@
+digraph "IEBrowserCloseCommand" {
+"IEBrowserCloseCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

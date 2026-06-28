@@ -1,0 +1,5 @@
+digraph "PDFTextExtractionCommand" {
+"PDFTextExtractionCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

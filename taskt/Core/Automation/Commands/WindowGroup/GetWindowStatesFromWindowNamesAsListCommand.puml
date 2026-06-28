@@ -1,0 +1,13 @@
+@startuml
+GetWindowStatesFromWindowNamesAsListCommand --> GetFromWindowNamesAsListCommands
+GetWindowStatesFromWindowNamesAsListCommand --> IWindowStateProperties
+GetFromWindowNamesAsListCommands --> AWindowNamesCommands
+GetFromWindowNamesAsListCommands --> ICanHandleList
+AWindowNamesCommands --> AWindowNameCoreCommands
+AWindowNamesCommands --> IWindowNamesProperties
+AWindowNamesCommands --> ICanHandleList
+AWindowNameCoreCommands --> ScriptCommand
+AWindowNameCoreCommands --> IWindowNameCoreProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

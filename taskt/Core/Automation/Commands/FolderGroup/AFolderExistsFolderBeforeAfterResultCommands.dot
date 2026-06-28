@@ -1,0 +1,10 @@
+digraph "AFolderExistsFolderBeforeAfterResultCommands" {
+"AFolderExistsFolderBeforeAfterResultCommands" -> "AFolderExistsFolderPathCommands";
+"AFolderExistsFolderBeforeAfterResultCommands" -> "IFolderExistsFolderPathBeforeAfterPathResultProperties";
+"AFolderExistsFolderPathCommands" -> "AFolderFolderPathCommands";
+"AFolderExistsFolderPathCommands" -> "IFolderExistsFolderPathProperties";
+"AFolderFolderPathCommands" -> "ScriptCommand";
+"AFolderFolderPathCommands" -> "IFolderPathProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

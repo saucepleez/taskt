@@ -1,0 +1,4 @@
+@startuml
+SafeDocumentGenerationClientSettings --> SafeClientSettings
+SafeClientSettings --> IClientSettings
+@enduml

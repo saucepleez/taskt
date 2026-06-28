@@ -1,0 +1,5 @@
+@startuml
+OutlookGetEmailsCommand --> ScriptCommand
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

@@ -1,0 +1,5 @@
+digraph "WordAppendImageCommand" {
+"WordAppendImageCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

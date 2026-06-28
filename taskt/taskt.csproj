@@ -614,6 +614,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserAttachWebBrowserInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserCheckWebElementExistsFromWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserGetWebElementsCountFromWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserRemoveWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\SeleniumBrowserExecuteJavaScriptFromFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumGetWebElementSelectorFromWebElementCommands.cs" />
@@ -2113,6 +2114,8 @@
     </Content>
     <None Include="Resources\RPALogo.png" />
     <None Include="Resources\various-chat-icon.png" />
+	<None Include="**\*.puml" ExcludeFromSingleFile="true" />
+	<None Include="**\*.dot" ExcludeFromSingleFile="true" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="External Dependencies\" />

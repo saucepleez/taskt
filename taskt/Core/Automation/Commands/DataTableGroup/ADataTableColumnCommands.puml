@@ -1,0 +1,8 @@
+@startuml
+ADataTableColumnCommands --> ADataTableInputDataTableCommands
+ADataTableColumnCommands --> IDataTableColumnProperties
+ADataTableInputDataTableCommands --> ScriptCommand
+ADataTableInputDataTableCommands --> IDataTableProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

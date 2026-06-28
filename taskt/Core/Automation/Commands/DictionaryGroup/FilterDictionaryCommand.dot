@@ -1,0 +1,9 @@
+digraph "FilterDictionaryCommand" {
+"FilterDictionaryCommand" -> "ADictionaryCreateFromDictionaryCommands";
+"FilterDictionaryCommand" -> "IFilterValueProperties";
+"FilterDictionaryCommand" -> "IHaveDataTableElements";
+"ADictionaryCreateFromDictionaryCommands" -> "ScriptCommand";
+"ADictionaryCreateFromDictionaryCommands" -> "IDictionaryCreateFromDictionary";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

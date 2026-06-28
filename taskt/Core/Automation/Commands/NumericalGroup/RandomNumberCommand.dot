@@ -1,0 +1,5 @@
+digraph "RandomNumberCommand" {
+"RandomNumberCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

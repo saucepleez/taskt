@@ -1,0 +1,10 @@
+digraph "UIAutomationSearchChildUIElementCommand" {
+"UIAutomationSearchChildUIElementCommand" -> "AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands";
+"UIAutomationSearchChildUIElementCommand" -> "IUIElementIndexProperties";
+"AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands" -> "AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands";
+"AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands" -> "IDoSomethingUIElementProperties";
+"AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands" -> "ScriptCommand";
+"AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands" -> "IUIElementChildrenSearchParametersProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

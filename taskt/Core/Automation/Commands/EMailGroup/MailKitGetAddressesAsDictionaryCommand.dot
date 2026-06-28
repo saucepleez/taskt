@@ -1,0 +1,6 @@
+digraph "MailKitGetAddressesAsDictionaryCommand" {
+"MailKitGetAddressesAsDictionaryCommand" -> "ScriptCommand";
+"MailKitGetAddressesAsDictionaryCommand" -> "ICanHandleDictionary";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

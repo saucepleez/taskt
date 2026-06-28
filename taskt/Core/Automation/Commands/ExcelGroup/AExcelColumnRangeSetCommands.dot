@@ -1,0 +1,10 @@
+digraph "AExcelColumnRangeSetCommands" {
+"AExcelColumnRangeSetCommands" -> "AExcelColumnRangeCommands";
+"AExcelColumnRangeSetCommands" -> "IExcelColumnRangeSetProperties";
+"AExcelColumnRangeCommands" -> "AExcelInstanceCommands";
+"AExcelColumnRangeCommands" -> "IExcelColumnRangeProperties";
+"AExcelInstanceCommands" -> "ScriptCommand";
+"AExcelInstanceCommands" -> "IExcelInstanceProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

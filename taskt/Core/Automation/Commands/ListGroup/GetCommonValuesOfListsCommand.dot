@@ -1,0 +1,6 @@
+digraph "GetCommonValuesOfListsCommand" {
+"GetCommonValuesOfListsCommand" -> "ScriptCommand";
+"GetCommonValuesOfListsCommand" -> "ICanHandleList";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

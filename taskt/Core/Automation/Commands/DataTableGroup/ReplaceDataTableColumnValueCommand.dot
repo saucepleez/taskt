@@ -1,0 +1,11 @@
+digraph "ReplaceDataTableColumnValueCommand" {
+"ReplaceDataTableColumnValueCommand" -> "ADataTableColumnCommands";
+"ReplaceDataTableColumnValueCommand" -> "IReplaceValueProperties";
+"ReplaceDataTableColumnValueCommand" -> "IHaveDataTableElements";
+"ADataTableColumnCommands" -> "ADataTableInputDataTableCommands";
+"ADataTableColumnCommands" -> "IDataTableColumnProperties";
+"ADataTableInputDataTableCommands" -> "ScriptCommand";
+"ADataTableInputDataTableCommands" -> "IDataTableProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

@@ -1,0 +1,8 @@
+@startuml
+FormatDateTimeByUnixTimeCommand --> AFormatDateTimeCommands
+AFormatDateTimeCommands --> ADateTimeConvertCommands
+ADateTimeConvertCommands --> ScriptCommand
+ADateTimeConvertCommands --> IDateTimeConvertProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

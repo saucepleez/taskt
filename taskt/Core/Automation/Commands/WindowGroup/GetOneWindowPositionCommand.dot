@@ -1,0 +1,10 @@
+digraph "GetOneWindowPositionCommand" {
+"GetOneWindowPositionCommand" -> "AOneWindowNameCommands";
+"GetOneWindowPositionCommand" -> "IWindowPositionProperties";
+"AOneWindowNameCommands" -> "AWindowNameCoreCommands";
+"AOneWindowNameCommands" -> "IOneWindowNameProperties";
+"AWindowNameCoreCommands" -> "ScriptCommand";
+"AWindowNameCoreCommands" -> "IWindowNameCoreProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

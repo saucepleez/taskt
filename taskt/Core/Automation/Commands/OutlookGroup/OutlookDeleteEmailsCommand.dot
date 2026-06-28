@@ -1,0 +1,5 @@
+digraph "OutlookDeleteEmailsCommand" {
+"OutlookDeleteEmailsCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

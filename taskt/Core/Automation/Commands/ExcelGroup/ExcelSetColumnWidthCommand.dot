@@ -1,0 +1,9 @@
+digraph "ExcelSetColumnWidthCommand" {
+"ExcelSetColumnWidthCommand" -> "AExcelColumnSpecifiedCommands";
+"AExcelColumnSpecifiedCommands" -> "AExcelInstanceCommands";
+"AExcelColumnSpecifiedCommands" -> "IExcelColumnSpecifiedProperties";
+"AExcelInstanceCommands" -> "ScriptCommand";
+"AExcelInstanceCommands" -> "IExcelInstanceProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

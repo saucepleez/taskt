@@ -1,0 +1,12 @@
+@startuml
+ExcelSetColumnValuesFromDataTableCommand --> AExcelColumnRangeSetCommands
+ExcelSetColumnValuesFromDataTableCommand --> ICanHandleDataTable
+AExcelColumnRangeSetCommands --> AExcelColumnRangeCommands
+AExcelColumnRangeSetCommands --> IExcelColumnRangeSetProperties
+AExcelColumnRangeCommands --> AExcelInstanceCommands
+AExcelColumnRangeCommands --> IExcelColumnRangeProperties
+AExcelInstanceCommands --> ScriptCommand
+AExcelInstanceCommands --> IExcelInstanceProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

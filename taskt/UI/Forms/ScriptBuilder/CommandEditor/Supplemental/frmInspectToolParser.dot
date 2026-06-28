@@ -1,0 +1,8 @@
+digraph "frmInspectToolParser" {
+"frmInspectToolParser" -> "DialogLikeThemedForm";
+"frmInspectToolParser" -> "DialogLikeThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"DialogLikeThemedForm" -> "ThemedForm";
+"ThemedForm" -> "Form";
+"ThemedForm" -> "Form";
+}

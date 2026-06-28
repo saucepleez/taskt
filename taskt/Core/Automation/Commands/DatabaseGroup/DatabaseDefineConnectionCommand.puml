@@ -1,0 +1,5 @@
+@startuml
+DatabaseDefineConnectionCommand --> ScriptCommand
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

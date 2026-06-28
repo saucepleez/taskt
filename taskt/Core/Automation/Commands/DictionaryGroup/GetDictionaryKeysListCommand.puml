@@ -1,0 +1,10 @@
+@startuml
+GetDictionaryKeysListCommand --> ADictionaryGetFromDictionaryCommands
+GetDictionaryKeysListCommand --> IListResultProperties
+ADictionaryGetFromDictionaryCommands --> ADictionaryInputDictionaryCommands
+ADictionaryGetFromDictionaryCommands --> IDictionaryGetFromDictionaryProperties
+ADictionaryInputDictionaryCommands --> ScriptCommand
+ADictionaryInputDictionaryCommands --> IDictionaryProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

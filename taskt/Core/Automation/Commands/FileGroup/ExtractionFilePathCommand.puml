@@ -1,0 +1,7 @@
+@startuml
+ExtractionFilePathCommand --> AFileFilePathCommands
+AFileFilePathCommands --> ScriptCommand
+AFileFilePathCommands --> IFilePathProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

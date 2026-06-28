@@ -1,0 +1,6 @@
+digraph "ADictionaryCreateFromDictionaryCommands" {
+"ADictionaryCreateFromDictionaryCommands" -> "ScriptCommand";
+"ADictionaryCreateFromDictionaryCommands" -> "IDictionaryCreateFromDictionary";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

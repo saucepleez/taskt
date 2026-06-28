@@ -1,0 +1,14 @@
+@startuml
+ASeleniumSearchMultiWebElementsFromWebElementCommands --> ASeleniumGetFromWebElementCommands
+ASeleniumSearchMultiWebElementsFromWebElementCommands --> ISeleniumSearchMultiWebElementsParametersProperties
+ASeleniumGetFromWebElementCommands --> ASeleniumWebElementActionAndScrollCommands
+ASeleniumGetFromWebElementCommands --> ISeleniumGetFromWebElementProperties
+ASeleniumWebElementActionAndScrollCommands --> ASeleniumWebElementActionCommands
+ASeleniumWebElementActionAndScrollCommands --> ISeleniumWebElementActionAndScrollProperties
+ASeleniumWebElementActionCommands --> ASeleniumDoSomethingToWebElementCommands
+ASeleniumWebElementActionCommands --> ISeleniumWebElementActionProperties
+ASeleniumDoSomethingToWebElementCommands --> ScriptCommand
+ASeleniumDoSomethingToWebElementCommands --> ISeleniumDoSomethingToWebElementProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

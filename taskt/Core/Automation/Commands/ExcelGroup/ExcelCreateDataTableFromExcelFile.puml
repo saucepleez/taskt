@@ -1,0 +1,5 @@
+@startuml
+ExcelCreateDataTableFromExcelFile --> ScriptCommand
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+ConvertDateTimeToExcelSerialCommand --> ADateTimeConvertCommands
+ADateTimeConvertCommands --> ScriptCommand
+ADateTimeConvertCommands --> IDateTimeConvertProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

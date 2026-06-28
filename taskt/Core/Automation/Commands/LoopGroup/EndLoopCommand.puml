@@ -1,0 +1,6 @@
+@startuml
+EndLoopCommand --> ScriptCommand
+EndLoopCommand --> IEndOfStacturedCommand
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

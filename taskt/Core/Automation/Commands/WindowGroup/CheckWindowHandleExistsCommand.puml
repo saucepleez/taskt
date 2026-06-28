@@ -1,0 +1,7 @@
+@startuml
+CheckWindowHandleExistsCommand --> AWindowHandleCommands
+AWindowHandleCommands --> ScriptCommand
+AWindowHandleCommands --> IWindowHandleProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

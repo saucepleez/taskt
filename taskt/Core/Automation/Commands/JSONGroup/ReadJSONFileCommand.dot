@@ -1,0 +1,6 @@
+digraph "ReadJSONFileCommand" {
+"ReadJSONFileCommand" -> "ScriptCommand";
+"ReadJSONFileCommand" -> "IFileExistsFilePathProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

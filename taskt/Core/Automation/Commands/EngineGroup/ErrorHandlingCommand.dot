@@ -1,0 +1,5 @@
+digraph "ErrorHandlingCommand" {
+"ErrorHandlingCommand" -> "ScriptCommand";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

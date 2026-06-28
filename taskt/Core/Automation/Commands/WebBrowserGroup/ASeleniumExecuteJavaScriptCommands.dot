@@ -1,0 +1,10 @@
+digraph "ASeleniumExecuteJavaScriptCommands" {
+"ASeleniumExecuteJavaScriptCommands" -> "ASeleniumWebDriverActionCommands";
+"ASeleniumExecuteJavaScriptCommands" -> "ISeleniumExecuteJavaScriptProperties";
+"ASeleniumWebDriverActionCommands" -> "ASeleniumDoSomethingToWebDriverCommands";
+"ASeleniumWebDriverActionCommands" -> "ISeleniumWebDriverActionProperties";
+"ASeleniumDoSomethingToWebDriverCommands" -> "ScriptCommand";
+"ASeleniumDoSomethingToWebDriverCommands" -> "ISeleniumDoSomethingToWebDriverProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

@@ -1,0 +1,6 @@
+digraph "ASeleniumDoSomethingToWebElementCommands" {
+"ASeleniumDoSomethingToWebElementCommands" -> "ScriptCommand";
+"ASeleniumDoSomethingToWebElementCommands" -> "ISeleniumDoSomethingToWebElementProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

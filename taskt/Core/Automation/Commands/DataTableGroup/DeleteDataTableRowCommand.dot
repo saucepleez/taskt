@@ -1,0 +1,9 @@
+digraph "DeleteDataTableRowCommand" {
+"DeleteDataTableRowCommand" -> "ADataTableRowCommands";
+"ADataTableRowCommands" -> "ADataTableInputDataTableCommands";
+"ADataTableRowCommands" -> "IDataTableRowProperties";
+"ADataTableInputDataTableCommands" -> "ScriptCommand";
+"ADataTableInputDataTableCommands" -> "IDataTableProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}

@@ -1,0 +1,12 @@
+@startuml
+ExcelGetRowValuesAsListCommand --> AExcelRowRangeGetCommands
+ExcelGetRowValuesAsListCommand --> IListResultProperties
+AExcelRowRangeGetCommands --> AExcelRowRangeCommands
+AExcelRowRangeGetCommands --> IExcelRowRangeGetProperties
+AExcelRowRangeCommands --> AExcelInstanceCommands
+AExcelRowRangeCommands --> IExcelRowRangeProperties
+AExcelInstanceCommands --> ScriptCommand
+AExcelInstanceCommands --> IExcelInstanceProperties
+ScriptCommand --> IUIParameterProperties
+ScriptCommand --> ICommandIDProperties
+@enduml

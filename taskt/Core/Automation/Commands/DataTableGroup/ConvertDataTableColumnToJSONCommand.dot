@@ -1,0 +1,11 @@
+digraph "ConvertDataTableColumnToJSONCommand" {
+"ConvertDataTableColumnToJSONCommand" -> "ADataTableGetFromDataTableColumnCommands";
+"ADataTableGetFromDataTableColumnCommands" -> "ADataTableColumnCommands";
+"ADataTableGetFromDataTableColumnCommands" -> "IResultProperties";
+"ADataTableColumnCommands" -> "ADataTableInputDataTableCommands";
+"ADataTableColumnCommands" -> "IDataTableColumnProperties";
+"ADataTableInputDataTableCommands" -> "ScriptCommand";
+"ADataTableInputDataTableCommands" -> "IDataTableProperties";
+"ScriptCommand" -> "IUIParameterProperties";
+"ScriptCommand" -> "ICommandIDProperties";
+}
