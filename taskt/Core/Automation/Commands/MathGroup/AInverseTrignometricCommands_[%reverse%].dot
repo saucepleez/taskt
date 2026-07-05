@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.AInverseTrignometricCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.GetArccosCommand" [ label="GetArccosCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AInverseTrignometricCommands" [ label="AInverseTrignometricCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetArcsinCommand" [ label="GetArcsinCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.GetArccosCommand" -> "taskt.Core.Automation.Commands.AInverseTrignometricCommands";
+"taskt.Core.Automation.Commands.GetArcsinCommand" -> "taskt.Core.Automation.Commands.AInverseTrignometricCommands";
+}

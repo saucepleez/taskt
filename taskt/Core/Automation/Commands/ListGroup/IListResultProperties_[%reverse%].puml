@@ -1,0 +1,221 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IListResultProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IListGetFromValueProperties" {
++{abstract} v_Value : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabHandlesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabURLsAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabTitlesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetOptionsFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_AttributeName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableColumnToListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableRowToListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDataTableColumnListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDictionaryKeysListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetColumnValuesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRowValuesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetWorksheetsCommand" <<sealed>> {
++RunCommand() : void 
++v_SheetName : String <<get>> <<set>> 
++v_CompareMethod : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertJSONToListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetSelectionItemsValueFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ExpandWhenItemsNotFound : String <<get>> <<set>> 
++v_WaitTimeAfterExpand : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetOneWebElementValuesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebElementsValueAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetFilesPathAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_SearchFileName : String <<get>> <<set>> 
++v_CheckMethod : String <<get>> <<set>> 
++v_CaseSensitive : String <<get>> <<set>> 
++v_TrimBeforeCheck : String <<get>> <<set>> 
++v_SearchExtension : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetFoldersPathAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_SearchFolderName : String <<get>> <<set>> 
++v_CheckMethod : String <<get>> <<set>> 
++v_CaseSensitive : String <<get>> <<set>> 
++v_TrimBeforeCheck : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValuesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AListGetFromValueCommands"{
++v_Value : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetListIndexFromValueCommand" <<sealed>> {
++RunCommand() : void 
++v_SearchMethod : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CheckListItemExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand
+taskt.Core.Automation.Commands.IListResultProperties <|-- taskt.Core.Automation.Commands.IListGetFromValueProperties
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabHandlesAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetOptionsFromWebElementCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableColumnToListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableRowToListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetDataTableColumnListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ConvertDictionaryToListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetDictionaryKeysListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetColumnValuesAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetWorksheetsCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ConvertJSONToListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetFilesPathAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetFoldersPathAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetJSONValuesAsListCommand
+taskt.Core.Automation.Commands.IListGetFromValueProperties <|.. taskt.Core.Automation.Commands.AListGetFromValueCommands
+taskt.Core.Automation.Commands.AListGetFromValueCommands <|-- taskt.Core.Automation.Commands.GetListIndexFromValueCommand
+taskt.Core.Automation.Commands.AListGetFromValueCommands <|-- taskt.Core.Automation.Commands.CheckListItemExistsCommand
+@enduml

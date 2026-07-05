@@ -1,0 +1,15 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "TryCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IHaveErrorAdditionalCommands" {
+}
+}
+
+
+taskt.Core.Automation.Commands.IHaveErrorAdditionalCommands <|.. taskt.Core.Automation.Commands.TryCommand
+@enduml

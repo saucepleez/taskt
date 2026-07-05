@@ -1,0 +1,31 @@
+digraph "taskt.Core.Automation.Commands.IPositionProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserPositionCommand" [ label="SeleniumBrowserGetWebBrowserPositionCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.IPositionProperties" [ label="IPositionProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGetUIElementPositionCommand" [ label="UIAutomationGetUIElementPositionCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementPositionCommand" [ label="SeleniumBrowserGetWebElementPositionCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.IWindowPositionProperties" [ label="IWindowPositionProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand" [ label="GetWindowPositionsFromWindowNamesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.MoveWindowsCommand" [ label="MoveWindowsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.MoveOneWindowCommand" [ label="MoveOneWindowCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetOneWindowPositionCommand" [ label="GetOneWindowPositionCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowPositionFromWindowHandleCommand" [ label="GetWindowPositionFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.MoveWindowByWindowHandleCommand" [ label="MoveWindowByWindowHandleCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserPositionCommand" -> "taskt.Core.Automation.Commands.IPositionProperties";
+"taskt.Core.Automation.Commands.UIAutomationGetUIElementPositionCommand" -> "taskt.Core.Automation.Commands.IPositionProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementPositionCommand" -> "taskt.Core.Automation.Commands.IPositionProperties";
+"taskt.Core.Automation.Commands.IWindowPositionProperties" -> "taskt.Core.Automation.Commands.IPositionProperties";
+"taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.IWindowPositionProperties";
+"taskt.Core.Automation.Commands.MoveWindowsCommand" -> "taskt.Core.Automation.Commands.IWindowPositionProperties";
+"taskt.Core.Automation.Commands.MoveOneWindowCommand" -> "taskt.Core.Automation.Commands.IWindowPositionProperties";
+"taskt.Core.Automation.Commands.GetOneWindowPositionCommand" -> "taskt.Core.Automation.Commands.IWindowPositionProperties";
+"taskt.Core.Automation.Commands.GetWindowPositionFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.IWindowPositionProperties";
+"taskt.Core.Automation.Commands.MoveWindowByWindowHandleCommand" -> "taskt.Core.Automation.Commands.IWindowPositionProperties";
+}

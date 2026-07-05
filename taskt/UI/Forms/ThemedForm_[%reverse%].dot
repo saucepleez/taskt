@@ -1,0 +1,83 @@
+digraph "taskt.UI.Forms.ThemedForm" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.UI.Forms.DialogLikeThemedForm" [ label="DialogLikeThemedForm", ];
+"taskt.UI.Forms.ThemedForm" [ label="ThemedForm", ];
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmSettings" [ label="frmSettings", ];
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor" [ label="frmCommandEditor", ];
+"taskt.UI.Forms.ScriptEngine.frmScriptEngine" [ label="frmScriptEngine", ];
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmUIElementSearchParameter" [ label="frmUIElementSearchParameter", ];
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmNewSettings" [ label="frmNewSettings", ];
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmSample" [ label="frmSample", ];
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptInformations" [ label="frmScriptInformations", ];
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmAddVariable" [ label="frmAddVariable", ];
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCodeBuilder" [ label="frmCodeBuilder", ];
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCommandList" [ label="frmCommandList", ];
+"taskt.UI.Forms.ScriptEngine.Supplemental.frmEngineContextViewer" [ label="frmEngineContextViewer", ];
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker" [ label="frmFormatChecker", ];
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspectTool" [ label="frmGUIInspectTool", ];
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInspectToolParser" [ label="frmInspectToolParser", ];
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmJSONPathHelper" [ label="frmJSONPathHelper", ];
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmKeysBuilder" [ label="frmKeysBuilder", ];
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmMultiEnterKeys" [ label="frmMultiEnterKeys", ];
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmSearchCommands" [ label="frmSearchCommands", ];
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector" [ label="frmItemSelector", ];
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmUpdate" [ label="frmUpdate", ];
+"taskt.UI.Forms.General.frmDialog" [ label="frmDialog", ];
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmAbout" [ label="frmAbout", ];
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptVariables" [ label="frmScriptVariables", ];
+
+"taskt.UI.Forms.DialogLikeThemedForm" -> "taskt.UI.Forms.ThemedForm";
+"taskt.UI.Forms.DialogLikeThemedForm" -> "taskt.UI.Forms.ThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmSettings" -> "taskt.UI.Forms.ThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmSettings" -> "taskt.UI.Forms.ThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor" -> "taskt.UI.Forms.ThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor" -> "taskt.UI.Forms.ThemedForm";
+"taskt.UI.Forms.ScriptEngine.frmScriptEngine" -> "taskt.UI.Forms.ThemedForm";
+"taskt.UI.Forms.ScriptEngine.frmScriptEngine" -> "taskt.UI.Forms.ThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmUIElementSearchParameter" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmUIElementSearchParameter" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmNewSettings" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmNewSettings" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmSample" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmSample" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptInformations" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptInformations" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmAddVariable" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmAddVariable" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCodeBuilder" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCodeBuilder" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCommandList" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCommandList" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptEngine.Supplemental.frmEngineContextViewer" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptEngine.Supplemental.frmEngineContextViewer" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspectTool" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspectTool" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInspectToolParser" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInspectToolParser" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmJSONPathHelper" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmJSONPathHelper" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmKeysBuilder" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmKeysBuilder" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmMultiEnterKeys" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmMultiEnterKeys" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmSearchCommands" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmSearchCommands" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmUpdate" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmUpdate" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.General.frmDialog" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.General.frmDialog" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmAbout" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmAbout" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptVariables" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptVariables" -> "taskt.UI.Forms.DialogLikeThemedForm";
+}

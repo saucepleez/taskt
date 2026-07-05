@@ -1,0 +1,13 @@
+digraph "taskt.UI.Forms.UIForm" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.UI.Forms.UIForm" [ label="UIForm", ];
+"System.Windows.Forms.Form" [ label="Form", ];
+
+"taskt.UI.Forms.UIForm" -> "System.Windows.Forms.Form";
+}

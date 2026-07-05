@@ -1,0 +1,45 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelRowRangeProperties" {
++{abstract} v_RowIndex : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ColumnStart : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ColumnEnd : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelRCRangeProperties" {
++{abstract} v_ColumnType : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelInstanceProperties" {
++{abstract} v_InstanceName : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelRCValueTypeProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelValueTypeProperties" {
++{abstract} v_ValueType : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IExcelRCRangeProperties <|-- taskt.Core.Automation.Commands.IExcelRowRangeProperties
+taskt.Core.Automation.Commands.IExcelInstanceProperties <|-- taskt.Core.Automation.Commands.IExcelRCRangeProperties
+taskt.Core.Automation.Commands.IExcelRCValueTypeProperties <|-- taskt.Core.Automation.Commands.IExcelRCRangeProperties
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IExcelInstanceProperties
+taskt.Core.Automation.Commands.IExcelValueTypeProperties <|-- taskt.Core.Automation.Commands.IExcelRCValueTypeProperties
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IExcelValueTypeProperties
+@enduml

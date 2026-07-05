@@ -1,0 +1,19 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromWindowNameCommand" <<sealed>> {
++RunCommand() : void 
++v_SelectionMethod : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_WindowSelectionMethod : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands"{
++v_TargetUIElementIndex : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameCommand
+@enduml

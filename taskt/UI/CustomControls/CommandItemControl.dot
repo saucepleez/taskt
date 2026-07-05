@@ -1,0 +1,14 @@
+digraph "taskt.UI.CustomControls.CommandItemControl" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.UI.CustomControls.CommandItemControl" [ label="CommandItemControl", ];
+"System.Windows.Forms.UserControl" [ label="UserControl", ];
+
+"taskt.UI.CustomControls.CommandItemControl" -> "System.Windows.Forms.UserControl";
+"taskt.UI.CustomControls.CommandItemControl" -> "System.Windows.Forms.UserControl";
+}

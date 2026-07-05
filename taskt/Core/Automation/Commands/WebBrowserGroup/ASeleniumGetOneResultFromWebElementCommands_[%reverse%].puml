@@ -1,0 +1,75 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+abstract class "ASeleniumGetWebElementSelectorFromWebElementCommands"{
++v_Result : String <<get>> <<set>> 
++v_BeliveIDAttribute : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumGetOneResultFromWebElementCommands"{
+#StoreEmptyValueToResult() : void 
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetSpecialValueFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_ValueType : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetHTMLFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetOptionsFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_AttributeName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetTextFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetAttributeFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_AttributeName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetCSSSelectorFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetXPathFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetSpecialValueFromWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetHTMLFromWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetOptionsFromWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetTextFromWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetAttributeFromWebElementCommand
+taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetCSSSelectorFromWebElementCommand
+taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetXPathFromWebElementCommand
+@enduml

@@ -1,0 +1,27 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationScrollPercentUIElementCommand" [ label="UIAutomationScrollPercentUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands" [ label="AUIElementActionCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationSetSelectedStateToUIElementCommand" [ label="UIAutomationSetSelectedStateToUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationClickUIElementCommand" [ label="UIAutomationClickUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationExpandCollapseItemsInUIElementCommand" [ label="UIAutomationExpandCollapseItemsInUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationScrollUIElementCommand" [ label="UIAutomationScrollUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationSelectItemInUIElementCommand" [ label="UIAutomationSelectItemInUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationSelectUIElementCommand" [ label="UIAutomationSelectUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationSetTextToUIElementCommand" [ label="UIAutomationSetTextToUIElementCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.UIAutomationScrollPercentUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands";
+"taskt.Core.Automation.Commands.UIAutomationSetSelectedStateToUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands";
+"taskt.Core.Automation.Commands.UIAutomationClickUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands";
+"taskt.Core.Automation.Commands.UIAutomationExpandCollapseItemsInUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands";
+"taskt.Core.Automation.Commands.UIAutomationScrollUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands";
+"taskt.Core.Automation.Commands.UIAutomationSelectItemInUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands";
+"taskt.Core.Automation.Commands.UIAutomationSelectUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands";
+"taskt.Core.Automation.Commands.UIAutomationSetTextToUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands";
+}

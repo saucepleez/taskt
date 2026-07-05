@@ -1,0 +1,13 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementXML" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementXML" [ label="ICanHandleUIElementXML", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement" [ label="ICanHandleUIElement", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementXML" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement";
+}

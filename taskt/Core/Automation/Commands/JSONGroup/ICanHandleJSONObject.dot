@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.ICanHandleJSONObject" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ICanHandleJSONObject" [ label="ICanHandleJSONObject", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleJSON" [ label="ICanHandleJSON", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.ICanHandleJSONObject" -> "taskt.Core.Automation.Commands.ICanHandleJSON";
+"taskt.Core.Automation.Commands.ICanHandleJSON" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

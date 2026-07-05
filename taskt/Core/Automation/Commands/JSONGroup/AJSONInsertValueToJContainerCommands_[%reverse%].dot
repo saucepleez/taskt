@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.InsertJSONArrayItemCommand" [ label="InsertJSONArrayItemCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands" [ label="AJSONInsertValueToJContainerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.InsertJSONObjectPropertyCommand" [ label="InsertJSONObjectPropertyCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.InsertJSONArrayItemCommand" -> "taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands";
+"taskt.Core.Automation.Commands.InsertJSONObjectPropertyCommand" -> "taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands";
+}

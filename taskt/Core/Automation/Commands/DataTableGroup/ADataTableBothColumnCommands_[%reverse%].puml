@@ -1,0 +1,30 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "SetDataTableColumnValuesByDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_DataTable : String <<get>> <<set>> 
++v_SetDataTableName : String <<get>> <<set>> 
++v_IfRowNotEnough : String <<get>> <<set>> 
++v_IfSetDataTableNotEnough : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADataTableBothColumnCommands"{
++v_DataTable : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetDataTableColumnValuesByListCommand" <<sealed>> {
++RunCommand() : void 
++v_SetListName : String <<get>> <<set>> 
++v_IfRowNotEnough : String <<get>> <<set>> 
++v_IfListNotEnough : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.ADataTableBothColumnCommands <|-- taskt.Core.Automation.Commands.SetDataTableColumnValuesByDataTableCommand
+taskt.Core.Automation.Commands.ADataTableBothColumnCommands <|-- taskt.Core.Automation.Commands.SetDataTableColumnValuesByListCommand
+@enduml

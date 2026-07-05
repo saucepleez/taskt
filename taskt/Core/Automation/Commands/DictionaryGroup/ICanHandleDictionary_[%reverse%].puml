@@ -1,0 +1,457 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryResultProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleDictionary" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryCreateFromDictionary" {
++{abstract} v_TargetDictionary : String <<get>> <<set>> <<abstract>> 
++{abstract} v_NewDictionary : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryProperties" {
++{abstract} v_Dictionary : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetDataTableRowValuesByDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_RowValues : String <<get>> <<set>> 
++v_WhenColumnNotExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "AddDataTableRowByDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_DataTable : String <<get>> <<set>> 
++v_RowName : String <<get>> <<set>> 
++v_WhenColumnNotExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConcatenateDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_DictionaryA : String <<get>> <<set>> 
++v_DictionaryB : String <<get>> <<set>> 
++v_KeyExists : String <<get>> <<set>> 
++v_NewDictionary : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetColumnValuesFromDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_DictionaryVariable : String <<get>> <<set>> 
++v_WhenItemNotEnough : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetRowValuesFromDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_DictionaryVariable : String <<get>> <<set>> 
++v_WhenItemNotEnough : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MailKitGetAddressesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_MailName : String <<get>> <<set>> 
++v_AddressesType : String <<get>> <<set>> 
++v_AddressesDictionary : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelCreateDictionaryFromExcelFile" <<sealed>> {
++RunCommand() : void 
++v_DictionaryName : String <<get>> <<set>> 
++v_FilePath : String <<get>> <<set>> 
++v_SheetName : String <<get>> <<set>> 
++v_ColumnType : String <<get>> <<set>> 
++v_KeyColumn : String <<get>> <<set>> 
++v_ValueColumn : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabTitlesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertColorCommand" <<sealed>> {
++RunCommand() : void 
+-cmbFormatSelectionChange() : void 
++AddInstance() : void 
++RemoveInstance() : void 
++v_Color : String <<get>> <<set>> 
++v_Format : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableColumnToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_KeyPrefix : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableRowToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetColumnValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRowValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertJSONToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertListToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_KeyType : String <<get>> <<set>> 
++v_Keys : String <<get>> <<set>> 
++v_KeysNotEnough : String <<get>> <<set>> 
++v_ListItemNotEnough : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebElementsValueAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADictionaryCreateFromDictionaryCommands"{
++{abstract} v_TargetDictionary : String <<get>> <<set>> <<abstract>> 
++v_NewDictionary : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADictionaryInputDictionaryCommands"{
++v_Dictionary : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryAddCreateProperties" {
++{abstract} v_ColumnNameDataTable : DataTable <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryKeyProperties" {
++{abstract} v_Key : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "FilterDictionaryCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbFilterAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_TargetDictionary : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_FilterAction : String <<get>> <<set>> 
++v_FilterActionParameterTable : DataTable <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CopyDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetDictionary : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADictionaryAddCreateCommands"{
++BeforeValidate() : void 
++AddDataAndValueFromDataTable() : void 
++v_ColumnNameDataTable : DataTable <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADictionaryGetFromDictionaryCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADictionaryKeyCommands"{
++v_Key : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExportDictionaryAsTextFileCommand" <<sealed>> {
++RunCommand() : void 
++v_FilePath : String <<get>> <<set>> 
++v_ExportHeader : String <<get>> <<set>> 
++v_ExportIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Value : String <<get>> <<set>> 
++v_Key : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ReplaceDictionaryCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbReplaceAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_Dictionary : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_ReplaceAction : String <<get>> <<set>> 
++v_ReplaceActionParameterTable : DataTable <<get>> <<set>> 
++v_NewValue : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryKeyActionProperties" {
++{abstract} v_WhenKeyDoesNotExists : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "AddDictionaryItemCommand" <<sealed>> {
++RunCommand() : void 
++v_Dictionary : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CreateDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Dictionary : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToVisualizedTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ExportHeader : String <<get>> <<set>> 
++v_ExportIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "JoinDictionaryValuesAsTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Separator : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_BeforeText : String <<get>> <<set>> 
++v_AfterText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToJSONCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDictionaryKeysListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDictionaryKeyFromValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Value : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADictionaryKeyActionCommands"{
++v_WhenKeyDoesNotExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CheckDictionaryKeyExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RemoveDictionaryItemCommand" <<sealed>> {
++RunCommand() : void 
++v_WhenKeyDoesNotExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetDictionaryValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Value : String <<get>> <<set>> 
++v_WhenKeyDoesNotExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDictionaryValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WhenKeyDoesNotExists : String <<get>> <<set>> 
++v_KeyType : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.ICanHandleDictionary <|-- taskt.Core.Automation.Commands.IDictionaryResultProperties
+taskt.Core.Automation.Commands.ICanHandleDictionary <|-- taskt.Core.Automation.Commands.IDictionaryCreateFromDictionary
+taskt.Core.Automation.Commands.ICanHandleDictionary <|-- taskt.Core.Automation.Commands.IDictionaryProperties
+taskt.Core.Automation.Commands.ICanHandleDictionary <|.. taskt.Core.Automation.Commands.SetDataTableRowValuesByDictionaryCommand
+taskt.Core.Automation.Commands.ICanHandleDictionary <|.. taskt.Core.Automation.Commands.AddDataTableRowByDictionaryCommand
+taskt.Core.Automation.Commands.ICanHandleDictionary <|.. taskt.Core.Automation.Commands.ConcatenateDictionaryCommand
+taskt.Core.Automation.Commands.ICanHandleDictionary <|.. taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDictionaryCommand
+taskt.Core.Automation.Commands.ICanHandleDictionary <|.. taskt.Core.Automation.Commands.ExcelSetRowValuesFromDictionaryCommand
+taskt.Core.Automation.Commands.ICanHandleDictionary <|.. taskt.Core.Automation.Commands.MailKitGetAddressesAsDictionaryCommand
+taskt.Core.Automation.Commands.ICanHandleDictionary <|.. taskt.Core.Automation.Commands.ExcelCreateDictionaryFromExcelFile
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ConvertColorCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableRowToDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetRowValuesAsDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ConvertJSONToDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ConvertListToDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryCreateFromDictionary <|.. taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands
+taskt.Core.Automation.Commands.IDictionaryProperties <|.. taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands
+taskt.Core.Automation.Commands.IDictionaryProperties <|-- taskt.Core.Automation.Commands.IDictionaryAddCreateProperties
+taskt.Core.Automation.Commands.IDictionaryProperties <|-- taskt.Core.Automation.Commands.IDictionaryKeyProperties
+taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands <|-- taskt.Core.Automation.Commands.FilterDictionaryCommand
+taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands <|-- taskt.Core.Automation.Commands.CopyDictionaryCommand
+taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands <|-- taskt.Core.Automation.Commands.ADictionaryAddCreateCommands
+taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands <|-- taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands <|-- taskt.Core.Automation.Commands.ADictionaryKeyCommands
+taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands <|-- taskt.Core.Automation.Commands.ExportDictionaryAsTextFileCommand
+taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands <|-- taskt.Core.Automation.Commands.BeginLoopForDictionaryCommand
+taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands <|-- taskt.Core.Automation.Commands.ReplaceDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryAddCreateProperties <|.. taskt.Core.Automation.Commands.ADictionaryAddCreateCommands
+taskt.Core.Automation.Commands.IDictionaryKeyProperties <|.. taskt.Core.Automation.Commands.ADictionaryKeyCommands
+taskt.Core.Automation.Commands.IDictionaryKeyProperties <|-- taskt.Core.Automation.Commands.IDictionaryKeyActionProperties
+taskt.Core.Automation.Commands.ADictionaryAddCreateCommands <|-- taskt.Core.Automation.Commands.AddDictionaryItemCommand
+taskt.Core.Automation.Commands.ADictionaryAddCreateCommands <|-- taskt.Core.Automation.Commands.CreateDictionaryCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToVisualizedTextCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToTextCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.JoinDictionaryValuesAsTextCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToDataTableCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToListCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToJSONCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.GetDictionaryKeysListCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.GetDictionaryKeyFromValueCommand
+taskt.Core.Automation.Commands.ADictionaryKeyCommands <|-- taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
+taskt.Core.Automation.Commands.ADictionaryKeyCommands <|-- taskt.Core.Automation.Commands.CheckDictionaryKeyExistsCommand
+taskt.Core.Automation.Commands.IDictionaryKeyActionProperties <|.. taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
+taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.RemoveDictionaryItemCommand
+taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.SetDictionaryValueCommand
+taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.GetDictionaryValueCommand
+@enduml

@@ -1,0 +1,42 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "GetFormattedDateTimeFromCalculatedExcelSerialDateTimeCommand" <<sealed>> {
++RunCommand() : void 
++v_DateTime : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AGetFormattedDateTimeFromCalculatedDateTimeCommands"{
+#CommandProcess() : void 
++v_Format : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetFormattedDateTimeFromCalculatedUnixDateTimeCommand" <<sealed>> {
++RunCommand() : void 
++v_DateTime : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetFormattedDateTimeFromCalculatedTextDateTimeCommand" <<sealed>> {
++RunCommand() : void 
++v_DateTime : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetFormattedDateTimeFromCalculatedDateTimeCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+
+taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands <|-- taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedExcelSerialDateTimeCommand
+taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands <|-- taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedUnixDateTimeCommand
+taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands <|-- taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedTextDateTimeCommand
+taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands <|-- taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedDateTimeCommand
+@enduml

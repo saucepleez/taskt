@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand" [ label="UIAutomationGetSelectionItemsValueFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties" [ label="IUIElementSelectionItemsProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationSelectItemInUIElementCommand" [ label="UIAutomationSelectItemInUIElementCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties";
+"taskt.Core.Automation.Commands.UIAutomationSelectItemInUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties";
+}

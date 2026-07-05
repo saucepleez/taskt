@@ -1,0 +1,256 @@
+@startuml
+package "taskt.UI.Forms.General"{
+class "frmDialog" {
+-CalculateCloseTime() : void 
+-uiBtnOk_Click() : void 
+-uiBtnCancel_Click() : void 
+-autoCloseTimer_Tick() : void 
+-frmDialog_Load() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-closeTicks : int
+-ticksPassed : int
+-components : System.ComponentModel.IContainer
+-uiBtnOk : taskt.UI.CustomControls.UIPictureButton
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-autoCloseTimer : System.Windows.Forms.Timer
+-lblAutoClose : System.Windows.Forms.Label
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-pnlControlContainer : taskt.UI.CustomControls.UIPanel
+-txtMessage : System.Windows.Forms.RichTextBox
+}
+}
+
+package "taskt.UI.Forms"{
+class "DialogLikeThemedForm" {
+-DialogLikeThemedForm_KeyPress() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-components : System.ComponentModel.IContainer
+}
+}
+
+package "taskt.UI.Forms"{
+class "ThemedForm" {
+#OnShown() : void 
+#OnPaint() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++Theme : Theme <<get>> <<set>> 
+-_Theme : taskt.Core.Theme
+-components : System.ComponentModel.IContainer
+}
+}
+
+package "System.Windows.Forms"{
+class "Form" {
++add_AutoSizeChanged() : void 
++remove_AutoSizeChanged() : void 
++add_AutoValidateChanged() : void 
++remove_AutoValidateChanged() : void 
++add_HelpButtonClicked() : void 
++remove_HelpButtonClicked() : void 
++add_MaximizedBoundsChanged() : void 
++remove_MaximizedBoundsChanged() : void 
++add_MaximumSizeChanged() : void 
++remove_MaximumSizeChanged() : void 
++add_MarginChanged() : void 
++remove_MarginChanged() : void 
++add_MinimumSizeChanged() : void 
++remove_MinimumSizeChanged() : void 
++add_TabIndexChanged() : void 
++remove_TabIndexChanged() : void 
++add_TabStopChanged() : void 
++remove_TabStopChanged() : void 
+#SetVisibleCore() : void 
++add_Activated() : void 
++remove_Activated() : void 
++add_Closing() : void 
++remove_Closing() : void 
++add_Closed() : void 
++remove_Closed() : void 
++add_Deactivate() : void 
++remove_Deactivate() : void 
++add_FormClosing() : void 
++remove_FormClosing() : void 
++add_FormClosed() : void 
++remove_FormClosed() : void 
++add_Load() : void 
++remove_Load() : void 
++add_MdiChildActivate() : void 
++remove_MdiChildActivate() : void 
++add_MenuComplete() : void 
++remove_MenuComplete() : void 
++add_MenuStart() : void 
++remove_MenuStart() : void 
++add_InputLanguageChanged() : void 
++remove_InputLanguageChanged() : void 
++add_InputLanguageChanging() : void 
++remove_InputLanguageChanging() : void 
++add_RightToLeftLayoutChanged() : void 
++remove_RightToLeftLayoutChanged() : void 
++add_Shown() : void 
++remove_Shown() : void 
++Activate() : void 
+#ActivateMdiChild() : void 
++AddOwnedForm() : void 
+#AdjustFormScrollbars() : void 
+#ApplyAutoScaling() : void 
+ AssignParent() : void 
++Close() : void 
+#CreateControlsInstance() : ControlCollection
+ AfterControlRemoved() : void 
+#CreateHandle() : void 
+#DefWndProc() : void 
+#Dispose() : void 
+ FocusInternal() : Boolean
++{static} GetAutoScaleSize() : SizeF
+ GetPreferredSizeCore() : Size
+ CanSelectCore() : Boolean
+ CanProcessMnemonic() : Boolean
+ ProcessMnemonic() : Boolean
+#CenterToParent() : void 
+#CenterToScreen() : void 
++LayoutMdi() : void 
+#OnActivated() : void 
+ OnAutoScaleModeChanged() : void 
+#OnBackgroundImageChanged() : void 
+#OnBackgroundImageLayoutChanged() : void 
+#OnClosing() : void 
+#OnClosed() : void 
+#OnFormClosing() : void 
+#OnFormClosed() : void 
+#OnCreateControl() : void 
+#OnDeactivate() : void 
+#OnEnabledChanged() : void 
+#OnEnter() : void 
+#OnFontChanged() : void 
+#OnHandleCreated() : void 
+#OnHandleDestroyed() : void 
+#OnHelpButtonClicked() : void 
+#OnLayout() : void 
+#OnLoad() : void 
+#OnMaximizedBoundsChanged() : void 
+#OnMaximumSizeChanged() : void 
+#OnMinimumSizeChanged() : void 
+#OnInputLanguageChanged() : void 
+#OnInputLanguageChanging() : void 
+#OnVisibleChanged() : void 
+#OnMdiChildActivate() : void 
+#OnMenuStart() : void 
+#OnMenuComplete() : void 
+#OnPaint() : void 
+#OnResize() : void 
+#OnDpiChanged() : void 
++add_DpiChanged() : void 
++remove_DpiChanged() : void 
+#OnGetDpiScaledSize() : Boolean
+#OnRightToLeftLayoutChanged() : void 
+#OnShown() : void 
+#OnTextChanged() : void 
+#ProcessCmdKey() : Boolean
+#ProcessDialogKey() : Boolean
+#ProcessDialogChar() : Boolean
+#ProcessKeyPreview() : Boolean
+#ProcessTabKey() : Boolean
+ RecreateHandleCore() : void 
++RemoveOwnedForm() : void 
++add_ResizeBegin() : void 
++remove_ResizeBegin() : void 
++add_ResizeEnd() : void 
++remove_ResizeEnd() : void 
+#Select() : void 
+#ScaleCore() : void 
+#GetScaledBounds() : Rectangle
+#ScaleControl() : void 
+#SetBoundsCore() : void 
+ ApplyBoundsConstraints() : Rectangle
+#SetClientSizeCore() : void 
++SetDesktopBounds() : void 
++SetDesktopLocation() : void 
++Show() : void 
++ShowDialog() : DialogResult
++ShowDialog() : DialogResult
+ ShouldSerializeAutoScaleBaseSize() : Boolean
+ ShouldSerializeSize() : Boolean
++ToString() : String
+#UpdateDefaultButton() : void 
+#OnResizeBegin() : void 
+#OnResizeEnd() : void 
+#OnStyleChanged() : void 
++ValidateChildren() : Boolean
++ValidateChildren() : Boolean
+#WndProc() : void 
++AcceptButton : IButtonControl <<get>> <<set>> 
++{static} ActiveForm : Form <<get>> 
++ActiveMdiChild : Form <<get>> 
++AllowTransparency : Boolean <<get>> <<set>> 
++AutoScale : Boolean <<get>> <<set>> 
++AutoScaleBaseSize : Size <<get>> <<set>> 
++AutoScroll : Boolean <<get>> <<set>> 
++AutoSize : Boolean <<get>> <<set>> 
++AutoSizeMode : AutoSizeMode <<get>> <<set>> 
++AutoValidate : AutoValidate <<get>> <<set>> 
++BackColor : Color <<get>> <<set>> 
++FormBorderStyle : FormBorderStyle <<get>> <<set>> 
++CancelButton : IButtonControl <<get>> <<set>> 
++ClientSize : Size <<get>> <<set>> 
++ControlBox : Boolean <<get>> <<set>> 
+#CreateParams : CreateParams <<get>> 
+#DefaultImeMode : ImeMode <<get>> 
+#DefaultSize : Size <<get>> 
++DesktopBounds : Rectangle <<get>> <<set>> 
++DesktopLocation : Point <<get>> <<set>> 
++DialogResult : DialogResult <<get>> <<set>> 
+ HasMenu : Boolean <<get>> 
++HelpButton : Boolean <<get>> <<set>> 
++Icon : Icon <<get>> <<set>> 
++IsMdiChild : Boolean <<get>> 
++IsMdiContainer : Boolean <<get>> <<set>> 
++IsRestrictedWindow : Boolean <<get>> 
++KeyPreview : Boolean <<get>> <<set>> 
++Location : Point <<get>> <<set>> 
+#MaximizedBounds : Rectangle <<get>> <<protected set>>
++MaximumSize : Size <<get>> <<set>> 
++MainMenuStrip : MenuStrip <<get>> <<set>> 
++Margin : Padding <<get>> <<set>> 
++Menu : MainMenu <<get>> <<set>> 
++MinimumSize : Size <<get>> <<set>> 
++MaximizeBox : Boolean <<get>> <<set>> 
++MdiChildren :  <<get>> 
++MdiParent : Form <<get>> <<set>> 
++MergedMenu : MainMenu <<get>> 
++MinimizeBox : Boolean <<get>> <<set>> 
++Modal : Boolean <<get>> 
++Opacity : Double <<get>> <<set>> 
++OwnedForms :  <<get>> 
++Owner : Form <<get>> <<set>> 
++RestoreBounds : Rectangle <<get>> 
++RightToLeftLayout : Boolean <<get>> <<set>> 
+ ParentInternal : Control <<get>> <<set>> 
++ShowInTaskbar : Boolean <<get>> <<set>> 
++ShowIcon : Boolean <<get>> <<set>> 
+ ShowParams : Int32 <<get>> 
+#ShowWithoutActivation : Boolean <<get>> 
++Size : Size <<get>> <<set>> 
++SizeGripStyle : SizeGripStyle <<get>> <<set>> 
++StartPosition : FormStartPosition <<get>> <<set>> 
++TabIndex : Int32 <<get>> <<set>> 
++TabStop : Boolean <<get>> <<set>> 
++Text : String <<get>> <<set>> 
++TopLevel : Boolean <<get>> <<set>> 
++TopMost : Boolean <<get>> <<set>> 
++TransparencyKey : Color <<get>> <<set>> 
++WindowState : FormWindowState <<get>> <<set>> 
+ WindowText : String <<get>> <<set>> 
+}
+}
+
+
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.General.frmDialog
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.General.frmDialog
+taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.DialogLikeThemedForm
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ThemedForm
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ThemedForm
+@enduml

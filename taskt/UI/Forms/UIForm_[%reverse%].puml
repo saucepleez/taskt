@@ -1,0 +1,211 @@
+@startuml
+package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
+class "frmSequenceRecorder" {
+-btnStartRecording_Click() : void 
+-OnHookStopped() : void 
+-FinalizeRecording() : void 
+-btnStopRecording_Click() : void 
+-frmSequenceRecorder_Load() : void 
+-chkGroupIntoSequences_CheckedChanged() : void 
+-chkCaptureMouse_CheckedChanged() : void 
+-uiBtnRecord_Click() : void 
+-chkActivateTopLeft_CheckedChanged() : void 
+-chkTrackWindowsOpenLocation_CheckedChanged() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++callBackForm : frmScriptBuilder <<get>> <<set>> 
+-isRecording : Boolean <<get>> <<private set>>
++commandList : List<taskt.Core.Automation.Commands.ScriptCommand>
+-components : System.ComponentModel.IContainer
+-chkGroupMovesIntoSequences : System.Windows.Forms.CheckBox
+-chkCaptureMouse : System.Windows.Forms.CheckBox
+-chkCaptureKeyboard : System.Windows.Forms.CheckBox
+-lblRecording : System.Windows.Forms.Label
+-pnlOptions : System.Windows.Forms.Panel
+-uiBtnRecord : taskt.UI.CustomControls.UIPictureButton
+-chkCaptureClicks : System.Windows.Forms.CheckBox
+-chkGroupIntoSequence : System.Windows.Forms.CheckBox
+-chkCaptureWindowEvents : System.Windows.Forms.CheckBox
+-txtHookResolution : System.Windows.Forms.TextBox
+-label1 : System.Windows.Forms.Label
+-chkActivateTopLeft : System.Windows.Forms.CheckBox
+-chkTrackWindowSize : System.Windows.Forms.CheckBox
+-label2 : System.Windows.Forms.Label
+-label5 : System.Windows.Forms.Label
+-label4 : System.Windows.Forms.Label
+-label3 : System.Windows.Forms.Label
+-chkTrackWindowsOpenLocation : System.Windows.Forms.CheckBox
+-label6 : System.Windows.Forms.Label
+-txtHookStop : System.Windows.Forms.TextBox
+}
+}
+
+package "taskt.UI.Forms"{
+class "UIForm" {
+#OnPaintBackground() : void 
+-InitializeComponent() : void 
+-UIForm_Load() : void 
++{static} MoveFormToBottomRight() : void 
++BackgroundChangeIndex : Int32 <<get>> <<set>> 
+-backgroundChangeIndex : int
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
+class "frmDisplayManager" {
+-frmDisplayManager_Load() : void 
+-btnAddMachine_Click() : void 
+-btnStart_Click() : void 
+-btnStop_Click() : void 
+-tmrCheck_Tick() : void 
+-Viewer_LoginUpdateEvent() : void 
+-AddLogEvent() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-Machines : System.ComponentModel.BindingList<taskt.UI.Forms.ScriptBuilder.Supplemental.frmDisplayManager.MachineConfiguration>
+-components : System.ComponentModel.IContainer
+-lstEventLogs : System.Windows.Forms.ListBox
+-dgvMachines : System.Windows.Forms.DataGridView
+-btnStart : System.Windows.Forms.Button
+-btnStop : System.Windows.Forms.Button
+-btnAddMachine : System.Windows.Forms.Button
+-tmrCheck : System.Windows.Forms.Timer
+-tlpDisplayManager : System.Windows.Forms.TableLayoutPanel
+-panel1 : System.Windows.Forms.Panel
+-chkHideScreen : System.Windows.Forms.CheckBox
+-chkStartMinimized : System.Windows.Forms.CheckBox
+-panel2 : System.Windows.Forms.Panel
+-lblHeader : System.Windows.Forms.Label
+-lblScheduledScripts : System.Windows.Forms.Label
+-lblResolution : System.Windows.Forms.Label
+-txtHeight : System.Windows.Forms.TextBox
+-txtWidth : System.Windows.Forms.TextBox
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
+class "frmDLLExplorer" {
+-frmDLLExplorer_Load() : void 
+-lstClasses_SelectedIndexChanged() : void 
+-lstMethods_SelectedIndexChanged() : void 
+-uiPictureButton1_Click() : void 
+-uiBtnOk_Click() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++Classes : List <<get>> <<set>> 
++FileName : String <<get>> <<set>> 
++SelectedParameters : List <<get>> <<set>> 
+-components : System.ComponentModel.IContainer
+-label1 : System.Windows.Forms.Label
+-label2 : System.Windows.Forms.Label
+-label3 : System.Windows.Forms.Label
+-label4 : System.Windows.Forms.Label
+-uiPictureButton1 : taskt.UI.CustomControls.UIPictureButton
+-uiBtnOk : taskt.UI.CustomControls.UIPictureButton
++lstClasses : System.Windows.Forms.ListBox
++lstMethods : System.Windows.Forms.ListBox
++lstParameters : System.Windows.Forms.ListBox
+}
+}
+
+package "taskt.UI.Forms.ScriptEngine.Supplemental"{
+class "frmUserInput" {
+-uiBtnOk_Click() : void 
+-uiBtnCancel_Click() : void 
+-frmUserInput_FormClosing() : void 
+-CancelProcess() : void 
+-frmUserInput_KeyPress() : void 
++GetSpecifiedValues() : List
+#Dispose() : void 
+-InitializeComponent() : void 
++DialogResultText : String <<get>> <<private set>>
+-inputCommand : taskt.Core.Automation.Commands.ShowUserInputDialogCommand
+-inputControls : List<System.Windows.Forms.Control>
+-components : System.ComponentModel.IContainer
+-flwInputControls : System.Windows.Forms.FlowLayoutPanel
+-lblHeader : System.Windows.Forms.Label
+-lblDirections : System.Windows.Forms.Label
+-tlpInputs : System.Windows.Forms.TableLayoutPanel
+-panel1 : System.Windows.Forms.Panel
+-uiBtnOk : taskt.UI.CustomControls.UIPictureButton
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
+class "frmScheduleManagement" {
+-frmScheduleManagement_Load() : void 
+-uiBtnOk_Click() : void 
+-uiBtnShowScheduleManager_Click() : void 
+-dgvScheduledTasks_CellContentClick() : void 
+-RefreshTasks() : void 
+-tmrGetSchedulingInfo_Tick() : void 
+-bgwGetSchedulingInfo_DoWork() : void 
+-bgwGetSchedulingInfo_RunWorkerCompleted() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-rpaScriptsFolder : string
+-components : System.ComponentModel.IContainer
+-txtAppPath : System.Windows.Forms.TextBox
+-uiBtnOk : taskt.UI.CustomControls.UIPictureButton
+-cboSelectedScript : System.Windows.Forms.ComboBox
+-lblMainLogo : System.Windows.Forms.Label
+-lblScheduledScripts : System.Windows.Forms.Label
+-label3 : System.Windows.Forms.Label
+-lblScriptName : System.Windows.Forms.Label
+-dgvScheduledTasks : System.Windows.Forms.DataGridView
+-colTaskName : System.Windows.Forms.DataGridViewTextBoxColumn
+-colTaskLastRun : System.Windows.Forms.DataGridViewTextBoxColumn
+-colTaskLastResult : System.Windows.Forms.DataGridViewTextBoxColumn
+-colTaskNextRunTime : System.Windows.Forms.DataGridViewTextBoxColumn
+-colTaskState : System.Windows.Forms.DataGridViewTextBoxColumn
+-colChangeTaskStatus : System.Windows.Forms.DataGridViewButtonColumn
+-bgwGetSchedulingInfo : System.ComponentModel.BackgroundWorker
+-tmrGetSchedulingInfo : System.Windows.Forms.Timer
+-uiBtnShowScheduleManager : taskt.UI.CustomControls.UIPictureButton
+-panel1 : System.Windows.Forms.Panel
+-dtStartTime : System.Windows.Forms.DateTimePicker
+-rdoEndByDate : System.Windows.Forms.RadioButton
+-dtEndTime : System.Windows.Forms.DateTimePicker
+-rdoDoNotEnd : System.Windows.Forms.RadioButton
+-cboRecurType : System.Windows.Forms.ComboBox
+-lblRecurrence : System.Windows.Forms.Label
+-txtRecurCount : System.Windows.Forms.TextBox
+-lblStartDate : System.Windows.Forms.Label
+-label2 : System.Windows.Forms.Label
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
+class "frmShowCursorPosition" {
++{static} GetCursorPos() : Boolean
+-ShowCursorPosition_Load() : void 
+-tmrGetPosition_Tick() : void 
+-ShowCursorPosition_KeyDown() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++xPos : Int32 <<get>> <<private set>>
++yPos : Int32 <<get>> <<private set>>
++lpPoint : taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmShowCursorPosition.POINT
+-components : System.ComponentModel.IContainer
+-lblXPosition : System.Windows.Forms.Label
+-lblYPosition : System.Windows.Forms.Label
+-tmrGetPosition : System.Windows.Forms.Timer
+-lblhelperText : System.Windows.Forms.Label
+}
+}
+
+
+taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSequenceRecorder
+taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSequenceRecorder
+taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmDisplayManager
+taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmDisplayManager
+taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmDLLExplorer
+taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmDLLExplorer
+taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptEngine.Supplemental.frmUserInput
+taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptEngine.Supplemental.frmUserInput
+taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmScheduleManagement
+taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmScheduleManagement
+taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmShowCursorPosition
+taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmShowCursorPosition
+@enduml

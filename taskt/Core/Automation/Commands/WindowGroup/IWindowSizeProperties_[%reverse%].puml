@@ -1,0 +1,79 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "GetWindowSizesFromWindowNamesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowSizeProperties" {
++{abstract} v_WhenWindowIsMinimized : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ResizeWindowsCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ResizeOneWindowCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetOneWindowSizeCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowResizeProperties" {
++{abstract} v_WhenWindowIsMaximized : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowSizeFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ResizeWindowByWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IWindowSizeProperties <|.. taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand
+taskt.Core.Automation.Commands.IWindowSizeProperties <|.. taskt.Core.Automation.Commands.ResizeWindowsCommand
+taskt.Core.Automation.Commands.IWindowSizeProperties <|.. taskt.Core.Automation.Commands.ResizeOneWindowCommand
+taskt.Core.Automation.Commands.IWindowSizeProperties <|.. taskt.Core.Automation.Commands.GetOneWindowSizeCommand
+taskt.Core.Automation.Commands.IWindowSizeProperties <|-- taskt.Core.Automation.Commands.IWindowResizeProperties
+taskt.Core.Automation.Commands.IWindowSizeProperties <|.. taskt.Core.Automation.Commands.GetWindowSizeFromWindowHandleCommand
+taskt.Core.Automation.Commands.IWindowResizeProperties <|.. taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand
+@enduml

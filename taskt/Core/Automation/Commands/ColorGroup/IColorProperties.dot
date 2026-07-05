@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.IColorProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.IColorProperties" [ label="IColorProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleColor" [ label="ICanHandleColor", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.IColorProperties" -> "taskt.Core.Automation.Commands.ICanHandleColor";
+"taskt.Core.Automation.Commands.ICanHandleColor" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

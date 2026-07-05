@@ -1,0 +1,321 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileFilePathCommands"{
++v_TargetFilePath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IFilePathProperties" {
++{abstract} v_TargetFilePath : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IFileExistsFilePathProperties" {
++{abstract} v_WaitTimeForFile : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileExistsFilePathCommands"{
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExtractionFilePathCommand" <<sealed>> {
++RunCommand() : void 
+-lnkFormatChecker_Click() : void 
++v_Format : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AScriptFileCommands"{
++v_TargetFilePath : String <<get>> <<set>> 
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IFileExistsFilePathBeforeAfterPathResultProperties" {
++{abstract} v_BeforeFilePathResult : String <<get>> <<set>> <<abstract>> 
++{abstract} v_AfterFilePathResult : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IFileExistsFilePathPathResultProperties" {
++{abstract} v_ResultPath : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExecuteTesseractOCRCommand" {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
++v_ImageVar : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_TessData : String <<get>> <<set>> 
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MailKitLoadEMailCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
++v_MailName : String <<get>> <<set>> 
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ReadJSONFileCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelOpenWorkbookCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
++v_Password : String <<get>> <<set>> 
++v_IfWorksheetExists : String <<get>> <<set>> 
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExecuteOCRCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
++v_userVariableName : String <<get>> <<set>> 
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ReadTextFileCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
++v_ReadOption : String <<get>> <<set>> 
++v_userVariableName : String <<get>> <<set>> 
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "WordOpenDocumentCommand" <<sealed>> {
++RunCommand() : void 
++v_InstanceName : String <<get>> <<set>> 
++v_TargetFilePath : String <<get>> <<set>> 
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileExistsFilePathBeforeAfterResultCommands"{
++v_BeforeFilePathResult : String <<get>> <<set>> 
++v_AfterFilePathResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileExistsFilePathPathResultCommands"{
++v_ResultPath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ARunScriptFileCommands"{
++v_Arguments : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UnloadScriptFileCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
++v_ErrorPreference : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "LoadScriptFileCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RunScriptFileCommand" <<sealed>> {
++RunCommand() : void 
+-lnkReloadVariables_Click() : void 
+-cmbAssignVariables_SelectedItemChanged() : void 
++v_TargetFilePath : String <<get>> <<set>> 
++v_AssignVariables : String <<get>> <<set>> 
++v_VariableAssignments : DataTable <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileCopyMoveFileCommands"{
+#CreateActionFunc() : Func
++v_DestinationFolderPath : String <<get>> <<set>> 
++v_CreateDirectory : String <<get>> <<set>> 
++v_WhenDestinationIsSame : String <<get>> <<set>> 
++v_WhenDestinationExists : String <<get>> <<set>> 
++v_WaitTimeForFolder : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileCopySameRenameFileCommands"{
+#CreateActionFunc() : Func
+#cmbExtensionOption_SelectionChange() : void 
++v_NewFileName : String <<get>> <<set>> 
++v_ExtensionOption : String <<get>> <<set>> 
++v_NewExtension : String <<get>> <<set>> 
++v_WhenFileNameSame : String <<get>> <<set>> 
++v_WhenNewFileExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "OpenFileCommand" <<sealed>> {
++RunCommand() : void 
++v_WaitTimeForOpen : String <<get>> <<set>> 
++v_WindowNameResult : String <<get>> <<set>> 
++v_WindowHandleResult : String <<get>> <<set>> 
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetFileInformationCommand" <<sealed>> {
++RunCommand() : void 
++AddInstance() : void 
++RemoveInstance() : void 
++v_InfoType : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CheckFileExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "DeleteFileCommand" <<sealed>> {
++RunCommand() : void 
++v_WhenFileDoesNotExists : String <<get>> <<set>> 
++v_MoveToRecycleBin : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "WaitForFileToExistCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RunJavaScriptFileCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RunPowerShellScriptFileCommand" <<sealed>> {
++RunCommand() : void 
+-cmbExecutionMethod_SelectionChangeCommited() : void 
++v_TargetFilePath : String <<get>> <<set>> 
++v_ExecutionMethod : String <<get>> <<set>> 
++v_ReplaceScriptVariables : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RunBatchScriptFileCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CopyFileCommand" <<sealed>> {
++RunCommand() : void 
++v_DestinationFolderPath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveFileCommand" <<sealed>> {
++RunCommand() : void 
++v_DestinationFolderPath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CopyFileToSameFolderCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RenameFileCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+
+taskt.Core.Automation.Commands.IFilePathProperties <|.. taskt.Core.Automation.Commands.AFileFilePathCommands
+taskt.Core.Automation.Commands.IFilePathProperties <|-- taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.AFileFilePathCommands <|-- taskt.Core.Automation.Commands.AFileExistsFilePathCommands
+taskt.Core.Automation.Commands.AFileFilePathCommands <|-- taskt.Core.Automation.Commands.ExtractionFilePathCommand
+taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.AScriptFileCommands
+taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.AFileExistsFilePathCommands
+taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|-- taskt.Core.Automation.Commands.IFileExistsFilePathBeforeAfterPathResultProperties
+taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|-- taskt.Core.Automation.Commands.IFileExistsFilePathPathResultProperties
+taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.ExecuteTesseractOCRCommand
+taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.MailKitLoadEMailCommand
+taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.ReadJSONFileCommand
+taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.ExcelOpenWorkbookCommand
+taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.ExecuteOCRCommand
+taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.ReadTextFileCommand
+taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.WordOpenDocumentCommand
+taskt.Core.Automation.Commands.AFileExistsFilePathCommands <|-- taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands
+taskt.Core.Automation.Commands.AFileExistsFilePathCommands <|-- taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.AScriptFileCommands <|-- taskt.Core.Automation.Commands.ARunScriptFileCommands
+taskt.Core.Automation.Commands.AScriptFileCommands <|-- taskt.Core.Automation.Commands.UnloadScriptFileCommand
+taskt.Core.Automation.Commands.AScriptFileCommands <|-- taskt.Core.Automation.Commands.LoadScriptFileCommand
+taskt.Core.Automation.Commands.AScriptFileCommands <|-- taskt.Core.Automation.Commands.RunScriptFileCommand
+taskt.Core.Automation.Commands.IFileExistsFilePathBeforeAfterPathResultProperties <|.. taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands
+taskt.Core.Automation.Commands.IFileExistsFilePathPathResultProperties <|.. taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands <|-- taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
+taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands <|-- taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
+taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.OpenFileCommand
+taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.GetFileInformationCommand
+taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.CheckFileExistsCommand
+taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.DeleteFileCommand
+taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.WaitForFileToExistCommand
+taskt.Core.Automation.Commands.ARunScriptFileCommands <|-- taskt.Core.Automation.Commands.RunJavaScriptFileCommand
+taskt.Core.Automation.Commands.ARunScriptFileCommands <|-- taskt.Core.Automation.Commands.RunPowerShellScriptFileCommand
+taskt.Core.Automation.Commands.ARunScriptFileCommands <|-- taskt.Core.Automation.Commands.RunBatchScriptFileCommand
+taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.CopyFileCommand
+taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.MoveFileCommand
+taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands <|-- taskt.Core.Automation.Commands.CopyFileToSameFolderCommand
+taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands <|-- taskt.Core.Automation.Commands.RenameFileCommand
+@enduml

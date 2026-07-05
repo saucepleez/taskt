@@ -1,0 +1,29 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "CopyFileToSameFolderCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileCopySameRenameFileCommands"{
+#CreateActionFunc() : Func
+#cmbExtensionOption_SelectionChange() : void 
++v_NewFileName : String <<get>> <<set>> 
++v_ExtensionOption : String <<get>> <<set>> 
++v_NewExtension : String <<get>> <<set>> 
++v_WhenFileNameSame : String <<get>> <<set>> 
++v_WhenNewFileExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RenameFileCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+
+taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands <|-- taskt.Core.Automation.Commands.CopyFileToSameFolderCommand
+taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands <|-- taskt.Core.Automation.Commands.RenameFileCommand
+@enduml

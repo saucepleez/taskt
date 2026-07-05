@@ -1,0 +1,28 @@
+digraph "taskt.Core.Automation.Commands.ExcelCheckWorksheetExistsCommand" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ExcelCheckWorksheetExistsCommand" [ label="ExcelCheckWorksheetExistsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AExcelSheetCommands" [ label="AExcelSheetCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AExcelInstanceCommands" [ label="AExcelInstanceCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IExcelWorksheetProperties" [ label="IExcelWorksheetProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.IExcelInstanceProperties" [ label="IExcelInstanceProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.ExcelCheckWorksheetExistsCommand" -> "taskt.Core.Automation.Commands.AExcelSheetCommands";
+"taskt.Core.Automation.Commands.AExcelSheetCommands" -> "taskt.Core.Automation.Commands.AExcelInstanceCommands";
+"taskt.Core.Automation.Commands.AExcelSheetCommands" -> "taskt.Core.Automation.Commands.IExcelWorksheetProperties";
+"taskt.Core.Automation.Commands.AExcelInstanceCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.AExcelInstanceCommands" -> "taskt.Core.Automation.Commands.IExcelInstanceProperties";
+"taskt.Core.Automation.Commands.IExcelWorksheetProperties" -> "taskt.Core.Automation.Commands.IExcelInstanceProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.IExcelInstanceProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

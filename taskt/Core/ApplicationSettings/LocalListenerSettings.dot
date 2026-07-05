@@ -1,0 +1,13 @@
+digraph "taskt.Core.LocalListenerSettings" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.LocalListenerSettings" [ label="LocalListenerSettings", shape="parallelogram", style="bold", ];
+"taskt.Core.ILocalListenerSettings" [ label="ILocalListenerSettings", shape="ellipse", style="dashed", ];
+
+"taskt.Core.LocalListenerSettings" -> "taskt.Core.ILocalListenerSettings";
+}

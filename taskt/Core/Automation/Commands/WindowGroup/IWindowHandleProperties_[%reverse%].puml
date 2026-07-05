@@ -1,0 +1,278 @@
+@startuml
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "ADescendantsSearchUIElementsFromWindowHandleByXPathCommands"{
++v_WindowHandle : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
++v_WindowUIElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowHandleProperties" {
++{abstract} v_WindowHandle : String <<get>> <<set>> <<abstract>> 
++{abstract} v_WaitTimeForWindow : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands"{
++v_WindowHandle : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
++v_WindowUIElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowHandle : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowHandle : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowHandleActionPropeties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AWindowHandleCommands"{
++v_WindowHandle : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
++v_WindowNameResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromWindowHandleByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands"{
++v_SelectionMethod : String <<get>> <<set>> 
++v_TargetUIElementIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementsInformationFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AWindowHandleActionCommands"{
++v_WaitTimeBetweenFindAndAction : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetWindowUIElementFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForUIElement : String <<get>> <<set>> 
++v_MaxSiblings : String <<get>> <<set>> 
++v_MaxDepth : String <<get>> <<set>> 
++v_WindowHandleResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ActivateWindowByWindowHandleCommand" <<sealed>> {
+-{static} SetWindowState() : Boolean
+-{static} SetForegroundWindow() : IntPtr
++RunCommand() : void 
+-WINDOW_NORMAL : int
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CheckWindowHandleExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetProcessNameFromWindowHandleCommand" <<sealed>> {
+-{static} GetWindowThreadProcessId() : UInt32
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowNameFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowNameResult : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowPositionFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_PositionBase : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowSizeFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowStateFromWindowHandleCommand" <<sealed>> {
+-{static} GetWindowPlacement() : Boolean
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
++v_WindowStateText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "EnterKeysFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSend : String <<get>> <<set>> 
++v_EncryptionOption : String <<get>> <<set>> 
++v_UseClipBoard : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ClearClipboardAfterPaste : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "EnterShortcutKeyFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
+-cmbHotkey_SelectedIndexChanged() : void 
++v_Hotkey : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SendAdvancedKeyStrokesFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++AfterShown() : void 
++IsValidate() : Boolean
++BeforeValidate() : void 
++v_KeyActions : DataTable <<get>> <<set>> 
++v_KeyUpDefault : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CloseWindowByWindowHandle" <<sealed>> {
+-{static} SendMessage() : IntPtr
++RunCommand() : void 
+-{static} .cctor() : void 
+-WM_CLOSE : UInt32
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveWindowByWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ResizeWindowByWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetWindowStateByWindowHandleCommand" <<sealed>> {
+-{static} ShowWindowAsync() : Boolean
+-{static} ShowWindow() : Boolean
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
+-MAXIMIZE : int
+-MINIMIZE : int
+-RESTORE : int
+}
+}
+
+
+taskt.Core.Automation.Commands.IWindowHandleProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands
+taskt.Core.Automation.Commands.IWindowHandleProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands
+taskt.Core.Automation.Commands.IWindowHandleProperties <|.. taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand
+taskt.Core.Automation.Commands.IWindowHandleProperties <|.. taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand
+taskt.Core.Automation.Commands.IWindowHandleProperties <|-- taskt.Core.Automation.Commands.IWindowHandleActionPropeties
+taskt.Core.Automation.Commands.IWindowHandleProperties <|.. taskt.Core.Automation.Commands.AWindowHandleCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleByXPathCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromWindowHandleCommand
+taskt.Core.Automation.Commands.IWindowHandleActionPropeties <|.. taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetWindowUIElementFromWindowHandleCommand
+taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand
+taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.ActivateWindowByWindowHandleCommand
+taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.CheckWindowHandleExistsCommand
+taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.GetProcessNameFromWindowHandleCommand
+taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.GetWindowNameFromWindowHandleCommand
+taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.GetWindowPositionFromWindowHandleCommand
+taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.GetWindowSizeFromWindowHandleCommand
+taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.GetWindowStateFromWindowHandleCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleCommand
+taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand
+taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand
+taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand
+taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.CloseWindowByWindowHandle
+taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.MoveWindowByWindowHandleCommand
+taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand
+taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.SetWindowStateByWindowHandleCommand
+@enduml

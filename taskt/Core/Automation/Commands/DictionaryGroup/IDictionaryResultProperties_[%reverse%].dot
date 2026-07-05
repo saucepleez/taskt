@@ -1,0 +1,35 @@
+digraph "taskt.Core.Automation.Commands.IDictionaryResultProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand" [ label="GetJSONValuesAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.IDictionaryResultProperties" [ label="IDictionaryResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand" [ label="SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsDictionaryCommand" [ label="SeleniumBrowserGetWindowAndTabTitlesAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertColorCommand" [ label="ConvertColorCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand" [ label="ConvertDataTableColumnToDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableRowToDictionaryCommand" [ label="ConvertDataTableRowToDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDictionaryCommand" [ label="ExcelGetColumnValuesAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetRowValuesAsDictionaryCommand" [ label="ExcelGetRowValuesAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertJSONToDictionaryCommand" [ label="ConvertJSONToDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertListToDictionaryCommand" [ label="ConvertListToDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand" [ label="SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDictionaryCommand" [ label="SeleniumBrowserGetWebElementsValueAsDictionaryCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand" -> "taskt.Core.Automation.Commands.IDictionaryResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand" -> "taskt.Core.Automation.Commands.IDictionaryResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsDictionaryCommand" -> "taskt.Core.Automation.Commands.IDictionaryResultProperties";
+"taskt.Core.Automation.Commands.ConvertColorCommand" -> "taskt.Core.Automation.Commands.IDictionaryResultProperties";
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand" -> "taskt.Core.Automation.Commands.IDictionaryResultProperties";
+"taskt.Core.Automation.Commands.ConvertDataTableRowToDictionaryCommand" -> "taskt.Core.Automation.Commands.IDictionaryResultProperties";
+"taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDictionaryCommand" -> "taskt.Core.Automation.Commands.IDictionaryResultProperties";
+"taskt.Core.Automation.Commands.ExcelGetRowValuesAsDictionaryCommand" -> "taskt.Core.Automation.Commands.IDictionaryResultProperties";
+"taskt.Core.Automation.Commands.ConvertJSONToDictionaryCommand" -> "taskt.Core.Automation.Commands.IDictionaryResultProperties";
+"taskt.Core.Automation.Commands.ConvertListToDictionaryCommand" -> "taskt.Core.Automation.Commands.IDictionaryResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand" -> "taskt.Core.Automation.Commands.IDictionaryResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDictionaryCommand" -> "taskt.Core.Automation.Commands.IDictionaryResultProperties";
+}

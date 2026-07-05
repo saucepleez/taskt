@@ -1,0 +1,23 @@
+digraph "taskt.Core.Automation.Commands.ADataTableBothDataTableCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ReplaceDataTableValueCommand" [ label="ReplaceDataTableValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ADataTableBothDataTableCommands" [ label="ADataTableBothDataTableCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AddDataTableColumnCommand" [ label="AddDataTableColumnCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AddDataTableRowCommand" [ label="AddDataTableRowCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AddDataTableRowsByDataTableCommand" [ label="AddDataTableRowsByDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AddDataTableRowByDictionaryCommand" [ label="AddDataTableRowByDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SearchAndDeleteDataTableRowsCommand" [ label="SearchAndDeleteDataTableRowsCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.ReplaceDataTableValueCommand" -> "taskt.Core.Automation.Commands.ADataTableBothDataTableCommands";
+"taskt.Core.Automation.Commands.AddDataTableColumnCommand" -> "taskt.Core.Automation.Commands.ADataTableBothDataTableCommands";
+"taskt.Core.Automation.Commands.AddDataTableRowCommand" -> "taskt.Core.Automation.Commands.ADataTableBothDataTableCommands";
+"taskt.Core.Automation.Commands.AddDataTableRowsByDataTableCommand" -> "taskt.Core.Automation.Commands.ADataTableBothDataTableCommands";
+"taskt.Core.Automation.Commands.AddDataTableRowByDictionaryCommand" -> "taskt.Core.Automation.Commands.ADataTableBothDataTableCommands";
+"taskt.Core.Automation.Commands.SearchAndDeleteDataTableRowsCommand" -> "taskt.Core.Automation.Commands.ADataTableBothDataTableCommands";
+}

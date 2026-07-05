@@ -1,0 +1,18 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRangeValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_FirstRowAsColumnName : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelColumnRowRangeGetCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand
+@enduml

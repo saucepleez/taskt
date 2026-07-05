@@ -1,0 +1,25 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "SetJSONValueOfJSONArrayCommand" <<sealed>> {
++RunCommand() : void 
++v_ArrayIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONSetValueOfJContainerCommands"{
++v_Value : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetJSONValueOfJSONObjectCommand" <<sealed>> {
++RunCommand() : void 
++v_PropertyName : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands <|-- taskt.Core.Automation.Commands.SetJSONValueOfJSONArrayCommand
+taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands <|-- taskt.Core.Automation.Commands.SetJSONValueOfJSONObjectCommand
+@enduml

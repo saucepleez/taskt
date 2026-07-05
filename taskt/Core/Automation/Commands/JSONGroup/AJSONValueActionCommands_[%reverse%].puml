@@ -1,0 +1,20 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "CreateJSONVariableCommand" <<sealed>> {
++RunCommand() : void 
++v_Json : String <<get>> <<set>> 
++v_Value : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONValueActionCommands"{
++v_Value : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.AJSONValueActionCommands <|-- taskt.Core.Automation.Commands.CreateJSONVariableCommand
+@enduml

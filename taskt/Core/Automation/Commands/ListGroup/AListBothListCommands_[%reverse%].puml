@@ -1,0 +1,33 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "ReplaceListCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbReplaceAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_List : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_ReplaceAction : String <<get>> <<set>> 
++v_ReplaceActionParameterTable : DataTable <<get>> <<set>> 
++v_NewValue : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AListBothListCommands"{
++v_List : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "AddListItemCommand" <<sealed>> {
++RunCommand() : void 
++v_Input : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.AListBothListCommands <|-- taskt.Core.Automation.Commands.ReplaceListCommand
+taskt.Core.Automation.Commands.AListBothListCommands <|-- taskt.Core.Automation.Commands.AddListItemCommand
+@enduml

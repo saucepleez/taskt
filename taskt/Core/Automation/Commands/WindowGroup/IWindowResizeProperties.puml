@@ -1,0 +1,36 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowResizeProperties" {
++{abstract} v_WhenWindowIsMaximized : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowSizeProperties" {
++{abstract} v_WhenWindowIsMinimized : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ISizeProperties" {
++{abstract} v_Width : String <<get>> <<set>> <<abstract>> 
++{abstract} v_Height : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowRECTProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+
+taskt.Core.Automation.Commands.IWindowSizeProperties <|-- taskt.Core.Automation.Commands.IWindowResizeProperties
+taskt.Core.Automation.Commands.ISizeProperties <|-- taskt.Core.Automation.Commands.IWindowSizeProperties
+taskt.Core.Automation.Commands.IWindowRECTProperties <|-- taskt.Core.Automation.Commands.IWindowSizeProperties
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ISizeProperties
+@enduml

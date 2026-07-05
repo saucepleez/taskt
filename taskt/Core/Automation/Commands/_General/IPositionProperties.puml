@@ -1,0 +1,16 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "IPositionProperties" {
++{abstract} v_XPosition : String <<get>> <<set>> <<abstract>> 
++{abstract} v_YPosition : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IPositionProperties
+@enduml

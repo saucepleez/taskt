@@ -1,0 +1,25 @@
+digraph "taskt.Core.Automation.Commands.IFolderExistsFolderPathBeforeAfterPathResultProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands" [ label="AFolderExistsFolderBeforeAfterResultCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IFolderExistsFolderPathBeforeAfterPathResultProperties" [ label="IFolderExistsFolderPathBeforeAfterPathResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands" [ label="AFolderCopyMoveFolderCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands" [ label="AFolderCopySameRenameFolderCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.CopyFolderCommand" [ label="CopyFolderCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.MoveFolderCommand" [ label="MoveFolderCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand" [ label="CopyFolderInSamLocationCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.RenameFolderCommand" [ label="RenameFolderCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands" -> "taskt.Core.Automation.Commands.IFolderExistsFolderPathBeforeAfterPathResultProperties";
+"taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands" -> "taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands";
+"taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands" -> "taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands";
+"taskt.Core.Automation.Commands.CopyFolderCommand" -> "taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands";
+"taskt.Core.Automation.Commands.MoveFolderCommand" -> "taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands";
+"taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand" -> "taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands";
+"taskt.Core.Automation.Commands.RenameFolderCommand" -> "taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands";
+}

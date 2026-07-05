@@ -1,0 +1,181 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForUIElement : String <<get>> <<set>> 
++v_MaxSiblings : String <<get>> <<set>> 
++v_MaxDepth : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AOneWindowNameCommands"{
+#MatchMethodComboBox_SelectionChangeCommitted() : void 
++v_SelectionMethod : String <<get>> <<set>> 
++v_TargetWindowIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AOneWindowNameActionCommands"{
++v_WaitTimeBetweenFindAndAction : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ActivateOneWindowCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetOneWindowHandleFromOneWindowNameCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowHandleResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetOneProcessNameFromOneWindowNameCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetOneWindowStateCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
++v_WindowStateText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetOneWindowPositionCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_PositionBase : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetOneWindowSizeCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetWindowUIElementFromWindowNameCommand" <<sealed>> {
++RunCommand() : void 
++Refresh() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetOneWindowStateCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ResizeOneWindowCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveOneWindowCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CloseOneWindowCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "EnterShortcutKeyCommand" <<sealed>> {
++RunCommand() : void 
+-cmbHotkey_SelectedIndexChanged() : void 
++v_Hotkey : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SendAdvancedKeyStrokesCommand" <<sealed>> {
++RunCommand() : void 
++AfterShown() : void 
++IsValidate() : Boolean
++BeforeValidate() : void 
++v_KeyActions : DataTable <<get>> <<set>> 
++v_KeyUpDefault : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "EnterKeysCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSend : String <<get>> <<set>> 
++v_EncryptionOption : String <<get>> <<set>> 
++v_UseClipBoard : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ClearClipboardAfterPaste : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "TakeScreenshotCommand" <<sealed>> {
++RunCommand() : void 
+-{static} CaptureWindow() : Bitmap
++v_FilePath : String <<get>> <<set>> 
++v_WaitTimeBetweenFindAndAction : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.ActivateOneWindowCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneWindowHandleFromOneWindowNameCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneProcessNameFromOneWindowNameCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneWindowStateCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneWindowPositionCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneWindowSizeCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetWindowUIElementFromWindowNameCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.SetOneWindowStateCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.ResizeOneWindowCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.MoveOneWindowCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.CloseOneWindowCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.EnterShortcutKeyCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.EnterKeysCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.TakeScreenshotCommand
+@enduml

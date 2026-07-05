@@ -1,0 +1,36 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "RemoveDictionaryItemCommand" <<sealed>> {
++RunCommand() : void 
++v_WhenKeyDoesNotExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADictionaryKeyActionCommands"{
++v_WhenKeyDoesNotExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetDictionaryValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Value : String <<get>> <<set>> 
++v_WhenKeyDoesNotExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDictionaryValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WhenKeyDoesNotExists : String <<get>> <<set>> 
++v_KeyType : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.RemoveDictionaryItemCommand
+taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.SetDictionaryValueCommand
+taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.GetDictionaryValueCommand
+@enduml

@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.AListGetFromValueCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.GetListIndexFromValueCommand" [ label="GetListIndexFromValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AListGetFromValueCommands" [ label="AListGetFromValueCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.CheckListItemExistsCommand" [ label="CheckListItemExistsCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.GetListIndexFromValueCommand" -> "taskt.Core.Automation.Commands.AListGetFromValueCommands";
+"taskt.Core.Automation.Commands.CheckListItemExistsCommand" -> "taskt.Core.Automation.Commands.AListGetFromValueCommands";
+}

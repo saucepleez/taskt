@@ -1,0 +1,15 @@
+digraph "taskt.Core.SafeFrmScriptBuilderApplicationSettings" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.SafeFrmScriptBuilderApplicationSettings" [ label="SafeFrmScriptBuilderApplicationSettings", ];
+"taskt.Core.SafeApplicationSettings" [ label="SafeApplicationSettings", ];
+"taskt.Core.IApplicationSettings" [ label="IApplicationSettings", shape="ellipse", style="dashed", ];
+
+"taskt.Core.SafeFrmScriptBuilderApplicationSettings" -> "taskt.Core.SafeApplicationSettings";
+"taskt.Core.SafeApplicationSettings" -> "taskt.Core.IApplicationSettings";
+}

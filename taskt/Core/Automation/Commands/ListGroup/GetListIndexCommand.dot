@@ -1,0 +1,33 @@
+digraph "taskt.Core.Automation.Commands.GetListIndexCommand" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.GetListIndexCommand" [ label="GetListIndexCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AListGetFromListCommands" [ label="AListGetFromListCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AListInputListCommands" [ label="AListInputListCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IListGetFromListProperties" [ label="IListGetFromListProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.IListProperties" [ label="IListProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IResultProperties" [ label="IResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleList" [ label="ICanHandleList", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.GetListIndexCommand" -> "taskt.Core.Automation.Commands.AListGetFromListCommands";
+"taskt.Core.Automation.Commands.AListGetFromListCommands" -> "taskt.Core.Automation.Commands.AListInputListCommands";
+"taskt.Core.Automation.Commands.AListGetFromListCommands" -> "taskt.Core.Automation.Commands.IListGetFromListProperties";
+"taskt.Core.Automation.Commands.AListInputListCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.AListInputListCommands" -> "taskt.Core.Automation.Commands.IListProperties";
+"taskt.Core.Automation.Commands.IListGetFromListProperties" -> "taskt.Core.Automation.Commands.IListProperties";
+"taskt.Core.Automation.Commands.IListGetFromListProperties" -> "taskt.Core.Automation.Commands.IResultProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.IListProperties" -> "taskt.Core.Automation.Commands.ICanHandleList";
+"taskt.Core.Automation.Commands.IListProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ICanHandleList" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

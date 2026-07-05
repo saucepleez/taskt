@@ -1,0 +1,11 @@
+@startuml
+package "taskt.Core.Automation.Engine"{
+class "ReportProgressEventArgs" {
++ProgressUpdate : String <<get>> <<set>> 
+}
+}
+
+
+
+EventArgs -- taskt.Core.Automation.Engine.ReportProgressEventArgs
+@enduml

@@ -1,0 +1,21 @@
+digraph "taskt.Core.Automation.Commands.IFileExistsFilePathPathResultProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.IFileExistsFilePathPathResultProperties" [ label="IFileExistsFilePathPathResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IFileExistsFilePathProperties" [ label="IFileExistsFilePathProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IFilePathProperties" [ label="IFilePathProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleFilePath" [ label="ICanHandleFilePath", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath" [ label="ICanHandleFileOrFolderPath", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.IFileExistsFilePathPathResultProperties" -> "taskt.Core.Automation.Commands.IFileExistsFilePathProperties";
+"taskt.Core.Automation.Commands.IFileExistsFilePathProperties" -> "taskt.Core.Automation.Commands.IFilePathProperties";
+"taskt.Core.Automation.Commands.IFilePathProperties" -> "taskt.Core.Automation.Commands.ICanHandleFilePath";
+"taskt.Core.Automation.Commands.ICanHandleFilePath" -> "taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath";
+"taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

@@ -1,0 +1,53 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelColumnRowRangeCommands"{
++v_ColumnType : String <<get>> <<set>> 
++v_ColumnStart : String <<get>> <<set>> 
++v_ColumnEnd : String <<get>> <<set>> 
++v_RowStart : String <<get>> <<set>> 
++v_RowEnd : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelColumnRowRangeProperties" {
++{abstract} v_ColumnStart : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ColumnEnd : String <<get>> <<set>> <<abstract>> 
++{abstract} v_RowStart : String <<get>> <<set>> <<abstract>> 
++{abstract} v_RowEnd : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelColumnRowRangeGetProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelColumnRowRangeSetProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelColumnRowRangeGetCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRangeValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_FirstRowAsColumnName : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IExcelColumnRowRangeProperties <|.. taskt.Core.Automation.Commands.AExcelColumnRowRangeCommands
+taskt.Core.Automation.Commands.IExcelColumnRowRangeProperties <|-- taskt.Core.Automation.Commands.IExcelColumnRowRangeGetProperties
+taskt.Core.Automation.Commands.IExcelColumnRowRangeProperties <|-- taskt.Core.Automation.Commands.IExcelColumnRowRangeSetProperties
+taskt.Core.Automation.Commands.AExcelColumnRowRangeCommands <|-- taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands
+taskt.Core.Automation.Commands.IExcelColumnRowRangeGetProperties <|.. taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands
+taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand
+@enduml

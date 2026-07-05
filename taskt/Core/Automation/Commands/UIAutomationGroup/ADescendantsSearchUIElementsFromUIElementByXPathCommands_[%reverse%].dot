@@ -1,0 +1,17 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsByXPathCommand" [ label="UIAutomationCheckUIElementExistsByXPathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands" [ label="ADescendantsSearchUIElementsFromUIElementByXPathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsByXPathCommand" [ label="UIAutomationWaitForUIElementToExistsByXPathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementByXPathCommand" [ label="UIAutomationSearchUIElementFromUIElementByXPathCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsByXPathCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands";
+"taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsByXPathCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementByXPathCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands";
+}

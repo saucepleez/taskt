@@ -1,0 +1,19 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromWindowHandleByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "ADescendantsSearchUIElementsFromWindowHandleByXPathCommands"{
++v_WindowHandle : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
++v_WindowUIElement : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleByXPathCommand
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+package "taskt.UI.CustomControls"{
+class "CommandGroupControl" {
+-CommandSelectionControl_Load() : void 
+-CommandSelectionControl_Paint() : void 
+-CommandSelectionControl_MouseEnter() : void 
+-CommandSelectionControl_MouseLeave() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++GroupName : String <<get>> <<set>> 
+-groupName : string
+-components : System.ComponentModel.IContainer
+}
+}
+
+package "System.Windows.Forms"{
+class "UserControl" {
++add_AutoSizeChanged() : void 
++remove_AutoSizeChanged() : void 
++add_AutoValidateChanged() : void 
++remove_AutoValidateChanged() : void 
++add_Load() : void 
++remove_Load() : void 
++add_TextChanged() : void 
++remove_TextChanged() : void 
++ValidateChildren() : Boolean
++ValidateChildren() : Boolean
+#OnCreateControl() : void 
+#OnLoad() : void 
+#OnResize() : void 
+#OnMouseDown() : void 
+#WndProc() : void 
++AutoSize : Boolean <<get>> <<set>> 
++AutoSizeMode : AutoSizeMode <<get>> <<set>> 
++AutoValidate : AutoValidate <<get>> <<set>> 
++BorderStyle : BorderStyle <<get>> <<set>> 
+#CreateParams : CreateParams <<get>> 
+#DefaultSize : Size <<get>> 
++Text : String <<get>> <<set>> 
+}
+}
+
+
+System.Windows.Forms.UserControl <|-- taskt.UI.CustomControls.CommandGroupControl
+System.Windows.Forms.UserControl <|-- taskt.UI.CustomControls.CommandGroupControl
+@enduml

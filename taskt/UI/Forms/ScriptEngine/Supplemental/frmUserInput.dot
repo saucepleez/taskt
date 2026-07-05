@@ -1,0 +1,16 @@
+digraph "taskt.UI.Forms.ScriptEngine.Supplemental.frmUserInput" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.UI.Forms.ScriptEngine.Supplemental.frmUserInput" [ label="frmUserInput", ];
+"taskt.UI.Forms.UIForm" [ label="UIForm", ];
+"System.Windows.Forms.Form" [ label="Form", ];
+
+"taskt.UI.Forms.ScriptEngine.Supplemental.frmUserInput" -> "taskt.UI.Forms.UIForm";
+"taskt.UI.Forms.ScriptEngine.Supplemental.frmUserInput" -> "taskt.UI.Forms.UIForm";
+"taskt.UI.Forms.UIForm" -> "System.Windows.Forms.Form";
+}

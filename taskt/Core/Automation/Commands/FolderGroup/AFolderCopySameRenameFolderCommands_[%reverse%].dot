@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand" [ label="CopyFolderInSamLocationCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands" [ label="AFolderCopySameRenameFolderCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.RenameFolderCommand" [ label="RenameFolderCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand" -> "taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands";
+"taskt.Core.Automation.Commands.RenameFolderCommand" -> "taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands";
+}

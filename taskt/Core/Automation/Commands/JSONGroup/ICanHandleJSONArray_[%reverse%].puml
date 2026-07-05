@@ -1,0 +1,246 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleJContainer" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleJSONArray" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IJSONInputJContainer" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IJSONValueActionProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONGetFromJContainerCommands"{
++v_JsonExtractor : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IJSONJSONPathProperties" {
++{abstract} v_JsonExtractor : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONAddInsertSetJContainerCommands"{
++v_Value : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONValueActionCommands"{
++v_Value : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValueFromJSONArrayCommand" <<sealed>> {
++RunCommand() : void 
++v_ArrayIndex : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValueFromJSONObjectCommand" <<sealed>> {
++RunCommand() : void 
++v_PropertyName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertJSONToDataTableCommand" <<sealed>> {
++RunCommand() : void 
+-{static} ParseJSONArrayAsDataTable() : DataTable
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertJSONToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertJSONToListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValuesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONJSONPathCommands"{
++v_Json : String <<get>> <<set>> 
++v_JsonExtractor : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONInsertValueToJContainerCommands"{
++v_Value : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONSetValueOfJContainerCommands"{
++v_Value : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "AddJSONArrayItemCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "AddJSONObjectPropertyCommand" <<sealed>> {
++RunCommand() : void 
++v_PropertyName : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetJSONValueCommand" <<sealed>> {
++RunCommand() : void 
++v_JsonExtractor : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CreateJSONVariableCommand" <<sealed>> {
++RunCommand() : void 
++v_Json : String <<get>> <<set>> 
++v_Value : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RemoveJSONArrayItemCommand" <<sealed>> {
++RunCommand() : void 
++v_Index : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RemoveJSONObjectPropertyCommand" <<sealed>> {
++RunCommand() : void 
++v_PropertyName : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "InsertJSONArrayItemCommand" <<sealed>> {
++RunCommand() : void 
++v_Index : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "InsertJSONObjectPropertyCommand" <<sealed>> {
++RunCommand() : void 
++v_PropertyNameInsertPosition : String <<get>> <<set>> 
++v_PropertyName : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetJSONValueOfJSONArrayCommand" <<sealed>> {
++RunCommand() : void 
++v_ArrayIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetJSONValueOfJSONObjectCommand" <<sealed>> {
++RunCommand() : void 
++v_PropertyName : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.ICanHandleJSONArray <|-- taskt.Core.Automation.Commands.ICanHandleJContainer
+taskt.Core.Automation.Commands.ICanHandleJContainer <|-- taskt.Core.Automation.Commands.IJSONInputJContainer
+taskt.Core.Automation.Commands.ICanHandleJContainer <|-- taskt.Core.Automation.Commands.IJSONValueActionProperties
+taskt.Core.Automation.Commands.IJSONInputJContainer <|.. taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.IJSONInputJContainer <|-- taskt.Core.Automation.Commands.IJSONJSONPathProperties
+taskt.Core.Automation.Commands.IJSONValueActionProperties <|.. taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands
+taskt.Core.Automation.Commands.IJSONValueActionProperties <|.. taskt.Core.Automation.Commands.AJSONValueActionCommands
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValueFromJSONArrayCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValueCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValuesAsDataTableCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValueFromJSONObjectCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.ConvertJSONToDataTableCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.ConvertJSONToDictionaryCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.ConvertJSONToListCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValuesAsListCommand
+taskt.Core.Automation.Commands.IJSONJSONPathProperties <|.. taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.IJSONJSONPathProperties <|.. taskt.Core.Automation.Commands.AJSONJSONPathCommands
+taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands
+taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands
+taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AddJSONArrayItemCommand
+taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AddJSONObjectPropertyCommand
+taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.SetJSONValueCommand
+taskt.Core.Automation.Commands.AJSONValueActionCommands <|-- taskt.Core.Automation.Commands.CreateJSONVariableCommand
+taskt.Core.Automation.Commands.AJSONJSONPathCommands <|-- taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands
+taskt.Core.Automation.Commands.AJSONJSONPathCommands <|-- taskt.Core.Automation.Commands.RemoveJSONArrayItemCommand
+taskt.Core.Automation.Commands.AJSONJSONPathCommands <|-- taskt.Core.Automation.Commands.RemoveJSONObjectPropertyCommand
+taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands <|-- taskt.Core.Automation.Commands.InsertJSONArrayItemCommand
+taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands <|-- taskt.Core.Automation.Commands.InsertJSONObjectPropertyCommand
+taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands <|-- taskt.Core.Automation.Commands.SetJSONValueOfJSONArrayCommand
+taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands <|-- taskt.Core.Automation.Commands.SetJSONValueOfJSONObjectCommand
+taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands
+taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands
+taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AddJSONArrayItemCommand
+taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AddJSONObjectPropertyCommand
+taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.SetJSONValueCommand
+taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands <|-- taskt.Core.Automation.Commands.InsertJSONArrayItemCommand
+taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands <|-- taskt.Core.Automation.Commands.InsertJSONObjectPropertyCommand
+taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands <|-- taskt.Core.Automation.Commands.SetJSONValueOfJSONArrayCommand
+taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands <|-- taskt.Core.Automation.Commands.SetJSONValueOfJSONObjectCommand
+@enduml

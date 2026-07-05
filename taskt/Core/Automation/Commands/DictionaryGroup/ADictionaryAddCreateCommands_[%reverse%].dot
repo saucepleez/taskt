@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.ADictionaryAddCreateCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.AddDictionaryItemCommand" [ label="AddDictionaryItemCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ADictionaryAddCreateCommands" [ label="ADictionaryAddCreateCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.CreateDictionaryCommand" [ label="CreateDictionaryCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.AddDictionaryItemCommand" -> "taskt.Core.Automation.Commands.ADictionaryAddCreateCommands";
+"taskt.Core.Automation.Commands.CreateDictionaryCommand" -> "taskt.Core.Automation.Commands.ADictionaryAddCreateCommands";
+}

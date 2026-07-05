@@ -1,0 +1,21 @@
+digraph "taskt.Core.Automation.Commands.AListIndexCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.CheckValidListIndex" [ label="CheckValidListIndex", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AListIndexCommands" [ label="AListIndexCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.RemoveListItemCommand" [ label="RemoveListItemCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SetListItemCommand" [ label="SetListItemCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SetListIndexCommand" [ label="SetListIndexCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetListItemCommand" [ label="GetListItemCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.CheckValidListIndex" -> "taskt.Core.Automation.Commands.AListIndexCommands";
+"taskt.Core.Automation.Commands.RemoveListItemCommand" -> "taskt.Core.Automation.Commands.AListIndexCommands";
+"taskt.Core.Automation.Commands.SetListItemCommand" -> "taskt.Core.Automation.Commands.AListIndexCommands";
+"taskt.Core.Automation.Commands.SetListIndexCommand" -> "taskt.Core.Automation.Commands.AListIndexCommands";
+"taskt.Core.Automation.Commands.GetListItemCommand" -> "taskt.Core.Automation.Commands.AListIndexCommands";
+}

@@ -1,0 +1,25 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "CopyFolderInSamLocationCommand" <<sealed>> {
++RunCommand() : void 
++v_CopySubFolder : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IFolderCopyFolderProperties" {
++{abstract} v_CopySubFolder : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CopyFolderCommand" <<sealed>> {
++RunCommand() : void 
++v_CopySubFolder : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IFolderCopyFolderProperties <|.. taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand
+taskt.Core.Automation.Commands.IFolderCopyFolderProperties <|.. taskt.Core.Automation.Commands.CopyFolderCommand
+@enduml

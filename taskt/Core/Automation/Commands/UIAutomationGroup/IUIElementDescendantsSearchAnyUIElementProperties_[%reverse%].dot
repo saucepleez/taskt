@@ -1,0 +1,29 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchAnyUIElementProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands" [ label="ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchAnyUIElementProperties" [ label="IUIElementDescendantsSearchAnyUIElementProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands" [ label="AUIElementActionFromSomethingByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands" [ label="ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands" [ label="AUIElementActionFromWindowSomethingByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsCommand" [ label="UIAutomationWaitForUIElementToExistsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsCommand" [ label="UIAutomationCheckUIElementExistsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementCommand" [ label="UIAutomationSearchUIElementFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand" [ label="UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand" [ label="UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchAnyUIElementProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchAnyUIElementProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands";
+}

@@ -1,0 +1,57 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "GetWindowStatesFromWindowNamesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
++v_WindowStateText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowStateProperties" {
++{abstract} v_WindowState : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetWindowsStateCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetOneWindowStateCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowStateFromWindowHandleCommand" <<sealed>> {
+-{static} GetWindowPlacement() : Boolean
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
++v_WindowStateText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetWindowStateByWindowHandleCommand" <<sealed>> {
+-{static} ShowWindowAsync() : Boolean
+-{static} ShowWindow() : Boolean
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
+-MAXIMIZE : int
+-MINIMIZE : int
+-RESTORE : int
+}
+}
+
+
+taskt.Core.Automation.Commands.IWindowStateProperties <|.. taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsListCommand
+taskt.Core.Automation.Commands.IWindowStateProperties <|.. taskt.Core.Automation.Commands.SetWindowsStateCommand
+taskt.Core.Automation.Commands.IWindowStateProperties <|.. taskt.Core.Automation.Commands.SetOneWindowStateCommand
+taskt.Core.Automation.Commands.IWindowStateProperties <|.. taskt.Core.Automation.Commands.GetWindowStateFromWindowHandleCommand
+taskt.Core.Automation.Commands.IWindowStateProperties <|.. taskt.Core.Automation.Commands.SetWindowStateByWindowHandleCommand
+@enduml

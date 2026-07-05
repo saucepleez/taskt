@@ -1,0 +1,66 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+abstract class "ADictionaryKeyCommands"{
++v_Key : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryKeyProperties" {
++{abstract} v_Key : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryKeyActionProperties" {
++{abstract} v_WhenKeyDoesNotExists : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADictionaryKeyActionCommands"{
++v_WhenKeyDoesNotExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CheckDictionaryKeyExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RemoveDictionaryItemCommand" <<sealed>> {
++RunCommand() : void 
++v_WhenKeyDoesNotExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetDictionaryValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Value : String <<get>> <<set>> 
++v_WhenKeyDoesNotExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDictionaryValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WhenKeyDoesNotExists : String <<get>> <<set>> 
++v_KeyType : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IDictionaryKeyProperties <|.. taskt.Core.Automation.Commands.ADictionaryKeyCommands
+taskt.Core.Automation.Commands.IDictionaryKeyProperties <|-- taskt.Core.Automation.Commands.IDictionaryKeyActionProperties
+taskt.Core.Automation.Commands.ADictionaryKeyCommands <|-- taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
+taskt.Core.Automation.Commands.ADictionaryKeyCommands <|-- taskt.Core.Automation.Commands.CheckDictionaryKeyExistsCommand
+taskt.Core.Automation.Commands.IDictionaryKeyActionProperties <|.. taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
+taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.RemoveDictionaryItemCommand
+taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.SetDictionaryValueCommand
+taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.GetDictionaryValueCommand
+@enduml

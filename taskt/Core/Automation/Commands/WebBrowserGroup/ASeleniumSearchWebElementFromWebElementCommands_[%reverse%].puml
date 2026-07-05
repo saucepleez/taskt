@@ -1,0 +1,20 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserCheckWebElementExistsFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForWebElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumSearchWebElementFromWebElementCommands"{
+#SearchWebElementAction() : void 
++v_SelectionMethod : String <<get>> <<set>> 
++v_WebElementIndex : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsFromWebElementCommand
+@enduml

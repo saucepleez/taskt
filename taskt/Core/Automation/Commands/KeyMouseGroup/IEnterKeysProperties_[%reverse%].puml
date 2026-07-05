@@ -1,0 +1,40 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "EnterKeysFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSend : String <<get>> <<set>> 
++v_EncryptionOption : String <<get>> <<set>> 
++v_UseClipBoard : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ClearClipboardAfterPaste : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.KeyMouseGroup"{
+Interface "IEnterKeysProperties" {
++{abstract} v_TextToSend : String <<get>> <<set>> <<abstract>> 
++{abstract} v_EncryptionOption : String <<get>> <<set>> <<abstract>> 
++{abstract} v_UseClipBoard : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ClearClipboardAfterPaste : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "EnterKeysCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSend : String <<get>> <<set>> 
++v_EncryptionOption : String <<get>> <<set>> 
++v_UseClipBoard : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ClearClipboardAfterPaste : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties <|.. taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand
+taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties <|.. taskt.Core.Automation.Commands.EnterKeysCommand
+@enduml

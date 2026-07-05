@@ -1,0 +1,14 @@
+@startuml
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "ICanHandleUIElementXML" {
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "ICanHandleUIElement" {
+}
+}
+
+
+taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement <|-- taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementXML
+@enduml

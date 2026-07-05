@@ -1,0 +1,15 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryGetFromDictionaryProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IResultProperties" {
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.IDictionaryGetFromDictionaryProperties
+@enduml

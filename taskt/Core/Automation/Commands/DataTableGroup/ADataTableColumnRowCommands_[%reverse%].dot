@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.ADataTableColumnRowCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.SetDataTableValueCommand" [ label="SetDataTableValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ADataTableColumnRowCommands" [ label="ADataTableColumnRowCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetDataTableValueCommand" [ label="GetDataTableValueCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.SetDataTableValueCommand" -> "taskt.Core.Automation.Commands.ADataTableColumnRowCommands";
+"taskt.Core.Automation.Commands.GetDataTableValueCommand" -> "taskt.Core.Automation.Commands.ADataTableColumnRowCommands";
+}

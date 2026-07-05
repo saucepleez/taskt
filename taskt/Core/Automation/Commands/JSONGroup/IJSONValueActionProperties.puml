@@ -1,0 +1,57 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "IJSONValueActionProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IJSONInputJSONProperties" {
++{abstract} v_Json : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IJSONValueProperties" {
++{abstract} v_Value : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ValueType : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleJContainer" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleJSON" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleJSONArray" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleJSONObject" {
+}
+}
+
+
+taskt.Core.Automation.Commands.IJSONInputJSONProperties <|-- taskt.Core.Automation.Commands.IJSONValueActionProperties
+taskt.Core.Automation.Commands.IJSONValueProperties <|-- taskt.Core.Automation.Commands.IJSONValueActionProperties
+taskt.Core.Automation.Commands.ICanHandleJContainer <|-- taskt.Core.Automation.Commands.IJSONValueActionProperties
+taskt.Core.Automation.Commands.ICanHandleJSON <|-- taskt.Core.Automation.Commands.IJSONInputJSONProperties
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IJSONInputJSONProperties
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IJSONValueProperties
+taskt.Core.Automation.Commands.ICanHandleJSONArray <|-- taskt.Core.Automation.Commands.ICanHandleJContainer
+taskt.Core.Automation.Commands.ICanHandleJSONObject <|-- taskt.Core.Automation.Commands.ICanHandleJContainer
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleJSON
+taskt.Core.Automation.Commands.ICanHandleJSON <|-- taskt.Core.Automation.Commands.ICanHandleJSONArray
+taskt.Core.Automation.Commands.ICanHandleJSON <|-- taskt.Core.Automation.Commands.ICanHandleJSONObject
+@enduml

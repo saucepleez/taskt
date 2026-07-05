@@ -1,0 +1,21 @@
+digraph "taskt.Core.Automation.Commands.IReplaceValueProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ReplaceDataTableValueCommand" [ label="ReplaceDataTableValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.IReplaceValueProperties" [ label="IReplaceValueProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ReplaceDataTableRowValueCommand" [ label="ReplaceDataTableRowValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ReplaceDataTableColumnValueCommand" [ label="ReplaceDataTableColumnValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ReplaceDictionaryCommand" [ label="ReplaceDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ReplaceListCommand" [ label="ReplaceListCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.ReplaceDataTableValueCommand" -> "taskt.Core.Automation.Commands.IReplaceValueProperties";
+"taskt.Core.Automation.Commands.ReplaceDataTableRowValueCommand" -> "taskt.Core.Automation.Commands.IReplaceValueProperties";
+"taskt.Core.Automation.Commands.ReplaceDataTableColumnValueCommand" -> "taskt.Core.Automation.Commands.IReplaceValueProperties";
+"taskt.Core.Automation.Commands.ReplaceDictionaryCommand" -> "taskt.Core.Automation.Commands.IReplaceValueProperties";
+"taskt.Core.Automation.Commands.ReplaceListCommand" -> "taskt.Core.Automation.Commands.IReplaceValueProperties";
+}

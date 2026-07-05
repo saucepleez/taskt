@@ -1,0 +1,43 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.IGetFromUIElementProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands" [ label="AGetFromUIElementCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IGetFromUIElementProperties" [ label="IGetFromUIElementProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGetTextsFromTableUIElementAsDataTableCommand" [ label="UIAutomationGetTextsFromTableUIElementAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetWindowUIElementFromUIElementCommand" [ label="UIAutomationGetWindowUIElementFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetTableInformationFromUIElementCommand" [ label="UIAutomationGetTableInformationFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetScrollBarInformationFromUIElementCommand" [ label="UIAutomationGetScrollBarInformationFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetWindowHandleFromUIElementCommand" [ label="UIAutomationGetWindowHandleFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetWindowNameFromUIElementCommand" [ label="UIAutomationGetWindowNameFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetPropertyValueFromUIElementCommand" [ label="UIAutomationGetPropertyValueFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetUIElementPositionCommand" [ label="UIAutomationGetUIElementPositionCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetUIElementSizeCommand" [ label="UIAutomationGetUIElementSizeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetSelectedStateFromUIElementCommand" [ label="UIAutomationGetSelectedStateFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetUIElementFromTableUIElementCommand" [ label="UIAutomationGetUIElementFromTableUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand" [ label="UIAutomationGetSelectionItemsValueFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetTextFromTableUIElementCommand" [ label="UIAutomationGetTextFromTableUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetTextFromUIElementCommand" [ label="UIAutomationGetTextFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetParentUIElementCommand" [ label="UIAutomationGetParentUIElementCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IGetFromUIElementProperties";
+"taskt.Core.Automation.Commands.UIAutomationGetTextsFromTableUIElementAsDataTableCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+"taskt.Core.Automation.Commands.UIAutomationGetWindowUIElementFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+"taskt.Core.Automation.Commands.UIAutomationGetTableInformationFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+"taskt.Core.Automation.Commands.UIAutomationGetScrollBarInformationFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+"taskt.Core.Automation.Commands.UIAutomationGetWindowHandleFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+"taskt.Core.Automation.Commands.UIAutomationGetWindowNameFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+"taskt.Core.Automation.Commands.UIAutomationGetPropertyValueFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+"taskt.Core.Automation.Commands.UIAutomationGetUIElementPositionCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+"taskt.Core.Automation.Commands.UIAutomationGetUIElementSizeCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+"taskt.Core.Automation.Commands.UIAutomationGetSelectedStateFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+"taskt.Core.Automation.Commands.UIAutomationGetUIElementFromTableUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+"taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+"taskt.Core.Automation.Commands.UIAutomationGetTextFromTableUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+"taskt.Core.Automation.Commands.UIAutomationGetTextFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+"taskt.Core.Automation.Commands.UIAutomationGetParentUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands";
+}

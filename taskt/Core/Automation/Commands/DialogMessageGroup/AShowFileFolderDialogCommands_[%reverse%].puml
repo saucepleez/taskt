@@ -1,0 +1,33 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "ShowFolderDialogCommand" <<sealed>> {
++RunCommand() : void 
++v_DialogType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AShowFileFolderDialogCommands"{
+#GetInitialDirectory() : String
+#ShowDialogProcess() : void 
++v_InitialDirectory : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_WhenCancel : String <<get>> <<set>> 
++v_DialogResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ShowFileDialogCommand" <<sealed>> {
++RunCommand() : void 
+-{static} CheckFileterProperty() : Boolean
++v_DialogType : String <<get>> <<set>> 
++v_Filter : String <<get>> <<set>> 
++v_FilterIndex : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.AShowFileFolderDialogCommands <|-- taskt.Core.Automation.Commands.ShowFolderDialogCommand
+taskt.Core.Automation.Commands.AShowFileFolderDialogCommands <|-- taskt.Core.Automation.Commands.ShowFileDialogCommand
+@enduml

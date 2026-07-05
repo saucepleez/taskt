@@ -1,0 +1,41 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+abstract class "ADictionaryCreateFromDictionaryCommands"{
++{abstract} v_TargetDictionary : String <<get>> <<set>> <<abstract>> 
++v_NewDictionary : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryCreateFromDictionary" {
++{abstract} v_TargetDictionary : String <<get>> <<set>> <<abstract>> 
++{abstract} v_NewDictionary : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "FilterDictionaryCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbFilterAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_TargetDictionary : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_FilterAction : String <<get>> <<set>> 
++v_FilterActionParameterTable : DataTable <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CopyDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetDictionary : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IDictionaryCreateFromDictionary <|.. taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands
+taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands <|-- taskt.Core.Automation.Commands.FilterDictionaryCommand
+taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands <|-- taskt.Core.Automation.Commands.CopyDictionaryCommand
+@enduml

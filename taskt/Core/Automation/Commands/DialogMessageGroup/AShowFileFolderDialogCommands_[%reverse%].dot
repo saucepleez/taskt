@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.AShowFileFolderDialogCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ShowFolderDialogCommand" [ label="ShowFolderDialogCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AShowFileFolderDialogCommands" [ label="AShowFileFolderDialogCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ShowFileDialogCommand" [ label="ShowFileDialogCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.ShowFolderDialogCommand" -> "taskt.Core.Automation.Commands.AShowFileFolderDialogCommands";
+"taskt.Core.Automation.Commands.ShowFileDialogCommand" -> "taskt.Core.Automation.Commands.AShowFileFolderDialogCommands";
+}

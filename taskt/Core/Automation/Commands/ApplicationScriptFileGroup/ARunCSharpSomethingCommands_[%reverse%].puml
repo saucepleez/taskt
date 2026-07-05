@@ -1,0 +1,29 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "RunCSharpFileCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ARunCSharpSomethingCommands"{
++v_Arguments : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_DeleteExecutableFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RunCSharpCodeCommand" <<sealed>> {
++RunCommand() : void 
+-lnkShowCodeBuilderLink_Clicked() : void 
++v_Code : String <<get>> <<set>> 
++v_ReplaceScriptVariables : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.ARunCSharpSomethingCommands <|-- taskt.Core.Automation.Commands.RunCSharpFileCommand
+taskt.Core.Automation.Commands.ARunCSharpSomethingCommands <|-- taskt.Core.Automation.Commands.RunCSharpCodeCommand
+@enduml

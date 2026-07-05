@@ -1,0 +1,17 @@
+digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetMultiWebElementsValueAsSomethingCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDataTableCommand" [ label="SeleniumBrowserGetWebElementsValueAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetMultiWebElementsValueAsSomethingCommands" [ label="ASeleniumGetMultiWebElementsValueAsSomethingCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDictionaryCommand" [ label="SeleniumBrowserGetWebElementsValueAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsListCommand" [ label="SeleniumBrowserGetWebElementsValueAsListCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDataTableCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetMultiWebElementsValueAsSomethingCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDictionaryCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetMultiWebElementsValueAsSomethingCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsListCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetMultiWebElementsValueAsSomethingCommands";
+}

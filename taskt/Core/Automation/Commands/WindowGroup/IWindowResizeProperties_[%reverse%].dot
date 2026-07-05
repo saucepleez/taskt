@@ -1,0 +1,13 @@
+digraph "taskt.Core.Automation.Commands.IWindowResizeProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand" [ label="ResizeWindowByWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.IWindowResizeProperties" [ label="IWindowResizeProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand" -> "taskt.Core.Automation.Commands.IWindowResizeProperties";
+}

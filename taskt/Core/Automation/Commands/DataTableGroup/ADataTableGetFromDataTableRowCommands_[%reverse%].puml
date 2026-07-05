@@ -1,0 +1,63 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "JoinDataTableRowAsTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Separator : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_BeforeText : String <<get>> <<set>> 
++v_AfterText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADataTableGetFromDataTableRowCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableRowToTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ExportHeader : String <<get>> <<set>> 
++v_ExportIndex : String <<get>> <<set>> 
++v_ActualRowIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableRowToDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableRowToJSONCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableRowToListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableRowToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.JoinDataTableRowAsTextCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToTextCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToDataTableCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToJSONCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToListCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToDictionaryCommand
+@enduml

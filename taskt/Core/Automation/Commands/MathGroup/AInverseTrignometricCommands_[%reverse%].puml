@@ -1,0 +1,24 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "GetArccosCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AInverseTrignometricCommands"{
++v_AngleType : String <<get>> <<set>> 
++v_WhenValueIsOutOfRange : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetArcsinCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+
+taskt.Core.Automation.Commands.AInverseTrignometricCommands <|-- taskt.Core.Automation.Commands.GetArccosCommand
+taskt.Core.Automation.Commands.AInverseTrignometricCommands <|-- taskt.Core.Automation.Commands.GetArcsinCommand
+@enduml

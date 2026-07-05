@@ -1,0 +1,16 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "ISizeProperties" {
++{abstract} v_Width : String <<get>> <<set>> <<abstract>> 
++{abstract} v_Height : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ISizeProperties
+@enduml

@@ -1,0 +1,39 @@
+@startuml
+package "taskt.Core"{
+class "SafeHttpServerClientServerSettings" {
++HTTPGuid : Guid <<get>> <<set>> 
++HTTPServerURL : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core"{
+class "SafeServerSettings" {
++ServerConnectionEnabled : Boolean <<get>> 
++ConnectToServerOnStartup : Boolean <<get>> 
++RetryServerConnectionOnFail : Boolean <<get>> 
++BypassCertificateValidation : Boolean <<get>> 
++ServerURL : String <<get>> 
++ServerPublicKey : String <<get>> 
++HTTPServerURL : String <<get>> 
++HTTPGuid : Guid <<get>> 
+#serverSettings : taskt.Core.ServerSettings
+}
+}
+
+package "taskt.Core"{
+Interface "IServerSettings" {
++{abstract} ServerConnectionEnabled : Boolean <<get>> <<abstract>> 
++{abstract} ConnectToServerOnStartup : Boolean <<get>> <<abstract>> 
++{abstract} RetryServerConnectionOnFail : Boolean <<get>> <<abstract>> 
++{abstract} BypassCertificateValidation : Boolean <<get>> <<abstract>> 
++{abstract} ServerURL : String <<get>> <<abstract>> 
++{abstract} ServerPublicKey : String <<get>> <<abstract>> 
++{abstract} HTTPServerURL : String <<get>> <<abstract>> 
++{abstract} HTTPGuid : Guid <<get>> <<abstract>> 
+}
+}
+
+
+taskt.Core.SafeServerSettings <|-- taskt.Core.SafeHttpServerClientServerSettings
+taskt.Core.IServerSettings <|.. taskt.Core.SafeServerSettings
+@enduml

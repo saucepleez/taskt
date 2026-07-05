@@ -1,0 +1,27 @@
+@startuml
+package "taskt.Core.Automation.Commands.KeyMouseGroup"{
+Interface "IEnterKeysProperties" {
++{abstract} v_TextToSend : String <<get>> <<set>> <<abstract>> 
++{abstract} v_EncryptionOption : String <<get>> <<set>> <<abstract>> 
++{abstract} v_UseClipBoard : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ClearClipboardAfterPaste : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.KeyMouseGroup"{
+Interface "IKeyActionCoreProperties" {
++{abstract} v_WaitTimeAfterKeyEnter : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ActivateCurrentWindow : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowActivateProperties" {
++{abstract} v_ActivateBeforeAction : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties
+taskt.Core.Automation.Commands.IWindowActivateProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties
+@enduml

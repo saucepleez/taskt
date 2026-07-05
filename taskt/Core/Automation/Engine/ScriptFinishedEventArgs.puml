@@ -1,0 +1,15 @@
+@startuml
+package "taskt.Core.Automation.Engine"{
+class "ScriptFinishedEventArgs" {
++LoggedOn : DateTime <<get>> <<set>> 
++Result : ScriptFinishedResult <<get>> <<set>> 
++Error : String <<get>> <<set>> 
++ExecutionTime : TimeSpan <<get>> <<set>> 
++FileName : String <<get>> <<set>> 
+}
+}
+
+
+
+EventArgs -- taskt.Core.Automation.Engine.ScriptFinishedEventArgs
+@enduml

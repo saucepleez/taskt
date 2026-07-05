@@ -1,0 +1,41 @@
+digraph "taskt.Core.Automation.Commands.IWindowRECTProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.IWindowPositionProperties" [ label="IWindowPositionProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IWindowRECTProperties" [ label="IWindowRECTProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IWindowSizeProperties" [ label="IWindowSizeProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand" [ label="GetWindowPositionsFromWindowNamesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.MoveWindowsCommand" [ label="MoveWindowsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.MoveOneWindowCommand" [ label="MoveOneWindowCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetOneWindowPositionCommand" [ label="GetOneWindowPositionCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowPositionFromWindowHandleCommand" [ label="GetWindowPositionFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.MoveWindowByWindowHandleCommand" [ label="MoveWindowByWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand" [ label="GetWindowSizesFromWindowNamesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ResizeWindowsCommand" [ label="ResizeWindowsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ResizeOneWindowCommand" [ label="ResizeOneWindowCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetOneWindowSizeCommand" [ label="GetOneWindowSizeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.IWindowResizeProperties" [ label="IWindowResizeProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.GetWindowSizeFromWindowHandleCommand" [ label="GetWindowSizeFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand" [ label="ResizeWindowByWindowHandleCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.IWindowPositionProperties" -> "taskt.Core.Automation.Commands.IWindowRECTProperties";
+"taskt.Core.Automation.Commands.IWindowSizeProperties" -> "taskt.Core.Automation.Commands.IWindowRECTProperties";
+"taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.IWindowPositionProperties";
+"taskt.Core.Automation.Commands.MoveWindowsCommand" -> "taskt.Core.Automation.Commands.IWindowPositionProperties";
+"taskt.Core.Automation.Commands.MoveOneWindowCommand" -> "taskt.Core.Automation.Commands.IWindowPositionProperties";
+"taskt.Core.Automation.Commands.GetOneWindowPositionCommand" -> "taskt.Core.Automation.Commands.IWindowPositionProperties";
+"taskt.Core.Automation.Commands.GetWindowPositionFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.IWindowPositionProperties";
+"taskt.Core.Automation.Commands.MoveWindowByWindowHandleCommand" -> "taskt.Core.Automation.Commands.IWindowPositionProperties";
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.IWindowSizeProperties";
+"taskt.Core.Automation.Commands.ResizeWindowsCommand" -> "taskt.Core.Automation.Commands.IWindowSizeProperties";
+"taskt.Core.Automation.Commands.ResizeOneWindowCommand" -> "taskt.Core.Automation.Commands.IWindowSizeProperties";
+"taskt.Core.Automation.Commands.GetOneWindowSizeCommand" -> "taskt.Core.Automation.Commands.IWindowSizeProperties";
+"taskt.Core.Automation.Commands.IWindowResizeProperties" -> "taskt.Core.Automation.Commands.IWindowSizeProperties";
+"taskt.Core.Automation.Commands.GetWindowSizeFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.IWindowSizeProperties";
+"taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand" -> "taskt.Core.Automation.Commands.IWindowResizeProperties";
+}

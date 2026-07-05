@@ -1,0 +1,21 @@
+digraph "taskt.Core.Automation.Commands.ShowMessageCommand" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ShowMessageCommand" [ label="ShowMessageCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.IDialogResultProperties" [ label="IDialogResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.ShowMessageCommand" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.ShowMessageCommand" -> "taskt.Core.Automation.Commands.IDialogResultProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.IDialogResultProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

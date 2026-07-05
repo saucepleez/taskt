@@ -1,0 +1,27 @@
+digraph "taskt.Core.Automation.Commands.ICanHandleColor" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.IColorCreateProperties" [ label="IColorCreateProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleColor" [ label="ICanHandleColor", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IColorProperties" [ label="IColorProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ConvertColorCommand" [ label="ConvertColorCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AColorCreateCommands" [ label="AColorCreateCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.CreateColorFromARGBNumberCommand" [ label="CreateColorFromARGBNumberCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CreateColorFromExcelColorCommand" [ label="CreateColorFromExcelColorCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CreateColorFromHexCommand" [ label="CreateColorFromHexCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CreateColorCommand" [ label="CreateColorCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.IColorCreateProperties" -> "taskt.Core.Automation.Commands.ICanHandleColor";
+"taskt.Core.Automation.Commands.IColorProperties" -> "taskt.Core.Automation.Commands.ICanHandleColor";
+"taskt.Core.Automation.Commands.ConvertColorCommand" -> "taskt.Core.Automation.Commands.ICanHandleColor";
+"taskt.Core.Automation.Commands.AColorCreateCommands" -> "taskt.Core.Automation.Commands.IColorCreateProperties";
+"taskt.Core.Automation.Commands.CreateColorFromARGBNumberCommand" -> "taskt.Core.Automation.Commands.AColorCreateCommands";
+"taskt.Core.Automation.Commands.CreateColorFromExcelColorCommand" -> "taskt.Core.Automation.Commands.AColorCreateCommands";
+"taskt.Core.Automation.Commands.CreateColorFromHexCommand" -> "taskt.Core.Automation.Commands.AColorCreateCommands";
+"taskt.Core.Automation.Commands.CreateColorCommand" -> "taskt.Core.Automation.Commands.AColorCreateCommands";
+}

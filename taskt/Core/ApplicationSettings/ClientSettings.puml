@@ -1,0 +1,127 @@
+@startuml
+package "taskt.Core"{
+class "ClientSettings" <<sealed>> {
++Clone() : ClientSettings
++AntiIdleWhileOpen : Boolean <<get>> <<set>> 
++RootFolder : String <<get>> <<set>> 
++MinimizeToTray : Boolean <<get>> <<set>> 
++AttendedTasksFolder : String <<get>> <<set>> 
++StartupMode : String <<get>> <<set>> 
++PreloadBuilderCommands : Boolean <<get>> <<set>> 
++UseSlimActionBar : Boolean <<get>> <<set>> 
++InsertCommandsInline : Boolean <<get>> <<set>> 
++EnableSequenceDragDrop : Boolean <<get>> <<set>> 
++InsertVariableAtCursor : Boolean <<get>> <<set>> 
++InsertElseAutomatically : Boolean <<get>> <<set>> 
++InsertCommentIfLoopAbove : Boolean <<get>> <<set>> 
++GroupingBySubgroup : Boolean <<get>> <<set>> 
++DontShowValidationMessage : Boolean <<get>> <<set>> 
++ShowPoliteTextInDescription : Boolean <<get>> <<set>> 
++ShowSampleUsageInDescription : Boolean <<get>> <<set>> 
++ShowDefaultValueInDescription : Boolean <<get>> <<set>> 
++ShowIndentLine : Boolean <<get>> <<set>> 
++ShowScriptMiniMap : Boolean <<get>> <<set>> 
++IndentWidth : Int32 <<get>> <<set>> 
++DefaultBrowserInstanceName : String <<get>> <<set>> 
++DefaultStopWatchInstanceName : String <<get>> <<set>> 
++DefaultExcelInstanceName : String <<get>> <<set>> 
++DefaultWordInstanceName : String <<get>> <<set>> 
++DefaultDBInstanceName : String <<get>> <<set>> 
++DefaultNLGInstanceName : String <<get>> <<set>> 
++InstanceNameOrder : String <<get>> <<set>> 
++DontShowDefaultInstanceWhenMultipleItemsExists : Boolean <<get>> <<set>> 
++SearchTargetGroupName : Boolean <<get>> <<set>> 
++SearchTargetSubGroupName : Boolean <<get>> <<set>> 
++SearchGreedlyGroupName : Boolean <<get>> <<set>> 
++SearchGreedlySubGroupName : Boolean <<get>> <<set>> 
++ShowCommandSearchBar : Boolean <<get>> <<set>> 
++HideNotifyAutomatically : Boolean <<get>> <<set>> 
++RememberCommandEditorSizeAndPosition : Boolean <<get>> <<set>> 
++RememberSupplementFormsForCommandEditorPosition : Boolean <<get>> <<set>> 
++CheckForUpdateAtStartup : Boolean <<get>> <<set>> 
++SkipBetaVersionUpdate : Boolean <<get>> <<set>> 
++EnabledAutoSave : Boolean <<get>> <<set>> 
++AutoSaveInterval : Int32 <<get>> <<set>> 
++RemoveAutoSaveFileDays : Int32 <<get>> <<set>> 
++RemoveRunWithtoutSavingFileDays : Int32 <<get>> <<set>> 
++RemoveBeforeConvertedFileDays : Int32 <<get>> <<set>> 
++SupportIECommand : Boolean <<get>> <<set>> 
++ChangeItemsWithWheelWhenNotForcused : Boolean <<get>> <<set>> 
++DisplayNumberBeforeParameterDescription : Boolean <<get>> <<set>> 
++DisplayParameterOrderInDescription : Boolean <<get>> <<set>> 
++GUIInspectMaxSiblings : Int32 <<get>> <<set>> 
++GUIInspectMaxDepth : Int32 <<get>> <<set>> 
++GUIInspectSearchTime : Int32 <<get>> <<set>> 
++GUIInspectMouseInterval : Int32 <<get>> <<set>> 
+-_IndentWidth : int
+-_InstanceNameOrder : string
+-_AutoSaveInterval : int
+-_RemoveAutoSaveFileDays : int
+-_RemoveRunWithoutSavingFileDays : int
+-_RemoveBeforeConvertedFileDays : int
+-_GUIInspectMaxSiblings : int
+-_GUIInspectMaxDepth : int
+-_GUIInspectSearchTime : int
+-_GUIInspectMouseInterval : int
+}
+}
+
+package "taskt.Core"{
+Interface "IClientSettings" {
++{abstract} AntiIdleWhileOpen : Boolean <<get>> <<abstract>> 
++{abstract} RootFolder : String <<get>> <<abstract>> 
++{abstract} MinimizeToTray : Boolean <<get>> <<abstract>> 
++{abstract} AttendedTasksFolder : String <<get>> <<abstract>> 
++{abstract} StartupMode : String <<get>> <<abstract>> 
++{abstract} PreloadBuilderCommands : Boolean <<get>> <<abstract>> 
++{abstract} UseSlimActionBar : Boolean <<get>> <<abstract>> 
++{abstract} InsertCommandsInline : Boolean <<get>> <<abstract>> 
++{abstract} EnableSequenceDragDrop : Boolean <<get>> <<abstract>> 
++{abstract} InsertVariableAtCursor : Boolean <<get>> <<abstract>> 
++{abstract} InsertElseAutomatically : Boolean <<get>> <<abstract>> 
++{abstract} InsertCommentIfLoopAbove : Boolean <<get>> <<abstract>> 
++{abstract} GroupingBySubgroup : Boolean <<get>> <<abstract>> 
++{abstract} DontShowValidationMessage : Boolean <<get>> <<abstract>> 
++{abstract} ShowPoliteTextInDescription : Boolean <<get>> <<abstract>> 
++{abstract} ShowSampleUsageInDescription : Boolean <<get>> <<abstract>> 
++{abstract} ShowDefaultValueInDescription : Boolean <<get>> <<abstract>> 
++{abstract} ShowIndentLine : Boolean <<get>> <<abstract>> 
++{abstract} ShowScriptMiniMap : Boolean <<get>> <<abstract>> 
++{abstract} IndentWidth : Int32 <<get>> <<abstract>> 
++{abstract} DefaultBrowserInstanceName : String <<get>> <<abstract>> 
++{abstract} DefaultStopWatchInstanceName : String <<get>> <<abstract>> 
++{abstract} DefaultExcelInstanceName : String <<get>> <<abstract>> 
++{abstract} DefaultWordInstanceName : String <<get>> <<abstract>> 
++{abstract} DefaultDBInstanceName : String <<get>> <<abstract>> 
++{abstract} DefaultNLGInstanceName : String <<get>> <<abstract>> 
++{abstract} InstanceNameOrder : String <<get>> <<abstract>> 
++{abstract} DontShowDefaultInstanceWhenMultipleItemsExists : Boolean <<get>> <<abstract>> 
++{abstract} SearchTargetGroupName : Boolean <<get>> <<abstract>> 
++{abstract} SearchTargetSubGroupName : Boolean <<get>> <<abstract>> 
++{abstract} SearchGreedlyGroupName : Boolean <<get>> <<abstract>> 
++{abstract} SearchGreedlySubGroupName : Boolean <<get>> <<abstract>> 
++{abstract} ShowCommandSearchBar : Boolean <<get>> <<abstract>> 
++{abstract} HideNotifyAutomatically : Boolean <<get>> <<abstract>> 
++{abstract} RememberCommandEditorSizeAndPosition : Boolean <<get>> <<abstract>> 
++{abstract} RememberSupplementFormsForCommandEditorPosition : Boolean <<get>> <<abstract>> 
++{abstract} CheckForUpdateAtStartup : Boolean <<get>> <<abstract>> 
++{abstract} SkipBetaVersionUpdate : Boolean <<get>> <<abstract>> 
++{abstract} EnabledAutoSave : Boolean <<get>> <<abstract>> 
++{abstract} AutoSaveInterval : Int32 <<get>> <<abstract>> 
++{abstract} RemoveAutoSaveFileDays : Int32 <<get>> <<abstract>> 
++{abstract} RemoveRunWithtoutSavingFileDays : Int32 <<get>> <<abstract>> 
++{abstract} RemoveBeforeConvertedFileDays : Int32 <<get>> <<abstract>> 
++{abstract} SupportIECommand : Boolean <<get>> <<abstract>> 
++{abstract} ChangeItemsWithWheelWhenNotForcused : Boolean <<get>> <<abstract>> 
++{abstract} DisplayNumberBeforeParameterDescription : Boolean <<get>> <<abstract>> 
++{abstract} DisplayParameterOrderInDescription : Boolean <<get>> <<abstract>> 
++{abstract} GUIInspectMaxSiblings : Int32 <<get>> <<abstract>> 
++{abstract} GUIInspectMaxDepth : Int32 <<get>> <<abstract>> 
++{abstract} GUIInspectSearchTime : Int32 <<get>> <<abstract>> 
++{abstract} GUIInspectMouseInterval : Int32 <<get>> <<abstract>> 
+}
+}
+
+
+taskt.Core.IClientSettings <|.. taskt.Core.ClientSettings
+@enduml

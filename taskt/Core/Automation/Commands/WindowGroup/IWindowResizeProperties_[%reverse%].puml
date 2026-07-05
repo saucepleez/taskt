@@ -1,0 +1,20 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "ResizeWindowByWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowResizeProperties" {
++{abstract} v_WhenWindowIsMaximized : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IWindowResizeProperties <|.. taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand
+@enduml

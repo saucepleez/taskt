@@ -1,0 +1,105 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "BeginIfCommand" <<sealed>> {
+-IfGridViewHelper_MouseEnter() : void 
++RunCommand() : void 
++Render() : List
+-linkWebBrowserInstanceSelector_Click() : void 
+-linkWindowNameSelector_Click() : void 
+-linkBooleanInstanceSelector_Click() : void 
+-ifAction_SelectionChangeCommitted() : void 
++GetDisplayValue() : String
++IsValidate() : Boolean
++ConvertToIntermediate() : void 
++ConvertToRaw() : void 
++BeforeValidate() : void 
++v_IfActionType : String <<get>> <<set>> 
++v_IfActionParameterTable : DataTable <<get>> <<set>> 
+-IfGridViewHelper : System.Windows.Forms.DataGridView
+-ActionDropdown : System.Windows.Forms.ComboBox
+-ParameterControls : List<System.Windows.Forms.Control>
+-lnkBrowserInstanceSelector : taskt.UI.CustomControls.CommandItemControl
+-lnkWindowNameSelector : taskt.UI.CustomControls.CommandItemControl
+-lnkBooleanSelector : taskt.UI.CustomControls.CommandItemControl
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ScriptCommand"{
++RunCommand() : void 
++RunCommand() : void 
++GetDisplayValue() : String
++Render() : List
++Render() : List
++AfterShown() : void 
++Refresh() : void 
++BeforeValidate() : void 
++IsValidate() : Boolean
++ConvertToIntermediate() : void 
++ConvertToIntermediate() : void 
++ConvertToRaw() : void 
++ConvertToRaw() : void 
++Clone() : ScriptCommand
++CheckMatched() : Boolean
++Replace() : Boolean
++AddInstance() : void 
++RemoveInstance() : void 
++CommandID : String <<get>> <<set>> 
++CommandName : String <<get>> <<set>> 
++IsCommented : Boolean <<get>> <<set>> 
++SelectionName : String <<get>> <<set>> 
++DefaultPause : Int32 <<get>> <<set>> 
++LineNumber : Int32 <<get>> <<set>> 
++PauseBeforeExeucution : Boolean <<get>> <<set>> 
++DisplayForeColor : Color <<get>> <<set>> 
++v_Comment : String <<get>> <<set>> 
++CommandEnabled : Boolean <<get>> <<set>> 
++IsValid : Boolean <<get>> <<protected set>>
++IsWarning : Boolean <<get>> <<protected set>>
++validationResult : String <<get>> <<protected set>>
++IsMatched : Boolean <<get>> <<protected set>>
++IsDontSavedCommand : Boolean <<get>> <<set>> 
++IsNewInsertedCommand : Boolean <<get>> <<set>> 
++CustomRendering : Boolean <<get>> <<set>> 
++ControlsList : Dictionary <<get>> 
++RenderedControls : List<System.Windows.Forms.Control>
+#_ControlsList : Dictionary<string, System.Windows.Forms.Control>
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IHaveDataTableElements" {
++{abstract} BeforeValidate() : void <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IHaveIfAdditionalCommands" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IUIParameterProperties" {
++{abstract} ControlsList : Dictionary <<get>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICommandIDProperties" {
++{abstract} CommandID : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IHaveAdditionalCommands" {
+}
+}
+
+
+taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.BeginIfCommand
+taskt.Core.Automation.Commands.IHaveDataTableElements <|.. taskt.Core.Automation.Commands.BeginIfCommand
+taskt.Core.Automation.Commands.IHaveIfAdditionalCommands <|.. taskt.Core.Automation.Commands.BeginIfCommand
+taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.IHaveAdditionalCommands <|-- taskt.Core.Automation.Commands.IHaveIfAdditionalCommands
+@enduml

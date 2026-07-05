@@ -1,0 +1,47 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "SetWindowsStateCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AWindowNamesActionCommnads"{
++v_WaitTimeBetweenFindAndAction : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ResizeWindowsCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveWindowsCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CloseWindowsCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+
+taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.SetWindowsStateCommand
+taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.ResizeWindowsCommand
+taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.MoveWindowsCommand
+taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.CloseWindowsCommand
+@enduml

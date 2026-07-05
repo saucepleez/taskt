@@ -1,0 +1,1459 @@
+@startuml
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IGetUIElementsInformationProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IResultProperties" {
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IGetUIElementsXMLTreeFromSomethingProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetWindowUIElementFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetTableInformationFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_InformationType : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_ContainsHeader : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetScrollBarInformationFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_InformationType : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchChildUIElementFromUIElementByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromWindowHandleByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementsInformationFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementsInformationFromWindowNameCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchChildrenUIElementsTreeXMLFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForUIElement : String <<get>> <<set>> 
++v_MaxSiblings : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumGetFromWebDriverCommands"{
++v_InstanceName : String <<get>> <<set>> 
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumGetOneResultFromWebElementCommands"{
+#StoreEmptyValueToResult() : void 
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+Interface "ISeleniumExecuteJavaScriptProperties" {
++{abstract} v_Arguments : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+Interface "ISeleniumWebElementResultProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADataTableGetFromDataTableColumnCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADataTableGetFromDataTableRowCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDataTableGetFromDataTable" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDataTableResultProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryGetFromDictionaryProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryResultProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONGetFromJSONCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IListGetFromListProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IListResultProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetPropertyValueFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_PropertyName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_WhenValueCanNotRetrieved : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromWindowNameCommand" <<sealed>> {
++RunCommand() : void 
++v_SelectionMethod : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_WindowSelectionMethod : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDataTableValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CheckTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Text : String <<get>> <<set>> 
++v_CheckMethod : String <<get>> <<set>> 
++v_CheckParameter : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_CaseSensitive : String <<get>> <<set>> 
++v_TrimBeforeCheck : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationCheckUIElementExistsByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromWindowNameByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromUIElementByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetSelectedStateFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetListItemCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementsInformationFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetElement : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchChildrenUIElementsInformationCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForUIElement : String <<get>> <<set>> 
++v_MaxSiblings : String <<get>> <<set>> 
++v_MaxDepth : String <<get>> <<set>> 
++v_WindowHandleResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForUIElement : String <<get>> <<set>> 
++v_MaxSiblings : String <<get>> <<set>> 
++v_MaxDepth : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementsTreeXMLFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForUIElement : String <<get>> <<set>> 
++v_MaxSiblings : String <<get>> <<set>> 
++v_MaxDepth : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumGetWindowAndTabInformationCommands"{
+#{static} SeleniumWindowAndTabAction() : void 
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumSearchMultiWebElementsFromWebDriverCommands"{
+#SearchMultiWebElementsAction() : void 
++v_SearchMethod : String <<get>> <<set>> 
++v_SearchParameter : String <<get>> <<set>> 
++v_WaitTimeForWebElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebBrowserHTMLSourceCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserCheckWebBrowserInstanceExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_InstanceName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebBrowserInformationCommand" <<sealed>> {
++RunCommand() : void 
++v_InfoType : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ASeleniumGetWebElementSelectorFromWebElementCommands"{
++v_Result : String <<get>> <<set>> 
++v_BeliveIDAttribute : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetSpecialValueFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_ValueType : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetHTMLFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetOptionsFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_AttributeName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetTextFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetAttributeFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_AttributeName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumExecuteJavaScriptCommands"{
+#ExecuteJavaScriptProcess() : void 
++v_Arguments : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserSearchWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "JoinDataTableColumnAsTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Separator : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_BeforeText : String <<get>> <<set>> 
++v_AfterText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableColumnToTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ExportHeader : String <<get>> <<set>> 
++v_ExportIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableColumnToJSONCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableColumnToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_KeyPrefix : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableColumnToDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableColumnToListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CheckDataTableColumnExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "JoinDataTableRowAsTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Separator : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_BeforeText : String <<get>> <<set>> 
++v_AfterText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableRowToTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ExportHeader : String <<get>> <<set>> 
++v_ExportIndex : String <<get>> <<set>> 
++v_ActualRowIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableRowToDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableRowToJSONCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableRowToListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableRowToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADataTableGetFromDataTableCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetTextsFromTableUIElementAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "GetFromWindowNamesAsDataTableCommands"{
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertColorCommand" <<sealed>> {
++RunCommand() : void 
+-cmbFormatSelectionChange() : void 
++AddInstance() : void 
++RemoveInstance() : void 
++v_Color : String <<get>> <<set>> 
++v_Format : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetColumnValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRangeValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_FirstRowAsColumnName : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRowValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertJSONToDataTableCommand" <<sealed>> {
++RunCommand() : void 
+-{static} ParseJSONArrayAsDataTable() : DataTable
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertListToDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_ColumnType : String <<get>> <<set>> 
++v_Columns : String <<get>> <<set>> 
++v_ColumnsNotEnough : String <<get>> <<set>> 
++v_ListItemNotEnough : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetTableValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_AttributeName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_FirstRowMethod : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebElementsValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++BeforeValidate() : void 
++v_AttributesName : DataTable <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetOneWebElementValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebElementsValueAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADictionaryGetFromDictionaryCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CheckDictionaryKeyExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDictionaryValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WhenKeyDoesNotExists : String <<get>> <<set>> 
++v_KeyType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabTitlesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetColumnValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRowValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertJSONToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertListToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_KeyType : String <<get>> <<set>> 
++v_Keys : String <<get>> <<set>> 
++v_KeysNotEnough : String <<get>> <<set>> 
++v_ListItemNotEnough : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebElementsValueAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONGetFromJContainerCommands"{
++v_JsonExtractor : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AListGetFromListCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IListGetMathResultFromListProperties" {
++{abstract} v_WhenValueIsNotNumeric : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IListGetFromValueProperties" {
++{abstract} v_Value : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabHandlesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabURLsAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabTitlesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDataTableColumnListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDictionaryKeysListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetColumnValuesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRowValuesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetWorksheetsCommand" <<sealed>> {
++RunCommand() : void 
++v_SheetName : String <<get>> <<set>> 
++v_CompareMethod : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertJSONToListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetSelectionItemsValueFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ExpandWhenItemsNotFound : String <<get>> <<set>> 
++v_WaitTimeAfterExpand : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetOneWebElementValuesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebElementsValueAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetFilesPathAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_SearchFileName : String <<get>> <<set>> 
++v_CheckMethod : String <<get>> <<set>> 
++v_CaseSensitive : String <<get>> <<set>> 
++v_TrimBeforeCheck : String <<get>> <<set>> 
++v_SearchExtension : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetFoldersPathAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_SearchFolderName : String <<get>> <<set>> 
++v_CheckMethod : String <<get>> <<set>> 
++v_CaseSensitive : String <<get>> <<set>> 
++v_TrimBeforeCheck : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValuesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabInformationsAsJSONCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabURLsAsJSONCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabTitlesAsJSONCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabCountCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumGetMultiWebElementsValueAsSomethingCommands"{
+#GetMultiWebElementValueAction() : void 
++v_AttributeName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumSearchWebElementFromWebDriverCommands"{
+#SearchWebElementAction() : void 
++v_SelectionMethod : String <<get>> <<set>> 
++v_WebElementIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebElementsCountCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetCSSSelectorFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetXPathFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserExecuteJavaScriptFromFileCommand" <<sealed>> {
++RunCommand() : void 
++v_FilePath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserExecuteJavaScriptFromCodeCommand" <<sealed>> {
++RunCommand() : void 
++v_ScriptCode : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableToVisualizedTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableToTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ExportHeader : String <<get>> <<set>> 
++v_ExportIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDataTableColumnAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ColumnIndex : String <<get>> <<set>> 
++v_ColumnName : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDataTableColumnAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ColumnIndex : String <<get>> <<set>> 
++v_ColumnName : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDataTableRowAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_RowIndex : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDataTableRowAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_RowIndex : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableToJSONCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDataTableColumnCountCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDataTableRowCountCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowHandlesFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowStatesFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowSizesFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowPositionsFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_PositionBase : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetProcessNamesFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToVisualizedTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ExportHeader : String <<get>> <<set>> 
++v_ExportIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "JoinDictionaryValuesAsTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Separator : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_BeforeText : String <<get>> <<set>> 
++v_AfterText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToJSONCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDictionaryKeyFromValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Value : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValueFromJSONArrayCommand" <<sealed>> {
++RunCommand() : void 
++v_ArrayIndex : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValueFromJSONObjectCommand" <<sealed>> {
++RunCommand() : void 
++v_PropertyName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AListGetFromValueCommands"{
++v_Value : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AListGetMathResultFromListCommands"{
++v_Result : String <<get>> <<set>> 
++v_WhenValueIsNotNumeric : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertListToVisualizedTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "JoinListValuesAsTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Separator : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_BeforeText : String <<get>> <<set>> 
++v_AfterText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertListToTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ExportHeader : String <<get>> <<set>> 
++v_ExportIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetListIndexCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertListToJSONCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetListCountCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumGetOneWebElementValuesAsSomethingCommands"{
++BeforeValidate() : void 
+#GetOneWebElementMultiValuesAction() : void 
++v_AttributesName : DataTable <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserCheckWebElementExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForWebElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetListIndexFromValueCommand" <<sealed>> {
++RunCommand() : void 
++v_SearchMethod : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CheckListItemExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetAverageFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetMaxFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetMedianFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetMinFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetSumFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetVarianceFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+
+taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsInformationProperties
+taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationGetWindowUIElementFromUIElementCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationGetTableInformationFromUIElementCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationGetScrollBarInformationFromUIElementCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchChildUIElementFromUIElementByXPathCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleByXPathCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromWindowHandleCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromWindowNameCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchChildrenUIElementsTreeXMLFromUIElementCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands
+taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumExecuteJavaScriptProperties
+taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementResultProperties
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands
+taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.IDataTableGetFromDataTable
+taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.IDictionaryGetFromDictionaryProperties
+taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.IDictionaryResultProperties
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.AJSONGetFromJSONCommands
+taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.IListGetFromListProperties
+taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationGetPropertyValueFromUIElementCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.GetDataTableValueCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.CheckTextCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsByXPathCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameByXPathCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementByXPathCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationGetSelectedStateFromUIElementCommand
+taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.GetListItemCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsInformationProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromUIElementCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsInformationProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchChildrenUIElementsInformationCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromUIElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebDriverCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserHTMLSourceCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserCheckWebBrowserInstanceExistsCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserInformationCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetSpecialValueFromWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetHTMLFromWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetOptionsFromWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetTextFromWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetAttributeFromWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumExecuteJavaScriptProperties <|.. taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.JoinDataTableColumnAsTextCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToTextCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToJSONCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToDataTableCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToListCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.CheckDataTableColumnExistsCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.JoinDataTableRowAsTextCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToTextCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToDataTableCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToJSONCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToListCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToDictionaryCommand
+taskt.Core.Automation.Commands.IDataTableGetFromDataTable <|.. taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationGetTextsFromTableUIElementAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.GetJSONValuesAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertColorCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableColumnToDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableRowToDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertDictionaryToDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertJSONToDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertListToDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetTableValuesAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValuesAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDataTableCommand
+taskt.Core.Automation.Commands.IDictionaryGetFromDictionaryProperties <|.. taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.IDictionaryGetFromDictionaryProperties <|.. taskt.Core.Automation.Commands.CheckDictionaryKeyExistsCommand
+taskt.Core.Automation.Commands.IDictionaryGetFromDictionaryProperties <|.. taskt.Core.Automation.Commands.GetDictionaryValueCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ConvertColorCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableRowToDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetRowValuesAsDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ConvertJSONToDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ConvertListToDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand
+taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDictionaryCommand
+taskt.Core.Automation.Commands.AJSONGetFromJSONCommands <|-- taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.IListGetFromListProperties <|.. taskt.Core.Automation.Commands.AListGetFromListCommands
+taskt.Core.Automation.Commands.IListGetFromListProperties <|-- taskt.Core.Automation.Commands.IListGetMathResultFromListProperties
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand
+taskt.Core.Automation.Commands.IListResultProperties <|-- taskt.Core.Automation.Commands.IListGetFromValueProperties
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabHandlesAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetOptionsFromWebElementCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableColumnToListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableRowToListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetDataTableColumnListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ConvertDictionaryToListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetDictionaryKeysListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetColumnValuesAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetWorksheetsCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ConvertJSONToListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetFilesPathAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetFoldersPathAsListCommand
+taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetJSONValuesAsListCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabInformationsAsJSONCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsJSONCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsJSONCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabHandlesAsListCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsDictionaryCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsListCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsListCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabCountCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebDriverCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetMultiWebElementsValueAsSomethingCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebDriverCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsCountCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValuesAsDataTableCommand
+taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetCSSSelectorFromWebElementCommand
+taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetXPathFromWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromFileCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromCodeCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableToVisualizedTextCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableToTextCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsDataTableCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsListCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDataTableCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDictionaryCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableToJSONCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.GetDataTableColumnCountCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.GetDataTableColumnListCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.GetDataTableRowCountCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToVisualizedTextCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToTextCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.JoinDictionaryValuesAsTextCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToDataTableCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToListCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToJSONCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.GetDictionaryKeysListCommand
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.GetDictionaryKeyFromValueCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValueFromJSONArrayCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValueCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValuesAsDataTableCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValueFromJSONObjectCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.ConvertJSONToDataTableCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.ConvertJSONToDictionaryCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.ConvertJSONToListCommand
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValuesAsListCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.AListGetFromValueCommands
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToVisualizedTextCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.JoinListValuesAsTextCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToTextCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.GetListIndexCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToDataTableCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToDictionaryCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToJSONCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.GetListCountCommand
+taskt.Core.Automation.Commands.IListGetMathResultFromListProperties <|.. taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
+taskt.Core.Automation.Commands.IListGetFromValueProperties <|.. taskt.Core.Automation.Commands.AListGetFromValueCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetMultiWebElementsValueAsSomethingCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDataTableCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetMultiWebElementsValueAsSomethingCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDictionaryCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetMultiWebElementsValueAsSomethingCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsListCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetTableValuesAsDataTableCommand
+taskt.Core.Automation.Commands.AListGetFromValueCommands <|-- taskt.Core.Automation.Commands.GetListIndexFromValueCommand
+taskt.Core.Automation.Commands.AListGetFromValueCommands <|-- taskt.Core.Automation.Commands.CheckListItemExistsCommand
+taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetAverageFromListCommand
+taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetMaxFromListCommand
+taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetMedianFromListCommand
+taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetMinFromListCommand
+taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetSumFromListCommand
+taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetVarianceFromListCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand
+@enduml

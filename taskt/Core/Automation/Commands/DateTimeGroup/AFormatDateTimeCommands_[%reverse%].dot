@@ -1,0 +1,19 @@
+digraph "taskt.Core.Automation.Commands.AFormatDateTimeCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.FormatDateTimeByUnixTimeCommand" [ label="FormatDateTimeByUnixTimeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AFormatDateTimeCommands" [ label="AFormatDateTimeCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.FormatDateTimeByExcelSerialCommand" [ label="FormatDateTimeByExcelSerialCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.FormatDateTimeByTextCommand" [ label="FormatDateTimeByTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.FormatDateTimeCommand" [ label="FormatDateTimeCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.FormatDateTimeByUnixTimeCommand" -> "taskt.Core.Automation.Commands.AFormatDateTimeCommands";
+"taskt.Core.Automation.Commands.FormatDateTimeByExcelSerialCommand" -> "taskt.Core.Automation.Commands.AFormatDateTimeCommands";
+"taskt.Core.Automation.Commands.FormatDateTimeByTextCommand" -> "taskt.Core.Automation.Commands.AFormatDateTimeCommands";
+"taskt.Core.Automation.Commands.FormatDateTimeCommand" -> "taskt.Core.Automation.Commands.AFormatDateTimeCommands";
+}

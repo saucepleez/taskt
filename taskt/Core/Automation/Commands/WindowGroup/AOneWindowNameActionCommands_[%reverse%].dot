@@ -1,0 +1,27 @@
+digraph "taskt.Core.Automation.Commands.AOneWindowNameActionCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.SetOneWindowStateCommand" [ label="SetOneWindowStateCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AOneWindowNameActionCommands" [ label="AOneWindowNameActionCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ResizeOneWindowCommand" [ label="ResizeOneWindowCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.MoveOneWindowCommand" [ label="MoveOneWindowCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CloseOneWindowCommand" [ label="CloseOneWindowCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.EnterShortcutKeyCommand" [ label="EnterShortcutKeyCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand" [ label="SendAdvancedKeyStrokesCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.EnterKeysCommand" [ label="EnterKeysCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.TakeScreenshotCommand" [ label="TakeScreenshotCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.SetOneWindowStateCommand" -> "taskt.Core.Automation.Commands.AOneWindowNameActionCommands";
+"taskt.Core.Automation.Commands.ResizeOneWindowCommand" -> "taskt.Core.Automation.Commands.AOneWindowNameActionCommands";
+"taskt.Core.Automation.Commands.MoveOneWindowCommand" -> "taskt.Core.Automation.Commands.AOneWindowNameActionCommands";
+"taskt.Core.Automation.Commands.CloseOneWindowCommand" -> "taskt.Core.Automation.Commands.AOneWindowNameActionCommands";
+"taskt.Core.Automation.Commands.EnterShortcutKeyCommand" -> "taskt.Core.Automation.Commands.AOneWindowNameActionCommands";
+"taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand" -> "taskt.Core.Automation.Commands.AOneWindowNameActionCommands";
+"taskt.Core.Automation.Commands.EnterKeysCommand" -> "taskt.Core.Automation.Commands.AOneWindowNameActionCommands";
+"taskt.Core.Automation.Commands.TakeScreenshotCommand" -> "taskt.Core.Automation.Commands.AOneWindowNameActionCommands";
+}

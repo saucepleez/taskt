@@ -1,0 +1,25 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementsInformationFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetElement : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IGetUIElementsInformationProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchChildrenUIElementsInformationCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsInformationProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromUIElementCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsInformationProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchChildrenUIElementsInformationCommand
+@enduml

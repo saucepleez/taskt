@@ -1,0 +1,52 @@
+digraph "taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand" [ label="GetJSONValuesAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands" [ label="AJSONGetFromJContainerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IDictionaryResultProperties" [ label="IDictionaryResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.AJSONGetFromJSONCommands" [ label="AJSONGetFromJSONCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IJSONInputJContainer" [ label="IJSONInputJContainer", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IJSONJSONPathProperties" [ label="IJSONJSONPathProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IResultProperties" [ label="IResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleDictionary" [ label="ICanHandleDictionary", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.AJSONInputJSONCommands" [ label="AJSONInputJSONCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IJSONInputJSONProperties" [ label="IJSONInputJSONProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleJContainer" [ label="ICanHandleJContainer", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleJSON" [ label="ICanHandleJSON", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleJSONArray" [ label="ICanHandleJSONArray", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleJSONObject" [ label="ICanHandleJSONObject", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand" -> "taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands";
+"taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand" -> "taskt.Core.Automation.Commands.IDictionaryResultProperties";
+"taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands" -> "taskt.Core.Automation.Commands.AJSONGetFromJSONCommands";
+"taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands" -> "taskt.Core.Automation.Commands.IJSONInputJContainer";
+"taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands" -> "taskt.Core.Automation.Commands.IJSONJSONPathProperties";
+"taskt.Core.Automation.Commands.IDictionaryResultProperties" -> "taskt.Core.Automation.Commands.IResultProperties";
+"taskt.Core.Automation.Commands.IDictionaryResultProperties" -> "taskt.Core.Automation.Commands.ICanHandleDictionary";
+"taskt.Core.Automation.Commands.AJSONGetFromJSONCommands" -> "taskt.Core.Automation.Commands.AJSONInputJSONCommands";
+"taskt.Core.Automation.Commands.AJSONGetFromJSONCommands" -> "taskt.Core.Automation.Commands.IResultProperties";
+"taskt.Core.Automation.Commands.IJSONInputJContainer" -> "taskt.Core.Automation.Commands.IJSONInputJSONProperties";
+"taskt.Core.Automation.Commands.IJSONInputJContainer" -> "taskt.Core.Automation.Commands.ICanHandleJContainer";
+"taskt.Core.Automation.Commands.IJSONJSONPathProperties" -> "taskt.Core.Automation.Commands.IJSONInputJContainer";
+"taskt.Core.Automation.Commands.ICanHandleDictionary" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.AJSONInputJSONCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.AJSONInputJSONCommands" -> "taskt.Core.Automation.Commands.IJSONInputJSONProperties";
+"taskt.Core.Automation.Commands.IJSONInputJSONProperties" -> "taskt.Core.Automation.Commands.ICanHandleJSON";
+"taskt.Core.Automation.Commands.IJSONInputJSONProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ICanHandleJContainer" -> "taskt.Core.Automation.Commands.ICanHandleJSONArray";
+"taskt.Core.Automation.Commands.ICanHandleJContainer" -> "taskt.Core.Automation.Commands.ICanHandleJSONObject";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.ICanHandleJSON" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ICanHandleJSONArray" -> "taskt.Core.Automation.Commands.ICanHandleJSON";
+"taskt.Core.Automation.Commands.ICanHandleJSONObject" -> "taskt.Core.Automation.Commands.ICanHandleJSON";
+}

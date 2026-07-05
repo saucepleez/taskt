@@ -1,0 +1,120 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "GetArcsinCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AInverseTrignometricCommands"{
++v_AngleType : String <<get>> <<set>> 
++v_WhenValueIsOutOfRange : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ATrignometricCommands"{
++v_AngleType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IInverseTrignometricProperties" {
++{abstract} v_WhenValueIsOutOfRange : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AMathValueResultCommands"{
++v_Value : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ITrignometricProperties" {
++{abstract} v_AngleType : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ScriptCommand"{
++RunCommand() : void 
++RunCommand() : void 
++GetDisplayValue() : String
++Render() : List
++Render() : List
++AfterShown() : void 
++Refresh() : void 
++BeforeValidate() : void 
++IsValidate() : Boolean
++ConvertToIntermediate() : void 
++ConvertToIntermediate() : void 
++ConvertToRaw() : void 
++ConvertToRaw() : void 
++Clone() : ScriptCommand
++CheckMatched() : Boolean
++Replace() : Boolean
++AddInstance() : void 
++RemoveInstance() : void 
++CommandID : String <<get>> <<set>> 
++CommandName : String <<get>> <<set>> 
++IsCommented : Boolean <<get>> <<set>> 
++SelectionName : String <<get>> <<set>> 
++DefaultPause : Int32 <<get>> <<set>> 
++LineNumber : Int32 <<get>> <<set>> 
++PauseBeforeExeucution : Boolean <<get>> <<set>> 
++DisplayForeColor : Color <<get>> <<set>> 
++v_Comment : String <<get>> <<set>> 
++CommandEnabled : Boolean <<get>> <<set>> 
++IsValid : Boolean <<get>> <<protected set>>
++IsWarning : Boolean <<get>> <<protected set>>
++validationResult : String <<get>> <<protected set>>
++IsMatched : Boolean <<get>> <<protected set>>
++IsDontSavedCommand : Boolean <<get>> <<set>> 
++IsNewInsertedCommand : Boolean <<get>> <<set>> 
++CustomRendering : Boolean <<get>> <<set>> 
++ControlsList : Dictionary <<get>> 
++RenderedControls : List<System.Windows.Forms.Control>
+#_ControlsList : Dictionary<string, System.Windows.Forms.Control>
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IMathValueResultProperties" {
++{abstract} v_Value : String <<get>> <<set>> <<abstract>> 
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IUIParameterProperties" {
++{abstract} ControlsList : Dictionary <<get>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICommandIDProperties" {
++{abstract} CommandID : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+
+taskt.Core.Automation.Commands.AInverseTrignometricCommands <|-- taskt.Core.Automation.Commands.GetArcsinCommand
+taskt.Core.Automation.Commands.ATrignometricCommands <|-- taskt.Core.Automation.Commands.AInverseTrignometricCommands
+taskt.Core.Automation.Commands.IInverseTrignometricProperties <|.. taskt.Core.Automation.Commands.AInverseTrignometricCommands
+taskt.Core.Automation.Commands.AMathValueResultCommands <|-- taskt.Core.Automation.Commands.ATrignometricCommands
+taskt.Core.Automation.Commands.ITrignometricProperties <|.. taskt.Core.Automation.Commands.ATrignometricCommands
+taskt.Core.Automation.Commands.ITrignometricProperties <|-- taskt.Core.Automation.Commands.IInverseTrignometricProperties
+taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AMathValueResultCommands
+taskt.Core.Automation.Commands.IMathValueResultProperties <|.. taskt.Core.Automation.Commands.AMathValueResultCommands
+taskt.Core.Automation.Commands.IMathValueResultProperties <|-- taskt.Core.Automation.Commands.ITrignometricProperties
+taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IMathValueResultProperties
+@enduml

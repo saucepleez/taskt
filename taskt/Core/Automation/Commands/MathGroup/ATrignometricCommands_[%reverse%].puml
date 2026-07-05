@@ -1,0 +1,60 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+abstract class "AInverseTrignometricCommands"{
++v_AngleType : String <<get>> <<set>> 
++v_WhenValueIsOutOfRange : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ATrignometricCommands"{
++v_AngleType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetArctanCommand" <<sealed>> {
++RunCommand() : void 
++v_AngleType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetTanCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetCosCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetSinCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetArccosCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetArcsinCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+
+taskt.Core.Automation.Commands.ATrignometricCommands <|-- taskt.Core.Automation.Commands.AInverseTrignometricCommands
+taskt.Core.Automation.Commands.ATrignometricCommands <|-- taskt.Core.Automation.Commands.GetArctanCommand
+taskt.Core.Automation.Commands.ATrignometricCommands <|-- taskt.Core.Automation.Commands.GetTanCommand
+taskt.Core.Automation.Commands.ATrignometricCommands <|-- taskt.Core.Automation.Commands.GetCosCommand
+taskt.Core.Automation.Commands.ATrignometricCommands <|-- taskt.Core.Automation.Commands.GetSinCommand
+taskt.Core.Automation.Commands.AInverseTrignometricCommands <|-- taskt.Core.Automation.Commands.GetArccosCommand
+taskt.Core.Automation.Commands.AInverseTrignometricCommands <|-- taskt.Core.Automation.Commands.GetArcsinCommand
+@enduml

@@ -1,0 +1,70 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+abstract class "ADataTableCreateFromDataTableCommands"{
++{abstract} v_TargetDataTable : String <<get>> <<set>> <<abstract>> 
++v_NewDataTable : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDataTableCreateFromDataTableProperties" {
++{abstract} v_TargetDataTable : String <<get>> <<set>> <<abstract>> 
++{abstract} v_NewDataTable : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "FilterDataTableColumnByRowValueCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbFilterAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_TargetDataTable : String <<get>> <<set>> 
++v_RowIndex : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_FilterAction : String <<get>> <<set>> 
++v_FilterActionParameterTable : DataTable <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "FilterDataTableRowByColumnValueCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbFilterAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_TargetDataTable : String <<get>> <<set>> 
++v_ColumnType : String <<get>> <<set>> 
++v_ColumnIndex : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_FilterAction : String <<get>> <<set>> 
++v_FilterActionParameterTable : DataTable <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CopyDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetDataTable : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "FilterDataTableCommand" <<sealed>> {
++RunCommand() : void 
++Render() : List
++GetDisplayValue() : String
++v_TargetDataTable : String <<get>> <<set>> 
++v_SearchItem : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IDataTableCreateFromDataTableProperties <|.. taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands
+taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands <|-- taskt.Core.Automation.Commands.FilterDataTableColumnByRowValueCommand
+taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands <|-- taskt.Core.Automation.Commands.FilterDataTableRowByColumnValueCommand
+taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands <|-- taskt.Core.Automation.Commands.CopyDataTableCommand
+taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands <|-- taskt.Core.Automation.Commands.FilterDataTableCommand
+@enduml

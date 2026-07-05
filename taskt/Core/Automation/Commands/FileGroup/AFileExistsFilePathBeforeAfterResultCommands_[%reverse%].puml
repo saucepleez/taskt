@@ -1,0 +1,65 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileCopyMoveFileCommands"{
+#CreateActionFunc() : Func
++v_DestinationFolderPath : String <<get>> <<set>> 
++v_CreateDirectory : String <<get>> <<set>> 
++v_WhenDestinationIsSame : String <<get>> <<set>> 
++v_WhenDestinationExists : String <<get>> <<set>> 
++v_WaitTimeForFolder : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileExistsFilePathBeforeAfterResultCommands"{
++v_BeforeFilePathResult : String <<get>> <<set>> 
++v_AfterFilePathResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileCopySameRenameFileCommands"{
+#CreateActionFunc() : Func
+#cmbExtensionOption_SelectionChange() : void 
++v_NewFileName : String <<get>> <<set>> 
++v_ExtensionOption : String <<get>> <<set>> 
++v_NewExtension : String <<get>> <<set>> 
++v_WhenFileNameSame : String <<get>> <<set>> 
++v_WhenNewFileExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CopyFileCommand" <<sealed>> {
++RunCommand() : void 
++v_DestinationFolderPath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveFileCommand" <<sealed>> {
++RunCommand() : void 
++v_DestinationFolderPath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CopyFileToSameFolderCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RenameFileCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+
+taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands <|-- taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
+taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands <|-- taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
+taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.CopyFileCommand
+taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.MoveFileCommand
+taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands <|-- taskt.Core.Automation.Commands.CopyFileToSameFolderCommand
+taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands <|-- taskt.Core.Automation.Commands.RenameFileCommand
+@enduml

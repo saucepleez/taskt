@@ -1,0 +1,35 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetScrollBarInformationFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_InformationType : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "ICanHandleUIElementScrollBar" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationScrollPercentUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_ScrollBarType : String <<get>> <<set>> 
++v_ScrollValue : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationScrollUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_ScrollBarType : String <<get>> <<set>> 
++v_DirectionAndAmount : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementScrollBar <|.. taskt.Core.Automation.Commands.UIAutomationGetScrollBarInformationFromUIElementCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementScrollBar <|.. taskt.Core.Automation.Commands.UIAutomationScrollPercentUIElementCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementScrollBar <|.. taskt.Core.Automation.Commands.UIAutomationScrollUIElementCommand
+@enduml

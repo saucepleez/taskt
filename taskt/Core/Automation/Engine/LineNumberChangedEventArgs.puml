@@ -1,0 +1,11 @@
+@startuml
+package "taskt.Core.Automation.Engine"{
+class "LineNumberChangedEventArgs" {
++CurrentLineNumber : Int32 <<get>> <<set>> 
+}
+}
+
+
+
+EventArgs -- taskt.Core.Automation.Engine.LineNumberChangedEventArgs
+@enduml

@@ -1,0 +1,19 @@
+digraph "taskt.Core.Automation.Commands.ADateTimeCreateCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.CreateDateTimeFromUnixTimeCommand" [ label="CreateDateTimeFromUnixTimeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ADateTimeCreateCommands" [ label="ADateTimeCreateCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.CreateDateTimeFromExcelSerialCommand" [ label="CreateDateTimeFromExcelSerialCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CreateDateTimeFromTextCommand" [ label="CreateDateTimeFromTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CreateDateTimeCommand" [ label="CreateDateTimeCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.CreateDateTimeFromUnixTimeCommand" -> "taskt.Core.Automation.Commands.ADateTimeCreateCommands";
+"taskt.Core.Automation.Commands.CreateDateTimeFromExcelSerialCommand" -> "taskt.Core.Automation.Commands.ADateTimeCreateCommands";
+"taskt.Core.Automation.Commands.CreateDateTimeFromTextCommand" -> "taskt.Core.Automation.Commands.ADateTimeCreateCommands";
+"taskt.Core.Automation.Commands.CreateDateTimeCommand" -> "taskt.Core.Automation.Commands.ADateTimeCreateCommands";
+}

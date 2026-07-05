@@ -1,0 +1,13 @@
+digraph "taskt.Core.Automation.Commands.IHaveErrorAdditionalCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.TryCommand" [ label="TryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.IHaveErrorAdditionalCommands" [ label="IHaveErrorAdditionalCommands", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.TryCommand" -> "taskt.Core.Automation.Commands.IHaveErrorAdditionalCommands";
+}

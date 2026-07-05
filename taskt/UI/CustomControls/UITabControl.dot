@@ -1,0 +1,13 @@
+digraph "taskt.UI.CustomControls.UITabControl" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.UI.CustomControls.UITabControl" [ label="UITabControl", ];
+"System.Windows.Forms.TabControl" [ label="TabControl", ];
+
+"taskt.UI.CustomControls.UITabControl" -> "System.Windows.Forms.TabControl";
+}

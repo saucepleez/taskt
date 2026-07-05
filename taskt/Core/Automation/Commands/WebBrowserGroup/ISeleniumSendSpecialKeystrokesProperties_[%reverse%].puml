@@ -1,0 +1,68 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++AfterShown() : void 
+-cmbSearchType_SelectionChangeCommited() : void 
+-cmbSeleniumAction_SelectionChangeCommitted() : void 
+-{static} AddDataTableRows() : void 
+-{static} AddDataTableRows() : void 
+-{static} ActionParameterProcess() : void 
+-{static} CreateComboBox() : DataGridViewComboBoxCell
++GetDisplayValue() : String
++BeforeValidate() : void 
++v_SearchMethod : String <<get>> <<set>> 
++v_SearchParameter : String <<get>> <<set>> 
++v_SelectionMethod : String <<get>> <<set>> 
++v_WebElementIndex : String <<get>> <<set>> 
++v_WebElementAction : String <<get>> <<set>> 
++v_WebActionParameterTable : DataTable <<get>> <<set>> 
++v_WaitTimeForWebElement : String <<get>> <<set>> 
++v_ScrollToWebElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+Interface "ISeleniumSendSpecialKeystrokesProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserSendSpecialKeystrokesToWebElementCommand" <<sealed>> {
++RunCommand() : void 
+-CreateSendKeyList() : List
++v_SendKey : String <<get>> <<set>> 
++v_ControlKey : String <<get>> <<set>> 
++v_ShiftKey : String <<get>> <<set>> 
++v_AltKey : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserWebElementActionAfterSearchWebElementCommand" <<sealed>> {
++RunCommand() : void 
++AfterShown() : void 
+-cmbSearchType_SelectionChangeCommited() : void 
+-cmbSeleniumAction_SelectionChangeCommitted() : void 
+-{static} AddDataTableRows() : void 
+-{static} AddDataTableRows() : void 
+-{static} ActionParameterProcess() : void 
+-{static} CreateComboBox() : DataGridViewComboBoxCell
++GetDisplayValue() : String
++BeforeValidate() : void 
++v_SearchMethod : String <<get>> <<set>> 
++v_SearchParameter : String <<get>> <<set>> 
++v_SelectionMethod : String <<get>> <<set>> 
++v_WebElementIndex : String <<get>> <<set>> 
++v_WebElementAction : String <<get>> <<set>> 
++v_WebActionParameterTable : DataTable <<get>> <<set>> 
++v_WaitTimeForWebElement : String <<get>> <<set>> 
++v_ScrollToWebElement : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserSendSpecialKeystrokesToWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand
+@enduml

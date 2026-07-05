@@ -1,0 +1,34 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowHandle : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "AUIElementActionFromWindowSomethingByXPathCommands"{
++v_WindowUIElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand" <<sealed>> {
++RunCommand() : void 
+-MatchMethodComboBox_SelectionChangeCommitted() : void 
++Refresh() : void 
++v_WindowName : String <<get>> <<set>> 
++v_CheckMethod : String <<get>> <<set>> 
++v_SelectionMethod : String <<get>> <<set>> 
++v_TargetWindowIndex : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
++v_CaseSensitive : String <<get>> <<set>> 
++v_TrimBeforeCheck : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand
+@enduml

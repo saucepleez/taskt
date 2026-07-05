@@ -1,0 +1,33 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "EnterShortcutKeyFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
+-cmbHotkey_SelectedIndexChanged() : void 
++v_Hotkey : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.KeyMouseGroup"{
+Interface "IEnterShortcutKeyProperties" {
++{abstract} v_Hotkey : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "EnterShortcutKeyCommand" <<sealed>> {
++RunCommand() : void 
+-cmbHotkey_SelectedIndexChanged() : void 
++v_Hotkey : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties <|.. taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand
+taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties <|.. taskt.Core.Automation.Commands.EnterShortcutKeyCommand
+@enduml

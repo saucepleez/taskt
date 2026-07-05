@@ -1,0 +1,20 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleJSONObject" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleJSON" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+
+taskt.Core.Automation.Commands.ICanHandleJSON <|-- taskt.Core.Automation.Commands.ICanHandleJSONObject
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleJSON
+@enduml

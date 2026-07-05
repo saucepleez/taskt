@@ -1,0 +1,37 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetColumnValuesFromDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_DataTableVariable : String <<get>> <<set>> 
++v_DataTableColumnIndex : String <<get>> <<set>> 
++v_WhenItemNotEnough : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelColumnRangeSetCommands"{
++{abstract} v_WhenItemNotEnough : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetColumnValuesFromDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_DictionaryVariable : String <<get>> <<set>> 
++v_WhenItemNotEnough : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetColumnValuesFromListCommand" <<sealed>> {
++RunCommand() : void 
++v_ListVariable : String <<get>> <<set>> 
++v_WhenItemNotEnough : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDataTableCommand
+taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDictionaryCommand
+taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetColumnValuesFromListCommand
+@enduml

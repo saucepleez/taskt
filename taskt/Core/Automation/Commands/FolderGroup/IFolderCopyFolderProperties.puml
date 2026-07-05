@@ -1,0 +1,15 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "IFolderCopyFolderProperties" {
++{abstract} v_CopySubFolder : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IFolderCopyFolderProperties
+@enduml

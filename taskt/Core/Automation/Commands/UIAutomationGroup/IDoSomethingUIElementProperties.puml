@@ -1,0 +1,48 @@
+@startuml
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IDoSomethingUIElementProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IUIElementCoreProperties" {
++{abstract} v_TargetElement : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IUIElementWindowResultsFromUIElementProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "ICanHandleUIElement" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands.WindowGroup"{
+Interface "IFromWindowNameResultsProperties" {
++{abstract} v_WindowHandleResult : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WindowGroup"{
+Interface "IFromWindowHandleResultsProperties" {
++{abstract} v_WindowNameResult : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+@enduml

@@ -1,0 +1,685 @@
+@startuml
+package "taskt.UI.Forms.ScriptBuilder"{
+class "frmScriptBuilder" {
+-autoSaveTimer_Tick() : void 
+-SetAutoSaveState() : void 
+-RemoveOldAutoSavedFiles() : void 
+-RemoveOldRunWithoutSavingScriptFiles() : void 
+-RemoveOldBeforeConvertedScriptFiles() : void 
+-RemoveOldScriptFiles() : void 
+-UpdateWindowTitle() : void 
+-ChangeSaveState() : void 
+-BeginOpenScriptProcess() : void 
+-CheckAndSaveScriptIfForget() : Boolean
+-OpenFile() : void 
+-BeginImportProcess() : void 
+-Import() : void 
++PopulateExecutionCommands() : void 
++InsertExecutionCommands() : Int32
+-BeginSaveScriptProcess() : void 
+-GetConfiguredCommands() : List
+-SaveToFile() : void 
+-GetSerializedScript() : Script
+-CheckValidateCommands() : void 
++ImportScriptFromFilePath() : Boolean
++OpenScriptFromFilePath() : Boolean
+-BeginRunScriptProcess() : void 
+-BeginUndoRedoProcess() : void 
+-UndoRedoProcess() : void 
+-ShowScriptFolderProcess() : void 
+-ShowLogFolderProcess() : void 
+-ShowGitProjectPage() : void 
+-ShowGitReleasePage() : void 
+-ShowGitIssuePage() : void 
+-ShowWikiPage() : void 
+-ShowGitterPage() : void 
+-ShowThisCommandHelp() : void 
+-BeginShowThisCommandHelpProcess() : void 
+-ShowVariableManager() : void 
+-ShowSettingForm() : void 
+-ShowNewSettingForm() : void 
+-ShowScriptInformationForm() : void 
+-ShowAboutForm() : void 
+-lstScriptActions_ItemDrag() : void 
+-lstScriptActions_DragOver() : void 
+-lstScriptActions_DragEnter() : void 
+-lstScriptActions_DragLeave() : void 
+-lstScriptActions_DragDrop() : void 
+-lstScriptActions_MouseMove() : void 
+-MoveCommands() : void 
+-EditSelectedCommand() : void 
+-SelectAllRows() : void 
+-DeleteRows() : void 
+-CutRows() : void 
+-CopyRows() : void 
+-PasteRows() : void 
+-UndoChange() : void 
+-RedoChange() : void 
+-SetSelectedCodeToCommented() : void 
+-SetPauseBeforeExecution() : void 
+-SetDontPauseBeforeExecution() : void 
+-MoveScriptCommandListViewItems() : void 
+-CloneScriptCommandListViewItem() : ListViewItem
+-ClearSelectedListViewItems() : void 
+-ClearHighlightListViewItem() : void 
+-CreateUndoSnapshot() : void 
+-CreateRedoSnapshot() : void 
+-CreateLineStates() : List
+-CreateScriptCommandListViewItem() : ListViewItem
++AddCommandToListView() : void 
+-txtCommandSearch_KeyDown() : void 
+-HideSearchInfo() : void 
+-SearchForItemInListView() : void 
+-frmScriptBuilder_Load() : void 
+-frmScriptBuilder_Shown() : void 
+-frmScriptBuilder_Resize() : void 
+-frmScriptBuilder_SizeChanged() : void 
+-frmScriptBuilder_FormClosing() : void 
+-notifyTray_MouseDoubleClick() : void 
+-GenerateRecentFiles() : void 
+-lnkStartEdit_Click() : void 
+-lnkGitProject_LinkClicked() : void 
+-lnkGitLatestReleases_LinkClicked() : void 
+-lnkGitIssue_LinkClicked() : void 
+-lnkGitWiki_LinkClicked() : void 
+-linkGitter_LinkClicked() : void 
+-NewFileLink_LinkClicked() : void 
+-pnlCommandHelper_DragDrop() : void 
+-pnlCommandHelper_DragEnter() : void 
+-pnlCommandHelper_DragLeave() : void 
+-picRecentFiles_Click() : void 
+-tmrNotify_Tick() : void 
+-pnlStatus_DoubleClick() : void 
++Notify() : void 
+-IndentListViewItems() : void 
+-AutoSizeLineNumberColumn() : void 
+-CreateMiniMap() : void 
+-lstScriptActions_DrawSubItem() : void 
+-DrawLineNumber() : void 
+-DrawCommandIcon() : void 
+-DrawCommandText() : void 
+-DecideNormalCommandText() : String
+-DecideLineNumberText() : String
+-DecideScriptActionsLineCharacterWidth() : Int32
+-lstScriptActions_SelectedIndexChanged() : void 
+-miniMapLoadingDelayTimer_Tick() : void 
+-lstScriptActions_SelectedIndexChangedProcess() : void 
+-lstScriptActions_KeyDown() : void 
+-lstScriptActions_MouseClick() : void 
+-lstScriptActions_DoubleClick() : void 
+-expandRootTVCommandMenuStrip_Click() : void 
+-collapseRootTVCommandMenuStrip_Click() : void 
+-clearRootTVCommandMenuStrip_Click() : void 
+-addCmdTVCommandMenuStrip_Click() : void 
+-helpCmdTVCommandMenuStrip_Click() : void 
+-sampleThisCommandTVCommandMenuStrip_Click() : void 
+-highlightCmdTVCommandMenuStrip_Click() : void 
+-clearCmdTVCommandMenuStrip_Click() : void 
+-disableSelectedCodeToolStripMenuItem_Click() : void 
+-enableSelectedCodeToolStripMenuItem_Click() : void 
+-pauseBeforeExecutionToolStripMenuItem_Click() : void 
+-dontPauseBeforeExecutionToolStripMenuItem1_Click() : void 
+-selectAllToolStripMenuItem_Click() : void 
+-cutSelectedActionssToolStripMenuItem_Click() : void 
+-copySelectedToolStripMenuItem_Click() : void 
+-pasteSelectedToolStripMenuItem_Click() : void 
+-deleteSelectedToolStripMenuItem_Click() : void 
+-aboveHereToolStripMenuItem_Click() : void 
+-belowHereToolStripMenuItem_Click() : void 
+-lstScriptActionsContextStrip_Opened() : void 
+-moveUpToolStripMenu_Click() : void 
+-moveDownToolStripMenu_Click() : void 
+-moveToParentToolStripMenuItem_Click() : void 
+-editThisCodeToolStripMenuItem_Click() : void 
+-multiSendKeystrokesEditToolStripMenuItem_Click() : void 
+-whereThisCommandToolStripMenuItem_Click() : void 
+-ViewJSONCodeToolStripMenuItem_Click() : void 
+-ViewXMLCodeToolStripMenuItem_Click() : void 
+-searchThisCommnadToolStripMenuItem_Click() : void 
+-clearHighlightToolStripMenuItem_Click() : void 
+-helpThisCommandToolStripMenuItem1_Click() : void 
+-showScriptInfoMenuItem_Click() : void 
+-variableManagerToolStripMenuItem_Click() : void 
+-tvCommands_DoubleClick() : void 
+-tvCommands_KeyPress() : void 
+-tvCommands_NodeMouseClick() : void 
+-tvCommands_MouseClick() : void 
+-picCommandFilter_Click() : void 
+-picCommandFilterClear_Click() : void 
+-txtCommandFilter_KeyDown() : void 
+-ShowFilterCommands() : void 
+-ShowAllCommands() : void 
+-SearchSelectedCommand() : void 
+-uiBtnNew_Click() : void 
+-uiBtnOpen_Click() : void 
+-uiBtnImport_Click() : void 
+-uiBtnSave_Click() : void 
+-uiBtnSaveAs_Click() : void 
+-uiBtnAddVariable_Click() : void 
+-uiBtnSettings_Click() : void 
+-uiBtnClearAll_Click() : void 
+-uiBtnRecordSequence_Click() : void 
+-uiBtnScheduleManagement_Click() : void 
+-uiBtnRunScript_Click() : void 
+-picCommandSearch_Click() : void 
+-picCommandSearch_MouseEnter() : void 
+-picCommandSearch_MouseLeave() : void 
+-uiBtnKeep_Click() : void 
+-uiBtnClose_Click() : void 
+-btnSequenceImport_Click() : void 
+-txtCommandSearch_TextChanged() : void 
+-newToolStripMenuItem_Click() : void 
+-openToolStripMenuItem_Click() : void 
+-importFileToolStripMenuItem_Click() : void 
+-sampleToolStripMenuItem_Click() : void 
+-saveToolStripMenuItem_Click() : void 
+-saveAsToolStripMenuItem_Click() : void 
+-restartApplicationToolStripMenuItem_Click() : void 
+-closeApplicationToolStripMenuItem_Click() : void 
+-undoSplitMenuItem_Click() : void 
+-redoSplitMenuItem_Click() : void 
+-editThisActionStripMenuItem_Click() : void 
+-helpThisCommandStripMenuItem_Click() : void 
+-whereThisCommandToolStripMenuItem1_Click() : void 
+-enableSelectedActionsStripMenuItem_Click() : void 
+-disableSelectedActionsStripMenuItem_Click() : void 
+-pauseBeforeExeutionStripMenuItem_Click() : void 
+-dontPauseBeforeExecutionToolStripMenuItem_Click() : void 
+-SelectAllStripMenuItem_Click() : void 
+-CutScriptStripMenuItem_Click() : void 
+-CopyStripMenuItem_Click() : void 
+-PasteStripMenuItem_Click() : void 
+-deleteStripMenuItem_Click() : void 
+-SearchStripMenuItem_Click() : void 
+-ReplaceStripMenuItem_Click() : void 
+-highlightThisCommandStripMenuItem_Click() : void 
+-clearSearchHighlightsToolStripMenuItem1_Click() : void 
+-variablesToolStripMenuItem_Click() : void 
+-scriptInformationsToolStripMenuItem_Click() : void 
+-settingsToolStripMenuItem_Click() : void 
+-newSettigsToolStripMenuItem_Click() : void 
+-showScriptFolderToolStripMenuItem_Click() : void 
+-showLogFolderToolStripMenuItem_Click() : void 
+-showSearchBarToolStripMenuItem_Click() : void 
+-guiInspectToolToolStripMenuItem_Click() : void 
+-jsonPathHelperToolStripMenuItem_Click() : void 
+-showFormatCheckerToolStripMenuItem_Click() : void 
+-recordToolStripMenuItem_Click() : void 
+-scheduleToolStripMenuItem_Click() : void 
+-runToolStripMenuItem_Click() : void 
+-saveAndRunToolStripMenuItem_Clicked() : void 
+-tasktProjectPageStripMenuItem_Click() : void 
+-tasktWikiStripMenuItem_Click() : void 
+-tasktGitterStripMenuItem_Click() : void 
+-releaseToolStripMenuItem_Click() : void 
+-issueToolStripMenuItem_Click() : void 
+-aboutStripMenuItem_Click() : void 
+-tsSearchBox_KeyDown() : void 
++AdvancedSearchItemInCommands() : Int32
++MoveMostNearMatchedLine() : void 
+-HighlightAllCurrentSelectedCommand() : void 
++ReplaceSearchInItemCommands() : Int32
++ReplaceInItemCommands() : Boolean
++ReplaceAllInItemCommands() : Int32
+-ApplyEditorFormat() : void 
+-AddInstanceName() : void 
+-RemoveInstanceName() : void 
+-BeginNewScriptProcess() : void 
+-NewScript() : void 
+-PerformAntiIdle() : void 
+-AddNewCommand() : void 
+-BeforeAddNewCommandProcess() : void 
+-GetSelectedCommandFullName() : String
+-GenerateTreeViewCommands() : void 
+-GetAllVariablesNames() : List
+-SetCommandSearchBoxState() : void 
+-lblMainLogo_Click() : void 
+-BeginFormCloseProcess() : Boolean
++ShowAttendedModeFormProcess() : void 
++SetCommandEditorSizeAndPosition() : void 
++SetPositionChildFormOfCommandEditor() : void 
++StorePositionChildFormOfCommandEditor() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-editMode : Boolean <<get>> <<private set>>
++MatchedLines : Int32 <<get>> <<private set>>
+-parentBuilder : frmScriptBuilder <<get>> <<private set>>
+-automationCommands : List <<get>> <<private set>>
++ScriptFilePath : String <<get>> <<set>> 
++DebugLine : Int32 <<get>> <<set>> 
+-bufferedCommandList : System.Windows.Forms.TreeNode[]
+-bufferedCommandTreeImages : System.Windows.Forms.ImageList
+-scriptVariables : List<taskt.Core.Script.ScriptVariable>
+-scriptInfo : taskt.Core.Script.ScriptInformation
+-scriptImages : System.Windows.Forms.ImageList
++appSettings : taskt.Core.SafeFrmScriptBuilderApplicationSettings
+-undoRedo : taskt.UI.Forms.UndoRedoManager4frmScriptBuilder
+-lastAntiIdleEvent : DateTime
+-selectedIndex : int
+-DnDIndex : int
+-dontSaveFlag : bool
+-instanceList : taskt.Core.InstanceCounter
+-miniMap : int[*,*]
+-miniMapImg : System.Drawing.Bitmap
+-notificationManager : taskt.UI.Forms.NotificationManager4frmScriptBuilder
++currentScriptEditorMode : taskt.UI.Forms.ScriptBuilder.frmScriptBuilder.CommandEditorState
++currentEditAction : taskt.UI.Forms.ScriptBuilder.frmScriptBuilder.CommandEditAction
+-lastEditorSize : System.Drawing.Size
+-lastEditorPosition : System.Drawing.Point
+-isRememberChildCommandEditorPosition : bool
+-lastChildCommandEditorPosition : System.Drawing.Point
+-currentIndexInMatchItems : int
+-indentDashLine : System.Drawing.Pen
+-lineCharWidth : int
+-frmSearch : taskt.UI.Forms.ScriptBuilder.Supplemental.frmSearchCommands
+-frmAttended : taskt.UI.Forms.AttendedMode.frmAttendedMode
+-_scriptFilePath : string
+-scriptSerializer : System.Xml.Serialization.XmlSerializer
+-debugLine : int
+-components : System.ComponentModel.IContainer
+-tlpControls : System.Windows.Forms.TableLayoutPanel
+-pnlHeader : System.Windows.Forms.Panel
+-pnlStatus : System.Windows.Forms.Panel
+-lblMainLogo : System.Windows.Forms.Label
+-tmrNotify : System.Windows.Forms.Timer
+-lstScriptActionsContextStrip : System.Windows.Forms.ContextMenuStrip
+-enableSelectedCodeToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-disableSelectedCodeToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-pnlControlContainer : System.Windows.Forms.Panel
+-uiBtnRunScript : taskt.UI.CustomControls.UIPictureButton
+-uiBtnAddVariable : taskt.UI.CustomControls.UIPictureButton
+-uiBtnSave : taskt.UI.CustomControls.UIPictureButton
+-uiBtnOpen : taskt.UI.CustomControls.UIPictureButton
+-uiBtnNew : taskt.UI.CustomControls.UIPictureButton
+-uiBtnScheduleManagement : taskt.UI.CustomControls.UIPictureButton
+-pauseBeforeExecutionToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-lblCoordinatorInfo : System.Windows.Forms.Label
+-uiBtnSettings : taskt.UI.CustomControls.UIPictureButton
+-splitContainer1 : taskt.UI.CustomControls.UISplitContainer
+-grpFileActions : taskt.UI.CustomControls.UIGroupBox
+-grpVariable : taskt.UI.CustomControls.UIGroupBox
+-grpRecordRun : taskt.UI.CustomControls.UIGroupBox
+-pnlCommandHelper : System.Windows.Forms.Panel
+-lblNote : System.Windows.Forms.Label
+-copySelectedToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-pasteSelectedToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-lnkGitProject : System.Windows.Forms.LinkLabel
+-label1 : System.Windows.Forms.Label
+-lnkGitIssue : System.Windows.Forms.LinkLabel
+-lnkGitLatestReleases : System.Windows.Forms.LinkLabel
+-lnkGitWiki : System.Windows.Forms.LinkLabel
+-lblRecentFiles : System.Windows.Forms.Label
+-flwRecentFiles : taskt.UI.CustomControls.UIFlowLayoutPanel
+-picWelcomeToTaskt : System.Windows.Forms.PictureBox
+-panel1 : System.Windows.Forms.Panel
+-picRecentFiles : System.Windows.Forms.PictureBox
+-picWebLinks : System.Windows.Forms.PictureBox
+-lblFilesMissing : System.Windows.Forms.Label
+-uiBtnRecordSequence : taskt.UI.CustomControls.UIPictureButton
+-uiBtnClearAll : taskt.UI.CustomControls.UIPictureButton
+-grpSaveClose : taskt.UI.CustomControls.UIGroupBox
+-uiBtnKeep : taskt.UI.CustomControls.UIPictureButton
+-uiBtnClose : taskt.UI.CustomControls.UIPictureButton
+-grpSearch : taskt.UI.CustomControls.UIGroupBox
+-txtCommandSearch : System.Windows.Forms.TextBox
+-lblCurrentlyViewing : System.Windows.Forms.Label
+-lblTotalResults : System.Windows.Forms.Label
+-picCommandSearch : System.Windows.Forms.PictureBox
+-uiBtnSaveAs : taskt.UI.CustomControls.UIPictureButton
+-pnlMain : taskt.UI.CustomControls.UIPanel
+-cutSelectedActionssToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-uiBtnImport : taskt.UI.CustomControls.UIPictureButton
+-moveToParentToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-btnSequenceImport : taskt.UI.CustomControls.UIPictureButton
+-notifyTray : System.Windows.Forms.NotifyIcon
+-headerMenu : taskt.UI.CustomControls.UIMenuStrip
+-fileActionsToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-modifyToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-variablesToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-settingsToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-scriptActionsToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-recordToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-scheduleToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-runToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-saveAndRunToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-showSearchBarToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-tsSearchBox : System.Windows.Forms.ToolStripTextBox
+-tsSearchButton : System.Windows.Forms.ToolStripMenuItem
+-tsSearchResult : System.Windows.Forms.ToolStripMenuItem
+-viewCodeToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-newToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-openToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-importFileToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-saveToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-saveAsToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-restartApplicationToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-closeApplicationToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-fileActionsSep3 : System.Windows.Forms.ToolStripSeparator
+-fileActionsSep1 : System.Windows.Forms.ToolStripSeparator
+-fileActionsSep2 : System.Windows.Forms.ToolStripSeparator
+-lstContextStripSep1 : System.Windows.Forms.ToolStripSeparator
+-lstContextStripSep2 : System.Windows.Forms.ToolStripSeparator
+-lstContextStripSep3 : System.Windows.Forms.ToolStripSeparator
+-editThisCodeToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-deleteSelectedToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-lnkStartEdit : System.Windows.Forms.LinkLabel
+-lstContextStripSep4 : System.Windows.Forms.ToolStripSeparator
+-showScriptInfoMenuItem : System.Windows.Forms.ToolStripMenuItem
+-editStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-CutScriptStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-CopyStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-PasteStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-SearchStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-ReplaceStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-editSplitMenuSeparator1 : System.Windows.Forms.ToolStripSeparator
+-SelectAllStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-helpStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-tasktProjectPageStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-tasktWikiStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-helpToolStripSeparator1 : System.Windows.Forms.ToolStripSeparator
+-aboutStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-releaseToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-issueToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-helpToolStripSeparator2 : System.Windows.Forms.ToolStripSeparator
+-clearSearchHighlightsToolStripMenuItem1 : System.Windows.Forms.ToolStripMenuItem
+-searchThisCommnadToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-clearHighlightToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-sampleToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-helpThisCommandToolStripMenuItem1 : System.Windows.Forms.ToolStripMenuItem
+-lstContextStripSep5 : System.Windows.Forms.ToolStripSeparator
+-variableManagerToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-selectAllToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-lstScriptActions : taskt.UI.CustomControls.UIListView
+-columnHeader1 : System.Windows.Forms.ColumnHeader
+-columnHeader2 : System.Windows.Forms.ColumnHeader
+-commandColumn : System.Windows.Forms.ColumnHeader
+-commandListTablePanel : System.Windows.Forms.TableLayoutPanel
+-commandsListPanelU : System.Windows.Forms.Panel
+-commandListPanelD : System.Windows.Forms.Panel
+-tvCommands : taskt.UI.CustomControls.UITreeView
+-picCommandFilterClear : System.Windows.Forms.PictureBox
+-picCommandFilter : System.Windows.Forms.PictureBox
+-txtCommandFilter : System.Windows.Forms.TextBox
+-label2 : System.Windows.Forms.Label
+-rootTVCommandMenuStrip : System.Windows.Forms.ContextMenuStrip
+-expandRootTVCommandMenuStrip : System.Windows.Forms.ToolStripMenuItem
+-collapseRootTVCommandMenuStrip : System.Windows.Forms.ToolStripMenuItem
+-rootTVCommandMenuSep1 : System.Windows.Forms.ToolStripSeparator
+-clearRootTVCommandMenuStrip : System.Windows.Forms.ToolStripMenuItem
+-cmdTVCommandMenuStrip : System.Windows.Forms.ContextMenuStrip
+-addCmdTVCommandMenuStrip : System.Windows.Forms.ToolStripMenuItem
+-helpCmdTVCommandMenuStrip : System.Windows.Forms.ToolStripMenuItem
+-cmdTVCommandMenuSep1 : System.Windows.Forms.ToolStripSeparator
+-highlightCmdTVCommandMenuStrip : System.Windows.Forms.ToolStripMenuItem
+-cmdTVCommandMenuSep2 : System.Windows.Forms.ToolStripSeparator
+-clearCmdTVCommandMenuStrip : System.Windows.Forms.ToolStripMenuItem
+-editThisActionStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-helpThisCommandStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-enableSelectedActionsStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-disableSelectedActionsStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-pauseBeforeExeutionStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-editSplitMenuSeparator2 : System.Windows.Forms.ToolStripSeparator
+-deleteStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-editSplitMenuSeparator3 : System.Windows.Forms.ToolStripSeparator
+-highlightThisCommandStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-scriptInformationsToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-myToolTip : System.Windows.Forms.ToolTip
+-optionToolStripSep1 : System.Windows.Forms.ToolStripSeparator
+-showScriptFolderToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-showLogFolderToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-optionToolStripSep2 : System.Windows.Forms.ToolStripSeparator
+-miniMapLoadingDelayTimer : System.Windows.Forms.Timer
+-linkGitter : System.Windows.Forms.LinkLabel
+-tasktGitterStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-whereThisCommandToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-whereThisCommandToolStripMenuItem1 : System.Windows.Forms.ToolStripMenuItem
+-newSettigsToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-insertCommentToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-aboveHereToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-belowHereToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-sampleThisCommandTVCommandMenuStrip : System.Windows.Forms.ToolStripMenuItem
+-ViewXMLCodeToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-ViewJSONCodeToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-optionToolStripSep3 : System.Windows.Forms.ToolStripSeparator
+-showGUIInspectToolToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-showJSONPathHelperToolToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-multiSendKeystrokesEditToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-showFormatCheckerToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-autoSaveTimer : System.Windows.Forms.Timer
+-dontPauseBeforeExecutionToolStripMenuItem1 : System.Windows.Forms.ToolStripMenuItem
+-dontPauseBeforeExecutionToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-undoSplitMenuItem : System.Windows.Forms.ToolStripMenuItem
+-redoSplitMenuItem : System.Windows.Forms.ToolStripMenuItem
+-editSplitMenuSeparator4 : System.Windows.Forms.ToolStripSeparator
+-moveUpToolStripMenu : System.Windows.Forms.ToolStripMenuItem
+-moveDownToolStripMenu : System.Windows.Forms.ToolStripMenuItem
+}
+}
+
+package "System.Windows.Forms"{
+class "Form" {
++add_AutoSizeChanged() : void 
++remove_AutoSizeChanged() : void 
++add_AutoValidateChanged() : void 
++remove_AutoValidateChanged() : void 
++add_HelpButtonClicked() : void 
++remove_HelpButtonClicked() : void 
++add_MaximizedBoundsChanged() : void 
++remove_MaximizedBoundsChanged() : void 
++add_MaximumSizeChanged() : void 
++remove_MaximumSizeChanged() : void 
++add_MarginChanged() : void 
++remove_MarginChanged() : void 
++add_MinimumSizeChanged() : void 
++remove_MinimumSizeChanged() : void 
++add_TabIndexChanged() : void 
++remove_TabIndexChanged() : void 
++add_TabStopChanged() : void 
++remove_TabStopChanged() : void 
+#SetVisibleCore() : void 
++add_Activated() : void 
++remove_Activated() : void 
++add_Closing() : void 
++remove_Closing() : void 
++add_Closed() : void 
++remove_Closed() : void 
++add_Deactivate() : void 
++remove_Deactivate() : void 
++add_FormClosing() : void 
++remove_FormClosing() : void 
++add_FormClosed() : void 
++remove_FormClosed() : void 
++add_Load() : void 
++remove_Load() : void 
++add_MdiChildActivate() : void 
++remove_MdiChildActivate() : void 
++add_MenuComplete() : void 
++remove_MenuComplete() : void 
++add_MenuStart() : void 
++remove_MenuStart() : void 
++add_InputLanguageChanged() : void 
++remove_InputLanguageChanged() : void 
++add_InputLanguageChanging() : void 
++remove_InputLanguageChanging() : void 
++add_RightToLeftLayoutChanged() : void 
++remove_RightToLeftLayoutChanged() : void 
++add_Shown() : void 
++remove_Shown() : void 
++Activate() : void 
+#ActivateMdiChild() : void 
++AddOwnedForm() : void 
+#AdjustFormScrollbars() : void 
+#ApplyAutoScaling() : void 
+ AssignParent() : void 
++Close() : void 
+#CreateControlsInstance() : ControlCollection
+ AfterControlRemoved() : void 
+#CreateHandle() : void 
+#DefWndProc() : void 
+#Dispose() : void 
+ FocusInternal() : Boolean
++{static} GetAutoScaleSize() : SizeF
+ GetPreferredSizeCore() : Size
+ CanSelectCore() : Boolean
+ CanProcessMnemonic() : Boolean
+ ProcessMnemonic() : Boolean
+#CenterToParent() : void 
+#CenterToScreen() : void 
++LayoutMdi() : void 
+#OnActivated() : void 
+ OnAutoScaleModeChanged() : void 
+#OnBackgroundImageChanged() : void 
+#OnBackgroundImageLayoutChanged() : void 
+#OnClosing() : void 
+#OnClosed() : void 
+#OnFormClosing() : void 
+#OnFormClosed() : void 
+#OnCreateControl() : void 
+#OnDeactivate() : void 
+#OnEnabledChanged() : void 
+#OnEnter() : void 
+#OnFontChanged() : void 
+#OnHandleCreated() : void 
+#OnHandleDestroyed() : void 
+#OnHelpButtonClicked() : void 
+#OnLayout() : void 
+#OnLoad() : void 
+#OnMaximizedBoundsChanged() : void 
+#OnMaximumSizeChanged() : void 
+#OnMinimumSizeChanged() : void 
+#OnInputLanguageChanged() : void 
+#OnInputLanguageChanging() : void 
+#OnVisibleChanged() : void 
+#OnMdiChildActivate() : void 
+#OnMenuStart() : void 
+#OnMenuComplete() : void 
+#OnPaint() : void 
+#OnResize() : void 
+#OnDpiChanged() : void 
++add_DpiChanged() : void 
++remove_DpiChanged() : void 
+#OnGetDpiScaledSize() : Boolean
+#OnRightToLeftLayoutChanged() : void 
+#OnShown() : void 
+#OnTextChanged() : void 
+#ProcessCmdKey() : Boolean
+#ProcessDialogKey() : Boolean
+#ProcessDialogChar() : Boolean
+#ProcessKeyPreview() : Boolean
+#ProcessTabKey() : Boolean
+ RecreateHandleCore() : void 
++RemoveOwnedForm() : void 
++add_ResizeBegin() : void 
++remove_ResizeBegin() : void 
++add_ResizeEnd() : void 
++remove_ResizeEnd() : void 
+#Select() : void 
+#ScaleCore() : void 
+#GetScaledBounds() : Rectangle
+#ScaleControl() : void 
+#SetBoundsCore() : void 
+ ApplyBoundsConstraints() : Rectangle
+#SetClientSizeCore() : void 
++SetDesktopBounds() : void 
++SetDesktopLocation() : void 
++Show() : void 
++ShowDialog() : DialogResult
++ShowDialog() : DialogResult
+ ShouldSerializeAutoScaleBaseSize() : Boolean
+ ShouldSerializeSize() : Boolean
++ToString() : String
+#UpdateDefaultButton() : void 
+#OnResizeBegin() : void 
+#OnResizeEnd() : void 
+#OnStyleChanged() : void 
++ValidateChildren() : Boolean
++ValidateChildren() : Boolean
+#WndProc() : void 
++AcceptButton : IButtonControl <<get>> <<set>> 
++{static} ActiveForm : Form <<get>> 
++ActiveMdiChild : Form <<get>> 
++AllowTransparency : Boolean <<get>> <<set>> 
++AutoScale : Boolean <<get>> <<set>> 
++AutoScaleBaseSize : Size <<get>> <<set>> 
++AutoScroll : Boolean <<get>> <<set>> 
++AutoSize : Boolean <<get>> <<set>> 
++AutoSizeMode : AutoSizeMode <<get>> <<set>> 
++AutoValidate : AutoValidate <<get>> <<set>> 
++BackColor : Color <<get>> <<set>> 
++FormBorderStyle : FormBorderStyle <<get>> <<set>> 
++CancelButton : IButtonControl <<get>> <<set>> 
++ClientSize : Size <<get>> <<set>> 
++ControlBox : Boolean <<get>> <<set>> 
+#CreateParams : CreateParams <<get>> 
+#DefaultImeMode : ImeMode <<get>> 
+#DefaultSize : Size <<get>> 
++DesktopBounds : Rectangle <<get>> <<set>> 
++DesktopLocation : Point <<get>> <<set>> 
++DialogResult : DialogResult <<get>> <<set>> 
+ HasMenu : Boolean <<get>> 
++HelpButton : Boolean <<get>> <<set>> 
++Icon : Icon <<get>> <<set>> 
++IsMdiChild : Boolean <<get>> 
++IsMdiContainer : Boolean <<get>> <<set>> 
++IsRestrictedWindow : Boolean <<get>> 
++KeyPreview : Boolean <<get>> <<set>> 
++Location : Point <<get>> <<set>> 
+#MaximizedBounds : Rectangle <<get>> <<protected set>>
++MaximumSize : Size <<get>> <<set>> 
++MainMenuStrip : MenuStrip <<get>> <<set>> 
++Margin : Padding <<get>> <<set>> 
++Menu : MainMenu <<get>> <<set>> 
++MinimumSize : Size <<get>> <<set>> 
++MaximizeBox : Boolean <<get>> <<set>> 
++MdiChildren :  <<get>> 
++MdiParent : Form <<get>> <<set>> 
++MergedMenu : MainMenu <<get>> 
++MinimizeBox : Boolean <<get>> <<set>> 
++Modal : Boolean <<get>> 
++Opacity : Double <<get>> <<set>> 
++OwnedForms :  <<get>> 
++Owner : Form <<get>> <<set>> 
++RestoreBounds : Rectangle <<get>> 
++RightToLeftLayout : Boolean <<get>> <<set>> 
+ ParentInternal : Control <<get>> <<set>> 
++ShowInTaskbar : Boolean <<get>> <<set>> 
++ShowIcon : Boolean <<get>> <<set>> 
+ ShowParams : Int32 <<get>> 
+#ShowWithoutActivation : Boolean <<get>> 
++Size : Size <<get>> <<set>> 
++SizeGripStyle : SizeGripStyle <<get>> <<set>> 
++StartPosition : FormStartPosition <<get>> <<set>> 
++TabIndex : Int32 <<get>> <<set>> 
++TabStop : Boolean <<get>> <<set>> 
++Text : String <<get>> <<set>> 
++TopLevel : Boolean <<get>> <<set>> 
++TopMost : Boolean <<get>> <<set>> 
++TransparencyKey : Color <<get>> <<set>> 
++WindowState : FormWindowState <<get>> <<set>> 
+ WindowText : String <<get>> <<set>> 
+}
+}
+
+
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+@enduml

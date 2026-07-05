@@ -1,0 +1,32 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationWaitForUIElementToExistsCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands"{
++v_TargetElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationCheckUIElementExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementCommand
+@enduml

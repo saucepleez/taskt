@@ -1,0 +1,162 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowPositionProperties" {
++{abstract} v_WhenWindowIsMinimized : String <<get>> <<set>> <<abstract>> 
++{abstract} v_WhenWindowIsMaximized : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowRECTProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowSizeProperties" {
++{abstract} v_WhenWindowIsMinimized : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowPositionsFromWindowNamesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_PositionBase : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveWindowsCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveOneWindowCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetOneWindowPositionCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_PositionBase : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowPositionFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_PositionBase : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveWindowByWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowSizesFromWindowNamesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ResizeWindowsCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ResizeOneWindowCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetOneWindowSizeCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowResizeProperties" {
++{abstract} v_WhenWindowIsMaximized : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowSizeFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ResizeWindowByWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IWindowRECTProperties <|-- taskt.Core.Automation.Commands.IWindowPositionProperties
+taskt.Core.Automation.Commands.IWindowRECTProperties <|-- taskt.Core.Automation.Commands.IWindowSizeProperties
+taskt.Core.Automation.Commands.IWindowPositionProperties <|.. taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand
+taskt.Core.Automation.Commands.IWindowPositionProperties <|.. taskt.Core.Automation.Commands.MoveWindowsCommand
+taskt.Core.Automation.Commands.IWindowPositionProperties <|.. taskt.Core.Automation.Commands.MoveOneWindowCommand
+taskt.Core.Automation.Commands.IWindowPositionProperties <|.. taskt.Core.Automation.Commands.GetOneWindowPositionCommand
+taskt.Core.Automation.Commands.IWindowPositionProperties <|.. taskt.Core.Automation.Commands.GetWindowPositionFromWindowHandleCommand
+taskt.Core.Automation.Commands.IWindowPositionProperties <|.. taskt.Core.Automation.Commands.MoveWindowByWindowHandleCommand
+taskt.Core.Automation.Commands.IWindowSizeProperties <|.. taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand
+taskt.Core.Automation.Commands.IWindowSizeProperties <|.. taskt.Core.Automation.Commands.ResizeWindowsCommand
+taskt.Core.Automation.Commands.IWindowSizeProperties <|.. taskt.Core.Automation.Commands.ResizeOneWindowCommand
+taskt.Core.Automation.Commands.IWindowSizeProperties <|.. taskt.Core.Automation.Commands.GetOneWindowSizeCommand
+taskt.Core.Automation.Commands.IWindowSizeProperties <|-- taskt.Core.Automation.Commands.IWindowResizeProperties
+taskt.Core.Automation.Commands.IWindowSizeProperties <|.. taskt.Core.Automation.Commands.GetWindowSizeFromWindowHandleCommand
+taskt.Core.Automation.Commands.IWindowResizeProperties <|.. taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand
+@enduml

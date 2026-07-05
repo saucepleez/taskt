@@ -1,0 +1,26 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "GetListIndexFromValueCommand" <<sealed>> {
++RunCommand() : void 
++v_SearchMethod : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AListGetFromValueCommands"{
++v_Value : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CheckListItemExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.AListGetFromValueCommands <|-- taskt.Core.Automation.Commands.GetListIndexFromValueCommand
+taskt.Core.Automation.Commands.AListGetFromValueCommands <|-- taskt.Core.Automation.Commands.CheckListItemExistsCommand
+@enduml

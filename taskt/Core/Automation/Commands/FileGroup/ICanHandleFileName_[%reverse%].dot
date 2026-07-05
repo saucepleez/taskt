@@ -1,0 +1,31 @@
+digraph "taskt.Core.Automation.Commands.ICanHandleFileName" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.CompileCSharpFileCommand" [ label="CompileCSharpFileCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ICanHandleFileName" [ label="ICanHandleFileName", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.CompileCSharpCodeCommand" [ label="CompileCSharpCodeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands" [ label="AFileCopySameRenameFileCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetRandomFilePathCommand" [ label="GetRandomFilePathCommand", ];
+"taskt.Core.Automation.Commands.AFileNumberedFileCommands" [ label="AFileNumberedFileCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.LogDataCommand" [ label="LogDataCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CopyFileToSameFolderCommand" [ label="CopyFileToSameFolderCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.RenameFileCommand" [ label="RenameFileCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetLastExistentNumberedFilePathCommand" [ label="GetLastExistentNumberedFilePathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetNonExistentFilePathCommand" [ label="GetNonExistentFilePathCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.CompileCSharpFileCommand" -> "taskt.Core.Automation.Commands.ICanHandleFileName";
+"taskt.Core.Automation.Commands.CompileCSharpCodeCommand" -> "taskt.Core.Automation.Commands.ICanHandleFileName";
+"taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands" -> "taskt.Core.Automation.Commands.ICanHandleFileName";
+"taskt.Core.Automation.Commands.GetRandomFilePathCommand" -> "taskt.Core.Automation.Commands.ICanHandleFileName";
+"taskt.Core.Automation.Commands.AFileNumberedFileCommands" -> "taskt.Core.Automation.Commands.ICanHandleFileName";
+"taskt.Core.Automation.Commands.LogDataCommand" -> "taskt.Core.Automation.Commands.ICanHandleFileName";
+"taskt.Core.Automation.Commands.CopyFileToSameFolderCommand" -> "taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands";
+"taskt.Core.Automation.Commands.RenameFileCommand" -> "taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands";
+"taskt.Core.Automation.Commands.GetLastExistentNumberedFilePathCommand" -> "taskt.Core.Automation.Commands.AFileNumberedFileCommands";
+"taskt.Core.Automation.Commands.GetNonExistentFilePathCommand" -> "taskt.Core.Automation.Commands.AFileNumberedFileCommands";
+}

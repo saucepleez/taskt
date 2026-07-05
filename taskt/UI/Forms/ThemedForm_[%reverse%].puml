@@ -1,0 +1,1178 @@
+@startuml
+package "taskt.UI.Forms"{
+class "DialogLikeThemedForm" {
+-DialogLikeThemedForm_KeyPress() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-components : System.ComponentModel.IContainer
+}
+}
+
+package "taskt.UI.Forms"{
+class "ThemedForm" {
+#OnShown() : void 
+#OnPaint() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++Theme : Theme <<get>> <<set>> 
+-_Theme : taskt.Core.Theme
+-components : System.ComponentModel.IContainer
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
+class "frmSettings" {
+-frmSettings_Load() : void 
+-frmSettings_KeyDown() : void 
+-uiBtnOpen_Click() : void 
+-uiCancel_Click() : void 
+-AutomationTCPListener_ListeningStopped() : void 
+-AutomationTCPListener_ListeningStarted() : void 
+-btnConnect_Click() : void 
+-btnAddAssembly_Click() : void 
+-btnUpdateCheck_Click() : void 
+-tmrGetSocketStatus_Tick() : void 
+-btnCloseConnection_Click() : void 
+-chkBypassValidation_CheckedChanged() : void 
+-btnSelectFolder_Click() : void 
+-bgwMetrics_DoWork() : void 
+-bgwMetrics_RunWorkerCompleted() : void 
+-btnClearMetrics_Click() : void 
+-btnGenerateWikiDocs_Click() : void 
+-txtVariableStartMarker_TextChanged() : void 
+-checkBox1_CheckedChanged() : void 
+-btnLaunchAttendedMode_Click() : void 
+-btnSelectAttendedTaskFolder_Click() : void 
+-btnLaunchDisplayManager_Click() : void 
+-btnGetGUID_Click() : void 
+-btnGetBotGUID_Click() : void 
+-btnTaskPublish_Click() : void 
+-label17_Click() : void 
+-SetupListeningUI() : void 
+-DisableListenerButtons() : void 
+-btnStartListening_Click() : void 
+-btnStopListening_Click() : void 
+-btnWhiteList_Click() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-newAppSettings : taskt.Core.ApplicationSettings
++scriptBuilderForm : taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+-components : System.ComponentModel.IContainer
+-label3 : System.Windows.Forms.Label
+-txtServerURL : System.Windows.Forms.TextBox
+-chkAutomaticallyConnect : System.Windows.Forms.CheckBox
+-chkServerEnabled : System.Windows.Forms.CheckBox
+-label1 : System.Windows.Forms.Label
+-chkRetryOnDisconnect : System.Windows.Forms.CheckBox
+-btnConnect : System.Windows.Forms.Button
+-txtPublicKey : System.Windows.Forms.TextBox
+-label2 : System.Windows.Forms.Label
+-chkAutoCloseWindow : System.Windows.Forms.CheckBox
+-chkShowDebug : System.Windows.Forms.CheckBox
+-chkEnableLogging : System.Windows.Forms.CheckBox
+-lblMainLogo : System.Windows.Forms.Label
+-lblOptions : System.Windows.Forms.Label
+-lblApplicationSettings : System.Windows.Forms.Label
+-chkAntiIdle : System.Windows.Forms.CheckBox
+-btnUpdates : System.Windows.Forms.Button
+-chkAdvancedDebug : System.Windows.Forms.CheckBox
+-chkCreateMissingVariables : System.Windows.Forms.CheckBox
+-uiSettingTabs : taskt.UI.CustomControls.UITabControl
+-tabAppSettings : System.Windows.Forms.TabPage
+-tabDebugSettings : System.Windows.Forms.TabPage
+-tabServerSettings : System.Windows.Forms.TabPage
+-label4 : System.Windows.Forms.Label
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-panel1 : System.Windows.Forms.Panel
+-lblSocketException : System.Windows.Forms.Label
+-btnCloseConnection : System.Windows.Forms.Button
+-tmrGetSocketStatus : System.Windows.Forms.Timer
+-chkBypassValidation : System.Windows.Forms.CheckBox
+-lblRootFolder : System.Windows.Forms.Label
+-txtAppFolderPath : System.Windows.Forms.TextBox
+-btnSelectFolder : System.Windows.Forms.Button
+-tvExecutionTimes : System.Windows.Forms.TreeView
+-bgwMetrics : System.ComponentModel.BackgroundWorker
+-label5 : System.Windows.Forms.Label
+-lblMetrics : System.Windows.Forms.Label
+-btnClearMetrics : System.Windows.Forms.Button
+-chkTrackMetrics : System.Windows.Forms.CheckBox
+-btnGenerateWikiDocs : System.Windows.Forms.Button
+-txtVariableStartMarker : System.Windows.Forms.TextBox
+-lblVariableDisplay : System.Windows.Forms.Label
+-txtVariableEndMarker : System.Windows.Forms.TextBox
+-label8 : System.Windows.Forms.Label
+-label7 : System.Windows.Forms.Label
+-label10 : System.Windows.Forms.Label
+-label9 : System.Windows.Forms.Label
+-lblDelay : System.Windows.Forms.Label
+-txtCommandDelay : System.Windows.Forms.TextBox
+ chkOverrideInstances : System.Windows.Forms.CheckBox
+-chkMinimizeToTray : System.Windows.Forms.CheckBox
+-btnLaunchAttendedMode : System.Windows.Forms.Button
+-btnSelectAttendedTaskFolder : System.Windows.Forms.Button
+-label6 : System.Windows.Forms.Label
+-txtAttendedTaskFolder : System.Windows.Forms.TextBox
+-lblStartupMode : System.Windows.Forms.Label
+-cboStartUpMode : System.Windows.Forms.ComboBox
+-btnLaunchDisplayManager : System.Windows.Forms.Button
+-label12 : System.Windows.Forms.Label
+-txtGUID : System.Windows.Forms.TextBox
+-label11 : System.Windows.Forms.Label
+-txtHttpsAddress : System.Windows.Forms.TextBox
+-btnGetGUID : System.Windows.Forms.Button
+-label14 : System.Windows.Forms.Label
+-label13 : System.Windows.Forms.Label
+-label15 : System.Windows.Forms.Label
+-lblStatus : System.Windows.Forms.Label
+-btnTaskPublish : System.Windows.Forms.Button
+-chkPreloadCommands : System.Windows.Forms.CheckBox
+-chkSlimActionBar : System.Windows.Forms.CheckBox
+-cboCancellationKey : System.Windows.Forms.ComboBox
+-label16 : System.Windows.Forms.Label
+-tabLocalListener : System.Windows.Forms.TabPage
+-label17 : System.Windows.Forms.Label
+-label18 : System.Windows.Forms.Label
+-label20 : System.Windows.Forms.Label
+-txtAuthListeningKey : System.Windows.Forms.TextBox
+-chkEnableListening : System.Windows.Forms.CheckBox
+-chkRequireListenerKey : System.Windows.Forms.CheckBox
+-btnStopListening : System.Windows.Forms.Button
+-btnStartListening : System.Windows.Forms.Button
+-lblListeningStatus : System.Windows.Forms.Label
+-chkAutoStartListener : System.Windows.Forms.CheckBox
+-label19 : System.Windows.Forms.Label
+-txtListeningPort : System.Windows.Forms.TextBox
+-chkEnableWhitelist : System.Windows.Forms.CheckBox
+-txtWhiteList : System.Windows.Forms.TextBox
+ chkAutoCalcVariables : System.Windows.Forms.CheckBox
+-tabEditorSettings : System.Windows.Forms.TabPage
+-chkSequenceDragDrop : System.Windows.Forms.CheckBox
+-chkInsertCommandsInline : System.Windows.Forms.CheckBox
+-txtDefaultBrowserInstanceName : System.Windows.Forms.TextBox
+-lblBrowserInstance : System.Windows.Forms.Label
+-txtDefaultWordInstanceName : System.Windows.Forms.TextBox
+-lblWordInstance : System.Windows.Forms.Label
+-txtDefaultExcelInstanceName : System.Windows.Forms.TextBox
+-lblExcelInstance : System.Windows.Forms.Label
+-txtDefaultStopwatchInstanceName : System.Windows.Forms.TextBox
+-lblStopwatchInstance : System.Windows.Forms.Label
+-chkInsertVariablePosition : System.Windows.Forms.CheckBox
+-chkInsertElse : System.Windows.Forms.CheckBox
+-txtCurrentWindow : System.Windows.Forms.TextBox
+-lblCurrentWindow : System.Windows.Forms.Label
+-txtDefaultDBInstanceName : System.Windows.Forms.TextBox
+-lblDBInstance : System.Windows.Forms.Label
+-chkInsertCommentIfLoop : System.Windows.Forms.CheckBox
+-chkGruopingBySubgruop : System.Windows.Forms.CheckBox
+-chkShowIndentLine : System.Windows.Forms.CheckBox
+-lblIndentWidth : System.Windows.Forms.Label
+-txtIndentWidth : System.Windows.Forms.TextBox
+-chkExportIntermediate : System.Windows.Forms.CheckBox
+-panel2 : System.Windows.Forms.Panel
+-uiCancel : taskt.UI.CustomControls.UIPictureButton
+-uiBtnOpen : taskt.UI.CustomControls.UIPictureButton
+-chkUseNewParser : System.Windows.Forms.CheckBox
+-txtDefaultNLGInstanceName : System.Windows.Forms.TextBox
+-lblDefaultNLGInstance : System.Windows.Forms.Label
+-lblVariableMarkerAlert : System.Windows.Forms.Label
+-chkIgnoreFirstVariableMarker : System.Windows.Forms.CheckBox
+-chkShowScriptMiniMap : System.Windows.Forms.CheckBox
+-cmbInstanceNameOrder : System.Windows.Forms.ComboBox
+-label21 : System.Windows.Forms.Label
+-chkGreedlySubGroupName : System.Windows.Forms.CheckBox
+-chkSubGroupNameSearchTarget : System.Windows.Forms.CheckBox
+-chkGreedlyGroupName : System.Windows.Forms.CheckBox
+-chkGroupNameSearchTarget : System.Windows.Forms.CheckBox
+-label22 : System.Windows.Forms.Label
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.CommandEditor"{
+class "frmCommandEditor" {
+-frmNewCommand_Load() : void 
+-CopyPropertiesTo() : void 
+-AfterFormInitialization() : void 
+-FocusFirstEditableControl() : void 
+-frmCommandEditor_Shown() : void 
+-frmCommandEditor_FormClosed() : void 
+-cboSelectedCommand_SelectionChangeCommitted() : void 
+-uiBtnAdd_Click() : void 
+-uiBtnCancel_Click() : void 
+-frmCommandEditor_Resize() : void 
+-tableLayoutPanel1_Paint() : void 
+-uiButtonVariable_Click() : void 
+-btnHelpThisCommand_Click() : void 
+-reloadVariableList() : void 
+-cboSelectedCommand_Click() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++ParameterBindingControls : Dictionary <<get>> 
+-commandList : List<taskt.UI.CustomControls.AutomationCommand>
++scriptVariables : List<taskt.Core.Script.ScriptVariable>
++selectedCommand : taskt.Core.Automation.Commands.ScriptCommand
++originalCommand : taskt.Core.Automation.Commands.ScriptCommand
++creationMode : taskt.UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode
++defaultStartupCommand : string
++editingCommand : taskt.Core.Automation.Commands.ScriptCommand
++configuredCommands : List<taskt.Core.Automation.Commands.ScriptCommand>
++appSettings : taskt.Core.SafeApplicationSettings
++instanceList : taskt.Core.InstanceCounter
+-_parameterBindingControls : Dictionary<string, System.Windows.Forms.Control>
+-treeAllCommands : System.Windows.Forms.TreeNode[]
+-treeAllCommandsImage : System.Windows.Forms.ImageList
+-components : System.ComponentModel.IContainer
+-cboSelectedCommand : System.Windows.Forms.ComboBox
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-uiBtnAdd : taskt.UI.CustomControls.UIPictureButton
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-flowLayoutPanel1 : System.Windows.Forms.FlowLayoutPanel
++flw_InputVariables : System.Windows.Forms.FlowLayoutPanel
+-uiButtonVariable : taskt.UI.CustomControls.UIPictureButton
+-btnHelpThisCommand : taskt.UI.CustomControls.UIPictureButton
+}
+}
+
+package "taskt.UI.Forms.ScriptEngine"{
+class "frmScriptEngine" {
+-frmProcessingStatus_Load() : void 
+-OnHookStopped() : void 
+-Engine_ReportProgress() : void 
+-Engine_ScriptFinishedEvent() : void 
+-EngineInstance_LineNumberChangedEvent() : void 
+-AddSteppingCommandsReport() : void 
+-ShowFinishedResult() : void 
++ShowNotifyMessageInScriptBuilder() : void 
+-UpdateLineNumberInScriptBuilder() : void 
+-autoCloseTimer_Tick() : void 
+-uiBtnCancel_Click() : void 
+-uiBtnPause_Click() : void 
+-pbBotIcon_Click() : void 
+-lstSteppingCommands_MouseDoubleClick() : void 
++{static} MoveFormToBottomRight() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++filePath : String <<get>> <<set>> 
++remoteTask : Task <<get>> <<set>> 
++serverExecution : Boolean <<get>> <<set>> 
++callBackForm : frmScriptBuilder <<get>> <<set>> 
+-advancedDebug : Boolean <<get>> <<private set>>
++engineInstance : AutomationEngineInstance <<get>> <<set>> 
+-Variables : List <<get>> <<private set>>
+-PreloadedTasks : Dictionary <<get>> <<private set>>
++Result : String <<get>> <<set>> 
++engineSettings : taskt.Core.SafeEngineSettings
++CloseWhenDone : bool
+-components : System.ComponentModel.IContainer
+-lstSteppingCommands : System.Windows.Forms.ListBox
+-tmrNotify : System.Windows.Forms.Timer
+-lblCloseTimer : System.Windows.Forms.Label
+-lblMainLogo : System.Windows.Forms.Label
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-uiBtnPause : taskt.UI.CustomControls.UIPictureButton
+-lblKillProcNote : System.Windows.Forms.Label
+-pbBotIcon : System.Windows.Forms.PictureBox
+-lblAction : System.Windows.Forms.Label
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
+class "frmUIElementSearchParameter" {
+-frmUIElementSearchParameter_Load() : void 
+-uiBtnOK_Click() : void 
+-uiBtnCancel_Click() : void 
+-CreateXPath() : String
+#Dispose() : void 
+-InitializeComponent() : void 
++XPath : String <<get>> 
+-searchParameters : System.Data.DataTable
+-xpath : string
+-components : System.ComponentModel.IContainer
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-panelFooter : System.Windows.Forms.Panel
+-uiBtnOK : taskt.UI.CustomControls.UIPictureButton
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-dgvSearchParameters : System.Windows.Forms.DataGridView
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
+class "frmNewSettings" {
+-frmNewSettings_Load() : void 
+-uiBtnOpen_Click() : void 
+-uiCancel_Click() : void 
+-tvSettingsMenu_AfterSelect() : void 
+-updatePrevPage() : void 
+-showApplicationStartUpSetting() : void 
+-showApplicationFolderSettings() : void 
+-showApplicationDebugSettings() : void 
+-showApplicationMetricSettings() : void 
+-showApplicationOtherSettings() : void 
+-showApplicationScriptFileSettings() : void 
+-showApplicationSettingsFile() : void 
+-showAutomationEngineParserSettings() : void 
+-showAutomationEngineKeywordSettings() : void 
+-showAutomationEngineEngineSettings() : void 
+-showAutomationEngineVariableSettings() : void 
+-showAutomationEngineLogSettings() : void 
+-showDocumentsCommandReferenceSettings() : void 
+-showEditorMenuBarSettings() : void 
+-showEditorCommandListSettings() : void 
+-showEditorGUIInspectToolSettings() : void 
+-showEditorInstanceSettings() : void 
+-showEditorInsertCommandSettings() : void 
+-showEditorMiniMapSettings() : void 
+-showEditorIndentSettings() : void 
+-showEditorVariableSettings() : void 
+-showEditorValidationSettings() : void 
+-showEditorStatusBarSettings() : void 
+-showEditorCommandEditorSettings() : void 
+-showNetworkLocalListerSettings() : void 
+-showNetworkServerSettings() : void 
+-showUpdateCheckUpdateSettings() : void 
+-showVMDisplayManagerSettings() : void 
+-RemoveSettingControls() : void 
+-CreateLabel() : Label
+-CreateTextBox() : TextBox
+-CreateCheckBox() : CheckBox
+-CreateComboBox() : ComboBox
+-CreateButton() : Button
+-CreateButton() : Button
+-{static} GetWebDriverVersions() : Dictionary
+-{static} ExtractWebDriverVersion() : String
+#Dispose() : void 
+-InitializeComponent() : void 
+-newAppSettings : taskt.Core.ApplicationSettings
+-scriptBuilderForm : taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+-prevPage : string
+-bgwMetricsDoWorkEvent : System.ComponentModel.DoWorkEventHandler
+-bgwMetricsRunWorkerCompletedEvent : System.ComponentModel.RunWorkerCompletedEventHandler
+-tmrGetScoketStatusTickEvent : EventHandler
+-tcpListenerListenStartEvent : EventHandler
+-tcpListenerListenStopEvent : EventHandler
+-keysList : string[]
+-components : System.ComponentModel.IContainer
+-tableLayoutBase : System.Windows.Forms.TableLayoutPanel
+-lblMainLogo : System.Windows.Forms.Label
+-label1 : System.Windows.Forms.Label
+-panelHeader : System.Windows.Forms.Panel
+-panelFooter : System.Windows.Forms.Panel
+-uiCancel : taskt.UI.CustomControls.UIPictureButton
+-uiBtnOpen : taskt.UI.CustomControls.UIPictureButton
+-tableLayoutMain : System.Windows.Forms.TableLayoutPanel
+-tvSettingsMenu : System.Windows.Forms.TreeView
+-flowLayoutSettings : System.Windows.Forms.FlowLayoutPanel
+-tmrGetSocketStatus : System.Windows.Forms.Timer
+-bgwMetrics : System.ComponentModel.BackgroundWorker
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
+class "frmSample" {
+-frmSample_Load() : void 
+-frmSample_KeyDown() : void 
+-tvSamples_DoubleClick() : void 
+-tvSamples_MouseClick() : void 
+-tvSamples_NodeMouseClick() : void 
+-tvSamples_KeyDown() : void 
+-btnOpen_Click() : void 
+-btnImport_Click() : void 
+-btnNew_Click() : void 
+-btnCancel_Click() : void 
+-ConvertFileNameToTreeNode() : String
+-ConvertTreeNodeToFileName() : String
+-GetSelectedScriptPath() : String
+-OpenSampleScriptProcess() : void 
+-ImportSampleScriptProcess() : void 
+-NewTasktSampleScriptProcess() : void 
+-openToolStripMenuItem_Click() : void 
+-importToolStripMenuItem_Click() : void 
+-newWindowToolStripMenuItem_Click() : void 
+-clearFilterTvContextMenuStrip_Click() : void 
+-expandToolStripMenuItem_Click() : void 
+-collapseToolStripMenuItem_Click() : void 
+-clearFilterRootContextMenuStrop_Click() : void 
+-picSearch_Click() : void 
+-picClear_Click() : void 
+-txtSearchBox_KeyDown() : void 
+-tvSamplesUpdateProcess() : void 
+-ApplyFilterProcess() : void 
+-FilterSamplesProcess() : void 
+-ShowAllSamplesProcess() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-samplePath : string
+-parentForm : taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+-bufferdSampleNodes : System.Windows.Forms.TreeNode[]
+-components : System.ComponentModel.IContainer
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-panel1 : System.Windows.Forms.Panel
+-panel2 : System.Windows.Forms.Panel
+-btnImport : taskt.UI.CustomControls.UIPictureButton
+-btnOpen : taskt.UI.CustomControls.UIPictureButton
+-btnCancel : taskt.UI.CustomControls.UIPictureButton
+-tvSamples : taskt.UI.CustomControls.UITreeView
+-tvContextMenuStrip : System.Windows.Forms.ContextMenuStrip
+-openToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-importToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-panel3 : System.Windows.Forms.Panel
+-lblMain : System.Windows.Forms.Label
+-panel4 : System.Windows.Forms.Panel
+-txtSearchBox : System.Windows.Forms.TextBox
+-picSearch : System.Windows.Forms.PictureBox
+-label1 : System.Windows.Forms.Label
+-label2 : System.Windows.Forms.Label
+-picClear : System.Windows.Forms.PictureBox
+-rootContextMenuStrip : System.Windows.Forms.ContextMenuStrip
+-expandToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-collapseToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-btnNew : taskt.UI.CustomControls.UIPictureButton
+-newWindowToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-tvContestSep1 : System.Windows.Forms.ToolStripSeparator
+-clearFilterTvContextMenuStrip : System.Windows.Forms.ToolStripMenuItem
+-rootContextSep1 : System.Windows.Forms.ToolStripSeparator
+-clearFilterRootContextMenuStrop : System.Windows.Forms.ToolStripMenuItem
+-myToolTip : System.Windows.Forms.ToolTip
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
+class "frmScriptInformations" {
+-frmScriptInformations_Load() : void 
+-btnOK_Click() : void 
+-btnCancel_Click() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++infos : ScriptInformation <<get>> <<private set>>
+-components : System.ComponentModel.IContainer
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-lblMainLogo : System.Windows.Forms.Label
+-panel1 : System.Windows.Forms.Panel
+-lblAuthor : System.Windows.Forms.Label
+-txtScriptAuthor : System.Windows.Forms.TextBox
+-lblScriptDescription : System.Windows.Forms.Label
+-txtScriptDescription : System.Windows.Forms.TextBox
+-lblScriptVersion : System.Windows.Forms.Label
+-txtScriptVersion : System.Windows.Forms.TextBox
+-txtTasktVersion : System.Windows.Forms.Label
+-lblTastkVersion : System.Windows.Forms.Label
+-txtRunTimes : System.Windows.Forms.Label
+-lblRunTimes : System.Windows.Forms.Label
+-txtLastRun : System.Windows.Forms.Label
+-lblLastRun : System.Windows.Forms.Label
+-txtScriptRevision : System.Windows.Forms.Label
+-lblScriptRevision : System.Windows.Forms.Label
+-pnlFooterButtons : System.Windows.Forms.Panel
+-btnCancel : taskt.UI.CustomControls.UIPictureButton
+-btnOK : taskt.UI.CustomControls.UIPictureButton
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
+class "frmAddVariable" {
+-frmAddVariable_Load() : void 
+-uiBtnOk_Click() : void 
+-uiBtnCancel_Click() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++editMode : frmAddVariablesEditMode <<get>> 
++VariableName : String <<get>> <<private set>>
++VariableValue : String <<get>> <<private set>>
+-appSettings : taskt.Core.SafeApplicationSettings
+-components : System.ComponentModel.IContainer
+-lblDefineName : System.Windows.Forms.Label
+-lblHeader : System.Windows.Forms.Label
+-lblDefineNameDescription : System.Windows.Forms.Label
+-lblDefineDefaultValueDescriptor : System.Windows.Forms.Label
+-lblDefineDefaultValue : System.Windows.Forms.Label
+-uiBtnOk : taskt.UI.CustomControls.UIPictureButton
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-txtVariableName : System.Windows.Forms.TextBox
+-txtDefaultValue : System.Windows.Forms.TextBox
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
+class "frmCodeBuilder" {
+-frmCodeBuilder_Load() : void 
+-rtbCode_TextChanged() : void 
+-utBtnCompile_Click() : void 
+-uiBtnSave_Click() : void 
+-uiBtnSample_Click() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-components : System.ComponentModel.IContainer
+-tlpBuilder : System.Windows.Forms.TableLayoutPanel
+-panel1 : System.Windows.Forms.Panel
+-uiBtnCompile : taskt.UI.CustomControls.UIPictureButton
+-lblHeader : System.Windows.Forms.Label
+-lstCompilerResults : System.Windows.Forms.ListBox
+-chkRunAfterCompile : System.Windows.Forms.CheckBox
+-uiBtnSave : taskt.UI.CustomControls.UIPictureButton
++rtbCode : System.Windows.Forms.RichTextBox
+-uiBtnSample : taskt.UI.CustomControls.UIPictureButton
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
+class "frmCommandList" {
+-frmCommandList_Load() : void 
+-uiBtnAdd_Click() : void 
+-uiBtnCancel_Click() : void 
+-tvCommands_NodeMouseDoubleClick() : void 
+-tvCommands_MouseClick() : void 
+-txtSearchKeyword_KeyDown() : void 
+-picCommandSearch_Click() : void 
+-picCommandClear_Click() : void 
+-SearchCommandProcess() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++FullCommandName : String <<get>> 
+-appSettings : taskt.Core.SafeApplicationSettings
+-treeAllCommands : System.Windows.Forms.TreeNode[]
+-treeAllCommandsImage : System.Windows.Forms.ImageList
+-firstGroup : string
+-firstCommand : string
+-components : System.ComponentModel.IContainer
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-panelFooter : System.Windows.Forms.Panel
+-uiBtnAdd : taskt.UI.CustomControls.UIPictureButton
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-tvCommands : System.Windows.Forms.TreeView
+-panelHeader : System.Windows.Forms.Panel
+-txtSearchKeyword : System.Windows.Forms.TextBox
+-label1 : System.Windows.Forms.Label
+-picCommandClear : System.Windows.Forms.PictureBox
+-picCommandSearch : System.Windows.Forms.PictureBox
+}
+}
+
+package "taskt.UI.Forms.ScriptEngine.Supplemental"{
+class "frmEngineContextViewer" {
+-Timer_Tick() : void 
+-FrmEngineContextViewer_Load() : void 
+-LoadEngineContext() : void 
+-DisplayTreeView() : void 
+-AddNode() : void 
+-UiBtnOk_Click() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-components : System.ComponentModel.IContainer
+-tvContext : System.Windows.Forms.TreeView
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-pnlDialogResult : System.Windows.Forms.Panel
+-uiBtnOk : taskt.UI.CustomControls.UIPictureButton
+-lblMainLogo : System.Windows.Forms.Label
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
+class "frmFormatChecker" {
+-frmFormatChecker_Load() : void 
+-txtValue_TextChanged() : void 
+-bntFile_Click() : void 
+-btnFolder_Click() : void 
+-btnNow_Click() : void 
+-txtFormat_TextChanged() : void 
+-updateResult() : void 
+-btnHelp_Click() : void 
+-getTypeIndex() : Int32
+-uiBtnAdd_Click() : void 
+-uiBtnCancel_Click() : void 
++{static} ShowFormatCheckerFormLinkClicked() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++Format : String <<get>> 
++Value : String <<get>> 
+-components : System.ComponentModel.IContainer
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-panelHeader : System.Windows.Forms.Panel
+-panelFooter : System.Windows.Forms.Panel
+-uiBtnAdd : taskt.UI.CustomControls.UIPictureButton
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-label1 : System.Windows.Forms.Label
+-panel1 : System.Windows.Forms.Panel
+-cmbType : System.Windows.Forms.ComboBox
+-label5 : System.Windows.Forms.Label
+-txtResult : System.Windows.Forms.TextBox
+-label4 : System.Windows.Forms.Label
+-txtFormat : System.Windows.Forms.TextBox
+-label3 : System.Windows.Forms.Label
+-txtValue : System.Windows.Forms.TextBox
+-label2 : System.Windows.Forms.Label
+-btnNow : System.Windows.Forms.Button
+-btnFolder : System.Windows.Forms.Button
+-bntFile : System.Windows.Forms.Button
+-openFileDialog1 : System.Windows.Forms.OpenFileDialog
+-folderBrowserDialog1 : System.Windows.Forms.FolderBrowserDialog
+-btnHelp : System.Windows.Forms.Button
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
+class "frmGUIInspectTool" {
+-frmGUIInspectTool_Load() : void 
+-btnReload_Click() : void 
+-cmbWindowList_SelectedValueChanged() : void 
+-ReloadWindowNamesInCmbWindowList() : void 
+-CreateUIElementXMLTreeFromWindowName() : void 
+-CreateXMLTreeAndTreeNodeFromWindowName() : TreeNode
+-CreateTreeNodeFromChildElementsOfUIElementXML() : void 
+-GetUIElementFromXML() : AutomationElement
+-{static} CreateTreeNodeFromUIElement() : TreeNode
+-GetUIElementHash() : String
+-GetXElementFromUIElement() : XElement
+-GetXPathFromRoot() : String
++GetXPathFromUIElement() : String
+-CreateXPath() : String
+-tvElements_NodeMouseClick() : void 
+-tvElements_AfterCheck() : void 
+-ClearAllCheckInTvElements() : void 
+-{static} ClearCheckTreeNode() : void 
+-GetCheckedNode() : TreeNode
+-{static} SearchCheckedNode() : TreeNode
+-chkElementReload_CheckedChanged() : void 
+-timerElementReload_Tick() : void 
+-chkUseNameAttr_CheckedChanged() : void 
+-chkUseAutomationIdAttr_CheckedChanged() : void 
+-ReloadXPath() : void 
++{static} GetInspectResultFromUIElement() : String
+-ShowUIElementInformation() : void 
+-HighlightUIElement() : void 
+-uiBtnAdd_Click() : void 
+-uiBtnCancel_Click() : void 
+-txtElementInformation_DoubleClick() : void 
+-txtXPath_DoubleClick() : void 
+-timerLabelShowTime_Tick() : void 
+-ShowMessageTimer() : void 
+-chkShowInTree_CheckedChanged() : void 
+-chkXPathRelative_CheckedChanged() : void 
+-cmbInspectMode_SelectedIndexChanged() : void 
+-timerMouseMove_Tick() : void 
+-CreateXMLTreeAndTreeNodeFromCursor() : TreeNode
+-{static} CreateChildUIElementXMLNodes() : List
+-{static} AddXMLNodeHashTableProcess() : void 
+-checkEnableInspect_CheckedChanged() : void 
+-StopTimerActionAfterRestoreTimer() : void 
+-tvElementsReloadProcess() : void 
+-tvElementsRenderProcess() : void 
+-btnXPathEvaluate_Click() : void 
+-SearchAndHighlightTvElements() : void 
+-{static} ClearHightlightTreeNodeProcess() : void 
+-{static} HighlightTreeNodeProcess() : void 
+-btnParametersEvaluate_Click() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++XPath : String <<get>> 
++WindowName : String <<get>> 
++InspectResult : String <<get>> 
+-windowXMLTree : System.Xml.Linq.XElement
+-uiElementHashTable : Dictionary<string, System.Windows.Automation.AutomationElement>
+-engine : taskt.Core.Automation.Engine.AutomationEngineInstance
+-oldCursorPosition : System.Drawing.Point
+-components : System.ComponentModel.IContainer
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-panelTitle : System.Windows.Forms.Panel
+-label1 : System.Windows.Forms.Label
+-panelXPath : System.Windows.Forms.Panel
+-splitContainer1 : System.Windows.Forms.SplitContainer
+-panelFooter : System.Windows.Forms.FlowLayoutPanel
+-uiBtnAdd : taskt.UI.CustomControls.UIPictureButton
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-txtXPath : System.Windows.Forms.TextBox
+-tvElements : System.Windows.Forms.TreeView
+-txtElementInformation : System.Windows.Forms.TextBox
+-panelFooterContainer : System.Windows.Forms.Panel
+-lblMessage : System.Windows.Forms.Label
+-timerLabelShowTime : System.Windows.Forms.Timer
+-myToolTip : System.Windows.Forms.ToolTip
+-chkUseAutomationIdAttr : System.Windows.Forms.CheckBox
+-chkUseNameAttr : System.Windows.Forms.CheckBox
+-panelMenu : System.Windows.Forms.Panel
+-chkShowInTree : System.Windows.Forms.CheckBox
+-chkXPathRelative : System.Windows.Forms.CheckBox
+-timerElementReload : System.Windows.Forms.Timer
+-chkElementReload : System.Windows.Forms.CheckBox
+-panelWindow : System.Windows.Forms.Panel
+-btnReload : System.Windows.Forms.Button
+-cmbWindowList : System.Windows.Forms.ComboBox
+-cmbInspectMode : System.Windows.Forms.ComboBox
+-timerMouseMove : System.Windows.Forms.Timer
+-label3 : System.Windows.Forms.Label
+-checkEnableInspect : System.Windows.Forms.CheckBox
+-label2 : System.Windows.Forms.Label
+-btnXPathEvaluate : System.Windows.Forms.Button
+-btnParametersEvaluate : System.Windows.Forms.Button
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
+class "frmInspectToolParser" {
+-frmInspectToolParser_Load() : void 
+-uiBtnAdd_Click() : void 
+-uiBtnCancel_Click() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++InspectResult : String <<get>> 
+-components : System.ComponentModel.IContainer
+-rootLayout : System.Windows.Forms.TableLayoutPanel
+-txtInspectResult : System.Windows.Forms.TextBox
+-panel1 : System.Windows.Forms.Panel
+-label2 : System.Windows.Forms.Label
+-label1 : System.Windows.Forms.Label
+-flowBottomLayout : System.Windows.Forms.FlowLayoutPanel
+-uiBtnAdd : taskt.UI.CustomControls.UIPictureButton
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
+class "frmJSONPathHelper" {
+-frmJSONPathHelper_Load() : void 
+-picOpenFromFile_Click() : void 
+-picOpenFromURL_Click() : void 
+-picClear_Click() : void 
+-OpenFromFileProcess() : void 
+-OpenFromURLProcess() : void 
+-btnParse_Click() : void 
+-ParseJSONProcess() : void 
+-CreateJSONTree() : void 
+-{static} ParsePath() : String
+-{static} ParseArrayPath() : String
+-tvJSON_NodeMouseClick() : void 
+-GetJSONPath() : String
+-txtJSONPath_DoubleClick() : void 
+-txtJSONPathResult_DoubleClick() : void 
+-txtRawJSON_DoubleClick() : void 
+-uiBtnAdd_Click() : void 
+-uiBtnCancel_Click() : void 
+-txtRawJSON_DragEnter() : void 
+-txtRawJSON_DragDrop() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++JSONPath : String <<get>> 
+-components : System.ComponentModel.IContainer
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-panelFooter : System.Windows.Forms.Panel
+-uiBtnAdd : taskt.UI.CustomControls.UIPictureButton
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-panelHeader : System.Windows.Forms.Panel
+-label1 : System.Windows.Forms.Label
+-splitBody : System.Windows.Forms.SplitContainer
+-tableRawJSON : System.Windows.Forms.TableLayoutPanel
+-txtRawJSON : System.Windows.Forms.TextBox
+-panalRawJSONButtons : System.Windows.Forms.Panel
+-btnParse : System.Windows.Forms.Button
+-picOpenFromURL : System.Windows.Forms.PictureBox
+-picOpenFromFile : System.Windows.Forms.PictureBox
+-openFileDialog1 : System.Windows.Forms.OpenFileDialog
+-lblMessage : System.Windows.Forms.Label
+-tableJSONParse : System.Windows.Forms.TableLayoutPanel
+-splitJsonParse : System.Windows.Forms.SplitContainer
+-tvJSON : System.Windows.Forms.TreeView
+-txtJSONPathResult : System.Windows.Forms.TextBox
+-panelJSONPath : System.Windows.Forms.Panel
+-label2 : System.Windows.Forms.Label
+-txtJSONPath : System.Windows.Forms.TextBox
+-myToolTip : System.Windows.Forms.ToolTip
+-picClear : System.Windows.Forms.PictureBox
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
+class "frmKeysBuilder" {
+-frmKeysBuilder_Load() : void 
+-uiBtnAdd_Click() : void 
+-uiBtnCancel_Click() : void 
+-chkShift_CheckedChanged() : void 
+-chkCtrl_CheckedChanged() : void 
+-chkAlt_CheckedChanged() : void 
+-chkWin_CheckedChanged() : void 
+-cmbKey_SelectedIndexChanged() : void 
+-txtTimes_TextChanged() : void 
+-ShowSendKey() : void 
+-convertKeyCode() : String
+#Dispose() : void 
+-InitializeComponent() : void 
++Result : String <<get>> 
+-components : System.ComponentModel.IContainer
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-panelFooter : System.Windows.Forms.Panel
+-uiBtnAdd : taskt.UI.CustomControls.UIPictureButton
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-panelHeader : System.Windows.Forms.Panel
+-panelBody : System.Windows.Forms.Panel
+-label1 : System.Windows.Forms.Label
+-txtTimes : System.Windows.Forms.TextBox
+-lblTimes : System.Windows.Forms.Label
+-lblPress : System.Windows.Forms.Label
+-cmbKey : System.Windows.Forms.ComboBox
+-lblKey : System.Windows.Forms.Label
+-chkWin : System.Windows.Forms.CheckBox
+-chkAlt : System.Windows.Forms.CheckBox
+-chkCtrl : System.Windows.Forms.CheckBox
+-chkShift : System.Windows.Forms.CheckBox
+-panelResult : System.Windows.Forms.Panel
+-txtResult : System.Windows.Forms.TextBox
+-lblResult : System.Windows.Forms.Label
+-myTooltip : System.Windows.Forms.ToolTip
+-lblWinKeyMessage : System.Windows.Forms.Label
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
+class "frmMultiEnterKeys" {
+-frmMultiSendKeystrokes_Load() : void 
+-lnkWindowNameUpToDate_Click() : void 
+-lnkWindoNameVariable_Click() : void 
+-cmbWindowName_KeyUp() : void 
+-cmbWindowName_Click() : void 
+-lnkCompareMethodVariable_Click() : void 
+-lnkKeyStrokesVariable_Click() : void 
+-lnkWaitTimeVariable_Click() : void 
+-uiBtnAdd_Click() : void 
+-uiBtnCancel_Click() : void 
+-{static} combobox_KeyUp() : void 
+-{static} combobox_Click() : void 
+-{static} SetCursorPosition() : void 
+-lnkInsertVariable_Click() : void 
+-CreateVariableSelectForm() : frmItemSelector
+-{static} ConcatenateVariableName() : void 
+-{static} ConcatenateVariableName() : void 
++SendKeystrokesCommands() : List
+-UpdateWindowNames() : void 
++{static} GetConsecutiveSendKeystrokesCommands() : List
+-{static} isSameWindowToBottom() : Boolean
+#Dispose() : void 
+-InitializeComponent() : void 
++Mode : CreationMode <<get>> 
+-appSetttings : taskt.Core.SafeApplicationSettings
+-scriptVariables : List<taskt.Core.Script.ScriptVariable>
+-mode : taskt.UI.Forms.ScriptBuilder.Supplemental.frmMultiEnterKeys.CreationMode
+-components : System.ComponentModel.IContainer
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-panelFooter : System.Windows.Forms.Panel
+-uiBtnAdd : taskt.UI.CustomControls.UIPictureButton
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-panelHeader : System.Windows.Forms.Panel
+-lblFormTitle : System.Windows.Forms.Label
+-panelBody : System.Windows.Forms.Panel
+-flowBody : System.Windows.Forms.FlowLayoutPanel
+-flowWindowName : System.Windows.Forms.FlowLayoutPanel
+-lblWindowName : System.Windows.Forms.Label
+-lnkWindoNameVariable : taskt.UI.CustomControls.CommandItemControl
+-lnkWindowNameUpToDate : taskt.UI.CustomControls.CommandItemControl
+-cmbWindowName : System.Windows.Forms.ComboBox
+-txtWaitTimeAfter : System.Windows.Forms.TextBox
+-lnkWaitTimeAfterVariable : taskt.UI.CustomControls.CommandItemControl
+-lblWaitTimeAfter : System.Windows.Forms.Label
+-lnkTextToSend : taskt.UI.CustomControls.CommandItemControl
+-txtTextToSend : System.Windows.Forms.TextBox
+-lblTextToSend : System.Windows.Forms.Label
+-cmbCompareMethod : System.Windows.Forms.ComboBox
+-lblCompareMethod : System.Windows.Forms.Label
+-flowCompareMethod : System.Windows.Forms.FlowLayoutPanel
+-flowTextToSend : System.Windows.Forms.FlowLayoutPanel
+-flowWaitTimeAfter : System.Windows.Forms.FlowLayoutPanel
+-lnkCompareMethodVariable : taskt.UI.CustomControls.CommandItemControl
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
+class "frmSearchCommands" {
+-frmSearchCommands_Load() : void 
+-frmSearchCommands_FormClosing() : void 
+-frmSearchCommands_Activated() : void 
+-frmSearchCommands_Deactivate() : void 
+-frmSearchCommands_KeyDown() : void 
+-barOpacity_Scroll() : void 
+-btnClose_Click() : void 
+-btnClearAndClose_Click() : void 
+-btnSearchSearch_Click() : void 
+-btnSearchNext_Click() : void 
+-txtSearchKeyword_KeyUp() : void 
+-chkSearchTargetIsInstance_CheckedChanged() : void 
+-radioTargetIsInstance_CheckedChanged() : void 
+-btnReplaceSearch_Click() : void 
+-btnReplaceReplace_Click() : void 
+-btnReplaceReplaceAll_Click() : void 
+-btnSearchKeywordVariable_Click() : void 
+-btnReplaceSearchVariable_Click() : void 
+-btnReplaceReplaceVariable_Click() : void 
+-InsertVariableToTextBoxProcess() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++variables : List <<get>> <<set>> 
++CurrentMode : SearchReplaceMode <<get>> <<set>> 
+-parentForm : taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+-_currentMode : taskt.UI.Forms.ScriptBuilder.Supplemental.frmSearchCommands.SearchReplaceMode
+-components : System.ComponentModel.IContainer
+-baseTableLayout : System.Windows.Forms.TableLayoutPanel
+-pnlHeader : System.Windows.Forms.Panel
+-lblHeader : System.Windows.Forms.Label
+-searchTab : taskt.UI.CustomControls.UITabControl
+-tabSearch : System.Windows.Forms.TabPage
+-tabReplace : System.Windows.Forms.TabPage
+-txtSearchKeyword : System.Windows.Forms.TextBox
+-btnSearchNext : System.Windows.Forms.Button
+-btnSearchSearch : System.Windows.Forms.Button
+-groupBox2 : System.Windows.Forms.GroupBox
+-chkSearchBackToTop : System.Windows.Forms.CheckBox
+-chkSearchCaseSensitive : System.Windows.Forms.CheckBox
+-groupBox1 : System.Windows.Forms.GroupBox
+-chkSearchTargetIsComment : System.Windows.Forms.CheckBox
+-chkSearchTargetIsName : System.Windows.Forms.CheckBox
+-chkSearchTargetIsParameter : System.Windows.Forms.CheckBox
+-label9 : System.Windows.Forms.Label
+-footarTableLayout : System.Windows.Forms.TableLayoutPanel
+-footerButtonsPanel : System.Windows.Forms.FlowLayoutPanel
+-btnClose : taskt.UI.CustomControls.UIPictureButton
+-btnClearAndClose : taskt.UI.CustomControls.UIPictureButton
+-panel1 : System.Windows.Forms.Panel
+-label1 : System.Windows.Forms.Label
+-barOpacity : System.Windows.Forms.TrackBar
+-chkSearchTargetIsDisplayText : System.Windows.Forms.CheckBox
+-btnReplaceReplaceAll : System.Windows.Forms.Button
+-btnReplaceReplace : System.Windows.Forms.Button
+-btnReplaceSearch : System.Windows.Forms.Button
+-groupBox4 : System.Windows.Forms.GroupBox
+-chkReplaceBackToTop : System.Windows.Forms.CheckBox
+-chkReplaceCaseSensitive : System.Windows.Forms.CheckBox
+-groupBox3 : System.Windows.Forms.GroupBox
+-cmbReplaceInstance : System.Windows.Forms.ComboBox
+-radioTargetIsComment : System.Windows.Forms.RadioButton
+-radioTargetIsInstance : System.Windows.Forms.RadioButton
+-radioTargetIsAll : System.Windows.Forms.RadioButton
+-label3 : System.Windows.Forms.Label
+-txtReplaceReplace : System.Windows.Forms.TextBox
+-label2 : System.Windows.Forms.Label
+-txtReplaceSearch : System.Windows.Forms.TextBox
+-chkSearchTargetIsInstance : System.Windows.Forms.CheckBox
+-cmbSearchInstance : System.Windows.Forms.ComboBox
+-btnSearchKeywordVariable : System.Windows.Forms.Button
+-btnReplaceReplaceVariable : System.Windows.Forms.Button
+-btnReplaceSearchVariable : System.Windows.Forms.Button
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
+class "frmItemSelector" {
+-frmVariableSelector_Load() : void 
+-uiBtnOk_Click() : void 
+-uiBtnCancel_Click() : void 
+-lstVariables_DoubleClick() : void 
+-lstVariables_SelectedIndexChanged() : void 
+-picSearch_Click() : void 
+-picClear_Click() : void 
+-txtSearchBox_KeyDown() : void 
+-BeginFilterItemsProcess() : void 
+-FilterItemsProcess() : void 
+-ShowAllItems() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++SelectedItem : Object <<get>> <<private set>>
+-bufferdItems : string[]
+-components : System.ComponentModel.IContainer
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-lblHeader : System.Windows.Forms.Label
+-lstItems : System.Windows.Forms.ListBox
+-panel1 : System.Windows.Forms.Panel
+-uiBtnOk : taskt.UI.CustomControls.UIPictureButton
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-panel2 : System.Windows.Forms.Panel
+-picClear : System.Windows.Forms.PictureBox
+-label2 : System.Windows.Forms.Label
+-picSearch : System.Windows.Forms.PictureBox
+-txtSearchBox : System.Windows.Forms.TextBox
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
+class "frmUpdate" {
+-uiBtnOk_Click() : void 
+-uiBtnCancel_Click() : void 
+-btnShowUpdateDetails_Click() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-manifest : taskt.Core.Update.UpdateManifest
+-components : System.ComponentModel.IContainer
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-panelFooter : System.Windows.Forms.Panel
+-uiBtnOk : taskt.UI.CustomControls.UIPictureButton
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-panelBody : System.Windows.Forms.Panel
+-lblText : System.Windows.Forms.Label
+-lblRemote : System.Windows.Forms.Label
+-lblLocal : System.Windows.Forms.Label
+-lblXPosition : System.Windows.Forms.Label
+-btnShowUpdateDetails : taskt.UI.CustomControls.UIPictureButton
+}
+}
+
+package "taskt.UI.Forms.General"{
+class "frmDialog" {
+-CalculateCloseTime() : void 
+-uiBtnOk_Click() : void 
+-uiBtnCancel_Click() : void 
+-autoCloseTimer_Tick() : void 
+-frmDialog_Load() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-closeTicks : int
+-ticksPassed : int
+-components : System.ComponentModel.IContainer
+-uiBtnOk : taskt.UI.CustomControls.UIPictureButton
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-autoCloseTimer : System.Windows.Forms.Timer
+-lblAutoClose : System.Windows.Forms.Label
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-pnlControlContainer : taskt.UI.CustomControls.UIPanel
+-txtMessage : System.Windows.Forms.RichTextBox
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
+class "frmAbout" {
+-frmAbout_Load() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-components : System.ComponentModel.IContainer
+-lblProjectName : System.Windows.Forms.Label
+-lblAppVersion : System.Windows.Forms.Label
+-lblBuildDate : System.Windows.Forms.Label
+-label1 : System.Windows.Forms.Label
+-label2 : System.Windows.Forms.Label
+}
+}
+
+package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
+class "frmScriptVariables" {
+-frmScriptVariables_Load() : void 
+-InitializeNodes() : void 
+-uiBtnOK_Click() : void 
+-uiBtnCancel_Click() : void 
+-uiBtnNew_Click() : void 
+-AddOrEditVaiableProcess() : void 
+-AddVariableProcess() : void 
+-EditSelectedVariableProcess() : void 
+-RemoveSelectedVariableProcess() : void 
+-tvScriptVariables_DoubleClick() : void 
+-tvScriptVariables_KeyDown() : void 
+-tvScriptVariables_MouseClick() : void 
+-tvScriptVariables_NodeMouseClick() : void 
+-GetSelectedTopNode() : TreeNode
+-GetVariableNameAndValue() : Boolean
+-editToolStripMenuItem_Click() : void 
+-removeToolStripMenuItem_Click() : void 
+-clearFilterEditVariableContextMenuStrip_Click() : void 
+-addToolStripMenuItem_Click() : void 
+-expandToolStripMenuItem_Click() : void 
+-collapseToolStripMenuItem_Click() : void 
+-clearFilterRootVariableContextMenuStrip_Click() : void 
+-AddUserVariableNode() : void 
+-RemoveUserVariableNode() : void 
+-ExpandUserVariableNode() : void 
+-isVariableExists() : Boolean
+-checkVariableNameIsValid() : Boolean
+-panel2_Paint() : void 
+-frmScriptVariables_FormClosed() : void 
+-frmScriptVariables_KeyDown() : void 
+-picSearch_Click() : void 
+-picClear_Click() : void 
+-picAdd_Click() : void 
+-txtSearchBox_KeyDown() : void 
+-BeginFilterVariablesProcess() : void 
+-filterVariables() : void 
+-showAllVariables() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-{static} .cctor() : void 
++scriptVariables : List <<get>> <<private set>>
+-bufferedUserVariableParentNode : System.Windows.Forms.TreeNode
+-bufferedSystemVariableParentNode : System.Windows.Forms.TreeNode
+-leadingValue : string
+-emptyValue : string
+-appSettings : taskt.Core.SafeApplicationSettings
+-User_Variables_Text : string
+-System_Variables_Text : string
+-components : System.ComponentModel.IContainer
+-lblMainLogo : System.Windows.Forms.Label
+-uiBtnCancel : taskt.UI.CustomControls.UIPictureButton
+-uiBtnOK : taskt.UI.CustomControls.UIPictureButton
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-panel1 : System.Windows.Forms.Panel
+-panel2 : System.Windows.Forms.Panel
+-tvScriptVariables : taskt.UI.CustomControls.UITreeView
+-uiBtnNew : taskt.UI.CustomControls.UIPictureButton
+-lblDefineName : System.Windows.Forms.Label
+-editVariableContextMenuStrip : System.Windows.Forms.ContextMenuStrip
+-editToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-removeToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-panel3 : System.Windows.Forms.Panel
+-picClear : System.Windows.Forms.PictureBox
+-label2 : System.Windows.Forms.Label
+-picSearch : System.Windows.Forms.PictureBox
+-txtSearchBox : System.Windows.Forms.TextBox
+-picAdd : System.Windows.Forms.PictureBox
+-rootVariableContestMenuStrip : System.Windows.Forms.ContextMenuStrip
+-addToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-expandToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-collapseToolStripMenuItem : System.Windows.Forms.ToolStripMenuItem
+-editVariableSep1 : System.Windows.Forms.ToolStripSeparator
+-clearFilterEditVariableContextMenuStrip : System.Windows.Forms.ToolStripMenuItem
+-rootVariableSep1 : System.Windows.Forms.ToolStripSeparator
+-clearFilterRootVariableContextMenuStrip : System.Windows.Forms.ToolStripMenuItem
+-myToolTip : System.Windows.Forms.ToolTip
+}
+}
+
+
+taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSettings
+taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSettings
+taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor
+taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor
+taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.ScriptEngine.frmScriptEngine
+taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.ScriptEngine.frmScriptEngine
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmUIElementSearchParameter
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmUIElementSearchParameter
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmNewSettings
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmNewSettings
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSample
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSample
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptInformations
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptInformations
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmAddVariable
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmAddVariable
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCodeBuilder
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCodeBuilder
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCommandList
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCommandList
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptEngine.Supplemental.frmEngineContextViewer
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptEngine.Supplemental.frmEngineContextViewer
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspectTool
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspectTool
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInspectToolParser
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInspectToolParser
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmJSONPathHelper
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmJSONPathHelper
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmKeysBuilder
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmKeysBuilder
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmMultiEnterKeys
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmMultiEnterKeys
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSearchCommands
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSearchCommands
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmUpdate
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmUpdate
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.General.frmDialog
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.General.frmDialog
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmAbout
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmAbout
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptVariables
+taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptVariables
+@enduml

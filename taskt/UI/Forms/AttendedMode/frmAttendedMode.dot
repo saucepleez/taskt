@@ -1,0 +1,14 @@
+digraph "taskt.UI.Forms.AttendedMode.frmAttendedMode" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.UI.Forms.AttendedMode.frmAttendedMode" [ label="frmAttendedMode", ];
+"System.Windows.Forms.Form" [ label="Form", ];
+
+"taskt.UI.Forms.AttendedMode.frmAttendedMode" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.AttendedMode.frmAttendedMode" -> "System.Windows.Forms.Form";
+}

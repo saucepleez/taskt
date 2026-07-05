@@ -1,0 +1,27 @@
+digraph "taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ConvertDictionaryToVisualizedTextCommand" [ label="ConvertDictionaryToVisualizedTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands" [ label="ADictionaryGetFromDictionaryCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ConvertDictionaryToTextCommand" [ label="ConvertDictionaryToTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.JoinDictionaryValuesAsTextCommand" [ label="JoinDictionaryValuesAsTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDictionaryToDataTableCommand" [ label="ConvertDictionaryToDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDictionaryToListCommand" [ label="ConvertDictionaryToListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDictionaryToJSONCommand" [ label="ConvertDictionaryToJSONCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetDictionaryKeysListCommand" [ label="GetDictionaryKeysListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetDictionaryKeyFromValueCommand" [ label="GetDictionaryKeyFromValueCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.ConvertDictionaryToVisualizedTextCommand" -> "taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands";
+"taskt.Core.Automation.Commands.ConvertDictionaryToTextCommand" -> "taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands";
+"taskt.Core.Automation.Commands.JoinDictionaryValuesAsTextCommand" -> "taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands";
+"taskt.Core.Automation.Commands.ConvertDictionaryToDataTableCommand" -> "taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands";
+"taskt.Core.Automation.Commands.ConvertDictionaryToListCommand" -> "taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands";
+"taskt.Core.Automation.Commands.ConvertDictionaryToJSONCommand" -> "taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands";
+"taskt.Core.Automation.Commands.GetDictionaryKeysListCommand" -> "taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands";
+"taskt.Core.Automation.Commands.GetDictionaryKeyFromValueCommand" -> "taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands";
+}

@@ -1,0 +1,51 @@
+digraph "taskt.Core.Automation.Commands.IHaveAdditionalCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.IHaveErrorAdditionalCommands" [ label="IHaveErrorAdditionalCommands", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IHaveAdditionalCommands" [ label="IHaveAdditionalCommands", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IHaveIfAdditionalCommands" [ label="IHaveIfAdditionalCommands", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands" [ label="IHaveLoopAdditionalCommands", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IHaveSequenceAdditionalCommands" [ label="IHaveSequenceAdditionalCommands", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.TryCommand" [ label="TryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginMultiIfCommand" [ label="BeginMultiIfCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginIfCommand" [ label="BeginIfCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsDataTableCommand" [ label="BeginLoopForDataTableColumnAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsListCommand" [ label="BeginLoopForDataTableColumnAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDataTableCommand" [ label="BeginLoopForDataTableRowAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDictionaryCommand" [ label="BeginLoopForDataTableRowAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginLoopForDataTableCommand" [ label="BeginLoopForDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginLoopForDictionaryCommand" [ label="BeginLoopForDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginLoopForListCommand" [ label="BeginLoopForListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginLoopCommand" [ label="BeginLoopCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginMultiLoopCommand" [ label="BeginMultiLoopCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginContinousLoopCommand" [ label="BeginContinousLoopCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginLoopForComplexDataTypesCommand" [ label="BeginLoopForComplexDataTypesCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginNumberOfTimesLoopCommand" [ label="BeginNumberOfTimesLoopCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SequenceCommand" [ label="SequenceCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.IHaveErrorAdditionalCommands" -> "taskt.Core.Automation.Commands.IHaveAdditionalCommands";
+"taskt.Core.Automation.Commands.IHaveIfAdditionalCommands" -> "taskt.Core.Automation.Commands.IHaveAdditionalCommands";
+"taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands" -> "taskt.Core.Automation.Commands.IHaveAdditionalCommands";
+"taskt.Core.Automation.Commands.IHaveSequenceAdditionalCommands" -> "taskt.Core.Automation.Commands.IHaveAdditionalCommands";
+"taskt.Core.Automation.Commands.TryCommand" -> "taskt.Core.Automation.Commands.IHaveErrorAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginMultiIfCommand" -> "taskt.Core.Automation.Commands.IHaveIfAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginIfCommand" -> "taskt.Core.Automation.Commands.IHaveIfAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsDataTableCommand" -> "taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsListCommand" -> "taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDataTableCommand" -> "taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDictionaryCommand" -> "taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginLoopForDataTableCommand" -> "taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginLoopForDictionaryCommand" -> "taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginLoopForListCommand" -> "taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginLoopCommand" -> "taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginMultiLoopCommand" -> "taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginContinousLoopCommand" -> "taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginLoopForComplexDataTypesCommand" -> "taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginNumberOfTimesLoopCommand" -> "taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands";
+"taskt.Core.Automation.Commands.SequenceCommand" -> "taskt.Core.Automation.Commands.IHaveSequenceAdditionalCommands";
+}

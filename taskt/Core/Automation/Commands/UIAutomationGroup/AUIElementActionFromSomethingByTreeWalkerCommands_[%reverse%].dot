@@ -1,0 +1,17 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands" [ label="AUIElementActionFromWindowSomethingByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands" [ label="AUIElementActionFromSomethingByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand" [ label="UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand" [ label="UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands";
+}

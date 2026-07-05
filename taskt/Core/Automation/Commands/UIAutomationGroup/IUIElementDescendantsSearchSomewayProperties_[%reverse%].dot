@@ -1,0 +1,90 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties" [ label="IGetUIElementsXMLTreeFromSomethingProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties" [ label="IUIElementDescendantsSearchSomewayProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchParametersProperties" [ label="IUIElementDescendantsSearchParametersProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchXPathProperties" [ label="IUIElementDescendantsSearchXPathProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand" [ label="UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand" [ label="UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromUIElementCommand" [ label="UIAutomationSearchUIElementsTreeXMLFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands" [ label="ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchAnyUIElementProperties" [ label="IUIElementDescendantsSearchAnyUIElementProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands" [ label="ADescendantsSearchUIElementsFromSomethingByXPathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByXPathCommands" [ label="AUIElementActionFromSomethingByXPathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands" [ label="ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands" [ label="ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands" [ label="ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromUIElementCommand" [ label="UIAutomationSearchUIElementsInformationFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands" [ label="AUIElementActionFromSomethingByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands" [ label="ADescendantsSearchUIElementsFromUIElementByXPathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands" [ label="ADescendantsSearchUIElementsFromWindowHandleByXPathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands" [ label="ADescendantsSearchUIElementsFromWindowNameByXPathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands" [ label="AUIElementActionFromWindowSomethingByXPathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands" [ label="ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands" [ label="ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromWindowHandleCommand" [ label="UIAutomationSearchUIElementsInformationFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands" [ label="ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromWindowNameCommand" [ label="UIAutomationSearchUIElementsInformationFromWindowNameCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands" [ label="AUIElementActionFromWindowSomethingByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsByXPathCommand" [ label="UIAutomationCheckUIElementExistsByXPathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsByXPathCommand" [ label="UIAutomationWaitForUIElementToExistsByXPathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementByXPathCommand" [ label="UIAutomationSearchUIElementFromUIElementByXPathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleByXPathCommand" [ label="UIAutomationSearchUIElementFromWindowHandleByXPathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameByXPathCommand" [ label="UIAutomationSearchUIElementFromWindowNameByXPathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand" [ label="UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand" [ label="UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsCommand" [ label="UIAutomationWaitForUIElementToExistsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsCommand" [ label="UIAutomationCheckUIElementExistsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementCommand" [ label="UIAutomationSearchUIElementFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleCommand" [ label="UIAutomationSearchUIElementFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameCommand" [ label="UIAutomationSearchUIElementFromWindowNameCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand" [ label="UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand" [ label="UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchParametersProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchXPathProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchParametersProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchAnyUIElementProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchParametersProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchXPathProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByXPathCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchXPathProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchAnyUIElementProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchAnyUIElementProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands";
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByXPathCommands";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromWindowNameCommand" -> "taskt.Core.Automation.Commands.ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsByXPathCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands";
+"taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsByXPathCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementByXPathCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleByXPathCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameByXPathCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands";
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands";
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands";
+"taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands";
+}

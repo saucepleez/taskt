@@ -1,0 +1,109 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableToVisualizedTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADataTableGetFromDataTableCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableToTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ExportHeader : String <<get>> <<set>> 
++v_ExportIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDataTableColumnAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ColumnIndex : String <<get>> <<set>> 
++v_ColumnName : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDataTableColumnAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ColumnIndex : String <<get>> <<set>> 
++v_ColumnName : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDataTableRowAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_RowIndex : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDataTableRowAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_RowIndex : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableToJSONCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDataTableColumnCountCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDataTableColumnListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDataTableRowCountCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableToVisualizedTextCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableToTextCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsDataTableCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsListCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDataTableCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDictionaryCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableToJSONCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.GetDataTableColumnCountCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.GetDataTableColumnListCommand
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.GetDataTableRowCountCommand
+@enduml

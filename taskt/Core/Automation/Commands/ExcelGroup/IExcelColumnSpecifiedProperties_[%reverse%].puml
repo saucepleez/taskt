@@ -1,0 +1,54 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelColumnSpecifiedCommands"{
++v_ColumnType : String <<get>> <<set>> 
++v_ColumnIndex : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelColumnSpecifiedProperties" {
++{abstract} v_ColumnIndex : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetColumnWidthCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelAppendCellCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSet : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelAppendRowCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSet : String <<get>> <<set>> 
++v_TextSeparator : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetLastRowIndexCommand" <<sealed>> {
++RunCommand() : void 
++v_ColumnIndex : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_UseFastMethodToCell : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IExcelColumnSpecifiedProperties <|.. taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands
+taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands <|-- taskt.Core.Automation.Commands.ExcelSetColumnWidthCommand
+taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands <|-- taskt.Core.Automation.Commands.ExcelAppendCellCommand
+taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands <|-- taskt.Core.Automation.Commands.ExcelAppendRowCommand
+taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands <|-- taskt.Core.Automation.Commands.ExcelGetLastRowIndexCommand
+@enduml

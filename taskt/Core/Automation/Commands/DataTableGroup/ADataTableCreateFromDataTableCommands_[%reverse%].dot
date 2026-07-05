@@ -1,0 +1,19 @@
+digraph "taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.FilterDataTableColumnByRowValueCommand" [ label="FilterDataTableColumnByRowValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands" [ label="ADataTableCreateFromDataTableCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.FilterDataTableRowByColumnValueCommand" [ label="FilterDataTableRowByColumnValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CopyDataTableCommand" [ label="CopyDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.FilterDataTableCommand" [ label="FilterDataTableCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.FilterDataTableColumnByRowValueCommand" -> "taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands";
+"taskt.Core.Automation.Commands.FilterDataTableRowByColumnValueCommand" -> "taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands";
+"taskt.Core.Automation.Commands.CopyDataTableCommand" -> "taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands";
+"taskt.Core.Automation.Commands.FilterDataTableCommand" -> "taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands";
+}

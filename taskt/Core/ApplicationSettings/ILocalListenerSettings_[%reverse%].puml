@@ -1,0 +1,43 @@
+@startuml
+package "taskt.Core"{
+class "LocalListenerSettings" <<sealed>> {
++Clone() : LocalListenerSettings
++StartListenerOnStartup : Boolean <<get>> <<set>> 
++LocalListeningEnabled : Boolean <<get>> <<set>> 
++RequireListenerAuthenticationKey : Boolean <<get>> <<set>> 
++ListeningPort : Int32 <<get>> <<set>> 
++AuthKey : String <<get>> <<set>> 
++EnableWhitelist : Boolean <<get>> <<set>> 
++IPWhiteList : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core"{
+Interface "ILocalListenerSettings" {
++{abstract} StartListenerOnStartup : Boolean <<get>> <<abstract>> 
++{abstract} LocalListeningEnabled : Boolean <<get>> <<abstract>> 
++{abstract} RequireListenerAuthenticationKey : Boolean <<get>> <<abstract>> 
++{abstract} ListeningPort : Int32 <<get>> <<abstract>> 
++{abstract} AuthKey : String <<get>> <<abstract>> 
++{abstract} EnableWhitelist : Boolean <<get>> <<abstract>> 
++{abstract} IPWhiteList : String <<get>> <<abstract>> 
+}
+}
+
+package "taskt.Core"{
+class "SafeLocalListenerSettings" {
++StartListenerOnStartup : Boolean <<get>> 
++LocalListeningEnabled : Boolean <<get>> 
++RequireListenerAuthenticationKey : Boolean <<get>> 
++ListeningPort : Int32 <<get>> 
++AuthKey : String <<get>> 
++EnableWhitelist : Boolean <<get>> 
++IPWhiteList : String <<get>> 
+#localListenerSettings : taskt.Core.LocalListenerSettings
+}
+}
+
+
+taskt.Core.ILocalListenerSettings <|.. taskt.Core.LocalListenerSettings
+taskt.Core.ILocalListenerSettings <|.. taskt.Core.SafeLocalListenerSettings
+@enduml

@@ -1,0 +1,51 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowHandleActionPropeties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowHandleProperties" {
++{abstract} v_WindowHandle : String <<get>> <<set>> <<abstract>> 
++{abstract} v_WaitTimeForWindow : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowWaitTimeBetweenFindAndActionProperties" {
++{abstract} v_WaitTimeBetweenFindAndAction : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowActivateProperties" {
++{abstract} v_ActivateBeforeAction : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WindowGroup"{
+Interface "IFromWindowHandleResultsProperties" {
++{abstract} v_WindowNameResult : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleWindowHandle" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+
+taskt.Core.Automation.Commands.IWindowHandleProperties <|-- taskt.Core.Automation.Commands.IWindowHandleActionPropeties
+taskt.Core.Automation.Commands.IWindowWaitTimeBetweenFindAndActionProperties <|-- taskt.Core.Automation.Commands.IWindowHandleActionPropeties
+taskt.Core.Automation.Commands.IWindowActivateProperties <|-- taskt.Core.Automation.Commands.IWindowHandleActionPropeties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties <|-- taskt.Core.Automation.Commands.IWindowHandleProperties
+taskt.Core.Automation.Commands.ICanHandleWindowHandle <|-- taskt.Core.Automation.Commands.IWindowHandleProperties
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IWindowWaitTimeBetweenFindAndActionProperties
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleWindowHandle
+@enduml

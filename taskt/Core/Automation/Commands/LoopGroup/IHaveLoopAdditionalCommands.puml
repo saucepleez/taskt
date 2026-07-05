@@ -1,0 +1,14 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "IHaveLoopAdditionalCommands" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IHaveAdditionalCommands" {
+}
+}
+
+
+taskt.Core.Automation.Commands.IHaveAdditionalCommands <|-- taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+@enduml

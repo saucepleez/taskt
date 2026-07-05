@@ -1,0 +1,202 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetTextsFromTableUIElementAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDataTableResultProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "GetFromWindowNamesAsDataTableCommands"{
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertColorCommand" <<sealed>> {
++RunCommand() : void 
+-cmbFormatSelectionChange() : void 
++AddInstance() : void 
++RemoveInstance() : void 
++v_Color : String <<get>> <<set>> 
++v_Format : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableColumnToDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableRowToDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetColumnValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRangeValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_FirstRowAsColumnName : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRowValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertJSONToDataTableCommand" <<sealed>> {
++RunCommand() : void 
+-{static} ParseJSONArrayAsDataTable() : DataTable
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertListToDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_ColumnType : String <<get>> <<set>> 
++v_Columns : String <<get>> <<set>> 
++v_ColumnsNotEnough : String <<get>> <<set>> 
++v_ListItemNotEnough : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetTableValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_AttributeName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_FirstRowMethod : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebElementsValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++BeforeValidate() : void 
++v_AttributesName : DataTable <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetOneWebElementValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebElementsValueAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowHandlesFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowStatesFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowSizesFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowPositionsFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_PositionBase : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetProcessNamesFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationGetTextsFromTableUIElementAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.GetJSONValuesAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertColorCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableColumnToDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableRowToDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertDictionaryToDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertJSONToDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertListToDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetTableValuesAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValuesAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand
+taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDataTableCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsDataTableCommand
+@enduml

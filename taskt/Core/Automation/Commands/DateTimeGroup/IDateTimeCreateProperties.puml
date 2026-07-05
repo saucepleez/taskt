@@ -1,0 +1,21 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "IDateTimeCreateProperties" {
++{abstract} v_DateTime : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleDateTime" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+
+taskt.Core.Automation.Commands.ICanHandleDateTime <|-- taskt.Core.Automation.Commands.IDateTimeCreateProperties
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleDateTime
+@enduml

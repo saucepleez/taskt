@@ -1,0 +1,30 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "CopyFileCommand" <<sealed>> {
++RunCommand() : void 
++v_DestinationFolderPath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileCopyMoveFileCommands"{
+#CreateActionFunc() : Func
++v_DestinationFolderPath : String <<get>> <<set>> 
++v_CreateDirectory : String <<get>> <<set>> 
++v_WhenDestinationIsSame : String <<get>> <<set>> 
++v_WhenDestinationExists : String <<get>> <<set>> 
++v_WaitTimeForFolder : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveFileCommand" <<sealed>> {
++RunCommand() : void 
++v_DestinationFolderPath : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.CopyFileCommand
+taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.MoveFileCommand
+@enduml

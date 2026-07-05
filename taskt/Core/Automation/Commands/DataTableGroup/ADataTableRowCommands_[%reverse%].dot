@@ -1,0 +1,37 @@
+digraph "taskt.Core.Automation.Commands.ADataTableRowCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ADataTableBothRowCommands" [ label="ADataTableBothRowCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ADataTableRowCommands" [ label="ADataTableRowCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands" [ label="ADataTableGetFromDataTableRowCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ExportDataTableRowAsTextFileCommand" [ label="ExportDataTableRowAsTextFileCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ReplaceDataTableRowValueCommand" [ label="ReplaceDataTableRowValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.DeleteDataTableRowCommand" [ label="DeleteDataTableRowCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SetDataTableRowValuesByDataTableCommand" [ label="SetDataTableRowValuesByDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SetDataTableRowValuesByDictionaryCommand" [ label="SetDataTableRowValuesByDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.JoinDataTableRowAsTextCommand" [ label="JoinDataTableRowAsTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableRowToTextCommand" [ label="ConvertDataTableRowToTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableRowToDataTableCommand" [ label="ConvertDataTableRowToDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableRowToJSONCommand" [ label="ConvertDataTableRowToJSONCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableRowToListCommand" [ label="ConvertDataTableRowToListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableRowToDictionaryCommand" [ label="ConvertDataTableRowToDictionaryCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.ADataTableBothRowCommands" -> "taskt.Core.Automation.Commands.ADataTableRowCommands";
+"taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands" -> "taskt.Core.Automation.Commands.ADataTableRowCommands";
+"taskt.Core.Automation.Commands.ExportDataTableRowAsTextFileCommand" -> "taskt.Core.Automation.Commands.ADataTableRowCommands";
+"taskt.Core.Automation.Commands.ReplaceDataTableRowValueCommand" -> "taskt.Core.Automation.Commands.ADataTableRowCommands";
+"taskt.Core.Automation.Commands.DeleteDataTableRowCommand" -> "taskt.Core.Automation.Commands.ADataTableRowCommands";
+"taskt.Core.Automation.Commands.SetDataTableRowValuesByDataTableCommand" -> "taskt.Core.Automation.Commands.ADataTableBothRowCommands";
+"taskt.Core.Automation.Commands.SetDataTableRowValuesByDictionaryCommand" -> "taskt.Core.Automation.Commands.ADataTableBothRowCommands";
+"taskt.Core.Automation.Commands.JoinDataTableRowAsTextCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands";
+"taskt.Core.Automation.Commands.ConvertDataTableRowToTextCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands";
+"taskt.Core.Automation.Commands.ConvertDataTableRowToDataTableCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands";
+"taskt.Core.Automation.Commands.ConvertDataTableRowToJSONCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands";
+"taskt.Core.Automation.Commands.ConvertDataTableRowToListCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands";
+"taskt.Core.Automation.Commands.ConvertDataTableRowToDictionaryCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands";
+}

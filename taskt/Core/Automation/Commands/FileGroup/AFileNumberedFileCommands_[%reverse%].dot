@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.AFileNumberedFileCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.GetLastExistentNumberedFilePathCommand" [ label="GetLastExistentNumberedFilePathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AFileNumberedFileCommands" [ label="AFileNumberedFileCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetNonExistentFilePathCommand" [ label="GetNonExistentFilePathCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.GetLastExistentNumberedFilePathCommand" -> "taskt.Core.Automation.Commands.AFileNumberedFileCommands";
+"taskt.Core.Automation.Commands.GetNonExistentFilePathCommand" -> "taskt.Core.Automation.Commands.AFileNumberedFileCommands";
+}

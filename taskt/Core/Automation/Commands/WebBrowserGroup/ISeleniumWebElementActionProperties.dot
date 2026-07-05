@@ -1,0 +1,19 @@
+digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties" [ label="ISeleniumWebElementActionProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties" [ label="ISeleniumDoSomethingToWebElementProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebElement" [ label="ICanHandleWebElement", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver" [ label="ICanHandleWebDriver", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebElement";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebElement" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver";
+}

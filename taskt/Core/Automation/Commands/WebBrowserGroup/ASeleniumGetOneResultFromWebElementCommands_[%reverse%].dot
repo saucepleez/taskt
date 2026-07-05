@@ -1,0 +1,27 @@
+digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands" [ label="ASeleniumGetWebElementSelectorFromWebElementCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands" [ label="ASeleniumGetOneResultFromWebElementCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetSpecialValueFromWebElementCommand" [ label="SeleniumBrowserGetSpecialValueFromWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetHTMLFromWebElementCommand" [ label="SeleniumBrowserGetHTMLFromWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetOptionsFromWebElementCommand" [ label="SeleniumBrowserGetOptionsFromWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetTextFromWebElementCommand" [ label="SeleniumBrowserGetTextFromWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetAttributeFromWebElementCommand" [ label="SeleniumBrowserGetAttributeFromWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetCSSSelectorFromWebElementCommand" [ label="SeleniumBrowserGetCSSSelectorFromWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetXPathFromWebElementCommand" [ label="SeleniumBrowserGetXPathFromWebElementCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetSpecialValueFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetHTMLFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetOptionsFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetTextFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetAttributeFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetCSSSelectorFromWebElementCommand" -> "taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetXPathFromWebElementCommand" -> "taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands";
+}

@@ -1,0 +1,74 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "FilterDataTableColumnByRowValueCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbFilterAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_TargetDataTable : String <<get>> <<set>> 
++v_RowIndex : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_FilterAction : String <<get>> <<set>> 
++v_FilterActionParameterTable : DataTable <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IFilterValueProperties" {
++{abstract} v_ValueType : String <<get>> <<set>> <<abstract>> 
++{abstract} v_FilterAction : String <<get>> <<set>> <<abstract>> 
++{abstract} v_FilterActionParameterTable : DataTable <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "FilterDataTableRowByColumnValueCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbFilterAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_TargetDataTable : String <<get>> <<set>> 
++v_ColumnType : String <<get>> <<set>> 
++v_ColumnIndex : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_FilterAction : String <<get>> <<set>> 
++v_FilterActionParameterTable : DataTable <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "FilterDictionaryCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbFilterAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_TargetDictionary : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_FilterAction : String <<get>> <<set>> 
++v_FilterActionParameterTable : DataTable <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "FilterListCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbFilterAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_TargetList : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_FilterAction : String <<get>> <<set>> 
++v_FilterActionParameterTable : DataTable <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IFilterValueProperties <|.. taskt.Core.Automation.Commands.FilterDataTableColumnByRowValueCommand
+taskt.Core.Automation.Commands.IFilterValueProperties <|.. taskt.Core.Automation.Commands.FilterDataTableRowByColumnValueCommand
+taskt.Core.Automation.Commands.IFilterValueProperties <|.. taskt.Core.Automation.Commands.FilterDictionaryCommand
+taskt.Core.Automation.Commands.IFilterValueProperties <|.. taskt.Core.Automation.Commands.FilterListCommand
+@enduml

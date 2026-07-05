@@ -1,0 +1,13 @@
+digraph "taskt.Core.SafeEngineSettings" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.SafeAutomationEngineInstanceEngineSettings" [ label="SafeAutomationEngineInstanceEngineSettings", ];
+"taskt.Core.SafeEngineSettings" [ label="SafeEngineSettings", ];
+
+"taskt.Core.SafeAutomationEngineInstanceEngineSettings" -> "taskt.Core.SafeEngineSettings";
+}

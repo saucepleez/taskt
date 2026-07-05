@@ -1,0 +1,35 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "ExcelCheckCellValueExistsRCCommand" <<sealed>> {
++RunCommand() : void 
+-cmbValueType_SelectedIndexChanged() : void 
++v_Result : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelRCLocationActionCommands"{
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetCellRCCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetCellRCCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSet : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.AExcelRCLocationActionCommands <|-- taskt.Core.Automation.Commands.ExcelCheckCellValueExistsRCCommand
+taskt.Core.Automation.Commands.AExcelRCLocationActionCommands <|-- taskt.Core.Automation.Commands.ExcelGetCellRCCommand
+taskt.Core.Automation.Commands.AExcelRCLocationActionCommands <|-- taskt.Core.Automation.Commands.ExcelSetCellRCCommand
+@enduml

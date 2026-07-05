@@ -1,0 +1,14 @@
+digraph "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmHTMLBuilder" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmHTMLBuilder" [ label="frmHTMLBuilder", ];
+"System.Windows.Forms.Form" [ label="Form", ];
+
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmHTMLBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmHTMLBuilder" -> "System.Windows.Forms.Form";
+}

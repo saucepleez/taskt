@@ -1,0 +1,21 @@
+digraph "taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsListCommand" [ label="GetWindowStatesFromWindowNamesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands" [ label="GetFromWindowNamesAsListCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand" [ label="GetWindowSizesFromWindowNamesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand" [ label="GetWindowPositionsFromWindowNamesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsListCommand" [ label="GetWindowHandlesFromWindowNamesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsListCommand" [ label="GetProcessNamesFromWindowNamesAsListCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands";
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands";
+"taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands";
+"taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands";
+"taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands";
+}

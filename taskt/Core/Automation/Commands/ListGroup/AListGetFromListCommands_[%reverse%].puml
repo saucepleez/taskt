@@ -1,0 +1,160 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+abstract class "AListGetFromValueCommands"{
++v_Value : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AListGetFromListCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AListGetMathResultFromListCommands"{
++v_Result : String <<get>> <<set>> 
++v_WhenValueIsNotNumeric : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertListToVisualizedTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "JoinListValuesAsTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Separator : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_BeforeText : String <<get>> <<set>> 
++v_AfterText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertListToTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ExportHeader : String <<get>> <<set>> 
++v_ExportIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetListIndexCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertListToDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_ColumnType : String <<get>> <<set>> 
++v_Columns : String <<get>> <<set>> 
++v_ColumnsNotEnough : String <<get>> <<set>> 
++v_ListItemNotEnough : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertListToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_KeyType : String <<get>> <<set>> 
++v_Keys : String <<get>> <<set>> 
++v_KeysNotEnough : String <<get>> <<set>> 
++v_ListItemNotEnough : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertListToJSONCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetListCountCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetListIndexFromValueCommand" <<sealed>> {
++RunCommand() : void 
++v_SearchMethod : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CheckListItemExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetAverageFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetMaxFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetMedianFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetMinFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetSumFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetVarianceFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.AListGetFromValueCommands
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToVisualizedTextCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.JoinListValuesAsTextCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToTextCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.GetListIndexCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToDataTableCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToDictionaryCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToJSONCommand
+taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.GetListCountCommand
+taskt.Core.Automation.Commands.AListGetFromValueCommands <|-- taskt.Core.Automation.Commands.GetListIndexFromValueCommand
+taskt.Core.Automation.Commands.AListGetFromValueCommands <|-- taskt.Core.Automation.Commands.CheckListItemExistsCommand
+taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetAverageFromListCommand
+taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetMaxFromListCommand
+taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetMedianFromListCommand
+taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetMinFromListCommand
+taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetSumFromListCommand
+taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetVarianceFromListCommand
+@enduml

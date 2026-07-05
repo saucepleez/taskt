@@ -1,0 +1,21 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "IColorCreateProperties" {
++{abstract} v_Color : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleColor" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+
+taskt.Core.Automation.Commands.ICanHandleColor <|-- taskt.Core.Automation.Commands.IColorCreateProperties
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleColor
+@enduml

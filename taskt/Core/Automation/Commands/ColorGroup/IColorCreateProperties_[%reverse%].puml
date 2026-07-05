@@ -1,0 +1,51 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+abstract class "AColorCreateCommands"{
++v_Color : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IColorCreateProperties" {
++{abstract} v_Color : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CreateColorFromARGBNumberCommand" <<sealed>> {
++RunCommand() : void 
++v_ARGB : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CreateColorFromExcelColorCommand" <<sealed>> {
++RunCommand() : void 
++v_ExcelColor : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CreateColorFromHexCommand" <<sealed>> {
++RunCommand() : void 
++v_Hex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CreateColorCommand" <<sealed>> {
++RunCommand() : void 
++v_Red : String <<get>> <<set>> 
++v_Green : String <<get>> <<set>> 
++v_Blue : String <<get>> <<set>> 
++v_Alpha : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.IColorCreateProperties <|.. taskt.Core.Automation.Commands.AColorCreateCommands
+taskt.Core.Automation.Commands.AColorCreateCommands <|-- taskt.Core.Automation.Commands.CreateColorFromARGBNumberCommand
+taskt.Core.Automation.Commands.AColorCreateCommands <|-- taskt.Core.Automation.Commands.CreateColorFromExcelColorCommand
+taskt.Core.Automation.Commands.AColorCreateCommands <|-- taskt.Core.Automation.Commands.CreateColorFromHexCommand
+taskt.Core.Automation.Commands.AColorCreateCommands <|-- taskt.Core.Automation.Commands.CreateColorCommand
+@enduml

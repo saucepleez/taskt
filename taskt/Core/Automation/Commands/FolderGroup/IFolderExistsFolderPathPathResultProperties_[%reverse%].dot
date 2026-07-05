@@ -1,0 +1,25 @@
+digraph "taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands" [ label="AFolderExistsFolderPathPathResultCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties" [ label="IFolderExistsFolderPathPathResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.OpenFolderCommand" [ label="OpenFolderCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetRandomFolderPathCommand" [ label="GetRandomFolderPathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.WaitForFolderToExistCommand" [ label="WaitForFolderToExistCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CheckFolderExistsCommand" [ label="CheckFolderExistsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CreateFolderCommand" [ label="CreateFolderCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.DeleteFolderCommand" [ label="DeleteFolderCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands" -> "taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties";
+"taskt.Core.Automation.Commands.OpenFolderCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands";
+"taskt.Core.Automation.Commands.GetRandomFolderPathCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands";
+"taskt.Core.Automation.Commands.WaitForFolderToExistCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands";
+"taskt.Core.Automation.Commands.CheckFolderExistsCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands";
+"taskt.Core.Automation.Commands.CreateFolderCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands";
+"taskt.Core.Automation.Commands.DeleteFolderCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands";
+}

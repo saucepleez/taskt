@@ -1,0 +1,19 @@
+digraph "taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedExcelSerialDateTimeCommand" [ label="GetFormattedDateTimeFromCalculatedExcelSerialDateTimeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands" [ label="AGetFormattedDateTimeFromCalculatedDateTimeCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedUnixDateTimeCommand" [ label="GetFormattedDateTimeFromCalculatedUnixDateTimeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedTextDateTimeCommand" [ label="GetFormattedDateTimeFromCalculatedTextDateTimeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedDateTimeCommand" [ label="GetFormattedDateTimeFromCalculatedDateTimeCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedExcelSerialDateTimeCommand" -> "taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands";
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedUnixDateTimeCommand" -> "taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands";
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedTextDateTimeCommand" -> "taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands";
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedDateTimeCommand" -> "taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands";
+}

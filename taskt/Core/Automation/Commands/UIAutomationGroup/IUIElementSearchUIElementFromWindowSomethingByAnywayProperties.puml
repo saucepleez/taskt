@@ -1,0 +1,21 @@
+@startuml
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IUIElementSearchUIElementFromWindowSomethingByAnywayProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IWindowUIElementResultProperties" {
++{abstract} v_WindowUIElement : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "ICanHandleUIElement" {
+}
+}
+
+
+taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSearchUIElementFromWindowSomethingByAnywayProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleDictionary" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleDictionary
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "SequenceCommand" <<sealed>> {
++RunCommand() : void 
++GetDisplayValue() : String
++v_scriptActions : List<taskt.Core.Automation.Commands.ScriptCommand>
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IHaveSequenceAdditionalCommands" {
+}
+}
+
+
+taskt.Core.Automation.Commands.IHaveSequenceAdditionalCommands <|.. taskt.Core.Automation.Commands.SequenceCommand
+@enduml

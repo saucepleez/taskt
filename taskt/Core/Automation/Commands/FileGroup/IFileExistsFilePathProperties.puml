@@ -1,0 +1,34 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+Interface "IFileExistsFilePathProperties" {
++{abstract} v_WaitTimeForFile : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IFilePathProperties" {
++{abstract} v_TargetFilePath : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleFilePath" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleFileOrFolderPath" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+
+taskt.Core.Automation.Commands.IFilePathProperties <|-- taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.ICanHandleFilePath <|-- taskt.Core.Automation.Commands.IFilePathProperties
+taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath <|-- taskt.Core.Automation.Commands.ICanHandleFilePath
+taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath
+@enduml

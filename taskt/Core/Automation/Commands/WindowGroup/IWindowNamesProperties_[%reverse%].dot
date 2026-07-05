@@ -1,0 +1,56 @@
+digraph "taskt.Core.Automation.Commands.IWindowNamesProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.AWindowNamesCommands" [ label="AWindowNamesCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IWindowNamesProperties" [ label="IWindowNamesProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IWindowNamesActionProperties" [ label="IWindowNamesActionProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ActivateWindowsCommand" [ label="ActivateWindowsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands" [ label="GetFromWindowNamesAsListCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AWindowNamesActionCommnads" [ label="AWindowNamesActionCommnads", style="dashed", ];
+"taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands" [ label="GetFromWindowNamesAsDataTableCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetWindowNamesCommand" [ label="GetWindowNamesCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CheckWindowNameExistsCommand" [ label="CheckWindowNameExistsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsListCommand" [ label="GetWindowStatesFromWindowNamesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand" [ label="GetWindowSizesFromWindowNamesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand" [ label="GetWindowPositionsFromWindowNamesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsListCommand" [ label="GetWindowHandlesFromWindowNamesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsListCommand" [ label="GetProcessNamesFromWindowNamesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SetWindowsStateCommand" [ label="SetWindowsStateCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ResizeWindowsCommand" [ label="ResizeWindowsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.MoveWindowsCommand" [ label="MoveWindowsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CloseWindowsCommand" [ label="CloseWindowsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsDataTableCommand" [ label="GetWindowHandlesFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsDataTableCommand" [ label="GetWindowStatesFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsDataTableCommand" [ label="GetWindowSizesFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsDataTableCommand" [ label="GetWindowPositionsFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsDataTableCommand" [ label="GetProcessNamesFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.AWindowNamesCommands" -> "taskt.Core.Automation.Commands.IWindowNamesProperties";
+"taskt.Core.Automation.Commands.IWindowNamesActionProperties" -> "taskt.Core.Automation.Commands.IWindowNamesProperties";
+"taskt.Core.Automation.Commands.ActivateWindowsCommand" -> "taskt.Core.Automation.Commands.AWindowNamesCommands";
+"taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands" -> "taskt.Core.Automation.Commands.AWindowNamesCommands";
+"taskt.Core.Automation.Commands.AWindowNamesActionCommnads" -> "taskt.Core.Automation.Commands.AWindowNamesCommands";
+"taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands" -> "taskt.Core.Automation.Commands.AWindowNamesCommands";
+"taskt.Core.Automation.Commands.GetWindowNamesCommand" -> "taskt.Core.Automation.Commands.AWindowNamesCommands";
+"taskt.Core.Automation.Commands.CheckWindowNameExistsCommand" -> "taskt.Core.Automation.Commands.AWindowNamesCommands";
+"taskt.Core.Automation.Commands.AWindowNamesActionCommnads" -> "taskt.Core.Automation.Commands.IWindowNamesActionProperties";
+"taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands";
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands";
+"taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands";
+"taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands";
+"taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands";
+"taskt.Core.Automation.Commands.SetWindowsStateCommand" -> "taskt.Core.Automation.Commands.AWindowNamesActionCommnads";
+"taskt.Core.Automation.Commands.ResizeWindowsCommand" -> "taskt.Core.Automation.Commands.AWindowNamesActionCommnads";
+"taskt.Core.Automation.Commands.MoveWindowsCommand" -> "taskt.Core.Automation.Commands.AWindowNamesActionCommnads";
+"taskt.Core.Automation.Commands.CloseWindowsCommand" -> "taskt.Core.Automation.Commands.AWindowNamesActionCommnads";
+"taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+"taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+"taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+"taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+}

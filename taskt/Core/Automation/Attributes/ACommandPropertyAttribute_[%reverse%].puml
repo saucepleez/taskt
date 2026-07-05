@@ -1,0 +1,352 @@
+@startuml
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+abstract class "ASingleComamndPropertyAttribute"{
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+abstract class "ACommandPropertyAttribute"{
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+abstract class "AMultiCommandPropertyAttribute"{
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyParameterOrder" <<sealed>> {
++order : int
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyVirtualProperty" <<sealed>> {
++Equals() : Boolean
++className : string
++propertyName : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyIntermediateConvert" <<sealed>> {
++intermediateMethod : string
++rawMethod : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "InputSpecification" <<sealed>> {
++inputSpecification : string
++autoGenerate : bool
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "SampleUsage" <<sealed>> {
++sampleUsage : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyDetailSampleUsageBehavior" <<sealed>> {
++behavior : taskt.Core.Automation.Attributes.PropertyAttributes.MultiAttributesBehavior
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "Remarks" <<sealed>> {
++remarks : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyDescription" <<sealed>> {
++propertyDescription : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyShowSampleUsageInDescription" <<sealed>> {
++showSampleUsage : bool
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertySecondaryLabel" <<sealed>> {
++useSecondaryLabel : bool
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyAddtionalParameterInfoBehavior" <<sealed>> {
++behavior : taskt.Core.Automation.Attributes.PropertyAttributes.MultiAttributesBehavior
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyUIHelperBehavior" <<sealed>> {
++behavior : taskt.Core.Automation.Attributes.PropertyAttributes.MultiAttributesBehavior
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyCustomUIHelperBehavior" <<sealed>> {
++behavior : taskt.Core.Automation.Attributes.PropertyAttributes.MultiAttributesBehavior
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyAvailableSystemVariableBehavior" <<sealed>> {
++behavior : taskt.Core.Automation.Attributes.PropertyAttributes.MultiAttributesBehavior
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyRecommendedUIControl" <<sealed>> {
++recommendedControl : taskt.Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyInstanceType" <<sealed>> {
++instanceType : taskt.Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType
++autoWrapVariableMarker : bool
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyParameterDirection" <<sealed>> {
++porpose : taskt.Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyControlIntoCommandField" <<sealed>> {
++labelName : string
++bodyName : string
++secondLabelName : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyValidationRule" <<sealed>> {
++IsErrorFlag() : Boolean
++IsWarningFlag() : Boolean
++parameterName : string
++errorRule : taskt.Core.Automation.Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags
++warningRule : taskt.Core.Automation.Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyValueRange" <<sealed>> {
++min : double
++max : double
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyDisplayText" <<sealed>> {
++parameterDisplay : bool
++parameterName : string
++afterText : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyIsOptional" <<sealed>> {
++isOptional : bool
++setBlankToValue : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyFirstValue" <<sealed>> {
++firstValue : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyTextBoxSetting" <<sealed>> {
++height : int
++allowNewLine : bool
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyFilePathSetting" <<sealed>> {
++GetExtensions() : List
++allowURL : bool
++supportExtension : taskt.Core.Automation.Attributes.PropertyAttributes.PropertyFilePathSetting.ExtensionBehavior
++supportFileCounter : taskt.Core.Automation.Attributes.PropertyAttributes.PropertyFilePathSetting.FileCounterBehavior
++extensions : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyUISelectionOptionBehavior" <<sealed>> {
++behavior : taskt.Core.Automation.Attributes.PropertyAttributes.MultiAttributesBehavior
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertySelectionValueSensitive" <<sealed>> {
++caseSensitive : bool
++whiteSpaceSensitive : bool
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertySelectionChangeEvent" <<sealed>> {
++methodName : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyIsWindowNamesList" <<sealed>> {
++isWindowNamesList : bool
++allowCurrentWindow : bool
++allowAllWindows : bool
++allowDesktop : bool
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyIsVariablesList" <<sealed>> {
++isVariablesList : bool
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyComboBoxItemMethod" <<sealed>> {
++methodName : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyDataGridViewSetting" <<sealed>> {
++allowAddRow : bool
++allowDeleteRow : bool
++allowResizeRow : bool
++width : int
++height : int
++autoGenerateColumns : bool
++headerRowHeight : int
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyDataGridViewInitMethod" <<sealed>> {
++methodName : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyDetailSampleUsage" <<sealed>> {
++sampleUsage : string
++means : string
++showInDescription : bool
++valueType : taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDetailSampleUsage.ValueType
++target : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyAddtionalParameterInfo" <<sealed>> {
++searchKey : string
++description : string
++sampleUsage : string
++remarks : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyUIHelper" <<sealed>> {
++additionalHelper : taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyCustomUIHelper" <<sealed>> {
++labelText : string
++methodName : string
++nameKey : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyAvailableSystemVariable" <<sealed>> {
++variable : taskt.Core.Automation.Engine.SystemVariables.LimitedSystemVariableNames
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyUISelectionOption" <<sealed>> {
++uiOption : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyDataGridViewColumnSettings" <<sealed>> {
++columnName : string
++headerText : string
++readOnly : bool
++type : taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings.DataGridViewColumnType
++comboBoxItems : string
++defaultValue : string
+}
+}
+
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+class "PropertyDataGridViewCellEditEvent" <<sealed>> {
++methodName : string
++eventRaise : taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent
+}
+}
+
+
+taskt.Core.Automation.Attributes.PropertyAttributes.ACommandPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute
+taskt.Core.Automation.Attributes.PropertyAttributes.ACommandPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyParameterOrder
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyVirtualProperty
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIntermediateConvert
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.InputSpecification
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.SampleUsage
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDetailSampleUsageBehavior
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.Remarks
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDescription
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfoBehavior
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelperBehavior
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyCustomUIHelperBehavior
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyAvailableSystemVariableBehavior
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyControlIntoCommandField
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyValidationRule
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyValueRange
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDisplayText
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyFirstValue
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyTextBoxSetting
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyFilePathSetting
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOptionBehavior
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertySelectionValueSensitive
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertySelectionChangeEvent
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyComboBoxItemMethod
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewSetting
+taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewInitMethod
+taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDetailSampleUsage
+taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo
+taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper
+taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyCustomUIHelper
+taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyAvailableSystemVariable
+taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption
+taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings
+taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute <|-- taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent
+@enduml

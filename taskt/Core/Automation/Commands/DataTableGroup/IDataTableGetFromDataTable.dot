@@ -1,0 +1,13 @@
+digraph "taskt.Core.Automation.Commands.IDataTableGetFromDataTable" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.IDataTableGetFromDataTable" [ label="IDataTableGetFromDataTable", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IResultProperties" [ label="IResultProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.IDataTableGetFromDataTable" -> "taskt.Core.Automation.Commands.IResultProperties";
+}

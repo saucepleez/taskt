@@ -1,0 +1,84 @@
+digraph "taskt.Core.Automation.Commands.IListProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.AListInputListCommands" [ label="AListInputListCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IListProperties" [ label="IListProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IListGetFromListProperties" [ label="IListGetFromListProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IListIndexProperties" [ label="IListIndexProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.AListBothListCommands" [ label="AListBothListCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AListGetFromListCommands" [ label="AListGetFromListCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AListIndexCommands" [ label="AListIndexCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ExportListAsTextFileCommand" [ label="ExportListAsTextFileCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginLoopForListCommand" [ label="BeginLoopForListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CreateListCommand" [ label="CreateListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.IListGetMathResultFromListProperties" [ label="IListGetMathResultFromListProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ReplaceListCommand" [ label="ReplaceListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AddListItemCommand" [ label="AddListItemCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AListGetFromValueCommands" [ label="AListGetFromValueCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AListGetMathResultFromListCommands" [ label="AListGetMathResultFromListCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ConvertListToVisualizedTextCommand" [ label="ConvertListToVisualizedTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.JoinListValuesAsTextCommand" [ label="JoinListValuesAsTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertListToTextCommand" [ label="ConvertListToTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetListIndexCommand" [ label="GetListIndexCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertListToDataTableCommand" [ label="ConvertListToDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertListToDictionaryCommand" [ label="ConvertListToDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertListToJSONCommand" [ label="ConvertListToJSONCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetListCountCommand" [ label="GetListCountCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CheckValidListIndex" [ label="CheckValidListIndex", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.RemoveListItemCommand" [ label="RemoveListItemCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SetListItemCommand" [ label="SetListItemCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SetListIndexCommand" [ label="SetListIndexCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetListItemCommand" [ label="GetListItemCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetListIndexFromValueCommand" [ label="GetListIndexFromValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CheckListItemExistsCommand" [ label="CheckListItemExistsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetAverageFromListCommand" [ label="GetAverageFromListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetMaxFromListCommand" [ label="GetMaxFromListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetMedianFromListCommand" [ label="GetMedianFromListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetMinFromListCommand" [ label="GetMinFromListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetSumFromListCommand" [ label="GetSumFromListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetVarianceFromListCommand" [ label="GetVarianceFromListCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.AListInputListCommands" -> "taskt.Core.Automation.Commands.IListProperties";
+"taskt.Core.Automation.Commands.IListGetFromListProperties" -> "taskt.Core.Automation.Commands.IListProperties";
+"taskt.Core.Automation.Commands.IListIndexProperties" -> "taskt.Core.Automation.Commands.IListProperties";
+"taskt.Core.Automation.Commands.AListBothListCommands" -> "taskt.Core.Automation.Commands.AListInputListCommands";
+"taskt.Core.Automation.Commands.AListGetFromListCommands" -> "taskt.Core.Automation.Commands.AListInputListCommands";
+"taskt.Core.Automation.Commands.AListIndexCommands" -> "taskt.Core.Automation.Commands.AListInputListCommands";
+"taskt.Core.Automation.Commands.ExportListAsTextFileCommand" -> "taskt.Core.Automation.Commands.AListInputListCommands";
+"taskt.Core.Automation.Commands.BeginLoopForListCommand" -> "taskt.Core.Automation.Commands.AListInputListCommands";
+"taskt.Core.Automation.Commands.CreateListCommand" -> "taskt.Core.Automation.Commands.AListInputListCommands";
+"taskt.Core.Automation.Commands.AListGetFromListCommands" -> "taskt.Core.Automation.Commands.IListGetFromListProperties";
+"taskt.Core.Automation.Commands.IListGetMathResultFromListProperties" -> "taskt.Core.Automation.Commands.IListGetFromListProperties";
+"taskt.Core.Automation.Commands.AListIndexCommands" -> "taskt.Core.Automation.Commands.IListIndexProperties";
+"taskt.Core.Automation.Commands.ReplaceListCommand" -> "taskt.Core.Automation.Commands.AListBothListCommands";
+"taskt.Core.Automation.Commands.AddListItemCommand" -> "taskt.Core.Automation.Commands.AListBothListCommands";
+"taskt.Core.Automation.Commands.AListGetFromValueCommands" -> "taskt.Core.Automation.Commands.AListGetFromListCommands";
+"taskt.Core.Automation.Commands.AListGetMathResultFromListCommands" -> "taskt.Core.Automation.Commands.AListGetFromListCommands";
+"taskt.Core.Automation.Commands.ConvertListToVisualizedTextCommand" -> "taskt.Core.Automation.Commands.AListGetFromListCommands";
+"taskt.Core.Automation.Commands.JoinListValuesAsTextCommand" -> "taskt.Core.Automation.Commands.AListGetFromListCommands";
+"taskt.Core.Automation.Commands.ConvertListToTextCommand" -> "taskt.Core.Automation.Commands.AListGetFromListCommands";
+"taskt.Core.Automation.Commands.GetListIndexCommand" -> "taskt.Core.Automation.Commands.AListGetFromListCommands";
+"taskt.Core.Automation.Commands.ConvertListToDataTableCommand" -> "taskt.Core.Automation.Commands.AListGetFromListCommands";
+"taskt.Core.Automation.Commands.ConvertListToDictionaryCommand" -> "taskt.Core.Automation.Commands.AListGetFromListCommands";
+"taskt.Core.Automation.Commands.ConvertListToJSONCommand" -> "taskt.Core.Automation.Commands.AListGetFromListCommands";
+"taskt.Core.Automation.Commands.GetListCountCommand" -> "taskt.Core.Automation.Commands.AListGetFromListCommands";
+"taskt.Core.Automation.Commands.CheckValidListIndex" -> "taskt.Core.Automation.Commands.AListIndexCommands";
+"taskt.Core.Automation.Commands.RemoveListItemCommand" -> "taskt.Core.Automation.Commands.AListIndexCommands";
+"taskt.Core.Automation.Commands.SetListItemCommand" -> "taskt.Core.Automation.Commands.AListIndexCommands";
+"taskt.Core.Automation.Commands.SetListIndexCommand" -> "taskt.Core.Automation.Commands.AListIndexCommands";
+"taskt.Core.Automation.Commands.GetListItemCommand" -> "taskt.Core.Automation.Commands.AListIndexCommands";
+"taskt.Core.Automation.Commands.AListGetMathResultFromListCommands" -> "taskt.Core.Automation.Commands.IListGetMathResultFromListProperties";
+"taskt.Core.Automation.Commands.GetListIndexFromValueCommand" -> "taskt.Core.Automation.Commands.AListGetFromValueCommands";
+"taskt.Core.Automation.Commands.CheckListItemExistsCommand" -> "taskt.Core.Automation.Commands.AListGetFromValueCommands";
+"taskt.Core.Automation.Commands.GetAverageFromListCommand" -> "taskt.Core.Automation.Commands.AListGetMathResultFromListCommands";
+"taskt.Core.Automation.Commands.GetMaxFromListCommand" -> "taskt.Core.Automation.Commands.AListGetMathResultFromListCommands";
+"taskt.Core.Automation.Commands.GetMedianFromListCommand" -> "taskt.Core.Automation.Commands.AListGetMathResultFromListCommands";
+"taskt.Core.Automation.Commands.GetMinFromListCommand" -> "taskt.Core.Automation.Commands.AListGetMathResultFromListCommands";
+"taskt.Core.Automation.Commands.GetSumFromListCommand" -> "taskt.Core.Automation.Commands.AListGetMathResultFromListCommands";
+"taskt.Core.Automation.Commands.GetVarianceFromListCommand" -> "taskt.Core.Automation.Commands.AListGetMathResultFromListCommands";
+}

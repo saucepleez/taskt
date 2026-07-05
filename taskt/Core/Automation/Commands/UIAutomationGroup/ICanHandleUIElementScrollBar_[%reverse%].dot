@@ -1,0 +1,17 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementScrollBar" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationGetScrollBarInformationFromUIElementCommand" [ label="UIAutomationGetScrollBarInformationFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementScrollBar" [ label="ICanHandleUIElementScrollBar", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationScrollPercentUIElementCommand" [ label="UIAutomationScrollPercentUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationScrollUIElementCommand" [ label="UIAutomationScrollUIElementCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.UIAutomationGetScrollBarInformationFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementScrollBar";
+"taskt.Core.Automation.Commands.UIAutomationScrollPercentUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementScrollBar";
+"taskt.Core.Automation.Commands.UIAutomationScrollUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementScrollBar";
+}

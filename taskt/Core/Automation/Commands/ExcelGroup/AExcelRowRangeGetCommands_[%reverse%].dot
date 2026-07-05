@@ -1,0 +1,17 @@
+digraph "taskt.Core.Automation.Commands.AExcelRowRangeGetCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ExcelGetRowValuesAsDictionaryCommand" [ label="ExcelGetRowValuesAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AExcelRowRangeGetCommands" [ label="AExcelRowRangeGetCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand" [ label="ExcelGetRowValuesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand" [ label="ExcelGetRowValuesAsListCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.ExcelGetRowValuesAsDictionaryCommand" -> "taskt.Core.Automation.Commands.AExcelRowRangeGetCommands";
+"taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand" -> "taskt.Core.Automation.Commands.AExcelRowRangeGetCommands";
+"taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand" -> "taskt.Core.Automation.Commands.AExcelRowRangeGetCommands";
+}

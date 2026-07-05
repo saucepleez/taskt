@@ -1,0 +1,27 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchChildrenUIElementsInformationCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands"{
++v_TargetElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchChildUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_SelectionMethod : String <<get>> <<set>> 
++v_TargetUIElementIndex : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchChildrenUIElementsInformationCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchChildUIElementCommand
+@enduml

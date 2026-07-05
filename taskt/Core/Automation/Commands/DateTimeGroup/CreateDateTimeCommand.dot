@@ -1,0 +1,25 @@
+digraph "taskt.Core.Automation.Commands.CreateDateTimeCommand" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.CreateDateTimeCommand" [ label="CreateDateTimeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ADateTimeCreateCommands" [ label="ADateTimeCreateCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.IDateTimeCreateProperties" [ label="IDateTimeCreateProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleDateTime" [ label="ICanHandleDateTime", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.CreateDateTimeCommand" -> "taskt.Core.Automation.Commands.ADateTimeCreateCommands";
+"taskt.Core.Automation.Commands.ADateTimeCreateCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.ADateTimeCreateCommands" -> "taskt.Core.Automation.Commands.IDateTimeCreateProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.IDateTimeCreateProperties" -> "taskt.Core.Automation.Commands.ICanHandleDateTime";
+"taskt.Core.Automation.Commands.ICanHandleDateTime" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

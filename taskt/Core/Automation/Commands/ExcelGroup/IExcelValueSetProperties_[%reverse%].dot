@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.IExcelValueSetProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ExcelSetCellRCCommand" [ label="ExcelSetCellRCCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.IExcelValueSetProperties" [ label="IExcelValueSetProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ExcelSetCellCommand" [ label="ExcelSetCellCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.ExcelSetCellRCCommand" -> "taskt.Core.Automation.Commands.IExcelValueSetProperties";
+"taskt.Core.Automation.Commands.ExcelSetCellCommand" -> "taskt.Core.Automation.Commands.IExcelValueSetProperties";
+}

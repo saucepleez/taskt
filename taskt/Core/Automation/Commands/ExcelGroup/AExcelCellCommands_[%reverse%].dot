@@ -1,0 +1,21 @@
+digraph "taskt.Core.Automation.Commands.AExcelCellCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.AExcelCellActionCommands" [ label="AExcelCellActionCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AExcelCellCommands" [ label="AExcelCellCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ExcelGoToCellCommand" [ label="ExcelGoToCellCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelCheckCellValueExistsCommand" [ label="ExcelCheckCellValueExistsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetCellCommand" [ label="ExcelGetCellCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelSetCellCommand" [ label="ExcelSetCellCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.AExcelCellActionCommands" -> "taskt.Core.Automation.Commands.AExcelCellCommands";
+"taskt.Core.Automation.Commands.ExcelGoToCellCommand" -> "taskt.Core.Automation.Commands.AExcelCellCommands";
+"taskt.Core.Automation.Commands.ExcelCheckCellValueExistsCommand" -> "taskt.Core.Automation.Commands.AExcelCellActionCommands";
+"taskt.Core.Automation.Commands.ExcelGetCellCommand" -> "taskt.Core.Automation.Commands.AExcelCellActionCommands";
+"taskt.Core.Automation.Commands.ExcelSetCellCommand" -> "taskt.Core.Automation.Commands.AExcelCellActionCommands";
+}

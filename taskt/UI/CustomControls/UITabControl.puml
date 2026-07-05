@@ -1,0 +1,104 @@
+@startuml
+package "taskt.UI.CustomControls"{
+class "UITabControl" {
+}
+}
+
+package "System.Windows.Forms"{
+class "TabControl" {
++add_BackColorChanged() : void 
++remove_BackColorChanged() : void 
++add_BackgroundImageChanged() : void 
++remove_BackgroundImageChanged() : void 
++add_BackgroundImageLayoutChanged() : void 
++remove_BackgroundImageLayoutChanged() : void 
++add_ForeColorChanged() : void 
++remove_ForeColorChanged() : void 
++add_TextChanged() : void 
++remove_TextChanged() : void 
++add_DrawItem() : void 
++remove_DrawItem() : void 
++add_RightToLeftLayoutChanged() : void 
++remove_RightToLeftLayoutChanged() : void 
++add_SelectedIndexChanged() : void 
++remove_SelectedIndexChanged() : void 
++add_Selecting() : void 
++remove_Selecting() : void 
++add_Selected() : void 
++remove_Selected() : void 
++add_Deselecting() : void 
++remove_Deselecting() : void 
++add_Deselected() : void 
++remove_Deselected() : void 
++add_Paint() : void 
++remove_Paint() : void 
+#CreateControlsInstance() : ControlCollection
+#CreateHandle() : void 
++DeselectTab() : void 
++DeselectTab() : void 
++DeselectTab() : void 
+#Dispose() : void 
++GetControl() : Control
+#GetItems() : 
+#GetItems() : 
++GetTabRect() : Rectangle
+#GetToolTipText() : String
+#IsInputKey() : Boolean
+#OnHandleCreated() : void 
+#OnHandleDestroyed() : void 
+#OnDrawItem() : void 
+#OnEnter() : void 
+#OnLeave() : void 
+#OnKeyDown() : void 
+ OnParentHandleRecreated() : void 
+#OnResize() : void 
+#OnRightToLeftLayoutChanged() : void 
+#OnSelectedIndexChanged() : void 
+#OnSelecting() : void 
+#OnSelected() : void 
+#OnDeselecting() : void 
+#OnDeselected() : void 
+#ProcessKeyPreview() : Boolean
+#OnFontChanged() : void 
+ RecreateHandleCore() : void 
+#RemoveAll() : void 
++SelectTab() : void 
++SelectTab() : void 
++SelectTab() : void 
+ ShouldPerformContainerValidation() : Boolean
++ToString() : String
+#ScaleCore() : void 
+#UpdateTabSelection() : void 
+#OnStyleChanged() : void 
+#WndProc() : void 
++Alignment : TabAlignment <<get>> <<set>> 
++Appearance : TabAppearance <<get>> <<set>> 
++BackColor : Color <<get>> <<set>> 
++BackgroundImage : Image <<get>> <<set>> 
++BackgroundImageLayout : ImageLayout <<get>> <<set>> 
+#DefaultSize : Size <<get>> 
+#DoubleBuffered : Boolean <<get>> <<protected set>>
++ForeColor : Color <<get>> <<set>> 
+#CreateParams : CreateParams <<get>> 
++DisplayRectangle : Rectangle <<get>> 
++DrawMode : TabDrawMode <<get>> <<set>> 
++HotTrack : Boolean <<get>> <<set>> 
++ImageList : ImageList <<get>> <<set>> 
++ItemSize : Size <<get>> <<set>> 
++Multiline : Boolean <<get>> <<set>> 
++Padding : Point <<get>> <<set>> 
++RightToLeftLayout : Boolean <<get>> <<set>> 
++RowCount : Int32 <<get>> 
++SelectedIndex : Int32 <<get>> <<set>> 
++SelectedTab : TabPage <<get>> <<set>> 
++SizeMode : TabSizeMode <<get>> <<set>> 
++ShowToolTips : Boolean <<get>> <<set>> 
++TabCount : Int32 <<get>> 
++TabPages : TabPageCollection <<get>> 
++Text : String <<get>> <<set>> 
+}
+}
+
+
+System.Windows.Forms.TabControl <|-- taskt.UI.CustomControls.UITabControl
+@enduml

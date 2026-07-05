@@ -1,0 +1,387 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+abstract class "AWindowNamesCommands"{
++v_WindowNameResult : String <<get>> <<set>> 
++v_WindowHandleResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AWindowNameCoreCommands"{
++Refresh() : void 
++v_WindowName : String <<get>> <<set>> 
++v_CheckMethod : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
++v_WindowNameResult : String <<get>> <<set>> 
++v_WindowHandleResult : String <<get>> <<set>> 
++v_CaseSensitive : String <<get>> <<set>> 
++v_TrimBeforeCheck : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AOneWindowNameCommands"{
+#MatchMethodComboBox_SelectionChangeCommitted() : void 
++v_SelectionMethod : String <<get>> <<set>> 
++v_TargetWindowIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "WaitForWindowToExistsCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ActivateWindowsCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "GetFromWindowNamesAsListCommands"{
+#{static} GetColumnValues() : List
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AWindowNamesActionCommnads"{
++v_WaitTimeBetweenFindAndAction : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "GetFromWindowNamesAsDataTableCommands"{
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowNamesCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowName : String <<get>> <<set>> 
++v_WindowNameResult : String <<get>> <<set>> 
++v_WhenWindowNotFound : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CheckWindowNameExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForUIElement : String <<get>> <<set>> 
++v_MaxSiblings : String <<get>> <<set>> 
++v_MaxDepth : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AOneWindowNameActionCommands"{
++v_WaitTimeBetweenFindAndAction : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ActivateOneWindowCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetOneWindowHandleFromOneWindowNameCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowHandleResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetOneProcessNameFromOneWindowNameCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetOneWindowStateCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
++v_WindowStateText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetOneWindowPositionCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_PositionBase : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetOneWindowSizeCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetWindowUIElementFromWindowNameCommand" <<sealed>> {
++RunCommand() : void 
++Refresh() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowStatesFromWindowNamesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
++v_WindowStateText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowSizesFromWindowNamesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowPositionsFromWindowNamesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_PositionBase : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowHandlesFromWindowNamesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowHandleResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetProcessNamesFromWindowNamesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetWindowsStateCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ResizeWindowsCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveWindowsCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CloseWindowsCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowHandlesFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowStatesFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowSizesFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowPositionsFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_PositionBase : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetProcessNamesFromWindowNamesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetOneWindowStateCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ResizeOneWindowCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveOneWindowCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CloseOneWindowCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "EnterShortcutKeyCommand" <<sealed>> {
++RunCommand() : void 
+-cmbHotkey_SelectedIndexChanged() : void 
++v_Hotkey : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SendAdvancedKeyStrokesCommand" <<sealed>> {
++RunCommand() : void 
++AfterShown() : void 
++IsValidate() : Boolean
++BeforeValidate() : void 
++v_KeyActions : DataTable <<get>> <<set>> 
++v_KeyUpDefault : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "EnterKeysCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSend : String <<get>> <<set>> 
++v_EncryptionOption : String <<get>> <<set>> 
++v_UseClipBoard : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ClearClipboardAfterPaste : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "TakeScreenshotCommand" <<sealed>> {
++RunCommand() : void 
+-{static} CaptureWindow() : Bitmap
++v_FilePath : String <<get>> <<set>> 
++v_WaitTimeBetweenFindAndAction : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.AWindowNameCoreCommands <|-- taskt.Core.Automation.Commands.AWindowNamesCommands
+taskt.Core.Automation.Commands.AWindowNameCoreCommands <|-- taskt.Core.Automation.Commands.AOneWindowNameCommands
+taskt.Core.Automation.Commands.AWindowNameCoreCommands <|-- taskt.Core.Automation.Commands.WaitForWindowToExistsCommand
+taskt.Core.Automation.Commands.AWindowNamesCommands <|-- taskt.Core.Automation.Commands.ActivateWindowsCommand
+taskt.Core.Automation.Commands.AWindowNamesCommands <|-- taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
+taskt.Core.Automation.Commands.AWindowNamesCommands <|-- taskt.Core.Automation.Commands.AWindowNamesActionCommnads
+taskt.Core.Automation.Commands.AWindowNamesCommands <|-- taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
+taskt.Core.Automation.Commands.AWindowNamesCommands <|-- taskt.Core.Automation.Commands.GetWindowNamesCommand
+taskt.Core.Automation.Commands.AWindowNamesCommands <|-- taskt.Core.Automation.Commands.CheckWindowNameExistsCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.ActivateOneWindowCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneWindowHandleFromOneWindowNameCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneProcessNameFromOneWindowNameCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneWindowStateCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneWindowPositionCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneWindowSizeCommand
+taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetWindowUIElementFromWindowNameCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsListCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsListCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsListCommand
+taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.SetWindowsStateCommand
+taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.ResizeWindowsCommand
+taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.MoveWindowsCommand
+taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.CloseWindowsCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.SetOneWindowStateCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.ResizeOneWindowCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.MoveOneWindowCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.CloseOneWindowCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.EnterShortcutKeyCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.EnterKeysCommand
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.TakeScreenshotCommand
+@enduml

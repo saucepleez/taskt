@@ -1,0 +1,35 @@
+digraph "taskt.Core.Automation.Commands.AJSONJSONPathCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands" [ label="AJSONAddInsertSetJContainerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AJSONJSONPathCommands" [ label="AJSONJSONPathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.RemoveJSONArrayItemCommand" [ label="RemoveJSONArrayItemCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.RemoveJSONObjectPropertyCommand" [ label="RemoveJSONObjectPropertyCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands" [ label="AJSONInsertValueToJContainerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands" [ label="AJSONSetValueOfJContainerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AddJSONArrayItemCommand" [ label="AddJSONArrayItemCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AddJSONObjectPropertyCommand" [ label="AddJSONObjectPropertyCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SetJSONValueCommand" [ label="SetJSONValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.InsertJSONArrayItemCommand" [ label="InsertJSONArrayItemCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.InsertJSONObjectPropertyCommand" [ label="InsertJSONObjectPropertyCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SetJSONValueOfJSONArrayCommand" [ label="SetJSONValueOfJSONArrayCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SetJSONValueOfJSONObjectCommand" [ label="SetJSONValueOfJSONObjectCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands" -> "taskt.Core.Automation.Commands.AJSONJSONPathCommands";
+"taskt.Core.Automation.Commands.RemoveJSONArrayItemCommand" -> "taskt.Core.Automation.Commands.AJSONJSONPathCommands";
+"taskt.Core.Automation.Commands.RemoveJSONObjectPropertyCommand" -> "taskt.Core.Automation.Commands.AJSONJSONPathCommands";
+"taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands" -> "taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands";
+"taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands" -> "taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands";
+"taskt.Core.Automation.Commands.AddJSONArrayItemCommand" -> "taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands";
+"taskt.Core.Automation.Commands.AddJSONObjectPropertyCommand" -> "taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands";
+"taskt.Core.Automation.Commands.SetJSONValueCommand" -> "taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands";
+"taskt.Core.Automation.Commands.InsertJSONArrayItemCommand" -> "taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands";
+"taskt.Core.Automation.Commands.InsertJSONObjectPropertyCommand" -> "taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands";
+"taskt.Core.Automation.Commands.SetJSONValueOfJSONArrayCommand" -> "taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands";
+"taskt.Core.Automation.Commands.SetJSONValueOfJSONObjectCommand" -> "taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands";
+}

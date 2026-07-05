@@ -1,0 +1,46 @@
+@startuml
+package "taskt.Core.Automation.Commands"{
+class "CreateDateTimeFromUnixTimeCommand" <<sealed>> {
++RunCommand() : void 
++v_UnixTime : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADateTimeCreateCommands"{
++v_DateTime : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CreateDateTimeFromExcelSerialCommand" <<sealed>> {
++RunCommand() : void 
++v_Serial : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CreateDateTimeFromTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Text : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CreateDateTimeCommand" <<sealed>> {
++RunCommand() : void 
++v_Year : String <<get>> <<set>> 
++v_Month : String <<get>> <<set>> 
++v_Day : String <<get>> <<set>> 
++v_Hour : String <<get>> <<set>> 
++v_Minute : String <<get>> <<set>> 
++v_Second : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.ADateTimeCreateCommands <|-- taskt.Core.Automation.Commands.CreateDateTimeFromUnixTimeCommand
+taskt.Core.Automation.Commands.ADateTimeCreateCommands <|-- taskt.Core.Automation.Commands.CreateDateTimeFromExcelSerialCommand
+taskt.Core.Automation.Commands.ADateTimeCreateCommands <|-- taskt.Core.Automation.Commands.CreateDateTimeFromTextCommand
+taskt.Core.Automation.Commands.ADateTimeCreateCommands <|-- taskt.Core.Automation.Commands.CreateDateTimeCommand
+@enduml

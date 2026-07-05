@@ -1,0 +1,117 @@
+@startuml
+package "taskt.Core.Automation.Commands.KeyMouseGroup"{
+Interface "IEnterKeysProperties" {
++{abstract} v_TextToSend : String <<get>> <<set>> <<abstract>> 
++{abstract} v_EncryptionOption : String <<get>> <<set>> <<abstract>> 
++{abstract} v_UseClipBoard : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ClearClipboardAfterPaste : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.KeyMouseGroup"{
+Interface "IKeyActionCoreProperties" {
++{abstract} v_WaitTimeAfterKeyEnter : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ActivateCurrentWindow : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.KeyMouseGroup"{
+Interface "IEnterShortcutKeyProperties" {
++{abstract} v_Hotkey : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.KeyMouseGroup"{
+Interface "ISendAdvancedKeyStrokesProperties" {
++{abstract} v_KeyActions : DataTable <<get>> <<set>> <<abstract>> 
++{abstract} v_KeyUpDefault : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "EnterKeysFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSend : String <<get>> <<set>> 
++v_EncryptionOption : String <<get>> <<set>> 
++v_UseClipBoard : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ClearClipboardAfterPaste : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "EnterKeysCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSend : String <<get>> <<set>> 
++v_EncryptionOption : String <<get>> <<set>> 
++v_UseClipBoard : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ClearClipboardAfterPaste : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "EnterShortcutKeyFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
+-cmbHotkey_SelectedIndexChanged() : void 
++v_Hotkey : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "EnterShortcutKeyCommand" <<sealed>> {
++RunCommand() : void 
+-cmbHotkey_SelectedIndexChanged() : void 
++v_Hotkey : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SendAdvancedKeyStrokesFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++AfterShown() : void 
++IsValidate() : Boolean
++BeforeValidate() : void 
++v_KeyActions : DataTable <<get>> <<set>> 
++v_KeyUpDefault : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SendAdvancedKeyStrokesCommand" <<sealed>> {
++RunCommand() : void 
++AfterShown() : void 
++IsValidate() : Boolean
++BeforeValidate() : void 
++v_KeyActions : DataTable <<get>> <<set>> 
++v_KeyUpDefault : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+
+taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties
+taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties
+taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties
+taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties <|.. taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand
+taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties <|.. taskt.Core.Automation.Commands.EnterKeysCommand
+taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties <|.. taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand
+taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties <|.. taskt.Core.Automation.Commands.EnterShortcutKeyCommand
+taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties <|.. taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand
+taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties <|.. taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand
+@enduml

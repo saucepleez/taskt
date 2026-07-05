@@ -1,0 +1,21 @@
+digraph "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsDataTableCommand" [ label="GetWindowHandlesFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands" [ label="GetFromWindowNamesAsDataTableCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsDataTableCommand" [ label="GetWindowStatesFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsDataTableCommand" [ label="GetWindowSizesFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsDataTableCommand" [ label="GetWindowPositionsFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsDataTableCommand" [ label="GetProcessNamesFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+"taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+"taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+"taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+}

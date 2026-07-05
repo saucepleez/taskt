@@ -1,0 +1,20 @@
+digraph "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmUIElementSearchParameter" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmUIElementSearchParameter" [ label="frmUIElementSearchParameter", ];
+"taskt.UI.Forms.DialogLikeThemedForm" [ label="DialogLikeThemedForm", ];
+"taskt.UI.Forms.ThemedForm" [ label="ThemedForm", ];
+"System.Windows.Forms.Form" [ label="Form", ];
+
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmUIElementSearchParameter" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmUIElementSearchParameter" -> "taskt.UI.Forms.DialogLikeThemedForm";
+"taskt.UI.Forms.DialogLikeThemedForm" -> "taskt.UI.Forms.ThemedForm";
+"taskt.UI.Forms.DialogLikeThemedForm" -> "taskt.UI.Forms.ThemedForm";
+"taskt.UI.Forms.ThemedForm" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ThemedForm" -> "System.Windows.Forms.Form";
+}
