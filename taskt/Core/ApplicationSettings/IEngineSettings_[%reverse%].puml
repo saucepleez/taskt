@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core"{
 class "EngineSettings" <<sealed>> {
 +Clone() : EngineSettings
@@ -107,8 +108,7 @@ class "SafeAutomationEngineInstanceEngineSettings" {
 }
 }
 
-
-taskt.Core.IEngineSettings <|.. taskt.Core.EngineSettings
-taskt.Core.IEngineSettings <|.. taskt.Core.SafeEngineSettings
-taskt.Core.SafeEngineSettings <|-- taskt.Core.SafeAutomationEngineInstanceEngineSettings
+taskt.Core.EngineSettings ..|> taskt.Core.IEngineSettings
+taskt.Core.SafeEngineSettings ..|> taskt.Core.IEngineSettings
+taskt.Core.SafeAutomationEngineInstanceEngineSettings --|> taskt.Core.SafeEngineSettings
 @enduml

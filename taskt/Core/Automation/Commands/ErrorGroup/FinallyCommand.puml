@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "FinallyCommand" <<sealed>> {
 +RunCommand() : void 
@@ -65,9 +66,8 @@ Interface "ICommandIDProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.FinallyCommand
-taskt.Core.Automation.Commands.IDelimitersOfStructuredCommands <|.. taskt.Core.Automation.Commands.FinallyCommand
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.FinallyCommand --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.FinallyCommand ..|> taskt.Core.Automation.Commands.IDelimitersOfStructuredCommands
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ExcelCheckCellValueExistsCommand" <<sealed>> {
 +RunCommand() : void 
@@ -28,8 +29,7 @@ class "ExcelSetCellCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AExcelCellActionCommands <|-- taskt.Core.Automation.Commands.ExcelCheckCellValueExistsCommand
-taskt.Core.Automation.Commands.AExcelCellActionCommands <|-- taskt.Core.Automation.Commands.ExcelGetCellCommand
-taskt.Core.Automation.Commands.AExcelCellActionCommands <|-- taskt.Core.Automation.Commands.ExcelSetCellCommand
+taskt.Core.Automation.Commands.ExcelCheckCellValueExistsCommand --|> taskt.Core.Automation.Commands.AExcelCellActionCommands
+taskt.Core.Automation.Commands.ExcelGetCellCommand --|> taskt.Core.Automation.Commands.AExcelCellActionCommands
+taskt.Core.Automation.Commands.ExcelSetCellCommand --|> taskt.Core.Automation.Commands.AExcelCellActionCommands
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AExcelCellActionCommands"{
 +v_ValueType : String <<get>> <<set>> 
@@ -33,9 +34,8 @@ class "ExcelSetCellCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IExcelCellActionProperties <|.. taskt.Core.Automation.Commands.AExcelCellActionCommands
-taskt.Core.Automation.Commands.AExcelCellActionCommands <|-- taskt.Core.Automation.Commands.ExcelCheckCellValueExistsCommand
-taskt.Core.Automation.Commands.AExcelCellActionCommands <|-- taskt.Core.Automation.Commands.ExcelGetCellCommand
-taskt.Core.Automation.Commands.AExcelCellActionCommands <|-- taskt.Core.Automation.Commands.ExcelSetCellCommand
+taskt.Core.Automation.Commands.AExcelCellActionCommands ..|> taskt.Core.Automation.Commands.IExcelCellActionProperties
+taskt.Core.Automation.Commands.ExcelCheckCellValueExistsCommand --|> taskt.Core.Automation.Commands.AExcelCellActionCommands
+taskt.Core.Automation.Commands.ExcelGetCellCommand --|> taskt.Core.Automation.Commands.AExcelCellActionCommands
+taskt.Core.Automation.Commands.ExcelSetCellCommand --|> taskt.Core.Automation.Commands.AExcelCellActionCommands
 @enduml

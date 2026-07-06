@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 Interface "IDataTableResultProperties" {
 }
@@ -20,8 +21,7 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.IDataTableResultProperties
-taskt.Core.Automation.Commands.ICanHandleDataTable <|-- taskt.Core.Automation.Commands.IDataTableResultProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleDataTable
+taskt.Core.Automation.Commands.IDataTableResultProperties --|> taskt.Core.Automation.Commands.IResultProperties
+taskt.Core.Automation.Commands.IDataTableResultProperties --|> taskt.Core.Automation.Commands.ICanHandleDataTable
+taskt.Core.Automation.Commands.ICanHandleDataTable --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

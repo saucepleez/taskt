@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
 class "frmHTMLBuilder" {
 -frmHTMLBuilder_Load() : void 
@@ -226,7 +227,6 @@ class "Form" {
 }
 }
 
-
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmHTMLBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmHTMLBuilder
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmHTMLBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmHTMLBuilder --|> System.Windows.Forms.Form
 @enduml

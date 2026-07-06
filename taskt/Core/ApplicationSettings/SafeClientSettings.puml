@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core"{
 class "SafeClientSettings" {
 +AntiIdleWhileOpen : Boolean <<get>> 
@@ -112,6 +113,5 @@ Interface "IClientSettings" {
 }
 }
 
-
-taskt.Core.IClientSettings <|.. taskt.Core.SafeClientSettings
+taskt.Core.SafeClientSettings ..|> taskt.Core.IClientSettings
 @enduml

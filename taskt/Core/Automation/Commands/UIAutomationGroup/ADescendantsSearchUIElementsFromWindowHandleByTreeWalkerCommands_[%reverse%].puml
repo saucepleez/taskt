@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 abstract class "ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands"{
 +v_SelectionMethod : String <<get>> <<set>> 
@@ -28,8 +29,7 @@ class "UIAutomationSearchUIElementFromWindowHandleCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromWindowHandleCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromWindowHandleCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands
 @enduml

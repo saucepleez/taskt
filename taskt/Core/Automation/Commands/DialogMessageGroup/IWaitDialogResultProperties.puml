@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 Interface "IWaitDialogResultProperties" {
 +{abstract} v_WhenCancel : String <<get>> <<set>> <<abstract>> 
@@ -16,7 +17,6 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.IDialogResultProperties <|-- taskt.Core.Automation.Commands.IWaitDialogResultProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IDialogResultProperties
+taskt.Core.Automation.Commands.IWaitDialogResultProperties --|> taskt.Core.Automation.Commands.IDialogResultProperties
+taskt.Core.Automation.Commands.IDialogResultProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "RunCSharpCodeCommand" <<sealed>> {
 +RunCommand() : void 
@@ -79,10 +80,9 @@ Interface "ICommandIDProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ARunCSharpSomethingCommands <|-- taskt.Core.Automation.Commands.RunCSharpCodeCommand
-taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands <|-- taskt.Core.Automation.Commands.ARunCSharpSomethingCommands
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.RunCSharpCodeCommand --|> taskt.Core.Automation.Commands.ARunCSharpSomethingCommands
+taskt.Core.Automation.Commands.ARunCSharpSomethingCommands --|> taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands
+taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
 @enduml

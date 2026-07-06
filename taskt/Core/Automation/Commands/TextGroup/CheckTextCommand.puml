@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "CheckTextCommand" <<sealed>> {
 +RunCommand() : void 
@@ -90,12 +91,11 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.CheckTextCommand
-taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties <|.. taskt.Core.Automation.Commands.CheckTextCommand
-taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.CheckTextCommand
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICheckProperties <|-- taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICheckProperties
+taskt.Core.Automation.Commands.CheckTextCommand --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.CheckTextCommand ..|> taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties
+taskt.Core.Automation.Commands.CheckTextCommand ..|> taskt.Core.Automation.Commands.IResultProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties --|> taskt.Core.Automation.Commands.ICheckProperties
+taskt.Core.Automation.Commands.ICheckProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

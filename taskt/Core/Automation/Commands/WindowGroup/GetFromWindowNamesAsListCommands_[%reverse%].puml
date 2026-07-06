@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "GetWindowStatesFromWindowNamesAsListCommand" <<sealed>> {
 +RunCommand() : void 
@@ -47,10 +48,9 @@ class "GetProcessNamesFromWindowNamesAsListCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsListCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsListCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsListCommand
+taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsListCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
+taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
+taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
+taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsListCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
+taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsListCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
 @enduml

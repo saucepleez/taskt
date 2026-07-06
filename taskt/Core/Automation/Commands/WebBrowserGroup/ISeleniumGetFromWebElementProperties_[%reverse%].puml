@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 abstract class "ASeleniumGetFromWebElementCommands"{
 +v_WhenValueCanNotRetrieved : String <<get>> <<set>> 
@@ -132,22 +133,21 @@ class "SeleniumBrowserCheckWebElementExistsFromWebElementCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumGetFromWebElementProperties <|.. taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementSizeCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementPositionCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetSpecialValueFromWebElementCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetHTMLFromWebElementCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetOptionsFromWebElementCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetTextFromWebElementCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetAttributeFromWebElementCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsCountFromWebElementCommand
-taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetCSSSelectorFromWebElementCommand
-taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetXPathFromWebElementCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsFromWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumGetFromWebElementProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementSizeCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementPositionCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands
+taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetSpecialValueFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetHTMLFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetOptionsFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetTextFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetAttributeFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneResultFromWebElementCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsCountFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetCSSSelectorFromWebElementCommand --|> taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetXPathFromWebElementCommand --|> taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
 class "frmSettings" {
 -frmSettings_Load() : void 
@@ -383,9 +384,8 @@ class "Form" {
 }
 }
 
-
-taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSettings
-taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSettings
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ThemedForm
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmSettings --|> taskt.UI.Forms.ThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmSettings --|> taskt.UI.Forms.ThemedForm
+taskt.UI.Forms.ThemedForm --|> System.Windows.Forms.Form
+taskt.UI.Forms.ThemedForm --|> System.Windows.Forms.Form
 @enduml

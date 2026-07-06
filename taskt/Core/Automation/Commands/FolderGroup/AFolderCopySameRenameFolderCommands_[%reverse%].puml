@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "CopyFolderInSamLocationCommand" <<sealed>> {
 +RunCommand() : void 
@@ -21,7 +22,6 @@ class "RenameFolderCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands <|-- taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand
-taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands <|-- taskt.Core.Automation.Commands.RenameFolderCommand
+taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand --|> taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands
+taskt.Core.Automation.Commands.RenameFolderCommand --|> taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AFileExistsFilePathPathResultCommands"{
 +v_ResultPath : String <<get>> <<set>> 
@@ -53,11 +54,10 @@ class "WaitForFileToExistCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IFileExistsFilePathPathResultProperties <|.. taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.OpenFileCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.GetFileInformationCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.CheckFileExistsCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.DeleteFileCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.WaitForFileToExistCommand
+taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands ..|> taskt.Core.Automation.Commands.IFileExistsFilePathPathResultProperties
+taskt.Core.Automation.Commands.OpenFileCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.GetFileInformationCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.CheckFileExistsCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.DeleteFileCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.WaitForFileToExistCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
 @enduml

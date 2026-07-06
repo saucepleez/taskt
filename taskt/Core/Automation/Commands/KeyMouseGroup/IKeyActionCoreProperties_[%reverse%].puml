@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.KeyMouseGroup"{
 Interface "IEnterKeysProperties" {
 +{abstract} v_TextToSend : String <<get>> <<set>> <<abstract>> 
@@ -104,14 +105,13 @@ class "SendAdvancedKeyStrokesCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties
-taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties
-taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties
-taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties <|.. taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand
-taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties <|.. taskt.Core.Automation.Commands.EnterKeysCommand
-taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties <|.. taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand
-taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties <|.. taskt.Core.Automation.Commands.EnterShortcutKeyCommand
-taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties <|.. taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand
-taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties <|.. taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand
+taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties --|> taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties
+taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties --|> taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties
+taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties --|> taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties
+taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties
+taskt.Core.Automation.Commands.EnterKeysCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties
+taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties
+taskt.Core.Automation.Commands.EnterShortcutKeyCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties
+taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties
+taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties
 @enduml

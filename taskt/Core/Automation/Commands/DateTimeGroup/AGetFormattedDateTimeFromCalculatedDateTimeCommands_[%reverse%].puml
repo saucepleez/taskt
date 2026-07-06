@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "GetFormattedDateTimeFromCalculatedExcelSerialDateTimeCommand" <<sealed>> {
 +RunCommand() : void 
@@ -34,9 +35,8 @@ class "GetFormattedDateTimeFromCalculatedDateTimeCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands <|-- taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedExcelSerialDateTimeCommand
-taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands <|-- taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedUnixDateTimeCommand
-taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands <|-- taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedTextDateTimeCommand
-taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands <|-- taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedDateTimeCommand
+taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedExcelSerialDateTimeCommand --|> taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands
+taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedUnixDateTimeCommand --|> taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands
+taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedTextDateTimeCommand --|> taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands
+taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedDateTimeCommand --|> taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands
 @enduml

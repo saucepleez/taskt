@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "FormatDateTimeByUnixTimeCommand" <<sealed>> {
 +RunCommand() : void 
@@ -33,9 +34,8 @@ class "FormatDateTimeCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AFormatDateTimeCommands <|-- taskt.Core.Automation.Commands.FormatDateTimeByUnixTimeCommand
-taskt.Core.Automation.Commands.AFormatDateTimeCommands <|-- taskt.Core.Automation.Commands.FormatDateTimeByExcelSerialCommand
-taskt.Core.Automation.Commands.AFormatDateTimeCommands <|-- taskt.Core.Automation.Commands.FormatDateTimeByTextCommand
-taskt.Core.Automation.Commands.AFormatDateTimeCommands <|-- taskt.Core.Automation.Commands.FormatDateTimeCommand
+taskt.Core.Automation.Commands.FormatDateTimeByUnixTimeCommand --|> taskt.Core.Automation.Commands.AFormatDateTimeCommands
+taskt.Core.Automation.Commands.FormatDateTimeByExcelSerialCommand --|> taskt.Core.Automation.Commands.AFormatDateTimeCommands
+taskt.Core.Automation.Commands.FormatDateTimeByTextCommand --|> taskt.Core.Automation.Commands.AFormatDateTimeCommands
+taskt.Core.Automation.Commands.FormatDateTimeCommand --|> taskt.Core.Automation.Commands.AFormatDateTimeCommands
 @enduml

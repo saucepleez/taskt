@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 Interface "ISeleniumSearchMultiWebElementsParametersProperties" {
 +{abstract} v_SearchMethod : String <<get>> <<set>> <<abstract>> 
@@ -12,6 +13,5 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebElementsParametersProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebElementsParametersProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

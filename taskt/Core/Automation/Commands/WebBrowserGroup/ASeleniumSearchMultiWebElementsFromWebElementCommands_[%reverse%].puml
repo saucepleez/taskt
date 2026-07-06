@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 abstract class "ASeleniumSearchWebElementFromWebElementCommands"{
 #SearchWebElementAction() : void 
@@ -38,9 +39,8 @@ class "SeleniumBrowserCheckWebElementExistsFromWebElementCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsCountFromWebElementCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsFromWebElementCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsCountFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands
 @enduml

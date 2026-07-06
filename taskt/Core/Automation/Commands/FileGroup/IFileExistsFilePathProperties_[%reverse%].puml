@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AScriptFileCommands"{
 +v_TargetFilePath : String <<get>> <<set>> 
@@ -259,38 +260,37 @@ class "RenameFileCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.AScriptFileCommands
-taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.AFileExistsFilePathCommands
-taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|-- taskt.Core.Automation.Commands.IFileExistsFilePathBeforeAfterPathResultProperties
-taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|-- taskt.Core.Automation.Commands.IFileExistsFilePathPathResultProperties
-taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.ExecuteTesseractOCRCommand
-taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.MailKitLoadEMailCommand
-taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.ReadJSONFileCommand
-taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.ExcelOpenWorkbookCommand
-taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.ExecuteOCRCommand
-taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.ReadTextFileCommand
-taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.WordOpenDocumentCommand
-taskt.Core.Automation.Commands.AScriptFileCommands <|-- taskt.Core.Automation.Commands.ARunScriptFileCommands
-taskt.Core.Automation.Commands.AScriptFileCommands <|-- taskt.Core.Automation.Commands.UnloadScriptFileCommand
-taskt.Core.Automation.Commands.AScriptFileCommands <|-- taskt.Core.Automation.Commands.LoadScriptFileCommand
-taskt.Core.Automation.Commands.AScriptFileCommands <|-- taskt.Core.Automation.Commands.RunScriptFileCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathCommands <|-- taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands
-taskt.Core.Automation.Commands.AFileExistsFilePathCommands <|-- taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
-taskt.Core.Automation.Commands.IFileExistsFilePathBeforeAfterPathResultProperties <|.. taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands
-taskt.Core.Automation.Commands.IFileExistsFilePathPathResultProperties <|.. taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
-taskt.Core.Automation.Commands.ARunScriptFileCommands <|-- taskt.Core.Automation.Commands.RunJavaScriptFileCommand
-taskt.Core.Automation.Commands.ARunScriptFileCommands <|-- taskt.Core.Automation.Commands.RunPowerShellScriptFileCommand
-taskt.Core.Automation.Commands.ARunScriptFileCommands <|-- taskt.Core.Automation.Commands.RunBatchScriptFileCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands <|-- taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
-taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands <|-- taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.OpenFileCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.GetFileInformationCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.CheckFileExistsCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.DeleteFileCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.WaitForFileToExistCommand
-taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.CopyFileCommand
-taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.MoveFileCommand
-taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands <|-- taskt.Core.Automation.Commands.CopyFileToSameFolderCommand
-taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands <|-- taskt.Core.Automation.Commands.RenameFileCommand
+taskt.Core.Automation.Commands.AScriptFileCommands ..|> taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.AFileExistsFilePathCommands ..|> taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.IFileExistsFilePathBeforeAfterPathResultProperties --|> taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.IFileExistsFilePathPathResultProperties --|> taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.ExecuteTesseractOCRCommand ..|> taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.MailKitLoadEMailCommand ..|> taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.ReadJSONFileCommand ..|> taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.ExcelOpenWorkbookCommand ..|> taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.ExecuteOCRCommand ..|> taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.ReadTextFileCommand ..|> taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.WordOpenDocumentCommand ..|> taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.ARunScriptFileCommands --|> taskt.Core.Automation.Commands.AScriptFileCommands
+taskt.Core.Automation.Commands.UnloadScriptFileCommand --|> taskt.Core.Automation.Commands.AScriptFileCommands
+taskt.Core.Automation.Commands.LoadScriptFileCommand --|> taskt.Core.Automation.Commands.AScriptFileCommands
+taskt.Core.Automation.Commands.RunScriptFileCommand --|> taskt.Core.Automation.Commands.AScriptFileCommands
+taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands --|> taskt.Core.Automation.Commands.AFileExistsFilePathCommands
+taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands --|> taskt.Core.Automation.Commands.AFileExistsFilePathCommands
+taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands ..|> taskt.Core.Automation.Commands.IFileExistsFilePathBeforeAfterPathResultProperties
+taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands ..|> taskt.Core.Automation.Commands.IFileExistsFilePathPathResultProperties
+taskt.Core.Automation.Commands.RunJavaScriptFileCommand --|> taskt.Core.Automation.Commands.ARunScriptFileCommands
+taskt.Core.Automation.Commands.RunPowerShellScriptFileCommand --|> taskt.Core.Automation.Commands.ARunScriptFileCommands
+taskt.Core.Automation.Commands.RunBatchScriptFileCommand --|> taskt.Core.Automation.Commands.ARunScriptFileCommands
+taskt.Core.Automation.Commands.AFileCopyMoveFileCommands --|> taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands
+taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands --|> taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands
+taskt.Core.Automation.Commands.OpenFileCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.GetFileInformationCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.CheckFileExistsCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.DeleteFileCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.WaitForFileToExistCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.CopyFileCommand --|> taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
+taskt.Core.Automation.Commands.MoveFileCommand --|> taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
+taskt.Core.Automation.Commands.CopyFileToSameFolderCommand --|> taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
+taskt.Core.Automation.Commands.RenameFileCommand --|> taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
 @enduml

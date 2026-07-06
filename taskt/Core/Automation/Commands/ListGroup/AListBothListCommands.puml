@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AListBothListCommands"{
 +v_List : String <<get>> <<set>> 
@@ -82,13 +83,12 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.AListInputListCommands <|-- taskt.Core.Automation.Commands.AListBothListCommands
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AListInputListCommands
-taskt.Core.Automation.Commands.IListProperties <|.. taskt.Core.Automation.Commands.AListInputListCommands
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICanHandleList <|-- taskt.Core.Automation.Commands.IListProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IListProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleList
+taskt.Core.Automation.Commands.AListBothListCommands --|> taskt.Core.Automation.Commands.AListInputListCommands
+taskt.Core.Automation.Commands.AListInputListCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AListInputListCommands ..|> taskt.Core.Automation.Commands.IListProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IListProperties --|> taskt.Core.Automation.Commands.ICanHandleList
+taskt.Core.Automation.Commands.IListProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICanHandleList --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

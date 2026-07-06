@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 Interface "IUIElementChildrenSearchXPathProperties" {
 +{abstract} v_SearchXPath : String <<get>> <<set>> <<abstract>> 
@@ -34,10 +35,9 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchXPathProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchXPathProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "GetCosCommand" <<sealed>> {
 +RunCommand() : void 
@@ -91,14 +92,13 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ATrignometricCommands <|-- taskt.Core.Automation.Commands.GetCosCommand
-taskt.Core.Automation.Commands.AMathValueResultCommands <|-- taskt.Core.Automation.Commands.ATrignometricCommands
-taskt.Core.Automation.Commands.ITrignometricProperties <|.. taskt.Core.Automation.Commands.ATrignometricCommands
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AMathValueResultCommands
-taskt.Core.Automation.Commands.IMathValueResultProperties <|.. taskt.Core.Automation.Commands.AMathValueResultCommands
-taskt.Core.Automation.Commands.IMathValueResultProperties <|-- taskt.Core.Automation.Commands.ITrignometricProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IMathValueResultProperties
+taskt.Core.Automation.Commands.GetCosCommand --|> taskt.Core.Automation.Commands.ATrignometricCommands
+taskt.Core.Automation.Commands.ATrignometricCommands --|> taskt.Core.Automation.Commands.AMathValueResultCommands
+taskt.Core.Automation.Commands.ATrignometricCommands ..|> taskt.Core.Automation.Commands.ITrignometricProperties
+taskt.Core.Automation.Commands.AMathValueResultCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AMathValueResultCommands ..|> taskt.Core.Automation.Commands.IMathValueResultProperties
+taskt.Core.Automation.Commands.ITrignometricProperties --|> taskt.Core.Automation.Commands.IMathValueResultProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IMathValueResultProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

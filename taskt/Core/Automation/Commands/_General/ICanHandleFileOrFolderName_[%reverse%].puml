@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 Interface "ICanHandleFileName" {
 }
@@ -127,21 +128,20 @@ class "RenameFolderCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.ICanHandleFileOrFolderName <|-- taskt.Core.Automation.Commands.ICanHandleFileName
-taskt.Core.Automation.Commands.ICanHandleFileOrFolderName <|-- taskt.Core.Automation.Commands.ICanHandleFolderName
-taskt.Core.Automation.Commands.ICanHandleFileName <|.. taskt.Core.Automation.Commands.CompileCSharpFileCommand
-taskt.Core.Automation.Commands.ICanHandleFileName <|.. taskt.Core.Automation.Commands.CompileCSharpCodeCommand
-taskt.Core.Automation.Commands.ICanHandleFileName <|.. taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
-taskt.Core.Automation.Commands.ICanHandleFileName <|.. taskt.Core.Automation.Commands.GetRandomFilePathCommand
-taskt.Core.Automation.Commands.ICanHandleFileName <|.. taskt.Core.Automation.Commands.AFileNumberedFileCommands
-taskt.Core.Automation.Commands.ICanHandleFileName <|.. taskt.Core.Automation.Commands.LogDataCommand
-taskt.Core.Automation.Commands.ICanHandleFolderName <|.. taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands
-taskt.Core.Automation.Commands.ICanHandleFolderName <|.. taskt.Core.Automation.Commands.CreateFolderCommand
-taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands <|-- taskt.Core.Automation.Commands.CopyFileToSameFolderCommand
-taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands <|-- taskt.Core.Automation.Commands.RenameFileCommand
-taskt.Core.Automation.Commands.AFileNumberedFileCommands <|-- taskt.Core.Automation.Commands.GetLastExistentNumberedFilePathCommand
-taskt.Core.Automation.Commands.AFileNumberedFileCommands <|-- taskt.Core.Automation.Commands.GetNonExistentFilePathCommand
-taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands <|-- taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand
-taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands <|-- taskt.Core.Automation.Commands.RenameFolderCommand
+taskt.Core.Automation.Commands.ICanHandleFileName --|> taskt.Core.Automation.Commands.ICanHandleFileOrFolderName
+taskt.Core.Automation.Commands.ICanHandleFolderName --|> taskt.Core.Automation.Commands.ICanHandleFileOrFolderName
+taskt.Core.Automation.Commands.CompileCSharpFileCommand ..|> taskt.Core.Automation.Commands.ICanHandleFileName
+taskt.Core.Automation.Commands.CompileCSharpCodeCommand ..|> taskt.Core.Automation.Commands.ICanHandleFileName
+taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands ..|> taskt.Core.Automation.Commands.ICanHandleFileName
+taskt.Core.Automation.Commands.GetRandomFilePathCommand ..|> taskt.Core.Automation.Commands.ICanHandleFileName
+taskt.Core.Automation.Commands.AFileNumberedFileCommands ..|> taskt.Core.Automation.Commands.ICanHandleFileName
+taskt.Core.Automation.Commands.LogDataCommand ..|> taskt.Core.Automation.Commands.ICanHandleFileName
+taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands ..|> taskt.Core.Automation.Commands.ICanHandleFolderName
+taskt.Core.Automation.Commands.CreateFolderCommand ..|> taskt.Core.Automation.Commands.ICanHandleFolderName
+taskt.Core.Automation.Commands.CopyFileToSameFolderCommand --|> taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
+taskt.Core.Automation.Commands.RenameFileCommand --|> taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
+taskt.Core.Automation.Commands.GetLastExistentNumberedFilePathCommand --|> taskt.Core.Automation.Commands.AFileNumberedFileCommands
+taskt.Core.Automation.Commands.GetNonExistentFilePathCommand --|> taskt.Core.Automation.Commands.AFileNumberedFileCommands
+taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand --|> taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands
+taskt.Core.Automation.Commands.RenameFolderCommand --|> taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands
 @enduml

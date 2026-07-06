@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "RemoveJSONObjectPropertyCommand" <<sealed>> {
 +RunCommand() : void 
@@ -116,23 +117,22 @@ Interface "ICanHandleJSONObject" {
 }
 }
 
-
-taskt.Core.Automation.Commands.AJSONJSONPathCommands <|-- taskt.Core.Automation.Commands.RemoveJSONObjectPropertyCommand
-taskt.Core.Automation.Commands.AJSONInputJSONCommands <|-- taskt.Core.Automation.Commands.AJSONJSONPathCommands
-taskt.Core.Automation.Commands.IJSONJSONPathProperties <|.. taskt.Core.Automation.Commands.AJSONJSONPathCommands
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AJSONInputJSONCommands
-taskt.Core.Automation.Commands.IJSONInputJSONProperties <|.. taskt.Core.Automation.Commands.AJSONInputJSONCommands
-taskt.Core.Automation.Commands.IJSONInputJContainer <|-- taskt.Core.Automation.Commands.IJSONJSONPathProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICanHandleJSON <|-- taskt.Core.Automation.Commands.IJSONInputJSONProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IJSONInputJSONProperties
-taskt.Core.Automation.Commands.IJSONInputJSONProperties <|-- taskt.Core.Automation.Commands.IJSONInputJContainer
-taskt.Core.Automation.Commands.ICanHandleJContainer <|-- taskt.Core.Automation.Commands.IJSONInputJContainer
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleJSON
-taskt.Core.Automation.Commands.ICanHandleJSONArray <|-- taskt.Core.Automation.Commands.ICanHandleJContainer
-taskt.Core.Automation.Commands.ICanHandleJSONObject <|-- taskt.Core.Automation.Commands.ICanHandleJContainer
-taskt.Core.Automation.Commands.ICanHandleJSON <|-- taskt.Core.Automation.Commands.ICanHandleJSONArray
-taskt.Core.Automation.Commands.ICanHandleJSON <|-- taskt.Core.Automation.Commands.ICanHandleJSONObject
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleJSON
+taskt.Core.Automation.Commands.RemoveJSONObjectPropertyCommand --|> taskt.Core.Automation.Commands.AJSONJSONPathCommands
+taskt.Core.Automation.Commands.AJSONJSONPathCommands --|> taskt.Core.Automation.Commands.AJSONInputJSONCommands
+taskt.Core.Automation.Commands.AJSONJSONPathCommands ..|> taskt.Core.Automation.Commands.IJSONJSONPathProperties
+taskt.Core.Automation.Commands.AJSONInputJSONCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AJSONInputJSONCommands ..|> taskt.Core.Automation.Commands.IJSONInputJSONProperties
+taskt.Core.Automation.Commands.IJSONJSONPathProperties --|> taskt.Core.Automation.Commands.IJSONInputJContainer
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IJSONInputJSONProperties --|> taskt.Core.Automation.Commands.ICanHandleJSON
+taskt.Core.Automation.Commands.IJSONInputJSONProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.IJSONInputJContainer --|> taskt.Core.Automation.Commands.IJSONInputJSONProperties
+taskt.Core.Automation.Commands.IJSONInputJContainer --|> taskt.Core.Automation.Commands.ICanHandleJContainer
+taskt.Core.Automation.Commands.ICanHandleJSON --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICanHandleJContainer --|> taskt.Core.Automation.Commands.ICanHandleJSONArray
+taskt.Core.Automation.Commands.ICanHandleJContainer --|> taskt.Core.Automation.Commands.ICanHandleJSONObject
+taskt.Core.Automation.Commands.ICanHandleJSONArray --|> taskt.Core.Automation.Commands.ICanHandleJSON
+taskt.Core.Automation.Commands.ICanHandleJSONObject --|> taskt.Core.Automation.Commands.ICanHandleJSON
+taskt.Core.Automation.Commands.ICanHandleJSON --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

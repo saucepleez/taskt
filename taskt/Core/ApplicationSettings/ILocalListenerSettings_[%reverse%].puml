@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core"{
 class "LocalListenerSettings" <<sealed>> {
 +Clone() : LocalListenerSettings
@@ -37,7 +38,6 @@ class "SafeLocalListenerSettings" {
 }
 }
 
-
-taskt.Core.ILocalListenerSettings <|.. taskt.Core.LocalListenerSettings
-taskt.Core.ILocalListenerSettings <|.. taskt.Core.SafeLocalListenerSettings
+taskt.Core.LocalListenerSettings ..|> taskt.Core.ILocalListenerSettings
+taskt.Core.SafeLocalListenerSettings ..|> taskt.Core.ILocalListenerSettings
 @enduml

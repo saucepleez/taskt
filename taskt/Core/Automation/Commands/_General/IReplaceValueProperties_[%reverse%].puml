@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ReplaceDataTableValueCommand" <<sealed>> {
 +RunCommand() : void 
@@ -80,10 +81,9 @@ class "ReplaceListCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IReplaceValueProperties <|.. taskt.Core.Automation.Commands.ReplaceDataTableValueCommand
-taskt.Core.Automation.Commands.IReplaceValueProperties <|.. taskt.Core.Automation.Commands.ReplaceDataTableRowValueCommand
-taskt.Core.Automation.Commands.IReplaceValueProperties <|.. taskt.Core.Automation.Commands.ReplaceDataTableColumnValueCommand
-taskt.Core.Automation.Commands.IReplaceValueProperties <|.. taskt.Core.Automation.Commands.ReplaceDictionaryCommand
-taskt.Core.Automation.Commands.IReplaceValueProperties <|.. taskt.Core.Automation.Commands.ReplaceListCommand
+taskt.Core.Automation.Commands.ReplaceDataTableValueCommand ..|> taskt.Core.Automation.Commands.IReplaceValueProperties
+taskt.Core.Automation.Commands.ReplaceDataTableRowValueCommand ..|> taskt.Core.Automation.Commands.IReplaceValueProperties
+taskt.Core.Automation.Commands.ReplaceDataTableColumnValueCommand ..|> taskt.Core.Automation.Commands.IReplaceValueProperties
+taskt.Core.Automation.Commands.ReplaceDictionaryCommand ..|> taskt.Core.Automation.Commands.IReplaceValueProperties
+taskt.Core.Automation.Commands.ReplaceListCommand ..|> taskt.Core.Automation.Commands.IReplaceValueProperties
 @enduml

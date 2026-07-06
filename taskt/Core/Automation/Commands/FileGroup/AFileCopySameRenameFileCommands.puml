@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AFileCopySameRenameFileCommands"{
 #CreateActionFunc() : Func
@@ -129,22 +130,21 @@ Interface "ICanHandleFileOrFolderPath" {
 }
 }
 
-
-taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands <|-- taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
-taskt.Core.Automation.Commands.ICanHandleFileName <|.. taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
-taskt.Core.Automation.Commands.AFileExistsFilePathCommands <|-- taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands
-taskt.Core.Automation.Commands.IFileExistsFilePathBeforeAfterPathResultProperties <|.. taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands
-taskt.Core.Automation.Commands.ICanHandleFileOrFolderName <|-- taskt.Core.Automation.Commands.ICanHandleFileName
-taskt.Core.Automation.Commands.AFileFilePathCommands <|-- taskt.Core.Automation.Commands.AFileExistsFilePathCommands
-taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|.. taskt.Core.Automation.Commands.AFileExistsFilePathCommands
-taskt.Core.Automation.Commands.IFileExistsFilePathProperties <|-- taskt.Core.Automation.Commands.IFileExistsFilePathBeforeAfterPathResultProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleFileOrFolderName
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AFileFilePathCommands
-taskt.Core.Automation.Commands.IFilePathProperties <|.. taskt.Core.Automation.Commands.AFileFilePathCommands
-taskt.Core.Automation.Commands.IFilePathProperties <|-- taskt.Core.Automation.Commands.IFileExistsFilePathProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICanHandleFilePath <|-- taskt.Core.Automation.Commands.IFilePathProperties
-taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath <|-- taskt.Core.Automation.Commands.ICanHandleFilePath
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath
+taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands --|> taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands
+taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands ..|> taskt.Core.Automation.Commands.ICanHandleFileName
+taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands --|> taskt.Core.Automation.Commands.AFileExistsFilePathCommands
+taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands ..|> taskt.Core.Automation.Commands.IFileExistsFilePathBeforeAfterPathResultProperties
+taskt.Core.Automation.Commands.ICanHandleFileName --|> taskt.Core.Automation.Commands.ICanHandleFileOrFolderName
+taskt.Core.Automation.Commands.AFileExistsFilePathCommands --|> taskt.Core.Automation.Commands.AFileFilePathCommands
+taskt.Core.Automation.Commands.AFileExistsFilePathCommands ..|> taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.IFileExistsFilePathBeforeAfterPathResultProperties --|> taskt.Core.Automation.Commands.IFileExistsFilePathProperties
+taskt.Core.Automation.Commands.ICanHandleFileOrFolderName --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.AFileFilePathCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AFileFilePathCommands ..|> taskt.Core.Automation.Commands.IFilePathProperties
+taskt.Core.Automation.Commands.IFileExistsFilePathProperties --|> taskt.Core.Automation.Commands.IFilePathProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IFilePathProperties --|> taskt.Core.Automation.Commands.ICanHandleFilePath
+taskt.Core.Automation.Commands.ICanHandleFilePath --|> taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath
+taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

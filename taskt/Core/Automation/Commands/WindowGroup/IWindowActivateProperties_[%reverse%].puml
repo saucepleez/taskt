@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.KeyMouseGroup"{
 Interface "IKeyActionCoreProperties" {
 +{abstract} v_WaitTimeAfterKeyEnter : String <<get>> <<set>> <<abstract>> 
@@ -262,40 +263,39 @@ class "TakeScreenshotCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IWindowActivateProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties
-taskt.Core.Automation.Commands.IWindowActivateProperties <|-- taskt.Core.Automation.Commands.IWindowNamesActionProperties
-taskt.Core.Automation.Commands.IWindowActivateProperties <|-- taskt.Core.Automation.Commands.IWindowHandleActionPropeties
-taskt.Core.Automation.Commands.IWindowActivateProperties <|-- taskt.Core.Automation.Commands.IOneWindowNameActionProperties
-taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties
-taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties
-taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties
-taskt.Core.Automation.Commands.IWindowNamesActionProperties <|.. taskt.Core.Automation.Commands.AWindowNamesActionCommnads
-taskt.Core.Automation.Commands.IWindowHandleActionPropeties <|.. taskt.Core.Automation.Commands.AWindowHandleActionCommands
-taskt.Core.Automation.Commands.IOneWindowNameActionProperties <|.. taskt.Core.Automation.Commands.AOneWindowNameActionCommands
-taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties <|.. taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand
-taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties <|.. taskt.Core.Automation.Commands.EnterKeysCommand
-taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties <|.. taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand
-taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties <|.. taskt.Core.Automation.Commands.EnterShortcutKeyCommand
-taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties <|.. taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand
-taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties <|.. taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand
-taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.SetWindowsStateCommand
-taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.ResizeWindowsCommand
-taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.MoveWindowsCommand
-taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.CloseWindowsCommand
-taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.CloseWindowByWindowHandle
-taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.MoveWindowByWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.SetWindowStateByWindowHandleCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.SetOneWindowStateCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.ResizeOneWindowCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.MoveOneWindowCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.CloseOneWindowCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.EnterShortcutKeyCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.EnterKeysCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.TakeScreenshotCommand
+taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties --|> taskt.Core.Automation.Commands.IWindowActivateProperties
+taskt.Core.Automation.Commands.IWindowNamesActionProperties --|> taskt.Core.Automation.Commands.IWindowActivateProperties
+taskt.Core.Automation.Commands.IWindowHandleActionPropeties --|> taskt.Core.Automation.Commands.IWindowActivateProperties
+taskt.Core.Automation.Commands.IOneWindowNameActionProperties --|> taskt.Core.Automation.Commands.IWindowActivateProperties
+taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties --|> taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties
+taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties --|> taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties
+taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties --|> taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties
+taskt.Core.Automation.Commands.AWindowNamesActionCommnads ..|> taskt.Core.Automation.Commands.IWindowNamesActionProperties
+taskt.Core.Automation.Commands.AWindowHandleActionCommands ..|> taskt.Core.Automation.Commands.IWindowHandleActionPropeties
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands ..|> taskt.Core.Automation.Commands.IOneWindowNameActionProperties
+taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties
+taskt.Core.Automation.Commands.EnterKeysCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties
+taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties
+taskt.Core.Automation.Commands.EnterShortcutKeyCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties
+taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties
+taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties
+taskt.Core.Automation.Commands.SetWindowsStateCommand --|> taskt.Core.Automation.Commands.AWindowNamesActionCommnads
+taskt.Core.Automation.Commands.ResizeWindowsCommand --|> taskt.Core.Automation.Commands.AWindowNamesActionCommnads
+taskt.Core.Automation.Commands.MoveWindowsCommand --|> taskt.Core.Automation.Commands.AWindowNamesActionCommnads
+taskt.Core.Automation.Commands.CloseWindowsCommand --|> taskt.Core.Automation.Commands.AWindowNamesActionCommnads
+taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.CloseWindowByWindowHandle --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.MoveWindowByWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.SetWindowStateByWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.SetOneWindowStateCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.ResizeOneWindowCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.MoveOneWindowCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.CloseOneWindowCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.EnterShortcutKeyCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.EnterKeysCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.TakeScreenshotCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
 @enduml

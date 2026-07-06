@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Attributes.ClassAttributes"{
 class "Group" <<sealed>> {
 +groupName : string
@@ -6,6 +7,5 @@ class "Group" <<sealed>> {
 }
 
 
-
-System.Attribute -- taskt.Core.Automation.Attributes.ClassAttributes.Group
+taskt.Core.Automation.Attributes.ClassAttributes.Group -- System.Attribute
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ReplaceListCommand" <<sealed>> {
 +RunCommand() : void 
@@ -27,7 +28,6 @@ class "AddListItemCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AListBothListCommands <|-- taskt.Core.Automation.Commands.ReplaceListCommand
-taskt.Core.Automation.Commands.AListBothListCommands <|-- taskt.Core.Automation.Commands.AddListItemCommand
+taskt.Core.Automation.Commands.ReplaceListCommand --|> taskt.Core.Automation.Commands.AListBothListCommands
+taskt.Core.Automation.Commands.AddListItemCommand --|> taskt.Core.Automation.Commands.AListBothListCommands
 @enduml

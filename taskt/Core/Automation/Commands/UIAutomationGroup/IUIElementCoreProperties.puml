@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 Interface "IUIElementCoreProperties" {
 +{abstract} v_TargetElement : String <<get>> <<set>> <<abstract>> 
@@ -15,7 +16,6 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

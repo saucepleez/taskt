@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "ADataTableRowCommands"{
 +v_RowIndex : String <<get>> <<set>> 
@@ -118,19 +119,18 @@ class "ConvertDataTableRowToDictionaryCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IDataTableRowProperties <|.. taskt.Core.Automation.Commands.ADataTableRowCommands
-taskt.Core.Automation.Commands.ADataTableRowCommands <|-- taskt.Core.Automation.Commands.ADataTableBothRowCommands
-taskt.Core.Automation.Commands.ADataTableRowCommands <|-- taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands
-taskt.Core.Automation.Commands.ADataTableRowCommands <|-- taskt.Core.Automation.Commands.ExportDataTableRowAsTextFileCommand
-taskt.Core.Automation.Commands.ADataTableRowCommands <|-- taskt.Core.Automation.Commands.ReplaceDataTableRowValueCommand
-taskt.Core.Automation.Commands.ADataTableRowCommands <|-- taskt.Core.Automation.Commands.DeleteDataTableRowCommand
-taskt.Core.Automation.Commands.ADataTableBothRowCommands <|-- taskt.Core.Automation.Commands.SetDataTableRowValuesByDataTableCommand
-taskt.Core.Automation.Commands.ADataTableBothRowCommands <|-- taskt.Core.Automation.Commands.SetDataTableRowValuesByDictionaryCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.JoinDataTableRowAsTextCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToTextCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToDataTableCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToJSONCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToListCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableRowToDictionaryCommand
+taskt.Core.Automation.Commands.ADataTableRowCommands ..|> taskt.Core.Automation.Commands.IDataTableRowProperties
+taskt.Core.Automation.Commands.ADataTableBothRowCommands --|> taskt.Core.Automation.Commands.ADataTableRowCommands
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands --|> taskt.Core.Automation.Commands.ADataTableRowCommands
+taskt.Core.Automation.Commands.ExportDataTableRowAsTextFileCommand --|> taskt.Core.Automation.Commands.ADataTableRowCommands
+taskt.Core.Automation.Commands.ReplaceDataTableRowValueCommand --|> taskt.Core.Automation.Commands.ADataTableRowCommands
+taskt.Core.Automation.Commands.DeleteDataTableRowCommand --|> taskt.Core.Automation.Commands.ADataTableRowCommands
+taskt.Core.Automation.Commands.SetDataTableRowValuesByDataTableCommand --|> taskt.Core.Automation.Commands.ADataTableBothRowCommands
+taskt.Core.Automation.Commands.SetDataTableRowValuesByDictionaryCommand --|> taskt.Core.Automation.Commands.ADataTableBothRowCommands
+taskt.Core.Automation.Commands.JoinDataTableRowAsTextCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands
+taskt.Core.Automation.Commands.ConvertDataTableRowToTextCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands
+taskt.Core.Automation.Commands.ConvertDataTableRowToDataTableCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands
+taskt.Core.Automation.Commands.ConvertDataTableRowToJSONCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands
+taskt.Core.Automation.Commands.ConvertDataTableRowToListCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands
+taskt.Core.Automation.Commands.ConvertDataTableRowToDictionaryCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableRowCommands
 @enduml

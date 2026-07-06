@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 Interface "IFilePathProperties" {
 +{abstract} v_TargetFilePath : String <<get>> <<set>> <<abstract>> 
@@ -20,8 +21,7 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ICanHandleFilePath <|-- taskt.Core.Automation.Commands.IFilePathProperties
-taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath <|-- taskt.Core.Automation.Commands.ICanHandleFilePath
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath
+taskt.Core.Automation.Commands.IFilePathProperties --|> taskt.Core.Automation.Commands.ICanHandleFilePath
+taskt.Core.Automation.Commands.ICanHandleFilePath --|> taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath
+taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

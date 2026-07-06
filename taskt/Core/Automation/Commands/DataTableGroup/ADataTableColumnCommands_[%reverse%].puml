@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "ADataTableBothColumnCommands"{
 +v_DataTable : String <<get>> <<set>> 
@@ -121,19 +122,18 @@ class "CheckDataTableColumnExistsCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.ADataTableColumnCommands <|-- taskt.Core.Automation.Commands.ADataTableBothColumnCommands
-taskt.Core.Automation.Commands.ADataTableColumnCommands <|-- taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
-taskt.Core.Automation.Commands.ADataTableColumnCommands <|-- taskt.Core.Automation.Commands.ExportDataTableColumnAsTextFileCommand
-taskt.Core.Automation.Commands.ADataTableColumnCommands <|-- taskt.Core.Automation.Commands.ReplaceDataTableColumnValueCommand
-taskt.Core.Automation.Commands.ADataTableColumnCommands <|-- taskt.Core.Automation.Commands.DeleteDataTableColumnCommand
-taskt.Core.Automation.Commands.ADataTableBothColumnCommands <|-- taskt.Core.Automation.Commands.SetDataTableColumnValuesByDataTableCommand
-taskt.Core.Automation.Commands.ADataTableBothColumnCommands <|-- taskt.Core.Automation.Commands.SetDataTableColumnValuesByListCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.JoinDataTableColumnAsTextCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToTextCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToJSONCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToDataTableCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToListCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.CheckDataTableColumnExistsCommand
+taskt.Core.Automation.Commands.ADataTableBothColumnCommands --|> taskt.Core.Automation.Commands.ADataTableColumnCommands
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands --|> taskt.Core.Automation.Commands.ADataTableColumnCommands
+taskt.Core.Automation.Commands.ExportDataTableColumnAsTextFileCommand --|> taskt.Core.Automation.Commands.ADataTableColumnCommands
+taskt.Core.Automation.Commands.ReplaceDataTableColumnValueCommand --|> taskt.Core.Automation.Commands.ADataTableColumnCommands
+taskt.Core.Automation.Commands.DeleteDataTableColumnCommand --|> taskt.Core.Automation.Commands.ADataTableColumnCommands
+taskt.Core.Automation.Commands.SetDataTableColumnValuesByDataTableCommand --|> taskt.Core.Automation.Commands.ADataTableBothColumnCommands
+taskt.Core.Automation.Commands.SetDataTableColumnValuesByListCommand --|> taskt.Core.Automation.Commands.ADataTableBothColumnCommands
+taskt.Core.Automation.Commands.JoinDataTableColumnAsTextCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
+taskt.Core.Automation.Commands.ConvertDataTableColumnToTextCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
+taskt.Core.Automation.Commands.ConvertDataTableColumnToJSONCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
+taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
+taskt.Core.Automation.Commands.ConvertDataTableColumnToDataTableCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
+taskt.Core.Automation.Commands.ConvertDataTableColumnToListCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
+taskt.Core.Automation.Commands.CheckDataTableColumnExistsCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
 @enduml

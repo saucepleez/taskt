@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 Interface "IUIElementIndexProperties" {
 +{abstract} v_TargetUIElementIndex : String <<get>> <<set>> <<abstract>> 
@@ -16,7 +17,6 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ISelectionMethodProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementIndexProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementIndexProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementIndexProperties --|> taskt.Core.Automation.Commands.ISelectionMethodProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementIndexProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

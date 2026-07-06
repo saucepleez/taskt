@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms"{
 class "UIForm" {
 #OnPaintBackground() : void 
@@ -214,6 +215,5 @@ class "Form" {
 }
 }
 
-
-System.Windows.Forms.Form <|-- taskt.UI.Forms.UIForm
+taskt.UI.Forms.UIForm --|> System.Windows.Forms.Form
 @enduml

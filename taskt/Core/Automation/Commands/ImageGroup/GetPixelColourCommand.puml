@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "GetPixelColourCommand" {
 +{static} GetDC() : IntPtr
@@ -67,8 +68,7 @@ Interface "ICommandIDProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.GetPixelColourCommand
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.GetPixelColourCommand --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
 @enduml

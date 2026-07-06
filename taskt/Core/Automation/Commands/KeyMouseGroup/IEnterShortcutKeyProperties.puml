@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.KeyMouseGroup"{
 Interface "IEnterShortcutKeyProperties" {
 +{abstract} v_Hotkey : String <<get>> <<set>> <<abstract>> 
@@ -18,7 +19,6 @@ Interface "IWindowActivateProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties
-taskt.Core.Automation.Commands.IWindowActivateProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties
+taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties --|> taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties
+taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties --|> taskt.Core.Automation.Commands.IWindowActivateProperties
 @enduml

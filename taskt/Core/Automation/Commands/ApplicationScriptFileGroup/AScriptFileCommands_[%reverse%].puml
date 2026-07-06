@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "ARunScriptFileCommands"{
 +v_Arguments : String <<get>> <<set>> 
@@ -63,12 +64,11 @@ class "RunBatchScriptFileCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AScriptFileCommands <|-- taskt.Core.Automation.Commands.ARunScriptFileCommands
-taskt.Core.Automation.Commands.AScriptFileCommands <|-- taskt.Core.Automation.Commands.UnloadScriptFileCommand
-taskt.Core.Automation.Commands.AScriptFileCommands <|-- taskt.Core.Automation.Commands.LoadScriptFileCommand
-taskt.Core.Automation.Commands.AScriptFileCommands <|-- taskt.Core.Automation.Commands.RunScriptFileCommand
-taskt.Core.Automation.Commands.ARunScriptFileCommands <|-- taskt.Core.Automation.Commands.RunJavaScriptFileCommand
-taskt.Core.Automation.Commands.ARunScriptFileCommands <|-- taskt.Core.Automation.Commands.RunPowerShellScriptFileCommand
-taskt.Core.Automation.Commands.ARunScriptFileCommands <|-- taskt.Core.Automation.Commands.RunBatchScriptFileCommand
+taskt.Core.Automation.Commands.ARunScriptFileCommands --|> taskt.Core.Automation.Commands.AScriptFileCommands
+taskt.Core.Automation.Commands.UnloadScriptFileCommand --|> taskt.Core.Automation.Commands.AScriptFileCommands
+taskt.Core.Automation.Commands.LoadScriptFileCommand --|> taskt.Core.Automation.Commands.AScriptFileCommands
+taskt.Core.Automation.Commands.RunScriptFileCommand --|> taskt.Core.Automation.Commands.AScriptFileCommands
+taskt.Core.Automation.Commands.RunJavaScriptFileCommand --|> taskt.Core.Automation.Commands.ARunScriptFileCommands
+taskt.Core.Automation.Commands.RunPowerShellScriptFileCommand --|> taskt.Core.Automation.Commands.ARunScriptFileCommands
+taskt.Core.Automation.Commands.RunBatchScriptFileCommand --|> taskt.Core.Automation.Commands.ARunScriptFileCommands
 @enduml

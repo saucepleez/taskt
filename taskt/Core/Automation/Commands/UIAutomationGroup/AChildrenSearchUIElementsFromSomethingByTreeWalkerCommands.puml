@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 abstract class "AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands"{
 +AfterShown() : void 
@@ -111,15 +112,14 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties
-taskt.Core.Automation.Commands.IHaveDataTableElements <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties --|> taskt.Core.Automation.Commands.IHaveDataTableElements
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

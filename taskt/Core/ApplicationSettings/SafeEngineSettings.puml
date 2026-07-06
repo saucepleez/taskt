@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core"{
 class "SafeEngineSettings" {
 +ShowDebugWindow : Boolean <<get>> 
@@ -64,6 +65,5 @@ Interface "IEngineSettings" {
 }
 }
 
-
-taskt.Core.IEngineSettings <|.. taskt.Core.SafeEngineSettings
+taskt.Core.SafeEngineSettings ..|> taskt.Core.IEngineSettings
 @enduml

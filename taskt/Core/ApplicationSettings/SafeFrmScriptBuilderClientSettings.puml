@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core"{
 class "SafeFrmScriptBuilderClientSettings" {
 +InsertCommandsInline : Boolean <<get>> <<set>> 
@@ -119,7 +120,6 @@ Interface "IClientSettings" {
 }
 }
 
-
-taskt.Core.SafeClientSettings <|-- taskt.Core.SafeFrmScriptBuilderClientSettings
-taskt.Core.IClientSettings <|.. taskt.Core.SafeClientSettings
+taskt.Core.SafeFrmScriptBuilderClientSettings --|> taskt.Core.SafeClientSettings
+taskt.Core.SafeClientSettings ..|> taskt.Core.IClientSettings
 @enduml

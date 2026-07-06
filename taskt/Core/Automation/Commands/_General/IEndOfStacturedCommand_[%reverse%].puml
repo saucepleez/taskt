@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "EndTryCommand" <<sealed>> {
 +RunCommand() : void 
@@ -24,8 +25,7 @@ class "EndIfCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IEndOfStacturedCommand <|.. taskt.Core.Automation.Commands.EndTryCommand
-taskt.Core.Automation.Commands.IEndOfStacturedCommand <|.. taskt.Core.Automation.Commands.EndLoopCommand
-taskt.Core.Automation.Commands.IEndOfStacturedCommand <|.. taskt.Core.Automation.Commands.EndIfCommand
+taskt.Core.Automation.Commands.EndTryCommand ..|> taskt.Core.Automation.Commands.IEndOfStacturedCommand
+taskt.Core.Automation.Commands.EndLoopCommand ..|> taskt.Core.Automation.Commands.IEndOfStacturedCommand
+taskt.Core.Automation.Commands.EndIfCommand ..|> taskt.Core.Automation.Commands.IEndOfStacturedCommand
 @enduml

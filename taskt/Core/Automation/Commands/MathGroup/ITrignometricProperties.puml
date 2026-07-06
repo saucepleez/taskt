@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 Interface "ITrignometricProperties" {
 +{abstract} v_AngleType : String <<get>> <<set>> <<abstract>> 
@@ -17,7 +18,6 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.IMathValueResultProperties <|-- taskt.Core.Automation.Commands.ITrignometricProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IMathValueResultProperties
+taskt.Core.Automation.Commands.ITrignometricProperties --|> taskt.Core.Automation.Commands.IMathValueResultProperties
+taskt.Core.Automation.Commands.IMathValueResultProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

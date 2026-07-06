@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ConvertDataTableToVisualizedTextCommand" <<sealed>> {
 +RunCommand() : void 
@@ -95,15 +96,14 @@ class "GetDataTableRowCountCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableToVisualizedTextCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableToTextCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsDataTableCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsListCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDataTableCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDictionaryCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableToJSONCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.GetDataTableColumnCountCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.GetDataTableColumnListCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.GetDataTableRowCountCommand
+taskt.Core.Automation.Commands.ConvertDataTableToVisualizedTextCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands
+taskt.Core.Automation.Commands.ConvertDataTableToTextCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands
+taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsDataTableCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands
+taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsListCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands
+taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDataTableCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands
+taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDictionaryCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands
+taskt.Core.Automation.Commands.ConvertDataTableToJSONCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands
+taskt.Core.Automation.Commands.GetDataTableColumnCountCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands
+taskt.Core.Automation.Commands.GetDataTableColumnListCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands
+taskt.Core.Automation.Commands.GetDataTableRowCountCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands
 @enduml

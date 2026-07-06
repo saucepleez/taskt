@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 abstract class "ASeleniumGetOneWebElementValuesAsSomethingCommands"{
 +BeforeValidate() : void 
@@ -61,12 +62,11 @@ class "SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetTableValuesAsDataTableCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands
+taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands
+taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetTableValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "CompileCSharpFileCommand" <<sealed>> {
 +RunCommand() : void 
@@ -94,15 +95,14 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands <|-- taskt.Core.Automation.Commands.CompileCSharpFileCommand
-taskt.Core.Automation.Commands.ICanHandleFileName <|.. taskt.Core.Automation.Commands.CompileCSharpFileCommand
-taskt.Core.Automation.Commands.ICanHandleFilePath <|.. taskt.Core.Automation.Commands.CompileCSharpFileCommand
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands
-taskt.Core.Automation.Commands.ICanHandleFileOrFolderName <|-- taskt.Core.Automation.Commands.ICanHandleFileName
-taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath <|-- taskt.Core.Automation.Commands.ICanHandleFilePath
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleFileOrFolderName
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath
+taskt.Core.Automation.Commands.CompileCSharpFileCommand --|> taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands
+taskt.Core.Automation.Commands.CompileCSharpFileCommand ..|> taskt.Core.Automation.Commands.ICanHandleFileName
+taskt.Core.Automation.Commands.CompileCSharpFileCommand ..|> taskt.Core.Automation.Commands.ICanHandleFilePath
+taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.ICanHandleFileName --|> taskt.Core.Automation.Commands.ICanHandleFileOrFolderName
+taskt.Core.Automation.Commands.ICanHandleFilePath --|> taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.ICanHandleFileOrFolderName --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

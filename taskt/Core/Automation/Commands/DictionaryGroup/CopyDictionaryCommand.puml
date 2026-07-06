@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "CopyDictionaryCommand" <<sealed>> {
 +RunCommand() : void 
@@ -85,13 +86,12 @@ Interface "ICanHandleDictionary" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands <|-- taskt.Core.Automation.Commands.CopyDictionaryCommand
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands
-taskt.Core.Automation.Commands.IDictionaryCreateFromDictionary <|.. taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IDictionaryCreateFromDictionary
-taskt.Core.Automation.Commands.ICanHandleDictionary <|-- taskt.Core.Automation.Commands.IDictionaryCreateFromDictionary
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleDictionary
+taskt.Core.Automation.Commands.CopyDictionaryCommand --|> taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands
+taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands ..|> taskt.Core.Automation.Commands.IDictionaryCreateFromDictionary
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IDictionaryCreateFromDictionary --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.IDictionaryCreateFromDictionary --|> taskt.Core.Automation.Commands.ICanHandleDictionary
+taskt.Core.Automation.Commands.ICanHandleDictionary --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

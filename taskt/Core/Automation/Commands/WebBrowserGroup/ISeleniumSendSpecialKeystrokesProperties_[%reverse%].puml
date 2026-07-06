@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" <<sealed>> {
 +RunCommand() : void 
@@ -61,8 +62,7 @@ class "SeleniumBrowserWebElementActionAfterSearchWebElementCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserSendSpecialKeystrokesToWebElementCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand
+taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties
+taskt.Core.Automation.Commands.SeleniumBrowserSendSpecialKeystrokesToWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties
+taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties
 @enduml

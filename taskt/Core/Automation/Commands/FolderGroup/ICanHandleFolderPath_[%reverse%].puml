@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AShowFileFolderDialogCommands"{
 #GetInitialDirectory() : String
@@ -286,43 +287,42 @@ class "RenameFolderCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.ICanHandleFolderPath <|.. taskt.Core.Automation.Commands.AShowFileFolderDialogCommands
-taskt.Core.Automation.Commands.ICanHandleFolderPath <|.. taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
-taskt.Core.Automation.Commands.ICanHandleFolderPath <|-- taskt.Core.Automation.Commands.IFolderPathProperties
-taskt.Core.Automation.Commands.ICanHandleFolderPath <|.. taskt.Core.Automation.Commands.ExtractZipFileCommand
-taskt.Core.Automation.Commands.AShowFileFolderDialogCommands <|-- taskt.Core.Automation.Commands.ShowFolderDialogCommand
-taskt.Core.Automation.Commands.AShowFileFolderDialogCommands <|-- taskt.Core.Automation.Commands.ShowFileDialogCommand
-taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.CopyFileCommand
-taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.MoveFileCommand
-taskt.Core.Automation.Commands.IFolderPathProperties <|.. taskt.Core.Automation.Commands.AFolderFolderPathCommands
-taskt.Core.Automation.Commands.IFolderPathProperties <|-- taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties
-taskt.Core.Automation.Commands.AFolderFolderPathCommands <|-- taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands
-taskt.Core.Automation.Commands.AFolderFolderPathCommands <|-- taskt.Core.Automation.Commands.CreateFolderByPathCommand
-taskt.Core.Automation.Commands.AFolderFolderPathCommands <|-- taskt.Core.Automation.Commands.ExtractionFolderPathCommand
-taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties <|.. taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands
-taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties <|-- taskt.Core.Automation.Commands.IFolderExistsFolderPathBeforeAfterPathResultProperties
-taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties <|-- taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties
-taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands <|-- taskt.Core.Automation.Commands.GetRandomFilePathCommand
-taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands <|-- taskt.Core.Automation.Commands.AFileNumberedFileCommands
-taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands <|-- taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands
-taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands <|-- taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
-taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands <|-- taskt.Core.Automation.Commands.GetFilesPathAsListCommand
-taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands <|-- taskt.Core.Automation.Commands.GetFoldersPathAsListCommand
-taskt.Core.Automation.Commands.IFolderExistsFolderPathBeforeAfterPathResultProperties <|.. taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands
-taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties <|.. taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
-taskt.Core.Automation.Commands.AFileNumberedFileCommands <|-- taskt.Core.Automation.Commands.GetLastExistentNumberedFilePathCommand
-taskt.Core.Automation.Commands.AFileNumberedFileCommands <|-- taskt.Core.Automation.Commands.GetNonExistentFilePathCommand
-taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands <|-- taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands
-taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands <|-- taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands
-taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands <|-- taskt.Core.Automation.Commands.OpenFolderCommand
-taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands <|-- taskt.Core.Automation.Commands.GetRandomFolderPathCommand
-taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands <|-- taskt.Core.Automation.Commands.WaitForFolderToExistCommand
-taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands <|-- taskt.Core.Automation.Commands.CheckFolderExistsCommand
-taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands <|-- taskt.Core.Automation.Commands.CreateFolderCommand
-taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands <|-- taskt.Core.Automation.Commands.DeleteFolderCommand
-taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands <|-- taskt.Core.Automation.Commands.CopyFolderCommand
-taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands <|-- taskt.Core.Automation.Commands.MoveFolderCommand
-taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands <|-- taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand
-taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands <|-- taskt.Core.Automation.Commands.RenameFolderCommand
+taskt.Core.Automation.Commands.AShowFileFolderDialogCommands ..|> taskt.Core.Automation.Commands.ICanHandleFolderPath
+taskt.Core.Automation.Commands.AFileCopyMoveFileCommands ..|> taskt.Core.Automation.Commands.ICanHandleFolderPath
+taskt.Core.Automation.Commands.IFolderPathProperties --|> taskt.Core.Automation.Commands.ICanHandleFolderPath
+taskt.Core.Automation.Commands.ExtractZipFileCommand ..|> taskt.Core.Automation.Commands.ICanHandleFolderPath
+taskt.Core.Automation.Commands.ShowFolderDialogCommand --|> taskt.Core.Automation.Commands.AShowFileFolderDialogCommands
+taskt.Core.Automation.Commands.ShowFileDialogCommand --|> taskt.Core.Automation.Commands.AShowFileFolderDialogCommands
+taskt.Core.Automation.Commands.CopyFileCommand --|> taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
+taskt.Core.Automation.Commands.MoveFileCommand --|> taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
+taskt.Core.Automation.Commands.AFolderFolderPathCommands ..|> taskt.Core.Automation.Commands.IFolderPathProperties
+taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties --|> taskt.Core.Automation.Commands.IFolderPathProperties
+taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands --|> taskt.Core.Automation.Commands.AFolderFolderPathCommands
+taskt.Core.Automation.Commands.CreateFolderByPathCommand --|> taskt.Core.Automation.Commands.AFolderFolderPathCommands
+taskt.Core.Automation.Commands.ExtractionFolderPathCommand --|> taskt.Core.Automation.Commands.AFolderFolderPathCommands
+taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands ..|> taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties
+taskt.Core.Automation.Commands.IFolderExistsFolderPathBeforeAfterPathResultProperties --|> taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties
+taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties --|> taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties
+taskt.Core.Automation.Commands.GetRandomFilePathCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands
+taskt.Core.Automation.Commands.AFileNumberedFileCommands --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands
+taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands
+taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands
+taskt.Core.Automation.Commands.GetFilesPathAsListCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands
+taskt.Core.Automation.Commands.GetFoldersPathAsListCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands
+taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands ..|> taskt.Core.Automation.Commands.IFolderExistsFolderPathBeforeAfterPathResultProperties
+taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands ..|> taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties
+taskt.Core.Automation.Commands.GetLastExistentNumberedFilePathCommand --|> taskt.Core.Automation.Commands.AFileNumberedFileCommands
+taskt.Core.Automation.Commands.GetNonExistentFilePathCommand --|> taskt.Core.Automation.Commands.AFileNumberedFileCommands
+taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands --|> taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands
+taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands --|> taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands
+taskt.Core.Automation.Commands.OpenFolderCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
+taskt.Core.Automation.Commands.GetRandomFolderPathCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
+taskt.Core.Automation.Commands.WaitForFolderToExistCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
+taskt.Core.Automation.Commands.CheckFolderExistsCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
+taskt.Core.Automation.Commands.CreateFolderCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
+taskt.Core.Automation.Commands.DeleteFolderCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
+taskt.Core.Automation.Commands.CopyFolderCommand --|> taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands
+taskt.Core.Automation.Commands.MoveFolderCommand --|> taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands
+taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand --|> taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands
+taskt.Core.Automation.Commands.RenameFolderCommand --|> taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands
 @enduml

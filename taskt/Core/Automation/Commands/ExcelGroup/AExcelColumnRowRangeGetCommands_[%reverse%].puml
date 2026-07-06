@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ExcelGetRangeValuesAsDataTableCommand" <<sealed>> {
 +RunCommand() : void 
@@ -13,6 +14,5 @@ abstract class "AExcelColumnRowRangeGetCommands"{
 }
 }
 
-
-taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand
+taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands
 @enduml

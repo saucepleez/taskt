@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "SplitTextCommand" <<sealed>> {
 +RunCommand() : void 
@@ -74,10 +75,9 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.SplitTextCommand
-taskt.Core.Automation.Commands.ICanHandleList <|.. taskt.Core.Automation.Commands.SplitTextCommand
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleList
+taskt.Core.Automation.Commands.SplitTextCommand --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.SplitTextCommand ..|> taskt.Core.Automation.Commands.ICanHandleList
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.ICanHandleList --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

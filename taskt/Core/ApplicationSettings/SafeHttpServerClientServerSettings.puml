@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core"{
 class "SafeHttpServerClientServerSettings" {
 +HTTPGuid : Guid <<get>> <<set>> 
@@ -33,7 +34,6 @@ Interface "IServerSettings" {
 }
 }
 
-
-taskt.Core.SafeServerSettings <|-- taskt.Core.SafeHttpServerClientServerSettings
-taskt.Core.IServerSettings <|.. taskt.Core.SafeServerSettings
+taskt.Core.SafeHttpServerClientServerSettings --|> taskt.Core.SafeServerSettings
+taskt.Core.SafeServerSettings ..|> taskt.Core.IServerSettings
 @enduml

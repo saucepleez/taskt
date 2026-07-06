@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "CatchExceptionCommand" <<sealed>> {
 +RunCommand() : void 
@@ -25,8 +26,7 @@ class "ElseCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IDelimitersOfStructuredCommands <|.. taskt.Core.Automation.Commands.CatchExceptionCommand
-taskt.Core.Automation.Commands.IDelimitersOfStructuredCommands <|.. taskt.Core.Automation.Commands.FinallyCommand
-taskt.Core.Automation.Commands.IDelimitersOfStructuredCommands <|.. taskt.Core.Automation.Commands.ElseCommand
+taskt.Core.Automation.Commands.CatchExceptionCommand ..|> taskt.Core.Automation.Commands.IDelimitersOfStructuredCommands
+taskt.Core.Automation.Commands.FinallyCommand ..|> taskt.Core.Automation.Commands.IDelimitersOfStructuredCommands
+taskt.Core.Automation.Commands.ElseCommand ..|> taskt.Core.Automation.Commands.IDelimitersOfStructuredCommands
 @enduml

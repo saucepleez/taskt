@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core"{
 class "SafeServerSettings" {
 +ServerConnectionEnabled : Boolean <<get>> 
@@ -26,6 +27,5 @@ Interface "IServerSettings" {
 }
 }
 
-
-taskt.Core.IServerSettings <|.. taskt.Core.SafeServerSettings
+taskt.Core.SafeServerSettings ..|> taskt.Core.IServerSettings
 @enduml

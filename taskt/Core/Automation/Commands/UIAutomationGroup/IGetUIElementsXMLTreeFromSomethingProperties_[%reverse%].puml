@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand" <<sealed>> {
 +RunCommand() : void 
@@ -35,8 +36,7 @@ class "UIAutomationSearchUIElementsTreeXMLFromUIElementCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromUIElementCommand
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromUIElementCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties
 @enduml

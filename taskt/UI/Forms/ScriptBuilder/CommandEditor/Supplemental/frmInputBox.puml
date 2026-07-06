@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
 class "frmInputBox" {
 -frmInputBox_Load() : void 
@@ -219,7 +220,6 @@ class "Form" {
 }
 }
 
-
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInputBox
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInputBox
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInputBox --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInputBox --|> System.Windows.Forms.Form
 @enduml

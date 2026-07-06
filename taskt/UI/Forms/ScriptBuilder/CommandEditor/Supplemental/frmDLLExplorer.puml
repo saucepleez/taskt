@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
 class "frmDLLExplorer" {
 -frmDLLExplorer_Load() : void 
@@ -239,8 +240,7 @@ class "Form" {
 }
 }
 
-
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmDLLExplorer
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmDLLExplorer
-System.Windows.Forms.Form <|-- taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmDLLExplorer --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmDLLExplorer --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.UIForm --|> System.Windows.Forms.Form
 @enduml

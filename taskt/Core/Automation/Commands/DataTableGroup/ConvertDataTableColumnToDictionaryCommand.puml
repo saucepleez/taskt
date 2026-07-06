@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ConvertDataTableColumnToDictionaryCommand" <<sealed>> {
 +RunCommand() : void 
@@ -125,24 +126,23 @@ Interface "ICanHandleDataTable" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand
-taskt.Core.Automation.Commands.IDictionaryResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand
-taskt.Core.Automation.Commands.ADataTableColumnCommands <|-- taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
-taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
-taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.IDictionaryResultProperties
-taskt.Core.Automation.Commands.ICanHandleDictionary <|-- taskt.Core.Automation.Commands.IDictionaryResultProperties
-taskt.Core.Automation.Commands.ADataTableInputDataTableCommands <|-- taskt.Core.Automation.Commands.ADataTableColumnCommands
-taskt.Core.Automation.Commands.IDataTableColumnProperties <|.. taskt.Core.Automation.Commands.ADataTableColumnCommands
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleDictionary
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.ADataTableInputDataTableCommands
-taskt.Core.Automation.Commands.IDataTableProperties <|.. taskt.Core.Automation.Commands.ADataTableInputDataTableCommands
-taskt.Core.Automation.Commands.IDataTableProperties <|-- taskt.Core.Automation.Commands.IDataTableColumnProperties
-taskt.Core.Automation.Commands.IDataTableColumnPositionProperties <|-- taskt.Core.Automation.Commands.IDataTableColumnProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICanHandleDataTable <|-- taskt.Core.Automation.Commands.IDataTableProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IDataTableProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IDataTableColumnPositionProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleDataTable
+taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
+taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand ..|> taskt.Core.Automation.Commands.IDictionaryResultProperties
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands --|> taskt.Core.Automation.Commands.ADataTableColumnCommands
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands ..|> taskt.Core.Automation.Commands.IResultProperties
+taskt.Core.Automation.Commands.IDictionaryResultProperties --|> taskt.Core.Automation.Commands.IResultProperties
+taskt.Core.Automation.Commands.IDictionaryResultProperties --|> taskt.Core.Automation.Commands.ICanHandleDictionary
+taskt.Core.Automation.Commands.ADataTableColumnCommands --|> taskt.Core.Automation.Commands.ADataTableInputDataTableCommands
+taskt.Core.Automation.Commands.ADataTableColumnCommands ..|> taskt.Core.Automation.Commands.IDataTableColumnProperties
+taskt.Core.Automation.Commands.ICanHandleDictionary --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ADataTableInputDataTableCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.ADataTableInputDataTableCommands ..|> taskt.Core.Automation.Commands.IDataTableProperties
+taskt.Core.Automation.Commands.IDataTableColumnProperties --|> taskt.Core.Automation.Commands.IDataTableProperties
+taskt.Core.Automation.Commands.IDataTableColumnProperties --|> taskt.Core.Automation.Commands.IDataTableColumnPositionProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IDataTableProperties --|> taskt.Core.Automation.Commands.ICanHandleDataTable
+taskt.Core.Automation.Commands.IDataTableProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.IDataTableColumnPositionProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICanHandleDataTable --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

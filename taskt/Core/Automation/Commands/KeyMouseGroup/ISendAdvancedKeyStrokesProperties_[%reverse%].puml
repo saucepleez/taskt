@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "SendAdvancedKeyStrokesFromWindowHandleCommand" <<sealed>> {
 +RunCommand() : void 
@@ -34,7 +35,6 @@ class "SendAdvancedKeyStrokesCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties <|.. taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand
-taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties <|.. taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand
+taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties
+taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties
 @enduml

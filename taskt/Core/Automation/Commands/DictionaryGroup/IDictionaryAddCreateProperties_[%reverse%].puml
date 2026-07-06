@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "ADictionaryAddCreateCommands"{
 +BeforeValidate() : void 
@@ -27,8 +28,7 @@ class "CreateDictionaryCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IDictionaryAddCreateProperties <|.. taskt.Core.Automation.Commands.ADictionaryAddCreateCommands
-taskt.Core.Automation.Commands.ADictionaryAddCreateCommands <|-- taskt.Core.Automation.Commands.AddDictionaryItemCommand
-taskt.Core.Automation.Commands.ADictionaryAddCreateCommands <|-- taskt.Core.Automation.Commands.CreateDictionaryCommand
+taskt.Core.Automation.Commands.ADictionaryAddCreateCommands ..|> taskt.Core.Automation.Commands.IDictionaryAddCreateProperties
+taskt.Core.Automation.Commands.AddDictionaryItemCommand --|> taskt.Core.Automation.Commands.ADictionaryAddCreateCommands
+taskt.Core.Automation.Commands.CreateDictionaryCommand --|> taskt.Core.Automation.Commands.ADictionaryAddCreateCommands
 @enduml

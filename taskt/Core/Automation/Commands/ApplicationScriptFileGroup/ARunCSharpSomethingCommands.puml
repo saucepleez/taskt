@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "ARunCSharpSomethingCommands"{
 +v_Arguments : String <<get>> <<set>> 
@@ -70,9 +71,8 @@ Interface "ICommandIDProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands <|-- taskt.Core.Automation.Commands.ARunCSharpSomethingCommands
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.ARunCSharpSomethingCommands --|> taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands
+taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
 @enduml

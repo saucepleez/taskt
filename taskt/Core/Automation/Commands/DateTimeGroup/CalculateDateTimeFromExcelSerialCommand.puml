@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "CalculateDateTimeFromExcelSerialCommand" <<sealed>> {
 +RunCommand() : void 
@@ -100,15 +101,14 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ACalculateDateTimeCommands <|-- taskt.Core.Automation.Commands.CalculateDateTimeFromExcelSerialCommand
-taskt.Core.Automation.Commands.ADateTimeConvertCommands <|-- taskt.Core.Automation.Commands.ACalculateDateTimeCommands
-taskt.Core.Automation.Commands.IDateTimeResultProperties <|.. taskt.Core.Automation.Commands.ACalculateDateTimeCommands
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.ADateTimeConvertCommands
-taskt.Core.Automation.Commands.IDateTimeConvertProperties <|.. taskt.Core.Automation.Commands.ADateTimeConvertCommands
-taskt.Core.Automation.Commands.ICanHandleDateTime <|-- taskt.Core.Automation.Commands.IDateTimeResultProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICanHandleDateTime <|-- taskt.Core.Automation.Commands.IDateTimeConvertProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleDateTime
+taskt.Core.Automation.Commands.CalculateDateTimeFromExcelSerialCommand --|> taskt.Core.Automation.Commands.ACalculateDateTimeCommands
+taskt.Core.Automation.Commands.ACalculateDateTimeCommands --|> taskt.Core.Automation.Commands.ADateTimeConvertCommands
+taskt.Core.Automation.Commands.ACalculateDateTimeCommands ..|> taskt.Core.Automation.Commands.IDateTimeResultProperties
+taskt.Core.Automation.Commands.ADateTimeConvertCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.ADateTimeConvertCommands ..|> taskt.Core.Automation.Commands.IDateTimeConvertProperties
+taskt.Core.Automation.Commands.IDateTimeResultProperties --|> taskt.Core.Automation.Commands.ICanHandleDateTime
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IDateTimeConvertProperties --|> taskt.Core.Automation.Commands.ICanHandleDateTime
+taskt.Core.Automation.Commands.ICanHandleDateTime --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

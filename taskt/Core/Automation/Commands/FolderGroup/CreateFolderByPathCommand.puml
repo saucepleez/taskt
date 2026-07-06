@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "CreateFolderByPathCommand" <<sealed>> {
 +RunCommand() : void 
@@ -88,13 +89,12 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.AFolderFolderPathCommands <|-- taskt.Core.Automation.Commands.CreateFolderByPathCommand
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AFolderFolderPathCommands
-taskt.Core.Automation.Commands.IFolderPathProperties <|.. taskt.Core.Automation.Commands.AFolderFolderPathCommands
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICanHandleFolderPath <|-- taskt.Core.Automation.Commands.IFolderPathProperties
-taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath <|-- taskt.Core.Automation.Commands.ICanHandleFolderPath
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath
+taskt.Core.Automation.Commands.CreateFolderByPathCommand --|> taskt.Core.Automation.Commands.AFolderFolderPathCommands
+taskt.Core.Automation.Commands.AFolderFolderPathCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AFolderFolderPathCommands ..|> taskt.Core.Automation.Commands.IFolderPathProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IFolderPathProperties --|> taskt.Core.Automation.Commands.ICanHandleFolderPath
+taskt.Core.Automation.Commands.ICanHandleFolderPath --|> taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath
+taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

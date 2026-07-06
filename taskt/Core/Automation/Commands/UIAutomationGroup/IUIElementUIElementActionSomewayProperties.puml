@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 Interface "IUIElementUIElementActionSomewayProperties" {
 +{abstract} v_AutomationType : String <<get>> <<set>> <<abstract>> 
@@ -17,7 +18,6 @@ Interface "IHaveDataTableElements" {
 }
 }
 
-
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties
-taskt.Core.Automation.Commands.IHaveDataTableElements <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties --|> taskt.Core.Automation.Commands.IHaveDataTableElements
 @enduml

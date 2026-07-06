@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
 class "frmSequenceRecorder" {
 -btnStartRecording_Click() : void 
@@ -255,8 +256,7 @@ class "Form" {
 }
 }
 
-
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSequenceRecorder
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSequenceRecorder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmSequenceRecorder --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmSequenceRecorder --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.UIForm --|> System.Windows.Forms.Form
 @enduml

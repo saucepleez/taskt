@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "UIAutomationSearchUIElementFromWindowNameByXPathCommand" <<sealed>> {
 +RunCommand() : void 
@@ -198,36 +199,35 @@ Interface "IUIElementWindowResultsFromUIElementProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameByXPathCommand
-taskt.Core.Automation.Commands.IResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameByXPathCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands
-taskt.Core.Automation.Commands.IOneWindowNameProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSearchUIElementFromWindowSomethingByAnywayProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchXPathProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands
-taskt.Core.Automation.Commands.IWindowNameCoreProperties <|-- taskt.Core.Automation.Commands.IOneWindowNameProperties
-taskt.Core.Automation.Commands.ISelectionMethodProperties <|-- taskt.Core.Automation.Commands.IOneWindowNameProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSearchUIElementFromWindowSomethingByAnywayProperties
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByXPathCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchXPathProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByXPathCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchXPathProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchXPathProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchXPathProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties <|-- taskt.Core.Automation.Commands.IWindowNameCoreProperties
-taskt.Core.Automation.Commands.ICanHandleWindowName <|-- taskt.Core.Automation.Commands.IWindowNameCoreProperties
-taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties <|-- taskt.Core.Automation.Commands.IWindowNameCoreProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchXPathProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleWindowName
-taskt.Core.Automation.Commands.ICheckProperties <|-- taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICheckProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameByXPathCommand ..|> taskt.Core.Automation.Commands.IResultProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands ..|> taskt.Core.Automation.Commands.IOneWindowNameProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSearchUIElementFromWindowSomethingByAnywayProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchXPathProperties
+taskt.Core.Automation.Commands.IOneWindowNameProperties --|> taskt.Core.Automation.Commands.IWindowNameCoreProperties
+taskt.Core.Automation.Commands.IOneWindowNameProperties --|> taskt.Core.Automation.Commands.ISelectionMethodProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSearchUIElementFromWindowSomethingByAnywayProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByXPathCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByXPathCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchXPathProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchXPathProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchXPathProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchXPathProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties
+taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.ICanHandleWindowName
+taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchXPathProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.ICanHandleWindowName --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties --|> taskt.Core.Automation.Commands.ICheckProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICheckProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "UIAutomationGetTextsFromTableUIElementAsDataTableCommand" <<sealed>> {
 +RunCommand() : void 
@@ -176,27 +177,26 @@ class "GetProcessNamesFromWindowNamesAsDataTableCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationGetTextsFromTableUIElementAsDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.GetJSONValuesAsDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertColorCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableColumnToDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableRowToDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertDictionaryToDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertJSONToDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertListToDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetTableValuesAsDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValuesAsDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDataTableCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsDataTableCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsDataTableCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsDataTableCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsDataTableCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.UIAutomationGetTextsFromTableUIElementAsDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.GetJSONValuesAsDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.ConvertColorCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.ConvertDataTableColumnToDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.ConvertDataTableRowToDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.ConvertDictionaryToDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.ConvertJSONToDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.ConvertListToDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetTableValuesAsDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValuesAsDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsDataTableCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
+taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsDataTableCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
+taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsDataTableCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
+taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsDataTableCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
+taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsDataTableCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
 @enduml

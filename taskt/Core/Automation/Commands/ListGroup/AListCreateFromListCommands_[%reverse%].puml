@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "GetListWithDuplicateItemsRemoved" <<sealed>> {
 +RunCommand() : void 
@@ -61,11 +62,10 @@ class "CopyListCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AListCreateFromListCommands <|-- taskt.Core.Automation.Commands.GetListWithDuplicateItemsRemoved
-taskt.Core.Automation.Commands.AListCreateFromListCommands <|-- taskt.Core.Automation.Commands.SliceListCommand
-taskt.Core.Automation.Commands.AListCreateFromListCommands <|-- taskt.Core.Automation.Commands.FilterListCommand
-taskt.Core.Automation.Commands.AListCreateFromListCommands <|-- taskt.Core.Automation.Commands.SortListCommand
-taskt.Core.Automation.Commands.AListCreateFromListCommands <|-- taskt.Core.Automation.Commands.ReverseListCommand
-taskt.Core.Automation.Commands.AListCreateFromListCommands <|-- taskt.Core.Automation.Commands.CopyListCommand
+taskt.Core.Automation.Commands.GetListWithDuplicateItemsRemoved --|> taskt.Core.Automation.Commands.AListCreateFromListCommands
+taskt.Core.Automation.Commands.SliceListCommand --|> taskt.Core.Automation.Commands.AListCreateFromListCommands
+taskt.Core.Automation.Commands.FilterListCommand --|> taskt.Core.Automation.Commands.AListCreateFromListCommands
+taskt.Core.Automation.Commands.SortListCommand --|> taskt.Core.Automation.Commands.AListCreateFromListCommands
+taskt.Core.Automation.Commands.ReverseListCommand --|> taskt.Core.Automation.Commands.AListCreateFromListCommands
+taskt.Core.Automation.Commands.CopyListCommand --|> taskt.Core.Automation.Commands.AListCreateFromListCommands
 @enduml

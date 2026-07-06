@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AExcelColumnRowRangeCommands"{
 +v_ColumnType : String <<get>> <<set>> 
@@ -43,11 +44,10 @@ class "ExcelGetRangeValuesAsDataTableCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IExcelColumnRowRangeProperties <|.. taskt.Core.Automation.Commands.AExcelColumnRowRangeCommands
-taskt.Core.Automation.Commands.IExcelColumnRowRangeProperties <|-- taskt.Core.Automation.Commands.IExcelColumnRowRangeGetProperties
-taskt.Core.Automation.Commands.IExcelColumnRowRangeProperties <|-- taskt.Core.Automation.Commands.IExcelColumnRowRangeSetProperties
-taskt.Core.Automation.Commands.AExcelColumnRowRangeCommands <|-- taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands
-taskt.Core.Automation.Commands.IExcelColumnRowRangeGetProperties <|.. taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands
-taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand
+taskt.Core.Automation.Commands.AExcelColumnRowRangeCommands ..|> taskt.Core.Automation.Commands.IExcelColumnRowRangeProperties
+taskt.Core.Automation.Commands.IExcelColumnRowRangeGetProperties --|> taskt.Core.Automation.Commands.IExcelColumnRowRangeProperties
+taskt.Core.Automation.Commands.IExcelColumnRowRangeSetProperties --|> taskt.Core.Automation.Commands.IExcelColumnRowRangeProperties
+taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands --|> taskt.Core.Automation.Commands.AExcelColumnRowRangeCommands
+taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands ..|> taskt.Core.Automation.Commands.IExcelColumnRowRangeGetProperties
+taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "EnterShortcutKeyFromWindowHandleCommand" <<sealed>> {
 +RunCommand() : void 
@@ -27,7 +28,6 @@ class "EnterShortcutKeyCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties <|.. taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand
-taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties <|.. taskt.Core.Automation.Commands.EnterShortcutKeyCommand
+taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties
+taskt.Core.Automation.Commands.EnterShortcutKeyCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties
 @enduml

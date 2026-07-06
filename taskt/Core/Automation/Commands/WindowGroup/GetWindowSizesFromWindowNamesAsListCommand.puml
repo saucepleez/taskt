@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "GetWindowSizesFromWindowNamesAsListCommand" <<sealed>> {
 +RunCommand() : void 
@@ -159,29 +160,28 @@ Interface "ICheckProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand
-taskt.Core.Automation.Commands.IWindowSizeProperties <|.. taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand
-taskt.Core.Automation.Commands.AWindowNamesCommands <|-- taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
-taskt.Core.Automation.Commands.ICanHandleList <|.. taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
-taskt.Core.Automation.Commands.ISizeProperties <|-- taskt.Core.Automation.Commands.IWindowSizeProperties
-taskt.Core.Automation.Commands.IWindowRECTProperties <|-- taskt.Core.Automation.Commands.IWindowSizeProperties
-taskt.Core.Automation.Commands.AWindowNameCoreCommands <|-- taskt.Core.Automation.Commands.AWindowNamesCommands
-taskt.Core.Automation.Commands.IWindowNamesProperties <|.. taskt.Core.Automation.Commands.AWindowNamesCommands
-taskt.Core.Automation.Commands.ICanHandleList <|.. taskt.Core.Automation.Commands.AWindowNamesCommands
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleList
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ISizeProperties
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AWindowNameCoreCommands
-taskt.Core.Automation.Commands.IWindowNameCoreProperties <|.. taskt.Core.Automation.Commands.AWindowNameCoreCommands
-taskt.Core.Automation.Commands.IWindowNameCoreProperties <|-- taskt.Core.Automation.Commands.IWindowNamesProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties <|-- taskt.Core.Automation.Commands.IWindowNameCoreProperties
-taskt.Core.Automation.Commands.ICanHandleWindowName <|-- taskt.Core.Automation.Commands.IWindowNameCoreProperties
-taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties <|-- taskt.Core.Automation.Commands.IWindowNameCoreProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleWindowName
-taskt.Core.Automation.Commands.ICheckProperties <|-- taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICheckProperties
+taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
+taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand ..|> taskt.Core.Automation.Commands.IWindowSizeProperties
+taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands --|> taskt.Core.Automation.Commands.AWindowNamesCommands
+taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands ..|> taskt.Core.Automation.Commands.ICanHandleList
+taskt.Core.Automation.Commands.IWindowSizeProperties --|> taskt.Core.Automation.Commands.ISizeProperties
+taskt.Core.Automation.Commands.IWindowSizeProperties --|> taskt.Core.Automation.Commands.IWindowRECTProperties
+taskt.Core.Automation.Commands.AWindowNamesCommands --|> taskt.Core.Automation.Commands.AWindowNameCoreCommands
+taskt.Core.Automation.Commands.AWindowNamesCommands ..|> taskt.Core.Automation.Commands.IWindowNamesProperties
+taskt.Core.Automation.Commands.AWindowNamesCommands ..|> taskt.Core.Automation.Commands.ICanHandleList
+taskt.Core.Automation.Commands.ICanHandleList --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ISizeProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.AWindowNameCoreCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AWindowNameCoreCommands ..|> taskt.Core.Automation.Commands.IWindowNameCoreProperties
+taskt.Core.Automation.Commands.IWindowNamesProperties --|> taskt.Core.Automation.Commands.IWindowNameCoreProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.ICanHandleWindowName
+taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.ICanHandleWindowName --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties --|> taskt.Core.Automation.Commands.ICheckProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICheckProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

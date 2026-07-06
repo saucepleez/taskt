@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AInverseTrignometricCommands"{
 +v_AngleType : String <<get>> <<set>> 
@@ -24,8 +25,7 @@ class "GetArcsinCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IInverseTrignometricProperties <|.. taskt.Core.Automation.Commands.AInverseTrignometricCommands
-taskt.Core.Automation.Commands.AInverseTrignometricCommands <|-- taskt.Core.Automation.Commands.GetArccosCommand
-taskt.Core.Automation.Commands.AInverseTrignometricCommands <|-- taskt.Core.Automation.Commands.GetArcsinCommand
+taskt.Core.Automation.Commands.AInverseTrignometricCommands ..|> taskt.Core.Automation.Commands.IInverseTrignometricProperties
+taskt.Core.Automation.Commands.GetArccosCommand --|> taskt.Core.Automation.Commands.AInverseTrignometricCommands
+taskt.Core.Automation.Commands.GetArcsinCommand --|> taskt.Core.Automation.Commands.AInverseTrignometricCommands
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 Interface "IUIElementSearchUIElementFromWindowSomethingByAnywayProperties" {
 }
@@ -15,7 +16,6 @@ Interface "ICanHandleUIElement" {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSearchUIElementFromWindowSomethingByAnywayProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSearchUIElementFromWindowSomethingByAnywayProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement
 @enduml

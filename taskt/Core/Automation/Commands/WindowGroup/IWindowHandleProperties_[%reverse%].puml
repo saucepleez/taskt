@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 abstract class "ADescendantsSearchUIElementsFromWindowHandleByXPathCommands"{
 +v_WindowHandle : String <<get>> <<set>> 
@@ -246,33 +247,32 @@ class "SetWindowStateByWindowHandleCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IWindowHandleProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands
-taskt.Core.Automation.Commands.IWindowHandleProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands
-taskt.Core.Automation.Commands.IWindowHandleProperties <|.. taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand
-taskt.Core.Automation.Commands.IWindowHandleProperties <|.. taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand
-taskt.Core.Automation.Commands.IWindowHandleProperties <|-- taskt.Core.Automation.Commands.IWindowHandleActionPropeties
-taskt.Core.Automation.Commands.IWindowHandleProperties <|.. taskt.Core.Automation.Commands.AWindowHandleCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleByXPathCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromWindowHandleCommand
-taskt.Core.Automation.Commands.IWindowHandleActionPropeties <|.. taskt.Core.Automation.Commands.AWindowHandleActionCommands
-taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetWindowUIElementFromWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.AWindowHandleActionCommands
-taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.ActivateWindowByWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.CheckWindowHandleExistsCommand
-taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.GetProcessNameFromWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.GetWindowNameFromWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.GetWindowPositionFromWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.GetWindowSizeFromWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleCommands <|-- taskt.Core.Automation.Commands.GetWindowStateFromWindowHandleCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.CloseWindowByWindowHandle
-taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.MoveWindowByWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand
-taskt.Core.Automation.Commands.AWindowHandleActionCommands <|-- taskt.Core.Automation.Commands.SetWindowStateByWindowHandleCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands ..|> taskt.Core.Automation.Commands.IWindowHandleProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands ..|> taskt.Core.Automation.Commands.IWindowHandleProperties
+taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.IWindowHandleProperties
+taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.IWindowHandleProperties
+taskt.Core.Automation.Commands.IWindowHandleActionPropeties --|> taskt.Core.Automation.Commands.IWindowHandleProperties
+taskt.Core.Automation.Commands.AWindowHandleCommands ..|> taskt.Core.Automation.Commands.IWindowHandleProperties
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromWindowHandleCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByTreeWalkerCommands
+taskt.Core.Automation.Commands.AWindowHandleActionCommands ..|> taskt.Core.Automation.Commands.IWindowHandleActionPropeties
+taskt.Core.Automation.Commands.UIAutomationGetWindowUIElementFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleCommands
+taskt.Core.Automation.Commands.AWindowHandleActionCommands --|> taskt.Core.Automation.Commands.AWindowHandleCommands
+taskt.Core.Automation.Commands.ActivateWindowByWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleCommands
+taskt.Core.Automation.Commands.CheckWindowHandleExistsCommand --|> taskt.Core.Automation.Commands.AWindowHandleCommands
+taskt.Core.Automation.Commands.GetProcessNameFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleCommands
+taskt.Core.Automation.Commands.GetWindowNameFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleCommands
+taskt.Core.Automation.Commands.GetWindowPositionFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleCommands
+taskt.Core.Automation.Commands.GetWindowSizeFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleCommands
+taskt.Core.Automation.Commands.GetWindowStateFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands
+taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.CloseWindowByWindowHandle --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.MoveWindowByWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.SetWindowStateByWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
 @enduml

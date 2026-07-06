@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "FilterDataTableColumnByRowValueCommand" <<sealed>> {
 +RunCommand() : void 
@@ -66,9 +67,8 @@ class "FilterListCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IFilterValueProperties <|.. taskt.Core.Automation.Commands.FilterDataTableColumnByRowValueCommand
-taskt.Core.Automation.Commands.IFilterValueProperties <|.. taskt.Core.Automation.Commands.FilterDataTableRowByColumnValueCommand
-taskt.Core.Automation.Commands.IFilterValueProperties <|.. taskt.Core.Automation.Commands.FilterDictionaryCommand
-taskt.Core.Automation.Commands.IFilterValueProperties <|.. taskt.Core.Automation.Commands.FilterListCommand
+taskt.Core.Automation.Commands.FilterDataTableColumnByRowValueCommand ..|> taskt.Core.Automation.Commands.IFilterValueProperties
+taskt.Core.Automation.Commands.FilterDataTableRowByColumnValueCommand ..|> taskt.Core.Automation.Commands.IFilterValueProperties
+taskt.Core.Automation.Commands.FilterDictionaryCommand ..|> taskt.Core.Automation.Commands.IFilterValueProperties
+taskt.Core.Automation.Commands.FilterListCommand ..|> taskt.Core.Automation.Commands.IFilterValueProperties
 @enduml

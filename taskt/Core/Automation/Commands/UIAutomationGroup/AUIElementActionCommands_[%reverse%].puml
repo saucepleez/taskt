@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "UIAutomationScrollPercentUIElementCommand" <<sealed>> {
 +RunCommand() : void 
@@ -71,13 +72,12 @@ class "UIAutomationSetTextToUIElementCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationScrollPercentUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationSetSelectedStateToUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationClickUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationExpandCollapseItemsInUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationScrollUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationSelectItemInUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationSelectUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationSetTextToUIElementCommand
+taskt.Core.Automation.Commands.UIAutomationScrollPercentUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
+taskt.Core.Automation.Commands.UIAutomationSetSelectedStateToUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
+taskt.Core.Automation.Commands.UIAutomationClickUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
+taskt.Core.Automation.Commands.UIAutomationExpandCollapseItemsInUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
+taskt.Core.Automation.Commands.UIAutomationScrollUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
+taskt.Core.Automation.Commands.UIAutomationSelectItemInUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
+taskt.Core.Automation.Commands.UIAutomationSelectUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
+taskt.Core.Automation.Commands.UIAutomationSetTextToUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
 @enduml

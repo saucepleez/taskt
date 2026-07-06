@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 Interface "IDataTableColumnProperties" {
 }
@@ -27,11 +28,10 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.IDataTableProperties <|-- taskt.Core.Automation.Commands.IDataTableColumnProperties
-taskt.Core.Automation.Commands.IDataTableColumnPositionProperties <|-- taskt.Core.Automation.Commands.IDataTableColumnProperties
-taskt.Core.Automation.Commands.ICanHandleDataTable <|-- taskt.Core.Automation.Commands.IDataTableProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IDataTableProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IDataTableColumnPositionProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleDataTable
+taskt.Core.Automation.Commands.IDataTableColumnProperties --|> taskt.Core.Automation.Commands.IDataTableProperties
+taskt.Core.Automation.Commands.IDataTableColumnProperties --|> taskt.Core.Automation.Commands.IDataTableColumnPositionProperties
+taskt.Core.Automation.Commands.IDataTableProperties --|> taskt.Core.Automation.Commands.ICanHandleDataTable
+taskt.Core.Automation.Commands.IDataTableProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.IDataTableColumnPositionProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICanHandleDataTable --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

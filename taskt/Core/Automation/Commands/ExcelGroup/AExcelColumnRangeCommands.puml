@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AExcelColumnRangeCommands"{
 +v_ColumnType : String <<get>> <<set>> 
@@ -106,17 +107,16 @@ Interface "IExcelValueTypeProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.AExcelInstanceCommands <|-- taskt.Core.Automation.Commands.AExcelColumnRangeCommands
-taskt.Core.Automation.Commands.IExcelColumnRangeProperties <|.. taskt.Core.Automation.Commands.AExcelColumnRangeCommands
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AExcelInstanceCommands
-taskt.Core.Automation.Commands.IExcelInstanceProperties <|.. taskt.Core.Automation.Commands.AExcelInstanceCommands
-taskt.Core.Automation.Commands.IExcelRCRangeProperties <|-- taskt.Core.Automation.Commands.IExcelColumnRangeProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IExcelInstanceProperties
-taskt.Core.Automation.Commands.IExcelInstanceProperties <|-- taskt.Core.Automation.Commands.IExcelRCRangeProperties
-taskt.Core.Automation.Commands.IExcelRCValueTypeProperties <|-- taskt.Core.Automation.Commands.IExcelRCRangeProperties
-taskt.Core.Automation.Commands.IExcelValueTypeProperties <|-- taskt.Core.Automation.Commands.IExcelRCValueTypeProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IExcelValueTypeProperties
+taskt.Core.Automation.Commands.AExcelColumnRangeCommands --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.AExcelColumnRangeCommands ..|> taskt.Core.Automation.Commands.IExcelColumnRangeProperties
+taskt.Core.Automation.Commands.AExcelInstanceCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AExcelInstanceCommands ..|> taskt.Core.Automation.Commands.IExcelInstanceProperties
+taskt.Core.Automation.Commands.IExcelColumnRangeProperties --|> taskt.Core.Automation.Commands.IExcelRCRangeProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IExcelInstanceProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.IExcelRCRangeProperties --|> taskt.Core.Automation.Commands.IExcelInstanceProperties
+taskt.Core.Automation.Commands.IExcelRCRangeProperties --|> taskt.Core.Automation.Commands.IExcelRCValueTypeProperties
+taskt.Core.Automation.Commands.IExcelRCValueTypeProperties --|> taskt.Core.Automation.Commands.IExcelValueTypeProperties
+taskt.Core.Automation.Commands.IExcelValueTypeProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

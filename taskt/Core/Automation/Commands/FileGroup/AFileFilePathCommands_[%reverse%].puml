@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AFileExistsFilePathCommands"{
 +v_WaitTimeForFile : String <<get>> <<set>> 
@@ -124,20 +125,19 @@ class "RenameFileCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AFileFilePathCommands <|-- taskt.Core.Automation.Commands.AFileExistsFilePathCommands
-taskt.Core.Automation.Commands.AFileFilePathCommands <|-- taskt.Core.Automation.Commands.ExtractionFilePathCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathCommands <|-- taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands
-taskt.Core.Automation.Commands.AFileExistsFilePathCommands <|-- taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
-taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands <|-- taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
-taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands <|-- taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.OpenFileCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.GetFileInformationCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.CheckFileExistsCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.DeleteFileCommand
-taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands <|-- taskt.Core.Automation.Commands.WaitForFileToExistCommand
-taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.CopyFileCommand
-taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.MoveFileCommand
-taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands <|-- taskt.Core.Automation.Commands.CopyFileToSameFolderCommand
-taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands <|-- taskt.Core.Automation.Commands.RenameFileCommand
+taskt.Core.Automation.Commands.AFileExistsFilePathCommands --|> taskt.Core.Automation.Commands.AFileFilePathCommands
+taskt.Core.Automation.Commands.ExtractionFilePathCommand --|> taskt.Core.Automation.Commands.AFileFilePathCommands
+taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands --|> taskt.Core.Automation.Commands.AFileExistsFilePathCommands
+taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands --|> taskt.Core.Automation.Commands.AFileExistsFilePathCommands
+taskt.Core.Automation.Commands.AFileCopyMoveFileCommands --|> taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands
+taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands --|> taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands
+taskt.Core.Automation.Commands.OpenFileCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.GetFileInformationCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.CheckFileExistsCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.DeleteFileCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.WaitForFileToExistCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.CopyFileCommand --|> taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
+taskt.Core.Automation.Commands.MoveFileCommand --|> taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
+taskt.Core.Automation.Commands.CopyFileToSameFolderCommand --|> taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
+taskt.Core.Automation.Commands.RenameFileCommand --|> taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
 @enduml

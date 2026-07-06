@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AFileCopyMoveFileCommands"{
 #CreateActionFunc() : Func
@@ -55,11 +56,10 @@ class "RenameFileCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands <|-- taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
-taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands <|-- taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
-taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.CopyFileCommand
-taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.MoveFileCommand
-taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands <|-- taskt.Core.Automation.Commands.CopyFileToSameFolderCommand
-taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands <|-- taskt.Core.Automation.Commands.RenameFileCommand
+taskt.Core.Automation.Commands.AFileCopyMoveFileCommands --|> taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands
+taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands --|> taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands
+taskt.Core.Automation.Commands.CopyFileCommand --|> taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
+taskt.Core.Automation.Commands.MoveFileCommand --|> taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
+taskt.Core.Automation.Commands.CopyFileToSameFolderCommand --|> taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
+taskt.Core.Automation.Commands.RenameFileCommand --|> taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
 @enduml

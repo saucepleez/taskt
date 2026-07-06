@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.ScriptBuilder"{
 class "frmScriptBuilder" {
 -autoSaveTimer_Tick() : void 
@@ -660,26 +661,25 @@ class "Form" {
 }
 }
 
-
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.frmScriptBuilder --|> System.Windows.Forms.Form
 @enduml

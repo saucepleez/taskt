@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core"{
 class "SafeApplicationSettings" {
 +GetClientSettings() : SafeClientSettings
@@ -23,6 +24,5 @@ Interface "IApplicationSettings" {
 }
 }
 
-
-taskt.Core.IApplicationSettings <|.. taskt.Core.SafeApplicationSettings
+taskt.Core.SafeApplicationSettings ..|> taskt.Core.IApplicationSettings
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "SeleniumBrowserCreateWebBrowserInstanceCommand" <<sealed>> {
 +RunCommand() : void 
@@ -115,17 +116,16 @@ Interface "ICanHandleWebDriver" {
 }
 }
 
-
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserCreateWebBrowserInstanceCommand
-taskt.Core.Automation.Commands.ICanHandleWindowHandle <|.. taskt.Core.Automation.Commands.SeleniumBrowserCreateWebBrowserInstanceCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumCreateWebDriverProperties <|.. taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleWindowHandle
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties <|.. taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumCreateWebDriverProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties
+taskt.Core.Automation.Commands.SeleniumBrowserCreateWebBrowserInstanceCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands
+taskt.Core.Automation.Commands.SeleniumBrowserCreateWebBrowserInstanceCommand ..|> taskt.Core.Automation.Commands.ICanHandleWindowHandle
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumCreateWebDriverProperties
+taskt.Core.Automation.Commands.ICanHandleWindowHandle --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumCreateWebDriverProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

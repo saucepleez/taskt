@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ExcelRenameWorksheetCommand" <<sealed>> {
 +RunCommand() : void 
@@ -91,14 +92,13 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.AExcelInstanceCommands <|-- taskt.Core.Automation.Commands.ExcelRenameWorksheetCommand
-taskt.Core.Automation.Commands.IExcelWorksheetCopyRenameProperties <|.. taskt.Core.Automation.Commands.ExcelRenameWorksheetCommand
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AExcelInstanceCommands
-taskt.Core.Automation.Commands.IExcelInstanceProperties <|.. taskt.Core.Automation.Commands.AExcelInstanceCommands
-taskt.Core.Automation.Commands.IExcelWorksheetActionProperties <|-- taskt.Core.Automation.Commands.IExcelWorksheetCopyRenameProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IExcelInstanceProperties
-taskt.Core.Automation.Commands.IExcelInstanceProperties <|-- taskt.Core.Automation.Commands.IExcelWorksheetActionProperties
+taskt.Core.Automation.Commands.ExcelRenameWorksheetCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelRenameWorksheetCommand ..|> taskt.Core.Automation.Commands.IExcelWorksheetCopyRenameProperties
+taskt.Core.Automation.Commands.AExcelInstanceCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AExcelInstanceCommands ..|> taskt.Core.Automation.Commands.IExcelInstanceProperties
+taskt.Core.Automation.Commands.IExcelWorksheetCopyRenameProperties --|> taskt.Core.Automation.Commands.IExcelWorksheetActionProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IExcelInstanceProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.IExcelWorksheetActionProperties --|> taskt.Core.Automation.Commands.IExcelInstanceProperties
 @enduml

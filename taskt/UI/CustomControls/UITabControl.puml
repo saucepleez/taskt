@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.CustomControls"{
 class "UITabControl" {
 }
@@ -99,6 +100,5 @@ class "TabControl" {
 }
 }
 
-
-System.Windows.Forms.TabControl <|-- taskt.UI.CustomControls.UITabControl
+taskt.UI.CustomControls.UITabControl --|> System.Windows.Forms.TabControl
 @enduml

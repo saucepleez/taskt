@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "EnterKeysFromWindowHandleCommand" <<sealed>> {
 +RunCommand() : void 
@@ -34,7 +35,6 @@ class "EnterKeysCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties <|.. taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand
-taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties <|.. taskt.Core.Automation.Commands.EnterKeysCommand
+taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties
+taskt.Core.Automation.Commands.EnterKeysCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties
 @enduml

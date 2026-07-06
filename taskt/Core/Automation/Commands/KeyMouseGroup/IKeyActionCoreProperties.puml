@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.KeyMouseGroup"{
 Interface "IKeyActionCoreProperties" {
 +{abstract} v_WaitTimeAfterKeyEnter : String <<get>> <<set>> <<abstract>> 
@@ -12,6 +13,5 @@ Interface "IWindowActivateProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.IWindowActivateProperties <|-- taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties
+taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties --|> taskt.Core.Automation.Commands.IWindowActivateProperties
 @enduml

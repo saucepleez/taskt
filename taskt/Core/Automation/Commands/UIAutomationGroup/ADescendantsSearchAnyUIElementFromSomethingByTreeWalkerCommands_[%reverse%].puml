@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 abstract class "ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands"{
 +v_TargetElement : String <<get>> <<set>> 
@@ -33,9 +34,8 @@ class "UIAutomationSearchUIElementFromUIElementCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "ADictionaryKeyActionCommands"{
 +v_WhenKeyDoesNotExists : String <<get>> <<set>> 
@@ -35,9 +36,8 @@ class "GetDictionaryValueCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IDictionaryKeyActionProperties <|.. taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
-taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.RemoveDictionaryItemCommand
-taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.SetDictionaryValueCommand
-taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.GetDictionaryValueCommand
+taskt.Core.Automation.Commands.ADictionaryKeyActionCommands ..|> taskt.Core.Automation.Commands.IDictionaryKeyActionProperties
+taskt.Core.Automation.Commands.RemoveDictionaryItemCommand --|> taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
+taskt.Core.Automation.Commands.SetDictionaryValueCommand --|> taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
+taskt.Core.Automation.Commands.GetDictionaryValueCommand --|> taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
 @enduml

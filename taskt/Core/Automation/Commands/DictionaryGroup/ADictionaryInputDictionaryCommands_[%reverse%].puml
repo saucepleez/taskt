@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "ADictionaryAddCreateCommands"{
 +BeforeValidate() : void 
@@ -173,26 +174,25 @@ class "GetDictionaryValueCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands <|-- taskt.Core.Automation.Commands.ADictionaryAddCreateCommands
-taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands <|-- taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
-taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands <|-- taskt.Core.Automation.Commands.ADictionaryKeyCommands
-taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands <|-- taskt.Core.Automation.Commands.ExportDictionaryAsTextFileCommand
-taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands <|-- taskt.Core.Automation.Commands.BeginLoopForDictionaryCommand
-taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands <|-- taskt.Core.Automation.Commands.ReplaceDictionaryCommand
-taskt.Core.Automation.Commands.ADictionaryAddCreateCommands <|-- taskt.Core.Automation.Commands.AddDictionaryItemCommand
-taskt.Core.Automation.Commands.ADictionaryAddCreateCommands <|-- taskt.Core.Automation.Commands.CreateDictionaryCommand
-taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToVisualizedTextCommand
-taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToTextCommand
-taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.JoinDictionaryValuesAsTextCommand
-taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToDataTableCommand
-taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToListCommand
-taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.ConvertDictionaryToJSONCommand
-taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.GetDictionaryKeysListCommand
-taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands <|-- taskt.Core.Automation.Commands.GetDictionaryKeyFromValueCommand
-taskt.Core.Automation.Commands.ADictionaryKeyCommands <|-- taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
-taskt.Core.Automation.Commands.ADictionaryKeyCommands <|-- taskt.Core.Automation.Commands.CheckDictionaryKeyExistsCommand
-taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.RemoveDictionaryItemCommand
-taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.SetDictionaryValueCommand
-taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.GetDictionaryValueCommand
+taskt.Core.Automation.Commands.ADictionaryAddCreateCommands --|> taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands
+taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands --|> taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands
+taskt.Core.Automation.Commands.ADictionaryKeyCommands --|> taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands
+taskt.Core.Automation.Commands.ExportDictionaryAsTextFileCommand --|> taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands
+taskt.Core.Automation.Commands.BeginLoopForDictionaryCommand --|> taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands
+taskt.Core.Automation.Commands.ReplaceDictionaryCommand --|> taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands
+taskt.Core.Automation.Commands.AddDictionaryItemCommand --|> taskt.Core.Automation.Commands.ADictionaryAddCreateCommands
+taskt.Core.Automation.Commands.CreateDictionaryCommand --|> taskt.Core.Automation.Commands.ADictionaryAddCreateCommands
+taskt.Core.Automation.Commands.ConvertDictionaryToVisualizedTextCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.ConvertDictionaryToTextCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.JoinDictionaryValuesAsTextCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.ConvertDictionaryToDataTableCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.ConvertDictionaryToListCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.ConvertDictionaryToJSONCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.GetDictionaryKeysListCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.GetDictionaryKeyFromValueCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.ADictionaryKeyActionCommands --|> taskt.Core.Automation.Commands.ADictionaryKeyCommands
+taskt.Core.Automation.Commands.CheckDictionaryKeyExistsCommand --|> taskt.Core.Automation.Commands.ADictionaryKeyCommands
+taskt.Core.Automation.Commands.RemoveDictionaryItemCommand --|> taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
+taskt.Core.Automation.Commands.SetDictionaryValueCommand --|> taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
+taskt.Core.Automation.Commands.GetDictionaryValueCommand --|> taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand" <<sealed>> {
 +RunCommand() : void 
@@ -160,22 +161,21 @@ class "TakeScreenshotCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand
-taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.AOneWindowNameActionCommands
-taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.ActivateOneWindowCommand
-taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneWindowHandleFromOneWindowNameCommand
-taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneProcessNameFromOneWindowNameCommand
-taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneWindowStateCommand
-taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneWindowPositionCommand
-taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.GetOneWindowSizeCommand
-taskt.Core.Automation.Commands.AOneWindowNameCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetWindowUIElementFromWindowNameCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.SetOneWindowStateCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.ResizeOneWindowCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.MoveOneWindowCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.CloseOneWindowCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.EnterShortcutKeyCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.EnterKeysCommand
-taskt.Core.Automation.Commands.AOneWindowNameActionCommands <|-- taskt.Core.Automation.Commands.TakeScreenshotCommand
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand --|> taskt.Core.Automation.Commands.AOneWindowNameCommands
+taskt.Core.Automation.Commands.AOneWindowNameActionCommands --|> taskt.Core.Automation.Commands.AOneWindowNameCommands
+taskt.Core.Automation.Commands.ActivateOneWindowCommand --|> taskt.Core.Automation.Commands.AOneWindowNameCommands
+taskt.Core.Automation.Commands.GetOneWindowHandleFromOneWindowNameCommand --|> taskt.Core.Automation.Commands.AOneWindowNameCommands
+taskt.Core.Automation.Commands.GetOneProcessNameFromOneWindowNameCommand --|> taskt.Core.Automation.Commands.AOneWindowNameCommands
+taskt.Core.Automation.Commands.GetOneWindowStateCommand --|> taskt.Core.Automation.Commands.AOneWindowNameCommands
+taskt.Core.Automation.Commands.GetOneWindowPositionCommand --|> taskt.Core.Automation.Commands.AOneWindowNameCommands
+taskt.Core.Automation.Commands.GetOneWindowSizeCommand --|> taskt.Core.Automation.Commands.AOneWindowNameCommands
+taskt.Core.Automation.Commands.UIAutomationGetWindowUIElementFromWindowNameCommand --|> taskt.Core.Automation.Commands.AOneWindowNameCommands
+taskt.Core.Automation.Commands.SetOneWindowStateCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.ResizeOneWindowCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.MoveOneWindowCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.CloseOneWindowCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.EnterShortcutKeyCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.EnterKeysCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
+taskt.Core.Automation.Commands.TakeScreenshotCommand --|> taskt.Core.Automation.Commands.AOneWindowNameActionCommands
 @enduml

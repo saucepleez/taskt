@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ReplaceDataTableValueCommand" <<sealed>> {
 +RunCommand() : void 
@@ -63,11 +64,10 @@ class "SearchAndDeleteDataTableRowsCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.ADataTableBothDataTableCommands <|-- taskt.Core.Automation.Commands.ReplaceDataTableValueCommand
-taskt.Core.Automation.Commands.ADataTableBothDataTableCommands <|-- taskt.Core.Automation.Commands.AddDataTableColumnCommand
-taskt.Core.Automation.Commands.ADataTableBothDataTableCommands <|-- taskt.Core.Automation.Commands.AddDataTableRowCommand
-taskt.Core.Automation.Commands.ADataTableBothDataTableCommands <|-- taskt.Core.Automation.Commands.AddDataTableRowsByDataTableCommand
-taskt.Core.Automation.Commands.ADataTableBothDataTableCommands <|-- taskt.Core.Automation.Commands.AddDataTableRowByDictionaryCommand
-taskt.Core.Automation.Commands.ADataTableBothDataTableCommands <|-- taskt.Core.Automation.Commands.SearchAndDeleteDataTableRowsCommand
+taskt.Core.Automation.Commands.ReplaceDataTableValueCommand --|> taskt.Core.Automation.Commands.ADataTableBothDataTableCommands
+taskt.Core.Automation.Commands.AddDataTableColumnCommand --|> taskt.Core.Automation.Commands.ADataTableBothDataTableCommands
+taskt.Core.Automation.Commands.AddDataTableRowCommand --|> taskt.Core.Automation.Commands.ADataTableBothDataTableCommands
+taskt.Core.Automation.Commands.AddDataTableRowsByDataTableCommand --|> taskt.Core.Automation.Commands.ADataTableBothDataTableCommands
+taskt.Core.Automation.Commands.AddDataTableRowByDictionaryCommand --|> taskt.Core.Automation.Commands.ADataTableBothDataTableCommands
+taskt.Core.Automation.Commands.SearchAndDeleteDataTableRowsCommand --|> taskt.Core.Automation.Commands.ADataTableBothDataTableCommands
 @enduml

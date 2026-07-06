@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "SeleniumBrowserExecuteJavaScriptFromFileCommand" <<sealed>> {
 +RunCommand() : void 
@@ -21,7 +22,6 @@ class "SeleniumBrowserExecuteJavaScriptFromCodeCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromFileCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromCodeCommand
+taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromFileCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands
+taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromCodeCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands
 @enduml

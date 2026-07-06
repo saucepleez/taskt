@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 abstract class "AUIElementActionFromSomethingByTreeWalkerCommands"{
 +v_SearchParameters : DataTable <<get>> <<set>> 
@@ -98,13 +99,12 @@ class "UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameComma
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByXPathCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByXPathCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands
 @enduml

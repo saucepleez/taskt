@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core"{
 class "ApplicationSettings" <<sealed>> {
 +Save() : void 
@@ -28,6 +29,5 @@ Interface "IApplicationSettings" {
 }
 }
 
-
-taskt.Core.IApplicationSettings <|.. taskt.Core.ApplicationSettings
+taskt.Core.ApplicationSettings ..|> taskt.Core.IApplicationSettings
 @enduml

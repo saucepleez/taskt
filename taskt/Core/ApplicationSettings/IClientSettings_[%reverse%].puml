@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core"{
 class "ClientSettings" <<sealed>> {
 +Clone() : ClientSettings
@@ -193,9 +194,8 @@ class "SafeDocumentGenerationClientSettings" {
 }
 }
 
-
-taskt.Core.IClientSettings <|.. taskt.Core.ClientSettings
-taskt.Core.IClientSettings <|.. taskt.Core.SafeClientSettings
-taskt.Core.SafeClientSettings <|-- taskt.Core.SafeFrmScriptBuilderClientSettings
-taskt.Core.SafeClientSettings <|-- taskt.Core.SafeDocumentGenerationClientSettings
+taskt.Core.ClientSettings ..|> taskt.Core.IClientSettings
+taskt.Core.SafeClientSettings ..|> taskt.Core.IClientSettings
+taskt.Core.SafeFrmScriptBuilderClientSettings --|> taskt.Core.SafeClientSettings
+taskt.Core.SafeDocumentGenerationClientSettings --|> taskt.Core.SafeClientSettings
 @enduml

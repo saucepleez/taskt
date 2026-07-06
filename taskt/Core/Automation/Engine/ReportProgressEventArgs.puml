@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Engine"{
 class "ReportProgressEventArgs" {
 +ProgressUpdate : String <<get>> <<set>> 
@@ -6,6 +7,5 @@ class "ReportProgressEventArgs" {
 }
 
 
-
-EventArgs -- taskt.Core.Automation.Engine.ReportProgressEventArgs
+taskt.Core.Automation.Engine.ReportProgressEventArgs -- EventArgs
 @enduml

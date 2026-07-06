@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "BeginLoopForDataTableColumnAsDataTableCommand" <<sealed>> {
 +RunCommand() : void 
@@ -151,17 +152,16 @@ class "BeginNumberOfTimesLoopCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands <|.. taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsDataTableCommand
-taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands <|.. taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsListCommand
-taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands <|.. taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDataTableCommand
-taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands <|.. taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDictionaryCommand
-taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands <|.. taskt.Core.Automation.Commands.BeginLoopForDataTableCommand
-taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands <|.. taskt.Core.Automation.Commands.BeginLoopForDictionaryCommand
-taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands <|.. taskt.Core.Automation.Commands.BeginLoopForListCommand
-taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands <|.. taskt.Core.Automation.Commands.BeginLoopCommand
-taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands <|.. taskt.Core.Automation.Commands.BeginMultiLoopCommand
-taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands <|.. taskt.Core.Automation.Commands.BeginContinousLoopCommand
-taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands <|.. taskt.Core.Automation.Commands.BeginLoopForComplexDataTypesCommand
-taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands <|.. taskt.Core.Automation.Commands.BeginNumberOfTimesLoopCommand
+taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsDataTableCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsListCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDataTableCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDictionaryCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopForDataTableCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopForDictionaryCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopForListCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginMultiLoopCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginContinousLoopCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopForComplexDataTypesCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginNumberOfTimesLoopCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
 @enduml

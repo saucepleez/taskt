@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "UIAutomationCheckUIElementExistsByXPathCommand" <<sealed>> {
 +RunCommand() : void 
@@ -25,8 +26,7 @@ class "UIAutomationSearchUIElementFromUIElementByXPathCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsByXPathCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsByXPathCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementByXPathCommand
+taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands
 @enduml

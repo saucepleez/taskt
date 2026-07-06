@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
 class "frmUIElementSearchParameter" {
 -frmUIElementSearchParameter_Load() : void 
@@ -858,45 +859,44 @@ class "frmScriptVariables" {
 }
 }
 
-
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmUIElementSearchParameter
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmUIElementSearchParameter
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmNewSettings
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmNewSettings
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSample
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSample
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptInformations
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptInformations
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmAddVariable
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmAddVariable
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCodeBuilder
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCodeBuilder
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCommandList
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCommandList
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptEngine.Supplemental.frmEngineContextViewer
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptEngine.Supplemental.frmEngineContextViewer
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspectTool
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspectTool
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInspectToolParser
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInspectToolParser
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmJSONPathHelper
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmJSONPathHelper
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmKeysBuilder
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmKeysBuilder
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmMultiEnterKeys
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmMultiEnterKeys
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSearchCommands
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSearchCommands
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmUpdate
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmUpdate
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.General.frmDialog
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.General.frmDialog
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmAbout
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmAbout
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptVariables
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptVariables
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmUIElementSearchParameter --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmUIElementSearchParameter --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmNewSettings --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmNewSettings --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmSample --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmSample --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptInformations --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptInformations --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmAddVariable --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmAddVariable --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCodeBuilder --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCodeBuilder --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCommandList --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCommandList --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptEngine.Supplemental.frmEngineContextViewer --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptEngine.Supplemental.frmEngineContextViewer --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspectTool --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspectTool --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInspectToolParser --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInspectToolParser --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmJSONPathHelper --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmJSONPathHelper --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmKeysBuilder --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmKeysBuilder --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmMultiEnterKeys --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmMultiEnterKeys --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmSearchCommands --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmSearchCommands --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmUpdate --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmUpdate --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.General.frmDialog --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.General.frmDialog --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmAbout --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmAbout --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptVariables --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmScriptVariables --|> taskt.UI.Forms.DialogLikeThemedForm
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 Interface "IExcelColumnRangeSetProperties" {
 }
@@ -82,16 +83,15 @@ class "ExcelSetRowValuesFromListCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IExcelRangeSetProperties <|-- taskt.Core.Automation.Commands.IExcelColumnRangeSetProperties
-taskt.Core.Automation.Commands.IExcelRangeSetProperties <|-- taskt.Core.Automation.Commands.IExcelColumnRowRangeSetProperties
-taskt.Core.Automation.Commands.IExcelRangeSetProperties <|-- taskt.Core.Automation.Commands.IExcelRowRangeSetProperties
-taskt.Core.Automation.Commands.IExcelColumnRangeSetProperties <|.. taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands
-taskt.Core.Automation.Commands.IExcelRowRangeSetProperties <|.. taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
-taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDataTableCommand
-taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDictionaryCommand
-taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetColumnValuesFromListCommand
-taskt.Core.Automation.Commands.AExcelRowRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetRowValuesFromDataTableCommand
-taskt.Core.Automation.Commands.AExcelRowRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetRowValuesFromDictionaryCommand
-taskt.Core.Automation.Commands.AExcelRowRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetRowValuesFromListCommand
+taskt.Core.Automation.Commands.IExcelColumnRangeSetProperties --|> taskt.Core.Automation.Commands.IExcelRangeSetProperties
+taskt.Core.Automation.Commands.IExcelColumnRowRangeSetProperties --|> taskt.Core.Automation.Commands.IExcelRangeSetProperties
+taskt.Core.Automation.Commands.IExcelRowRangeSetProperties --|> taskt.Core.Automation.Commands.IExcelRangeSetProperties
+taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands ..|> taskt.Core.Automation.Commands.IExcelColumnRangeSetProperties
+taskt.Core.Automation.Commands.AExcelRowRangeSetCommands ..|> taskt.Core.Automation.Commands.IExcelRowRangeSetProperties
+taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDataTableCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetColumnValuesFromListCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetRowValuesFromDataTableCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetRowValuesFromDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetRowValuesFromListCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "SeleniumBrowserGetWebElementsCountFromWebElementCommand" <<sealed>> {
 +RunCommand() : void 
@@ -141,25 +142,24 @@ Interface "ICanHandleWebDriver" {
 }
 }
 
-
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsCountFromWebElementCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebElementsParametersProperties <|.. taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAndScrollCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumGetFromWebElementProperties <|.. taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebElementsParametersProperties
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAndScrollCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionAndScrollProperties <|.. taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAndScrollCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionAndScrollProperties <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumGetFromWebElementProperties
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties <|.. taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionAndScrollProperties
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties <|.. taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebElement <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties
-taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver <|-- taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebElement
+taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsCountFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebElementsParametersProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAndScrollCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebElementCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumGetFromWebElementProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebElementsParametersProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAndScrollCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAndScrollCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionAndScrollProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumGetFromWebElementProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionAndScrollProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionAndScrollProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebElement
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebElement --|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "CopyFileCommand" <<sealed>> {
 +RunCommand() : void 
@@ -24,7 +25,6 @@ class "MoveFileCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.CopyFileCommand
-taskt.Core.Automation.Commands.AFileCopyMoveFileCommands <|-- taskt.Core.Automation.Commands.MoveFileCommand
+taskt.Core.Automation.Commands.CopyFileCommand --|> taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
+taskt.Core.Automation.Commands.MoveFileCommand --|> taskt.Core.Automation.Commands.AFileCopyMoveFileCommands
 @enduml

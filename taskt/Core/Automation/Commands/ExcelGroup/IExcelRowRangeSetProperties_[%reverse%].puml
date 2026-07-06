@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AExcelRowRangeSetCommands"{
 +{abstract} v_WhenItemNotEnough : String <<get>> <<set>> <<abstract>> 
@@ -35,9 +36,8 @@ class "ExcelSetRowValuesFromListCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IExcelRowRangeSetProperties <|.. taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
-taskt.Core.Automation.Commands.AExcelRowRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetRowValuesFromDataTableCommand
-taskt.Core.Automation.Commands.AExcelRowRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetRowValuesFromDictionaryCommand
-taskt.Core.Automation.Commands.AExcelRowRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetRowValuesFromListCommand
+taskt.Core.Automation.Commands.AExcelRowRangeSetCommands ..|> taskt.Core.Automation.Commands.IExcelRowRangeSetProperties
+taskt.Core.Automation.Commands.ExcelSetRowValuesFromDataTableCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetRowValuesFromDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetRowValuesFromListCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
 @enduml

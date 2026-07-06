@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.Splash"{
 class "frmSplash" {
 -frmSplash_Load() : void 
@@ -213,7 +214,6 @@ class "Form" {
 }
 }
 
-
-System.Windows.Forms.Form <|-- taskt.UI.Forms.Splash.frmSplash
-System.Windows.Forms.Form <|-- taskt.UI.Forms.Splash.frmSplash
+taskt.UI.Forms.Splash.frmSplash --|> System.Windows.Forms.Form
+taskt.UI.Forms.Splash.frmSplash --|> System.Windows.Forms.Form
 @enduml

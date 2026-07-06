@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 Interface "IUIElementChildrenSearchParametersProperties" {
 +{abstract} v_SearchParameters : DataTable <<get>> <<set>> <<abstract>> 
@@ -42,11 +43,10 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties
-taskt.Core.Automation.Commands.IHaveDataTableElements <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties --|> taskt.Core.Automation.Commands.IHaveDataTableElements
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

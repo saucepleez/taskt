@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core"{
 class "SafeAutomationEngineInstanceEngineSettings" {
 +VariableStartMarker : String <<get>> <<set>> 
@@ -41,6 +42,5 @@ class "SafeEngineSettings" {
 }
 }
 
-
-taskt.Core.SafeEngineSettings <|-- taskt.Core.SafeAutomationEngineInstanceEngineSettings
+taskt.Core.SafeAutomationEngineInstanceEngineSettings --|> taskt.Core.SafeEngineSettings
 @enduml

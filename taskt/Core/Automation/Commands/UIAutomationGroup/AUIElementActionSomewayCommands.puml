@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 abstract class "AUIElementActionSomewayCommands"{
 #UIElementActionProcess() : void 
@@ -105,14 +106,13 @@ Interface "IFromWindowHandleResultsProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties
-taskt.Core.Automation.Commands.IHaveDataTableElements <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands ..|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties --|> taskt.Core.Automation.Commands.IHaveDataTableElements
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

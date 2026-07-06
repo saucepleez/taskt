@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AExcelColumnRangeGetCommands"{
 +{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
@@ -67,13 +68,12 @@ class "ExcelSetColumnValuesFromListCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AExcelColumnRangeCommands <|-- taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands
-taskt.Core.Automation.Commands.AExcelColumnRangeCommands <|-- taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands
-taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDataTableCommand
-taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDictionaryCommand
-taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetColumnValuesAsListCommand
-taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDataTableCommand
-taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDictionaryCommand
-taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetColumnValuesFromListCommand
+taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands --|> taskt.Core.Automation.Commands.AExcelColumnRangeCommands
+taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands --|> taskt.Core.Automation.Commands.AExcelColumnRangeCommands
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsListCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands
+taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDataTableCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetColumnValuesFromListCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands
 @enduml

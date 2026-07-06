@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AShowFileFolderDialogCommands"{
 #GetInitialDirectory() : String
@@ -63,10 +64,9 @@ class "ShowFileDialogCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IWaitDialogResultProperties <|.. taskt.Core.Automation.Commands.AShowFileFolderDialogCommands
-taskt.Core.Automation.Commands.IWaitDialogResultProperties <|.. taskt.Core.Automation.Commands.ShowHTMLInputDialogCommand
-taskt.Core.Automation.Commands.IWaitDialogResultProperties <|.. taskt.Core.Automation.Commands.ShowUserInputDialogCommand
-taskt.Core.Automation.Commands.AShowFileFolderDialogCommands <|-- taskt.Core.Automation.Commands.ShowFolderDialogCommand
-taskt.Core.Automation.Commands.AShowFileFolderDialogCommands <|-- taskt.Core.Automation.Commands.ShowFileDialogCommand
+taskt.Core.Automation.Commands.AShowFileFolderDialogCommands ..|> taskt.Core.Automation.Commands.IWaitDialogResultProperties
+taskt.Core.Automation.Commands.ShowHTMLInputDialogCommand ..|> taskt.Core.Automation.Commands.IWaitDialogResultProperties
+taskt.Core.Automation.Commands.ShowUserInputDialogCommand ..|> taskt.Core.Automation.Commands.IWaitDialogResultProperties
+taskt.Core.Automation.Commands.ShowFolderDialogCommand --|> taskt.Core.Automation.Commands.AShowFileFolderDialogCommands
+taskt.Core.Automation.Commands.ShowFileDialogCommand --|> taskt.Core.Automation.Commands.AShowFileFolderDialogCommands
 @enduml

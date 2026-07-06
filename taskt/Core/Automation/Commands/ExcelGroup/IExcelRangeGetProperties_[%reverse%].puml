@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 Interface "IExcelColumnRangeGetProperties" {
 }
@@ -88,18 +89,17 @@ class "ExcelGetRowValuesAsListCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IExcelRangeGetProperties <|-- taskt.Core.Automation.Commands.IExcelColumnRangeGetProperties
-taskt.Core.Automation.Commands.IExcelRangeGetProperties <|-- taskt.Core.Automation.Commands.IExcelColumnRowRangeGetProperties
-taskt.Core.Automation.Commands.IExcelRangeGetProperties <|-- taskt.Core.Automation.Commands.IExcelRowRangeGetProperties
-taskt.Core.Automation.Commands.IExcelColumnRangeGetProperties <|.. taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands
-taskt.Core.Automation.Commands.IExcelColumnRowRangeGetProperties <|.. taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands
-taskt.Core.Automation.Commands.IExcelRowRangeGetProperties <|.. taskt.Core.Automation.Commands.AExcelRowRangeGetCommands
-taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDataTableCommand
-taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDictionaryCommand
-taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetColumnValuesAsListCommand
-taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand
-taskt.Core.Automation.Commands.AExcelRowRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetRowValuesAsDictionaryCommand
-taskt.Core.Automation.Commands.AExcelRowRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand
-taskt.Core.Automation.Commands.AExcelRowRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand
+taskt.Core.Automation.Commands.IExcelColumnRangeGetProperties --|> taskt.Core.Automation.Commands.IExcelRangeGetProperties
+taskt.Core.Automation.Commands.IExcelColumnRowRangeGetProperties --|> taskt.Core.Automation.Commands.IExcelRangeGetProperties
+taskt.Core.Automation.Commands.IExcelRowRangeGetProperties --|> taskt.Core.Automation.Commands.IExcelRangeGetProperties
+taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands ..|> taskt.Core.Automation.Commands.IExcelColumnRangeGetProperties
+taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands ..|> taskt.Core.Automation.Commands.IExcelColumnRowRangeGetProperties
+taskt.Core.Automation.Commands.AExcelRowRangeGetCommands ..|> taskt.Core.Automation.Commands.IExcelRowRangeGetProperties
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsListCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeGetCommands
 @enduml

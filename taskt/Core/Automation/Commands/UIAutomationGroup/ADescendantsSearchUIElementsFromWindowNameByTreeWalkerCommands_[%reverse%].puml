@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 abstract class "ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands"{
 +v_TargetUIElementIndex : String <<get>> <<set>> 
@@ -37,8 +38,7 @@ class "UIAutomationSearchUIElementFromWindowNameCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands
-taskt.Core.Automation.Commands.ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromWindowNameCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands --|> taskt.Core.Automation.Commands.ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromWindowNameCommand --|> taskt.Core.Automation.Commands.ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands
 @enduml

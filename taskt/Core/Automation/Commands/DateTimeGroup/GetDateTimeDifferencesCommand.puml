@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "GetDateTimeDifferencesCommand" <<sealed>> {
 +RunCommand() : void 
@@ -76,10 +77,9 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.GetDateTimeDifferencesCommand
-taskt.Core.Automation.Commands.ICanHandleDateTime <|.. taskt.Core.Automation.Commands.GetDateTimeDifferencesCommand
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleDateTime
+taskt.Core.Automation.Commands.GetDateTimeDifferencesCommand --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.GetDateTimeDifferencesCommand ..|> taskt.Core.Automation.Commands.ICanHandleDateTime
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.ICanHandleDateTime --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "ACalculateDateTimeCommands"{
 #CommandProcess() : void 
@@ -76,15 +77,14 @@ class "GetFormattedDateTimeFromCalculatedDateTimeCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IDateTimeResultProperties <|.. taskt.Core.Automation.Commands.ACalculateDateTimeCommands
-taskt.Core.Automation.Commands.ACalculateDateTimeCommands <|-- taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands
-taskt.Core.Automation.Commands.ACalculateDateTimeCommands <|-- taskt.Core.Automation.Commands.CalculateDateTimeFromUnixTimeCommand
-taskt.Core.Automation.Commands.ACalculateDateTimeCommands <|-- taskt.Core.Automation.Commands.CalculateDateTimeFromExcelSerialCommand
-taskt.Core.Automation.Commands.ACalculateDateTimeCommands <|-- taskt.Core.Automation.Commands.CalculateDateTimeFromTextCommand
-taskt.Core.Automation.Commands.ACalculateDateTimeCommands <|-- taskt.Core.Automation.Commands.CalculateDateTimeCommand
-taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands <|-- taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedExcelSerialDateTimeCommand
-taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands <|-- taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedUnixDateTimeCommand
-taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands <|-- taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedTextDateTimeCommand
-taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands <|-- taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedDateTimeCommand
+taskt.Core.Automation.Commands.ACalculateDateTimeCommands ..|> taskt.Core.Automation.Commands.IDateTimeResultProperties
+taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands --|> taskt.Core.Automation.Commands.ACalculateDateTimeCommands
+taskt.Core.Automation.Commands.CalculateDateTimeFromUnixTimeCommand --|> taskt.Core.Automation.Commands.ACalculateDateTimeCommands
+taskt.Core.Automation.Commands.CalculateDateTimeFromExcelSerialCommand --|> taskt.Core.Automation.Commands.ACalculateDateTimeCommands
+taskt.Core.Automation.Commands.CalculateDateTimeFromTextCommand --|> taskt.Core.Automation.Commands.ACalculateDateTimeCommands
+taskt.Core.Automation.Commands.CalculateDateTimeCommand --|> taskt.Core.Automation.Commands.ACalculateDateTimeCommands
+taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedExcelSerialDateTimeCommand --|> taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands
+taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedUnixDateTimeCommand --|> taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands
+taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedTextDateTimeCommand --|> taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands
+taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedDateTimeCommand --|> taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands
 @enduml

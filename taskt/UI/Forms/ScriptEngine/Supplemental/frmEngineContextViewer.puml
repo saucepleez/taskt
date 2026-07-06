@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.ScriptEngine.Supplemental"{
 class "frmEngineContextViewer" {
 -Timer_Tick() : void 
@@ -243,11 +244,10 @@ class "Form" {
 }
 }
 
-
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptEngine.Supplemental.frmEngineContextViewer
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptEngine.Supplemental.frmEngineContextViewer
-taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.DialogLikeThemedForm
-taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.DialogLikeThemedForm
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ThemedForm
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ThemedForm
+taskt.UI.Forms.ScriptEngine.Supplemental.frmEngineContextViewer --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptEngine.Supplemental.frmEngineContextViewer --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.DialogLikeThemedForm --|> taskt.UI.Forms.ThemedForm
+taskt.UI.Forms.DialogLikeThemedForm --|> taskt.UI.Forms.ThemedForm
+taskt.UI.Forms.ThemedForm --|> System.Windows.Forms.Form
+taskt.UI.Forms.ThemedForm --|> System.Windows.Forms.Form
 @enduml

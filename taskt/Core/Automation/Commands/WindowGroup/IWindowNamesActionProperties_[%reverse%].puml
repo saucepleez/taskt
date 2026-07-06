@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AWindowNamesActionCommnads"{
 +v_WaitTimeBetweenFindAndAction : String <<get>> <<set>> 
@@ -44,10 +45,9 @@ class "CloseWindowsCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IWindowNamesActionProperties <|.. taskt.Core.Automation.Commands.AWindowNamesActionCommnads
-taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.SetWindowsStateCommand
-taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.ResizeWindowsCommand
-taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.MoveWindowsCommand
-taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.CloseWindowsCommand
+taskt.Core.Automation.Commands.AWindowNamesActionCommnads ..|> taskt.Core.Automation.Commands.IWindowNamesActionProperties
+taskt.Core.Automation.Commands.SetWindowsStateCommand --|> taskt.Core.Automation.Commands.AWindowNamesActionCommnads
+taskt.Core.Automation.Commands.ResizeWindowsCommand --|> taskt.Core.Automation.Commands.AWindowNamesActionCommnads
+taskt.Core.Automation.Commands.MoveWindowsCommand --|> taskt.Core.Automation.Commands.AWindowNamesActionCommnads
+taskt.Core.Automation.Commands.CloseWindowsCommand --|> taskt.Core.Automation.Commands.AWindowNamesActionCommnads
 @enduml

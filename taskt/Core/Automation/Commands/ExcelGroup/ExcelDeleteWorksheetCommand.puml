@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ExcelDeleteWorksheetCommand" <<sealed>> {
 +RunCommand() : void 
@@ -89,14 +90,13 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.AExcelSheetCommands <|-- taskt.Core.Automation.Commands.ExcelDeleteWorksheetCommand
-taskt.Core.Automation.Commands.AExcelInstanceCommands <|-- taskt.Core.Automation.Commands.AExcelSheetCommands
-taskt.Core.Automation.Commands.IExcelWorksheetProperties <|.. taskt.Core.Automation.Commands.AExcelSheetCommands
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AExcelInstanceCommands
-taskt.Core.Automation.Commands.IExcelInstanceProperties <|.. taskt.Core.Automation.Commands.AExcelInstanceCommands
-taskt.Core.Automation.Commands.IExcelInstanceProperties <|-- taskt.Core.Automation.Commands.IExcelWorksheetProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IExcelInstanceProperties
+taskt.Core.Automation.Commands.ExcelDeleteWorksheetCommand --|> taskt.Core.Automation.Commands.AExcelSheetCommands
+taskt.Core.Automation.Commands.AExcelSheetCommands --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.AExcelSheetCommands ..|> taskt.Core.Automation.Commands.IExcelWorksheetProperties
+taskt.Core.Automation.Commands.AExcelInstanceCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AExcelInstanceCommands ..|> taskt.Core.Automation.Commands.IExcelInstanceProperties
+taskt.Core.Automation.Commands.IExcelWorksheetProperties --|> taskt.Core.Automation.Commands.IExcelInstanceProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IExcelInstanceProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ShowFolderDialogCommand" <<sealed>> {
 +RunCommand() : void 
@@ -27,7 +28,6 @@ class "ShowFileDialogCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AShowFileFolderDialogCommands <|-- taskt.Core.Automation.Commands.ShowFolderDialogCommand
-taskt.Core.Automation.Commands.AShowFileFolderDialogCommands <|-- taskt.Core.Automation.Commands.ShowFileDialogCommand
+taskt.Core.Automation.Commands.ShowFolderDialogCommand --|> taskt.Core.Automation.Commands.AShowFileFolderDialogCommands
+taskt.Core.Automation.Commands.ShowFileDialogCommand --|> taskt.Core.Automation.Commands.AShowFileFolderDialogCommands
 @enduml

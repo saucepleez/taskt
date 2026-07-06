@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.CustomControls"{
 class "CommandGroupControl" {
 -CommandSelectionControl_Load() : void 
@@ -40,7 +41,6 @@ class "UserControl" {
 }
 }
 
-
-System.Windows.Forms.UserControl <|-- taskt.UI.CustomControls.CommandGroupControl
-System.Windows.Forms.UserControl <|-- taskt.UI.CustomControls.CommandGroupControl
+taskt.UI.CustomControls.CommandGroupControl --|> System.Windows.Forms.UserControl
+taskt.UI.CustomControls.CommandGroupControl --|> System.Windows.Forms.UserControl
 @enduml

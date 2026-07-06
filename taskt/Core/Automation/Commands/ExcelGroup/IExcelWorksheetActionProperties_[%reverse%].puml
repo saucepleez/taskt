@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 Interface "IExcelWorksheetCopyRenameProperties" {
 +{abstract} v_NewSheetName : String <<get>> <<set>> <<abstract>> 
@@ -27,8 +28,7 @@ class "ExcelRenameWorksheetCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IExcelWorksheetActionProperties <|-- taskt.Core.Automation.Commands.IExcelWorksheetCopyRenameProperties
-taskt.Core.Automation.Commands.IExcelWorksheetCopyRenameProperties <|.. taskt.Core.Automation.Commands.ExcelCopyWorksheetCommand
-taskt.Core.Automation.Commands.IExcelWorksheetCopyRenameProperties <|.. taskt.Core.Automation.Commands.ExcelRenameWorksheetCommand
+taskt.Core.Automation.Commands.IExcelWorksheetCopyRenameProperties --|> taskt.Core.Automation.Commands.IExcelWorksheetActionProperties
+taskt.Core.Automation.Commands.ExcelCopyWorksheetCommand ..|> taskt.Core.Automation.Commands.IExcelWorksheetCopyRenameProperties
+taskt.Core.Automation.Commands.ExcelRenameWorksheetCommand ..|> taskt.Core.Automation.Commands.IExcelWorksheetCopyRenameProperties
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "UIAutomationGetTextFromTableUIElementCommand" <<sealed>> {
 +RunCommand() : void 
@@ -126,22 +127,21 @@ Interface "IFromWindowHandleResultsProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetTextFromTableUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IGetFromUIElementProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementCoreCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IGetFromUIElementProperties
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementCoreCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementCoreCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.UIAutomationGetTextFromTableUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IGetFromUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementCoreCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IGetFromUIElementProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementCoreCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementCoreCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ShowHTMLInputDialogCommand" <<sealed>> {
 +RunCommand() : void 
@@ -82,11 +83,10 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.ShowHTMLInputDialogCommand
-taskt.Core.Automation.Commands.IWaitDialogResultProperties <|.. taskt.Core.Automation.Commands.ShowHTMLInputDialogCommand
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.IDialogResultProperties <|-- taskt.Core.Automation.Commands.IWaitDialogResultProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IDialogResultProperties
+taskt.Core.Automation.Commands.ShowHTMLInputDialogCommand --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.ShowHTMLInputDialogCommand ..|> taskt.Core.Automation.Commands.IWaitDialogResultProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IWaitDialogResultProperties --|> taskt.Core.Automation.Commands.IDialogResultProperties
+taskt.Core.Automation.Commands.IDialogResultProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AMathValueResultCommands"{
 +v_Value : String <<get>> <<set>> 
@@ -73,10 +74,9 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AMathValueResultCommands
-taskt.Core.Automation.Commands.IMathValueResultProperties <|.. taskt.Core.Automation.Commands.AMathValueResultCommands
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IMathValueResultProperties
+taskt.Core.Automation.Commands.AMathValueResultCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AMathValueResultCommands ..|> taskt.Core.Automation.Commands.IMathValueResultProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IMathValueResultProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

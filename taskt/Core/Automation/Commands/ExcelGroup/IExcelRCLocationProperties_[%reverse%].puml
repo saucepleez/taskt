@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AExcelRCLocationCommands"{
 +v_CellRow : String <<get>> <<set>> 
@@ -53,13 +54,12 @@ class "ExcelSetCellRCCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IExcelRCLocationProperties <|.. taskt.Core.Automation.Commands.AExcelRCLocationCommands
-taskt.Core.Automation.Commands.IExcelRCLocationProperties <|-- taskt.Core.Automation.Commands.IExcelRCLocationActionProperties
-taskt.Core.Automation.Commands.AExcelRCLocationCommands <|-- taskt.Core.Automation.Commands.ExcelGoToCellRCCommand
-taskt.Core.Automation.Commands.AExcelRCLocationCommands <|-- taskt.Core.Automation.Commands.AExcelRCLocationActionCommands
-taskt.Core.Automation.Commands.IExcelRCLocationActionProperties <|.. taskt.Core.Automation.Commands.AExcelRCLocationActionCommands
-taskt.Core.Automation.Commands.AExcelRCLocationActionCommands <|-- taskt.Core.Automation.Commands.ExcelCheckCellValueExistsRCCommand
-taskt.Core.Automation.Commands.AExcelRCLocationActionCommands <|-- taskt.Core.Automation.Commands.ExcelGetCellRCCommand
-taskt.Core.Automation.Commands.AExcelRCLocationActionCommands <|-- taskt.Core.Automation.Commands.ExcelSetCellRCCommand
+taskt.Core.Automation.Commands.AExcelRCLocationCommands ..|> taskt.Core.Automation.Commands.IExcelRCLocationProperties
+taskt.Core.Automation.Commands.IExcelRCLocationActionProperties --|> taskt.Core.Automation.Commands.IExcelRCLocationProperties
+taskt.Core.Automation.Commands.ExcelGoToCellRCCommand --|> taskt.Core.Automation.Commands.AExcelRCLocationCommands
+taskt.Core.Automation.Commands.AExcelRCLocationActionCommands --|> taskt.Core.Automation.Commands.AExcelRCLocationCommands
+taskt.Core.Automation.Commands.AExcelRCLocationActionCommands ..|> taskt.Core.Automation.Commands.IExcelRCLocationActionProperties
+taskt.Core.Automation.Commands.ExcelCheckCellValueExistsRCCommand --|> taskt.Core.Automation.Commands.AExcelRCLocationActionCommands
+taskt.Core.Automation.Commands.ExcelGetCellRCCommand --|> taskt.Core.Automation.Commands.AExcelRCLocationActionCommands
+taskt.Core.Automation.Commands.ExcelSetCellRCCommand --|> taskt.Core.Automation.Commands.AExcelRCLocationActionCommands
 @enduml

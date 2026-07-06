@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
 class "frmSequenceRecorder" {
 -btnStartRecording_Click() : void 
@@ -195,17 +196,16 @@ class "frmShowCursorPosition" {
 }
 }
 
-
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSequenceRecorder
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmSequenceRecorder
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmDisplayManager
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmDisplayManager
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmDLLExplorer
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmDLLExplorer
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptEngine.Supplemental.frmUserInput
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptEngine.Supplemental.frmUserInput
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmScheduleManagement
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.Supplemental.frmScheduleManagement
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmShowCursorPosition
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmShowCursorPosition
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmSequenceRecorder --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmSequenceRecorder --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmDisplayManager --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmDisplayManager --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmDLLExplorer --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmDLLExplorer --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptEngine.Supplemental.frmUserInput --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptEngine.Supplemental.frmUserInput --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmScheduleManagement --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmScheduleManagement --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmShowCursorPosition --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmShowCursorPosition --|> taskt.UI.Forms.UIForm
 @enduml

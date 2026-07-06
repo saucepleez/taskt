@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "RunPowerShellScriptByCodeCommand" <<sealed>> {
 +RunCommand() : void 
@@ -35,8 +36,7 @@ class "RunBatchScriptByCodeCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.ARunScriptByCodeCommands <|-- taskt.Core.Automation.Commands.RunPowerShellScriptByCodeCommand
-taskt.Core.Automation.Commands.ARunScriptByCodeCommands <|-- taskt.Core.Automation.Commands.RunJavaScriptByCodeCommand
-taskt.Core.Automation.Commands.ARunScriptByCodeCommands <|-- taskt.Core.Automation.Commands.RunBatchScriptByCodeCommand
+taskt.Core.Automation.Commands.RunPowerShellScriptByCodeCommand --|> taskt.Core.Automation.Commands.ARunScriptByCodeCommands
+taskt.Core.Automation.Commands.RunJavaScriptByCodeCommand --|> taskt.Core.Automation.Commands.ARunScriptByCodeCommands
+taskt.Core.Automation.Commands.RunBatchScriptByCodeCommand --|> taskt.Core.Automation.Commands.ARunScriptByCodeCommands
 @enduml

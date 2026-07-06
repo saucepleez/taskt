@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 Interface "IJSONInputJContainer" {
 }
@@ -197,44 +198,43 @@ class "SetJSONValueOfJSONObjectCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.ICanHandleJContainer <|-- taskt.Core.Automation.Commands.IJSONInputJContainer
-taskt.Core.Automation.Commands.ICanHandleJContainer <|-- taskt.Core.Automation.Commands.IJSONValueActionProperties
-taskt.Core.Automation.Commands.IJSONInputJContainer <|.. taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
-taskt.Core.Automation.Commands.IJSONInputJContainer <|-- taskt.Core.Automation.Commands.IJSONJSONPathProperties
-taskt.Core.Automation.Commands.IJSONValueActionProperties <|.. taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands
-taskt.Core.Automation.Commands.IJSONValueActionProperties <|.. taskt.Core.Automation.Commands.AJSONValueActionCommands
-taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValueFromJSONArrayCommand
-taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValueCommand
-taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValuesAsDataTableCommand
-taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand
-taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValueFromJSONObjectCommand
-taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.ConvertJSONToDataTableCommand
-taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.ConvertJSONToDictionaryCommand
-taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.ConvertJSONToListCommand
-taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands <|-- taskt.Core.Automation.Commands.GetJSONValuesAsListCommand
-taskt.Core.Automation.Commands.IJSONJSONPathProperties <|.. taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
-taskt.Core.Automation.Commands.IJSONJSONPathProperties <|.. taskt.Core.Automation.Commands.AJSONJSONPathCommands
-taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands
-taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands
-taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AddJSONArrayItemCommand
-taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AddJSONObjectPropertyCommand
-taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.SetJSONValueCommand
-taskt.Core.Automation.Commands.AJSONValueActionCommands <|-- taskt.Core.Automation.Commands.CreateJSONVariableCommand
-taskt.Core.Automation.Commands.AJSONJSONPathCommands <|-- taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands
-taskt.Core.Automation.Commands.AJSONJSONPathCommands <|-- taskt.Core.Automation.Commands.RemoveJSONArrayItemCommand
-taskt.Core.Automation.Commands.AJSONJSONPathCommands <|-- taskt.Core.Automation.Commands.RemoveJSONObjectPropertyCommand
-taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands <|-- taskt.Core.Automation.Commands.InsertJSONArrayItemCommand
-taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands <|-- taskt.Core.Automation.Commands.InsertJSONObjectPropertyCommand
-taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands <|-- taskt.Core.Automation.Commands.SetJSONValueOfJSONArrayCommand
-taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands <|-- taskt.Core.Automation.Commands.SetJSONValueOfJSONObjectCommand
-taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands
-taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands
-taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AddJSONArrayItemCommand
-taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.AddJSONObjectPropertyCommand
-taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands <|-- taskt.Core.Automation.Commands.SetJSONValueCommand
-taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands <|-- taskt.Core.Automation.Commands.InsertJSONArrayItemCommand
-taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands <|-- taskt.Core.Automation.Commands.InsertJSONObjectPropertyCommand
-taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands <|-- taskt.Core.Automation.Commands.SetJSONValueOfJSONArrayCommand
-taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands <|-- taskt.Core.Automation.Commands.SetJSONValueOfJSONObjectCommand
+taskt.Core.Automation.Commands.IJSONInputJContainer --|> taskt.Core.Automation.Commands.ICanHandleJContainer
+taskt.Core.Automation.Commands.IJSONValueActionProperties --|> taskt.Core.Automation.Commands.ICanHandleJContainer
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands ..|> taskt.Core.Automation.Commands.IJSONInputJContainer
+taskt.Core.Automation.Commands.IJSONJSONPathProperties --|> taskt.Core.Automation.Commands.IJSONInputJContainer
+taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands ..|> taskt.Core.Automation.Commands.IJSONValueActionProperties
+taskt.Core.Automation.Commands.AJSONValueActionCommands ..|> taskt.Core.Automation.Commands.IJSONValueActionProperties
+taskt.Core.Automation.Commands.GetJSONValueFromJSONArrayCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.GetJSONValueCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.GetJSONValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.GetJSONValueFromJSONObjectCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.ConvertJSONToDataTableCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.ConvertJSONToDictionaryCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.ConvertJSONToListCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.GetJSONValuesAsListCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands ..|> taskt.Core.Automation.Commands.IJSONJSONPathProperties
+taskt.Core.Automation.Commands.AJSONJSONPathCommands ..|> taskt.Core.Automation.Commands.IJSONJSONPathProperties
+taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands --|> taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands
+taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands --|> taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands
+taskt.Core.Automation.Commands.AddJSONArrayItemCommand --|> taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands
+taskt.Core.Automation.Commands.AddJSONObjectPropertyCommand --|> taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands
+taskt.Core.Automation.Commands.SetJSONValueCommand --|> taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands
+taskt.Core.Automation.Commands.CreateJSONVariableCommand --|> taskt.Core.Automation.Commands.AJSONValueActionCommands
+taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands --|> taskt.Core.Automation.Commands.AJSONJSONPathCommands
+taskt.Core.Automation.Commands.RemoveJSONArrayItemCommand --|> taskt.Core.Automation.Commands.AJSONJSONPathCommands
+taskt.Core.Automation.Commands.RemoveJSONObjectPropertyCommand --|> taskt.Core.Automation.Commands.AJSONJSONPathCommands
+taskt.Core.Automation.Commands.InsertJSONArrayItemCommand --|> taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands
+taskt.Core.Automation.Commands.InsertJSONObjectPropertyCommand --|> taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands
+taskt.Core.Automation.Commands.SetJSONValueOfJSONArrayCommand --|> taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands
+taskt.Core.Automation.Commands.SetJSONValueOfJSONObjectCommand --|> taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands
+taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands --|> taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands
+taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands --|> taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands
+taskt.Core.Automation.Commands.AddJSONArrayItemCommand --|> taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands
+taskt.Core.Automation.Commands.AddJSONObjectPropertyCommand --|> taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands
+taskt.Core.Automation.Commands.SetJSONValueCommand --|> taskt.Core.Automation.Commands.AJSONAddInsertSetJContainerCommands
+taskt.Core.Automation.Commands.InsertJSONArrayItemCommand --|> taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands
+taskt.Core.Automation.Commands.InsertJSONObjectPropertyCommand --|> taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands
+taskt.Core.Automation.Commands.SetJSONValueOfJSONArrayCommand --|> taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands
+taskt.Core.Automation.Commands.SetJSONValueOfJSONObjectCommand --|> taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands
 @enduml

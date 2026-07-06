@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
 class "frmImageCapture" {
 -frmImageCapture_Load() : void 
@@ -235,7 +236,6 @@ class "Form" {
 }
 }
 
-
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmImageCapture
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmImageCapture
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmImageCapture --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmImageCapture --|> System.Windows.Forms.Form
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ActivateWindowsCommand" <<sealed>> {
 +RunCommand() : void 
@@ -163,25 +164,24 @@ class "GetProcessNamesFromWindowNamesAsDataTableCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AWindowNamesCommands <|-- taskt.Core.Automation.Commands.ActivateWindowsCommand
-taskt.Core.Automation.Commands.AWindowNamesCommands <|-- taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
-taskt.Core.Automation.Commands.AWindowNamesCommands <|-- taskt.Core.Automation.Commands.AWindowNamesActionCommnads
-taskt.Core.Automation.Commands.AWindowNamesCommands <|-- taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
-taskt.Core.Automation.Commands.AWindowNamesCommands <|-- taskt.Core.Automation.Commands.GetWindowNamesCommand
-taskt.Core.Automation.Commands.AWindowNamesCommands <|-- taskt.Core.Automation.Commands.CheckWindowNameExistsCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsListCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsListCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands <|-- taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsListCommand
-taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.SetWindowsStateCommand
-taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.ResizeWindowsCommand
-taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.MoveWindowsCommand
-taskt.Core.Automation.Commands.AWindowNamesActionCommnads <|-- taskt.Core.Automation.Commands.CloseWindowsCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsDataTableCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsDataTableCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsDataTableCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsDataTableCommand
-taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands <|-- taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsDataTableCommand
+taskt.Core.Automation.Commands.ActivateWindowsCommand --|> taskt.Core.Automation.Commands.AWindowNamesCommands
+taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands --|> taskt.Core.Automation.Commands.AWindowNamesCommands
+taskt.Core.Automation.Commands.AWindowNamesActionCommnads --|> taskt.Core.Automation.Commands.AWindowNamesCommands
+taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands --|> taskt.Core.Automation.Commands.AWindowNamesCommands
+taskt.Core.Automation.Commands.GetWindowNamesCommand --|> taskt.Core.Automation.Commands.AWindowNamesCommands
+taskt.Core.Automation.Commands.CheckWindowNameExistsCommand --|> taskt.Core.Automation.Commands.AWindowNamesCommands
+taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsListCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
+taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
+taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
+taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsListCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
+taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsListCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands
+taskt.Core.Automation.Commands.SetWindowsStateCommand --|> taskt.Core.Automation.Commands.AWindowNamesActionCommnads
+taskt.Core.Automation.Commands.ResizeWindowsCommand --|> taskt.Core.Automation.Commands.AWindowNamesActionCommnads
+taskt.Core.Automation.Commands.MoveWindowsCommand --|> taskt.Core.Automation.Commands.AWindowNamesActionCommnads
+taskt.Core.Automation.Commands.CloseWindowsCommand --|> taskt.Core.Automation.Commands.AWindowNamesActionCommnads
+taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsDataTableCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
+taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsDataTableCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
+taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsDataTableCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
+taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsDataTableCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
+taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsDataTableCommand --|> taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands
 @enduml

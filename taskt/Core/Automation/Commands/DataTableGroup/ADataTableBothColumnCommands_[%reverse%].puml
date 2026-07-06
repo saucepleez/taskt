@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "SetDataTableColumnValuesByDataTableCommand" <<sealed>> {
 +RunCommand() : void 
@@ -24,7 +25,6 @@ class "SetDataTableColumnValuesByListCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.ADataTableBothColumnCommands <|-- taskt.Core.Automation.Commands.SetDataTableColumnValuesByDataTableCommand
-taskt.Core.Automation.Commands.ADataTableBothColumnCommands <|-- taskt.Core.Automation.Commands.SetDataTableColumnValuesByListCommand
+taskt.Core.Automation.Commands.SetDataTableColumnValuesByDataTableCommand --|> taskt.Core.Automation.Commands.ADataTableBothColumnCommands
+taskt.Core.Automation.Commands.SetDataTableColumnValuesByListCommand --|> taskt.Core.Automation.Commands.ADataTableBothColumnCommands
 @enduml

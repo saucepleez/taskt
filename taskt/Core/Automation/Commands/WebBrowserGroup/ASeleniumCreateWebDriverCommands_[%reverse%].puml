@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "SeleniumBrowserAttachCreateWebBrowserInstanceCommand" <<sealed>> {
 +RunCommand() : void 
@@ -33,7 +34,6 @@ class "SeleniumBrowserCreateWebBrowserInstanceCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserAttachCreateWebBrowserInstanceCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserCreateWebBrowserInstanceCommand
+taskt.Core.Automation.Commands.SeleniumBrowserAttachCreateWebBrowserInstanceCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands
+taskt.Core.Automation.Commands.SeleniumBrowserCreateWebBrowserInstanceCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands
 @enduml

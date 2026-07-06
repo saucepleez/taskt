@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AExcelColumnSpecifiedCommands"{
 +v_ColumnType : String <<get>> <<set>> 
@@ -45,10 +46,9 @@ class "ExcelGetLastRowIndexCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IExcelColumnSpecifiedProperties <|.. taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands
-taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands <|-- taskt.Core.Automation.Commands.ExcelSetColumnWidthCommand
-taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands <|-- taskt.Core.Automation.Commands.ExcelAppendCellCommand
-taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands <|-- taskt.Core.Automation.Commands.ExcelAppendRowCommand
-taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands <|-- taskt.Core.Automation.Commands.ExcelGetLastRowIndexCommand
+taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands ..|> taskt.Core.Automation.Commands.IExcelColumnSpecifiedProperties
+taskt.Core.Automation.Commands.ExcelSetColumnWidthCommand --|> taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands
+taskt.Core.Automation.Commands.ExcelAppendCellCommand --|> taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands
+taskt.Core.Automation.Commands.ExcelAppendRowCommand --|> taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands
+taskt.Core.Automation.Commands.ExcelGetLastRowIndexCommand --|> taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands
 @enduml

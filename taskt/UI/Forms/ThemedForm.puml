@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms"{
 class "ThemedForm" {
 #OnShown() : void 
@@ -215,7 +216,6 @@ class "Form" {
 }
 }
 
-
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ThemedForm
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ThemedForm
+taskt.UI.Forms.ThemedForm --|> System.Windows.Forms.Form
+taskt.UI.Forms.ThemedForm --|> System.Windows.Forms.Form
 @enduml

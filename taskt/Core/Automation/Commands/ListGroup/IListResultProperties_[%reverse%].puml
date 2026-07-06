@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand" <<sealed>> {
 +RunCommand() : void 
@@ -192,30 +193,29 @@ class "CheckListItemExistsCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand
-taskt.Core.Automation.Commands.IListResultProperties <|-- taskt.Core.Automation.Commands.IListGetFromValueProperties
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabHandlesAsListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetOptionsFromWebElementCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableColumnToListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ConvertDataTableRowToListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetDataTableColumnListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ConvertDictionaryToListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetDictionaryKeysListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetColumnValuesAsListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ExcelGetWorksheetsCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.ConvertJSONToListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetFilesPathAsListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetFoldersPathAsListCommand
-taskt.Core.Automation.Commands.IListResultProperties <|.. taskt.Core.Automation.Commands.GetJSONValuesAsListCommand
-taskt.Core.Automation.Commands.IListGetFromValueProperties <|.. taskt.Core.Automation.Commands.AListGetFromValueCommands
-taskt.Core.Automation.Commands.AListGetFromValueCommands <|-- taskt.Core.Automation.Commands.GetListIndexFromValueCommand
-taskt.Core.Automation.Commands.AListGetFromValueCommands <|-- taskt.Core.Automation.Commands.CheckListItemExistsCommand
+taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.IListGetFromValueProperties --|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabHandlesAsListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetOptionsFromWebElementCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.ConvertDataTableColumnToListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.ConvertDataTableRowToListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.GetDataTableColumnListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.ConvertDictionaryToListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.GetDictionaryKeysListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.ExcelGetWorksheetsCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.ConvertJSONToListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.GetFilesPathAsListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.GetFoldersPathAsListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.GetJSONValuesAsListCommand ..|> taskt.Core.Automation.Commands.IListResultProperties
+taskt.Core.Automation.Commands.AListGetFromValueCommands ..|> taskt.Core.Automation.Commands.IListGetFromValueProperties
+taskt.Core.Automation.Commands.GetListIndexFromValueCommand --|> taskt.Core.Automation.Commands.AListGetFromValueCommands
+taskt.Core.Automation.Commands.CheckListItemExistsCommand --|> taskt.Core.Automation.Commands.AListGetFromValueCommands
 @enduml

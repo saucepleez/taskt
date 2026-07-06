@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 abstract class "ADescendantsSearchUIElementsFromUIElementByXPathCommands"{
 +v_TargetElement : String <<get>> <<set>> 
@@ -358,57 +359,56 @@ class "UIAutomationSetTextToUIElementCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementCoreCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties <|.. taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsByXPathCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsByXPathCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementByXPathCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementCoreCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByXPathCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IGetFromUIElementProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementActionProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchChildrenUIElementsTreeXMLFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchChildrenUIElementsInformationCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchChildUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByXPathCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchChildUIElementFromUIElementByXPathCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.IGetFromUIElementProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementActionProperties <|.. taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties <|.. taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties <|.. taskt.Core.Automation.Commands.UIAutomationSelectItemInUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetTextsFromTableUIElementAsDataTableCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetWindowUIElementFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetTableInformationFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetScrollBarInformationFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetWindowHandleFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetWindowNameFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetPropertyValueFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetUIElementPositionCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetUIElementSizeCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetSelectedStateFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetUIElementFromTableUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetTextFromTableUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetTextFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands <|-- taskt.Core.Automation.Commands.UIAutomationGetParentUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationScrollPercentUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationSetSelectedStateToUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationClickUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationExpandCollapseItemsInUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationScrollUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationSelectItemInUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationSelectUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands <|-- taskt.Core.Automation.Commands.UIAutomationSetTextToUIElementCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementCoreCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementsInformationFromUIElementCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties
+taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementCoreCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByXPathCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IGetFromUIElementProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementActionProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IDoSomethingUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationSearchChildrenUIElementsTreeXMLFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationSearchChildrenUIElementsInformationCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationSearchChildUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationSearchChildUIElementFromUIElementByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IGetFromUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementActionProperties
+taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties
+taskt.Core.Automation.Commands.UIAutomationSelectItemInUIElementCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties
+taskt.Core.Automation.Commands.UIAutomationGetTextsFromTableUIElementAsDataTableCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetWindowUIElementFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetTableInformationFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetScrollBarInformationFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetWindowHandleFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetWindowNameFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetPropertyValueFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetUIElementPositionCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetUIElementSizeCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetSelectedStateFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetUIElementFromTableUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetTextFromTableUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetTextFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetParentUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationScrollPercentUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
+taskt.Core.Automation.Commands.UIAutomationSetSelectedStateToUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
+taskt.Core.Automation.Commands.UIAutomationClickUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
+taskt.Core.Automation.Commands.UIAutomationExpandCollapseItemsInUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
+taskt.Core.Automation.Commands.UIAutomationScrollUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
+taskt.Core.Automation.Commands.UIAutomationSelectItemInUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
+taskt.Core.Automation.Commands.UIAutomationSelectUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
+taskt.Core.Automation.Commands.UIAutomationSetTextToUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionCommands
 @enduml

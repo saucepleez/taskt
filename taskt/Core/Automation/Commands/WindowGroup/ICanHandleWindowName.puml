@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 Interface "ICanHandleWindowName" {
 }
@@ -9,6 +10,5 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleWindowName
+taskt.Core.Automation.Commands.ICanHandleWindowName --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

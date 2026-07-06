@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "WaitForFolderToExistCommand" <<sealed>> {
 +RunCommand() : void 
@@ -111,19 +112,18 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands <|-- taskt.Core.Automation.Commands.WaitForFolderToExistCommand
-taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands <|-- taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
-taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties <|.. taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
-taskt.Core.Automation.Commands.AFolderFolderPathCommands <|-- taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands
-taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties <|.. taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands
-taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties <|-- taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AFolderFolderPathCommands
-taskt.Core.Automation.Commands.IFolderPathProperties <|.. taskt.Core.Automation.Commands.AFolderFolderPathCommands
-taskt.Core.Automation.Commands.IFolderPathProperties <|-- taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICanHandleFolderPath <|-- taskt.Core.Automation.Commands.IFolderPathProperties
-taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath <|-- taskt.Core.Automation.Commands.ICanHandleFolderPath
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath
+taskt.Core.Automation.Commands.WaitForFolderToExistCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
+taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands
+taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands ..|> taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties
+taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands --|> taskt.Core.Automation.Commands.AFolderFolderPathCommands
+taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands ..|> taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties
+taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties --|> taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties
+taskt.Core.Automation.Commands.AFolderFolderPathCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AFolderFolderPathCommands ..|> taskt.Core.Automation.Commands.IFolderPathProperties
+taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties --|> taskt.Core.Automation.Commands.IFolderPathProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IFolderPathProperties --|> taskt.Core.Automation.Commands.ICanHandleFolderPath
+taskt.Core.Automation.Commands.ICanHandleFolderPath --|> taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath
+taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

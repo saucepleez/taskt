@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core"{
 class "SafeDocumentGenerationClientSettings" {
 +ShowSampleUsageInDescription : Boolean <<get>> <<set>> 
@@ -119,7 +120,6 @@ Interface "IClientSettings" {
 }
 }
 
-
-taskt.Core.SafeClientSettings <|-- taskt.Core.SafeDocumentGenerationClientSettings
-taskt.Core.IClientSettings <|.. taskt.Core.SafeClientSettings
+taskt.Core.SafeDocumentGenerationClientSettings --|> taskt.Core.SafeClientSettings
+taskt.Core.SafeClientSettings ..|> taskt.Core.IClientSettings
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "GetLastExistentNumberedFilePathCommand" <<sealed>> {
 +RunCommand() : void 
@@ -24,7 +25,6 @@ class "GetNonExistentFilePathCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AFileNumberedFileCommands <|-- taskt.Core.Automation.Commands.GetLastExistentNumberedFilePathCommand
-taskt.Core.Automation.Commands.AFileNumberedFileCommands <|-- taskt.Core.Automation.Commands.GetNonExistentFilePathCommand
+taskt.Core.Automation.Commands.GetLastExistentNumberedFilePathCommand --|> taskt.Core.Automation.Commands.AFileNumberedFileCommands
+taskt.Core.Automation.Commands.GetNonExistentFilePathCommand --|> taskt.Core.Automation.Commands.AFileNumberedFileCommands
 @enduml

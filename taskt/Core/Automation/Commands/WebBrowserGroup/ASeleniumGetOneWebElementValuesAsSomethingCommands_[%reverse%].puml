@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "SeleniumBrowserGetOneWebElementValuesAsDataTableCommand" <<sealed>> {
 +RunCommand() : void 
@@ -29,8 +30,7 @@ class "SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand
+taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands
 @enduml

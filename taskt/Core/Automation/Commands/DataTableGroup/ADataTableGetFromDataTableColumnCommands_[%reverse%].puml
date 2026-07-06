@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "JoinDataTableColumnAsTextCommand" <<sealed>> {
 +RunCommand() : void 
@@ -60,12 +61,11 @@ class "CheckDataTableColumnExistsCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.JoinDataTableColumnAsTextCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToTextCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToJSONCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToDataTableCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableColumnToListCommand
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands <|-- taskt.Core.Automation.Commands.CheckDataTableColumnExistsCommand
+taskt.Core.Automation.Commands.JoinDataTableColumnAsTextCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
+taskt.Core.Automation.Commands.ConvertDataTableColumnToTextCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
+taskt.Core.Automation.Commands.ConvertDataTableColumnToJSONCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
+taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
+taskt.Core.Automation.Commands.ConvertDataTableColumnToDataTableCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
+taskt.Core.Automation.Commands.ConvertDataTableColumnToListCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
+taskt.Core.Automation.Commands.CheckDataTableColumnExistsCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands
 @enduml

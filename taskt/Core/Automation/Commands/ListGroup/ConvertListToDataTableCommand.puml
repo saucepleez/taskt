@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ConvertListToDataTableCommand" <<sealed>> {
 +RunCommand() : void 
@@ -114,22 +115,21 @@ Interface "ICommandIDProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToDataTableCommand
-taskt.Core.Automation.Commands.IDataTableResultProperties <|.. taskt.Core.Automation.Commands.ConvertListToDataTableCommand
-taskt.Core.Automation.Commands.ICanHandleList <|.. taskt.Core.Automation.Commands.ConvertListToDataTableCommand
-taskt.Core.Automation.Commands.AListInputListCommands <|-- taskt.Core.Automation.Commands.AListGetFromListCommands
-taskt.Core.Automation.Commands.IListGetFromListProperties <|.. taskt.Core.Automation.Commands.AListGetFromListCommands
-taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.IDataTableResultProperties
-taskt.Core.Automation.Commands.ICanHandleDataTable <|-- taskt.Core.Automation.Commands.IDataTableResultProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleList
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AListInputListCommands
-taskt.Core.Automation.Commands.IListProperties <|.. taskt.Core.Automation.Commands.AListInputListCommands
-taskt.Core.Automation.Commands.IListProperties <|-- taskt.Core.Automation.Commands.IListGetFromListProperties
-taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.IListGetFromListProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleDataTable
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICanHandleList <|-- taskt.Core.Automation.Commands.IListProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IListProperties
+taskt.Core.Automation.Commands.ConvertListToDataTableCommand --|> taskt.Core.Automation.Commands.AListGetFromListCommands
+taskt.Core.Automation.Commands.ConvertListToDataTableCommand ..|> taskt.Core.Automation.Commands.IDataTableResultProperties
+taskt.Core.Automation.Commands.ConvertListToDataTableCommand ..|> taskt.Core.Automation.Commands.ICanHandleList
+taskt.Core.Automation.Commands.AListGetFromListCommands --|> taskt.Core.Automation.Commands.AListInputListCommands
+taskt.Core.Automation.Commands.AListGetFromListCommands ..|> taskt.Core.Automation.Commands.IListGetFromListProperties
+taskt.Core.Automation.Commands.IDataTableResultProperties --|> taskt.Core.Automation.Commands.IResultProperties
+taskt.Core.Automation.Commands.IDataTableResultProperties --|> taskt.Core.Automation.Commands.ICanHandleDataTable
+taskt.Core.Automation.Commands.ICanHandleList --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.AListInputListCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AListInputListCommands ..|> taskt.Core.Automation.Commands.IListProperties
+taskt.Core.Automation.Commands.IListGetFromListProperties --|> taskt.Core.Automation.Commands.IListProperties
+taskt.Core.Automation.Commands.IListGetFromListProperties --|> taskt.Core.Automation.Commands.IResultProperties
+taskt.Core.Automation.Commands.ICanHandleDataTable --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IListProperties --|> taskt.Core.Automation.Commands.ICanHandleList
+taskt.Core.Automation.Commands.IListProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

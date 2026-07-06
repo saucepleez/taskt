@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "ARunCSharpSomethingCommands"{
 +v_Arguments : String <<get>> <<set>> 
@@ -47,10 +48,9 @@ class "RunCSharpCodeCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands <|-- taskt.Core.Automation.Commands.ARunCSharpSomethingCommands
-taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands <|-- taskt.Core.Automation.Commands.CompileCSharpFileCommand
-taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands <|-- taskt.Core.Automation.Commands.CompileCSharpCodeCommand
-taskt.Core.Automation.Commands.ARunCSharpSomethingCommands <|-- taskt.Core.Automation.Commands.RunCSharpFileCommand
-taskt.Core.Automation.Commands.ARunCSharpSomethingCommands <|-- taskt.Core.Automation.Commands.RunCSharpCodeCommand
+taskt.Core.Automation.Commands.ARunCSharpSomethingCommands --|> taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands
+taskt.Core.Automation.Commands.CompileCSharpFileCommand --|> taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands
+taskt.Core.Automation.Commands.CompileCSharpCodeCommand --|> taskt.Core.Automation.Commands.ACompileCSharpSomethingCommands
+taskt.Core.Automation.Commands.RunCSharpFileCommand --|> taskt.Core.Automation.Commands.ARunCSharpSomethingCommands
+taskt.Core.Automation.Commands.RunCSharpCodeCommand --|> taskt.Core.Automation.Commands.ARunCSharpSomethingCommands
 @enduml

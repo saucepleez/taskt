@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "UIAutomationSearchUIElementFromWindowHandleCommand" <<sealed>> {
 +RunCommand() : void 
@@ -13,6 +14,5 @@ abstract class "ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerComman
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands <|-- taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleCommand
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands
 @enduml

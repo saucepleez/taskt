@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.ScriptEngine.Supplemental"{
 class "frmUserInput" {
 -uiBtnOk_Click() : void 
@@ -238,8 +239,7 @@ class "Form" {
 }
 }
 
-
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptEngine.Supplemental.frmUserInput
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptEngine.Supplemental.frmUserInput
-System.Windows.Forms.Form <|-- taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptEngine.Supplemental.frmUserInput --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptEngine.Supplemental.frmUserInput --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.UIForm --|> System.Windows.Forms.Form
 @enduml

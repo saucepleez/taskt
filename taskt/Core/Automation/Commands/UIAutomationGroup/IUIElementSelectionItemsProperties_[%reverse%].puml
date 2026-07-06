@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "UIAutomationGetSelectionItemsValueFromUIElementCommand" <<sealed>> {
 +RunCommand() : void 
@@ -25,7 +26,6 @@ class "UIAutomationSelectItemInUIElementCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties <|.. taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties <|.. taskt.Core.Automation.Commands.UIAutomationSelectItemInUIElementCommand
+taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties
+taskt.Core.Automation.Commands.UIAutomationSelectItemInUIElementCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties
 @enduml

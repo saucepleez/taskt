@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
 class "frmGUIInspectTool" {
 -frmGUIInspectTool_Load() : void 
@@ -321,11 +322,10 @@ class "Form" {
 }
 }
 
-
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspectTool
-taskt.UI.Forms.DialogLikeThemedForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspectTool
-taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.DialogLikeThemedForm
-taskt.UI.Forms.ThemedForm <|-- taskt.UI.Forms.DialogLikeThemedForm
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ThemedForm
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspectTool --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspectTool --|> taskt.UI.Forms.DialogLikeThemedForm
+taskt.UI.Forms.DialogLikeThemedForm --|> taskt.UI.Forms.ThemedForm
+taskt.UI.Forms.DialogLikeThemedForm --|> taskt.UI.Forms.ThemedForm
+taskt.UI.Forms.ThemedForm --|> System.Windows.Forms.Form
+taskt.UI.Forms.ThemedForm --|> System.Windows.Forms.Form
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "AddDataTableRowsByDataTableCommand" <<sealed>> {
 +RunCommand() : void 
@@ -91,14 +92,13 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ADataTableBothDataTableCommands <|-- taskt.Core.Automation.Commands.AddDataTableRowsByDataTableCommand
-taskt.Core.Automation.Commands.ADataTableInputDataTableCommands <|-- taskt.Core.Automation.Commands.ADataTableBothDataTableCommands
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.ADataTableInputDataTableCommands
-taskt.Core.Automation.Commands.IDataTableProperties <|.. taskt.Core.Automation.Commands.ADataTableInputDataTableCommands
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICanHandleDataTable <|-- taskt.Core.Automation.Commands.IDataTableProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IDataTableProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleDataTable
+taskt.Core.Automation.Commands.AddDataTableRowsByDataTableCommand --|> taskt.Core.Automation.Commands.ADataTableBothDataTableCommands
+taskt.Core.Automation.Commands.ADataTableBothDataTableCommands --|> taskt.Core.Automation.Commands.ADataTableInputDataTableCommands
+taskt.Core.Automation.Commands.ADataTableInputDataTableCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.ADataTableInputDataTableCommands ..|> taskt.Core.Automation.Commands.IDataTableProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IDataTableProperties --|> taskt.Core.Automation.Commands.ICanHandleDataTable
+taskt.Core.Automation.Commands.IDataTableProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICanHandleDataTable --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

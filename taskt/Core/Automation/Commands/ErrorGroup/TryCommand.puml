@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "TryCommand" <<sealed>> {
 +RunCommand() : void 
@@ -70,10 +71,9 @@ Interface "IHaveAdditionalCommands" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.TryCommand
-taskt.Core.Automation.Commands.IHaveErrorAdditionalCommands <|.. taskt.Core.Automation.Commands.TryCommand
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.IHaveAdditionalCommands <|-- taskt.Core.Automation.Commands.IHaveErrorAdditionalCommands
+taskt.Core.Automation.Commands.TryCommand --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.TryCommand ..|> taskt.Core.Automation.Commands.IHaveErrorAdditionalCommands
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IHaveErrorAdditionalCommands --|> taskt.Core.Automation.Commands.IHaveAdditionalCommands
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "SeleniumBrowserCheckWebElementExistsFromWebElementCommand" <<sealed>> {
 +RunCommand() : void 
@@ -15,6 +16,5 @@ abstract class "ASeleniumSearchWebElementFromWebElementCommands"{
 }
 }
 
-
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands <|-- taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsFromWebElementCommand
+taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AExcelRowRangeGetCommands"{
 +{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
@@ -67,13 +68,12 @@ class "ExcelSetRowValuesFromListCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AExcelRowRangeCommands <|-- taskt.Core.Automation.Commands.AExcelRowRangeGetCommands
-taskt.Core.Automation.Commands.AExcelRowRangeCommands <|-- taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
-taskt.Core.Automation.Commands.AExcelRowRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetRowValuesAsDictionaryCommand
-taskt.Core.Automation.Commands.AExcelRowRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand
-taskt.Core.Automation.Commands.AExcelRowRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand
-taskt.Core.Automation.Commands.AExcelRowRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetRowValuesFromDataTableCommand
-taskt.Core.Automation.Commands.AExcelRowRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetRowValuesFromDictionaryCommand
-taskt.Core.Automation.Commands.AExcelRowRangeSetCommands <|-- taskt.Core.Automation.Commands.ExcelSetRowValuesFromListCommand
+taskt.Core.Automation.Commands.AExcelRowRangeGetCommands --|> taskt.Core.Automation.Commands.AExcelRowRangeCommands
+taskt.Core.Automation.Commands.AExcelRowRangeSetCommands --|> taskt.Core.Automation.Commands.AExcelRowRangeCommands
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeGetCommands
+taskt.Core.Automation.Commands.ExcelSetRowValuesFromDataTableCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetRowValuesFromDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetRowValuesFromListCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
 @enduml

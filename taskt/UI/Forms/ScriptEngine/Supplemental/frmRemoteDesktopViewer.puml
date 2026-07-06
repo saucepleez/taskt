@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.ScriptEngine.Supplemental"{
 class "frmRemoteDesktopViewer" {
 +add_LoginUpdateEvent() : void 
@@ -224,7 +225,6 @@ class "Form" {
 }
 }
 
-
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptEngine.Supplemental.frmRemoteDesktopViewer
-System.Windows.Forms.Form <|-- taskt.UI.Forms.ScriptEngine.Supplemental.frmRemoteDesktopViewer
+taskt.UI.Forms.ScriptEngine.Supplemental.frmRemoteDesktopViewer --|> System.Windows.Forms.Form
+taskt.UI.Forms.ScriptEngine.Supplemental.frmRemoteDesktopViewer --|> System.Windows.Forms.Form
 @enduml

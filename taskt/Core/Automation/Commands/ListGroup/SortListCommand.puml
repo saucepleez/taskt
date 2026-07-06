@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "SortListCommand" <<sealed>> {
 +RunCommand() : void 
@@ -87,13 +88,12 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.AListCreateFromListCommands <|-- taskt.Core.Automation.Commands.SortListCommand
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AListCreateFromListCommands
-taskt.Core.Automation.Commands.IListCreateFromListProperties <|.. taskt.Core.Automation.Commands.AListCreateFromListCommands
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICanHandleList <|-- taskt.Core.Automation.Commands.IListCreateFromListProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IListCreateFromListProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleList
+taskt.Core.Automation.Commands.SortListCommand --|> taskt.Core.Automation.Commands.AListCreateFromListCommands
+taskt.Core.Automation.Commands.AListCreateFromListCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AListCreateFromListCommands ..|> taskt.Core.Automation.Commands.IListCreateFromListProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IListCreateFromListProperties --|> taskt.Core.Automation.Commands.ICanHandleList
+taskt.Core.Automation.Commands.IListCreateFromListProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICanHandleList --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

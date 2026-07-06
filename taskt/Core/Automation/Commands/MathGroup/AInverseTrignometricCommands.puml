@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AInverseTrignometricCommands"{
 +v_AngleType : String <<get>> <<set>> 
@@ -98,16 +99,15 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ATrignometricCommands <|-- taskt.Core.Automation.Commands.AInverseTrignometricCommands
-taskt.Core.Automation.Commands.IInverseTrignometricProperties <|.. taskt.Core.Automation.Commands.AInverseTrignometricCommands
-taskt.Core.Automation.Commands.AMathValueResultCommands <|-- taskt.Core.Automation.Commands.ATrignometricCommands
-taskt.Core.Automation.Commands.ITrignometricProperties <|.. taskt.Core.Automation.Commands.ATrignometricCommands
-taskt.Core.Automation.Commands.ITrignometricProperties <|-- taskt.Core.Automation.Commands.IInverseTrignometricProperties
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.AMathValueResultCommands
-taskt.Core.Automation.Commands.IMathValueResultProperties <|.. taskt.Core.Automation.Commands.AMathValueResultCommands
-taskt.Core.Automation.Commands.IMathValueResultProperties <|-- taskt.Core.Automation.Commands.ITrignometricProperties
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IMathValueResultProperties
+taskt.Core.Automation.Commands.AInverseTrignometricCommands --|> taskt.Core.Automation.Commands.ATrignometricCommands
+taskt.Core.Automation.Commands.AInverseTrignometricCommands ..|> taskt.Core.Automation.Commands.IInverseTrignometricProperties
+taskt.Core.Automation.Commands.ATrignometricCommands --|> taskt.Core.Automation.Commands.AMathValueResultCommands
+taskt.Core.Automation.Commands.ATrignometricCommands ..|> taskt.Core.Automation.Commands.ITrignometricProperties
+taskt.Core.Automation.Commands.IInverseTrignometricProperties --|> taskt.Core.Automation.Commands.ITrignometricProperties
+taskt.Core.Automation.Commands.AMathValueResultCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AMathValueResultCommands ..|> taskt.Core.Automation.Commands.IMathValueResultProperties
+taskt.Core.Automation.Commands.ITrignometricProperties --|> taskt.Core.Automation.Commands.IMathValueResultProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IMathValueResultProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core"{
 class "ServerSettings" <<sealed>> {
 +Clone() : ServerSettings
@@ -26,6 +27,5 @@ Interface "IServerSettings" {
 }
 }
 
-
-taskt.Core.IServerSettings <|.. taskt.Core.ServerSettings
+taskt.Core.ServerSettings ..|> taskt.Core.IServerSettings
 @enduml

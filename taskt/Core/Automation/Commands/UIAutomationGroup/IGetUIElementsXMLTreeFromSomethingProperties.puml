@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 Interface "IGetUIElementsXMLTreeFromSomethingProperties" {
 }
@@ -45,14 +46,13 @@ Interface "IFromWindowHandleResultsProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties
-taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties
-taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties <|-- taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
-taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties --|> taskt.Core.Automation.Commands.IResultProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 Interface "IDictionaryKeyActionProperties" {
 +{abstract} v_WhenKeyDoesNotExists : String <<get>> <<set>> <<abstract>> 
@@ -27,10 +28,9 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.IDictionaryKeyProperties <|-- taskt.Core.Automation.Commands.IDictionaryKeyActionProperties
-taskt.Core.Automation.Commands.IDictionaryProperties <|-- taskt.Core.Automation.Commands.IDictionaryKeyProperties
-taskt.Core.Automation.Commands.ICanHandleDictionary <|-- taskt.Core.Automation.Commands.IDictionaryProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IDictionaryProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleDictionary
+taskt.Core.Automation.Commands.IDictionaryKeyActionProperties --|> taskt.Core.Automation.Commands.IDictionaryKeyProperties
+taskt.Core.Automation.Commands.IDictionaryKeyProperties --|> taskt.Core.Automation.Commands.IDictionaryProperties
+taskt.Core.Automation.Commands.IDictionaryProperties --|> taskt.Core.Automation.Commands.ICanHandleDictionary
+taskt.Core.Automation.Commands.IDictionaryProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICanHandleDictionary --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

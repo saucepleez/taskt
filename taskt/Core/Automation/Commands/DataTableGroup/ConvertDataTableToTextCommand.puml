@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ConvertDataTableToTextCommand" <<sealed>> {
 +RunCommand() : void 
@@ -102,16 +103,15 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands <|-- taskt.Core.Automation.Commands.ConvertDataTableToTextCommand
-taskt.Core.Automation.Commands.ADataTableInputDataTableCommands <|-- taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands
-taskt.Core.Automation.Commands.IDataTableGetFromDataTable <|.. taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands
-taskt.Core.Automation.Commands.ScriptCommand <|-- taskt.Core.Automation.Commands.ADataTableInputDataTableCommands
-taskt.Core.Automation.Commands.IDataTableProperties <|.. taskt.Core.Automation.Commands.ADataTableInputDataTableCommands
-taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.IDataTableGetFromDataTable
-taskt.Core.Automation.Commands.IUIParameterProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICommandIDProperties <|.. taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.ICanHandleDataTable <|-- taskt.Core.Automation.Commands.IDataTableProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IDataTableProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleDataTable
+taskt.Core.Automation.Commands.ConvertDataTableToTextCommand --|> taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands --|> taskt.Core.Automation.Commands.ADataTableInputDataTableCommands
+taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands ..|> taskt.Core.Automation.Commands.IDataTableGetFromDataTable
+taskt.Core.Automation.Commands.ADataTableInputDataTableCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.ADataTableInputDataTableCommands ..|> taskt.Core.Automation.Commands.IDataTableProperties
+taskt.Core.Automation.Commands.IDataTableGetFromDataTable --|> taskt.Core.Automation.Commands.IResultProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IDataTableProperties --|> taskt.Core.Automation.Commands.ICanHandleDataTable
+taskt.Core.Automation.Commands.IDataTableProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICanHandleDataTable --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

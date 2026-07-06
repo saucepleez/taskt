@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 Interface "IListGetMathResultFromListProperties" {
 +{abstract} v_WhenValueIsNotNumeric : String <<get>> <<set>> <<abstract>> 
@@ -32,11 +33,10 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.IListGetFromListProperties <|-- taskt.Core.Automation.Commands.IListGetMathResultFromListProperties
-taskt.Core.Automation.Commands.IListProperties <|-- taskt.Core.Automation.Commands.IListGetFromListProperties
-taskt.Core.Automation.Commands.IResultProperties <|-- taskt.Core.Automation.Commands.IListGetFromListProperties
-taskt.Core.Automation.Commands.ICanHandleList <|-- taskt.Core.Automation.Commands.IListProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.IListProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleList
+taskt.Core.Automation.Commands.IListGetMathResultFromListProperties --|> taskt.Core.Automation.Commands.IListGetFromListProperties
+taskt.Core.Automation.Commands.IListGetFromListProperties --|> taskt.Core.Automation.Commands.IListProperties
+taskt.Core.Automation.Commands.IListGetFromListProperties --|> taskt.Core.Automation.Commands.IResultProperties
+taskt.Core.Automation.Commands.IListProperties --|> taskt.Core.Automation.Commands.ICanHandleList
+taskt.Core.Automation.Commands.IListProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICanHandleList --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

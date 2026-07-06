@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "UIAutomationGetScrollBarInformationFromUIElementCommand" <<sealed>> {
 +RunCommand() : void 
@@ -28,8 +29,7 @@ class "UIAutomationScrollUIElementCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementScrollBar <|.. taskt.Core.Automation.Commands.UIAutomationGetScrollBarInformationFromUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementScrollBar <|.. taskt.Core.Automation.Commands.UIAutomationScrollPercentUIElementCommand
-taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementScrollBar <|.. taskt.Core.Automation.Commands.UIAutomationScrollUIElementCommand
+taskt.Core.Automation.Commands.UIAutomationGetScrollBarInformationFromUIElementCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementScrollBar
+taskt.Core.Automation.Commands.UIAutomationScrollPercentUIElementCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementScrollBar
+taskt.Core.Automation.Commands.UIAutomationScrollUIElementCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementScrollBar
 @enduml

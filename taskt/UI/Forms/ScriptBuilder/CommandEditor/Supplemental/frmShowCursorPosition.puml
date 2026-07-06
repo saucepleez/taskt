@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental"{
 class "frmShowCursorPosition" {
 +{static} GetCursorPos() : Boolean
@@ -233,8 +234,7 @@ class "Form" {
 }
 }
 
-
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmShowCursorPosition
-taskt.UI.Forms.UIForm <|-- taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmShowCursorPosition
-System.Windows.Forms.Form <|-- taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmShowCursorPosition --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmShowCursorPosition --|> taskt.UI.Forms.UIForm
+taskt.UI.Forms.UIForm --|> System.Windows.Forms.Form
 @enduml

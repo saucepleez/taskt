@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AListBothListCommands"{
 +v_List : String <<get>> <<set>> 
@@ -243,36 +244,35 @@ class "GetVarianceFromListCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AListInputListCommands <|-- taskt.Core.Automation.Commands.AListBothListCommands
-taskt.Core.Automation.Commands.AListInputListCommands <|-- taskt.Core.Automation.Commands.AListGetFromListCommands
-taskt.Core.Automation.Commands.AListInputListCommands <|-- taskt.Core.Automation.Commands.AListIndexCommands
-taskt.Core.Automation.Commands.AListInputListCommands <|-- taskt.Core.Automation.Commands.ExportListAsTextFileCommand
-taskt.Core.Automation.Commands.AListInputListCommands <|-- taskt.Core.Automation.Commands.BeginLoopForListCommand
-taskt.Core.Automation.Commands.AListInputListCommands <|-- taskt.Core.Automation.Commands.CreateListCommand
-taskt.Core.Automation.Commands.AListBothListCommands <|-- taskt.Core.Automation.Commands.ReplaceListCommand
-taskt.Core.Automation.Commands.AListBothListCommands <|-- taskt.Core.Automation.Commands.AddListItemCommand
-taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.AListGetFromValueCommands
-taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
-taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToVisualizedTextCommand
-taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.JoinListValuesAsTextCommand
-taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToTextCommand
-taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.GetListIndexCommand
-taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToDataTableCommand
-taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToDictionaryCommand
-taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.ConvertListToJSONCommand
-taskt.Core.Automation.Commands.AListGetFromListCommands <|-- taskt.Core.Automation.Commands.GetListCountCommand
-taskt.Core.Automation.Commands.AListIndexCommands <|-- taskt.Core.Automation.Commands.CheckValidListIndex
-taskt.Core.Automation.Commands.AListIndexCommands <|-- taskt.Core.Automation.Commands.RemoveListItemCommand
-taskt.Core.Automation.Commands.AListIndexCommands <|-- taskt.Core.Automation.Commands.SetListItemCommand
-taskt.Core.Automation.Commands.AListIndexCommands <|-- taskt.Core.Automation.Commands.SetListIndexCommand
-taskt.Core.Automation.Commands.AListIndexCommands <|-- taskt.Core.Automation.Commands.GetListItemCommand
-taskt.Core.Automation.Commands.AListGetFromValueCommands <|-- taskt.Core.Automation.Commands.GetListIndexFromValueCommand
-taskt.Core.Automation.Commands.AListGetFromValueCommands <|-- taskt.Core.Automation.Commands.CheckListItemExistsCommand
-taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetAverageFromListCommand
-taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetMaxFromListCommand
-taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetMedianFromListCommand
-taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetMinFromListCommand
-taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetSumFromListCommand
-taskt.Core.Automation.Commands.AListGetMathResultFromListCommands <|-- taskt.Core.Automation.Commands.GetVarianceFromListCommand
+taskt.Core.Automation.Commands.AListBothListCommands --|> taskt.Core.Automation.Commands.AListInputListCommands
+taskt.Core.Automation.Commands.AListGetFromListCommands --|> taskt.Core.Automation.Commands.AListInputListCommands
+taskt.Core.Automation.Commands.AListIndexCommands --|> taskt.Core.Automation.Commands.AListInputListCommands
+taskt.Core.Automation.Commands.ExportListAsTextFileCommand --|> taskt.Core.Automation.Commands.AListInputListCommands
+taskt.Core.Automation.Commands.BeginLoopForListCommand --|> taskt.Core.Automation.Commands.AListInputListCommands
+taskt.Core.Automation.Commands.CreateListCommand --|> taskt.Core.Automation.Commands.AListInputListCommands
+taskt.Core.Automation.Commands.ReplaceListCommand --|> taskt.Core.Automation.Commands.AListBothListCommands
+taskt.Core.Automation.Commands.AddListItemCommand --|> taskt.Core.Automation.Commands.AListBothListCommands
+taskt.Core.Automation.Commands.AListGetFromValueCommands --|> taskt.Core.Automation.Commands.AListGetFromListCommands
+taskt.Core.Automation.Commands.AListGetMathResultFromListCommands --|> taskt.Core.Automation.Commands.AListGetFromListCommands
+taskt.Core.Automation.Commands.ConvertListToVisualizedTextCommand --|> taskt.Core.Automation.Commands.AListGetFromListCommands
+taskt.Core.Automation.Commands.JoinListValuesAsTextCommand --|> taskt.Core.Automation.Commands.AListGetFromListCommands
+taskt.Core.Automation.Commands.ConvertListToTextCommand --|> taskt.Core.Automation.Commands.AListGetFromListCommands
+taskt.Core.Automation.Commands.GetListIndexCommand --|> taskt.Core.Automation.Commands.AListGetFromListCommands
+taskt.Core.Automation.Commands.ConvertListToDataTableCommand --|> taskt.Core.Automation.Commands.AListGetFromListCommands
+taskt.Core.Automation.Commands.ConvertListToDictionaryCommand --|> taskt.Core.Automation.Commands.AListGetFromListCommands
+taskt.Core.Automation.Commands.ConvertListToJSONCommand --|> taskt.Core.Automation.Commands.AListGetFromListCommands
+taskt.Core.Automation.Commands.GetListCountCommand --|> taskt.Core.Automation.Commands.AListGetFromListCommands
+taskt.Core.Automation.Commands.CheckValidListIndex --|> taskt.Core.Automation.Commands.AListIndexCommands
+taskt.Core.Automation.Commands.RemoveListItemCommand --|> taskt.Core.Automation.Commands.AListIndexCommands
+taskt.Core.Automation.Commands.SetListItemCommand --|> taskt.Core.Automation.Commands.AListIndexCommands
+taskt.Core.Automation.Commands.SetListIndexCommand --|> taskt.Core.Automation.Commands.AListIndexCommands
+taskt.Core.Automation.Commands.GetListItemCommand --|> taskt.Core.Automation.Commands.AListIndexCommands
+taskt.Core.Automation.Commands.GetListIndexFromValueCommand --|> taskt.Core.Automation.Commands.AListGetFromValueCommands
+taskt.Core.Automation.Commands.CheckListItemExistsCommand --|> taskt.Core.Automation.Commands.AListGetFromValueCommands
+taskt.Core.Automation.Commands.GetAverageFromListCommand --|> taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
+taskt.Core.Automation.Commands.GetMaxFromListCommand --|> taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
+taskt.Core.Automation.Commands.GetMedianFromListCommand --|> taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
+taskt.Core.Automation.Commands.GetMinFromListCommand --|> taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
+taskt.Core.Automation.Commands.GetSumFromListCommand --|> taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
+taskt.Core.Automation.Commands.GetVarianceFromListCommand --|> taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
 @enduml

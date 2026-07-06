@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 Interface "IDateTimeCreateProperties" {
 +{abstract} v_DateTime : String <<get>> <<set>> <<abstract>> 
@@ -15,7 +16,6 @@ Interface "IExpandableProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.ICanHandleDateTime <|-- taskt.Core.Automation.Commands.IDateTimeCreateProperties
-taskt.Core.Automation.Commands.IExpandableProperties <|-- taskt.Core.Automation.Commands.ICanHandleDateTime
+taskt.Core.Automation.Commands.IDateTimeCreateProperties --|> taskt.Core.Automation.Commands.ICanHandleDateTime
+taskt.Core.Automation.Commands.ICanHandleDateTime --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

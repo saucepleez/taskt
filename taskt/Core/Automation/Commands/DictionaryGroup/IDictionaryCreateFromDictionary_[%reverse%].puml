@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "ADictionaryCreateFromDictionaryCommands"{
 +{abstract} v_TargetDictionary : String <<get>> <<set>> <<abstract>> 
@@ -34,8 +35,7 @@ class "CopyDictionaryCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IDictionaryCreateFromDictionary <|.. taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands
-taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands <|-- taskt.Core.Automation.Commands.FilterDictionaryCommand
-taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands <|-- taskt.Core.Automation.Commands.CopyDictionaryCommand
+taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands ..|> taskt.Core.Automation.Commands.IDictionaryCreateFromDictionary
+taskt.Core.Automation.Commands.FilterDictionaryCommand --|> taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands
+taskt.Core.Automation.Commands.CopyDictionaryCommand --|> taskt.Core.Automation.Commands.ADictionaryCreateFromDictionaryCommands
 @enduml

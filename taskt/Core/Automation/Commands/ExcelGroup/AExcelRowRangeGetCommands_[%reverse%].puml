@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ExcelGetRowValuesAsDictionaryCommand" <<sealed>> {
 +RunCommand() : void 
@@ -26,8 +27,7 @@ class "ExcelGetRowValuesAsListCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.AExcelRowRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetRowValuesAsDictionaryCommand
-taskt.Core.Automation.Commands.AExcelRowRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand
-taskt.Core.Automation.Commands.AExcelRowRangeGetCommands <|-- taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeGetCommands
 @enduml

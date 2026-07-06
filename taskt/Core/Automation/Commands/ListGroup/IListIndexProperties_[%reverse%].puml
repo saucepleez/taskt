@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 abstract class "AListIndexCommands"{
 +v_Index : String <<get>> <<set>> 
@@ -47,11 +48,10 @@ class "GetListItemCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.IListIndexProperties <|.. taskt.Core.Automation.Commands.AListIndexCommands
-taskt.Core.Automation.Commands.AListIndexCommands <|-- taskt.Core.Automation.Commands.CheckValidListIndex
-taskt.Core.Automation.Commands.AListIndexCommands <|-- taskt.Core.Automation.Commands.RemoveListItemCommand
-taskt.Core.Automation.Commands.AListIndexCommands <|-- taskt.Core.Automation.Commands.SetListItemCommand
-taskt.Core.Automation.Commands.AListIndexCommands <|-- taskt.Core.Automation.Commands.SetListIndexCommand
-taskt.Core.Automation.Commands.AListIndexCommands <|-- taskt.Core.Automation.Commands.GetListItemCommand
+taskt.Core.Automation.Commands.AListIndexCommands ..|> taskt.Core.Automation.Commands.IListIndexProperties
+taskt.Core.Automation.Commands.CheckValidListIndex --|> taskt.Core.Automation.Commands.AListIndexCommands
+taskt.Core.Automation.Commands.RemoveListItemCommand --|> taskt.Core.Automation.Commands.AListIndexCommands
+taskt.Core.Automation.Commands.SetListItemCommand --|> taskt.Core.Automation.Commands.AListIndexCommands
+taskt.Core.Automation.Commands.SetListIndexCommand --|> taskt.Core.Automation.Commands.AListIndexCommands
+taskt.Core.Automation.Commands.GetListItemCommand --|> taskt.Core.Automation.Commands.AListIndexCommands
 @enduml

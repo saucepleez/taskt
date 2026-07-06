@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Engine"{
 class "AutomationEngineInstance" {
 +add_ReportProgressEvent() : void 
@@ -63,7 +64,6 @@ Interface "IScriptVariableListProperties" {
 }
 }
 
-
-taskt.Core.Automation.Engine.IAppInstancesProperties <|.. taskt.Core.Automation.Engine.AutomationEngineInstance
-taskt.Core.Automation.Engine.IScriptVariableListProperties <|.. taskt.Core.Automation.Engine.AutomationEngineInstance
+taskt.Core.Automation.Engine.AutomationEngineInstance ..|> taskt.Core.Automation.Engine.IAppInstancesProperties
+taskt.Core.Automation.Engine.AutomationEngineInstance ..|> taskt.Core.Automation.Engine.IScriptVariableListProperties
 @enduml

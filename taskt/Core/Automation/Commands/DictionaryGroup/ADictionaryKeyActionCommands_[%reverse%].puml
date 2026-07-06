@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "RemoveDictionaryItemCommand" <<sealed>> {
 +RunCommand() : void 
@@ -29,8 +30,7 @@ class "GetDictionaryValueCommand" <<sealed>> {
 }
 }
 
-
-taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.RemoveDictionaryItemCommand
-taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.SetDictionaryValueCommand
-taskt.Core.Automation.Commands.ADictionaryKeyActionCommands <|-- taskt.Core.Automation.Commands.GetDictionaryValueCommand
+taskt.Core.Automation.Commands.RemoveDictionaryItemCommand --|> taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
+taskt.Core.Automation.Commands.SetDictionaryValueCommand --|> taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
+taskt.Core.Automation.Commands.GetDictionaryValueCommand --|> taskt.Core.Automation.Commands.ADictionaryKeyActionCommands
 @enduml

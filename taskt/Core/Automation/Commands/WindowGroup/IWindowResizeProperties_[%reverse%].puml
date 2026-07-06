@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 package "taskt.Core.Automation.Commands"{
 class "ResizeWindowByWindowHandleCommand" <<sealed>> {
 +RunCommand() : void 
@@ -15,6 +16,5 @@ Interface "IWindowResizeProperties" {
 }
 }
 
-
-taskt.Core.Automation.Commands.IWindowResizeProperties <|.. taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand
+taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand ..|> taskt.Core.Automation.Commands.IWindowResizeProperties
 @enduml
