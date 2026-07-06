@@ -264,5 +264,5 @@ __pycache__/
 /sharpRPA/sharpRPA2.licenseheader
 
 # ignore png files (puml, dot)
-/taskt/**/*.png
-!/taskt/Recources/*.png
+taskt/**/*.png
+!taskt/Recources/*.png
