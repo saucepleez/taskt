@@ -3,7 +3,7 @@
     /// <summary>
     /// for WebElement action commands properties
     /// </summary>
-    public interface ISeleniumWebElementActionProperties : ISeleniumDoSomethingToWebElementProperties, IWhenFailActionProperties
+    public interface ISeleniumWebElementActionProperties : ISeleniumDoSomethingToWebElementProperties, IWhenFailActionBehaviorProperties
     {
         // nothing
 

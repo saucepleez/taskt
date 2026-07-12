@@ -1,6 +1,6 @@
 ﻿namespace taskt.Core.Automation.Commands.WebBrowserGroup
 {
-    public interface ISeleniumWebDriverActionProperties : ISeleniumDoSomethingToWebDriverProperties, IWhenFailActionProperties
+    public interface ISeleniumWebDriverActionProperties : ISeleniumDoSomethingToWebDriverProperties, IWhenFailActionBehaviorProperties
     {
         // nothing
 

@@ -1,9 +1,9 @@
 ﻿namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// when fail execute some action properties
+    /// when fail execute some action behavior properties
     /// </summary>
-    public interface IWhenFailActionProperties
+    public interface IWhenFailActionBehaviorProperties
     {
         /// <summary>
         /// behavior when Fail action

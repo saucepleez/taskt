@@ -691,7 +691,7 @@
     <Compile Include="Core\Automation\Commands\WindowGroup\IWindowResizeProperties.cs" />
     <Compile Include="Core\Automation\Commands\WindowGroup\IWindowWaitTimeBetweenFindAndActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\ISelectionMethodProperties.cs" />
-    <Compile Include="Core\Automation\Commands\_General\IWhenFailActionProperties.cs" />
+    <Compile Include="Core\Automation\Commands\_General\IWhenFailActionBehaviorProperties.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\CompareNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\TextGroup\VP_TextCheckMethodControls.cs" />
     <Compile Include="Core\Automation\Commands\DataTableGroup\ADataTableBothRowCommands.cs" />
