@@ -3,7 +3,7 @@
     /// <summary>
     /// when fail execute some action behavior properties
     /// </summary>
-    public interface IWhenFailActionBehaviorProperties
+    public interface IWhenFailActionBehaviorProperties : IExpandableProperties
     {
         /// <summary>
         /// behavior when Fail action

@@ -3,7 +3,7 @@
     /// <summary>
     /// general selection properties
     /// </summary>
-    public interface ISelectionMethodProperties
+    public interface ISelectionMethodProperties : IExpandableProperties
     {
         /// <summary>
         /// selection method
