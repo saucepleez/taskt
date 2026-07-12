@@ -10,7 +10,7 @@ digraph "taskt.Core.Automation.Commands.IHaveDataTableElements" {
 "taskt.Core.Automation.Commands.IHaveDataTableElements" [ label="IHaveDataTableElements", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties" [ label="IUIElementChildrenSearchParametersProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties" [ label="IUIElementUIElementActionSomewayProperties", shape="ellipse", style="dashed", ];
-"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands" [ label="ASeleniumBrowserWebElementActionAfterSearchWebElementCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands" [ label="ASeleniumWebElementActionAfterSearchWebElementCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands" [ label="ASeleniumGetOneWebElementValuesAsSomethingCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.ReplaceDataTableValueCommand" [ label="ReplaceDataTableValueCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.ReplaceDataTableRowValueCommand" [ label="ReplaceDataTableRowValueCommand", shape="parallelogram", style="bold", ];
@@ -75,7 +75,7 @@ digraph "taskt.Core.Automation.Commands.IHaveDataTableElements" {
 "taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties" -> "taskt.Core.Automation.Commands.IHaveDataTableElements";
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties" -> "taskt.Core.Automation.Commands.IHaveDataTableElements";
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties" -> "taskt.Core.Automation.Commands.IHaveDataTableElements";
-"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands" -> "taskt.Core.Automation.Commands.IHaveDataTableElements";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands" -> "taskt.Core.Automation.Commands.IHaveDataTableElements";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands" -> "taskt.Core.Automation.Commands.IHaveDataTableElements";
 "taskt.Core.Automation.Commands.ReplaceDataTableValueCommand" -> "taskt.Core.Automation.Commands.IHaveDataTableElements";
 "taskt.Core.Automation.Commands.ReplaceDataTableRowValueCommand" -> "taskt.Core.Automation.Commands.IHaveDataTableElements";
@@ -105,8 +105,8 @@ digraph "taskt.Core.Automation.Commands.IHaveDataTableElements" {
 "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties";
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchParametersProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties";
 "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties";
-"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands";
-"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands";

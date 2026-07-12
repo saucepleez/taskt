@@ -32,18 +32,6 @@ abstract class "ASeleniumWebDriverActionCommands"{
 }
 
 package "taskt.Core.Automation.Commands"{
-class "SeleniumBrowserWaitForWebElementToExistsCommand" <<sealed>> {
-+RunCommand() : void 
-+v_InstanceName : String <<get>> <<set>> 
-+v_SearchMethod : String <<get>> <<set>> 
-+v_SearchParameter : String <<get>> <<set>> 
-+v_SelectionMethod : String <<get>> <<set>> 
-+v_WebElementIndex : String <<get>> <<set>> 
-+v_WaitTimeForWebElement : String <<get>> <<set>> 
-}
-}
-
-package "taskt.Core.Automation.Commands"{
 class "SeleniumBrowserAttachCreateWebBrowserInstanceCommand" <<sealed>> {
 +RunCommand() : void 
 +v_DebuggerAddress : String <<get>> <<set>> 
@@ -411,7 +399,6 @@ class "SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand" <<sealed>> {
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands
-taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands
 taskt.Core.Automation.Commands.SeleniumBrowserAttachCreateWebBrowserInstanceCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands
 taskt.Core.Automation.Commands.SeleniumBrowserCreateWebBrowserInstanceCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands

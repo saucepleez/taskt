@@ -9,7 +9,6 @@ digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWe
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands" [ label="ASeleniumWebElementActionCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands" [ label="ASeleniumDoSomethingToWebElementCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand" [ label="SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand", shape="parallelogram", style="bold", ];
-"taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand" [ label="SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementFromWebElementCommand" [ label="SeleniumBrowserSearchWebElementFromWebElementCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAndScrollCommands" [ label="ASeleniumWebElementActionAndScrollCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserScrollToWebElementCommand" [ label="SeleniumBrowserScrollToWebElementCommand", shape="parallelogram", style="bold", ];
@@ -40,7 +39,6 @@ digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWe
 
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands";
-"taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAndScrollCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserScrollToWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands";

@@ -10,7 +10,6 @@ digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWe
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands" [ label="ASeleniumDoSomethingToWebDriverCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands" [ label="ASeleniumGetFromWebDriverCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands" [ label="ASeleniumWebDriverActionCommands", style="dashed", ];
-"taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsCommand" [ label="SeleniumBrowserWaitForWebElementToExistsCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserAttachCreateWebBrowserInstanceCommand" [ label="SeleniumBrowserAttachCreateWebBrowserInstanceCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserCreateWebBrowserInstanceCommand" [ label="SeleniumBrowserCreateWebBrowserInstanceCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands" [ label="ASeleniumGetWindowAndTabInformationCommands", style="dashed", ];
@@ -62,7 +61,6 @@ digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWe
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands";
-"taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserAttachCreateWebBrowserInstanceCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserCreateWebBrowserInstanceCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands";

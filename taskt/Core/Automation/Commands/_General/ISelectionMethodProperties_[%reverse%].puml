@@ -65,25 +65,13 @@ class "UIAutomationSearchChildUIElementCommand" <<sealed>> {
 }
 
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
-abstract class "ASeleniumBrowserWebElementActionAfterSearchWebElementCommands"{
-#SearchAndActionProcess() : void 
-+AfterShown() : void 
+abstract class "ASeleniumSearchWebElementFromSomethingCommands"{
 #cmbSearchType_SelectionChangeCommited() : void 
-#cmbSeleniumAction_SelectionChangeCommitted() : void 
--{static} AddDataTableRows() : void 
--{static} AddDataTableRows() : void 
--{static} ActionParameterProcess() : void 
--{static} CreateComboBox() : DataGridViewComboBoxCell
-+BeforeValidate() : void 
 +v_SearchMethod : String <<get>> <<set>> 
 +v_SearchParameter : String <<get>> <<set>> 
 +v_SelectionMethod : String <<get>> <<set>> 
 +v_WebElementIndex : String <<get>> <<set>> 
-+v_WebElementAction : String <<get>> <<set>> 
-+v_WebActionParameterTable : DataTable <<get>> <<set>> 
 +v_WaitTimeForWebElement : String <<get>> <<set>> 
-+v_WhenFailAction : String <<get>> <<set>> 
-+v_ScrollToWebElement : String <<get>> <<set>> 
 }
 }
 
@@ -116,17 +104,6 @@ class "SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand" <<sealed>>
 }
 
 package "taskt.Core.Automation.Commands"{
-class "SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand" <<sealed>> {
-+RunCommand() : void 
-+v_SearchMethod : String <<get>> <<set>> 
-+v_SearchParameter : String <<get>> <<set>> 
-+v_SelectionMethod : String <<get>> <<set>> 
-+v_WebElementIndex : String <<get>> <<set>> 
-+v_WaitTimeForWebElement : String <<get>> <<set>> 
-}
-}
-
-package "taskt.Core.Automation.Commands"{
 class "SeleniumBrowserSearchWebElementFromWebElementCommand" <<sealed>> {
 +RunCommand() : void 
 +v_SearchMethod : String <<get>> <<set>> 
@@ -134,18 +111,6 @@ class "SeleniumBrowserSearchWebElementFromWebElementCommand" <<sealed>> {
 +v_SelectionMethod : String <<get>> <<set>> 
 +v_WebElementIndex : String <<get>> <<set>> 
 +v_Result : String <<get>> <<set>> 
-+v_WaitTimeForWebElement : String <<get>> <<set>> 
-}
-}
-
-package "taskt.Core.Automation.Commands"{
-class "SeleniumBrowserWaitForWebElementToExistsCommand" <<sealed>> {
-+RunCommand() : void 
-+v_InstanceName : String <<get>> <<set>> 
-+v_SearchMethod : String <<get>> <<set>> 
-+v_SearchParameter : String <<get>> <<set>> 
-+v_SelectionMethod : String <<get>> <<set>> 
-+v_WebElementIndex : String <<get>> <<set>> 
 +v_WaitTimeForWebElement : String <<get>> <<set>> 
 }
 }
@@ -268,18 +233,33 @@ abstract class "AUIElementActionFromSomethingByTreeWalkerCommands"{
 }
 }
 
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumWebElementActionAfterSearchWebElementCommands"{
+#SearchAndActionProcess() : void 
++AfterShown() : void 
+#cmbSeleniumAction_SelectionChangeCommitted() : void 
+-{static} AddDataTableRows() : void 
+-{static} AddDataTableRows() : void 
+-{static} ActionParameterProcess() : void 
+-{static} CreateComboBox() : DataGridViewComboBoxCell
++BeforeValidate() : void 
++v_WebElementAction : String <<get>> <<set>> 
++v_WebActionParameterTable : DataTable <<get>> <<set>> 
++v_WhenFailAction : String <<get>> <<set>> 
++v_ScrollToWebElement : String <<get>> <<set>> 
+}
+}
+
 package "taskt.Core.Automation.Commands"{
-class "SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" <<sealed>> {
+class "SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand" <<sealed>> {
 +RunCommand() : void 
-+GetDisplayValue() : String
 +v_WebElement : String <<get>> <<set>> 
 }
 }
 
 package "taskt.Core.Automation.Commands"{
-class "SeleniumBrowserWebElementActionAfterSearchWebElementCommand" <<sealed>> {
+class "SeleniumBrowserWaitForWebElementToExistsCommand" <<sealed>> {
 +RunCommand() : void 
-+GetDisplayValue() : String
 +v_InstanceName : String <<get>> <<set>> 
 }
 }
@@ -414,6 +394,22 @@ abstract class "ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands"
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 abstract class "AUIElementActionFromWindowSomethingByTreeWalkerCommands"{
 +v_WindowUIElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++GetDisplayValue() : String
++v_WebElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserWebElementActionAfterSearchWebElementCommand" <<sealed>> {
++RunCommand() : void 
++GetDisplayValue() : String
++v_InstanceName : String <<get>> <<set>> 
 }
 }
 
@@ -554,13 +550,11 @@ taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementF
 taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementIndexProperties
 taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchAnyUIElementProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementIndexProperties
 taskt.Core.Automation.Commands.UIAutomationSearchChildUIElementCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementIndexProperties
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties
 taskt.Core.Automation.Commands.SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties
-taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties
 taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementFromWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties
-taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties
 taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties
 taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands ..|> taskt.Core.Automation.Commands.IOneWindowNameProperties
 taskt.Core.Automation.Commands.ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands ..|> taskt.Core.Automation.Commands.IOneWindowNameProperties
@@ -572,8 +566,9 @@ taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameCommand 
 taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowHandleByTreeWalkerCommands
 taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchAnyUIElementProperties
 taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchAnyUIElementProperties
-taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands
-taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands
+taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands
+taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands
 taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands
 taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands
@@ -594,6 +589,8 @@ taskt.Core.Automation.Commands.GetOneWindowSizeCommand --|> taskt.Core.Automatio
 taskt.Core.Automation.Commands.UIAutomationGetWindowUIElementFromWindowNameCommand --|> taskt.Core.Automation.Commands.AOneWindowNameCommands
 taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands
 taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands
+taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands
 taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands
 taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands
 taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands

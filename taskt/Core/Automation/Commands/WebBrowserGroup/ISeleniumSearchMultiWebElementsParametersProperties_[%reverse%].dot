@@ -18,11 +18,9 @@ digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebE
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands" [ label="ASeleniumSearchWebElementFromWebElementCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand" [ label="SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsCountFromWebElementCommand" [ label="SeleniumBrowserGetWebElementsCountFromWebElementCommand", shape="parallelogram", style="bold", ];
-"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands" [ label="ASeleniumBrowserWebElementActionAfterSearchWebElementCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands" [ label="ASeleniumSearchWebElementFromSomethingCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand" [ label="SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand", shape="parallelogram", style="bold", ];
-"taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand" [ label="SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementFromWebElementCommand" [ label="SeleniumBrowserSearchWebElementFromWebElementCommand", shape="parallelogram", style="bold", ];
-"taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsCommand" [ label="SeleniumBrowserWaitForWebElementToExistsCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementCommand" [ label="SeleniumBrowserSearchWebElementCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDataTableCommand" [ label="SeleniumBrowserGetWebElementsValueAsDataTableCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDictionaryCommand" [ label="SeleniumBrowserGetWebElementsValueAsDictionaryCommand", shape="parallelogram", style="bold", ];
@@ -31,11 +29,14 @@ digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebE
 "taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsCommand" [ label="SeleniumBrowserCheckWebElementExistsCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserGetTableValuesAsDataTableCommand" [ label="SeleniumBrowserGetTableValuesAsDataTableCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsFromWebElementCommand" [ label="SeleniumBrowserCheckWebElementExistsFromWebElementCommand", shape="parallelogram", style="bold", ];
-"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" [ label="SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand", shape="parallelogram", style="bold", ];
-"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand" [ label="SeleniumBrowserWebElementActionAfterSearchWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands" [ label="ASeleniumWebElementActionAfterSearchWebElementCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand" [ label="SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsCommand" [ label="SeleniumBrowserWaitForWebElementToExistsCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand" [ label="SeleniumBrowserGetOneWebElementValuesAsDataTableCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand" [ label="SeleniumBrowserGetOneWebElementValuesAsListCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand" [ label="SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" [ label="SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand" [ label="SeleniumBrowserWebElementActionAfterSearchWebElementCommand", shape="parallelogram", style="bold", ];
 
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebDriverCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebElementsParametersProperties";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebElementsParametersProperties";
@@ -48,13 +49,11 @@ digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebE
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsCountFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands";
-"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties";
 "taskt.Core.Automation.Commands.SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties";
-"taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties";
 "taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties";
-"taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties";
 "taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties";
 "taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDataTableCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetMultiWebElementsValueAsSomethingCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDictionaryCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetMultiWebElementsValueAsSomethingCommands";
@@ -64,9 +63,12 @@ digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebE
 "taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserGetTableValuesAsDataTableCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebDriverCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands";
-"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands";
-"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands";
 }

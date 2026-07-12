@@ -30,6 +30,13 @@ Interface "ISeleniumWebDriverActionProperties" {
 }
 }
 
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserWaitForWebElementToExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_InstanceName : String <<get>> <<set>> 
+}
+}
+
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 abstract class "ASeleniumCreateWebDriverCommands"{
 #CreateWebDriverService() : DriverService
@@ -52,18 +59,6 @@ package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 abstract class "ASeleniumWebDriverActionCommands"{
 +v_InstanceName : String <<get>> <<set>> 
 +v_WhenFailAction : String <<get>> <<set>> 
-}
-}
-
-package "taskt.Core.Automation.Commands"{
-class "SeleniumBrowserWaitForWebElementToExistsCommand" <<sealed>> {
-+RunCommand() : void 
-+v_InstanceName : String <<get>> <<set>> 
-+v_SearchMethod : String <<get>> <<set>> 
-+v_SearchParameter : String <<get>> <<set>> 
-+v_SelectionMethod : String <<get>> <<set>> 
-+v_WebElementIndex : String <<get>> <<set>> 
-+v_WaitTimeForWebElement : String <<get>> <<set>> 
 }
 }
 
@@ -450,10 +445,10 @@ taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCo
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumCreateWebDriverProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebBrowserInstanceActionProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties
+taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands
-taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumCreateWebDriverProperties
 taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebBrowserInstanceActionProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties

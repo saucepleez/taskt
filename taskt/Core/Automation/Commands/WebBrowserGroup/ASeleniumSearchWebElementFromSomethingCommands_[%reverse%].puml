@@ -18,18 +18,27 @@ abstract class "ASeleniumWebElementActionAfterSearchWebElementCommands"{
 }
 
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
-Interface "ISeleniumSendSpecialKeystrokesProperties" {
+abstract class "ASeleniumSearchWebElementFromSomethingCommands"{
+#cmbSearchType_SelectionChangeCommited() : void 
++v_SearchMethod : String <<get>> <<set>> 
++v_SearchParameter : String <<get>> <<set>> 
++v_SelectionMethod : String <<get>> <<set>> 
++v_WebElementIndex : String <<get>> <<set>> 
++v_WaitTimeForWebElement : String <<get>> <<set>> 
 }
 }
 
 package "taskt.Core.Automation.Commands"{
-class "SeleniumBrowserSendSpecialKeystrokesToWebElementCommand" <<sealed>> {
+class "SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand" <<sealed>> {
 +RunCommand() : void 
--CreateSendKeyList() : List
-+v_SendKey : String <<get>> <<set>> 
-+v_ControlKey : String <<get>> <<set>> 
-+v_ShiftKey : String <<get>> <<set>> 
-+v_AltKey : String <<get>> <<set>> 
++v_WebElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserWaitForWebElementToExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_InstanceName : String <<get>> <<set>> 
 }
 }
 
@@ -49,8 +58,9 @@ class "SeleniumBrowserWebElementActionAfterSearchWebElementCommand" <<sealed>> {
 }
 }
 
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties
-taskt.Core.Automation.Commands.SeleniumBrowserSendSpecialKeystrokesToWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands
+taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands
+taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands
 taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands
 taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands
 @enduml

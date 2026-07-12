@@ -29,23 +29,17 @@ Interface "IUIElementUIElementActionSomewayProperties" {
 }
 
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
-abstract class "ASeleniumBrowserWebElementActionAfterSearchWebElementCommands"{
+abstract class "ASeleniumWebElementActionAfterSearchWebElementCommands"{
 #SearchAndActionProcess() : void 
 +AfterShown() : void 
-#cmbSearchType_SelectionChangeCommited() : void 
 #cmbSeleniumAction_SelectionChangeCommitted() : void 
 -{static} AddDataTableRows() : void 
 -{static} AddDataTableRows() : void 
 -{static} ActionParameterProcess() : void 
 -{static} CreateComboBox() : DataGridViewComboBoxCell
 +BeforeValidate() : void 
-+v_SearchMethod : String <<get>> <<set>> 
-+v_SearchParameter : String <<get>> <<set>> 
-+v_SelectionMethod : String <<get>> <<set>> 
-+v_WebElementIndex : String <<get>> <<set>> 
 +v_WebElementAction : String <<get>> <<set>> 
 +v_WebActionParameterTable : DataTable <<get>> <<set>> 
-+v_WaitTimeForWebElement : String <<get>> <<set>> 
 +v_WhenFailAction : String <<get>> <<set>> 
 +v_ScrollToWebElement : String <<get>> <<set>> 
 }
@@ -714,7 +708,7 @@ class "UIAutomationSearchUIElementFromWindowNameCommand" <<sealed>> {
 taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties --|> taskt.Core.Automation.Commands.IHaveDataTableElements
 taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties --|> taskt.Core.Automation.Commands.IHaveDataTableElements
 taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties --|> taskt.Core.Automation.Commands.IHaveDataTableElements
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands ..|> taskt.Core.Automation.Commands.IHaveDataTableElements
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands ..|> taskt.Core.Automation.Commands.IHaveDataTableElements
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands ..|> taskt.Core.Automation.Commands.IHaveDataTableElements
 taskt.Core.Automation.Commands.ReplaceDataTableValueCommand ..|> taskt.Core.Automation.Commands.IHaveDataTableElements
 taskt.Core.Automation.Commands.ReplaceDataTableRowValueCommand ..|> taskt.Core.Automation.Commands.IHaveDataTableElements
@@ -744,8 +738,8 @@ taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSo
 taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties
 taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchParametersProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties
 taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties
-taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands
-taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands
 taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands
 taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands
 taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetOneWebElementValuesAsSomethingCommands

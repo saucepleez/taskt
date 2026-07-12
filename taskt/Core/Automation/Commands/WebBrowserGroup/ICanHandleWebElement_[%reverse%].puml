@@ -22,6 +22,13 @@ Interface "ISeleniumWebElementActionProperties" {
 }
 }
 
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_WebElement : String <<get>> <<set>> 
+}
+}
+
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 abstract class "ASeleniumWebElementActionCommands"{
 +v_WhenFailAction : String <<get>> <<set>> 
@@ -36,17 +43,6 @@ class "SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand" <<sealed>>
 +v_SelectionMethod : String <<get>> <<set>> 
 +v_WebElementIndex : String <<get>> <<set>> 
 +v_Result : String <<get>> <<set>> 
-+v_WaitTimeForWebElement : String <<get>> <<set>> 
-}
-}
-
-package "taskt.Core.Automation.Commands"{
-class "SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand" <<sealed>> {
-+RunCommand() : void 
-+v_SearchMethod : String <<get>> <<set>> 
-+v_SearchParameter : String <<get>> <<set>> 
-+v_SelectionMethod : String <<get>> <<set>> 
-+v_WebElementIndex : String <<get>> <<set>> 
 +v_WaitTimeForWebElement : String <<get>> <<set>> 
 }
 }
@@ -282,9 +278,9 @@ class "SeleniumBrowserCheckWebElementExistsFromWebElementCommand" <<sealed>> {
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebElement
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties
+taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands
 taskt.Core.Automation.Commands.SeleniumBrowserSearchShadowDOMWebElementFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands
-taskt.Core.Automation.Commands.SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands
 taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionAndScrollProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties

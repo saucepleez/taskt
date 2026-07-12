@@ -9,23 +9,17 @@ class "SeleniumBrowserWebElementActionAfterSearchWebElementCommand" <<sealed>> {
 }
 
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
-abstract class "ASeleniumBrowserWebElementActionAfterSearchWebElementCommands"{
+abstract class "ASeleniumWebElementActionAfterSearchWebElementCommands"{
 #SearchAndActionProcess() : void 
 +AfterShown() : void 
-#cmbSearchType_SelectionChangeCommited() : void 
 #cmbSeleniumAction_SelectionChangeCommitted() : void 
 -{static} AddDataTableRows() : void 
 -{static} AddDataTableRows() : void 
 -{static} ActionParameterProcess() : void 
 -{static} CreateComboBox() : DataGridViewComboBoxCell
 +BeforeValidate() : void 
-+v_SearchMethod : String <<get>> <<set>> 
-+v_SearchParameter : String <<get>> <<set>> 
-+v_SelectionMethod : String <<get>> <<set>> 
-+v_WebElementIndex : String <<get>> <<set>> 
 +v_WebElementAction : String <<get>> <<set>> 
 +v_WebActionParameterTable : DataTable <<get>> <<set>> 
-+v_WaitTimeForWebElement : String <<get>> <<set>> 
 +v_WhenFailAction : String <<get>> <<set>> 
 +v_ScrollToWebElement : String <<get>> <<set>> 
 }
@@ -33,6 +27,40 @@ abstract class "ASeleniumBrowserWebElementActionAfterSearchWebElementCommands"{
 
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 Interface "ISeleniumWebBrowserInstanceActionProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumSearchWebElementFromSomethingCommands"{
+#cmbSearchType_SelectionChangeCommited() : void 
++v_SearchMethod : String <<get>> <<set>> 
++v_SearchParameter : String <<get>> <<set>> 
++v_SelectionMethod : String <<get>> <<set>> 
++v_WebElementIndex : String <<get>> <<set>> 
++v_WaitTimeForWebElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWhenFailActionBehaviorProperties" {
++{abstract} v_WhenFailAction : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+Interface "ISeleniumSendSpecialKeystrokesProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IHaveDataTableElements" {
++{abstract} BeforeValidate() : void <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+Interface "ISeleniumDoSomethingToWebDriverProperties" {
++{abstract} v_InstanceName : String <<get>> <<set>> <<abstract>> 
 }
 }
 
@@ -86,25 +114,12 @@ Interface "ISeleniumSearchWebElementParametersProperties" {
 }
 
 package "taskt.Core.Automation.Commands"{
-Interface "IWhenFailActionBehaviorProperties" {
-+{abstract} v_WhenFailAction : String <<get>> <<set>> <<abstract>> 
+Interface "IExpandableProperties" {
 }
 }
 
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
-Interface "ISeleniumSendSpecialKeystrokesProperties" {
-}
-}
-
-package "taskt.Core.Automation.Commands"{
-Interface "IHaveDataTableElements" {
-+{abstract} BeforeValidate() : void <<abstract>> 
-}
-}
-
-package "taskt.Core.Automation.Commands.WebBrowserGroup"{
-Interface "ISeleniumDoSomethingToWebDriverProperties" {
-+{abstract} v_InstanceName : String <<get>> <<set>> <<abstract>> 
+Interface "ICanHandleWebDriver" {
 }
 }
 
@@ -134,32 +149,23 @@ Interface "ISelectionMethodProperties" {
 }
 }
 
-package "taskt.Core.Automation.Commands"{
-Interface "IExpandableProperties" {
-}
-}
-
-package "taskt.Core.Automation.Commands.WebBrowserGroup"{
-Interface "ICanHandleWebDriver" {
-}
-}
-
-taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands
 taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebBrowserInstanceActionProperties
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands --|> taskt.Core.Automation.Commands.ScriptCommand
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands ..|> taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands ..|> taskt.Core.Automation.Commands.IHaveDataTableElements
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands ..|> taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands ..|> taskt.Core.Automation.Commands.IHaveDataTableElements
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebBrowserInstanceActionProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromSomethingCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties
+taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
 taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebElementsParametersProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties --|> taskt.Core.Automation.Commands.ISelectionMethodProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
-taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver
-taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebElementsParametersProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 taskt.Core.Automation.Commands.ISelectionMethodProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

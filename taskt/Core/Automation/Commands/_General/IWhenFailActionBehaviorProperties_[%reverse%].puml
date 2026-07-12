@@ -1,23 +1,17 @@
 @startuml
 left to right direction
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
-abstract class "ASeleniumBrowserWebElementActionAfterSearchWebElementCommands"{
+abstract class "ASeleniumWebElementActionAfterSearchWebElementCommands"{
 #SearchAndActionProcess() : void 
 +AfterShown() : void 
-#cmbSearchType_SelectionChangeCommited() : void 
 #cmbSeleniumAction_SelectionChangeCommitted() : void 
 -{static} AddDataTableRows() : void 
 -{static} AddDataTableRows() : void 
 -{static} ActionParameterProcess() : void 
 -{static} CreateComboBox() : DataGridViewComboBoxCell
 +BeforeValidate() : void 
-+v_SearchMethod : String <<get>> <<set>> 
-+v_SearchParameter : String <<get>> <<set>> 
-+v_SelectionMethod : String <<get>> <<set>> 
-+v_WebElementIndex : String <<get>> <<set>> 
 +v_WebElementAction : String <<get>> <<set>> 
 +v_WebActionParameterTable : DataTable <<get>> <<set>> 
-+v_WaitTimeForWebElement : String <<get>> <<set>> 
 +v_WhenFailAction : String <<get>> <<set>> 
 +v_ScrollToWebElement : String <<get>> <<set>> 
 }
@@ -394,11 +388,11 @@ class "SeleniumBrowserCheckWebElementExistsFromWebElementCommand" <<sealed>> {
 }
 }
 
-taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands ..|> taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands ..|> taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties --|> taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties --|> taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties
-taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands
-taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumExecuteJavaScriptProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties
