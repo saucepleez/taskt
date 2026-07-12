@@ -19,7 +19,6 @@ abstract class "ASeleniumDoSomethingToWebElementCommands"{
 
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 Interface "ISeleniumWebElementActionProperties" {
-+{abstract} v_WhenFailAction : String <<get>> <<set>> <<abstract>> 
 }
 }
 

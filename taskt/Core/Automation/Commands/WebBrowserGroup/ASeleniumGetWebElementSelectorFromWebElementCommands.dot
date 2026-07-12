@@ -18,6 +18,7 @@ digraph "taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebEle
 "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties" [ label="ISeleniumWebElementActionProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties" [ label="ISeleniumDoSomethingToWebElementProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties" [ label="IWhenFailActionBehaviorProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebElement" [ label="ICanHandleWebElement", shape="ellipse", style="dashed", ];
@@ -38,6 +39,7 @@ digraph "taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebEle
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties" -> "taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties";
 "taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
 "taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebElement";

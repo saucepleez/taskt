@@ -9,7 +9,6 @@ abstract class "ASeleniumWebDriverActionCommands"{
 
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 Interface "ISeleniumWebDriverActionProperties" {
-+{abstract} v_WhenFailAction : String <<get>> <<set>> <<abstract>> 
 }
 }
 

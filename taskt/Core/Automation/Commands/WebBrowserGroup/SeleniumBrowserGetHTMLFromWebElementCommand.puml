@@ -58,7 +58,6 @@ abstract class "ASeleniumDoSomethingToWebElementCommands"{
 
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 Interface "ISeleniumWebElementActionProperties" {
-+{abstract} v_WhenFailAction : String <<get>> <<set>> <<abstract>> 
 }
 }
 
@@ -112,6 +111,12 @@ Interface "ISeleniumDoSomethingToWebElementProperties" {
 }
 
 package "taskt.Core.Automation.Commands"{
+Interface "IWhenFailActionBehaviorProperties" {
++{abstract} v_WhenFailAction : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
 Interface "IUIParameterProperties" {
 +{abstract} ControlsList : Dictionary <<get>> <<abstract>> 
 }
@@ -152,6 +157,7 @@ taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionAndScrol
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands --|> taskt.Core.Automation.Commands.ScriptCommand
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementActionProperties --|> taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties
 taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
 taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebElementProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebElement

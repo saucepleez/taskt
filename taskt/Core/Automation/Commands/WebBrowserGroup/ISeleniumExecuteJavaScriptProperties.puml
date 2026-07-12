@@ -8,7 +8,6 @@ Interface "ISeleniumExecuteJavaScriptProperties" {
 
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 Interface "ISeleniumWebDriverActionProperties" {
-+{abstract} v_WhenFailAction : String <<get>> <<set>> <<abstract>> 
 }
 }
 
@@ -29,6 +28,12 @@ Interface "ISeleniumDoSomethingToWebDriverProperties" {
 }
 }
 
+package "taskt.Core.Automation.Commands"{
+Interface "IWhenFailActionBehaviorProperties" {
++{abstract} v_WhenFailAction : String <<get>> <<set>> <<abstract>> 
+}
+}
+
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 Interface "ICanHandleWebDriver" {
 }
@@ -43,6 +48,7 @@ taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumExecuteJavaScriptPropert
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumExecuteJavaScriptProperties --|> taskt.Core.Automation.Commands.IResultProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumExecuteJavaScriptProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties --|> taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

@@ -8,10 +8,12 @@ digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverAction
 
 "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties" [ label="ISeleniumWebDriverActionProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties" [ label="ISeleniumDoSomethingToWebDriverProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties" [ label="IWhenFailActionBehaviorProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver" [ label="ICanHandleWebDriver", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
 
 "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties" -> "taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
 }

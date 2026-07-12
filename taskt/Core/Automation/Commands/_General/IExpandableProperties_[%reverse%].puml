@@ -442,7 +442,6 @@ Interface "ISeleniumWebBrowserInstanceActionProperties" {
 
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 Interface "ISeleniumWebDriverActionProperties" {
-+{abstract} v_WhenFailAction : String <<get>> <<set>> <<abstract>> 
 }
 }
 
@@ -454,7 +453,6 @@ abstract class "ASeleniumDoSomethingToWebElementCommands"{
 
 package "taskt.Core.Automation.Commands.WebBrowserGroup"{
 Interface "ISeleniumWebElementActionProperties" {
-+{abstract} v_WhenFailAction : String <<get>> <<set>> <<abstract>> 
 }
 }
 
