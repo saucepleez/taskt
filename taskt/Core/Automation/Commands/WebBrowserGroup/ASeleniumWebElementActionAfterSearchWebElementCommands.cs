@@ -11,28 +11,28 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
     /// <summary>
     /// for WebElement Action After Search WebElement commands
     /// </summary>
-    public abstract class ASeleniumWebElementActionAfterSearchWebElementCommands : ScriptCommand, ISeleniumSearchWebElementParametersProperties, IWhenFailActionBehaviorProperties, ISeleniumSendSpecialKeystrokesProperties, IHaveDataTableElements
+    public abstract class ASeleniumWebElementActionAfterSearchWebElementCommands : ASeleniumSearchWebElementFromSomethingCommands, IWhenFailActionBehaviorProperties, ISeleniumSendSpecialKeystrokesProperties, IHaveDataTableElements
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchMethod))]
-        [PropertySelectionChangeEvent(nameof(cmbSearchType_SelectionChangeCommited))]
-        [PropertyParameterOrder(6000)]
-        public string v_SearchMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchMethod))]
+        //[PropertySelectionChangeEvent(nameof(cmbSearchType_SelectionChangeCommited))]
+        //[PropertyParameterOrder(6000)]
+        //public string v_SearchMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchParameter))]
-        [PropertyParameterOrder(6100)]
-        public string v_SearchParameter { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchParameter))]
+        //[PropertyParameterOrder(6100)]
+        //public string v_SearchParameter { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SelectionMethod))]
-        [PropertyParameterOrder(6200)]
-        public string v_SelectionMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SelectionMethod))]
+        //[PropertyParameterOrder(6200)]
+        //public string v_SelectionMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WebElementIndex))]
-        [PropertyParameterOrder(6300)]
-        public string v_WebElementIndex { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WebElementIndex))]
+        //[PropertyParameterOrder(6300)]
+        //public string v_WebElementIndex { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -76,10 +76,10 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
         [PropertyParameterOrder(8000)]
         public DataTable v_WebActionParameterTable { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WaitTimeForWebElement))]
-        [PropertyParameterOrder(10000)]
-        public string v_WaitTimeForWebElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WaitTimeForWebElement))]
+        //[PropertyParameterOrder(10000)]
+        //public string v_WaitTimeForWebElement { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WhenFailAction))]
@@ -390,11 +390,11 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
             ActionParameterProcess(dgv, cmb.SelectedItem?.ToString() ?? "");
         }
 
-        protected void cmbSearchType_SelectionChangeCommited(object sender, EventArgs e)
-        {
-            var searchType = ((ComboBox)sender).SelectedItem?.ToString().ToLower() ?? "";
-            FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_WebElementIndex), !searchType.StartsWith("find element "));
-        }
+        //protected void cmbSearchType_SelectionChangeCommited(object sender, EventArgs e)
+        //{
+        //    var searchType = ((ComboBox)sender).SelectedItem?.ToString().ToLower() ?? "";
+        //    FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_WebElementIndex), !searchType.StartsWith("find element "));
+        //}
 
         protected void cmbSeleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
         {

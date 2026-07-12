@@ -565,6 +565,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomationGroup\VP_UIElementControls.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumSearchWebElementFromSomethingCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumWebElementActionAfterSearchWebElementCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumCreateWebDriverCommands.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowserGroup\ASeleniumDoSomethingToWebDriverCommands.cs" />

@@ -15,32 +15,37 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand : ASeleniumDoSomethingToWebElementCommands, ISeleniumSearchWebElementParametersProperties
+    public sealed class SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand : ASeleniumSearchWebElementFromSomethingCommands, ISeleniumDoSomethingToWebElementProperties
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchMethod))]
-        [PropertyParameterOrder(6000)]
-        public string v_SearchMethod { get; set; }
+        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_InputWebElementName))]
+        [PropertyParameterOrder(5000)]
+        public string v_WebElement { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchParameter))]
-        [PropertyParameterOrder(6100)]
-        public string v_SearchParameter { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchMethod))]
+        //[PropertyParameterOrder(6000)]
+        //public string v_SearchMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SelectionMethod))]
-        [PropertyParameterOrder(6200)]
-        public string v_SelectionMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchParameter))]
+        //[PropertyParameterOrder(6100)]
+        //public string v_SearchParameter { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WebElementIndex))]
-        [PropertyParameterOrder(6300)]
-        public string v_WebElementIndex { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SelectionMethod))]
+        //[PropertyParameterOrder(6200)]
+        //public string v_SelectionMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WaitTimeForWebElement))]
-        [PropertyParameterOrder(10000)]
-        public string v_WaitTimeForWebElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WebElementIndex))]
+        //[PropertyParameterOrder(6300)]
+        //public string v_WebElementIndex { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WaitTimeForWebElement))]
+        //[PropertyParameterOrder(10000)]
+        //public string v_WaitTimeForWebElement { get; set; }
 
         public SeleniumBrowserWaitForWebElementToExistsFromWebElementCommand()
         {

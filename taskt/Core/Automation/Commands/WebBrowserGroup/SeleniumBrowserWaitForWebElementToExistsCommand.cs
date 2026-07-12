@@ -15,36 +15,37 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class SeleniumBrowserWaitForWebElementToExistsCommand : ASeleniumDoSomethingToWebDriverCommands, ISeleniumSearchWebElementParametersProperties
+    public sealed class SeleniumBrowserWaitForWebElementToExistsCommand : ASeleniumSearchWebElementFromSomethingCommands, ISeleniumDoSomethingToWebDriverProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_InputInstanceName))]
-        public override string v_InstanceName { get; set; }
+        [PropertyParameterOrder(5000)]
+        public string v_InstanceName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchMethod))]
-        [PropertyParameterOrder(6000)]
-        public string v_SearchMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchMethod))]
+        //[PropertyParameterOrder(6000)]
+        //public string v_SearchMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchParameter))]
-        [PropertyParameterOrder(6100)]
-        public string v_SearchParameter { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchParameter))]
+        //[PropertyParameterOrder(6100)]
+        //public string v_SearchParameter { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SelectionMethod))]
-        [PropertyParameterOrder(6200)]
-        public string v_SelectionMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SelectionMethod))]
+        //[PropertyParameterOrder(6200)]
+        //public string v_SelectionMethod { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WebElementIndex))]
-        [PropertyParameterOrder(6300)]
-        public string v_WebElementIndex { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WebElementIndex))]
+        //[PropertyParameterOrder(6300)]
+        //public string v_WebElementIndex { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WaitTimeForWebElement))]
-        [PropertyParameterOrder(10000)]
-        public string v_WaitTimeForWebElement { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_WaitTimeForWebElement))]
+        //[PropertyParameterOrder(10000)]
+        //public string v_WaitTimeForWebElement { get; set; }
 
         public SeleniumBrowserWaitForWebElementToExistsCommand()
         {
@@ -52,8 +53,6 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElement(this, nameof(v_InstanceName), nameof(v_SearchMethod), nameof(v_SearchParameter), nameof(v_WebElementIndex), nameof(v_WaitTimeForWebElement), engine);
-
             this.WebDriverActionCore(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
             {
                 this.SearchWebElement(seleniumInstance, engine);
