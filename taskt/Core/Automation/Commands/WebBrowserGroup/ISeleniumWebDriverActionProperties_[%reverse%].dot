@@ -17,7 +17,6 @@ digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverAction
 "taskt.Core.Automation.Commands.SeleniumBrowserTakeScreenshotOfWebBrowserCommand" [ label="SeleniumBrowserTakeScreenshotOfWebBrowserCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserCloseWebBrowserInstanceCommand" [ label="SeleniumBrowserCloseWebBrowserInstanceCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserSwitchWebBrowserWindowAndTabCommand" [ label="SeleniumBrowserSwitchWebBrowserWindowAndTabCommand", shape="parallelogram", style="bold", ];
-"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand" [ label="SeleniumBrowserWebElementActionAfterSearchWebElementCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserNavigateBackCommand" [ label="SeleniumBrowserNavigateBackCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserNavigateForwardCommand" [ label="SeleniumBrowserNavigateForwardCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserNavigateToURLCommand" [ label="SeleniumBrowserNavigateToURLCommand", shape="parallelogram", style="bold", ];
@@ -35,7 +34,6 @@ digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverAction
 "taskt.Core.Automation.Commands.SeleniumBrowserTakeScreenshotOfWebBrowserCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserCloseWebBrowserInstanceCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserSwitchWebBrowserWindowAndTabCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
-"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserNavigateBackCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserNavigateForwardCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserNavigateToURLCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";

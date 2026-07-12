@@ -159,6 +159,11 @@ Interface "ITextCheckProperties" {
 }
 }
 
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
 package "taskt.Core.Automation.Commands.UIAutomationGroup"{
 Interface "ICanHandleUIElement" {
 }
@@ -186,11 +191,6 @@ Interface "IUIElementChildrenSearchSomewayProperties" {
 package "taskt.Core.Automation.Commands"{
 Interface "IHaveDataTableElements" {
 +{abstract} BeforeValidate() : void <<abstract>> 
-}
-}
-
-package "taskt.Core.Automation.Commands"{
-Interface "IExpandableProperties" {
 }
 }
 
@@ -228,6 +228,7 @@ taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchPara
 taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
 taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.ICanHandleWindowName
 taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties
+taskt.Core.Automation.Commands.ISelectionMethodProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement
 taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
 taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties

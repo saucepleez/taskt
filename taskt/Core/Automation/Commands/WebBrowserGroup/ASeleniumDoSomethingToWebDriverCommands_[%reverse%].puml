@@ -178,29 +178,6 @@ class "SeleniumBrowserSwitchWebBrowserWindowAndTabCommand" <<sealed>> {
 }
 
 package "taskt.Core.Automation.Commands"{
-class "SeleniumBrowserWebElementActionAfterSearchWebElementCommand" <<sealed>> {
-+RunCommand() : void 
-+AfterShown() : void 
--cmbSearchType_SelectionChangeCommited() : void 
--cmbSeleniumAction_SelectionChangeCommitted() : void 
--{static} AddDataTableRows() : void 
--{static} AddDataTableRows() : void 
--{static} ActionParameterProcess() : void 
--{static} CreateComboBox() : DataGridViewComboBoxCell
-+GetDisplayValue() : String
-+BeforeValidate() : void 
-+v_SearchMethod : String <<get>> <<set>> 
-+v_SearchParameter : String <<get>> <<set>> 
-+v_SelectionMethod : String <<get>> <<set>> 
-+v_WebElementIndex : String <<get>> <<set>> 
-+v_WebElementAction : String <<get>> <<set>> 
-+v_WebActionParameterTable : DataTable <<get>> <<set>> 
-+v_WaitTimeForWebElement : String <<get>> <<set>> 
-+v_ScrollToWebElement : String <<get>> <<set>> 
-}
-}
-
-package "taskt.Core.Automation.Commands"{
 class "SeleniumBrowserNavigateBackCommand" <<sealed>> {
 +RunCommand() : void 
 }
@@ -450,7 +427,6 @@ taskt.Core.Automation.Commands.SeleniumBrowserSwitchWebBrowserFrameCommand --|> 
 taskt.Core.Automation.Commands.SeleniumBrowserTakeScreenshotOfWebBrowserCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands
 taskt.Core.Automation.Commands.SeleniumBrowserCloseWebBrowserInstanceCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands
 taskt.Core.Automation.Commands.SeleniumBrowserSwitchWebBrowserWindowAndTabCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands
-taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands
 taskt.Core.Automation.Commands.SeleniumBrowserNavigateBackCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands
 taskt.Core.Automation.Commands.SeleniumBrowserNavigateForwardCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands
 taskt.Core.Automation.Commands.SeleniumBrowserNavigateToURLCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands

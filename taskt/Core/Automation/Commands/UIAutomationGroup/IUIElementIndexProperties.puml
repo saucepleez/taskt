@@ -19,4 +19,5 @@ Interface "IExpandableProperties" {
 
 taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementIndexProperties --|> taskt.Core.Automation.Commands.ISelectionMethodProperties
 taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementIndexProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ISelectionMethodProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

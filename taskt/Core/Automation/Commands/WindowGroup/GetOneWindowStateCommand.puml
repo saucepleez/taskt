@@ -121,14 +121,14 @@ Interface "ITextCheckProperties" {
 }
 }
 
-package "taskt.Core.Automation.Commands.WindowGroup"{
-Interface "IFromWindowHandleResultsProperties" {
-+{abstract} v_WindowNameResult : String <<get>> <<set>> <<abstract>> 
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
 }
 }
 
-package "taskt.Core.Automation.Commands"{
-Interface "IExpandableProperties" {
+package "taskt.Core.Automation.Commands.WindowGroup"{
+Interface "IFromWindowHandleResultsProperties" {
++{abstract} v_WindowNameResult : String <<get>> <<set>> <<abstract>> 
 }
 }
 
@@ -150,6 +150,7 @@ taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands
 taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
 taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.ICanHandleWindowName
 taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties
+taskt.Core.Automation.Commands.ISelectionMethodProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
 taskt.Core.Automation.Commands.ICanHandleWindowName --|> taskt.Core.Automation.Commands.IExpandableProperties
 taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties --|> taskt.Core.Automation.Commands.ICheckProperties

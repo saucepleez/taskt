@@ -116,6 +116,11 @@ Interface "ITextCheckProperties" {
 }
 
 package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
 abstract class "ScriptCommand"{
 +RunCommand() : void 
 +RunCommand() : void 
@@ -196,11 +201,6 @@ Interface "IFromWindowHandleResultsProperties" {
 }
 
 package "taskt.Core.Automation.Commands"{
-Interface "IExpandableProperties" {
-}
-}
-
-package "taskt.Core.Automation.Commands"{
 Interface "ICheckProperties" {
 +{abstract} v_CheckMethod : String <<get>> <<set>> <<abstract>> 
 }
@@ -242,6 +242,7 @@ taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultPropertie
 taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
 taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.ICanHandleWindowName
 taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties
+taskt.Core.Automation.Commands.ISelectionMethodProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands --|> taskt.Core.Automation.Commands.ScriptCommand
 taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties
 taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands ..|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
@@ -267,6 +268,7 @@ taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIEl
 taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties
 taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties --|> taskt.Core.Automation.Commands.IHaveDataTableElements
 taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ISelectionMethodProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
 taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
 taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties --|> taskt.Core.Automation.Commands.IExpandableProperties

@@ -51,6 +51,11 @@ Interface "ICheckProperties" {
 }
 
 package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
 abstract class "ScriptCommand"{
 +RunCommand() : void 
 +RunCommand() : void 
@@ -106,11 +111,6 @@ Interface "IWhenFailActionBehaviorProperties" {
 }
 
 package "taskt.Core.Automation.Commands"{
-Interface "IExpandableProperties" {
-}
-}
-
-package "taskt.Core.Automation.Commands"{
 Interface "IUIParameterProperties" {
 +{abstract} ControlsList : Dictionary <<get>> <<abstract>> 
 }
@@ -133,6 +133,7 @@ taskt.Core.Automation.Commands.SeleniumBrowserSwitchWebBrowserWindowAndTabComman
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties
 taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties --|> taskt.Core.Automation.Commands.ICheckProperties
+taskt.Core.Automation.Commands.ISelectionMethodProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands --|> taskt.Core.Automation.Commands.ScriptCommand
 taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties
@@ -142,4 +143,5 @@ taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands
 taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver
 taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
 @enduml

@@ -45,6 +45,7 @@ digraph "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyU
 "taskt.Core.Automation.Commands.IOneWindowNameProperties" -> "taskt.Core.Automation.Commands.IWindowNameCoreProperties";
 "taskt.Core.Automation.Commands.IOneWindowNameProperties" -> "taskt.Core.Automation.Commands.ISelectionMethodProperties";
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSearchUIElementFromWindowSomethingByAnywayProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties";
+"taskt.Core.Automation.Commands.ISelectionMethodProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
 "taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
 "taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties";
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchParametersProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties";

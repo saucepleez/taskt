@@ -15,4 +15,5 @@ digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElemen
 "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties" -> "taskt.Core.Automation.Commands.ISelectionMethodProperties";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchWebElementParametersProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebElementsParametersProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ISelectionMethodProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
 }

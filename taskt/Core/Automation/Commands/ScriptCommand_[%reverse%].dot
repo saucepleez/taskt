@@ -20,6 +20,7 @@ digraph "taskt.Core.Automation.Commands.ScriptCommand" {
 "taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands" [ label="AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands" [ label="AUIElementActionSomewayCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementCoreCommands" [ label="AUIElementCoreCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands" [ label="ASeleniumBrowserWebElementActionAfterSearchWebElementCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands" [ label="ASeleniumDoSomethingToWebDriverCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands" [ label="ASeleniumDoSomethingToWebElementCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.CheckNumberCommand" [ label="CheckNumberCommand", shape="parallelogram", style="bold", ];
@@ -208,6 +209,8 @@ digraph "taskt.Core.Automation.Commands.ScriptCommand" {
 "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands" [ label="AUIElementActionFromSomethingByTreeWalkerCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByXPathCommands" [ label="AUIElementActionFromSomethingByXPathCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands" [ label="ADoSomethingUIElementCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" [ label="SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand" [ label="SeleniumBrowserWebElementActionAfterSearchWebElementCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands" [ label="ASeleniumCreateWebDriverCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands" [ label="ASeleniumGetFromWebDriverCommands", style="dashed", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands" [ label="ASeleniumWebDriverActionCommands", style="dashed", ];
@@ -345,13 +348,11 @@ digraph "taskt.Core.Automation.Commands.ScriptCommand" {
 "taskt.Core.Automation.Commands.SeleniumBrowserTakeScreenshotOfWebBrowserCommand" [ label="SeleniumBrowserTakeScreenshotOfWebBrowserCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserCloseWebBrowserInstanceCommand" [ label="SeleniumBrowserCloseWebBrowserInstanceCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserSwitchWebBrowserWindowAndTabCommand" [ label="SeleniumBrowserSwitchWebBrowserWindowAndTabCommand", shape="parallelogram", style="bold", ];
-"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand" [ label="SeleniumBrowserWebElementActionAfterSearchWebElementCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserNavigateBackCommand" [ label="SeleniumBrowserNavigateBackCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserNavigateForwardCommand" [ label="SeleniumBrowserNavigateForwardCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserNavigateToURLCommand" [ label="SeleniumBrowserNavigateToURLCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserRefreshWebBrowserCommand" [ label="SeleniumBrowserRefreshWebBrowserCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAndScrollCommands" [ label="ASeleniumWebElementActionAndScrollCommands", style="dashed", ];
-"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" [ label="SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.SeleniumBrowserScrollToWebElementCommand" [ label="SeleniumBrowserScrollToWebElementCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.ReplaceDataTableValueCommand" [ label="ReplaceDataTableValueCommand", shape="parallelogram", style="bold", ];
 "taskt.Core.Automation.Commands.AddDataTableColumnCommand" [ label="AddDataTableColumnCommand", shape="parallelogram", style="bold", ];
@@ -696,6 +697,7 @@ digraph "taskt.Core.Automation.Commands.ScriptCommand" {
 "taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
 "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
 "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementCoreCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebElementCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
 "taskt.Core.Automation.Commands.CheckNumberCommand" -> "taskt.Core.Automation.Commands.ScriptCommand";
@@ -884,6 +886,8 @@ digraph "taskt.Core.Automation.Commands.ScriptCommand" {
 "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands";
 "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByXPathCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands";
 "taskt.Core.Automation.Commands.UIAutomationGroup.ADoSomethingUIElementCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementCoreCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumBrowserWebElementActionAfterSearchWebElementCommands";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands";
@@ -1021,13 +1025,11 @@ digraph "taskt.Core.Automation.Commands.ScriptCommand" {
 "taskt.Core.Automation.Commands.SeleniumBrowserTakeScreenshotOfWebBrowserCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserCloseWebBrowserInstanceCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserSwitchWebBrowserWindowAndTabCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
-"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserNavigateBackCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserNavigateForwardCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserNavigateToURLCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserRefreshWebBrowserCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAndScrollCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands";
-"taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands";
 "taskt.Core.Automation.Commands.SeleniumBrowserScrollToWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionCommands";
 "taskt.Core.Automation.Commands.ReplaceDataTableValueCommand" -> "taskt.Core.Automation.Commands.ADataTableBothDataTableCommands";
 "taskt.Core.Automation.Commands.AddDataTableColumnCommand" -> "taskt.Core.Automation.Commands.ADataTableBothDataTableCommands";

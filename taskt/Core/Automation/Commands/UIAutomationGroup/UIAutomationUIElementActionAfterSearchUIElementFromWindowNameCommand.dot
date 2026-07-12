@@ -20,6 +20,7 @@ digraph "taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUI
 "taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties" [ label="IFromWindowNameResultsProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.ICanHandleWindowName" [ label="ICanHandleWindowName", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties" [ label="ITextCheckProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties" [ label="IUIElementUIElementActionSomewayProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties" [ label="IUIElementChildrenSearchSomewayProperties", shape="ellipse", style="dashed", ];
@@ -27,7 +28,6 @@ digraph "taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUI
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchParametersProperties" [ label="IUIElementDescendantsSearchParametersProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementIndexProperties" [ label="IUIElementIndexProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties" [ label="IFromWindowHandleResultsProperties", shape="ellipse", style="dashed", ];
-"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.ICheckProperties" [ label="ICheckProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
@@ -47,6 +47,7 @@ digraph "taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUI
 "taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties";
 "taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.ICanHandleWindowName";
 "taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties";
+"taskt.Core.Automation.Commands.ISelectionMethodProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
 "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
 "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties";
 "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands" -> "taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties";
@@ -72,6 +73,7 @@ digraph "taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUI
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties";
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties" -> "taskt.Core.Automation.Commands.IHaveDataTableElements";
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ISelectionMethodProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
 "taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties" -> "taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties";
 "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties";
 "taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";

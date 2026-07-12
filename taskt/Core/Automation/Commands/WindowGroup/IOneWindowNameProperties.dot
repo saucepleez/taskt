@@ -12,8 +12,8 @@ digraph "taskt.Core.Automation.Commands.IOneWindowNameProperties" {
 "taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties" [ label="IFromWindowNameResultsProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.ICanHandleWindowName" [ label="ICanHandleWindowName", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties" [ label="ITextCheckProperties", shape="ellipse", style="dashed", ];
-"taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties" [ label="IFromWindowHandleResultsProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties" [ label="IFromWindowHandleResultsProperties", shape="ellipse", style="dashed", ];
 "taskt.Core.Automation.Commands.ICheckProperties" [ label="ICheckProperties", shape="ellipse", style="dashed", ];
 
 "taskt.Core.Automation.Commands.IOneWindowNameProperties" -> "taskt.Core.Automation.Commands.IWindowNameCoreProperties";
@@ -21,6 +21,7 @@ digraph "taskt.Core.Automation.Commands.IOneWindowNameProperties" {
 "taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties";
 "taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.ICanHandleWindowName";
 "taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties";
+"taskt.Core.Automation.Commands.ISelectionMethodProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
 "taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties" -> "taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties";
 "taskt.Core.Automation.Commands.ICanHandleWindowName" -> "taskt.Core.Automation.Commands.IExpandableProperties";
 "taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties" -> "taskt.Core.Automation.Commands.ICheckProperties";

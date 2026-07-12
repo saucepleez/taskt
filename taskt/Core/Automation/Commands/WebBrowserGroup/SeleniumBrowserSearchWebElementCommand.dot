@@ -35,6 +35,7 @@ digraph "taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementCommand" 
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebDriverCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebDriverCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebElementsParametersProperties";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSearchMultiWebElementsParametersProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ISelectionMethodProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetFromWebDriverCommands" -> "taskt.Core.Automation.Commands.IResultProperties";
 "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";

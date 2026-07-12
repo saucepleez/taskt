@@ -47,6 +47,7 @@ digraph "taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromW
 "taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties";
 "taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.ICanHandleWindowName";
 "taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties";
+"taskt.Core.Automation.Commands.ISelectionMethodProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
 "taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties" -> "taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties";
 "taskt.Core.Automation.Commands.ICanHandleWindowName" -> "taskt.Core.Automation.Commands.IExpandableProperties";
 "taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties" -> "taskt.Core.Automation.Commands.ICheckProperties";
