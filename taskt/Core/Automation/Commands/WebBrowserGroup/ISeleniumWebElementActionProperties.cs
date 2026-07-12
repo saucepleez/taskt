@@ -3,11 +3,13 @@
     /// <summary>
     /// for WebElement action commands properties
     /// </summary>
-    public interface ISeleniumWebElementActionProperties : ISeleniumDoSomethingToWebElementProperties
+    public interface ISeleniumWebElementActionProperties : ISeleniumDoSomethingToWebElementProperties, IWhenFailActionProperties
     {
-        /// <summary>
-        /// behavior when Fail action
-        /// </summary>
-        string v_WhenFailAction { get; set; }
+        // nothing
+
+        ///// <summary>
+        ///// behavior when Fail action
+        ///// </summary>
+        //string v_WhenFailAction { get; set; }
     }
 }
