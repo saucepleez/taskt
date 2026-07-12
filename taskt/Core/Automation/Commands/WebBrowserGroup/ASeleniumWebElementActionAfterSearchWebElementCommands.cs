@@ -11,7 +11,7 @@ namespace taskt.Core.Automation.Commands.WebBrowserGroup
     /// <summary>
     /// for WebElement Action After Search WebElement commands
     /// </summary>
-    public abstract class ASeleniumBrowserWebElementActionAfterSearchWebElementCommands : ScriptCommand, ISeleniumSearchWebElementParametersProperties, IWhenFailActionBehaviorProperties, ISeleniumSendSpecialKeystrokesProperties, IHaveDataTableElements
+    public abstract class ASeleniumWebElementActionAfterSearchWebElementCommands : ScriptCommand, ISeleniumSearchWebElementParametersProperties, IWhenFailActionBehaviorProperties, ISeleniumSendSpecialKeystrokesProperties, IHaveDataTableElements
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_SearchMethod))]

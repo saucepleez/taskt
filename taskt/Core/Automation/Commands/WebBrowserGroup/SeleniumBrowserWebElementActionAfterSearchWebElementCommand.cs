@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
-    public sealed class SeleniumBrowserWebElementActionAfterSearchWebElementCommand : ASeleniumBrowserWebElementActionAfterSearchWebElementCommands, ISeleniumWebBrowserInstanceActionProperties
+    public sealed class SeleniumBrowserWebElementActionAfterSearchWebElementCommand : ASeleniumWebElementActionAfterSearchWebElementCommands, ISeleniumWebBrowserInstanceActionProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(VP_WebBrowserControls), nameof(VP_WebBrowserControls.v_InputInstanceName))]
