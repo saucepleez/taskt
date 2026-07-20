@@ -423,6 +423,8 @@
     <Compile Include="Core\Automation\Commands\FileGroup\AFileFilePathCommands.cs" />
     <Compile Include="Core\Automation\Commands\FileGroup\AFileExistsFilePathCommands.cs" />
     <Compile Include="Core\Automation\Commands\FileGroup\AFileCopySameRenameFileCommands.cs" />
+    <Compile Include="Core\Automation\Commands\FileGroup\AFileRemoveInvalidFileNameCharactorsCommands.cs" />
+    <Compile Include="Core\Automation\Commands\FileGroup\RemoveInvalidFileNameCharactorsCommand.cs" />
     <Compile Include="Core\Automation\Commands\FileGroup\GetRandomFilePathCommand.cs" />
     <Compile Include="Core\Automation\Commands\FileGroup\EM_CanHandleFileNameExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\FileGroup\EM_CanHandleFilePathExtentionMethods.cs" />
@@ -465,6 +467,7 @@
     <Compile Include="Core\Automation\Commands\FolderGroup\IFolderPathProperties.cs" />
     <Compile Include="Core\Automation\Commands\FolderGroup\AFolderCopySameRenameFolderCommands.cs" />
     <Compile Include="Core\Automation\Commands\FolderGroup\CopyFolderInSameLocationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\FolderGroup\RemoveInvalidFolderNameCharactorsCommand.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouseGroup\EnterKeysFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouseGroup\EnterShortcutKeyFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouseGroup\IEnterKeysProperties.cs" />
@@ -1919,6 +1922,24 @@
     <EmbeddedResource Include="UI\Forms\UIForm.resx">
       <DependentUpon>UIForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Core\Automation\Commands\FileGroup\CheckFileExistsCommand - コピー.dot">
+      <DependentUpon>AFileRemoveInvalidFileNameCharactorsCommands.cs</DependentUpon>
+    </None>
+    <None Include="Core\Automation\Commands\FileGroup\CheckFileExistsCommand - コピー.puml">
+      <DependentUpon>AFileRemoveInvalidFileNameCharactorsCommands.cs</DependentUpon>
+    </None>
+    <None Include="Core\Automation\Commands\FileGroup\DeleteFileCommand - コピー.dot">
+      <DependentUpon>RemoveInvalidFileNameCharactorsCommand.cs</DependentUpon>
+    </None>
+    <None Include="Core\Automation\Commands\FileGroup\DeleteFileCommand - コピー.puml">
+      <DependentUpon>RemoveInvalidFileNameCharactorsCommand.cs</DependentUpon>
+    </None>
+    <None Include="Core\Automation\Commands\FolderGroup\DeleteFileCommand - コピー.dot">
+      <DependentUpon>RemoveInvalidFolderNameCharactorsCommand.cs</DependentUpon>
+    </None>
+    <None Include="Core\Automation\Commands\FolderGroup\DeleteFileCommand - コピー.puml">
+      <DependentUpon>RemoveInvalidFolderNameCharactorsCommand.cs</DependentUpon>
+    </None>
     <None Include="latest.json" />
     <None Include="LICENSE" />
     <None Include="packages.config">
