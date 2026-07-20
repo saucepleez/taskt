@@ -414,6 +414,7 @@
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\IDialogResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\IWaitDialogResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\ShowDialogControls.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelSaveWorksheetToNewFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelAttachExcelInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGoToCellRCCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelSetColumnWidthCommand.cs" />
@@ -1922,24 +1923,6 @@
     <EmbeddedResource Include="UI\Forms\UIForm.resx">
       <DependentUpon>UIForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Core\Automation\Commands\FileGroup\CheckFileExistsCommand - コピー.dot">
-      <DependentUpon>AFileRemoveInvalidFileNameCharactorsCommands.cs</DependentUpon>
-    </None>
-    <None Include="Core\Automation\Commands\FileGroup\CheckFileExistsCommand - コピー.puml">
-      <DependentUpon>AFileRemoveInvalidFileNameCharactorsCommands.cs</DependentUpon>
-    </None>
-    <None Include="Core\Automation\Commands\FileGroup\DeleteFileCommand - コピー.dot">
-      <DependentUpon>RemoveInvalidFileNameCharactorsCommand.cs</DependentUpon>
-    </None>
-    <None Include="Core\Automation\Commands\FileGroup\DeleteFileCommand - コピー.puml">
-      <DependentUpon>RemoveInvalidFileNameCharactorsCommand.cs</DependentUpon>
-    </None>
-    <None Include="Core\Automation\Commands\FolderGroup\DeleteFileCommand - コピー.dot">
-      <DependentUpon>RemoveInvalidFolderNameCharactorsCommand.cs</DependentUpon>
-    </None>
-    <None Include="Core\Automation\Commands\FolderGroup\DeleteFileCommand - コピー.puml">
-      <DependentUpon>RemoveInvalidFolderNameCharactorsCommand.cs</DependentUpon>
-    </None>
     <None Include="latest.json" />
     <None Include="LICENSE" />
     <None Include="packages.config">
