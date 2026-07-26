@@ -351,6 +351,17 @@ namespace taskt.Core.Automation.Commands
         //[PropertyTextBoxSetting(1, true)]
         //[PropertyParameterOrder(5000)]
         public static string v_ValueToSet { get; }
+
+        /// <summary>
+        /// chart name
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_OneLineTextBox))]
+        [PropertyDescription("Chart Name")]
+        [InputSpecification("Text", true)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDetailSampleUsage("**Chart 1**", PropertyDetailSampleUsage.ValueType.Value, "Chart Name")]
+        [PropertyDetailSampleUsage("**{{{vChart}}}**", PropertyDetailSampleUsage.ValueType.VariableName, "Chart Name")]
+        public static string v_ChartName { get; }
         #endregion
 
         #region keyword convert method
