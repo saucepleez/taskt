@@ -5,9 +5,9 @@ using System.Collections.Generic;
 namespace taskt.Core.Automation.Commands.ExcelGroup
 {
     /// <summary>
-    /// do something to Excel Chart commands
+    /// do something to Excel Charts commands
     /// </summary>
-    public abstract class AExcelChartCommands : AExcelInstanceCommands, ICanHandleExcelCharts
+    public abstract class AExcelChartsCommands : AExcelInstanceCommands, ICanHandleExcelCharts
     {
         /// <summary>
         /// excel charts action
