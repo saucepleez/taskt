@@ -414,9 +414,16 @@
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\IDialogResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\IWaitDialogResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\ShowDialogControls.cs" />
-    <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelChartCommands.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelChartActionCommands.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelChartsCommands.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelDoSomethingToChartByChartName.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\EM_CanHandleExcelChartsExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelMoveChartByNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelResizeChartNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetChartSizeByNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetChartPositionByNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetChartNamesAsListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelCheckChartExistsByNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetChartsCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelSaveWorksheetToNewFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelAttachExcelInstanceCommand.cs" />
@@ -424,6 +431,7 @@
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelSetColumnWidthCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ICanHandleExcelCharts.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ICanHandleExcelInstance.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\IExcelChartNameProperties.cs" />
     <Compile Include="Core\Automation\Commands\FileGroup\AFileCopyMoveFileCommands.cs" />
     <Compile Include="Core\Automation\Commands\FileGroup\AFileExistsFilePathBeforeAfterResultCommands.cs" />
     <Compile Include="Core\Automation\Commands\FileGroup\AFileExistsFilePathPathResultCommands.cs" />
@@ -1929,18 +1937,6 @@
     <EmbeddedResource Include="UI\Forms\UIForm.resx">
       <DependentUpon>UIForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Core\Automation\Commands\ExcelGroup\ExcelGetCellCommand - コピー - コピー.dot">
-      <DependentUpon>ExcelGetChartNamesAsListCommand.cs</DependentUpon>
-    </None>
-    <None Include="Core\Automation\Commands\ExcelGroup\ExcelGetCellCommand - コピー - コピー.puml">
-      <DependentUpon>ExcelGetChartNamesAsListCommand.cs</DependentUpon>
-    </None>
-    <None Include="Core\Automation\Commands\ExcelGroup\ExcelGetCellCommand - コピー.dot">
-      <DependentUpon>ExcelGetChartsCountCommand.cs</DependentUpon>
-    </None>
-    <None Include="Core\Automation\Commands\ExcelGroup\ExcelGetCellCommand - コピー.puml">
-      <DependentUpon>ExcelGetChartsCountCommand.cs</DependentUpon>
-    </None>
     <None Include="latest.json" />
     <None Include="LICENSE" />
     <None Include="packages.config">

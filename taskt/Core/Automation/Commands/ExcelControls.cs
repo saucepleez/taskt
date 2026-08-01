@@ -355,7 +355,7 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// chart name
         /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_OneLineTextBox))]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Chart Name")]
         [InputSpecification("Text", true)]
         [PropertyShowSampleUsageInDescription(true)]
