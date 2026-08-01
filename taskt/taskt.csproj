@@ -418,6 +418,8 @@
     <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelChartsCommands.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelDoSomethingToChartByChartName.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\EM_CanHandleExcelChartsExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelRenameChartByNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelRemoveChartByNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelMoveChartByNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelResizeChartNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetChartSizeByNameCommand.cs" />
