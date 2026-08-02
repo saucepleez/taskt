@@ -422,6 +422,8 @@
     <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelDoSomethingToChartByChartName.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\EM_CanHandleExcelShapesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\EM_CanHandleExcelChartsExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelCheckShapeExistsByNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetShapesCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetShapeNamesAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelRenameChartByNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelRemoveChartByNameCommand.cs" />
