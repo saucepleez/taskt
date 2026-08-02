@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel")]
     [Attributes.ClassAttributes.SubGruop("Chart")]
-    [Attributes.ClassAttributes.CommandSettings("Get Chart Count")]
+    [Attributes.ClassAttributes.CommandSettings("Get Charts Count")]
     [Attributes.ClassAttributes.Description("This command allows you to Get Charts count from Current Worksheet.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get Charts count from Current Worksheet.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
