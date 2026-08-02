@@ -364,6 +364,29 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Chart Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Chart Name")]
         public static string v_ChartName { get; }
+
+        /// <summary>
+        /// shape name
+        /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Shape Name")]
+        [InputSpecification("Text", true)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDetailSampleUsage("**Shape 1**", PropertyDetailSampleUsage.ValueType.Value, "Shape Name")]
+        [PropertyDetailSampleUsage("**{{{vShape}}}**", PropertyDetailSampleUsage.ValueType.VariableName, "Shape Name")]
+        [PropertyValidationRule("Shape Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Shape Name")]
+        public static string v_ShapeName { get; }
+
+        /// <summary>
+        /// when fail action
+        /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
+        [PropertyDescription("When Fail Action")]
+        [PropertyIsOptional(true, "Error")]
+        [PropertyDisplayText(false, "When Fail Action")]
+        [PropertyParameterOrder(10000)]
+        public static string v_WhenFailAction { get; }
         #endregion
 
         #region keyword convert method

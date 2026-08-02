@@ -11,10 +11,7 @@ namespace taskt.Core.Automation.Commands.ExcelGroup
     public abstract class AExcelChartActionCommands : AExcelDoSomethingToChartByChartName, IWhenFailActionBehaviorProperties
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
-        [PropertyDescription("When Fail Action")]
-        [PropertyIsOptional(true, "Error")]
-        [PropertyDisplayText(false, "When Fail Action")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_WhenFailAction))]
         [PropertyParameterOrder(10000)]
         public virtual string v_WhenFailAction { get; set; }
 
