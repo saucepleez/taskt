@@ -372,7 +372,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Shape Name")]
         [InputSpecification("Text", true)]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyDetailSampleUsage("**Shape 1**", PropertyDetailSampleUsage.ValueType.Value, "Shape Name")]
+        [PropertyDetailSampleUsage("**Rectangle 1**", PropertyDetailSampleUsage.ValueType.Value, "Shape Name")]
         [PropertyDetailSampleUsage("**{{{vShape}}}**", PropertyDetailSampleUsage.ValueType.VariableName, "Shape Name")]
         [PropertyValidationRule("Shape Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Shape Name")]
