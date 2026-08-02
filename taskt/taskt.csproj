@@ -414,7 +414,7 @@
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\IDialogResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\IWaitDialogResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\ShowDialogControls.cs" />
-    <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelDoSomethingToShapeByChartName.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelDoSomethingToShapeByShapeName.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelShapeActionCommands.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelChartActionCommands.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelShapesCommands.cs" />
@@ -423,6 +423,8 @@
     <Compile Include="Core\Automation\Commands\ExcelGroup\EM_CanHandleExcelShapesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\EM_CanHandleExcelChartsExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelCheckShapeExistsByNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetShapeSizeByNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetShapePositionByNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetShapesCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetShapeNamesAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelRenameChartByNameCommand.cs" />

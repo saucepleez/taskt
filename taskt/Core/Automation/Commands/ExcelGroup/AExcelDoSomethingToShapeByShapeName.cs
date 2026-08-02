@@ -5,7 +5,7 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands.ExcelGroup
 {
-    public abstract class AExcelDoSomethingToShapeByChartName : AExcelShapesCommands, IExcelShapeNameProperties
+    public abstract class AExcelDoSomethingToShapeByShapeName : AExcelShapesCommands, IExcelShapeNameProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ShapeName))]
@@ -13,12 +13,12 @@ namespace taskt.Core.Automation.Commands.ExcelGroup
         public virtual string v_ShapeName { get; set; }
 
         /// <summary>
-        /// one chart action by name
+        /// one shape action by name
         /// </summary>
         /// <param name="engine"></param>
         /// <param name="shapeFunc"></param>
         /// <param name="errorFunc"></param>
-        protected void ExcelChartAction(Engine.AutomationEngineInstance engine, Action<Shape> shapeFunc, Action<Exception> errorFunc = null)
+        protected void ExcelShapeAction(Engine.AutomationEngineInstance engine, Action<Shape> shapeFunc, Action<Exception> errorFunc = null)
         {
             (_, var sht) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 

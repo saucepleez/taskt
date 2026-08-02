@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ExcelCheckShapeExistsByNameCommand : AExcelDoSomethingToShapeByChartName, IResultProperties
+    public sealed class ExcelCheckShapeExistsByNameCommand : AExcelDoSomethingToShapeByShapeName, IResultProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            this.ExcelChartAction(engine,
+            this.ExcelShapeAction(engine,
                 new Action<Microsoft.Office.Interop.Excel.Shape>(shape =>
                 {
                     true.StoreInUserVariable(engine, v_Result);

@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands.ExcelGroup
     /// <summary>
     /// for excel shape action commands
     /// </summary>
-    public abstract class AExcelShapeActionCommands : AExcelDoSomethingToShapeByChartName, IWhenFailActionBehaviorProperties
+    public abstract class AExcelShapeActionCommands : AExcelDoSomethingToShapeByShapeName, IWhenFailActionBehaviorProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_WhenFailAction))]
@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands.ExcelGroup
         /// <param name="shapeFunc"></param>
         protected void ExcelChartAction(Engine.AutomationEngineInstance engine, Action<Shape> shapeFunc)
         {
-            this.ExcelChartAction(engine, shapeFunc, new Action<Exception>(ex => 
+            this.ExcelShapeAction(engine, shapeFunc, new Action<Exception>(ex => 
             {
                 switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFailAction), engine))
                 {
