@@ -414,12 +414,15 @@
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\IDialogResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\IWaitDialogResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessageGroup\ShowDialogControls.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelDoSomethingToShapeByChartName.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelShapeActionCommands.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelChartActionCommands.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelShapesCommands.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelChartsCommands.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\AExcelDoSomethingToChartByChartName.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\EM_CanHandleExcelShapesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\EM_CanHandleExcelChartsExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetShapeNamesAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelRenameChartByNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelRemoveChartByNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelMoveChartByNameCommand.cs" />
@@ -436,6 +439,7 @@
     <Compile Include="Core\Automation\Commands\ExcelGroup\ICanHandleExcelCharts.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ICanHandleExcelInstance.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ICanHandleExcelShapes.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\IExcelShapeNameProperties.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\IExcelChartNameProperties.cs" />
     <Compile Include="Core\Automation\Commands\FileGroup\AFileCopyMoveFileCommands.cs" />
     <Compile Include="Core\Automation\Commands\FileGroup\AFileExistsFilePathBeforeAfterResultCommands.cs" />
