@@ -361,6 +361,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDetailSampleUsage("**Chart 1**", PropertyDetailSampleUsage.ValueType.Value, "Chart Name")]
         [PropertyDetailSampleUsage("**{{{vChart}}}**", PropertyDetailSampleUsage.ValueType.VariableName, "Chart Name")]
+        [PropertyValidationRule("Chart Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Chart Name")]
         public static string v_ChartName { get; }
         #endregion
 

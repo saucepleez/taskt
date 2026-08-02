@@ -19,12 +19,10 @@ namespace taskt.Core.Automation.Commands
     public sealed class ExcelRenameChartByNameCommand : AExcelChartActionCommands
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ChartName))]
         [PropertyDescription("New Chart Name")]
-        [PropertyDisplayText(false, "New  Name")]
-        [PropertyDetailSampleUsage("Chart10", PropertyDetailSampleUsage.ValueType.Value, "Chart Name")]
-        [PropertyDetailSampleUsage("{{{vChart}}}", PropertyDetailSampleUsage.ValueType.VariableValue, "Chart Name")]
-        [PropertyValidationRule("New Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("New Chart Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "New Chart Name")]
         [PropertyParameterOrder(8000)]
         public string v_NewName { get; set; }
 
