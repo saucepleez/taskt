@@ -427,9 +427,13 @@
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetShapePositionByNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetShapesCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetShapeNamesAsListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelMoveShapeByNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelRemoveShapeByNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelRenameShapeByNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelRenameChartByNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelRemoveChartByNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelMoveChartByNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelResizeShapeNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelResizeChartNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetChartSizeByNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetChartPositionByNameCommand.cs" />
