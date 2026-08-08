@@ -1188,7 +1188,7 @@
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetWorksheetInformationCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetExcelInformationCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetCurrentWorksheetCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetWorksheetsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetWorksheetNamesAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelDeleteWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelGetCellRCCommand.cs" />
     <Compile Include="Core\Automation\Commands\ExcelGroup\ExcelCopyWorksheetCommand.cs" />
@@ -7663,10 +7663,10 @@
       <DependentUpon>ExcelGetCurrentWorksheetCommand.cs</DependentUpon>
     </None>
     <None Include="Core\Automation\Commands\ExcelGroup\ExcelGetWorksheetsCommand.puml" ExcludeFromSingleFile="true">
-      <DependentUpon>ExcelGetWorksheetsCommand.cs</DependentUpon>
+      <DependentUpon>ExcelGetWorksheetNamesAsListCommand.cs</DependentUpon>
     </None>
     <None Include="Core\Automation\Commands\ExcelGroup\ExcelGetWorksheetsCommand.dot" ExcludeFromSingleFile="true">
-      <DependentUpon>ExcelGetWorksheetsCommand.cs</DependentUpon>
+      <DependentUpon>ExcelGetWorksheetNamesAsListCommand.cs</DependentUpon>
     </None>
     <None Include="Core\Automation\Commands\ExcelGroup\ExcelDeleteWorksheetCommand.puml" ExcludeFromSingleFile="true">
       <DependentUpon>ExcelDeleteWorksheetCommand.cs</DependentUpon>

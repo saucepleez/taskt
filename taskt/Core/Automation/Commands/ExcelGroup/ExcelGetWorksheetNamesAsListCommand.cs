@@ -8,14 +8,14 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel")]
     [Attributes.ClassAttributes.SubGruop("Worksheet")]
-    [Attributes.ClassAttributes.CommandSettings("Get Worksheets")]
-    [Attributes.ClassAttributes.Description("This command allows you to get a specific worksheet names")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to switch to a specific worksheet")]
+    [Attributes.ClassAttributes.CommandSettings("Get Worksheet Names As List")]
+    [Attributes.ClassAttributes.Description("This command allows you to get a specific worksheet names as List")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get worksheet names")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ExcelGetWorksheetsCommand : AExcelSheetCommands, IListResultProperties
+    public sealed class ExcelGetWorksheetNamesAsListCommand : AExcelSheetCommands, IListResultProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         public override string v_SheetName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Compare Method")]
+        [PropertyDescription("Check Method")]
         [InputSpecification("", true)]
         [SampleUsage("**Contains** or **Starts with** or **Ends with**")]
         [Remarks("")]
@@ -38,14 +38,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Contains")]
         [PropertyParameterOrder(7000)]
-        public string v_CompareMethod { get; set; }
+        public string v_CheckMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         [PropertyParameterOrder(7001)]
         public string v_Result { get; set; }
 
-        public ExcelGetWorksheetsCommand()
+        public ExcelGetWorksheetNamesAsListCommand()
         {
         }
 
@@ -68,7 +68,7 @@ namespace taskt.Core.Automation.Commands
             {
                 Func<string, string, bool> func = null;
 
-                var compareMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CompareMethod), "Compare Method", engine);
+                var compareMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CheckMethod), "Check Method", engine);
                 switch (compareMethod)
                 {
                     case "contains":

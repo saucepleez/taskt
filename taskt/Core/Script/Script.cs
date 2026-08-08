@@ -773,6 +773,10 @@ namespace taskt.Core.Script
             {
                 convertTo3_5_2_66(doc);
             }
+            if (IsOldVersion(myVersion, "3.5.2.70"))
+            {
+                convertTo3_5_2_70(doc);
+            }
             return doc;
         }
 
@@ -5811,6 +5815,15 @@ namespace taskt.Core.Script
         {
             // SeleniumBrowserCheckBrowserInstanceExistsCommand -> SeleniumBrowserCheckWebBrowserInstanceExistsCommand
             ChangeCommandName(doc, "SeleniumBrowserCheckBrowserInstanceExistsCommand", "SeleniumBrowserCheckWebBrowserInstanceExistsCommand", "Check Web Browser Instance Exists");
+        }
+
+        private static void convertTo3_5_2_70(XDocument doc)
+        {
+            // ExcelGetWorksheetsCommand v_CompareMethod -> v_CheckMethod
+            ChangeAttributeName(doc, "ExcelGetWorksheetsCommand", "v_CompareMethod", "v_CheckMethod");
+
+            // ExcelGetWorksheetsCommand -> ExcelGetWorksheetNamesAsListCommand
+            ChangeCommandName(doc, "ExcelGetWorksheetsCommand", "ExcelGetWorksheetNamesAsListCommand", "Get Worksheet Names As List");
         }
 
         /// <summary>
