@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("X Position")]
         [PropertyIsOptional(true, "Current X Position")]
-        [PropertyDisplayText(false, "X Position")]
+        [PropertyDisplayText(true, "X Position")]
         [PropertyValidationRule("X Postition", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyParameterOrder(8000)]
         public string v_XPosition { get; set; }
@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Y Position")]
         [PropertyIsOptional(true, "Current Y Position")]
-        [PropertyDisplayText(false, "Y Position")]
+        [PropertyDisplayText(true, "Y Position")]
         [PropertyValidationRule("Y Postition", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyParameterOrder(8001)]
         public string v_YPosition { get; set; }

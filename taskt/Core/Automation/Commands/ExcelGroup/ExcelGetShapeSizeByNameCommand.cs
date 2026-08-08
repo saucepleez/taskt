@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Recieve the Chart Width")]
         [PropertyIsOptional(true)]
-        [PropertyDisplayText(false, "Width")]
+        [PropertyDisplayText(true, "Width")]
         [PropertyValidationRule("Width", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyParameterOrder(8000)]
         public string v_Width { get; set; }
@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Recieve the Chart Height")]
         [PropertyIsOptional(true)]
-        [PropertyDisplayText(false, "Height")]
+        [PropertyDisplayText(true, "Height")]
         [PropertyValidationRule("Height", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyParameterOrder(8001)]
         public string v_Height { get; set; }
