@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands.ExcelGroup
         /// </summary>
         /// <param name="engine"></param>
         /// <param name="shapeFunc"></param>
-        protected void ExcelChartAction(Engine.AutomationEngineInstance engine, Action<Shape> shapeFunc)
+        protected void ExcelShapeAction(Engine.AutomationEngineInstance engine, Action<Shape> shapeFunc)
         {
             this.ExcelShapeAction(engine, shapeFunc, new Action<Exception>(ex => 
             {
