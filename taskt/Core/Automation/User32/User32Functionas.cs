@@ -253,11 +253,13 @@ namespace taskt.Core.Automation.User32
             }
 
             /// <summary>
-            /// hook procedure (callback) when keyboard input occered
+            /// hook procedure (callback) when keyboard input occered. low level keyboard input events hook
+            /// https://learn.microsoft.com/en-us/windows/win32/winmsg/lowlevelkeyboardproc
             /// </summary>
             /// <param name="nCode"></param>
-            /// <param name="wParam"></param>
-            /// <param name="lParam"></param>
+            /// <param name="wParam">WM_KEYDOWN, WM_KEYUP, WM_SYSKEYDOWN, or WM_SYSKEYUP</param>
+            /// <param name="lParam">KBDLLHOOKSTRUCT structure
+            /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-kbdllhookstruct</param>
             /// <returns></returns>
             private static IntPtr KeyboardHookEvent(int nCode, IntPtr wParam, IntPtr lParam)
             {
@@ -274,11 +276,13 @@ namespace taskt.Core.Automation.User32
             public static event EventHandler<MouseCoordinateEventArgs> MouseEvent;
 
             /// <summary>
-            /// hook procedure (callback) when mouse input occered
+            /// hook procedure (callback) when mouse input occered. low level mouse input events hook
+            /// https://learn.microsoft.com/en-us/windows/win32/winmsg/lowlevelmouseproc
             /// </summary>
             /// <param name="nCode"></param>
-            /// <param name="wParam"></param>
-            /// <param name="lParam"></param>
+            /// <param name="wParam">WM_LBUTTONDOWN, WM_LBUTTONUP, WM_MOUSEMOVE, WM_MOUSEWHEEL, WM_RBUTTONDOWN, WM_RBUTTONUP, WM_MBUTTONDOWN, WM_MBUTTONUP, WM_XBUTTONDOWN, or WM_XBUTTONUP</param>
+            /// <param name="lParam">MSLLHOOKSTRUCT structure
+            /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-msllhookstruct</param>
             /// <returns></returns>
             private static IntPtr MouseHookForLeftClickUpEvent(int nCode, IntPtr wParam, IntPtr lParam)
             {
@@ -318,6 +322,16 @@ namespace taskt.Core.Automation.User32
 
                 return CallNextHookEx(_mouseHookID, nCode, wParam, lParam);
             }
+
+            /// <summary>
+            /// last or current key event occered time
+            /// </summary>
+            public static DateTime keyTime { get; set; }
+
+            /// <summary>
+            /// last key when keyboard event occered
+            /// </summary>
+            public static Keys? LastKey { get; set; }
 
             /// <summary>
             /// build/create keyboard command
@@ -461,9 +475,6 @@ namespace taskt.Core.Automation.User32
                     generatedCommands.Add(keyboardCommand);
                 }
             }
-
-            public static DateTime keyTime { get; set; }
-            public static Keys? LastKey { get; set; }
 
             /// <summary>
             /// build mouse command
@@ -655,7 +666,7 @@ namespace taskt.Core.Automation.User32
             }
 
             /// <summary>
-            /// build pause command
+            /// build/create pause command
             /// </summary>
             private static void BuildPauseCommand()
             {
@@ -711,23 +722,25 @@ namespace taskt.Core.Automation.User32
             #region User32 Keyboard Mouse
 
             /// <summary>
-            /// callback for keyboard hook
+            /// callback for keyboard input hook
             /// https://learn.microsoft.com/en-us/windows/win32/winmsg/lowlevelkeyboardproc
             /// </summary>
             /// <param name="nCode"></param>
-            /// <param name="wParam"></param>
-            /// <param name="lParam">when (nCode < 0) please specify return value of CallNextHookEx</param>
-            /// <returns></returns>
+            /// <param name="wParam">WM_KEYDOWN, WM_KEYUP, WM_SYSKEYDOWN, or WM_SYSKEYUP</param>
+            /// <param name="lParam">KBDLLHOOKSTRUCT structure
+            /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-kbdllhookstruct</param>
+            /// <returns>when (nCode < 0) please specify return value of CallNextHookEx</returns>
             private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
             /// <summary>
-            /// callback for mouse fook
+            /// callback for mouse click hook
             /// https://learn.microsoft.com/en-us/windows/win32/winmsg/lowlevelmouseproc
             /// </summary>
             /// <param name="nCode"></param>
-            /// <param name="wParam"></param>
-            /// <param name="lParam">when (nCode < 0) please specify return value of CallNextHookEx</param>
-            /// <returns></returns>
+            /// <param name="wParam">WM_LBUTTONDOWN, WM_LBUTTONUP, WM_MOUSEMOVE, WM_MOUSEWHEEL, WM_RBUTTONDOWN, WM_RBUTTONUP, WM_MBUTTONDOWN, WM_MBUTTONUP, WM_XBUTTONDOWN, or WM_XBUTTONUP</param>
+            /// <param name="lParam">MSLLHOOKSTRUCT structure
+            /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-msllhookstruct</param>
+            /// <returns>when (nCode < 0) please specify return value of CallNextHookEx</returns>
             private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
 
             /// <summary>
@@ -738,19 +751,19 @@ namespace taskt.Core.Automation.User32
             /// <param name="lpfn">call back procedure</param>
             /// <param name="hMod"></param>
             /// <param name="dwThreadId"></param>
-            /// <returns></returns>
+            /// <returns>hook procedure handle</returns>
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
 
             /// <summary>
-            /// low level hook to mouse
+            /// low level hook to mouse click
             /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexa
             /// </summary>
             /// <param name="idHook"></param>
             /// <param name="lpfn">call back procedure</param>
             /// <param name="hMod"></param>
             /// <param name="dwThreadId"></param>
-            /// <returns></returns>
+            /// <returns>hook procedure handle</returns>
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
 
