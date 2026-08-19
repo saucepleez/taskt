@@ -50,12 +50,41 @@ namespace taskt.Core.Automation.User32
 
         public class GlobalHook
         {
+            /// <summary>
+            /// low level keyboard input event hook
+            /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexa
+            /// </summary>
             private const int WH_KEYBOARD_LL = 13;
+
+            /// <summary>
+            /// non-system key is pressed
+            /// https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-keydown
+            /// </summary>
             private const int WM_KEYDOWN = 0x0100;
+
+            /// <summary>
+            /// low level keyboard input hook procedure
+            /// </summary>
             private static readonly LowLevelKeyboardProc _kbProc = KeyboardHookEvent;
+
+            /// <summary>
+            /// low level mouse move hook procedure
+            /// </summary>
             private static readonly LowLevelMouseProc _mouseProc = MouseHookEvent;
+
+            /// <summary>
+            /// low level mouse click hook procedure
+            /// </summary>
             private static readonly LowLevelMouseProc _mouseLeftUpProc = MouseHookForLeftClickUpEvent;
+
+            /// <summary>
+            /// keyboard input hook procedure handle
+            /// </summary>
             private static IntPtr _keyboardHookID = IntPtr.Zero;
+
+            /// <summary>
+            /// mouse input hook procedure handle
+            /// </summary>
             private static IntPtr _mouseHookID = IntPtr.Zero;
             private static Stopwatch sw;
 
@@ -93,16 +122,16 @@ namespace taskt.Core.Automation.User32
             /// <summary>
             /// start screen recording
             /// </summary>
-            /// <param name="captureClick"></param>
-            /// <param name="captureMouse"></param>
-            /// <param name="groupMouseMoves"></param>
-            /// <param name="captureKeyboard"></param>
-            /// <param name="captureWindow"></param>
-            /// <param name="activateTopLeft"></param>
-            /// <param name="trackActivatedWindowSize"></param>
-            /// <param name="trackWindowsOpenLocation"></param>
-            /// <param name="eventResolution"></param>
-            /// <param name="stopHookHotKey"></param>
+            /// <param name="captureClick">capture mouse click</param>
+            /// <param name="captureMouse">capture mouse move</param>
+            /// <param name="groupMouseMoves">groping mouse move commands in seaquence</param>
+            /// <param name="captureKeyboard">capture keyboard input</param>
+            /// <param name="captureWindow">capture window events</param>
+            /// <param name="activateTopLeft">actiate window move to top-left</param>
+            /// <param name="trackActivatedWindowSize">track activate window size</param>
+            /// <param name="trackWindowsOpenLocation">track activate window position</param>
+            /// <param name="eventResolution">mouse move sampling (ms)</param>
+            /// <param name="stopHookHotKey">hot key to stop hook</param>
             public static void StartScreenRecordingHook(bool captureClick, bool captureMouse, bool groupMouseMoves, bool captureKeyboard, bool captureWindow, bool activateTopLeft, bool trackActivatedWindowSize, bool trackWindowsOpenLocation, int eventResolution, string stopHookHotKey)
             {
                 // create new list for commands generated
@@ -210,7 +239,7 @@ namespace taskt.Core.Automation.User32
             }
 
             /// <summary>
-            /// move hook event
+            /// mouse move hook event
             /// </summary>
             /// <param name="nCode"></param>
             /// <param name="wParam"></param>
@@ -582,14 +611,13 @@ namespace taskt.Core.Automation.User32
             }
 
             /// <summary>
-            /// set keyboard hook
+            /// set keyboard input hook
             /// </summary>
             /// <param name="proc"></param>
-            /// <returns></returns>
+            /// <returns>hook procedure handle</returns>
             private static IntPtr SetKeyboardHook(LowLevelKeyboardProc proc)
             {
-                using (Process curProcess = System.Diagnostics.Process.GetCurrentProcess())
-
+                using (Process curProcess = Process.GetCurrentProcess())
                 using (ProcessModule curModule = curProcess.MainModule)
                 {
                     return SetWindowsHookEx(WH_KEYBOARD_LL, proc,
@@ -599,14 +627,13 @@ namespace taskt.Core.Automation.User32
             }
 
             /// <summary>
-            /// set mouse hook
+            /// set mouse input hook
             /// </summary>
             /// <param name="proc"></param>
-            /// <returns></returns>
+            /// <returns>hook procedure handle</returns>
             private static IntPtr SetMouseHook(LowLevelMouseProc proc)
             {
-                using (Process curProcess = System.Diagnostics.Process.GetCurrentProcess())
-
+                using (Process curProcess = Process.GetCurrentProcess())
                 using (ProcessModule curModule = curProcess.MainModule)
                 {
                     return SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
@@ -737,7 +764,7 @@ namespace taskt.Core.Automation.User32
             // enums and structs
 
             /// <summary>
-            /// value of win hook low level mouse event
+            /// value of win hook low level mouse input event
             /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexa
             /// </summary>
             private const int WH_MOUSE_LL = 14;
