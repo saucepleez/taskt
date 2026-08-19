@@ -86,25 +86,86 @@ namespace taskt.Core.Automation.User32
             /// mouse input hook procedure handle
             /// </summary>
             private static IntPtr _mouseHookID = IntPtr.Zero;
+
+            /// <summary>
+            /// stop watch for timing all event occurences
+            /// </summary>
             private static Stopwatch sw;
 
+            /// <summary>
+            /// perform mouse click capture
+            /// </summary>
             private static bool performMouseClickCapture;
+
+            /// <summary>
+            /// grouping mouse moves into sequence
+            /// </summary>
             private static bool groupMouseMovesIntoSequence;
+
+            /// <summary>
+            /// perform mouse move capture
+            /// </summary>
             private static bool performMouseMoveCapture;
+
+            /// <summary>
+            /// perform keyboard input capture
+            /// </summary>
             private static bool performKeyboardCapture;
+
+            /// <summary>
+            /// perform window events capture
+            /// </summary>
             private static bool performWindowCapture;
+
+            /// <summary>
+            /// perfrom activate window move to top-left
+            /// </summary>
             private static bool activateWindowTopLeft;
+
+            /// <summary>
+            /// perform track activate window size
+            /// </summary>
             private static bool trackActivatedWindowSizes;
+
+            /// <summary>
+            /// perform track activate window position
+            /// </summary>
             private static bool trackWindowOpenLocations;
+
+            /// <summary>
+            /// mouse move sampling resolution (ms)
+            /// </summary>
             private static int msResolution;
+
+            /// <summary>
+            /// hot key to stop hook
+            /// </summary>
             public static string stopHookKey;
+
+            /// <summary>
+            /// ?
+            /// </summary>
             public static bool stopOnClick;
+
+            /// <summary>
+            /// last mouse move
+            /// </summary>
             private static Stopwatch lastMouseMove;
 
+            /// <summary>
+            /// generated commands by hook
+            /// </summary>
             public static List<ScriptCommand> generatedCommands;
 
+            /// <summary>
+            /// events when stopped hook
+            /// </summary>
             public static event EventHandler HookStopped = delegate { };
 
+            /// <summary>
+            /// set keyboard input hook and hot key to stop hook
+            /// </summary>
+            /// <param name="keyName"></param>
             public static void StartEngineCancellationHook(Keys keyName)
             {
                 stopHookKey = keyName.ToString();
@@ -112,6 +173,10 @@ namespace taskt.Core.Automation.User32
                 _keyboardHookID = SetKeyboardHook(_kbProc);
             }
 
+            /// <summary>
+            /// set mouse click hook and stop-on-click (what is this ?)
+            /// </summary>
+            /// <param name="stopOnFirstClick"></param>
             public static void StartElementCaptureHook(bool stopOnFirstClick)
             {
                 stopOnClick = stopOnFirstClick;
@@ -170,7 +235,7 @@ namespace taskt.Core.Automation.User32
             }
 
             /// <summary>
-            /// hook end
+            /// stop hook process
             /// </summary>
             public static void StopHook()
             {
@@ -188,7 +253,7 @@ namespace taskt.Core.Automation.User32
             }
 
             /// <summary>
-            /// keyboard hook event triggers
+            /// hook procedure (callback) when keyboard input occered
             /// </summary>
             /// <param name="nCode"></param>
             /// <param name="wParam"></param>
@@ -204,13 +269,12 @@ namespace taskt.Core.Automation.User32
                 }
 
                 return CallNextHookEx(_keyboardHookID, nCode, wParam, lParam);
-            
             }
 
             public static event EventHandler<MouseCoordinateEventArgs> MouseEvent;
-            
+
             /// <summary>
-            /// mouse left click event hook
+            /// hook procedure (callback) when mouse input occered
             /// </summary>
             /// <param name="nCode"></param>
             /// <param name="wParam"></param>
@@ -239,7 +303,7 @@ namespace taskt.Core.Automation.User32
             }
 
             /// <summary>
-            /// mouse move hook event
+            /// hook procedure (callback) when mouse move occered
             /// </summary>
             /// <param name="nCode"></param>
             /// <param name="wParam"></param>
@@ -613,7 +677,7 @@ namespace taskt.Core.Automation.User32
             /// <summary>
             /// set keyboard input hook
             /// </summary>
-            /// <param name="proc"></param>
+            /// <param name="proc">call back hook procedure</param>
             /// <returns>hook procedure handle</returns>
             private static IntPtr SetKeyboardHook(LowLevelKeyboardProc proc)
             {
@@ -629,7 +693,7 @@ namespace taskt.Core.Automation.User32
             /// <summary>
             /// set mouse input hook
             /// </summary>
-            /// <param name="proc"></param>
+            /// <param name="proc">call back hook procedure</param>
             /// <returns>hook procedure handle</returns>
             private static IntPtr SetMouseHook(LowLevelMouseProc proc)
             {
@@ -648,21 +712,21 @@ namespace taskt.Core.Automation.User32
 
             /// <summary>
             /// callback for keyboard hook
-            /// https://learn.microsoft.com/en-us/previous-versions/windows/desktop/legacy/ms644985(v=vs.85)
+            /// https://learn.microsoft.com/en-us/windows/win32/winmsg/lowlevelkeyboardproc
             /// </summary>
             /// <param name="nCode"></param>
             /// <param name="wParam"></param>
-            /// <param name="lParam"></param>
+            /// <param name="lParam">when (nCode < 0) please specify return value of CallNextHookEx</param>
             /// <returns></returns>
             private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
             /// <summary>
             /// callback for mouse fook
-            /// https://learn.microsoft.com/ja-jp/previous-versions/windows/desktop/legacy/ms644986(v=vs.85)
+            /// https://learn.microsoft.com/en-us/windows/win32/winmsg/lowlevelmouseproc
             /// </summary>
             /// <param name="nCode"></param>
             /// <param name="wParam"></param>
-            /// <param name="lParam"></param>
+            /// <param name="lParam">when (nCode < 0) please specify return value of CallNextHookEx</param>
             /// <returns></returns>
             private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
 
@@ -671,7 +735,7 @@ namespace taskt.Core.Automation.User32
             /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexa
             /// </summary>
             /// <param name="idHook"></param>
-            /// <param name="lpfn"></param>
+            /// <param name="lpfn">call back procedure</param>
             /// <param name="hMod"></param>
             /// <param name="dwThreadId"></param>
             /// <returns></returns>
@@ -683,7 +747,7 @@ namespace taskt.Core.Automation.User32
             /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexa
             /// </summary>
             /// <param name="idHook"></param>
-            /// <param name="lpfn"></param>
+            /// <param name="lpfn">call back procedure</param>
             /// <param name="hMod"></param>
             /// <param name="dwThreadId"></param>
             /// <returns></returns>
