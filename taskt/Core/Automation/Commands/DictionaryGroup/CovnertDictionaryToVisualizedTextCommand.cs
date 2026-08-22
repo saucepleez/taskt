@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -7,9 +8,9 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary")]
     [Attributes.ClassAttributes.SubGruop("Convert")]
-    [Attributes.ClassAttributes.CommandSettings("Covnert Dictionary To Visualized Text")]
-    [Attributes.ClassAttributes.Description("This command allows you to Covnert Dictionary to Visualized Text.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Covnert Dictionary to Visualized Text.")]
+    [Attributes.ClassAttributes.CommandSettings("Convert Dictionary To Visualized Text")]
+    [Attributes.ClassAttributes.Description("This command allows you to Convert Dictionary to Visualized Text.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Convert Dictionary to Visualized Text.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -65,31 +66,31 @@ namespace taskt.Core.Automation.Commands
             string keyFormat = $"{{0,-{maxKeyLength}}}";
             string valueFormat = $"{{0,-{maxValueLength}}}";
 
-            string txt = $"{string.Format(indexFormat, "No.")} | {string.Format(keyFormat, "Key")} | {string.Format(valueFormat, "Value")}\r\n";
+            var txt = new StringBuilder($"{string.Format(indexFormat, "No.")} | {string.Format(keyFormat, "Key")} | {string.Format(valueFormat, "Value")}\r\n");
             for (int i = 0; i < indexDigits; i++)
             {
-                txt += "-";
+                txt.Append("-");
             }
-            txt += "-|-";
+            txt.Append("-|-");
             for (int i = 0; i < maxKeyLength; i++)
             {
-                txt += "-";
+                txt.Append("-");
             }
-            txt += "-|-";
+            txt.Append("-|-");
             for (int i=0; i< maxValueLength; i++)
             {
-                txt += "-";
+                txt.Append("-");
             }
-            txt += "\r\n";
+            txt.Append("\r\n");
 
             int cnt = 0;
             foreach (var item in dic)
             {
-                txt += $"{string.Format(indexFormat, cnt)} | {string.Format(keyFormat, item.Key)} | {string.Format(valueFormat, item.Value)}\r\n";
+                txt.Append($"{string.Format(indexFormat, cnt)} | {string.Format(keyFormat, item.Key)} | {string.Format(valueFormat, item.Value)}\r\n");
                 cnt++;
             }
 
-            txt.StoreInUserVariable(engine, v_Result);
+            txt.ToString().StoreInUserVariable(engine, v_Result);
         }
     }
 }

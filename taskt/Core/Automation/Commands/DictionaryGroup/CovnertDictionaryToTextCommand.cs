@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -7,9 +8,9 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary")]
     [Attributes.ClassAttributes.SubGruop("Convert")]
-    [Attributes.ClassAttributes.CommandSettings("Covnert Dictionary To Text")]
-    [Attributes.ClassAttributes.Description("This command allows you to Covnert Dictionary to Text.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Covnert Dictionary to Text.")]
+    [Attributes.ClassAttributes.CommandSettings("Convert Dictionary To Text")]
+    [Attributes.ClassAttributes.Description("This command allows you to Convert Dictionary to Text.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Convert Dictionary to Text.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -54,16 +55,16 @@ namespace taskt.Core.Automation.Commands
             var exportHeader = this.ExpandValueOrUserVariableAsYesNo(nameof(v_ExportHeader), engine);
             var exportIndex = this.ExpandValueOrUserVariableAsYesNo(nameof(v_ExportIndex), engine);
 
-            string txt = "";
+            var txt = new StringBuilder();
             if (exportHeader)
             {
                 if (exportIndex)
                 {
-                    txt = "index,key,value\r\n";
+                    txt.Append("index,key,value\r\n");
                 }
                 else
                 {
-                    txt = "key,value\r\n";
+                    txt.Append("key,value\r\n");
                 }
             }
             Func<string, string, int, string> textAction;
@@ -85,11 +86,11 @@ namespace taskt.Core.Automation.Commands
             int index = 0;
             foreach (var item in dic)
             {
-                txt += textAction(item.Key, item.Value, index);
+                txt.Append(textAction(item.Key, item.Value, index));
                 index++;
             }
 
-            txt.Trim().StoreInUserVariable(engine, v_Result);
+            txt.ToString().Trim().StoreInUserVariable(engine, v_Result);
         }
     }
 }
