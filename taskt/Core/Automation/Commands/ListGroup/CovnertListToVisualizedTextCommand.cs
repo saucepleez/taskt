@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -55,24 +56,24 @@ namespace taskt.Core.Automation.Commands
             string indexFormat = $"{{0,{indexDigits}}}";
             string valueFormat = $"{{0,-{maxValueLength}}}";
 
-            string txt = $"{string.Format(indexFormat, "Index")} | {string.Format(valueFormat, "Value")}\r\n";
+            var txt = new StringBuilder($"{string.Format(indexFormat, "Index")} | {string.Format(valueFormat, "Value")}\r\n");
             for (int i = 0; i < indexDigits; i++)
             {
-                txt += "-";
+                txt.Append("-");
             }
-            txt += "-|-";
+            txt.Append("-|-");
             for (int i = 0; i < maxValueLength; i++)
             {
-                txt += "-";
+                txt.Append("-");
             }
-            txt += "\r\n";
+            txt.Append("\r\n");
 
             for (int i = 0; i < size; i++)
             {
-                txt += $"{string.Format(indexFormat, i)} | {string.Format(valueFormat, list[i])}\r\n";
+                txt.Append($"{string.Format(indexFormat, i)} | {string.Format(valueFormat, list[i])}\r\n");
             }
 
-            txt.StoreInUserVariable(engine, v_Result);
+            txt.ToString().StoreInUserVariable(engine, v_Result);
         }
     }
 }
