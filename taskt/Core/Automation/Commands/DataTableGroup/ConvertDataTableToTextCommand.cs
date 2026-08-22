@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Text;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -57,30 +58,30 @@ namespace taskt.Core.Automation.Commands
             var exportHeader = this.ExpandValueOrUserVariableAsYesNo(nameof(v_ExportHeader), engine);
             var exportIndex = this.ExpandValueOrUserVariableAsYesNo(nameof(v_ExportIndex), engine);
 
-            string txt = "";
+            var txt = new StringBuilder();
             if (exportHeader)
             {
                 if (exportIndex)
                 {
-                    txt = "index,";
+                    txt.Append("index,");
                 }
-                string t = "";
+                var t = new StringBuilder();
                 foreach (DataColumn c in dt.Columns)
                 {
-                    t += $"{c.ColumnName},";
+                    t.Append($"{c.ColumnName},");
                 }
-                txt += t.Substring(0, t.Length - 1) + "\r\n";
+                txt.Append(t.ToString().Substring(0, t.Length - 1) + "\r\n");
             }
 
             string rowTextAction(DataRow row, int column)
             {
-                string v = "";
+                var v = new StringBuilder();
                 
                 for (int i = 0; i < column; i++)
                 {
-                    v += $"{row[i]?.ToString() ?? ""},";
+                    v.Append($"{row[i]?.ToString() ?? ""},");
                 }
-                return v.Substring(0, v.Length - 1) + "\r\n";
+                return v.ToString().Substring(0, v.Length - 1) + "\r\n";
             }
 
             Func<DataRow, int, string> textAction;
@@ -101,10 +102,10 @@ namespace taskt.Core.Automation.Commands
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                txt += textAction(dt.Rows[i], i);
+                txt.Append(textAction(dt.Rows[i], i));
             }
 
-            txt.Trim().StoreInUserVariable(engine, v_Result);
+            txt.ToString().Trim().StoreInUserVariable(engine, v_Result);
         }
     }
 }

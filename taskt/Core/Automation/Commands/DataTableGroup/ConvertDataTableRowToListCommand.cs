@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
             //(var srcDT, var index) = this.ExpandUserVariablesAsDataTableAndRowIndex(nameof(v_DataTable), nameof(v_RowIndex), engine);
             (var srcDT, var index) = this.ExpandValueOrUserVariableAsDataTableAndRow(engine);
 
-            var myList = new List<string>();
+            var myList = this.CreateEmptyList();
 
             int cols = srcDT.Columns.Count;
             for (int i = 0; i < cols; i++)

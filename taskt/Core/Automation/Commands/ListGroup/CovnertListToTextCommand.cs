@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
+using System.Text;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -52,7 +53,7 @@ namespace taskt.Core.Automation.Commands
         {
             var list = this.ExpandUserVariableAsList(engine);
 
-            string txt = "";
+            var txt = new StringBuilder();
 
             var exportHeader = this.ExpandValueOrUserVariableAsYesNo(nameof(v_ExportHeader), engine);
             var exportIndex = this.ExpandValueOrUserVariableAsYesNo(nameof(v_ExportIndex), engine);
@@ -61,11 +62,11 @@ namespace taskt.Core.Automation.Commands
             {
                 if (exportIndex)
                 {
-                    txt = "index,value\r\n";
+                    txt.Append("index,value\r\n");
                 }
                 else
                 {
-                    txt = "value\r\n";
+                    txt.Append("value\r\n");
                 }
             }
 
@@ -87,10 +88,10 @@ namespace taskt.Core.Automation.Commands
 
             for (int i = 0; i < list.Count; i++)
             {
-                txt += textAction(list[i], i);
+                txt.Append(textAction(list[i], i));
             }
 
-            txt.Trim().StoreInUserVariable(engine, v_Result);
+            txt.ToString().Trim().StoreInUserVariable(engine, v_Result);
         }
     }
 }

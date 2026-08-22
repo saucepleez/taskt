@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -44,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("\"", PropertyDetailSampleUsage.ValueType.Value, "Text before Values")]
         [PropertyDetailSampleUsage("{{{vText}}}", PropertyDetailSampleUsage.ValueType.VariableValue, "Text before Values")]
         [PropertyValidationRule("Text before Values", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(false, "")]
+        [PropertyDisplayText(false, "Before Values")]
         [PropertyParameterOrder(8000)]
         public string v_BeforeText { get; set; }
 
@@ -56,7 +57,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("\"", PropertyDetailSampleUsage.ValueType.Value, "Text after Values")]
         [PropertyDetailSampleUsage("{{{vText}}}", PropertyDetailSampleUsage.ValueType.VariableValue, "Text after Values")]
         [PropertyValidationRule("Text after Values", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(false, "")]
+        [PropertyDisplayText(false, "After Values")]
         [PropertyParameterOrder(8001)]
         public string v_AfterText { get; set; }
 
@@ -72,14 +73,14 @@ namespace taskt.Core.Automation.Commands
             var bef = this.ExpandValueOrUserVariable(nameof(v_BeforeText), "Text before", engine);
             var aft = this.ExpandValueOrUserVariable(nameof(v_AfterText), "Text after", engine);
             
-            string txt = "";
+            var txt = new StringBuilder();
             var last = list.Count - 1;
             for (int i = 0; i < last; i++)
             {
-                txt += $"{bef}{list[i]}{aft}{sep}";
+                txt.Append($"{bef}{list[i]}{aft}{sep}");
             }
-            txt += $"{bef}{list[last]}{aft}";
-            txt.StoreInUserVariable(engine, v_Result);
+            txt.Append($"{bef}{list[last]}{aft}");
+            txt.ToString().StoreInUserVariable(engine, v_Result);
         }
     }
 }

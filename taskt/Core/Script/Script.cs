@@ -777,6 +777,10 @@ namespace taskt.Core.Script
             {
                 convertTo3_5_2_70(doc);
             }
+            if (IsOldVersion(myVersion, "3.5.2.71"))
+            {
+                convertTo3_5_2_71(doc);
+            }
             return doc;
         }
 
@@ -5824,6 +5828,15 @@ namespace taskt.Core.Script
 
             // ExcelGetWorksheetsCommand -> ExcelGetWorksheetNamesAsListCommand
             ChangeCommandName(doc, "ExcelGetWorksheetsCommand", "ExcelGetWorksheetNamesAsListCommand", "Get Worksheet Names As List");
+        }
+
+        private static void convertTo3_5_2_71(XDocument doc)
+        {
+            // ConvertDictionaryToVisualizedTextCommand fix command name
+            ChangeCommandName(doc, "ConvertDictionaryToVisualizedTextCommand", "ConvertDictionaryToVisualizedTextCommand", "Convert Dictionary To Visualized Text");
+
+            // ConvertDictionaryToTextCommand fix command name
+            ChangeCommandName(doc, "ConvertDictionaryToTextCommand", "ConvertDictionaryToTextCommand", "Convert Dictionary To Text");
         }
 
         /// <summary>
