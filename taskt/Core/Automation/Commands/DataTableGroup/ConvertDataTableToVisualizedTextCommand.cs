@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Text;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -74,58 +75,61 @@ namespace taskt.Core.Automation.Commands
             }
             var rowFormat = $"{{0, {rowLength}}}";
 
+            var txt = new StringBuilder();
+
             // first header
-            string txt = $"{string.Format(rowFormat, "")} ";
+            var firstHeader = new StringBuilder($"{string.Format(rowFormat, "")} ");
             int cnt = 0;
             foreach(var s in columnFormats)
             {
-                txt += $"| {string.Format(s, cnt)} ";
+                firstHeader.Append($"| {string.Format(s, cnt)} ");
                 cnt++;
             }
-            txt = txt.TrimEnd() + "\r\n";
+
+            txt.Append(firstHeader.ToString().TrimEnd() + "\r\n");
 
             // second header
-            txt += $"{string.Format(rowFormat, "Row")} ";
+            var secondHeader = new StringBuilder($"{string.Format(rowFormat, "Row")} ");
             cnt = 0;
             foreach(var s in columnFormats)
             {
-                txt += $"| {string.Format(s, dt.Columns[cnt].ColumnName)} ";
+                secondHeader.Append($"| {string.Format(s, dt.Columns[cnt].ColumnName)} ");
                 cnt++;
             }
-            txt = txt.TrimEnd() + "\r\n";
+            txt.Append(secondHeader.ToString().TrimEnd() + "\r\n");
 
             // split lines
             for (int i = 0; i < rowLength; i++)
             {
-                txt += "-";
+                txt.Append("-");
             }
-            txt += "-|-";
+            txt.Append("-|-");
 
             for (int i = 0; i < columnSize - 1; i++)
             {
                 for (int j = 0; j < columnMaxLength[i]; j++)
                 {
-                    txt += "-";
+                    txt.Append("-");
                 }
-                txt += "-|-";
+                txt.Append("-|-");
             }
             for (int i = 0; i < columnMaxLength[columnSize - 1]; i++)
             {
-                txt += "-";
+                txt.Append("-");
             }
-            txt += "\r\n";
+            txt.Append("\r\n");
 
             for (int i = 0; i < rows; i++)
             {
-                txt += $"{string.Format(rowFormat, i)} ";
+                var rtxt = new StringBuilder($"{string.Format(rowFormat, i)} ");
                 for (int j = 0; j < columnSize; j++)
                 {
-                    txt += $"| {string.Format(columnFormats[j], dt.Rows[i][j]?.ToString() ?? "")} ";
+                    rtxt.Append($"| {string.Format(columnFormats[j], dt.Rows[i][j]?.ToString() ?? "")} ");
                 }
-                txt = txt.TrimEnd() + "\r\n";
+                txt.Append(rtxt.ToString().TrimEnd() + "\r\n");
             }
 
-            txt.StoreInUserVariable(engine, v_Result);
+            txt.ToString().StoreInUserVariable(engine, v_Result);
         }
     }
 }
