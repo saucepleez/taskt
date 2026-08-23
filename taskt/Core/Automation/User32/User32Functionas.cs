@@ -18,6 +18,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
+using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.User32
 {
@@ -222,7 +223,7 @@ namespace taskt.Core.Automation.User32
                 if (performWindowCapture)
                 {
                     _WinEventHookHandler = new SystemEventHandler(BuildWindowCommand);
-                    _WinEventHook = SetWinEventHook(SystemEvents.EVENT_MIN, SystemEvents.EVENT_MAX,IntPtr.Zero, _WinEventHookHandler, 0, 0, 0);
+                    _WinEventHook = SetWinEventHook(SystemEvents.EVENT_MIN, SystemEvents.EVENT_MAX, IntPtr.Zero, _WinEventHookHandler, 0, 0, 0);
                 }
               
                 // start stopwatch for timing all event occurences
@@ -246,7 +247,7 @@ namespace taskt.Core.Automation.User32
                 {
                     UnhookWinEvent(_WinEventHook);
                 }
-               
+                
                 //BuildCommentCommand();
 
                 HookStopped(null, new EventArgs());
@@ -265,6 +266,7 @@ namespace taskt.Core.Automation.User32
             {
                 if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
                 {
+                    // KBDLLHOOKSTRUCT vkCode (virtual key code)
                     int vkCode = Marshal.ReadInt32(lParam);
 
                     BuildKeyboardCommand((Keys)vkCode);
@@ -273,6 +275,9 @@ namespace taskt.Core.Automation.User32
                 return CallNextHookEx(_keyboardHookID, nCode, wParam, lParam);
             }
 
+            /// <summary>
+            /// mouse event?
+            /// </summary>
             public static event EventHandler<MouseCoordinateEventArgs> MouseEvent;
 
             /// <summary>
@@ -297,8 +302,8 @@ namespace taskt.Core.Automation.User32
                             UnhookWindowsHookEx(_mouseHookID);
                         }
 
-                        MSLLHOOKSTRUCT hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
-                        System.Windows.Point point = new System.Windows.Point(hookStruct.pt.x, hookStruct.pt.y);
+                        var hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
+                        var point = new System.Windows.Point(hookStruct.pt.x, hookStruct.pt.y);
                         MouseEvent?.Invoke(null, new MouseCoordinateEventArgs() { MouseCoordinates = point });
                     }
                 }
@@ -310,14 +315,16 @@ namespace taskt.Core.Automation.User32
             /// hook procedure (callback) when mouse move occered
             /// </summary>
             /// <param name="nCode"></param>
-            /// <param name="wParam"></param>
-            /// <param name="lParam"></param>
+            /// <param name="wParam">WM_LBUTTONDOWN, WM_LBUTTONUP, WM_MOUSEMOVE, WM_MOUSEWHEEL, WM_RBUTTONDOWN, WM_RBUTTONUP, WM_MBUTTONDOWN, WM_MBUTTONUP, WM_XBUTTONDOWN, or WM_XBUTTONUP</param>
+            /// <param name="lParam">MSLLHOOKSTRUCT structure
+            /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-msllhookstruct</param>
             /// <returns></returns>
             private static IntPtr MouseHookEvent(int nCode, IntPtr wParam, IntPtr lParam)
             {
                 if (nCode >= 0)
                 {
-                    BuildMouseCommand(lParam, (MouseMessages)wParam);
+                    var hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
+                    BuildMouseCommand(hookStruct, (MouseMessages)wParam);
                 }
 
                 return CallNextHookEx(_mouseHookID, nCode, wParam, lParam);
@@ -336,7 +343,7 @@ namespace taskt.Core.Automation.User32
             /// <summary>
             /// build/create keyboard command
             /// </summary>
-            /// <param name="key"></param>
+            /// <param name="key">virtual key code</param>
             private static void BuildKeyboardCommand(Keys key)
             {
                 var diff = DateTime.Now - keyTime;
@@ -371,6 +378,7 @@ namespace taskt.Core.Automation.User32
                     toUpperCase = false;
                 }
 
+                // unicode key state
                 var buf = new StringBuilder(256);
                 var keyboardState = new byte[256];
 
@@ -391,7 +399,7 @@ namespace taskt.Core.Automation.User32
                 // translate key press to sendkeys identifier
                 if (selectedKey == stopHookKey)
                 {
-                    //STOP HOOK
+                    // stop hook
                     StopHook();
                     return;
                 }
@@ -440,7 +448,7 @@ namespace taskt.Core.Automation.User32
 
                     if (lastCreatedSendKeysCommand.v_TextToSend.Contains("{ENTER}"))
                     {
-                        // append this to a new command because you dont want text to input after user presses enter
+                        // append this to a new command because you don't want text to input after user presses enter
 
                         // build a pause command to track pause since last command
                         BuildPauseCommand();
@@ -449,7 +457,7 @@ namespace taskt.Core.Automation.User32
                         var keyboardCommand = new EnterKeysCommand
                         {
                             v_TextToSend = selectedKey,
-                            v_WindowName = "Current Window"
+                            v_WindowName = GetCurrentWindowVariable(),
                         };
                         generatedCommands.Add(keyboardCommand);
                     }
@@ -470,18 +478,30 @@ namespace taskt.Core.Automation.User32
                     var keyboardCommand = new EnterKeysCommand
                     {
                         v_TextToSend = selectedKey,
-                        v_WindowName = "Current Window"
+                        v_WindowName = GetCurrentWindowVariable(),
                     };
                     generatedCommands.Add(keyboardCommand);
                 }
             }
 
             /// <summary>
+            /// get current window variable name
+            /// </summary>
+            /// <returns></returns>
+            private static string GetCurrentWindowVariable()
+            {
+                var engineSettings = App.Taskt_Settings.EngineSettings;
+
+                return $"{engineSettings.VariableStartMarker}{SystemVariables.Window_CurrentWindowName.VariableName}{engineSettings.VariableEndMarker}";
+            }
+
+            /// <summary>
             /// build mouse command
             /// </summary>
-            /// <param name="lParam"></param>
-            /// <param name="mouseMessage"></param>
-            private static void BuildMouseCommand(IntPtr lParam, MouseMessages mouseMessage)
+            /// <param name="hookStruct">MSLLHOOKSTRUCT structure
+            /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-msllhookstruct</param>
+            /// <param name="mouseMessage">MouseMessage</param>
+            private static void BuildMouseCommand(MSLLHOOKSTRUCT hookStruct, MouseMessages mouseMessage)
             {
                 string mouseEventClickType = string.Empty;
                 switch (mouseMessage)
@@ -535,7 +555,7 @@ namespace taskt.Core.Automation.User32
 
 
                 // define new mouse command
-                MSLLHOOKSTRUCT hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
+                //var hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
 
                 var mouseMove = new MoveMouseCommand
                 {
@@ -548,10 +568,12 @@ namespace taskt.Core.Automation.User32
                 {
                     IntPtr winHandle = WindowFromPoint(hookStruct.pt);
 
-                    int length = GetWindowText(winHandle, _Buffer, _Buffer.Capacity);
-                    var windowName = _Buffer.ToString();
+                    var _winName = new StringBuilder(512);
 
-                    mouseMove.v_Comment = "Clicked On Window: " + windowName;
+                    int length = GetWindowText(winHandle, _winName, _winName.Capacity);
+                    var windowName = _winName.ToString();
+
+                    mouseMove.v_Comment = $"Clicked On Window: {windowName}";
                 }
 
                 generatedCommands.Add(mouseMove);
@@ -585,8 +607,9 @@ namespace taskt.Core.Automation.User32
                         return;
                 }
 
-                int length = GetWindowText(hwnd, _Buffer, _Buffer.Capacity);
-                var windowName = _Buffer.ToString();
+                var _winName = new StringBuilder(512);
+                int length = GetWindowText(hwnd, _winName, _winName.Capacity);
+                var windowName = _winName.ToString();
 
                 // bypass screen recorder and Cortana (Win10) which throws errors
                 if ((windowName == "Screen Recorder") || (windowName == "Cortana"))
@@ -598,7 +621,7 @@ namespace taskt.Core.Automation.User32
                 {
                     // wait additional for window to initialize
                     //System.Threading.Thread.Sleep(250);
-                    windowName = _Buffer.ToString();
+                    windowName = _winName.ToString();
                  
                     // generate activete window command
                     var activateWindowCommand = new ActivateOneWindowCommand()
@@ -715,9 +738,17 @@ namespace taskt.Core.Automation.User32
                 }
             }
 
+            /// <summary>
+            /// return value of SetWinEventHook
+            /// </summary>
             private static IntPtr _WinEventHook;
+
+            /// <summary>
+            /// window event hook
+            /// </summary>
             private static SystemEventHandler _WinEventHookHandler;
-            private static StringBuilder _Buffer = new StringBuilder(512);
+
+            //private static StringBuilder _Buffer = new StringBuilder(512);
 
             #region User32 Keyboard Mouse
 
@@ -763,7 +794,7 @@ namespace taskt.Core.Automation.User32
             /// <param name="lpfn">call back procedure</param>
             /// <param name="hMod"></param>
             /// <param name="dwThreadId"></param>
-            /// <returns>hook procedure handle</returns>
+            /// <returns>hook handle</returns>
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
 
@@ -771,7 +802,7 @@ namespace taskt.Core.Automation.User32
             /// remove hook
             /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-unhookwindowshookex
             /// </summary>
-            /// <param name="hhk"></param>
+            /// <param name="hhk">hook handle</param>
             /// <returns></returns>
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
@@ -827,13 +858,14 @@ namespace taskt.Core.Automation.User32
 
             /// <summary>
             /// convert virtual-key code and keystate to unicode
+            /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-tounicode
             /// </summary>
-            /// <param name="virtualKeyCode"></param>
-            /// <param name="scanCode"></param>
-            /// <param name="keyboardState"></param>
-            /// <param name="receivingBuffer"></param>
-            /// <param name="bufferSize"></param>
-            /// <param name="flags"></param>
+            /// <param name="virtualKeyCode">virtual keycode to be translated</param>
+            /// <param name="scanCode">hardware scancode to be translated</param>
+            /// <param name="keyboardState">265 byte array</param>
+            /// <param name="receivingBuffer">translated character UTF-16</param>
+            /// <param name="bufferSize">receivingBuffer size</param>
+            /// <param name="flags">behavior of function</param>
             /// <returns></returns>
             [DllImport("user32.dll", CharSet = CharSet.Unicode)]
             public static extern int ToUnicode(uint virtualKeyCode, uint scanCode, byte[] keyboardState, StringBuilder receivingBuffer, int bufferSize, uint flags);
@@ -870,16 +902,60 @@ namespace taskt.Core.Automation.User32
             }
 
             /// <summary>
-            /// low level mouse input event
+            /// low level keyboard input event information struct
+            /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-kbdllhookstruct
+            /// </summary>
+            [StructLayout(LayoutKind.Sequential)]
+            private struct KBDLLHOOKSTRUCT
+            {
+                /// <summary>
+                /// virtual key code
+                /// </summary>
+                public uint vkCode;
+                /// <summary>
+                /// hardware scan code
+                /// </summary>
+                public uint scanCode;
+                /// <summary>
+                /// extended key flag
+                /// </summary>
+                public uint flags;
+                /// <summary>
+                /// timestamp
+                /// </summary>
+                public uint time;
+                /// <summary>
+                /// additional infomation
+                /// </summary>
+                public IntPtr dwExtraInfo;
+            }
+
+            /// <summary>
+            /// low level mouse input event information struct
             /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-msllhookstruct
             /// </summary>
             [StructLayout(LayoutKind.Sequential)]
             private struct MSLLHOOKSTRUCT
             {
+                /// <summary>
+                /// point x and y
+                /// </summary>
                 public POINT pt;
+                /// <summary>
+                /// mouse button message
+                /// </summary>
                 public uint mouseData;
+                /// <summary>
+                /// event injected flag
+                /// </summary>
                 public uint flags;
+                /// <summary>
+                /// timestamp
+                /// </summary>
                 public uint time;
+                /// <summary>
+                /// additional message
+                /// </summary>
                 public IntPtr dwExtraInfo;
             }
 
@@ -890,8 +966,17 @@ namespace taskt.Core.Automation.User32
             [Flags]
             private enum KeyStates
             {
+                /// <summary>
+                /// not pressed
+                /// </summary>
                 None = 0,
+                /// <summary>
+                /// pressed
+                /// </summary>
                 Down = 1,
+                /// <summary>
+                /// toggled
+                /// </summary>
                 Toggled = 2
             }
 
@@ -975,14 +1060,14 @@ namespace taskt.Core.Automation.User32
             /// sets an event hook function for a range of events (WinEvents)
             /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwineventhook
             /// </summary>
-            /// <param name="eventMin"></param>
-            /// <param name="eventMax"></param>
+            /// <param name="eventMin">hook event lowest value</param>
+            /// <param name="eventMax">hook event highest value</param>
             /// <param name="hmodWinEventProc"></param>
-            /// <param name="lpfnWinEventProc"></param>
+            /// <param name="lpfnWinEventProc">callback hook procedure</param>
             /// <param name="idProcess"></param>
             /// <param name="idThread"></param>
             /// <param name="dwFlags"></param>
-            /// <returns></returns>
+            /// <returns>event hook instance</returns>
             [DllImport("user32.dll")]
             static extern IntPtr SetWinEventHook(SystemEvents eventMin, SystemEvents eventMax, IntPtr hmodWinEventProc, SystemEventHandler lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
 
