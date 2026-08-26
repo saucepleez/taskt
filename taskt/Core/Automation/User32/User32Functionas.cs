@@ -79,6 +79,17 @@ namespace taskt.Core.Automation.User32
             private static readonly LowLevelMouseProc _mouseLeftUpProc = MouseHookForLeftClickUpEvent;
 
             /// <summary>
+            /// return value of SetWinEventHook
+            /// </summary>
+            private static IntPtr _WinEventHook;
+
+            /// <summary>
+            /// window event hook
+            /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/nc-winuser-wineventproc
+            /// </summary>
+            private static SystemEventHandler _WinEventHookHandler;
+
+            /// <summary>
             /// keyboard input hook procedure handle
             /// </summary>
             private static IntPtr _keyboardHookID = IntPtr.Zero;
@@ -267,9 +278,11 @@ namespace taskt.Core.Automation.User32
                 if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
                 {
                     // KBDLLHOOKSTRUCT vkCode (virtual key code)
-                    int vkCode = Marshal.ReadInt32(lParam);
+                    var hookStruct = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
+                    //int vkCode = Marshal.ReadInt32(lParam);
 
-                    BuildKeyboardCommand((Keys)vkCode);
+                    //BuildKeyboardCommand((Keys)vkCode);
+                    BuildKeyboardCommad(hookStruct);
                 }
 
                 return CallNextHookEx(_keyboardHookID, nCode, wParam, lParam);
@@ -343,9 +356,13 @@ namespace taskt.Core.Automation.User32
             /// <summary>
             /// build/create keyboard command
             /// </summary>
-            /// <param name="key">virtual key code</param>
-            private static void BuildKeyboardCommand(Keys key)
+            /// <param name="hookInfo">KBDLLHOOKSTRUCT struct
+            /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-kbdllhookstruct</param>
+            //private static void BuildKeyboardCommand(Keys key)
+            private static void BuildKeyboardCommad(KBDLLHOOKSTRUCT hookInfo)
             {
+                var key = (Keys)hookInfo.vkCode;
+
                 var diff = DateTime.Now - keyTime;
                 keyTime = DateTime.Now;
 
@@ -581,10 +598,12 @@ namespace taskt.Core.Automation.User32
 
             /// <summary>
             /// build window command
+            /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/nc-winuser-wineventproc
             /// </summary>
             /// <param name="hWinEventHook"></param>
-            /// <param name="event"></param>
-            /// <param name="hwnd"></param>
+            /// <param name="event">event constants
+            /// https://learn.microsoft.com/en-us/windows/win32/winauto/event-constants</param>
+            /// <param name="hwnd">window handle</param>
             /// <param name="idObject"></param>
             /// <param name="idChild"></param>
             /// <param name="dwEventThread"></param>
@@ -738,15 +757,6 @@ namespace taskt.Core.Automation.User32
                 }
             }
 
-            /// <summary>
-            /// return value of SetWinEventHook
-            /// </summary>
-            private static IntPtr _WinEventHook;
-
-            /// <summary>
-            /// window event hook
-            /// </summary>
-            private static SystemEventHandler _WinEventHookHandler;
 
             //private static StringBuilder _Buffer = new StringBuilder(512);
 
@@ -892,7 +902,7 @@ namespace taskt.Core.Automation.User32
             }
 
             /// <summary>
-            /// point struct
+            /// point location struct
             /// </summary>
             [StructLayout(LayoutKind.Sequential)]
             private struct POINT
