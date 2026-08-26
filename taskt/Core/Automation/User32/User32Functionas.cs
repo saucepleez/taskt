@@ -585,10 +585,11 @@ namespace taskt.Core.Automation.User32
                 {
                     IntPtr winHandle = WindowFromPoint(hookStruct.pt);
 
-                    var _winName = new StringBuilder(512);
+                    //var _winName = new StringBuilder(512);
+                    //int length = GetWindowText(winHandle, _winName, _winName.Capacity);
+                    //var windowName = _winName.ToString();
 
-                    int length = GetWindowText(winHandle, _winName, _winName.Capacity);
-                    var windowName = _winName.ToString();
+                    var windowName = GetWindowName(winHandle);
 
                     mouseMove.v_Comment = $"Clicked On Window: {windowName}";
                 }
@@ -626,9 +627,11 @@ namespace taskt.Core.Automation.User32
                         return;
                 }
 
-                var _winName = new StringBuilder(512);
-                int length = GetWindowText(hwnd, _winName, _winName.Capacity);
-                var windowName = _winName.ToString();
+                //var _winName = new StringBuilder(512);
+                //int length = GetWindowText(hwnd, _winName, _winName.Capacity);
+                //var windowName = _winName.ToString();
+                var windowName = GetWindowName(hwnd);
+                //var length = windowName.Length;
 
                 // bypass screen recorder and Cortana (Win10) which throws errors
                 if ((windowName == "Screen Recorder") || (windowName == "Cortana"))
@@ -636,11 +639,12 @@ namespace taskt.Core.Automation.User32
                     return;
                 }
 
-                if (length > 0)
+                //if (length > 0)
+                if (!string.IsNullOrEmpty(windowName))
                 {
                     // wait additional for window to initialize
                     //System.Threading.Thread.Sleep(250);
-                    windowName = _winName.ToString();
+                    //windowName = _winName.ToString();
                  
                     // generate activete window command
                     var activateWindowCommand = new ActivateOneWindowCommand()
@@ -705,6 +709,18 @@ namespace taskt.Core.Automation.User32
                         generatedCommands.Add(reszWindowCommand);
                     }
                 }
+            }
+
+            /// <summary>
+            /// get window name from handle
+            /// </summary>
+            /// <param name="whnd">window handle</param>
+            /// <returns></returns>
+            private static string GetWindowName(IntPtr whnd)
+            {
+                var _winName = new StringBuilder(512);
+                _ = GetWindowText(whnd, _winName, _winName.Capacity);
+                return _winName.ToString();
             }
 
             /// <summary>
@@ -1098,7 +1114,7 @@ namespace taskt.Core.Automation.User32
             /// <param name="hWnd"></param>
             /// <param name="lpClassName"></param>
             /// <param name="nMaxCount"></param>
-            /// <returns></returns>
+            /// <returns>window name length</returns>
             [DllImport("user32.dll", CharSet = CharSet.Unicode)]
             static extern int GetWindowText(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
             #endregion
