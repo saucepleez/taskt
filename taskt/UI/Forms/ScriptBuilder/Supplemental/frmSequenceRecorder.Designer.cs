@@ -61,7 +61,7 @@
             this.chkGroupMovesIntoSequences.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkGroupMovesIntoSequences.ForeColor = System.Drawing.Color.AliceBlue;
             this.chkGroupMovesIntoSequences.Location = new System.Drawing.Point(12, 258);
-            this.chkGroupMovesIntoSequences.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkGroupMovesIntoSequences.Margin = new System.Windows.Forms.Padding(4);
             this.chkGroupMovesIntoSequences.Name = "chkGroupMovesIntoSequences";
             this.chkGroupMovesIntoSequences.Size = new System.Drawing.Size(348, 24);
             this.chkGroupMovesIntoSequences.TabIndex = 11;
@@ -77,7 +77,7 @@
             this.chkCaptureMouse.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkCaptureMouse.ForeColor = System.Drawing.Color.AliceBlue;
             this.chkCaptureMouse.Location = new System.Drawing.Point(15, 115);
-            this.chkCaptureMouse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkCaptureMouse.Margin = new System.Windows.Forms.Padding(4);
             this.chkCaptureMouse.Name = "chkCaptureMouse";
             this.chkCaptureMouse.Size = new System.Drawing.Size(178, 24);
             this.chkCaptureMouse.TabIndex = 4;
@@ -93,7 +93,7 @@
             this.chkCaptureKeyboard.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkCaptureKeyboard.ForeColor = System.Drawing.Color.AliceBlue;
             this.chkCaptureKeyboard.Location = new System.Drawing.Point(15, 138);
-            this.chkCaptureKeyboard.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkCaptureKeyboard.Margin = new System.Windows.Forms.Padding(4);
             this.chkCaptureKeyboard.Name = "chkCaptureKeyboard";
             this.chkCaptureKeyboard.Size = new System.Drawing.Size(189, 24);
             this.chkCaptureKeyboard.TabIndex = 5;
@@ -135,7 +135,7 @@
             this.pnlOptions.Controls.Add(this.chkCaptureMouse);
             this.pnlOptions.Controls.Add(this.chkCaptureKeyboard);
             this.pnlOptions.Location = new System.Drawing.Point(17, 8);
-            this.pnlOptions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlOptions.Margin = new System.Windows.Forms.Padding(4);
             this.pnlOptions.Name = "pnlOptions";
             this.pnlOptions.Size = new System.Drawing.Size(675, 401);
             this.pnlOptions.TabIndex = 7;
@@ -156,7 +156,7 @@
             // 
             this.txtHookStop.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtHookStop.Location = new System.Drawing.Point(213, 191);
-            this.txtHookStop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtHookStop.Margin = new System.Windows.Forms.Padding(4);
             this.txtHookStop.Name = "txtHookStop";
             this.txtHookStop.Size = new System.Drawing.Size(68, 26);
             this.txtHookStop.TabIndex = 9;
@@ -170,7 +170,7 @@
             this.chkTrackWindowsOpenLocation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkTrackWindowsOpenLocation.ForeColor = System.Drawing.Color.White;
             this.chkTrackWindowsOpenLocation.Location = new System.Drawing.Point(12, 328);
-            this.chkTrackWindowsOpenLocation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkTrackWindowsOpenLocation.Margin = new System.Windows.Forms.Padding(4);
             this.chkTrackWindowsOpenLocation.Name = "chkTrackWindowsOpenLocation";
             this.chkTrackWindowsOpenLocation.Size = new System.Drawing.Size(247, 24);
             this.chkTrackWindowsOpenLocation.TabIndex = 14;
@@ -235,7 +235,7 @@
             this.chkTrackWindowSize.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkTrackWindowSize.ForeColor = System.Drawing.Color.White;
             this.chkTrackWindowSize.Location = new System.Drawing.Point(12, 374);
-            this.chkTrackWindowSize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkTrackWindowSize.Margin = new System.Windows.Forms.Padding(4);
             this.chkTrackWindowSize.Name = "chkTrackWindowSize";
             this.chkTrackWindowSize.Size = new System.Drawing.Size(228, 24);
             this.chkTrackWindowSize.TabIndex = 16;
@@ -248,7 +248,7 @@
             this.chkActivateTopLeft.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkActivateTopLeft.ForeColor = System.Drawing.Color.White;
             this.chkActivateTopLeft.Location = new System.Drawing.Point(12, 351);
-            this.chkActivateTopLeft.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkActivateTopLeft.Margin = new System.Windows.Forms.Padding(4);
             this.chkActivateTopLeft.Name = "chkActivateTopLeft";
             this.chkActivateTopLeft.Size = new System.Drawing.Size(257, 24);
             this.chkActivateTopLeft.TabIndex = 15;
@@ -272,7 +272,7 @@
             // 
             this.txtHookResolution.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtHookResolution.Location = new System.Drawing.Point(213, 159);
-            this.txtHookResolution.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtHookResolution.Margin = new System.Windows.Forms.Padding(4);
             this.txtHookResolution.Name = "txtHookResolution";
             this.txtHookResolution.Size = new System.Drawing.Size(68, 26);
             this.txtHookResolution.TabIndex = 7;
@@ -286,7 +286,7 @@
             this.chkCaptureWindowEvents.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkCaptureWindowEvents.ForeColor = System.Drawing.Color.AliceBlue;
             this.chkCaptureWindowEvents.Location = new System.Drawing.Point(15, 74);
-            this.chkCaptureWindowEvents.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkCaptureWindowEvents.Margin = new System.Windows.Forms.Padding(4);
             this.chkCaptureWindowEvents.Name = "chkCaptureWindowEvents";
             this.chkCaptureWindowEvents.Size = new System.Drawing.Size(188, 24);
             this.chkCaptureWindowEvents.TabIndex = 2;
@@ -296,12 +296,10 @@
             // chkGroupIntoSequence
             // 
             this.chkGroupIntoSequence.AutoSize = true;
-            this.chkGroupIntoSequence.Checked = true;
-            this.chkGroupIntoSequence.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkGroupIntoSequence.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkGroupIntoSequence.ForeColor = System.Drawing.Color.AliceBlue;
             this.chkGroupIntoSequence.Location = new System.Drawing.Point(12, 278);
-            this.chkGroupIntoSequence.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkGroupIntoSequence.Margin = new System.Windows.Forms.Padding(4);
             this.chkGroupIntoSequence.Name = "chkGroupIntoSequence";
             this.chkGroupIntoSequence.Size = new System.Drawing.Size(192, 24);
             this.chkGroupIntoSequence.TabIndex = 12;
@@ -316,7 +314,7 @@
             this.chkCaptureClicks.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkCaptureClicks.ForeColor = System.Drawing.Color.AliceBlue;
             this.chkCaptureClicks.Location = new System.Drawing.Point(15, 95);
-            this.chkCaptureClicks.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkCaptureClicks.Margin = new System.Windows.Forms.Padding(4);
             this.chkCaptureClicks.Name = "chkCaptureClicks";
             this.chkCaptureClicks.Size = new System.Drawing.Size(172, 24);
             this.chkCaptureClicks.TabIndex = 3;
@@ -333,7 +331,7 @@
             this.uiBtnRecord.Image = global::taskt.Properties.Resources.various_record_button;
             this.uiBtnRecord.IsMouseOver = false;
             this.uiBtnRecord.Location = new System.Drawing.Point(15, 416);
-            this.uiBtnRecord.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.uiBtnRecord.Margin = new System.Windows.Forms.Padding(4);
             this.uiBtnRecord.Name = "uiBtnRecord";
             this.uiBtnRecord.Size = new System.Drawing.Size(64, 55);
             this.uiBtnRecord.TabIndex = 8;
@@ -351,7 +349,7 @@
             this.Controls.Add(this.pnlOptions);
             this.Controls.Add(this.lblRecording);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmSequenceRecorder";
             this.Text = "Screen Recorder";
             this.Load += new System.EventHandler(this.frmSequenceRecorder_Load);
