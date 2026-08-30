@@ -1049,6 +1049,7 @@
     <Compile Include="Core\Automation\Commands\FormUIControls.cs" />
     <Compile Include="Core\IO\Files.cs" />
     <Compile Include="Core\MyURLs.UserOriginal.cs" />
+    <Compile Include="Core\Native\WindowAPI.cs" />
     <Compile Include="Core\Script\InnerScriptVariable.cs" />
     <Compile Include="Core\Update\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings\ApplicationSettings.cs" />
