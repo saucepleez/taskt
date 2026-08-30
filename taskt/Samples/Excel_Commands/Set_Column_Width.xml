@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="4fcea63d-4d4a-4775-8efe-5a289385b1df" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Set Column Width sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelCreateExcelInstanceCommand" CommandID="027e9e0c-b00e-4512-97d8-bdc5e4d557fe" CommandName="ExcelCreateExcelInstanceCommand" IsCommented="false" SelectionName="Create Excel Instance" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_WindowHandle="" v_ReferenceStyle="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelOpenWorkbookCommand" CommandID="1a187216-ed45-4f87-8110-7daacc443975" CommandName="ExcelOpenWorkbookCommand" IsCommented="false" SelectionName="Open Workbook" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_TargetFilePath="⦃Folder.SamplesPath⦄\Resources\sample_excel.xlsx" v_Password="" v_IfWorksheetExists="" v_WaitTimeForFile="10" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="62757aed-bed2-4742-b6e4-71c32d79fd62" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="A is 10, B is 20, and C is 30" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelSetColumnWidthCommand" CommandID="81741eb0-dbb1-4f20-9158-1888934b237c" CommandName="ExcelSetColumnWidthCommand" IsCommented="false" SelectionName="Set Column Width" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_ColumnType="" v_ColumnIndex="A" v_ValueType="" v_Width="10" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelSetColumnWidthCommand" CommandID="26c2ed09-915b-4424-98ea-fac18aa3563c" CommandName="ExcelSetColumnWidthCommand" IsCommented="false" SelectionName="Set Column Width" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_ColumnType="" v_ColumnIndex="B" v_ValueType="" v_Width="20" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelSetColumnWidthCommand" CommandID="895d5af4-f61a-4a12-97cd-950d7f4a9d3b" CommandName="ExcelSetColumnWidthCommand" IsCommented="false" SelectionName="Set Column Width" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_ColumnType="" v_ColumnIndex="C" v_ValueType="" v_Width="30" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="32075530-ac74-41ce-bb7f-4d590b4ff057" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Please check Columns width" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" v_DialogType="" v_DialogTitle="ShowMessage Comamnd" v_WaitForAnswer="Yes" v_DialogResult="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelCloseExcelInstanceCommand" CommandID="7bcb5bc3-0813-464f-a037-0544e5e839e3" CommandName="ExcelCloseExcelInstanceCommand" IsCommented="false" SelectionName="Close Excel Instance" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_ExcelSaveOnExit="" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.2.51</TasktVersion>
+    <Author />
+    <LastRunTime>2025-12-29T21:03:09.1547596+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <Revision>2</Revision>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables />
+</Script>

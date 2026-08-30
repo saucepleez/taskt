@@ -1,0 +1,53 @@
+digraph "taskt.Core.Automation.Commands.IDataTableColumnPositionProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.IDataTableColumnProperties" [ label="IDataTableColumnProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IDataTableColumnPositionProperties" [ label="IDataTableColumnPositionProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IDataTableColumnRowPositionProperties" [ label="IDataTableColumnRowPositionProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.FilterDataTableRowByColumnValueCommand" [ label="FilterDataTableRowByColumnValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ADataTableColumnCommands" [ label="ADataTableColumnCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ADataTableColumnRowCommands" [ label="ADataTableColumnRowCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ADataTableBothColumnCommands" [ label="ADataTableBothColumnCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands" [ label="ADataTableGetFromDataTableColumnCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ExportDataTableColumnAsTextFileCommand" [ label="ExportDataTableColumnAsTextFileCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ReplaceDataTableColumnValueCommand" [ label="ReplaceDataTableColumnValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.DeleteDataTableColumnCommand" [ label="DeleteDataTableColumnCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SetDataTableValueCommand" [ label="SetDataTableValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetDataTableValueCommand" [ label="GetDataTableValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SetDataTableColumnValuesByDataTableCommand" [ label="SetDataTableColumnValuesByDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SetDataTableColumnValuesByListCommand" [ label="SetDataTableColumnValuesByListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.JoinDataTableColumnAsTextCommand" [ label="JoinDataTableColumnAsTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToTextCommand" [ label="ConvertDataTableColumnToTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToJSONCommand" [ label="ConvertDataTableColumnToJSONCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand" [ label="ConvertDataTableColumnToDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToDataTableCommand" [ label="ConvertDataTableColumnToDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToListCommand" [ label="ConvertDataTableColumnToListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CheckDataTableColumnExistsCommand" [ label="CheckDataTableColumnExistsCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.IDataTableColumnProperties" -> "taskt.Core.Automation.Commands.IDataTableColumnPositionProperties";
+"taskt.Core.Automation.Commands.IDataTableColumnRowPositionProperties" -> "taskt.Core.Automation.Commands.IDataTableColumnPositionProperties";
+"taskt.Core.Automation.Commands.FilterDataTableRowByColumnValueCommand" -> "taskt.Core.Automation.Commands.IDataTableColumnPositionProperties";
+"taskt.Core.Automation.Commands.ADataTableColumnCommands" -> "taskt.Core.Automation.Commands.IDataTableColumnProperties";
+"taskt.Core.Automation.Commands.ADataTableColumnRowCommands" -> "taskt.Core.Automation.Commands.IDataTableColumnRowPositionProperties";
+"taskt.Core.Automation.Commands.ADataTableBothColumnCommands" -> "taskt.Core.Automation.Commands.ADataTableColumnCommands";
+"taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands" -> "taskt.Core.Automation.Commands.ADataTableColumnCommands";
+"taskt.Core.Automation.Commands.ExportDataTableColumnAsTextFileCommand" -> "taskt.Core.Automation.Commands.ADataTableColumnCommands";
+"taskt.Core.Automation.Commands.ReplaceDataTableColumnValueCommand" -> "taskt.Core.Automation.Commands.ADataTableColumnCommands";
+"taskt.Core.Automation.Commands.DeleteDataTableColumnCommand" -> "taskt.Core.Automation.Commands.ADataTableColumnCommands";
+"taskt.Core.Automation.Commands.SetDataTableValueCommand" -> "taskt.Core.Automation.Commands.ADataTableColumnRowCommands";
+"taskt.Core.Automation.Commands.GetDataTableValueCommand" -> "taskt.Core.Automation.Commands.ADataTableColumnRowCommands";
+"taskt.Core.Automation.Commands.SetDataTableColumnValuesByDataTableCommand" -> "taskt.Core.Automation.Commands.ADataTableBothColumnCommands";
+"taskt.Core.Automation.Commands.SetDataTableColumnValuesByListCommand" -> "taskt.Core.Automation.Commands.ADataTableBothColumnCommands";
+"taskt.Core.Automation.Commands.JoinDataTableColumnAsTextCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands";
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToTextCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands";
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToJSONCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands";
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands";
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToDataTableCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands";
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToListCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands";
+"taskt.Core.Automation.Commands.CheckDataTableColumnExistsCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableColumnCommands";
+}

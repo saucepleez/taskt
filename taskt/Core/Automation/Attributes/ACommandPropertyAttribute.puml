@@ -1,0 +1,10 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Attributes.PropertyAttributes"{
+abstract class "ACommandPropertyAttribute"{
+}
+}
+
+
+taskt.Core.Automation.Attributes.PropertyAttributes.ACommandPropertyAttribute -- Attribute
+@enduml

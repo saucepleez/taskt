@@ -1,0 +1,27 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "SetDataTableValueCommand" <<sealed>> {
++RunCommand() : void 
++v_NewValue : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADataTableColumnRowCommands"{
++v_ColumnType : String <<get>> <<set>> 
++v_ColumnIndex : String <<get>> <<set>> 
++v_RowIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDataTableValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.SetDataTableValueCommand --|> taskt.Core.Automation.Commands.ADataTableColumnRowCommands
+taskt.Core.Automation.Commands.GetDataTableValueCommand --|> taskt.Core.Automation.Commands.ADataTableColumnRowCommands
+@enduml

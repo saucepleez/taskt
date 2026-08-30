@@ -1,0 +1,71 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "GetListWithDuplicateItemsRemoved" <<sealed>> {
++RunCommand() : void 
++v_CaseSenstive : String <<get>> <<set>> 
++v_RemovedItemsList : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AListCreateFromListCommands"{
++v_TargetList : String <<get>> <<set>> 
++v_NewList : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SliceListCommand" <<sealed>> {
++RunCommand() : void 
+-cmbSliceMethod_SelectionChangeCommitted() : void 
++v_SliceMethod : String <<get>> <<set>> 
++v_Index1 : String <<get>> <<set>> 
++v_Index2 : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "FilterListCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbFilterAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_TargetList : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_FilterAction : String <<get>> <<set>> 
++v_FilterActionParameterTable : DataTable <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SortListCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetList : String <<get>> <<set>> 
++v_SortOrder : String <<get>> <<set>> 
++v_TargetType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ReverseListCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetList : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CopyListCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetList : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.GetListWithDuplicateItemsRemoved --|> taskt.Core.Automation.Commands.AListCreateFromListCommands
+taskt.Core.Automation.Commands.SliceListCommand --|> taskt.Core.Automation.Commands.AListCreateFromListCommands
+taskt.Core.Automation.Commands.FilterListCommand --|> taskt.Core.Automation.Commands.AListCreateFromListCommands
+taskt.Core.Automation.Commands.SortListCommand --|> taskt.Core.Automation.Commands.AListCreateFromListCommands
+taskt.Core.Automation.Commands.ReverseListCommand --|> taskt.Core.Automation.Commands.AListCreateFromListCommands
+taskt.Core.Automation.Commands.CopyListCommand --|> taskt.Core.Automation.Commands.AListCreateFromListCommands
+@enduml

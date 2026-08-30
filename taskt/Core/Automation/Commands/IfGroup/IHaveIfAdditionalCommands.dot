@@ -1,0 +1,13 @@
+digraph "taskt.Core.Automation.Commands.IHaveIfAdditionalCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.IHaveIfAdditionalCommands" [ label="IHaveIfAdditionalCommands", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IHaveAdditionalCommands" [ label="IHaveAdditionalCommands", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.IHaveIfAdditionalCommands" -> "taskt.Core.Automation.Commands.IHaveAdditionalCommands";
+}

@@ -1,0 +1,84 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValueFromJSONArrayCommand" <<sealed>> {
++RunCommand() : void 
++v_ArrayIndex : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONGetFromJContainerCommands"{
++v_JsonExtractor : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValueFromJSONObjectCommand" <<sealed>> {
++RunCommand() : void 
++v_PropertyName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertJSONToDataTableCommand" <<sealed>> {
++RunCommand() : void 
+-{static} ParseJSONArrayAsDataTable() : DataTable
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertJSONToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertJSONToListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValuesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.GetJSONValueFromJSONArrayCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.GetJSONValueCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.GetJSONValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.GetJSONValueFromJSONObjectCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.ConvertJSONToDataTableCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.ConvertJSONToDictionaryCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.ConvertJSONToListCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.GetJSONValuesAsListCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+@enduml

@@ -1,0 +1,29 @@
+digraph "taskt.Core.Automation.Commands.ACalculateDateTimeCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands" [ label="AGetFormattedDateTimeFromCalculatedDateTimeCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ACalculateDateTimeCommands" [ label="ACalculateDateTimeCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.CalculateDateTimeFromUnixTimeCommand" [ label="CalculateDateTimeFromUnixTimeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CalculateDateTimeFromExcelSerialCommand" [ label="CalculateDateTimeFromExcelSerialCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CalculateDateTimeFromTextCommand" [ label="CalculateDateTimeFromTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CalculateDateTimeCommand" [ label="CalculateDateTimeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedExcelSerialDateTimeCommand" [ label="GetFormattedDateTimeFromCalculatedExcelSerialDateTimeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedUnixDateTimeCommand" [ label="GetFormattedDateTimeFromCalculatedUnixDateTimeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedTextDateTimeCommand" [ label="GetFormattedDateTimeFromCalculatedTextDateTimeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedDateTimeCommand" [ label="GetFormattedDateTimeFromCalculatedDateTimeCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands" -> "taskt.Core.Automation.Commands.ACalculateDateTimeCommands";
+"taskt.Core.Automation.Commands.CalculateDateTimeFromUnixTimeCommand" -> "taskt.Core.Automation.Commands.ACalculateDateTimeCommands";
+"taskt.Core.Automation.Commands.CalculateDateTimeFromExcelSerialCommand" -> "taskt.Core.Automation.Commands.ACalculateDateTimeCommands";
+"taskt.Core.Automation.Commands.CalculateDateTimeFromTextCommand" -> "taskt.Core.Automation.Commands.ACalculateDateTimeCommands";
+"taskt.Core.Automation.Commands.CalculateDateTimeCommand" -> "taskt.Core.Automation.Commands.ACalculateDateTimeCommands";
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedExcelSerialDateTimeCommand" -> "taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands";
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedUnixDateTimeCommand" -> "taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands";
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedTextDateTimeCommand" -> "taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands";
+"taskt.Core.Automation.Commands.GetFormattedDateTimeFromCalculatedDateTimeCommand" -> "taskt.Core.Automation.Commands.AGetFormattedDateTimeFromCalculatedDateTimeCommands";
+}

@@ -1,0 +1,25 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetCellRCCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSet : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelValueSetProperties" {
++{abstract} v_TextToSet : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetCellCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSet : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.ExcelSetCellRCCommand ..|> taskt.Core.Automation.Commands.IExcelValueSetProperties
+taskt.Core.Automation.Commands.ExcelSetCellCommand ..|> taskt.Core.Automation.Commands.IExcelValueSetProperties
+@enduml

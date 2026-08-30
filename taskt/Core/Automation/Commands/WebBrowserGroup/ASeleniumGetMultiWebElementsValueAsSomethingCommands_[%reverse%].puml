@@ -1,0 +1,35 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebElementsValueAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumGetMultiWebElementsValueAsSomethingCommands"{
+#GetMultiWebElementValueAction() : void 
++v_AttributeName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebElementsValueAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebElementsValueAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDataTableCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetMultiWebElementsValueAsSomethingCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDictionaryCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetMultiWebElementsValueAsSomethingCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsListCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetMultiWebElementsValueAsSomethingCommands
+@enduml

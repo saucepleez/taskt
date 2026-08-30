@@ -1,0 +1,19 @@
+digraph "taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ExcelSetColumnWidthCommand" [ label="ExcelSetColumnWidthCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands" [ label="AExcelColumnSpecifiedCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ExcelAppendCellCommand" [ label="ExcelAppendCellCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelAppendRowCommand" [ label="ExcelAppendRowCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetLastRowIndexCommand" [ label="ExcelGetLastRowIndexCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.ExcelSetColumnWidthCommand" -> "taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands";
+"taskt.Core.Automation.Commands.ExcelAppendCellCommand" -> "taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands";
+"taskt.Core.Automation.Commands.ExcelAppendRowCommand" -> "taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands";
+"taskt.Core.Automation.Commands.ExcelGetLastRowIndexCommand" -> "taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands";
+}

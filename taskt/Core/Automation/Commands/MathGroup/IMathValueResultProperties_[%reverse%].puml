@@ -1,0 +1,114 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+abstract class "AMathValueResultCommands"{
++v_Value : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IMathValueResultProperties" {
++{abstract} v_Value : String <<get>> <<set>> <<abstract>> 
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ITrignometricProperties" {
++{abstract} v_AngleType : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetAbsoluteCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetLogarithmCommand" <<sealed>> {
++RunCommand() : void 
++v_Base : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetSquareRootCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ATrignometricCommands"{
++v_AngleType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IInverseTrignometricProperties" {
++{abstract} v_WhenValueIsOutOfRange : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AInverseTrignometricCommands"{
++v_AngleType : String <<get>> <<set>> 
++v_WhenValueIsOutOfRange : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetArctanCommand" <<sealed>> {
++RunCommand() : void 
++v_AngleType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetTanCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetCosCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetSinCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetArccosCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetArcsinCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+taskt.Core.Automation.Commands.AMathValueResultCommands ..|> taskt.Core.Automation.Commands.IMathValueResultProperties
+taskt.Core.Automation.Commands.ITrignometricProperties --|> taskt.Core.Automation.Commands.IMathValueResultProperties
+taskt.Core.Automation.Commands.GetAbsoluteCommand --|> taskt.Core.Automation.Commands.AMathValueResultCommands
+taskt.Core.Automation.Commands.GetLogarithmCommand --|> taskt.Core.Automation.Commands.AMathValueResultCommands
+taskt.Core.Automation.Commands.GetSquareRootCommand --|> taskt.Core.Automation.Commands.AMathValueResultCommands
+taskt.Core.Automation.Commands.ATrignometricCommands --|> taskt.Core.Automation.Commands.AMathValueResultCommands
+taskt.Core.Automation.Commands.IInverseTrignometricProperties --|> taskt.Core.Automation.Commands.ITrignometricProperties
+taskt.Core.Automation.Commands.ATrignometricCommands ..|> taskt.Core.Automation.Commands.ITrignometricProperties
+taskt.Core.Automation.Commands.AInverseTrignometricCommands --|> taskt.Core.Automation.Commands.ATrignometricCommands
+taskt.Core.Automation.Commands.GetArctanCommand --|> taskt.Core.Automation.Commands.ATrignometricCommands
+taskt.Core.Automation.Commands.GetTanCommand --|> taskt.Core.Automation.Commands.ATrignometricCommands
+taskt.Core.Automation.Commands.GetCosCommand --|> taskt.Core.Automation.Commands.ATrignometricCommands
+taskt.Core.Automation.Commands.GetSinCommand --|> taskt.Core.Automation.Commands.ATrignometricCommands
+taskt.Core.Automation.Commands.AInverseTrignometricCommands ..|> taskt.Core.Automation.Commands.IInverseTrignometricProperties
+taskt.Core.Automation.Commands.GetArccosCommand --|> taskt.Core.Automation.Commands.AInverseTrignometricCommands
+taskt.Core.Automation.Commands.GetArcsinCommand --|> taskt.Core.Automation.Commands.AInverseTrignometricCommands
+@enduml

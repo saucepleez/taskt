@@ -1,0 +1,27 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromWindowNameByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "ADescendantsSearchUIElementsFromWindowNameByXPathCommands"{
+#MatchMethodComboBox_SelectionChangeCommitted() : void 
++Refresh() : void 
+#SearchWindowAfterAction() : void 
++v_WindowName : String <<get>> <<set>> 
++v_CheckMethod : String <<get>> <<set>> 
++v_SelectionMethod : String <<get>> <<set>> 
++v_TargetWindowIndex : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
++v_WindowUIElement : String <<get>> <<set>> 
++v_CaseSensitive : String <<get>> <<set>> 
++v_TrimBeforeCheck : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands
+@enduml

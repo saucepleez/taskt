@@ -1,0 +1,15 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowWaitTimeBetweenFindAndActionProperties" {
++{abstract} v_WaitTimeBetweenFindAndAction : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.IWindowWaitTimeBetweenFindAndActionProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

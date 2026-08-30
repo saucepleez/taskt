@@ -1,0 +1,18 @@
+digraph "taskt.Core.Automation.Commands.IListIndexProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.IListIndexProperties" [ label="IListIndexProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IListProperties" [ label="IListProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleList" [ label="ICanHandleList", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.IListIndexProperties" -> "taskt.Core.Automation.Commands.IListProperties";
+"taskt.Core.Automation.Commands.IListProperties" -> "taskt.Core.Automation.Commands.ICanHandleList";
+"taskt.Core.Automation.Commands.IListProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ICanHandleList" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

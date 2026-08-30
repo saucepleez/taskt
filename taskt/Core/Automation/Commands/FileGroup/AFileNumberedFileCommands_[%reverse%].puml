@@ -1,0 +1,30 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "GetLastExistentNumberedFilePathCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileNumberedFileCommands"{
+#SearchNonExistentFileAction() : void 
++v_TargetFolderPath : String <<get>> <<set>> 
++v_BeforeFileCounter : String <<get>> <<set>> 
++v_Digits : String <<get>> <<set>> 
++v_AfterFileCounter : String <<get>> <<set>> 
++v_Extension : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_StartValue : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetNonExistentFilePathCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+taskt.Core.Automation.Commands.GetLastExistentNumberedFilePathCommand --|> taskt.Core.Automation.Commands.AFileNumberedFileCommands
+taskt.Core.Automation.Commands.GetNonExistentFilePathCommand --|> taskt.Core.Automation.Commands.AFileNumberedFileCommands
+@enduml

@@ -1,0 +1,19 @@
+digraph "taskt.Core.Automation.Commands.IFilterValueProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.FilterDataTableColumnByRowValueCommand" [ label="FilterDataTableColumnByRowValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.IFilterValueProperties" [ label="IFilterValueProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.FilterDataTableRowByColumnValueCommand" [ label="FilterDataTableRowByColumnValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.FilterDictionaryCommand" [ label="FilterDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.FilterListCommand" [ label="FilterListCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.FilterDataTableColumnByRowValueCommand" -> "taskt.Core.Automation.Commands.IFilterValueProperties";
+"taskt.Core.Automation.Commands.FilterDataTableRowByColumnValueCommand" -> "taskt.Core.Automation.Commands.IFilterValueProperties";
+"taskt.Core.Automation.Commands.FilterDictionaryCommand" -> "taskt.Core.Automation.Commands.IFilterValueProperties";
+"taskt.Core.Automation.Commands.FilterListCommand" -> "taskt.Core.Automation.Commands.IFilterValueProperties";
+}

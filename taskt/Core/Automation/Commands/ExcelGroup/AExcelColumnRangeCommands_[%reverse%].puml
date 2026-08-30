@@ -1,0 +1,79 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelColumnRangeGetCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelColumnRangeCommands"{
++v_ColumnType : String <<get>> <<set>> 
++v_ColumnIndex : String <<get>> <<set>> 
++v_RowStart : String <<get>> <<set>> 
++v_RowEnd : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelColumnRangeSetCommands"{
++{abstract} v_WhenItemNotEnough : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetColumnValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetColumnValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetColumnValuesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetColumnValuesFromDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_DataTableVariable : String <<get>> <<set>> 
++v_DataTableColumnIndex : String <<get>> <<set>> 
++v_WhenItemNotEnough : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetColumnValuesFromDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_DictionaryVariable : String <<get>> <<set>> 
++v_WhenItemNotEnough : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetColumnValuesFromListCommand" <<sealed>> {
++RunCommand() : void 
++v_ListVariable : String <<get>> <<set>> 
++v_WhenItemNotEnough : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands --|> taskt.Core.Automation.Commands.AExcelColumnRangeCommands
+taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands --|> taskt.Core.Automation.Commands.AExcelColumnRangeCommands
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsListCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands
+taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDataTableCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetColumnValuesFromListCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands
+@enduml

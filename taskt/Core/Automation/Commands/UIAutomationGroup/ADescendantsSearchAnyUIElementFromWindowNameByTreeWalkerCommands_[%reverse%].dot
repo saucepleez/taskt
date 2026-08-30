@@ -1,0 +1,13 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameCommand" [ label="UIAutomationSearchUIElementFromWindowNameCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands" [ label="ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands", style="dashed", ];
+
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands";
+}

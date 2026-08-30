@@ -1,0 +1,152 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValueFromJSONObjectCommand" <<sealed>> {
++RunCommand() : void 
++v_PropertyName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONGetFromJContainerCommands"{
++v_JsonExtractor : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONGetFromJSONCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IJSONInputJContainer" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IJSONJSONPathProperties" {
++{abstract} v_JsonExtractor : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONInputJSONCommands"{
++v_Json : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IResultProperties" {
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IJSONInputJSONProperties" {
++{abstract} v_Json : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleJContainer" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ScriptCommand"{
++RunCommand() : void 
++RunCommand() : void 
++GetDisplayValue() : String
++Render() : List
++Render() : List
++AfterShown() : void 
++Refresh() : void 
++BeforeValidate() : void 
++IsValidate() : Boolean
++ConvertToIntermediate() : void 
++ConvertToIntermediate() : void 
++ConvertToRaw() : void 
++ConvertToRaw() : void 
++Clone() : ScriptCommand
++CheckMatched() : Boolean
++Replace() : Boolean
++AddInstance() : void 
++RemoveInstance() : void 
++CommandID : String <<get>> <<set>> 
++CommandName : String <<get>> <<set>> 
++IsCommented : Boolean <<get>> <<set>> 
++SelectionName : String <<get>> <<set>> 
++DefaultPause : Int32 <<get>> <<set>> 
++LineNumber : Int32 <<get>> <<set>> 
++PauseBeforeExeucution : Boolean <<get>> <<set>> 
++DisplayForeColor : Color <<get>> <<set>> 
++v_Comment : String <<get>> <<set>> 
++CommandEnabled : Boolean <<get>> <<set>> 
++IsValid : Boolean <<get>> <<protected set>>
++IsWarning : Boolean <<get>> <<protected set>>
++validationResult : String <<get>> <<protected set>>
++IsMatched : Boolean <<get>> <<protected set>>
++IsDontSavedCommand : Boolean <<get>> <<set>> 
++IsNewInsertedCommand : Boolean <<get>> <<set>> 
++CustomRendering : Boolean <<get>> <<set>> 
++ControlsList : Dictionary <<get>> 
++RenderedControls : List<System.Windows.Forms.Control>
+#_ControlsList : Dictionary<string, System.Windows.Forms.Control>
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleJSON" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleJSONArray" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleJSONObject" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IUIParameterProperties" {
++{abstract} ControlsList : Dictionary <<get>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICommandIDProperties" {
++{abstract} CommandID : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+taskt.Core.Automation.Commands.GetJSONValueFromJSONObjectCommand --|> taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands --|> taskt.Core.Automation.Commands.AJSONGetFromJSONCommands
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands ..|> taskt.Core.Automation.Commands.IJSONInputJContainer
+taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands ..|> taskt.Core.Automation.Commands.IJSONJSONPathProperties
+taskt.Core.Automation.Commands.AJSONGetFromJSONCommands --|> taskt.Core.Automation.Commands.AJSONInputJSONCommands
+taskt.Core.Automation.Commands.AJSONGetFromJSONCommands ..|> taskt.Core.Automation.Commands.IResultProperties
+taskt.Core.Automation.Commands.IJSONInputJContainer --|> taskt.Core.Automation.Commands.IJSONInputJSONProperties
+taskt.Core.Automation.Commands.IJSONInputJContainer --|> taskt.Core.Automation.Commands.ICanHandleJContainer
+taskt.Core.Automation.Commands.IJSONJSONPathProperties --|> taskt.Core.Automation.Commands.IJSONInputJContainer
+taskt.Core.Automation.Commands.AJSONInputJSONCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AJSONInputJSONCommands ..|> taskt.Core.Automation.Commands.IJSONInputJSONProperties
+taskt.Core.Automation.Commands.IJSONInputJSONProperties --|> taskt.Core.Automation.Commands.ICanHandleJSON
+taskt.Core.Automation.Commands.IJSONInputJSONProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICanHandleJContainer --|> taskt.Core.Automation.Commands.ICanHandleJSONArray
+taskt.Core.Automation.Commands.ICanHandleJContainer --|> taskt.Core.Automation.Commands.ICanHandleJSONObject
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.ICanHandleJSON --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICanHandleJSONArray --|> taskt.Core.Automation.Commands.ICanHandleJSON
+taskt.Core.Automation.Commands.ICanHandleJSONObject --|> taskt.Core.Automation.Commands.ICanHandleJSON
+@enduml

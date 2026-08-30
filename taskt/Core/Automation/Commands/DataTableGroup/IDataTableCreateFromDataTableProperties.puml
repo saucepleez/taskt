@@ -1,0 +1,23 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "IDataTableCreateFromDataTableProperties" {
++{abstract} v_TargetDataTable : String <<get>> <<set>> <<abstract>> 
++{abstract} v_NewDataTable : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleDataTable" {
+}
+}
+
+taskt.Core.Automation.Commands.IDataTableCreateFromDataTableProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.IDataTableCreateFromDataTableProperties --|> taskt.Core.Automation.Commands.ICanHandleDataTable
+taskt.Core.Automation.Commands.ICanHandleDataTable --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

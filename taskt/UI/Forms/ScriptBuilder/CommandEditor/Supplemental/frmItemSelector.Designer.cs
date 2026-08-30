@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmItemSelector));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblHeader = new System.Windows.Forms.Label();
-            this.lstVariables = new System.Windows.Forms.ListBox();
+            this.lstItems = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.uiBtnOk = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnCancel = new taskt.UI.CustomControls.UIPictureButton();
@@ -55,7 +55,7 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.lblHeader, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.lstVariables, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.lstItems, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -83,18 +83,18 @@
             this.lblHeader.TabIndex = 0;
             this.lblHeader.Text = "Insert a variable from the list";
             // 
-            // lstVariables
+            // lstItems
             // 
-            this.lstVariables.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstVariables.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lstVariables.FormattingEnabled = true;
-            this.lstVariables.ItemHeight = 21;
-            this.lstVariables.Location = new System.Drawing.Point(3, 78);
-            this.lstVariables.Name = "lstVariables";
-            this.lstVariables.Size = new System.Drawing.Size(354, 182);
-            this.lstVariables.TabIndex = 0;
-            this.lstVariables.SelectedIndexChanged += new System.EventHandler(this.lstVariables_SelectedIndexChanged);
-            this.lstVariables.DoubleClick += new System.EventHandler(this.lstVariables_DoubleClick);
+            this.lstItems.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstItems.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstItems.FormattingEnabled = true;
+            this.lstItems.ItemHeight = 21;
+            this.lstItems.Location = new System.Drawing.Point(3, 78);
+            this.lstItems.Name = "lstItems";
+            this.lstItems.Size = new System.Drawing.Size(354, 182);
+            this.lstItems.TabIndex = 0;
+            this.lstItems.SelectedIndexChanged += new System.EventHandler(this.lstVariables_SelectedIndexChanged);
+            this.lstItems.DoubleClick += new System.EventHandler(this.lstVariables_DoubleClick);
             // 
             // panel1
             // 
@@ -231,7 +231,7 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label lblHeader;
-        private System.Windows.Forms.ListBox lstVariables;
+        private System.Windows.Forms.ListBox lstItems;
         private System.Windows.Forms.Panel panel1;
         private CustomControls.UIPictureButton uiBtnOk;
         private CustomControls.UIPictureButton uiBtnCancel;

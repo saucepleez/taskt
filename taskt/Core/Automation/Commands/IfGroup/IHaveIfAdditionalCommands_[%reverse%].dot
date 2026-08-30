@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.IHaveIfAdditionalCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.BeginMultiIfCommand" [ label="BeginMultiIfCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.IHaveIfAdditionalCommands" [ label="IHaveIfAdditionalCommands", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.BeginIfCommand" [ label="BeginIfCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.BeginMultiIfCommand" -> "taskt.Core.Automation.Commands.IHaveIfAdditionalCommands";
+"taskt.Core.Automation.Commands.BeginIfCommand" -> "taskt.Core.Automation.Commands.IHaveIfAdditionalCommands";
+}

@@ -235,19 +235,19 @@
                 return engineSettings.MaxFileCounter;
             }
         }
-        public int MaxUIElementInpectDepth
-        {
-            get
-            {
-                return engineSettings.MaxUIElementInpectDepth;
-            }
-        }
-        public int MaxUIElementInspectSiblingNodes
-        {
-            get
-            {
-                return engineSettings.MaxUIElementInspectSiblingNodes;
-            }
-        }
+        //public int MaxUIElementInpectDepth
+        //{
+        //    get
+        //    {
+        //        return engineSettings.MaxUIElementInpectDepth;
+        //    }
+        //}
+        //public int MaxUIElementInspectSiblingNodes
+        //{
+        //    get
+        //    {
+        //        return engineSettings.MaxUIElementInspectSiblingNodes;
+        //    }
+        //}
     }
 }

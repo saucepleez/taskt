@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.ICanHandleFilePath" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ICanHandleFilePath" [ label="ICanHandleFilePath", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath" [ label="ICanHandleFileOrFolderPath", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.ICanHandleFilePath" -> "taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath";
+"taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

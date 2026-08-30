@@ -1,0 +1,715 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelInstanceCommands"{
++v_InstanceName : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelInstanceProperties" {
++{abstract} v_InstanceName : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelCellProperties" {
++{abstract} v_CellLocation : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelColumnRowRangeProperties" {
++{abstract} v_ColumnStart : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ColumnEnd : String <<get>> <<set>> <<abstract>> 
++{abstract} v_RowStart : String <<get>> <<set>> <<abstract>> 
++{abstract} v_RowEnd : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelRCLocationProperties" {
++{abstract} v_CellRow : String <<get>> <<set>> <<abstract>> 
++{abstract} v_CellColumn : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelRCRangeProperties" {
++{abstract} v_ColumnType : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelWorksheetActionProperties" {
++{abstract} v_TargetSheetName : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelWorksheetProperties" {
++{abstract} v_SheetName : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelAttachExcelInstanceCommand" <<sealed>> {
++RunCommand() : void 
++v_InstanceName : String <<get>> <<set>> 
++v_WindowHandle : String <<get>> <<set>> 
++v_ReferenceStyle : String <<get>> <<set>> 
++v_WaitTimeForExcel : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelCellCommands"{
++v_CellLocation : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelColumnRangeCommands"{
++v_ColumnType : String <<get>> <<set>> 
++v_ColumnIndex : String <<get>> <<set>> 
++v_RowStart : String <<get>> <<set>> 
++v_RowEnd : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelColumnRowRangeCommands"{
++v_ColumnType : String <<get>> <<set>> 
++v_ColumnStart : String <<get>> <<set>> 
++v_ColumnEnd : String <<get>> <<set>> 
++v_RowStart : String <<get>> <<set>> 
++v_RowEnd : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelColumnSpecifiedCommands"{
++v_ColumnType : String <<get>> <<set>> 
++v_ColumnIndex : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelRCLocationCommands"{
++v_CellRow : String <<get>> <<set>> 
++v_CellColumn : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelRowRangeCommands"{
++v_RowIndex : String <<get>> <<set>> 
++v_ColumnType : String <<get>> <<set>> 
++v_ColumnStart : String <<get>> <<set>> 
++v_ColumnEnd : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelSheetCommands"{
++v_SheetName : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetExcelInformationCommand" <<sealed>> {
++RunCommand() : void 
++v_InfoType : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetCurrentWorksheetCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelCopyWorksheetCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetSheetName : String <<get>> <<set>> 
++v_NewSheetName : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelRenameWorksheetCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetSheetName : String <<get>> <<set>> 
++v_NewSheetName : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelCheckExcelInstanceExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSplitRangeByColumnCommand" <<sealed>> {
++RunCommand() : void 
++Render() : List
++GetDisplayValue() : String
++v_ExcelCellAddress1 : String <<get>> <<set>> 
++v_ExcelCellAddress2 : String <<get>> <<set>> 
++v_ColumnName : String <<get>> <<set>> 
++v_OutputDirectory : String <<get>> <<set>> 
++v_FileType : String <<get>> <<set>> 
++v_userVariableName : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRangeCommand" <<sealed>> {
++RunCommand() : void 
++Render() : List
++GetDisplayValue() : String
++v_ExcelCellAddress1 : String <<get>> <<set>> 
++v_ExcelCellAddress2 : String <<get>> <<set>> 
++v_userVariableName : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelWriteRangeCommand" <<sealed>> {
++RunCommand() : void 
+-LookupVariable() : ScriptVariable
++Render() : List
++GetDisplayValue() : String
++v_DataTableToSet : String <<get>> <<set>> 
++v_ExcelCellAddress : String <<get>> <<set>> 
++v_AddHeaders : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelAddWorkbookCommand" <<sealed>> {
++RunCommand() : void 
++v_IfWorkbookExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelCloseExcelInstanceCommand" <<sealed>> {
++RunCommand() : void 
++v_ExcelSaveOnExit : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelCreateExcelInstanceCommand" <<sealed>> {
++RunCommand() : void 
++v_InstanceName : String <<get>> <<set>> 
++v_WindowHandle : String <<get>> <<set>> 
++v_ReferenceStyle : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelDeleteCellCommand" <<sealed>> {
++RunCommand() : void 
++Render() : List
++GetDisplayValue() : String
++v_CellLocation : String <<get>> <<set>> 
++v_Shift : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelDeleteRowCommand" <<sealed>> {
++RunCommand() : void 
++Render() : List
++GetDisplayValue() : String
++v_RowIndex : String <<get>> <<set>> 
++v_Shift : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelOpenWorkbookCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
++v_Password : String <<get>> <<set>> 
++v_IfWorksheetExists : String <<get>> <<set>> 
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelRunExcelMacroCommand" <<sealed>> {
++RunCommand() : void 
++v_MacroName : String <<get>> <<set>> 
++v_Argument1 : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSaveAsCommand" <<sealed>> {
++RunCommand() : void 
++v_FileName : String <<get>> <<set>> 
++v_IfExcelFileExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSaveCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelCellActionProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelColumnRowRangeGetProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelColumnRowRangeSetProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelRCLocationActionProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelColumnRangeProperties" {
++{abstract} v_ColumnIndex : String <<get>> <<set>> <<abstract>> 
++{abstract} v_RowStart : String <<get>> <<set>> <<abstract>> 
++{abstract} v_RowEnd : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelColumnSpecifiedProperties" {
++{abstract} v_ColumnIndex : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelRowRangeProperties" {
++{abstract} v_RowIndex : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ColumnStart : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ColumnEnd : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelWorksheetCopyRenameProperties" {
++{abstract} v_NewSheetName : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelCellActionCommands"{
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGoToCellCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelColumnRangeGetCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelColumnRangeSetCommands"{
++{abstract} v_WhenItemNotEnough : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelColumnRowRangeGetCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetColumnWidthCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelAppendCellCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSet : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelAppendRowCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSet : String <<get>> <<set>> 
++v_TextSeparator : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetLastRowIndexCommand" <<sealed>> {
++RunCommand() : void 
++v_ColumnIndex : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_UseFastMethodToCell : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGoToCellRCCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelRCLocationActionCommands"{
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelRowRangeGetCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelRowRangeSetCommands"{
++{abstract} v_WhenItemNotEnough : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelCheckWorksheetExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetWorksheetInformationCommand" <<sealed>> {
++RunCommand() : void 
++v_InfoType : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetWorksheetsCommand" <<sealed>> {
++RunCommand() : void 
++v_SheetName : String <<get>> <<set>> 
++v_CompareMethod : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelDeleteWorksheetCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelAddWorksheetCommand" <<sealed>> {
++RunCommand() : void 
++v_SheetName : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelActivateWorksheetCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelColumnRangeGetProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelColumnRangeSetProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelRowRangeGetProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelRowRangeSetProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelCheckCellValueExistsCommand" <<sealed>> {
++RunCommand() : void 
+-cmbValueType_SelectedIndexChanged() : void 
++v_Result : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetCellCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetCellCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSet : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetColumnValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetColumnValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetColumnValuesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetColumnValuesFromDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_DataTableVariable : String <<get>> <<set>> 
++v_DataTableColumnIndex : String <<get>> <<set>> 
++v_WhenItemNotEnough : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetColumnValuesFromDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_DictionaryVariable : String <<get>> <<set>> 
++v_WhenItemNotEnough : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetColumnValuesFromListCommand" <<sealed>> {
++RunCommand() : void 
++v_ListVariable : String <<get>> <<set>> 
++v_WhenItemNotEnough : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRangeValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_FirstRowAsColumnName : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelCheckCellValueExistsRCCommand" <<sealed>> {
++RunCommand() : void 
+-cmbValueType_SelectedIndexChanged() : void 
++v_Result : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetCellRCCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetCellRCCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSet : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRowValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRowValuesAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRowValuesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetRowValuesFromDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_DataTableVariable : String <<get>> <<set>> 
++v_DataTableRowIndex : String <<get>> <<set>> 
++v_WhenItemNotEnough : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetRowValuesFromDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_DictionaryVariable : String <<get>> <<set>> 
++v_WhenItemNotEnough : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetRowValuesFromListCommand" <<sealed>> {
++RunCommand() : void 
++v_ListVariable : String <<get>> <<set>> 
++v_WhenItemNotEnough : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.AExcelInstanceCommands ..|> taskt.Core.Automation.Commands.IExcelInstanceProperties
+taskt.Core.Automation.Commands.IExcelCellProperties --|> taskt.Core.Automation.Commands.IExcelInstanceProperties
+taskt.Core.Automation.Commands.IExcelColumnRowRangeProperties --|> taskt.Core.Automation.Commands.IExcelInstanceProperties
+taskt.Core.Automation.Commands.IExcelRCLocationProperties --|> taskt.Core.Automation.Commands.IExcelInstanceProperties
+taskt.Core.Automation.Commands.IExcelRCRangeProperties --|> taskt.Core.Automation.Commands.IExcelInstanceProperties
+taskt.Core.Automation.Commands.IExcelWorksheetActionProperties --|> taskt.Core.Automation.Commands.IExcelInstanceProperties
+taskt.Core.Automation.Commands.IExcelWorksheetProperties --|> taskt.Core.Automation.Commands.IExcelInstanceProperties
+taskt.Core.Automation.Commands.ExcelAttachExcelInstanceCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.AExcelCellCommands --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.AExcelColumnRangeCommands --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.AExcelColumnRowRangeCommands --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.AExcelRCLocationCommands --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.AExcelRowRangeCommands --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.AExcelSheetCommands --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelGetExcelInformationCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelGetCurrentWorksheetCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelCopyWorksheetCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelRenameWorksheetCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelCheckExcelInstanceExistsCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelSplitRangeByColumnCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelGetRangeCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelWriteRangeCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelAddWorkbookCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelCloseExcelInstanceCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelCreateExcelInstanceCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelDeleteCellCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelDeleteRowCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelOpenWorkbookCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelRunExcelMacroCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelSaveAsCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.ExcelSaveCommand --|> taskt.Core.Automation.Commands.AExcelInstanceCommands
+taskt.Core.Automation.Commands.AExcelCellCommands ..|> taskt.Core.Automation.Commands.IExcelCellProperties
+taskt.Core.Automation.Commands.IExcelCellActionProperties --|> taskt.Core.Automation.Commands.IExcelCellProperties
+taskt.Core.Automation.Commands.AExcelColumnRowRangeCommands ..|> taskt.Core.Automation.Commands.IExcelColumnRowRangeProperties
+taskt.Core.Automation.Commands.IExcelColumnRowRangeGetProperties --|> taskt.Core.Automation.Commands.IExcelColumnRowRangeProperties
+taskt.Core.Automation.Commands.IExcelColumnRowRangeSetProperties --|> taskt.Core.Automation.Commands.IExcelColumnRowRangeProperties
+taskt.Core.Automation.Commands.AExcelRCLocationCommands ..|> taskt.Core.Automation.Commands.IExcelRCLocationProperties
+taskt.Core.Automation.Commands.IExcelRCLocationActionProperties --|> taskt.Core.Automation.Commands.IExcelRCLocationProperties
+taskt.Core.Automation.Commands.IExcelColumnRangeProperties --|> taskt.Core.Automation.Commands.IExcelRCRangeProperties
+taskt.Core.Automation.Commands.IExcelColumnRowRangeProperties --|> taskt.Core.Automation.Commands.IExcelRCRangeProperties
+taskt.Core.Automation.Commands.IExcelColumnSpecifiedProperties --|> taskt.Core.Automation.Commands.IExcelRCRangeProperties
+taskt.Core.Automation.Commands.IExcelRowRangeProperties --|> taskt.Core.Automation.Commands.IExcelRCRangeProperties
+taskt.Core.Automation.Commands.IExcelWorksheetCopyRenameProperties --|> taskt.Core.Automation.Commands.IExcelWorksheetActionProperties
+taskt.Core.Automation.Commands.AExcelSheetCommands ..|> taskt.Core.Automation.Commands.IExcelWorksheetProperties
+taskt.Core.Automation.Commands.AExcelCellActionCommands --|> taskt.Core.Automation.Commands.AExcelCellCommands
+taskt.Core.Automation.Commands.ExcelGoToCellCommand --|> taskt.Core.Automation.Commands.AExcelCellCommands
+taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands --|> taskt.Core.Automation.Commands.AExcelColumnRangeCommands
+taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands --|> taskt.Core.Automation.Commands.AExcelColumnRangeCommands
+taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands --|> taskt.Core.Automation.Commands.AExcelColumnRowRangeCommands
+taskt.Core.Automation.Commands.ExcelSetColumnWidthCommand --|> taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands
+taskt.Core.Automation.Commands.ExcelAppendCellCommand --|> taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands
+taskt.Core.Automation.Commands.ExcelAppendRowCommand --|> taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands
+taskt.Core.Automation.Commands.ExcelGetLastRowIndexCommand --|> taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands
+taskt.Core.Automation.Commands.ExcelGoToCellRCCommand --|> taskt.Core.Automation.Commands.AExcelRCLocationCommands
+taskt.Core.Automation.Commands.AExcelRCLocationActionCommands --|> taskt.Core.Automation.Commands.AExcelRCLocationCommands
+taskt.Core.Automation.Commands.AExcelRowRangeGetCommands --|> taskt.Core.Automation.Commands.AExcelRowRangeCommands
+taskt.Core.Automation.Commands.AExcelRowRangeSetCommands --|> taskt.Core.Automation.Commands.AExcelRowRangeCommands
+taskt.Core.Automation.Commands.ExcelCheckWorksheetExistsCommand --|> taskt.Core.Automation.Commands.AExcelSheetCommands
+taskt.Core.Automation.Commands.ExcelGetWorksheetInformationCommand --|> taskt.Core.Automation.Commands.AExcelSheetCommands
+taskt.Core.Automation.Commands.ExcelGetWorksheetsCommand --|> taskt.Core.Automation.Commands.AExcelSheetCommands
+taskt.Core.Automation.Commands.ExcelDeleteWorksheetCommand --|> taskt.Core.Automation.Commands.AExcelSheetCommands
+taskt.Core.Automation.Commands.ExcelAddWorksheetCommand --|> taskt.Core.Automation.Commands.AExcelSheetCommands
+taskt.Core.Automation.Commands.ExcelActivateWorksheetCommand --|> taskt.Core.Automation.Commands.AExcelSheetCommands
+taskt.Core.Automation.Commands.AExcelCellActionCommands ..|> taskt.Core.Automation.Commands.IExcelCellActionProperties
+taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands ..|> taskt.Core.Automation.Commands.IExcelColumnRowRangeGetProperties
+taskt.Core.Automation.Commands.AExcelRCLocationActionCommands ..|> taskt.Core.Automation.Commands.IExcelRCLocationActionProperties
+taskt.Core.Automation.Commands.AExcelColumnRangeCommands ..|> taskt.Core.Automation.Commands.IExcelColumnRangeProperties
+taskt.Core.Automation.Commands.IExcelColumnRangeGetProperties --|> taskt.Core.Automation.Commands.IExcelColumnRangeProperties
+taskt.Core.Automation.Commands.IExcelColumnRangeSetProperties --|> taskt.Core.Automation.Commands.IExcelColumnRangeProperties
+taskt.Core.Automation.Commands.AExcelColumnSpecifiedCommands ..|> taskt.Core.Automation.Commands.IExcelColumnSpecifiedProperties
+taskt.Core.Automation.Commands.AExcelRowRangeCommands ..|> taskt.Core.Automation.Commands.IExcelRowRangeProperties
+taskt.Core.Automation.Commands.IExcelRowRangeGetProperties --|> taskt.Core.Automation.Commands.IExcelRowRangeProperties
+taskt.Core.Automation.Commands.IExcelRowRangeSetProperties --|> taskt.Core.Automation.Commands.IExcelRowRangeProperties
+taskt.Core.Automation.Commands.ExcelCopyWorksheetCommand ..|> taskt.Core.Automation.Commands.IExcelWorksheetCopyRenameProperties
+taskt.Core.Automation.Commands.ExcelRenameWorksheetCommand ..|> taskt.Core.Automation.Commands.IExcelWorksheetCopyRenameProperties
+taskt.Core.Automation.Commands.ExcelCheckCellValueExistsCommand --|> taskt.Core.Automation.Commands.AExcelCellActionCommands
+taskt.Core.Automation.Commands.ExcelGetCellCommand --|> taskt.Core.Automation.Commands.AExcelCellActionCommands
+taskt.Core.Automation.Commands.ExcelSetCellCommand --|> taskt.Core.Automation.Commands.AExcelCellActionCommands
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsListCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands
+taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDataTableCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetColumnValuesFromListCommand --|> taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands
+taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.AExcelColumnRowRangeGetCommands
+taskt.Core.Automation.Commands.ExcelCheckCellValueExistsRCCommand --|> taskt.Core.Automation.Commands.AExcelRCLocationActionCommands
+taskt.Core.Automation.Commands.ExcelGetCellRCCommand --|> taskt.Core.Automation.Commands.AExcelRCLocationActionCommands
+taskt.Core.Automation.Commands.ExcelSetCellRCCommand --|> taskt.Core.Automation.Commands.AExcelRCLocationActionCommands
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeGetCommands
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeGetCommands
+taskt.Core.Automation.Commands.ExcelSetRowValuesFromDataTableCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetRowValuesFromDictionaryCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
+taskt.Core.Automation.Commands.ExcelSetRowValuesFromListCommand --|> taskt.Core.Automation.Commands.AExcelRowRangeSetCommands
+taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands ..|> taskt.Core.Automation.Commands.IExcelColumnRangeGetProperties
+taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands ..|> taskt.Core.Automation.Commands.IExcelColumnRangeSetProperties
+taskt.Core.Automation.Commands.AExcelRowRangeGetCommands ..|> taskt.Core.Automation.Commands.IExcelRowRangeGetProperties
+taskt.Core.Automation.Commands.AExcelRowRangeSetCommands ..|> taskt.Core.Automation.Commands.IExcelRowRangeSetProperties
+@enduml

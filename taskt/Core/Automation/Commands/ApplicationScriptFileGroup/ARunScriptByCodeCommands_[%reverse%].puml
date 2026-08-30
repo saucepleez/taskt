@@ -1,0 +1,42 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "RunPowerShellScriptByCodeCommand" <<sealed>> {
++RunCommand() : void 
++v_ScriptCode : String <<get>> <<set>> 
++v_Arguments : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ARunScriptByCodeCommands"{
+#RunScriptAction() : void 
++v_ScriptCode : String <<get>> <<set>> 
++v_Arguments : String <<get>> <<set>> 
++v_ReplaceScriptVariables : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_DeleteScriptFile : String <<get>> <<set>> 
++v_TemporaryScriptFolder : String <<get>> <<set>> 
++v_ScriptFilePath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RunJavaScriptByCodeCommand" <<sealed>> {
++RunCommand() : void 
++v_ScriptCode : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RunBatchScriptByCodeCommand" <<sealed>> {
++RunCommand() : void 
++v_ScriptCode : String <<get>> <<set>> 
++v_ScriptType : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.RunPowerShellScriptByCodeCommand --|> taskt.Core.Automation.Commands.ARunScriptByCodeCommands
+taskt.Core.Automation.Commands.RunJavaScriptByCodeCommand --|> taskt.Core.Automation.Commands.ARunScriptByCodeCommands
+taskt.Core.Automation.Commands.RunBatchScriptByCodeCommand --|> taskt.Core.Automation.Commands.ARunScriptByCodeCommands
+@enduml

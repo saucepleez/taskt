@@ -1,0 +1,32 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationCheckUIElementExistsByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "ADescendantsSearchUIElementsFromUIElementByXPathCommands"{
++v_TargetElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationWaitForUIElementToExistsByXPathCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromUIElementByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands
+@enduml

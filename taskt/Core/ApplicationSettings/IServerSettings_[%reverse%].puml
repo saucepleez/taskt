@@ -1,0 +1,63 @@
+@startuml
+left to right direction
+package "taskt.Core"{
+class "SafeServerSettings" {
++ServerConnectionEnabled : Boolean <<get>> 
++ConnectToServerOnStartup : Boolean <<get>> 
++RetryServerConnectionOnFail : Boolean <<get>> 
++BypassCertificateValidation : Boolean <<get>> 
++ServerURL : String <<get>> 
++ServerPublicKey : String <<get>> 
++HTTPServerURL : String <<get>> 
++HTTPGuid : Guid <<get>> 
+#serverSettings : taskt.Core.ServerSettings
+}
+}
+
+package "taskt.Core"{
+Interface "IServerSettings" {
++{abstract} ServerConnectionEnabled : Boolean <<get>> <<abstract>> 
++{abstract} ConnectToServerOnStartup : Boolean <<get>> <<abstract>> 
++{abstract} RetryServerConnectionOnFail : Boolean <<get>> <<abstract>> 
++{abstract} BypassCertificateValidation : Boolean <<get>> <<abstract>> 
++{abstract} ServerURL : String <<get>> <<abstract>> 
++{abstract} ServerPublicKey : String <<get>> <<abstract>> 
++{abstract} HTTPServerURL : String <<get>> <<abstract>> 
++{abstract} HTTPGuid : Guid <<get>> <<abstract>> 
+}
+}
+
+package "taskt.Core"{
+class "ServerSettings" <<sealed>> {
++Clone() : ServerSettings
++ServerConnectionEnabled : Boolean <<get>> <<set>> 
++ConnectToServerOnStartup : Boolean <<get>> <<set>> 
++RetryServerConnectionOnFail : Boolean <<get>> <<set>> 
++BypassCertificateValidation : Boolean <<get>> <<set>> 
++ServerURL : String <<get>> <<set>> 
++ServerPublicKey : String <<get>> <<set>> 
++HTTPServerURL : String <<get>> <<set>> 
++HTTPGuid : Guid <<get>> <<set>> 
+}
+}
+
+package "taskt.Core"{
+class "SafeHttpServerClientServerSettings" {
++HTTPGuid : Guid <<get>> <<set>> 
++HTTPServerURL : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core"{
+class "SafeWebSocketServerSettings" {
++ConnectToServerOnStartup : Boolean <<get>> <<set>> 
++ServerConnectionEnabled : Boolean <<get>> <<set>> 
++ServerPublicKey : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.SafeServerSettings ..|> taskt.Core.IServerSettings
+taskt.Core.ServerSettings ..|> taskt.Core.IServerSettings
+taskt.Core.SafeHttpServerClientServerSettings --|> taskt.Core.SafeServerSettings
+taskt.Core.SafeWebSocketServerSettings --|> taskt.Core.SafeServerSettings
+@enduml

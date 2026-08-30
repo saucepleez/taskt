@@ -1,0 +1,74 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+abstract class "ARunScriptFileCommands"{
++v_Arguments : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AScriptFileCommands"{
++v_TargetFilePath : String <<get>> <<set>> 
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UnloadScriptFileCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
++v_ErrorPreference : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "LoadScriptFileCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RunScriptFileCommand" <<sealed>> {
++RunCommand() : void 
+-lnkReloadVariables_Click() : void 
+-cmbAssignVariables_SelectedItemChanged() : void 
++v_TargetFilePath : String <<get>> <<set>> 
++v_AssignVariables : String <<get>> <<set>> 
++v_VariableAssignments : DataTable <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RunJavaScriptFileCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RunPowerShellScriptFileCommand" <<sealed>> {
++RunCommand() : void 
+-cmbExecutionMethod_SelectionChangeCommited() : void 
++v_TargetFilePath : String <<get>> <<set>> 
++v_ExecutionMethod : String <<get>> <<set>> 
++v_ReplaceScriptVariables : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RunBatchScriptFileCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.ARunScriptFileCommands --|> taskt.Core.Automation.Commands.AScriptFileCommands
+taskt.Core.Automation.Commands.UnloadScriptFileCommand --|> taskt.Core.Automation.Commands.AScriptFileCommands
+taskt.Core.Automation.Commands.LoadScriptFileCommand --|> taskt.Core.Automation.Commands.AScriptFileCommands
+taskt.Core.Automation.Commands.RunScriptFileCommand --|> taskt.Core.Automation.Commands.AScriptFileCommands
+taskt.Core.Automation.Commands.RunJavaScriptFileCommand --|> taskt.Core.Automation.Commands.ARunScriptFileCommands
+taskt.Core.Automation.Commands.RunPowerShellScriptFileCommand --|> taskt.Core.Automation.Commands.ARunScriptFileCommands
+taskt.Core.Automation.Commands.RunBatchScriptFileCommand --|> taskt.Core.Automation.Commands.ARunScriptFileCommands
+@enduml

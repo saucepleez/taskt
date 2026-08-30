@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        public static ScriptCommand ToScriptCommand(this ILExpandableProperties command)
+        public static ScriptCommand ToScriptCommand(this IExpandableProperties command)
         {
             // TODO: It will eventually go out of use.
             return (ScriptCommand)command;

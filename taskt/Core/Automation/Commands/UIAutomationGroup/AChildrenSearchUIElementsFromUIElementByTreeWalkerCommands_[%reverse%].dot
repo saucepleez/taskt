@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationSearchChildrenUIElementsInformationCommand" [ label="UIAutomationSearchChildrenUIElementsInformationCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands" [ label="AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchChildUIElementCommand" [ label="UIAutomationSearchChildUIElementCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.UIAutomationSearchChildrenUIElementsInformationCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationSearchChildUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByTreeWalkerCommands";
+}

@@ -1,0 +1,34 @@
+@startuml
+left to right direction
+package "taskt.Core"{
+class "SafeHttpServerClientServerSettings" {
++HTTPGuid : Guid <<get>> <<set>> 
++HTTPServerURL : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core"{
+class "SafeServerSettings" {
++ServerConnectionEnabled : Boolean <<get>> 
++ConnectToServerOnStartup : Boolean <<get>> 
++RetryServerConnectionOnFail : Boolean <<get>> 
++BypassCertificateValidation : Boolean <<get>> 
++ServerURL : String <<get>> 
++ServerPublicKey : String <<get>> 
++HTTPServerURL : String <<get>> 
++HTTPGuid : Guid <<get>> 
+#serverSettings : taskt.Core.ServerSettings
+}
+}
+
+package "taskt.Core"{
+class "SafeWebSocketServerSettings" {
++ConnectToServerOnStartup : Boolean <<get>> <<set>> 
++ServerConnectionEnabled : Boolean <<get>> <<set>> 
++ServerPublicKey : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.SafeHttpServerClientServerSettings --|> taskt.Core.SafeServerSettings
+taskt.Core.SafeWebSocketServerSettings --|> taskt.Core.SafeServerSettings
+@enduml

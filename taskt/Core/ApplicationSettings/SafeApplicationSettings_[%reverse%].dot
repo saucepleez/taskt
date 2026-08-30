@@ -1,0 +1,21 @@
+digraph "taskt.Core.SafeApplicationSettings" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.SafeAutomationEngineInstanceApplicationSettings" [ label="SafeAutomationEngineInstanceApplicationSettings", ];
+"taskt.Core.SafeApplicationSettings" [ label="SafeApplicationSettings", ];
+"taskt.Core.SafeFrmScriptBuilderApplicationSettings" [ label="SafeFrmScriptBuilderApplicationSettings", ];
+"taskt.Core.SafeHttpServerClientApplicationSettings" [ label="SafeHttpServerClientApplicationSettings", ];
+"taskt.Core.SafeWebSocketApplicationSettings" [ label="SafeWebSocketApplicationSettings", ];
+"taskt.Core.SafeDocumentGenerationApplicationSettings" [ label="SafeDocumentGenerationApplicationSettings", ];
+
+"taskt.Core.SafeAutomationEngineInstanceApplicationSettings" -> "taskt.Core.SafeApplicationSettings";
+"taskt.Core.SafeFrmScriptBuilderApplicationSettings" -> "taskt.Core.SafeApplicationSettings";
+"taskt.Core.SafeHttpServerClientApplicationSettings" -> "taskt.Core.SafeApplicationSettings";
+"taskt.Core.SafeWebSocketApplicationSettings" -> "taskt.Core.SafeApplicationSettings";
+"taskt.Core.SafeDocumentGenerationApplicationSettings" -> "taskt.Core.SafeApplicationSettings";
+}

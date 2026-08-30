@@ -1,0 +1,96 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "EnterKeysFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSend : String <<get>> <<set>> 
++v_EncryptionOption : String <<get>> <<set>> 
++v_UseClipBoard : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ClearClipboardAfterPaste : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AWindowHandleActionCommands"{
++v_WaitTimeBetweenFindAndAction : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "EnterShortcutKeyFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
+-cmbHotkey_SelectedIndexChanged() : void 
++v_Hotkey : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SendAdvancedKeyStrokesFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++AfterShown() : void 
++IsValidate() : Boolean
++BeforeValidate() : void 
++v_KeyActions : DataTable <<get>> <<set>> 
++v_KeyUpDefault : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CloseWindowByWindowHandle" <<sealed>> {
+-{static} SendMessage() : IntPtr
++RunCommand() : void 
+-{static} .cctor() : void 
+-WM_CLOSE : UInt32
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveWindowByWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ResizeWindowByWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetWindowStateByWindowHandleCommand" <<sealed>> {
+-{static} ShowWindowAsync() : Boolean
+-{static} ShowWindow() : Boolean
++RunCommand() : void 
++v_WindowState : String <<get>> <<set>> 
+-MAXIMIZE : int
+-MINIMIZE : int
+-RESTORE : int
+}
+}
+
+taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.CloseWindowByWindowHandle --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.MoveWindowByWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.ResizeWindowByWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+taskt.Core.Automation.Commands.SetWindowStateByWindowHandleCommand --|> taskt.Core.Automation.Commands.AWindowHandleActionCommands
+@enduml

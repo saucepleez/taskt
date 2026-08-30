@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSearchUIElementFromWindowSomethingByAnywayProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSearchUIElementFromWindowSomethingByAnywayProperties" [ label="IUIElementSearchUIElementFromWindowSomethingByAnywayProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties" [ label="IWindowUIElementResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement" [ label="ICanHandleUIElement", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSearchUIElementFromWindowSomethingByAnywayProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement";
+}

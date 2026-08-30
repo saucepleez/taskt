@@ -1,0 +1,79 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "GetWindowPositionsFromWindowNamesAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_PositionBase : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowPositionProperties" {
++{abstract} v_WhenWindowIsMinimized : String <<get>> <<set>> <<abstract>> 
++{abstract} v_WhenWindowIsMaximized : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveWindowsCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveOneWindowCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetOneWindowPositionCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_PositionBase : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetWindowPositionFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_PositionBase : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveWindowByWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_WhenWindowIsMinimized : String <<get>> <<set>> 
++v_WhenWindowIsMaximized : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsListCommand ..|> taskt.Core.Automation.Commands.IWindowPositionProperties
+taskt.Core.Automation.Commands.MoveWindowsCommand ..|> taskt.Core.Automation.Commands.IWindowPositionProperties
+taskt.Core.Automation.Commands.MoveOneWindowCommand ..|> taskt.Core.Automation.Commands.IWindowPositionProperties
+taskt.Core.Automation.Commands.GetOneWindowPositionCommand ..|> taskt.Core.Automation.Commands.IWindowPositionProperties
+taskt.Core.Automation.Commands.GetWindowPositionFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.IWindowPositionProperties
+taskt.Core.Automation.Commands.MoveWindowByWindowHandleCommand ..|> taskt.Core.Automation.Commands.IWindowPositionProperties
+@enduml

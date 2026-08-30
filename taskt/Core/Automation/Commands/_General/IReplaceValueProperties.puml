@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "IReplaceValueProperties" {
++{abstract} v_ValueType : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ReplaceAction : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ReplaceActionParameterTable : DataTable <<get>> <<set>> <<abstract>> 
++{abstract} v_NewValue : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.IReplaceValueProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

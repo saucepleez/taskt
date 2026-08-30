@@ -1,0 +1,55 @@
+digraph "taskt.Core.Automation.Commands.IDataTableResultProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationGetTextsFromTableUIElementAsDataTableCommand" [ label="UIAutomationGetTextsFromTableUIElementAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.IDataTableResultProperties" [ label="IDataTableResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands" [ label="GetFromWindowNamesAsDataTableCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetJSONValuesAsDataTableCommand" [ label="GetJSONValuesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand" [ label="SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertColorCommand" [ label="ConvertColorCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToDataTableCommand" [ label="ConvertDataTableColumnToDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableRowToDataTableCommand" [ label="ConvertDataTableRowToDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDictionaryToDataTableCommand" [ label="ConvertDictionaryToDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDataTableCommand" [ label="ExcelGetColumnValuesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand" [ label="ExcelGetRangeValuesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand" [ label="ExcelGetRowValuesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertJSONToDataTableCommand" [ label="ConvertJSONToDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertListToDataTableCommand" [ label="ConvertListToDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetTableValuesAsDataTableCommand" [ label="SeleniumBrowserGetTableValuesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValuesAsDataTableCommand" [ label="SeleniumBrowserGetWebElementsValuesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand" [ label="SeleniumBrowserGetOneWebElementValuesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDataTableCommand" [ label="SeleniumBrowserGetWebElementsValueAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsDataTableCommand" [ label="GetWindowHandlesFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsDataTableCommand" [ label="GetWindowStatesFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsDataTableCommand" [ label="GetWindowSizesFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsDataTableCommand" [ label="GetWindowPositionsFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsDataTableCommand" [ label="GetProcessNamesFromWindowNamesAsDataTableCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.UIAutomationGetTextsFromTableUIElementAsDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.GetJSONValuesAsDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.ConvertColorCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.ConvertDataTableRowToDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.ConvertDictionaryToDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.ExcelGetRangeValuesAsDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.ExcelGetRowValuesAsDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.ConvertJSONToDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.ConvertListToDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetTableValuesAsDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValuesAsDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDataTableCommand" -> "taskt.Core.Automation.Commands.IDataTableResultProperties";
+"taskt.Core.Automation.Commands.GetWindowHandlesFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+"taskt.Core.Automation.Commands.GetWindowStatesFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+"taskt.Core.Automation.Commands.GetWindowPositionsFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+"taskt.Core.Automation.Commands.GetProcessNamesFromWindowNamesAsDataTableCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsDataTableCommands";
+}

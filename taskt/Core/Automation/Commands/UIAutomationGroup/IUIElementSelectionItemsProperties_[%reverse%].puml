@@ -1,0 +1,31 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetSelectionItemsValueFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ExpandWhenItemsNotFound : String <<get>> <<set>> 
++v_WaitTimeAfterExpand : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IUIElementSelectionItemsProperties" {
++{abstract} v_ExpandWhenItemsNotFound : String <<get>> <<set>> <<abstract>> 
++{abstract} v_WaitTimeAfterExpand : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSelectItemInUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Item : String <<get>> <<set>> 
++v_ItemValueType : String <<get>> <<set>> 
++v_ExpandWhenItemsNotFound : String <<get>> <<set>> 
++v_WaitTimeAfterExpand : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties
+taskt.Core.Automation.Commands.UIAutomationSelectItemInUIElementCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSelectionItemsProperties
+@enduml

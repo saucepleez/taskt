@@ -1,0 +1,61 @@
+digraph "taskt.Core.Automation.Commands.IListResultProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand" [ label="SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.IListResultProperties" [ label="IListResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IListGetFromValueProperties" [ label="IListGetFromValueProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand" [ label="SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabHandlesAsListCommand" [ label="SeleniumBrowserGetWindowAndTabHandlesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsListCommand" [ label="SeleniumBrowserGetWindowAndTabURLsAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsListCommand" [ label="SeleniumBrowserGetWindowAndTabTitlesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetOptionsFromWebElementCommand" [ label="SeleniumBrowserGetOptionsFromWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToListCommand" [ label="ConvertDataTableColumnToListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableRowToListCommand" [ label="ConvertDataTableRowToListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetDataTableColumnListCommand" [ label="GetDataTableColumnListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDictionaryToListCommand" [ label="ConvertDictionaryToListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetDictionaryKeysListCommand" [ label="GetDictionaryKeysListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetColumnValuesAsListCommand" [ label="ExcelGetColumnValuesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand" [ label="ExcelGetRowValuesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetWorksheetsCommand" [ label="ExcelGetWorksheetsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertJSONToListCommand" [ label="ConvertJSONToListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand" [ label="UIAutomationGetSelectionItemsValueFromUIElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand" [ label="SeleniumBrowserGetOneWebElementValuesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsListCommand" [ label="SeleniumBrowserGetWebElementsValueAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetFilesPathAsListCommand" [ label="GetFilesPathAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetFoldersPathAsListCommand" [ label="GetFoldersPathAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetJSONValuesAsListCommand" [ label="GetJSONValuesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AListGetFromValueCommands" [ label="AListGetFromValueCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetListIndexFromValueCommand" [ label="GetListIndexFromValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CheckListItemExistsCommand" [ label="CheckListItemExistsCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.IListGetFromValueProperties" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabHandlesAsListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetOptionsFromWebElementCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.ConvertDataTableColumnToListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.ConvertDataTableRowToListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.GetDataTableColumnListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.ConvertDictionaryToListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.GetDictionaryKeysListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.ExcelGetColumnValuesAsListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.ExcelGetRowValuesAsListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.ExcelGetWorksheetsCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.ConvertJSONToListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.GetFilesPathAsListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.GetFoldersPathAsListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.GetJSONValuesAsListCommand" -> "taskt.Core.Automation.Commands.IListResultProperties";
+"taskt.Core.Automation.Commands.AListGetFromValueCommands" -> "taskt.Core.Automation.Commands.IListGetFromValueProperties";
+"taskt.Core.Automation.Commands.GetListIndexFromValueCommand" -> "taskt.Core.Automation.Commands.AListGetFromValueCommands";
+"taskt.Core.Automation.Commands.CheckListItemExistsCommand" -> "taskt.Core.Automation.Commands.AListGetFromValueCommands";
+}

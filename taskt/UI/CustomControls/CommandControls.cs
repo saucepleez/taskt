@@ -10,6 +10,7 @@ using taskt.Core;
 using taskt.Core.Automation.Attributes.ClassAttributes;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands;
+using taskt.Core.Automation.Engine;
 using static taskt.Core.Automation.Commands.PropertyControls;
 using static taskt.Core.Automation.Engine.SystemVariables;
 
@@ -559,6 +560,7 @@ namespace taskt.UI.CustomControls
         #endregion
 
         #region combobox
+
         /// <summary>
         /// create ComboBox and binding property, some events, selection items. this method use PropertyIsWindowNamesList, PropertyIsVariableList, PropertyInstanceType, PropertyComboBoxItemMethod, PropertyParameterDirection, PropertyUISelectionOption, PropertySelectionChangeEvent attributes.
         /// </summary>
@@ -582,7 +584,7 @@ namespace taskt.UI.CustomControls
             if (attrIsWin?.isWindowNamesList ?? false)
             {
                 //uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
-                uiOptions.AddRange(WindowControls.GetAllWindowTitles(editor?.appSettings, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
+                uiOptions.AddRange(GetWindowTitlesForComboBox(editor?.appSettings, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
             }
 
             // variable names list & instance name list
@@ -646,6 +648,39 @@ namespace taskt.UI.CustomControls
 
             return CreateDefaultDropdownFor(propertyName, command, uiOptions, changeEvent?.methodName ?? "", firstValue?.firstValue ?? "", editor, propInfo);
         }
+
+        /// <summary>
+        /// get all window names for frmCommandEditor ComboBox
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <param name="addCurrentWindow"></param>
+        /// <param name="addAllWindows"></param>
+        /// <param name="addDesktop"></param>
+        /// <returns></returns>
+        private static List<string> GetWindowTitlesForComboBox(SafeApplicationSettings settings, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
+        {
+            var lst = new List<string>();
+
+            if (addCurrentWindow)
+            {
+                lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentWindowName.VariableName, settings));
+            }
+
+            if (addAllWindows)
+            {
+                lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_AllWindows.VariableName, settings));
+            }
+
+            if (addDesktop)
+            {
+                lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_Desktop.VariableName, settings));
+            }
+
+            lst.AddRange(EM_CanHandleWindowNameExtensionMethods.GetAllWindowNames());
+
+            return lst;
+        }
+
 
         /// <summary>
         /// create ComboBox and binding property, some events, selection items. this method does not support attributes. only specify arguments.
@@ -1267,6 +1302,16 @@ namespace taskt.UI.CustomControls
                 }
             }
 
+            // show parmater order
+            if (setting.ClientSettings.DisplayParameterOrderInDescription)
+            {
+                var order = GetCustomAttributeWithVirtual<PropertyParameterOrder>(propInfo, virtualPropertyInfo);
+                if (order != null)
+                {
+                    labelText = $"[{order.order},0x{order.order:X8}] {labelText}";
+                }
+            }
+
             return labelText;
         }
 
@@ -1370,7 +1415,7 @@ namespace taskt.UI.CustomControls
         public static ComboBox AddWindowNames(this ComboBox cbo, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
         {
             return cbo.AddComoboBoxItems(editor, new Func<List<string>>( () => {
-                return WindowControls.GetAllWindowTitles(editor?.appSettings, addCurrentWindow, addAllWindows, addDesktop);
+                return GetWindowTitlesForComboBox(editor?.appSettings, addCurrentWindow, addAllWindows, addDesktop);
             }));
         }
 
@@ -1513,7 +1558,8 @@ namespace taskt.UI.CustomControls
                 int idx = methodName.IndexOf("+");
                 string className = methodName.Substring(0, idx);
                 string shortMethodName = methodName.Substring(idx + 1);
-                var tp = Type.GetType("taskt.Core.Automation.Commands." + className);
+                //var tp = Type.GetType("taskt.Core.Automation.Commands." + className);
+                var tp = Type.GetType(CommandClassesControl.GetClassFullName(className));
                 trgMethod = tp.GetMethod(shortMethodName, BindingFlags.Public | BindingFlags.Static);
             }
             else
@@ -1523,7 +1569,7 @@ namespace taskt.UI.CustomControls
 
             if (trgMethod == null)
             {
-                throw new Exception("Method '" + methodName + "' does not exists. Command: " + command.CommandName);
+                throw new Exception($"Method '{methodName}' does not exists. Command: '{command.CommandName}'");
             }
 
             return (trgMethod, useOuterClassEvent);
@@ -1556,6 +1602,7 @@ namespace taskt.UI.CustomControls
             ComboBox trg = (ComboBox)sender;
             trg.Tag = trg.SelectionStart;
         }
+
         /// <summary>
         /// remember cursor position in ComboBox
         /// </summary>
@@ -1661,7 +1708,7 @@ namespace taskt.UI.CustomControls
                 if (newVariableSelector.ShowDialog(editor) == DialogResult.OK)
                 {
                     //ensure that a variable was actually selected
-                    if (newVariableSelector.selectedItem == null)
+                    if (newVariableSelector.SelectedItem == null)
                     {
                         //return out as nothing was selected
                         MessageBox.Show("There were no variables selected!");
@@ -1680,7 +1727,7 @@ namespace taskt.UI.CustomControls
                         {
                             string str = targetTextbox.Text;
                             int cursorPos = targetTextbox.SelectionStart;
-                            string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.SelectedItem.ToString(), settings.VariableEndMarker);
                             targetTextbox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
                             targetTextbox.Focus();
                             targetTextbox.SelectionStart = cursorPos + ins.Length;
@@ -1688,7 +1735,7 @@ namespace taskt.UI.CustomControls
                         }
                         else
                         {
-                            targetTextbox.Text += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetTextbox.Text += string.Concat(settings.VariableStartMarker, newVariableSelector.SelectedItem.ToString(), settings.VariableEndMarker);
                             targetTextbox.Focus();
                             targetTextbox.SelectionStart = targetTextbox.Text.Length;
                             targetTextbox.SelectionLength = 0;
@@ -1708,7 +1755,7 @@ namespace taskt.UI.CustomControls
                             {
                                 cursorPos = str.Length;
                             }
-                            string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.SelectedItem.ToString(), settings.VariableEndMarker);
                             targetCombobox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
                             targetCombobox.Focus();
                             targetCombobox.SelectionStart = cursorPos + ins.Length;
@@ -1716,7 +1763,7 @@ namespace taskt.UI.CustomControls
                         }
                         else
                         {
-                            targetCombobox.Text += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetCombobox.Text += string.Concat(settings.VariableStartMarker, newVariableSelector.SelectedItem.ToString(), settings.VariableEndMarker);
                             targetCombobox.Focus();
                             targetCombobox.SelectionStart = targetCombobox.Text.Length;
                             targetCombobox.SelectionLength = 0;
@@ -1768,7 +1815,7 @@ namespace taskt.UI.CustomControls
                             source.Rows.Add(source.NewRow());
                         }
                         var targetCell = targetDGV.Rows[rowIndex].Cells[colIndex];
-                        targetCell.Value += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                        targetCell.Value += string.Concat(settings.VariableStartMarker, newVariableSelector.SelectedItem.ToString(), settings.VariableEndMarker);
                     }
                 }
             }

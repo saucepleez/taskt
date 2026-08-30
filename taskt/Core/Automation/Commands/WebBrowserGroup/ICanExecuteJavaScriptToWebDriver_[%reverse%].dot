@@ -1,0 +1,30 @@
+digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumExecuteJavaScriptProperties" [ label="ISeleniumExecuteJavaScriptProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver" [ label="ICanExecuteJavaScriptToWebDriver", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserRemoveWebElementCommand" [ label="SeleniumBrowserRemoveWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserSizeCommand" [ label="SeleniumBrowserGetWebBrowserSizeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserPositionCommand" [ label="SeleniumBrowserGetWebBrowserPositionCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserClickWebElementCommand" [ label="SeleniumBrowserClickWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserScrollToWebElementCommand" [ label="SeleniumBrowserScrollToWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromCodeCommand" [ label="SeleniumBrowserExecuteJavaScriptFromCodeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands" [ label="ASeleniumExecuteJavaScriptCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromFileCommand" [ label="SeleniumBrowserExecuteJavaScriptFromFileCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumExecuteJavaScriptProperties" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver";
+"taskt.Core.Automation.Commands.SeleniumBrowserRemoveWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserSizeCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserPositionCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver";
+"taskt.Core.Automation.Commands.SeleniumBrowserClickWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver";
+"taskt.Core.Automation.Commands.SeleniumBrowserScrollToWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver";
+"taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromCodeCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumExecuteJavaScriptProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromFileCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromCodeCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands";
+}

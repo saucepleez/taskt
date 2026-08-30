@@ -1,0 +1,107 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "AChildrenSearchUIElementsFromUIElementByXPathCommands"{
++v_TargetElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "AChildrenSearchUIElementsFromSomethingByXPathCommands"{
++v_SearchXPath : String <<get>> <<set>> 
++v_WaitTimeForUIElement : String <<get>> <<set>> 
++v_MaxSiblings : String <<get>> <<set>> 
++v_WindowNameResult : String <<get>> <<set>> 
++v_WindowHandleResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "ADescendantsSearchUIElementsFromSomethingByXPathCommands"{
++v_MaxDepth : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchChildUIElementFromUIElementByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "ADescendantsSearchUIElementsFromUIElementByXPathCommands"{
++v_TargetElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "ADescendantsSearchUIElementsFromWindowHandleByXPathCommands"{
++v_WindowHandle : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
++v_WindowUIElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "ADescendantsSearchUIElementsFromWindowNameByXPathCommands"{
+#MatchMethodComboBox_SelectionChangeCommitted() : void 
++Refresh() : void 
+#SearchWindowAfterAction() : void 
++v_WindowName : String <<get>> <<set>> 
++v_CheckMethod : String <<get>> <<set>> 
++v_SelectionMethod : String <<get>> <<set>> 
++v_TargetWindowIndex : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
++v_WindowUIElement : String <<get>> <<set>> 
++v_CaseSensitive : String <<get>> <<set>> 
++v_TrimBeforeCheck : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationCheckUIElementExistsByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationWaitForUIElementToExistsByXPathCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromUIElementByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromWindowHandleByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementFromWindowNameByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByXPathCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationSearchChildUIElementFromUIElementByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromUIElementByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowNameByXPathCommands
+@enduml

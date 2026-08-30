@@ -1,0 +1,54 @@
+@startuml
+left to right direction
+package "taskt.Core"{
+class "SafeAutomationEngineInstanceApplicationSettings" {
++Clone() : SafeAutomationEngineInstanceApplicationSettings
++EngineSettings : SafeAutomationEngineInstanceEngineSettings <<get>> <<set>> 
+}
+}
+
+package "taskt.Core"{
+class "SafeApplicationSettings" {
++GetClientSettings() : SafeClientSettings
++GetEngineSettings() : SafeEngineSettings
++GetServerSettings() : SafeServerSettings
++GetLocalListenerSettings() : SafeLocalListenerSettings
++Clone() : SafeApplicationSettings
++ClientSettings : IClientSettings <<get>> <<private set>>
++EngineSettings : IEngineSettings <<get>> <<private set>>
++ServerSettings : IServerSettings <<get>> <<private set>>
++ListenerSettings : ILocalListenerSettings <<get>> <<private set>>
+#applicationSettings : taskt.Core.ApplicationSettings
+}
+}
+
+package "taskt.Core"{
+class "SafeFrmScriptBuilderApplicationSettings" {
++ClientSettings : SafeFrmScriptBuilderClientSettings <<get>> <<private set>>
+}
+}
+
+package "taskt.Core"{
+class "SafeHttpServerClientApplicationSettings" {
++ServerSettings : SafeHttpServerClientServerSettings <<get>> <<private set>>
+}
+}
+
+package "taskt.Core"{
+class "SafeWebSocketApplicationSettings" {
++ServerSettings : SafeWebSocketServerSettings <<get>> <<private set>>
+}
+}
+
+package "taskt.Core"{
+class "SafeDocumentGenerationApplicationSettings" {
++ClientSettings : SafeDocumentGenerationClientSettings <<get>> <<private set>>
+}
+}
+
+taskt.Core.SafeAutomationEngineInstanceApplicationSettings --|> taskt.Core.SafeApplicationSettings
+taskt.Core.SafeFrmScriptBuilderApplicationSettings --|> taskt.Core.SafeApplicationSettings
+taskt.Core.SafeHttpServerClientApplicationSettings --|> taskt.Core.SafeApplicationSettings
+taskt.Core.SafeWebSocketApplicationSettings --|> taskt.Core.SafeApplicationSettings
+taskt.Core.SafeDocumentGenerationApplicationSettings --|> taskt.Core.SafeApplicationSettings
+@enduml

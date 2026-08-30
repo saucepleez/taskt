@@ -8,13 +8,13 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="d27080f3-d96f-4b60-a61b-8e58c535f359" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute UIAutomationTester" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="db3aadbd-0247-47f3-9905-e23499e018da" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="db3aadbd-0247-47f3-9905-e23499e018da" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="7cbda6a9-795d-4ff8-9c9c-13cd579cdd32" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Check &quot;UIAutomation Tester&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckWindowNameExistsCommand" CommandID="2f104136-23a7-4b7d-bd08-065e92f44609" CommandName="CheckWindowNameExistsCommand" IsCommented="false" SelectionName="Check Window Name Exists" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_CompareMethod="" v_WaitTimeForWindow="0" v_NameResult="" v_HandleResult="" v_UserVariableName="vResult" />
+      <ScriptCommand xsi:type="CheckWindowNameExistsCommand" CommandID="2f104136-23a7-4b7d-bd08-065e92f44609" CommandName="CheckWindowNameExistsCommand" IsCommented="false" SelectionName="Check Window Name Exists" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_CheckMethod="" v_WaitTimeForWindow="0" v_NameResult="" v_HandleResult="" v_Result="vResult" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="5aa66a51-197a-49e0-a006-d1eca172b6bd" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Result: ⦃vResult⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
@@ -23,18 +23,18 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="e70dc167-6482-4518-885f-39e1acd47c1a" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Check &quot;UI Tester&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckWindowNameExistsCommand" CommandID="e995e100-3dd5-4fef-873f-c8fb41416eb0" CommandName="CheckWindowNameExistsCommand" IsCommented="false" SelectionName="Check Window Name Exists" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UI Tester" v_CompareMethod="" v_WaitTimeForWindow="0" v_NameResult="" v_HandleResult="" v_UserVariableName="vResult" />
+      <ScriptCommand xsi:type="CheckWindowNameExistsCommand" CommandID="e995e100-3dd5-4fef-873f-c8fb41416eb0" CommandName="CheckWindowNameExistsCommand" IsCommented="false" SelectionName="Check Window Name Exists" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UI Tester" v_CheckMethod="" v_WaitTimeForWindow="0" v_NameResult="" v_HandleResult="" v_Result="vResult" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="2d97e4a0-99a4-45d3-99f0-c08ce0d428d6" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Result: ⦃vResult⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.4</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2024-09-22T09:54:53.228269+09:00</LastRunTime>
     <RunTimes>7</RunTimes>
-    <Revision>17</Revision>
+    <Revision>18</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>

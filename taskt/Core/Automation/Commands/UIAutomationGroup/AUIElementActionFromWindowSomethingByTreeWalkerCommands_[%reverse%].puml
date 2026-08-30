@@ -1,0 +1,34 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowHandle : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "AUIElementActionFromWindowSomethingByTreeWalkerCommands"{
++v_WindowUIElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand" <<sealed>> {
++RunCommand() : void 
+-MatchMethodComboBox_SelectionChangeCommitted() : void 
++Refresh() : void 
++v_WindowName : String <<get>> <<set>> 
++v_CheckMethod : String <<get>> <<set>> 
++v_WindowSelectionMethod : String <<get>> <<set>> 
++v_TargetWindowIndex : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
++v_CaseSensitive : String <<get>> <<set>> 
++v_TrimBeforeCheck : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands
+taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByTreeWalkerCommands
+@enduml

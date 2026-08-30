@@ -1,0 +1,32 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "CatchExceptionCommand" <<sealed>> {
++RunCommand() : void 
++ErrorMessage : String <<get>> <<set>> 
++StackTrace : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDelimitersOfStructuredCommands" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "FinallyCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ElseCommand" <<sealed>> {
++Render() : List
++GetDisplayValue() : String
+}
+}
+
+taskt.Core.Automation.Commands.CatchExceptionCommand ..|> taskt.Core.Automation.Commands.IDelimitersOfStructuredCommands
+taskt.Core.Automation.Commands.FinallyCommand ..|> taskt.Core.Automation.Commands.IDelimitersOfStructuredCommands
+taskt.Core.Automation.Commands.ElseCommand ..|> taskt.Core.Automation.Commands.IDelimitersOfStructuredCommands
+@enduml

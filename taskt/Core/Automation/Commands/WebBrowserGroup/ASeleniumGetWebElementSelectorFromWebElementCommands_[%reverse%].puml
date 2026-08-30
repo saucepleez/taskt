@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetCSSSelectorFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ASeleniumGetWebElementSelectorFromWebElementCommands"{
++v_Result : String <<get>> <<set>> 
++v_BeliveIDAttribute : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetXPathFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+taskt.Core.Automation.Commands.SeleniumBrowserGetCSSSelectorFromWebElementCommand --|> taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserGetXPathFromWebElementCommand --|> taskt.Core.Automation.Commands.ASeleniumGetWebElementSelectorFromWebElementCommands
+@enduml

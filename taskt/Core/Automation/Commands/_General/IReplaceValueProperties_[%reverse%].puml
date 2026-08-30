@@ -1,0 +1,89 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "ReplaceDataTableValueCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbReplaceAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_ValueType : String <<get>> <<set>> 
++v_ReplaceAction : String <<get>> <<set>> 
++v_ReplaceActionParameterTable : DataTable <<get>> <<set>> 
++v_NewValue : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IReplaceValueProperties" {
++{abstract} v_ValueType : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ReplaceAction : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ReplaceActionParameterTable : DataTable <<get>> <<set>> <<abstract>> 
++{abstract} v_NewValue : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ReplaceDataTableRowValueCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbReplaceAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_ValueType : String <<get>> <<set>> 
++v_ReplaceAction : String <<get>> <<set>> 
++v_ReplaceActionParameterTable : DataTable <<get>> <<set>> 
++v_NewValue : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ReplaceDataTableColumnValueCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbReplaceAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_ValueType : String <<get>> <<set>> 
++v_ReplaceAction : String <<get>> <<set>> 
++v_ReplaceActionParameterTable : DataTable <<get>> <<set>> 
++v_NewValue : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ReplaceDictionaryCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbReplaceAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_Dictionary : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_ReplaceAction : String <<get>> <<set>> 
++v_ReplaceActionParameterTable : DataTable <<get>> <<set>> 
++v_NewValue : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ReplaceListCommand" <<sealed>> {
++RunCommand() : void 
+-cmbTargetType_SelectionChangeCommited() : void 
+-cmbReplaceAction_SelectionChangeCommited() : void 
++AfterShown() : void 
++BeforeValidate() : void 
++v_List : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
++v_ReplaceAction : String <<get>> <<set>> 
++v_ReplaceActionParameterTable : DataTable <<get>> <<set>> 
++v_NewValue : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.ReplaceDataTableValueCommand ..|> taskt.Core.Automation.Commands.IReplaceValueProperties
+taskt.Core.Automation.Commands.ReplaceDataTableRowValueCommand ..|> taskt.Core.Automation.Commands.IReplaceValueProperties
+taskt.Core.Automation.Commands.ReplaceDataTableColumnValueCommand ..|> taskt.Core.Automation.Commands.IReplaceValueProperties
+taskt.Core.Automation.Commands.ReplaceDictionaryCommand ..|> taskt.Core.Automation.Commands.IReplaceValueProperties
+taskt.Core.Automation.Commands.ReplaceListCommand ..|> taskt.Core.Automation.Commands.IReplaceValueProperties
+@enduml

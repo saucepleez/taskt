@@ -1,0 +1,56 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "OpenFileCommand" <<sealed>> {
++RunCommand() : void 
++v_WaitTimeForOpen : String <<get>> <<set>> 
++v_WindowNameResult : String <<get>> <<set>> 
++v_WindowHandleResult : String <<get>> <<set>> 
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileExistsFilePathPathResultCommands"{
++v_ResultPath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetFileInformationCommand" <<sealed>> {
++RunCommand() : void 
++AddInstance() : void 
++RemoveInstance() : void 
++v_InfoType : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CheckFileExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForFile : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "DeleteFileCommand" <<sealed>> {
++RunCommand() : void 
++v_WhenFileDoesNotExists : String <<get>> <<set>> 
++v_MoveToRecycleBin : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "WaitForFileToExistCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+taskt.Core.Automation.Commands.OpenFileCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.GetFileInformationCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.CheckFileExistsCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.DeleteFileCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+taskt.Core.Automation.Commands.WaitForFileToExistCommand --|> taskt.Core.Automation.Commands.AFileExistsFilePathPathResultCommands
+@enduml

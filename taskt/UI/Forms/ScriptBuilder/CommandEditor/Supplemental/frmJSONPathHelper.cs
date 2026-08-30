@@ -19,7 +19,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         private void frmJSONPathHelper_Load(object sender, EventArgs e)
         {
             SupplementFormsEvents.SupplementFormLoad(this);
-            lblMessage.Text = "";
+            lblMessage.Text = string.Empty;
         }
 
         #region Open JSON
@@ -42,9 +42,13 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         }
         private void picClear_Click(object sender, EventArgs e)
         {
-            txtRawJSON.Text = "";
+            txtRawJSON.Text = string.Empty;
         }
 
+        /// <summary>
+        /// open json file process
+        /// </summary>
+        /// <param name="path"></param>
         private void OpenFromFileProcess(string path)
         {
             try
@@ -62,12 +66,18 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             }
         }
 
+        /// <summary>
+        /// open JSON from URL
+        /// </summary>
+        /// <param name="url"></param>
         private void OpenFromURLProcess(string url)
         {
             try
             {
-                var wc = new System.Net.WebClient();
-                wc.Encoding = Encoding.UTF8;
+                var wc = new System.Net.WebClient
+                {
+                    Encoding = Encoding.UTF8
+                };
                 wc.Headers.Add("user-agent", "request");
                 txtRawJSON.Text = wc.DownloadString(url);
                 lblMessage.Text = "URL Open.";
@@ -101,7 +111,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                     Tag = json.ToString()
                 };
 
-                createJSONTree(json, node);
+                CreateJSONTree(json, node);
 
                 tvJSON.Nodes.Add(node);
                 tvJSON.ExpandAll();
@@ -123,7 +133,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                         Tag = jary.ToString()
                     };
 
-                    createJSONTree(jary, node);
+                    CreateJSONTree(jary, node);
 
                     tvJSON.Nodes.Add(node);
                     tvJSON.ExpandAll();
@@ -141,23 +151,28 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             tvJSON.EndUpdate();
         }
 
-        private void createJSONTree(JToken root, TreeNode tree)
+        /// <summary>
+        /// create TreeNodes from JSON
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="tree"></param>
+        private void CreateJSONTree(JToken root, TreeNode tree)
         {
             var JArrayFunc = new Action<JArray, TreeNode>((ary, tnode) =>
             {
-                tnode.Text = $"\"{parsePath(ary.Path)}\" - Array";
+                tnode.Text = $"\"{ParsePath(ary.Path)}\" - Array";
                 tnode.Tag = ary.ToString();
-                createJSONTree(ary, tnode);
+                CreateJSONTree(ary, tnode);
             });
             var JObjectFunc = new Action<JObject, TreeNode>((obj, tnode) =>
             {
-                tnode.Text = $"\"{parsePath(obj.Path)}\" - Object";
+                tnode.Text = $"\"{ParsePath(obj.Path)}\" - Object";
                 tnode.Tag = obj.ToString();
-                createJSONTree(obj, tnode);
+                CreateJSONTree(obj, tnode);
             });
             var JValueFunc = new Action<JValue, TreeNode>((v, tnode) =>
             {
-                tnode.Text = $"\"{parsePath(v.Path)}\" - Value";
+                tnode.Text = $"\"{ParsePath(v.Path)}\" - Value";
 
                 if (v.Value == null)
                 {
@@ -241,21 +256,32 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                 node = node.Next;
             }
         }
-        private static string parsePath(string path)
+
+        /// <summary>
+        /// parse JSON path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private static string ParsePath(string path)
         {
             int idx = path.LastIndexOf(".");
             if (idx < 0)
             {
-                return parseArrayPath(path);
+                return ParseArrayPath(path);
             }
             else
             {
                 string myPath = path.Substring(idx + 1);
-                return parseArrayPath(myPath);
+                return ParseArrayPath(myPath);
             }
         }
 
-        private static string parseArrayPath(string path)
+        /// <summary>
+        /// parse Json-Array path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private static string ParseArrayPath(string path)
         {
             if (path.EndsWith("]"))
             {
@@ -272,12 +298,17 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         private void tvJSON_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             txtJSONPathResult.Text = (string)e.Node.Tag;
-            txtJSONPath.Text = getJSONPath(e.Node);
+            txtJSONPath.Text = GetJSONPath(e.Node);
         }
 
-        private string getJSONPath(TreeNode node)
+        /// <summary>
+        /// get JSONPath
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private string GetJSONPath(TreeNode node)
         {
-            string jsonPath = "";
+            string jsonPath = string.Empty;
 
             TreeNode p = node;
             while (p.Parent != null)
@@ -296,10 +327,10 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                 {
                     case "Value":
                     case "Object":
-                        jsonPath = nodePath + "." + jsonPath;
+                        jsonPath = $"{nodePath}.{jsonPath}";
                         break;
                     case "Array":
-                        jsonPath = nodePath + jsonPath;
+                        jsonPath = $"{nodePath}{jsonPath}";
                         break;
                     default:
                         break;
@@ -313,7 +344,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                 // remove last dot
                 jsonPath = jsonPath.Substring(0, jsonPath.Length - 1);
             }
-            jsonPath = "$." + jsonPath; // set first $.
+            jsonPath = $"$.{jsonPath}"; // set first $.
 
             return jsonPath;
         }

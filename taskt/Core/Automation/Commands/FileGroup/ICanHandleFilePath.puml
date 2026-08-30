@@ -1,0 +1,20 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleFilePath" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleFileOrFolderPath" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.ICanHandleFilePath --|> taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath
+taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

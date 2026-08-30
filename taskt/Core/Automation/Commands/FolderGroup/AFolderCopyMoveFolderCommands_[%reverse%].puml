@@ -1,0 +1,28 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "CopyFolderCommand" <<sealed>> {
++RunCommand() : void 
++v_CopySubFolder : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFolderCopyMoveFolderCommands"{
+#CreateActionFunc() : Func
++v_DestinationFolderPath : String <<get>> <<set>> 
++v_CreateDirectory : String <<get>> <<set>> 
++v_WhenDestinationIsSame : String <<get>> <<set>> 
++v_WhenDestinationExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveFolderCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+taskt.Core.Automation.Commands.CopyFolderCommand --|> taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands
+taskt.Core.Automation.Commands.MoveFolderCommand --|> taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands
+@enduml

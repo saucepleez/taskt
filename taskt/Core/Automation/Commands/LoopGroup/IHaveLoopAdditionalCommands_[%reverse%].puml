@@ -1,0 +1,167 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDataTableColumnAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ColumnIndex : String <<get>> <<set>> 
++v_ColumnName : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IHaveLoopAdditionalCommands" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDataTableColumnAsListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ColumnIndex : String <<get>> <<set>> 
++v_ColumnName : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDataTableRowAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_RowIndex : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDataTableRowAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_RowIndex : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Value : String <<get>> <<set>> 
++v_RowIndex : String <<get>> <<set>> 
++v_ColumnIndex : String <<get>> <<set>> 
++v_ColumnName : String <<get>> <<set>> 
++v_LoopDirection : String <<get>> <<set>> 
++v_RowReverseLoop : String <<get>> <<set>> 
++v_ColumnReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Value : String <<get>> <<set>> 
++v_Key : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForListCommand" <<sealed>> {
++RunCommand() : void 
++v_Value : String <<get>> <<set>> 
++v_Index : String <<get>> <<set>> 
++v_ReverseLoop : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopCommand" <<sealed>> {
+-LoopGridViewHelper_MouseEnter() : void 
++RunCommand() : void 
++Render() : List
+-loopAction_SelectionChangeCommitted() : void 
+-linkWebBrowserInstanceSelector_Click() : void 
+-linkWindowNameSelector_Click() : void 
+-linkBooleanInstanceSelector_Click() : void 
++GetDisplayValue() : String
++IsValidate() : Boolean
++ConvertToIntermediate() : void 
++ConvertToRaw() : void 
++BeforeValidate() : void 
++v_LoopActionType : String <<get>> <<set>> 
++v_LoopActionParameterTable : DataTable <<get>> <<set>> 
+-LoopGridViewHelper : System.Windows.Forms.DataGridView
+-ActionDropdown : System.Windows.Forms.ComboBox
+-ParameterControls : List<System.Windows.Forms.Control>
+-lnkBrowserInstanceSelector : taskt.UI.CustomControls.CommandItemControl
+-lnkWindowNameSelector : taskt.UI.CustomControls.CommandItemControl
+-lnkBooleanSelector : taskt.UI.CustomControls.CommandItemControl
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginMultiLoopCommand" <<sealed>> {
++RunCommand() : void 
+-DetermineMultiStatementTruth() : Boolean
++Render() : List
+-LoopConditionHelper_CellContentClick() : void 
+-CreateLoopCondition() : void 
++GetDisplayValue() : String
++v_LoopConditionsTable : DataTable <<get>> <<set>> 
+-ScriptVariables : List <<get>> <<private set>>
+-LoopConditionHelper : System.Windows.Forms.DataGridView
+-appSettings : taskt.Core.SafeApplicationSettings
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginContinousLoopCommand" <<sealed>> {
++RunCommand() : void 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginLoopForComplexDataTypesCommand" <<sealed>> {
++RunCommand() : void 
++v_LoopParameter : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginNumberOfTimesLoopCommand" <<sealed>> {
++RunCommand() : void 
++v_LoopParameter : String <<get>> <<set>> 
++v_LoopStart : String <<get>> <<set>> 
++v_CurrentTimes : String <<get>> <<set>> 
++v_NumberOfLoops : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsDataTableCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsListCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDataTableCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDictionaryCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopForDataTableCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopForDictionaryCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopForListCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginMultiLoopCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginContinousLoopCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginLoopForComplexDataTypesCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+taskt.Core.Automation.Commands.BeginNumberOfTimesLoopCommand ..|> taskt.Core.Automation.Commands.IHaveLoopAdditionalCommands
+@enduml

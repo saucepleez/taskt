@@ -1,0 +1,33 @@
+@startuml
+left to right direction
+package "taskt.Core.Script"{
+class "InnerScriptVariable" {
++Dispose() : void 
+#Dispose() : void 
+#Finalize() : void 
+-engine : taskt.Core.Automation.Engine.AutomationEngineInstance
+}
+}
+
+package "taskt.Core.Script"{
+class "ScriptVariable" {
++GetDisplayValue() : String
+-GetDisplayValue() : String
+-GetDisplayValue() : String
+-GetDisplayValue() : String
+-GetDisplayValue() : String
+-GetDisplayValue() : String
+-GetDisplayValue() : String
+-GetDisplayValue() : String
+-GetDisplayValue() : String
+-GetDisplayValue() : String
++VariableName : String <<get>> <<set>> 
++VariableValue : Object <<get>> <<set>> 
++CurrentPosition : int
+}
+}
+
+
+taskt.Core.Script.InnerScriptVariable --|> taskt.Core.Script.ScriptVariable
+taskt.Core.Script.InnerScriptVariable -- IDisposable
+@enduml

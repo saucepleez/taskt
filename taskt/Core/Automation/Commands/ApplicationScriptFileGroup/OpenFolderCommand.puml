@@ -1,0 +1,134 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "OpenFolderCommand" <<sealed>> {
++RunCommand() : void 
++v_WaitTimeForOpen : String <<get>> <<set>> 
++v_WindowNameResult : String <<get>> <<set>> 
++v_WindowHandleResult : String <<get>> <<set>> 
++v_WaitTimeForFolder : String <<get>> <<set>> 
+-ExplorerProcessName : string
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFolderExistsFolderPathPathResultCommands"{
++v_ResultPath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFolderExistsFolderPathCommands"{
++v_WaitTimeForFolder : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IFolderExistsFolderPathPathResultProperties" {
++{abstract} v_ResultPath : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFolderFolderPathCommands"{
++v_TargetFolderPath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IFolderExistsFolderPathProperties" {
++{abstract} v_WaitTimeForFolder : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ScriptCommand"{
++RunCommand() : void 
++RunCommand() : void 
++GetDisplayValue() : String
++Render() : List
++Render() : List
++AfterShown() : void 
++Refresh() : void 
++BeforeValidate() : void 
++IsValidate() : Boolean
++ConvertToIntermediate() : void 
++ConvertToIntermediate() : void 
++ConvertToRaw() : void 
++ConvertToRaw() : void 
++Clone() : ScriptCommand
++CheckMatched() : Boolean
++Replace() : Boolean
++AddInstance() : void 
++RemoveInstance() : void 
++CommandID : String <<get>> <<set>> 
++CommandName : String <<get>> <<set>> 
++IsCommented : Boolean <<get>> <<set>> 
++SelectionName : String <<get>> <<set>> 
++DefaultPause : Int32 <<get>> <<set>> 
++LineNumber : Int32 <<get>> <<set>> 
++PauseBeforeExeucution : Boolean <<get>> <<set>> 
++DisplayForeColor : Color <<get>> <<set>> 
++v_Comment : String <<get>> <<set>> 
++CommandEnabled : Boolean <<get>> <<set>> 
++IsValid : Boolean <<get>> <<protected set>>
++IsWarning : Boolean <<get>> <<protected set>>
++validationResult : String <<get>> <<protected set>>
++IsMatched : Boolean <<get>> <<protected set>>
++IsDontSavedCommand : Boolean <<get>> <<set>> 
++IsNewInsertedCommand : Boolean <<get>> <<set>> 
++CustomRendering : Boolean <<get>> <<set>> 
++ControlsList : Dictionary <<get>> 
++RenderedControls : List<System.Windows.Forms.Control>
+#_ControlsList : Dictionary<string, System.Windows.Forms.Control>
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IFolderPathProperties" {
++{abstract} v_TargetFolderPath : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IUIParameterProperties" {
++{abstract} ControlsList : Dictionary <<get>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICommandIDProperties" {
++{abstract} CommandID : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleFolderPath" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleFileOrFolderPath" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.OpenFolderCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
+taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands
+taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands ..|> taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties
+taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands --|> taskt.Core.Automation.Commands.AFolderFolderPathCommands
+taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands ..|> taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties
+taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties --|> taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties
+taskt.Core.Automation.Commands.AFolderFolderPathCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.AFolderFolderPathCommands ..|> taskt.Core.Automation.Commands.IFolderPathProperties
+taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties --|> taskt.Core.Automation.Commands.IFolderPathProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.IFolderPathProperties --|> taskt.Core.Automation.Commands.ICanHandleFolderPath
+taskt.Core.Automation.Commands.ICanHandleFolderPath --|> taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath
+taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

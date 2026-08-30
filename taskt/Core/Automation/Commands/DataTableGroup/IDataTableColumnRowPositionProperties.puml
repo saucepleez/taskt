@@ -1,0 +1,45 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "IDataTableColumnRowPositionProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDataTableProperties" {
++{abstract} v_DataTable : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDataTableColumnPositionProperties" {
++{abstract} v_ColumnType : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ColumnIndex : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDataTableRowPositionProperties" {
++{abstract} v_RowIndex : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleDataTable" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.IDataTableColumnRowPositionProperties --|> taskt.Core.Automation.Commands.IDataTableProperties
+taskt.Core.Automation.Commands.IDataTableColumnRowPositionProperties --|> taskt.Core.Automation.Commands.IDataTableColumnPositionProperties
+taskt.Core.Automation.Commands.IDataTableColumnRowPositionProperties --|> taskt.Core.Automation.Commands.IDataTableRowPositionProperties
+taskt.Core.Automation.Commands.IDataTableProperties --|> taskt.Core.Automation.Commands.ICanHandleDataTable
+taskt.Core.Automation.Commands.IDataTableProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.IDataTableColumnPositionProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.IDataTableRowPositionProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICanHandleDataTable --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

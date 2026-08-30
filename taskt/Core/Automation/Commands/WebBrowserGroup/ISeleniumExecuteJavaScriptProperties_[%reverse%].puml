@@ -1,0 +1,34 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumExecuteJavaScriptCommands"{
+#ExecuteJavaScriptProcess() : void 
++v_Arguments : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+Interface "ISeleniumExecuteJavaScriptProperties" {
++{abstract} v_Arguments : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserExecuteJavaScriptFromFileCommand" <<sealed>> {
++RunCommand() : void 
++v_FilePath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserExecuteJavaScriptFromCodeCommand" <<sealed>> {
++RunCommand() : void 
++v_ScriptCode : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumExecuteJavaScriptProperties
+taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromFileCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands
+taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromCodeCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands
+@enduml

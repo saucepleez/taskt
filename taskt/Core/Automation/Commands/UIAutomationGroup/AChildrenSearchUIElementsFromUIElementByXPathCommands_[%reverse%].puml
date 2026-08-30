@@ -1,0 +1,17 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchChildUIElementFromUIElementByXPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "AChildrenSearchUIElementsFromUIElementByXPathCommands"{
++v_TargetElement : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.UIAutomationSearchChildUIElementFromUIElementByXPathCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromUIElementByXPathCommands
+@enduml

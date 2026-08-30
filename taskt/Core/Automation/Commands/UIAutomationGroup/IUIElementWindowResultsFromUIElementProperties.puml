@@ -1,0 +1,28 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IUIElementWindowResultsFromUIElementProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands.WindowGroup"{
+Interface "IFromWindowNameResultsProperties" {
++{abstract} v_WindowHandleResult : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WindowGroup"{
+Interface "IFromWindowHandleResultsProperties" {
++{abstract} v_WindowNameResult : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

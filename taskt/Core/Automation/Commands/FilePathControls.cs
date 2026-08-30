@@ -527,12 +527,12 @@ namespace taskt.Core.Automation.Commands
         //}
 
         /// <summary>
-        /// format file/folder path to specified format
+        /// extraction file/folder path to specified format
         /// </summary>
         /// <param name="path"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public static string FormatFileFolderPath(string path, string format)
+        public static string ExtractionFilePath(string path, string format)
         {
             // todo: separate when path is folder or file
             switch (format.ToLower())

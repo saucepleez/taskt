@@ -1,0 +1,14 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "ICanHandleUIElementXML" {
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "ICanHandleUIElement" {
+}
+}
+
+taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElementXML --|> taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement
+@enduml

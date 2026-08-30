@@ -1,0 +1,18 @@
+digraph "taskt.Core.Automation.Commands.IDictionaryKeyProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.IDictionaryKeyProperties" [ label="IDictionaryKeyProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IDictionaryProperties" [ label="IDictionaryProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleDictionary" [ label="ICanHandleDictionary", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.IDictionaryKeyProperties" -> "taskt.Core.Automation.Commands.IDictionaryProperties";
+"taskt.Core.Automation.Commands.IDictionaryProperties" -> "taskt.Core.Automation.Commands.ICanHandleDictionary";
+"taskt.Core.Automation.Commands.IDictionaryProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ICanHandleDictionary" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

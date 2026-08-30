@@ -1,0 +1,14 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+Interface "ICanHandleWebElement" {
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+Interface "ICanHandleWebDriver" {
+}
+}
+
+taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebElement --|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver
+@enduml

@@ -1,0 +1,391 @@
+@startuml
+left to right direction
+package "taskt.UI.Forms.ScriptBuilder.Supplemental"{
+class "frmSettings" {
+-frmSettings_Load() : void 
+-frmSettings_KeyDown() : void 
+-uiBtnOpen_Click() : void 
+-uiCancel_Click() : void 
+-AutomationTCPListener_ListeningStopped() : void 
+-AutomationTCPListener_ListeningStarted() : void 
+-btnConnect_Click() : void 
+-btnAddAssembly_Click() : void 
+-btnUpdateCheck_Click() : void 
+-tmrGetSocketStatus_Tick() : void 
+-btnCloseConnection_Click() : void 
+-chkBypassValidation_CheckedChanged() : void 
+-btnSelectFolder_Click() : void 
+-bgwMetrics_DoWork() : void 
+-bgwMetrics_RunWorkerCompleted() : void 
+-btnClearMetrics_Click() : void 
+-btnGenerateWikiDocs_Click() : void 
+-txtVariableStartMarker_TextChanged() : void 
+-checkBox1_CheckedChanged() : void 
+-btnLaunchAttendedMode_Click() : void 
+-btnSelectAttendedTaskFolder_Click() : void 
+-btnLaunchDisplayManager_Click() : void 
+-btnGetGUID_Click() : void 
+-btnGetBotGUID_Click() : void 
+-btnTaskPublish_Click() : void 
+-label17_Click() : void 
+-SetupListeningUI() : void 
+-DisableListenerButtons() : void 
+-btnStartListening_Click() : void 
+-btnStopListening_Click() : void 
+-btnWhiteList_Click() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
+-newAppSettings : taskt.Core.ApplicationSettings
++scriptBuilderForm : taskt.UI.Forms.ScriptBuilder.frmScriptBuilder
+-components : System.ComponentModel.IContainer
+-label3 : System.Windows.Forms.Label
+-txtServerURL : System.Windows.Forms.TextBox
+-chkAutomaticallyConnect : System.Windows.Forms.CheckBox
+-chkServerEnabled : System.Windows.Forms.CheckBox
+-label1 : System.Windows.Forms.Label
+-chkRetryOnDisconnect : System.Windows.Forms.CheckBox
+-btnConnect : System.Windows.Forms.Button
+-txtPublicKey : System.Windows.Forms.TextBox
+-label2 : System.Windows.Forms.Label
+-chkAutoCloseWindow : System.Windows.Forms.CheckBox
+-chkShowDebug : System.Windows.Forms.CheckBox
+-chkEnableLogging : System.Windows.Forms.CheckBox
+-lblMainLogo : System.Windows.Forms.Label
+-lblOptions : System.Windows.Forms.Label
+-lblApplicationSettings : System.Windows.Forms.Label
+-chkAntiIdle : System.Windows.Forms.CheckBox
+-btnUpdates : System.Windows.Forms.Button
+-chkAdvancedDebug : System.Windows.Forms.CheckBox
+-chkCreateMissingVariables : System.Windows.Forms.CheckBox
+-uiSettingTabs : taskt.UI.CustomControls.UITabControl
+-tabAppSettings : System.Windows.Forms.TabPage
+-tabDebugSettings : System.Windows.Forms.TabPage
+-tabServerSettings : System.Windows.Forms.TabPage
+-label4 : System.Windows.Forms.Label
+-tableLayoutPanel1 : System.Windows.Forms.TableLayoutPanel
+-panel1 : System.Windows.Forms.Panel
+-lblSocketException : System.Windows.Forms.Label
+-btnCloseConnection : System.Windows.Forms.Button
+-tmrGetSocketStatus : System.Windows.Forms.Timer
+-chkBypassValidation : System.Windows.Forms.CheckBox
+-lblRootFolder : System.Windows.Forms.Label
+-txtAppFolderPath : System.Windows.Forms.TextBox
+-btnSelectFolder : System.Windows.Forms.Button
+-tvExecutionTimes : System.Windows.Forms.TreeView
+-bgwMetrics : System.ComponentModel.BackgroundWorker
+-label5 : System.Windows.Forms.Label
+-lblMetrics : System.Windows.Forms.Label
+-btnClearMetrics : System.Windows.Forms.Button
+-chkTrackMetrics : System.Windows.Forms.CheckBox
+-btnGenerateWikiDocs : System.Windows.Forms.Button
+-txtVariableStartMarker : System.Windows.Forms.TextBox
+-lblVariableDisplay : System.Windows.Forms.Label
+-txtVariableEndMarker : System.Windows.Forms.TextBox
+-label8 : System.Windows.Forms.Label
+-label7 : System.Windows.Forms.Label
+-label10 : System.Windows.Forms.Label
+-label9 : System.Windows.Forms.Label
+-lblDelay : System.Windows.Forms.Label
+-txtCommandDelay : System.Windows.Forms.TextBox
+ chkOverrideInstances : System.Windows.Forms.CheckBox
+-chkMinimizeToTray : System.Windows.Forms.CheckBox
+-btnLaunchAttendedMode : System.Windows.Forms.Button
+-btnSelectAttendedTaskFolder : System.Windows.Forms.Button
+-label6 : System.Windows.Forms.Label
+-txtAttendedTaskFolder : System.Windows.Forms.TextBox
+-lblStartupMode : System.Windows.Forms.Label
+-cboStartUpMode : System.Windows.Forms.ComboBox
+-btnLaunchDisplayManager : System.Windows.Forms.Button
+-label12 : System.Windows.Forms.Label
+-txtGUID : System.Windows.Forms.TextBox
+-label11 : System.Windows.Forms.Label
+-txtHttpsAddress : System.Windows.Forms.TextBox
+-btnGetGUID : System.Windows.Forms.Button
+-label14 : System.Windows.Forms.Label
+-label13 : System.Windows.Forms.Label
+-label15 : System.Windows.Forms.Label
+-lblStatus : System.Windows.Forms.Label
+-btnTaskPublish : System.Windows.Forms.Button
+-chkPreloadCommands : System.Windows.Forms.CheckBox
+-chkSlimActionBar : System.Windows.Forms.CheckBox
+-cboCancellationKey : System.Windows.Forms.ComboBox
+-label16 : System.Windows.Forms.Label
+-tabLocalListener : System.Windows.Forms.TabPage
+-label17 : System.Windows.Forms.Label
+-label18 : System.Windows.Forms.Label
+-label20 : System.Windows.Forms.Label
+-txtAuthListeningKey : System.Windows.Forms.TextBox
+-chkEnableListening : System.Windows.Forms.CheckBox
+-chkRequireListenerKey : System.Windows.Forms.CheckBox
+-btnStopListening : System.Windows.Forms.Button
+-btnStartListening : System.Windows.Forms.Button
+-lblListeningStatus : System.Windows.Forms.Label
+-chkAutoStartListener : System.Windows.Forms.CheckBox
+-label19 : System.Windows.Forms.Label
+-txtListeningPort : System.Windows.Forms.TextBox
+-chkEnableWhitelist : System.Windows.Forms.CheckBox
+-txtWhiteList : System.Windows.Forms.TextBox
+ chkAutoCalcVariables : System.Windows.Forms.CheckBox
+-tabEditorSettings : System.Windows.Forms.TabPage
+-chkSequenceDragDrop : System.Windows.Forms.CheckBox
+-chkInsertCommandsInline : System.Windows.Forms.CheckBox
+-txtDefaultBrowserInstanceName : System.Windows.Forms.TextBox
+-lblBrowserInstance : System.Windows.Forms.Label
+-txtDefaultWordInstanceName : System.Windows.Forms.TextBox
+-lblWordInstance : System.Windows.Forms.Label
+-txtDefaultExcelInstanceName : System.Windows.Forms.TextBox
+-lblExcelInstance : System.Windows.Forms.Label
+-txtDefaultStopwatchInstanceName : System.Windows.Forms.TextBox
+-lblStopwatchInstance : System.Windows.Forms.Label
+-chkInsertVariablePosition : System.Windows.Forms.CheckBox
+-chkInsertElse : System.Windows.Forms.CheckBox
+-txtCurrentWindow : System.Windows.Forms.TextBox
+-lblCurrentWindow : System.Windows.Forms.Label
+-txtDefaultDBInstanceName : System.Windows.Forms.TextBox
+-lblDBInstance : System.Windows.Forms.Label
+-chkInsertCommentIfLoop : System.Windows.Forms.CheckBox
+-chkGruopingBySubgruop : System.Windows.Forms.CheckBox
+-chkShowIndentLine : System.Windows.Forms.CheckBox
+-lblIndentWidth : System.Windows.Forms.Label
+-txtIndentWidth : System.Windows.Forms.TextBox
+-chkExportIntermediate : System.Windows.Forms.CheckBox
+-panel2 : System.Windows.Forms.Panel
+-uiCancel : taskt.UI.CustomControls.UIPictureButton
+-uiBtnOpen : taskt.UI.CustomControls.UIPictureButton
+-chkUseNewParser : System.Windows.Forms.CheckBox
+-txtDefaultNLGInstanceName : System.Windows.Forms.TextBox
+-lblDefaultNLGInstance : System.Windows.Forms.Label
+-lblVariableMarkerAlert : System.Windows.Forms.Label
+-chkIgnoreFirstVariableMarker : System.Windows.Forms.CheckBox
+-chkShowScriptMiniMap : System.Windows.Forms.CheckBox
+-cmbInstanceNameOrder : System.Windows.Forms.ComboBox
+-label21 : System.Windows.Forms.Label
+-chkGreedlySubGroupName : System.Windows.Forms.CheckBox
+-chkSubGroupNameSearchTarget : System.Windows.Forms.CheckBox
+-chkGreedlyGroupName : System.Windows.Forms.CheckBox
+-chkGroupNameSearchTarget : System.Windows.Forms.CheckBox
+-label22 : System.Windows.Forms.Label
+}
+}
+
+package "taskt.UI.Forms"{
+class "ThemedForm" {
+#OnShown() : void 
+#OnPaint() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++Theme : Theme <<get>> <<set>> 
+-_Theme : taskt.Core.Theme
+-components : System.ComponentModel.IContainer
+}
+}
+
+package "System.Windows.Forms"{
+class "Form" {
++add_AutoSizeChanged() : void 
++remove_AutoSizeChanged() : void 
++add_AutoValidateChanged() : void 
++remove_AutoValidateChanged() : void 
++add_HelpButtonClicked() : void 
++remove_HelpButtonClicked() : void 
++add_MaximizedBoundsChanged() : void 
++remove_MaximizedBoundsChanged() : void 
++add_MaximumSizeChanged() : void 
++remove_MaximumSizeChanged() : void 
++add_MarginChanged() : void 
++remove_MarginChanged() : void 
++add_MinimumSizeChanged() : void 
++remove_MinimumSizeChanged() : void 
++add_TabIndexChanged() : void 
++remove_TabIndexChanged() : void 
++add_TabStopChanged() : void 
++remove_TabStopChanged() : void 
+#SetVisibleCore() : void 
++add_Activated() : void 
++remove_Activated() : void 
++add_Closing() : void 
++remove_Closing() : void 
++add_Closed() : void 
++remove_Closed() : void 
++add_Deactivate() : void 
++remove_Deactivate() : void 
++add_FormClosing() : void 
++remove_FormClosing() : void 
++add_FormClosed() : void 
++remove_FormClosed() : void 
++add_Load() : void 
++remove_Load() : void 
++add_MdiChildActivate() : void 
++remove_MdiChildActivate() : void 
++add_MenuComplete() : void 
++remove_MenuComplete() : void 
++add_MenuStart() : void 
++remove_MenuStart() : void 
++add_InputLanguageChanged() : void 
++remove_InputLanguageChanged() : void 
++add_InputLanguageChanging() : void 
++remove_InputLanguageChanging() : void 
++add_RightToLeftLayoutChanged() : void 
++remove_RightToLeftLayoutChanged() : void 
++add_Shown() : void 
++remove_Shown() : void 
++Activate() : void 
+#ActivateMdiChild() : void 
++AddOwnedForm() : void 
+#AdjustFormScrollbars() : void 
+#ApplyAutoScaling() : void 
+ AssignParent() : void 
++Close() : void 
+#CreateControlsInstance() : ControlCollection
+ AfterControlRemoved() : void 
+#CreateHandle() : void 
+#DefWndProc() : void 
+#Dispose() : void 
+ FocusInternal() : Boolean
++{static} GetAutoScaleSize() : SizeF
+ GetPreferredSizeCore() : Size
+ CanSelectCore() : Boolean
+ CanProcessMnemonic() : Boolean
+ ProcessMnemonic() : Boolean
+#CenterToParent() : void 
+#CenterToScreen() : void 
++LayoutMdi() : void 
+#OnActivated() : void 
+ OnAutoScaleModeChanged() : void 
+#OnBackgroundImageChanged() : void 
+#OnBackgroundImageLayoutChanged() : void 
+#OnClosing() : void 
+#OnClosed() : void 
+#OnFormClosing() : void 
+#OnFormClosed() : void 
+#OnCreateControl() : void 
+#OnDeactivate() : void 
+#OnEnabledChanged() : void 
+#OnEnter() : void 
+#OnFontChanged() : void 
+#OnHandleCreated() : void 
+#OnHandleDestroyed() : void 
+#OnHelpButtonClicked() : void 
+#OnLayout() : void 
+#OnLoad() : void 
+#OnMaximizedBoundsChanged() : void 
+#OnMaximumSizeChanged() : void 
+#OnMinimumSizeChanged() : void 
+#OnInputLanguageChanged() : void 
+#OnInputLanguageChanging() : void 
+#OnVisibleChanged() : void 
+#OnMdiChildActivate() : void 
+#OnMenuStart() : void 
+#OnMenuComplete() : void 
+#OnPaint() : void 
+#OnResize() : void 
+#OnDpiChanged() : void 
++add_DpiChanged() : void 
++remove_DpiChanged() : void 
+#OnGetDpiScaledSize() : Boolean
+#OnRightToLeftLayoutChanged() : void 
+#OnShown() : void 
+#OnTextChanged() : void 
+#ProcessCmdKey() : Boolean
+#ProcessDialogKey() : Boolean
+#ProcessDialogChar() : Boolean
+#ProcessKeyPreview() : Boolean
+#ProcessTabKey() : Boolean
+ RecreateHandleCore() : void 
++RemoveOwnedForm() : void 
++add_ResizeBegin() : void 
++remove_ResizeBegin() : void 
++add_ResizeEnd() : void 
++remove_ResizeEnd() : void 
+#Select() : void 
+#ScaleCore() : void 
+#GetScaledBounds() : Rectangle
+#ScaleControl() : void 
+#SetBoundsCore() : void 
+ ApplyBoundsConstraints() : Rectangle
+#SetClientSizeCore() : void 
++SetDesktopBounds() : void 
++SetDesktopLocation() : void 
++Show() : void 
++ShowDialog() : DialogResult
++ShowDialog() : DialogResult
+ ShouldSerializeAutoScaleBaseSize() : Boolean
+ ShouldSerializeSize() : Boolean
++ToString() : String
+#UpdateDefaultButton() : void 
+#OnResizeBegin() : void 
+#OnResizeEnd() : void 
+#OnStyleChanged() : void 
++ValidateChildren() : Boolean
++ValidateChildren() : Boolean
+#WndProc() : void 
++AcceptButton : IButtonControl <<get>> <<set>> 
++{static} ActiveForm : Form <<get>> 
++ActiveMdiChild : Form <<get>> 
++AllowTransparency : Boolean <<get>> <<set>> 
++AutoScale : Boolean <<get>> <<set>> 
++AutoScaleBaseSize : Size <<get>> <<set>> 
++AutoScroll : Boolean <<get>> <<set>> 
++AutoSize : Boolean <<get>> <<set>> 
++AutoSizeMode : AutoSizeMode <<get>> <<set>> 
++AutoValidate : AutoValidate <<get>> <<set>> 
++BackColor : Color <<get>> <<set>> 
++FormBorderStyle : FormBorderStyle <<get>> <<set>> 
++CancelButton : IButtonControl <<get>> <<set>> 
++ClientSize : Size <<get>> <<set>> 
++ControlBox : Boolean <<get>> <<set>> 
+#CreateParams : CreateParams <<get>> 
+#DefaultImeMode : ImeMode <<get>> 
+#DefaultSize : Size <<get>> 
++DesktopBounds : Rectangle <<get>> <<set>> 
++DesktopLocation : Point <<get>> <<set>> 
++DialogResult : DialogResult <<get>> <<set>> 
+ HasMenu : Boolean <<get>> 
++HelpButton : Boolean <<get>> <<set>> 
++Icon : Icon <<get>> <<set>> 
++IsMdiChild : Boolean <<get>> 
++IsMdiContainer : Boolean <<get>> <<set>> 
++IsRestrictedWindow : Boolean <<get>> 
++KeyPreview : Boolean <<get>> <<set>> 
++Location : Point <<get>> <<set>> 
+#MaximizedBounds : Rectangle <<get>> <<protected set>>
++MaximumSize : Size <<get>> <<set>> 
++MainMenuStrip : MenuStrip <<get>> <<set>> 
++Margin : Padding <<get>> <<set>> 
++Menu : MainMenu <<get>> <<set>> 
++MinimumSize : Size <<get>> <<set>> 
++MaximizeBox : Boolean <<get>> <<set>> 
++MdiChildren :  <<get>> 
++MdiParent : Form <<get>> <<set>> 
++MergedMenu : MainMenu <<get>> 
++MinimizeBox : Boolean <<get>> <<set>> 
++Modal : Boolean <<get>> 
++Opacity : Double <<get>> <<set>> 
++OwnedForms :  <<get>> 
++Owner : Form <<get>> <<set>> 
++RestoreBounds : Rectangle <<get>> 
++RightToLeftLayout : Boolean <<get>> <<set>> 
+ ParentInternal : Control <<get>> <<set>> 
++ShowInTaskbar : Boolean <<get>> <<set>> 
++ShowIcon : Boolean <<get>> <<set>> 
+ ShowParams : Int32 <<get>> 
+#ShowWithoutActivation : Boolean <<get>> 
++Size : Size <<get>> <<set>> 
++SizeGripStyle : SizeGripStyle <<get>> <<set>> 
++StartPosition : FormStartPosition <<get>> <<set>> 
++TabIndex : Int32 <<get>> <<set>> 
++TabStop : Boolean <<get>> <<set>> 
++Text : String <<get>> <<set>> 
++TopLevel : Boolean <<get>> <<set>> 
++TopMost : Boolean <<get>> <<set>> 
++TransparencyKey : Color <<get>> <<set>> 
++WindowState : FormWindowState <<get>> <<set>> 
+ WindowText : String <<get>> <<set>> 
+}
+}
+
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmSettings --|> taskt.UI.Forms.ThemedForm
+taskt.UI.Forms.ScriptBuilder.Supplemental.frmSettings --|> taskt.UI.Forms.ThemedForm
+taskt.UI.Forms.ThemedForm --|> System.Windows.Forms.Form
+taskt.UI.Forms.ThemedForm --|> System.Windows.Forms.Form
+@enduml

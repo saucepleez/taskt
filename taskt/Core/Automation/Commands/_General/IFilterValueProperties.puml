@@ -1,0 +1,17 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "IFilterValueProperties" {
++{abstract} v_ValueType : String <<get>> <<set>> <<abstract>> 
++{abstract} v_FilterAction : String <<get>> <<set>> <<abstract>> 
++{abstract} v_FilterActionParameterTable : DataTable <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.IFilterValueProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+Interface "ISeleniumWebElementResultProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IResultProperties" {
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementResultProperties --|> taskt.Core.Automation.Commands.IResultProperties
+@enduml

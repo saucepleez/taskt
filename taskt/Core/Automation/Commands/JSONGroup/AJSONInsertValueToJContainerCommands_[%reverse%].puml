@@ -1,0 +1,26 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "InsertJSONArrayItemCommand" <<sealed>> {
++RunCommand() : void 
++v_Index : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AJSONInsertValueToJContainerCommands"{
++v_Value : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "InsertJSONObjectPropertyCommand" <<sealed>> {
++RunCommand() : void 
++v_PropertyNameInsertPosition : String <<get>> <<set>> 
++v_PropertyName : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.InsertJSONArrayItemCommand --|> taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands
+taskt.Core.Automation.Commands.InsertJSONObjectPropertyCommand --|> taskt.Core.Automation.Commands.AJSONInsertValueToJContainerCommands
+@enduml

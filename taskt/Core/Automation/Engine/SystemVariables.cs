@@ -232,10 +232,10 @@ namespace taskt.Core.Automation.Engine
             DateTime_Now_FileSafe.VariableValue = DateTime.Now.ToString("MM-dd-yy HH.mm.ss");
             DateTime_Now_FileSafeLong.VariableValue = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss");
 
-            Env_ActiveWindowTitle.VariableValue = WindowControls.GetActiveWindowTitle();
+            Env_ActiveWindowTitle.VariableValue = EM_CanHandleWindowNameExtensionMethods.GetActiveWindowName(); ;
 
-            Window_CurrentWindowName.VariableValue = WindowControls.GetActiveWindowTitle();
-            Window_CurrentWindowHandle.VariableValue = WindowControls.GetActiveWindowHandle().ToString();
+            Window_CurrentWindowName.VariableValue = EM_CanHandleWindowNameExtensionMethods.GetActiveWindowName();
+            Window_CurrentWindowHandle.VariableValue = EM_CanHandleWindowHandleExtentionMethods.GetActiveWindowHandle().ToString();
 
             // NOTE: Keep it commented out as this is where it slows down the script execution.
             //Taskt_EngineContext.VariableValue = engine.GetEngineContext();

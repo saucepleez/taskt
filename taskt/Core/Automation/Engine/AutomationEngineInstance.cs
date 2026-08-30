@@ -5,10 +5,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading;
-using System.Reflection;
-using taskt.Core.Server;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Script;
+using taskt.Core.Server;
 
 namespace taskt.Core.Automation.Engine
 {
@@ -35,7 +34,7 @@ namespace taskt.Core.Automation.Engine
 
         public Dictionary<string, Script.Script> PreloadedTasks { get; set; }
 
-        
+
         public ErrorHandlingCommand ErrorHandler;
 
         public WhenErrorOccurs WhenErrorOccursBehavior { get; set; }
@@ -230,7 +229,7 @@ namespace taskt.Core.Automation.Engine
                 {
                     this.AppInstances.Add(instance.Key, instance.Value);
                 }
-              
+                
                 // execute commands
                 foreach (var executionCommand in automationScript.Commands)
                 {
@@ -522,8 +521,10 @@ namespace taskt.Core.Automation.Engine
 
         public virtual void LineNumberChanged(int lineNumber)
         {
-            LineNumberChangedEventArgs args = new LineNumberChangedEventArgs();
-            args.CurrentLineNumber = lineNumber;
+            LineNumberChangedEventArgs args = new LineNumberChangedEventArgs
+            {
+                CurrentLineNumber = lineNumber
+            };
             LineNumberChangedEvent?.Invoke(this, args);
         }
 
@@ -532,15 +533,21 @@ namespace taskt.Core.Automation.Engine
             Loaded, Running, Paused, Finished
         }
 
-        public string GetEngineContext()
+        /// <summary>
+        /// get engine status as json text
+        /// </summary>
+        /// <returns></returns>
+        public string GetEngineContextAsJSON()
         {
             // set json settings
-            JsonSerializerSettings settings = new JsonSerializerSettings();
-            settings.Error = (serializer, err) =>
+            JsonSerializerSettings settings = new JsonSerializerSettings
             {
-                err.ErrorContext.Handled = true;
+                Error = (serializer, err) =>
+                {
+                    err.ErrorContext.Handled = true;
+                },
+                Formatting = Formatting.Indented
             };
-            settings.Formatting = Formatting.Indented;
 
             return  JsonConvert.SerializeObject(this, settings);
         }
@@ -562,30 +569,6 @@ namespace taskt.Core.Automation.Engine
             return (SafeAutomationEngineInstanceEngineSettings)engineSettings;
         }
     }
-
-    public class ReportProgressEventArgs : EventArgs
-    {
-        public string ProgressUpdate { get; set; }
-    }
-
-    public class ScriptFinishedEventArgs : EventArgs
-    {
-        public DateTime LoggedOn { get; set; }
-        public ScriptFinishedResult Result { get; set; }
-        public string Error { get; set; }
-        public TimeSpan ExecutionTime { get; set; }
-        public string FileName { get; set; }
-        public enum ScriptFinishedResult
-        {
-            Successful, Error, Cancelled
-        }
-    }
-
-    public class LineNumberChangedEventArgs : EventArgs
-    {
-       public int CurrentLineNumber { get; set; }
-    }
-
 
     public class ScriptError
     {

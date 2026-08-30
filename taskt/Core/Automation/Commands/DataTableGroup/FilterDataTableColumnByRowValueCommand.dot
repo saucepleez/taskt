@@ -1,0 +1,34 @@
+digraph "taskt.Core.Automation.Commands.FilterDataTableColumnByRowValueCommand" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.FilterDataTableColumnByRowValueCommand" [ label="FilterDataTableColumnByRowValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands" [ label="ADataTableCreateFromDataTableCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IDataTableRowPositionProperties" [ label="IDataTableRowPositionProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IFilterValueProperties" [ label="IFilterValueProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IHaveDataTableElements" [ label="IHaveDataTableElements", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.IDataTableCreateFromDataTableProperties" [ label="IDataTableCreateFromDataTableProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleDataTable" [ label="ICanHandleDataTable", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.FilterDataTableColumnByRowValueCommand" -> "taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands";
+"taskt.Core.Automation.Commands.FilterDataTableColumnByRowValueCommand" -> "taskt.Core.Automation.Commands.IDataTableRowPositionProperties";
+"taskt.Core.Automation.Commands.FilterDataTableColumnByRowValueCommand" -> "taskt.Core.Automation.Commands.IFilterValueProperties";
+"taskt.Core.Automation.Commands.FilterDataTableColumnByRowValueCommand" -> "taskt.Core.Automation.Commands.IHaveDataTableElements";
+"taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.ADataTableCreateFromDataTableCommands" -> "taskt.Core.Automation.Commands.IDataTableCreateFromDataTableProperties";
+"taskt.Core.Automation.Commands.IDataTableRowPositionProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.IFilterValueProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.IDataTableCreateFromDataTableProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.IDataTableCreateFromDataTableProperties" -> "taskt.Core.Automation.Commands.ICanHandleDataTable";
+"taskt.Core.Automation.Commands.ICanHandleDataTable" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

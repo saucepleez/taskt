@@ -1,0 +1,34 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+abstract class "ADictionaryAddCreateCommands"{
++BeforeValidate() : void 
++AddDataAndValueFromDataTable() : void 
++v_ColumnNameDataTable : DataTable <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryAddCreateProperties" {
++{abstract} v_ColumnNameDataTable : DataTable <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "AddDictionaryItemCommand" <<sealed>> {
++RunCommand() : void 
++v_Dictionary : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CreateDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Dictionary : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.ADictionaryAddCreateCommands ..|> taskt.Core.Automation.Commands.IDictionaryAddCreateProperties
+taskt.Core.Automation.Commands.AddDictionaryItemCommand --|> taskt.Core.Automation.Commands.ADictionaryAddCreateCommands
+taskt.Core.Automation.Commands.CreateDictionaryCommand --|> taskt.Core.Automation.Commands.ADictionaryAddCreateCommands
+@enduml

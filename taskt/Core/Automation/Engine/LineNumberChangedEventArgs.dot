@@ -1,0 +1,13 @@
+digraph "taskt.Core.Automation.Engine.LineNumberChangedEventArgs" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Engine.LineNumberChangedEventArgs" [ label="LineNumberChangedEventArgs", ];
+"EventArgs" [ label="EventArgs", ];
+
+"taskt.Core.Automation.Engine.LineNumberChangedEventArgs" -> "EventArgs";
+}

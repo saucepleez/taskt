@@ -1,0 +1,63 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelCellCommands"{
++v_CellLocation : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelCellProperties" {
++{abstract} v_CellLocation : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExcelCellActionProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AExcelCellActionCommands"{
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGoToCellCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelCheckCellValueExistsCommand" <<sealed>> {
++RunCommand() : void 
+-cmbValueType_SelectedIndexChanged() : void 
++v_Result : String <<get>> <<set>> 
++v_ValueType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetCellCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelSetCellCommand" <<sealed>> {
++RunCommand() : void 
++v_TextToSet : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.AExcelCellCommands ..|> taskt.Core.Automation.Commands.IExcelCellProperties
+taskt.Core.Automation.Commands.IExcelCellActionProperties --|> taskt.Core.Automation.Commands.IExcelCellProperties
+taskt.Core.Automation.Commands.AExcelCellActionCommands --|> taskt.Core.Automation.Commands.AExcelCellCommands
+taskt.Core.Automation.Commands.ExcelGoToCellCommand --|> taskt.Core.Automation.Commands.AExcelCellCommands
+taskt.Core.Automation.Commands.AExcelCellActionCommands ..|> taskt.Core.Automation.Commands.IExcelCellActionProperties
+taskt.Core.Automation.Commands.ExcelCheckCellValueExistsCommand --|> taskt.Core.Automation.Commands.AExcelCellActionCommands
+taskt.Core.Automation.Commands.ExcelGetCellCommand --|> taskt.Core.Automation.Commands.AExcelCellActionCommands
+taskt.Core.Automation.Commands.ExcelSetCellCommand --|> taskt.Core.Automation.Commands.AExcelCellActionCommands
+@enduml

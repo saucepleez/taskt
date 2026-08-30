@@ -8,19 +8,19 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="bc693501-da5a-4145-b972-5489ec935242" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute Notepad" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="3da9d124-3f5e-4242-8760-510b9ded20ee" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="notepad" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="3da9d124-3f5e-4242-8760-510b9ded20ee" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="notepad" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="35386627-fe50-4c4c-87c4-412e7dba09c7" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Enter Keys, use Clipboard" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="EnterKeysCommand" CommandID="74a141f4-a8ed-4ce7-8630-a94a9c303087" CommandName="EnterKeysCommand" IsCommented="false" SelectionName="Enter Keys" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="⦃Window.CurrentWindowName⦄" v_TextToSend="Use clipboard, very fast!" v_EncryptionOption="" v_UseClipBoard="Yes" v_CompareMethod="" v_MatchMethod="" v_TargetWindowIndex="0" v_WaitTimeForWindow="60" v_WaitTime="500" v_ActivateCurrentWindow="" v_NameResult="" v_HandleResult="" v_ClearClipboardAfterPaste="" />
+      <ScriptCommand xsi:type="EnterKeysCommand" CommandID="74a141f4-a8ed-4ce7-8630-a94a9c303087" CommandName="EnterKeysCommand" IsCommented="false" SelectionName="Enter Keys" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="⦃Window.CurrentWindowName⦄" v_CheckMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_SelectionMethod="" v_TargetWindowIndex="0" v_TextToSend="Use clipboard, very fast!" v_EncryptionOption="" v_UseClipBoard="Yes" v_WaitTimeAfterKeyEnter="500" v_ActivateCurrentWindow="" v_ClearClipboardAfterPaste="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="95d58832-2ed2-4e98-bba7-07d2cb39534b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="By default, text remain on the clipboard." CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="EnterKeysCommand" CommandID="ad0fc324-c4a5-4137-ac44-b80b023aa188" CommandName="EnterKeysCommand" IsCommented="false" SelectionName="Enter Keys" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="⦃Window.CurrentWindowName⦄" v_TextToSend="^v" v_EncryptionOption="" v_UseClipBoard="" v_CompareMethod="" v_MatchMethod="" v_TargetWindowIndex="0" v_WaitTimeForWindow="60" v_WaitTime="500" v_ActivateCurrentWindow="" v_NameResult="" v_HandleResult="" v_ClearClipboardAfterPaste="" />
+      <ScriptCommand xsi:type="EnterKeysCommand" CommandID="ad0fc324-c4a5-4137-ac44-b80b023aa188" CommandName="EnterKeysCommand" IsCommented="false" SelectionName="Enter Keys" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="⦃Window.CurrentWindowName⦄" v_CheckMethod="" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" v_SelectionMethod="" v_TargetWindowIndex="0" v_TextToSend="^v" v_EncryptionOption="" v_UseClipBoard="" v_WaitTimeAfterKeyEnter="500" v_ActivateCurrentWindow="" v_ClearClipboardAfterPaste="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="dd55cfee-fd12-4375-86dc-1214a5b8a598" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="If you do not want to keep the text on the Clipboard, " CommandEnabled="true" />
@@ -30,11 +30,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.15</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2024-12-01T17:35:25.796111+09:00</LastRunTime>
     <RunTimes>2</RunTimes>
-    <Revision>4</Revision>
+    <Revision>5</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>

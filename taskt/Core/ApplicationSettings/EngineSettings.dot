@@ -1,0 +1,13 @@
+digraph "taskt.Core.EngineSettings" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.EngineSettings" [ label="EngineSettings", shape="parallelogram", style="bold", ];
+"taskt.Core.IEngineSettings" [ label="IEngineSettings", shape="ellipse", style="dashed", ];
+
+"taskt.Core.EngineSettings" -> "taskt.Core.IEngineSettings";
+}

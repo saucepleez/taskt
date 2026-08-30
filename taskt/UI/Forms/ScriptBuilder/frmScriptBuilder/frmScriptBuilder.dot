@@ -1,0 +1,33 @@
+digraph "taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" [ label="frmScriptBuilder", ];
+"System.Windows.Forms.Form" [ label="Form", ];
+
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptBuilder.frmScriptBuilder" -> "System.Windows.Forms.Form";
+}

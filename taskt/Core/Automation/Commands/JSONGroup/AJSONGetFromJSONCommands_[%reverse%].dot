@@ -1,0 +1,31 @@
+digraph "taskt.Core.Automation.Commands.AJSONGetFromJSONCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands" [ label="AJSONGetFromJContainerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AJSONGetFromJSONCommands" [ label="AJSONGetFromJSONCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetJSONValueFromJSONArrayCommand" [ label="GetJSONValueFromJSONArrayCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetJSONValueCommand" [ label="GetJSONValueCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetJSONValuesAsDataTableCommand" [ label="GetJSONValuesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand" [ label="GetJSONValuesAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetJSONValueFromJSONObjectCommand" [ label="GetJSONValueFromJSONObjectCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertJSONToDataTableCommand" [ label="ConvertJSONToDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertJSONToDictionaryCommand" [ label="ConvertJSONToDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertJSONToListCommand" [ label="ConvertJSONToListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetJSONValuesAsListCommand" [ label="GetJSONValuesAsListCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands" -> "taskt.Core.Automation.Commands.AJSONGetFromJSONCommands";
+"taskt.Core.Automation.Commands.GetJSONValueFromJSONArrayCommand" -> "taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands";
+"taskt.Core.Automation.Commands.GetJSONValueCommand" -> "taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands";
+"taskt.Core.Automation.Commands.GetJSONValuesAsDataTableCommand" -> "taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands";
+"taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand" -> "taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands";
+"taskt.Core.Automation.Commands.GetJSONValueFromJSONObjectCommand" -> "taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands";
+"taskt.Core.Automation.Commands.ConvertJSONToDataTableCommand" -> "taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands";
+"taskt.Core.Automation.Commands.ConvertJSONToDictionaryCommand" -> "taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands";
+"taskt.Core.Automation.Commands.ConvertJSONToListCommand" -> "taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands";
+"taskt.Core.Automation.Commands.GetJSONValuesAsListCommand" -> "taskt.Core.Automation.Commands.AJSONGetFromJContainerCommands";
+}

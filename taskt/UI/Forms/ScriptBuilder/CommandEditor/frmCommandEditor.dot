@@ -1,0 +1,17 @@
+digraph "taskt.UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor" [ label="frmCommandEditor", ];
+"taskt.UI.Forms.ThemedForm" [ label="ThemedForm", ];
+"System.Windows.Forms.Form" [ label="Form", ];
+
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor" -> "taskt.UI.Forms.ThemedForm";
+"taskt.UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor" -> "taskt.UI.Forms.ThemedForm";
+"taskt.UI.Forms.ThemedForm" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ThemedForm" -> "System.Windows.Forms.Form";
+}

@@ -1,0 +1,11 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Attributes.ClassAttributes"{
+class "Group" <<sealed>> {
++groupName : string
+}
+}
+
+
+taskt.Core.Automation.Attributes.ClassAttributes.Group -- System.Attribute
+@enduml

@@ -1,0 +1,14 @@
+digraph "taskt.UI.Forms.ScriptEngine.Supplemental.frmRemoteDesktopViewer" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.UI.Forms.ScriptEngine.Supplemental.frmRemoteDesktopViewer" [ label="frmRemoteDesktopViewer", ];
+"System.Windows.Forms.Form" [ label="Form", ];
+
+"taskt.UI.Forms.ScriptEngine.Supplemental.frmRemoteDesktopViewer" -> "System.Windows.Forms.Form";
+"taskt.UI.Forms.ScriptEngine.Supplemental.frmRemoteDesktopViewer" -> "System.Windows.Forms.Form";
+}

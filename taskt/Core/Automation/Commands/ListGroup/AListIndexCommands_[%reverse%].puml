@@ -1,0 +1,50 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "CheckValidListIndex" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_IndexResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AListIndexCommands"{
++v_Index : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RemoveListItemCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetListItemCommand" <<sealed>> {
++RunCommand() : void 
++v_List : String <<get>> <<set>> 
++v_NewValue : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetListIndexCommand" <<sealed>> {
++RunCommand() : void 
++v_Index : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetListItemCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.CheckValidListIndex --|> taskt.Core.Automation.Commands.AListIndexCommands
+taskt.Core.Automation.Commands.RemoveListItemCommand --|> taskt.Core.Automation.Commands.AListIndexCommands
+taskt.Core.Automation.Commands.SetListItemCommand --|> taskt.Core.Automation.Commands.AListIndexCommands
+taskt.Core.Automation.Commands.SetListIndexCommand --|> taskt.Core.Automation.Commands.AListIndexCommands
+taskt.Core.Automation.Commands.GetListItemCommand --|> taskt.Core.Automation.Commands.AListIndexCommands
+@enduml

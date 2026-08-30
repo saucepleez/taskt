@@ -8,16 +8,16 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="83f6c4c3-5e9b-4c81-9855-ab6c47d663a4" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute Notepad, UIAutomation Tester" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="f5c05647-1d0e-4c84-bea0-65974f6574a4" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="notepad" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="f5c05647-1d0e-4c84-bea0-65974f6574a4" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="notepad" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="4c80b654-02ef-4295-9260-9a392d1b339b" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="4c80b654-02ef-4295-9260-9a392d1b339b" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="613234b5-b81d-4fbd-88c9-6a5e9b0329f1" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Get Window Name that contains &quot;UIAuto&quot;" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="GetWindowNamesCommand" CommandID="9f931de7-6b0c-4054-929f-724305d489b5" CommandName="GetWindowNamesCommand" IsCommented="false" SelectionName="Get Window Names" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAuto" v_CompareMethod="" v_WaitTimeForWindow="0" v_NameResult="" v_HandleResult="" v_UserVariableName="vList" v_WhenWindowNotFound="" />
+      <ScriptCommand xsi:type="GetWindowNamesCommand" CommandID="9f931de7-6b0c-4054-929f-724305d489b5" CommandName="GetWindowNamesCommand" IsCommented="false" SelectionName="Get Window Names" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAuto" v_CheckMethod="" v_WaitTimeForWindow="0" v_NameResult="" v_HandleResult="" v_Result="vList" v_WhenWindowNotFound="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="1c8acb14-ba4c-4e3c-ab36-0797f122f961" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Show vList" CommandEnabled="true" />
@@ -30,11 +30,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.4</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2024-09-22T10:03:11.5079685+09:00</LastRunTime>
     <RunTimes>2</RunTimes>
-    <Revision>4</Revision>
+    <Revision>5</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>

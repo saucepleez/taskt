@@ -1,0 +1,38 @@
+digraph "taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserPositionCommand" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserPositionCommand" [ label="SeleniumBrowserGetWebBrowserPositionCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands" [ label="ASeleniumWebDriverActionCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IPositionProperties" [ label="IPositionProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver" [ label="ICanExecuteJavaScriptToWebDriver", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands" [ label="ASeleniumDoSomethingToWebDriverCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties" [ label="ISeleniumWebDriverActionProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties" [ label="ISeleniumDoSomethingToWebDriverProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties" [ label="IWhenFailActionBehaviorProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver" [ label="ICanHandleWebDriver", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserPositionCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserPositionCommand" -> "taskt.Core.Automation.Commands.IPositionProperties";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserPositionCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebDriverActionCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties";
+"taskt.Core.Automation.Commands.IPositionProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumDoSomethingToWebDriverCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebDriverActionProperties" -> "taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ICanHandleWebDriver";
+"taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumDoSomethingToWebDriverProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.IWhenFailActionBehaviorProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

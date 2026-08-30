@@ -1,0 +1,33 @@
+digraph "taskt.Core.Automation.Commands.AMathValueResultCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.GetAbsoluteCommand" [ label="GetAbsoluteCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AMathValueResultCommands" [ label="AMathValueResultCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetLogarithmCommand" [ label="GetLogarithmCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetSquareRootCommand" [ label="GetSquareRootCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ATrignometricCommands" [ label="ATrignometricCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AInverseTrignometricCommands" [ label="AInverseTrignometricCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetArctanCommand" [ label="GetArctanCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetTanCommand" [ label="GetTanCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetCosCommand" [ label="GetCosCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetSinCommand" [ label="GetSinCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetArccosCommand" [ label="GetArccosCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetArcsinCommand" [ label="GetArcsinCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.GetAbsoluteCommand" -> "taskt.Core.Automation.Commands.AMathValueResultCommands";
+"taskt.Core.Automation.Commands.GetLogarithmCommand" -> "taskt.Core.Automation.Commands.AMathValueResultCommands";
+"taskt.Core.Automation.Commands.GetSquareRootCommand" -> "taskt.Core.Automation.Commands.AMathValueResultCommands";
+"taskt.Core.Automation.Commands.ATrignometricCommands" -> "taskt.Core.Automation.Commands.AMathValueResultCommands";
+"taskt.Core.Automation.Commands.AInverseTrignometricCommands" -> "taskt.Core.Automation.Commands.ATrignometricCommands";
+"taskt.Core.Automation.Commands.GetArctanCommand" -> "taskt.Core.Automation.Commands.ATrignometricCommands";
+"taskt.Core.Automation.Commands.GetTanCommand" -> "taskt.Core.Automation.Commands.ATrignometricCommands";
+"taskt.Core.Automation.Commands.GetCosCommand" -> "taskt.Core.Automation.Commands.ATrignometricCommands";
+"taskt.Core.Automation.Commands.GetSinCommand" -> "taskt.Core.Automation.Commands.ATrignometricCommands";
+"taskt.Core.Automation.Commands.GetArccosCommand" -> "taskt.Core.Automation.Commands.AInverseTrignometricCommands";
+"taskt.Core.Automation.Commands.GetArcsinCommand" -> "taskt.Core.Automation.Commands.AInverseTrignometricCommands";
+}

@@ -1,0 +1,19 @@
+digraph "taskt.Core.Automation.Commands.IExcelColumnRangeGetProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands" [ label="AExcelColumnRangeGetCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IExcelColumnRangeGetProperties" [ label="IExcelColumnRangeGetProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDataTableCommand" [ label="ExcelGetColumnValuesAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDictionaryCommand" [ label="ExcelGetColumnValuesAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetColumnValuesAsListCommand" [ label="ExcelGetColumnValuesAsListCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands" -> "taskt.Core.Automation.Commands.IExcelColumnRangeGetProperties";
+"taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDataTableCommand" -> "taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands";
+"taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDictionaryCommand" -> "taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands";
+"taskt.Core.Automation.Commands.ExcelGetColumnValuesAsListCommand" -> "taskt.Core.Automation.Commands.AExcelColumnRangeGetCommands";
+}

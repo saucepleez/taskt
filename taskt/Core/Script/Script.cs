@@ -27,17 +27,24 @@ using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Script
 {
+    /// <summary>
+    /// taskt script file class
+    /// </summary>
     public class Script
     {
         /// <summary>
         /// Contains user-defined variables
         /// </summary>
         public List<ScriptVariable> Variables { get; set; }
+
         /// <summary>
         /// Contains user-selected commands
         /// </summary>
         public List<ScriptAction> Commands;
 
+        /// <summary>
+        /// script informations
+        /// </summary>
         public ScriptInformation Info;
 
         public Script()
@@ -47,6 +54,7 @@ namespace taskt.Core.Script
             Commands = new List<ScriptAction>();
             Info = new ScriptInformation();
         }
+
         /// <summary>
         /// Returns a new 'Top-Level' command.  
         /// </summary>
@@ -89,7 +97,7 @@ namespace taskt.Core.Script
                 {
                     srcCommand.IsDontSavedCommand = false;
                 }
-                
+
                 var command = srcCommand.Clone();
                 command.LineNumber = lineNumber;
 
@@ -123,7 +131,7 @@ namespace taskt.Core.Script
                     // remove last command since loop is ending
                     subCommands.RemoveAt(subCommands.Count - 1);
                 }
-                else if (subCommands.Count == 0) 
+                else if (subCommands.Count == 0)
                 {
                     // add command as a root item
                     script.AddNewParentCommand(command);
@@ -303,7 +311,7 @@ namespace taskt.Core.Script
             var savePath = IO.Folders.GetAutoSaveFolderPath();
             var saveTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
 
-            return (Path.Combine(savePath, "autosave-") + saveTime + ".xml", saveTime);
+            return (Path.Combine(savePath, $"autosave-{saveTime}.xml"), saveTime);
         }
 
         ///// <summary>
@@ -335,7 +343,7 @@ namespace taskt.Core.Script
             //var runPath = GetRunWithoutSavingFolderPath();
             var runPath = IO.Folders.GetRunWithoutSavingFolderPath();
             var saveTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-            return Path.Combine(runPath, "run-") + saveTime + ".xml";
+            return Path.Combine(runPath, $"run-{saveTime}.xml");
         }
 
         /// <summary>
@@ -343,7 +351,7 @@ namespace taskt.Core.Script
         /// </summary>
         public void ReGenerateCommandID()
         {
-            foreach(var command in this.Commands)
+            foreach (var command in this.Commands)
             {
                 ReGenerateCommandIDProcess(command);
             }
@@ -358,11 +366,22 @@ namespace taskt.Core.Script
             script.ScriptCommand.GenerateID();
             if ((script.AdditionalScriptCommands?.Count ?? 0) > 0)
             {
-                foreach(var command in script.AdditionalScriptCommands)
+                foreach (var command in script.AdditionalScriptCommands)
                 {
                     ReGenerateCommandIDProcess(command);
                 }
             }
+        }
+
+        /// <summary>
+        /// check old version
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns>When a is older than b, return true</returns>
+        private static bool IsOldVersion(Version a, string b)
+        {
+            return a.CompareTo(new Version(b)) < 0;
         }
 
         /// <summary>
@@ -375,85 +394,393 @@ namespace taskt.Core.Script
             // very important!
             // ** DO NOT USE nameof to change command name **
 
+            var versionText = doc.Element("Script").Element("Info")?.Element("TasktVersion")?.Value ?? "0.0.0.0";
+            var myVersion = new Version(versionText);
+
             fixDataTableSchemaPosition(doc);
             fixToSameCommandNames(doc);
 
-            convertTo3_5_0_45(doc);
-            convertTo3_5_0_46(doc);
-            convertTo3_5_0_47(doc);
-            convertTo3_5_0_50(doc);
-            convertTo3_5_0_51(doc);
-            convertTo3_5_0_52(doc);
-            convertTo3_5_0_57(doc);
-            convertTo3_5_0_67(doc);
-            fixUIAutomationCommandEnableParameterValue(doc);
-            convertTo3_5_0_73(doc);
-            convertTo3_5_0_74(doc);
-            convertTo3_5_0_78(doc);
-            fixUIAutomationSearchEnableParameterValue(doc);
-            convertTo3_5_0_83(doc);
-            convertTo3_5_1_16(doc);
-            convertTo3_5_1_30(doc);
-            convertTo3_5_1_31(doc);
-            convertTo3_5_1_33(doc);
-            convertTo3_5_1_34(doc);
-            convertTo3_5_1_35(doc);
-            convertTo3_5_1_36(doc);
-            convertTo3_5_1_38(doc);
-            convertTo3_5_1_39(doc);
-            fixUIAutomationSearchEnableParameterValue_3_5_1_39(doc);
-            convertTo3_5_1_40(doc);
-            convertTo3_5_1_41(doc);
-            convertTo3_5_1_42(doc);
-            convertTo3_5_1_44(doc);
-            convertTo3_5_1_45(doc);
-            convertTo3_5_1_46(doc);
-            convertTo3_5_1_48(doc);
-            convertTo3_5_1_49(doc);
-            convertTo3_5_1_50(doc);
-            convertTo3_5_1_51(doc);
-            convertTo3_5_1_52(doc);
-            convertTo3_5_1_54(doc);
+            if (IsOldVersion(myVersion, "3.5.0.45"))
+            {
+                convertTo3_5_0_45(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.46"))
+            {
+                convertTo3_5_0_46(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.47"))
+            {
+                convertTo3_5_0_47(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.50"))
+            {
+                convertTo3_5_0_50(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.51"))
+            {
+                convertTo3_5_0_51(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.52"))
+            {
+                convertTo3_5_0_52(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.57"))
+            {
+                convertTo3_5_0_57(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.67"))
+            {
+                convertTo3_5_0_67(doc);
+            }
+            fixUIAutomationCommandEnableColumnParameterValues(doc);
+            if (IsOldVersion(myVersion, "3.5.0.73"))
+            {
+                convertTo3_5_0_73(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.74"))
+            {
+                convertTo3_5_0_74(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.0.78"))
+            {
+                convertTo3_5_0_78(doc);
+            }
+            fixUIAutomationSearchEnableColumnParameterValues(doc);
+            if (IsOldVersion(myVersion, "3.5.0.83"))
+            {
+                convertTo3_5_0_83(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.16"))
+            {
+                convertTo3_5_1_16(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.30"))
+            {
+                convertTo3_5_1_30(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.31"))
+            {
+                convertTo3_5_1_31(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.33"))
+            {
+                convertTo3_5_1_33(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.34"))
+            {
+                convertTo3_5_1_34(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.35"))
+            {
+                convertTo3_5_1_35(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.36"))
+            {
+                convertTo3_5_1_36(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.38"))
+            {
+
+                convertTo3_5_1_38(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.39"))
+            {
+                convertTo3_5_1_39(doc);
+            }
+            fixUIAutomationSearchEnableColumnParameterValues_3_5_1_39(doc);
+            if (IsOldVersion(myVersion, "3.5.1.40"))
+            {
+                convertTo3_5_1_40(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.41"))
+            {
+                convertTo3_5_1_41(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.42"))
+            {
+                convertTo3_5_1_42(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.44"))
+            {
+                convertTo3_5_1_44(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.45"))
+            {
+                convertTo3_5_1_45(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.46"))
+            {
+                convertTo3_5_1_46(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.48"))
+            {
+                convertTo3_5_1_48(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.49"))
+            {
+                convertTo3_5_1_49(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.50"))
+            {
+                convertTo3_5_1_50(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.51"))
+            {
+                convertTo3_5_1_51(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.52"))
+            {
+                convertTo3_5_1_52(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.54"))
+            {
+                convertTo3_5_1_54(doc);
+            }
             fixUIAutomationSearchEnableParameterValue_v3_5_1_56(doc);
-            convertTo3_5_1_56(doc);
-            convertTo3_5_1_58(doc);
-            convertTo3_5_1_62(doc);
-            convertTo3_5_1_72(doc);
-            convertTo3_5_1_74(doc);
-            convertTo3_5_1_75(doc, engine);
-            convertTo3_5_1_77(doc, engine);
-            convertTo3_5_1_79(doc, engine);
-            convertTo3_5_1_80(doc);
-            convertTo3_5_1_81(doc, engine);
-            convertTo3_5_1_83(doc);
-            convertTo3_5_1_84(doc);
-            convertTo3_5_1_86(doc);
-            convertTo3_5_1_87(doc);
-            convertTo3_5_1_88(doc);
-            convertTo3_5_1_89(doc);
-            convertTo3_5_1_91(doc);
-            convertTo3_5_1_92(doc);
-            convertTo3_5_1_93(doc);
-            convertTo3_5_1_96(doc);
-            convertTo3_5_1_98(doc);
-            convertTo3_5_2_0(doc);
-            convertTo3_5_2_1(doc);
-            convertTo3_5_2_6(doc);
-            convertTo3_5_2_11(doc);
-            convertTo3_5_2_13(doc);
-            convertTo3_5_2_14(doc);
-            convertTo3_5_2_15(doc);
-            convertTo3_5_2_16(doc);
-            convertTo3_5_2_17(doc);
-            convertTo3_5_2_18(doc);
-            convertTo3_5_2_19(doc);
-            convertTo3_5_2_20(doc);
-            convertTo3_5_2_21(doc);
-            convertTo3_5_2_22(doc);
-            convertTo3_5_2_23(doc);
-            convertTo3_5_2_24(doc);
-            convertTo3_5_2_25(doc);
-            convertTo3_5_2_31(doc);
+            if (IsOldVersion(myVersion, "3.5.1.56"))
+            {
+                convertTo3_5_1_56(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.58"))
+            {
+                convertTo3_5_1_58(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.62"))
+            {
+                convertTo3_5_1_62(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.72"))
+            {
+                convertTo3_5_1_72(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.74"))
+            {
+                convertTo3_5_1_74(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.75"))
+            {
+                convertTo3_5_1_75(doc, engine);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.77"))
+            {
+                convertTo3_5_1_77(doc, engine);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.79"))
+            {
+                convertTo3_5_1_79(doc, engine);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.80"))
+            {
+                convertTo3_5_1_80(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.81"))
+            {
+                convertTo3_5_1_81(doc, engine);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.83"))
+            {
+                convertTo3_5_1_83(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.84"))
+            {
+                convertTo3_5_1_84(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.86"))
+            {
+                convertTo3_5_1_86(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.87"))
+            {
+                convertTo3_5_1_87(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.88"))
+            {
+                convertTo3_5_1_88(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.89"))
+            {
+                convertTo3_5_1_89(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.91"))
+            {
+                convertTo3_5_1_91(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.92"))
+            {
+                convertTo3_5_1_92(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.93"))
+            {
+                convertTo3_5_1_93(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.96"))
+            {
+                convertTo3_5_1_96(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.1.98"))
+            {
+                convertTo3_5_1_98(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.0"))
+            {
+                convertTo3_5_2_0(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.1"))
+            {
+                convertTo3_5_2_1(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.6"))
+            {
+                convertTo3_5_2_6(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.11"))
+            {
+                convertTo3_5_2_11(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.13"))
+            {
+                convertTo3_5_2_13(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.14"))
+            {
+                convertTo3_5_2_14(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.15"))
+            {
+                convertTo3_5_2_15(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.16"))
+            {
+                convertTo3_5_2_16(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.17"))
+            {
+                convertTo3_5_2_17(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.18"))
+            {
+                convertTo3_5_2_18(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.19"))
+            {
+                convertTo3_5_2_19(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.20"))
+            {
+                convertTo3_5_2_20(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.21"))
+            {
+                convertTo3_5_2_21(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.22"))
+            {
+                convertTo3_5_2_22(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.23"))
+            {
+                convertTo3_5_2_23(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.24"))
+            {
+                convertTo3_5_2_24(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.25"))
+            {
+                convertTo3_5_2_25(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.31"))
+            {
+                convertTo3_5_2_31(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.38"))
+            {
+                convertTo3_5_2_38(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.39"))
+            {
+                convertTo3_5_2_39(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.42"))
+            {
+                convertTo3_5_2_42(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.43"))
+            {
+                convertTo3_5_2_43(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.44"))
+            {
+                convertTo3_5_2_44(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.45"))
+            {
+                convertTo3_5_2_45(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.46"))
+            {
+                convertTo3_5_2_46(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.47"))
+            {
+                convertTo3_5_2_47(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.51"))
+            {
+                convertTo3_5_2_51(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.53"))
+            {
+                convertTo3_5_2_53(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.55"))
+            {
+                convertTo3_5_2_55(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.56"))
+            {
+                convertTo3_5_2_56(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.57"))
+            {
+                convertTo3_5_2_57(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.59"))
+            {
+                convertTo3_5_2_59(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.61"))    // this method use <= 3.5.2.60
+            {
+                convertTo3_5_2_60(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.61"))
+            {
+                convertTo3_5_2_61(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.62"))
+            {
+                convertTo3_5_2_62(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.64"))
+            {
+                convertTo3_5_2_64(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.65"))
+            {
+                convertTo3_5_2_65(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.66"))
+            {
+                convertTo3_5_2_66(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.70"))
+            {
+                convertTo3_5_2_70(doc);
+            }
+            if (IsOldVersion(myVersion, "3.5.2.71"))
+            {
+                convertTo3_5_2_71(doc);
+            }
             return doc;
         }
 
@@ -527,7 +854,7 @@ namespace taskt.Core.Script
             XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
 
             var commands = doc.Descendants("ScriptCommand");
-            foreach(var cmd in commands)
+            foreach (var cmd in commands)
             {
                 var commandName = cmd.Attribute("CommandName");
                 var xsiType = cmd.Attribute(ns + "type");
@@ -541,7 +868,8 @@ namespace taskt.Core.Script
         private static void convertTo3_5_0_45(XDocument doc)
         {
             // change "Start with" -> "Starts with", "End with" -> "Ends with"
-            ChangeAttributeValue(doc, new Func<XElement, bool>( el => {
+            ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
+            {
                 switch (GetCommandName(el))
                 {
                     case "ActivateWindowCommand":
@@ -562,7 +890,8 @@ namespace taskt.Core.Script
                     default:
                         return false;
                 }
-            }), "v_SearchMethod", new Action<XAttribute>( attr => {
+            }), "v_SearchMethod", new Action<XAttribute>(attr =>
+            {
                 switch (attr?.Value.ToLower() ?? "")
                 {
                     case "start with":
@@ -624,7 +953,7 @@ namespace taskt.Core.Script
             // change "Start with" -> "Starts with", "End with" -> "Ends with"
             ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
             {
-                switch(GetCommandName(el))
+                switch (GetCommandName(el))
                 {
                     case "GetFilesCommand":
                     case "GetFoldersCommand":
@@ -633,7 +962,8 @@ namespace taskt.Core.Script
                     default:
                         return false;
                 }
-            }), "v_SearchMethod", new Action<XAttribute>(attr => {
+            }), "v_SearchMethod", new Action<XAttribute>(attr =>
+            {
                 switch (attr?.Value.ToLower() ?? "")
                 {
                     case "start with":
@@ -652,7 +982,7 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "CheckStringCommand", "CheckTextCommand", "Check Text");
 
             // ModifyVariableCommand -> ModifyTextCommand
-            ChangeCommandName(doc, new Func<XElement, bool>( el => 
+            ChangeCommandName(doc, new Func<XElement, bool>(el =>
             {
                 switch (GetCommandName(el))
                 {
@@ -690,7 +1020,7 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "SeleniumBrowserGetAElementValuesAsDataTableCommand", "SeleniumBrowserGetAnElementValuesAsDataTableCommand", "Get An Element Values As DataTable");
         }
 
-        private static void fixUIAutomationCommandEnableParameterValue(XDocument doc)
+        private static void fixUIAutomationCommandEnableColumnParameterValues(XDocument doc)
         {
             // UI Automation Boolean Fix
             ChangeTableCellValue(doc, "UIAutomationCommand", "v_UIASearchParameters", "Enabled", new Action<XElement>(c =>
@@ -816,7 +1146,7 @@ namespace taskt.Core.Script
             }), "v_LoopActionParameterTable", modFunc);
         }
 
-        private static void fixUIAutomationSearchEnableParameterValue(XDocument doc)
+        private static void fixUIAutomationSearchEnableColumnParameterValues(XDocument doc)
         {
             // UI Automation Boolean Fix
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
@@ -1053,7 +1383,7 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "Format Folder PathCommand", "FormatFolderPathCommand", "Format Folder Path");
         }
 
-        private static void fixUIAutomationSearchEnableParameterValue_3_5_1_39(XDocument doc)
+        private static void fixUIAutomationSearchEnableColumnParameterValues_3_5_1_39(XDocument doc)
         {
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
@@ -1173,7 +1503,7 @@ namespace taskt.Core.Script
             var copyCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() == "copy file")).ToList();
             ChangeCommandNameProcess(moveCommands, "MoveFileCommand", "Move File");
             ChangeCommandNameProcess(copyCommands, "CopyFileCommand", "Copy File");
-            foreach(var cmd in commands)
+            foreach (var cmd in commands)
             {
                 cmd.Attribute("v_OperationType").Remove();
             }
@@ -1312,7 +1642,7 @@ namespace taskt.Core.Script
 
             // change new SeleniumBrowserWebElementActionCommand
             var commands = GetCommands(doc, "SeleniumBrowserWebElementActionCommand");
-            foreach(var cmd in commands)
+            foreach (var cmd in commands)
             {
                 var elementAction = cmd.Element("v_SeleniumElementAction");
                 string act = "";
@@ -1453,14 +1783,14 @@ namespace taskt.Core.Script
             }
         }
 
-        private static void convertTo3_5_1_50(XDocument doc) 
+        private static void convertTo3_5_1_50(XDocument doc)
         {
             // WebElement Action: Wait For WebElement To Exists
             // WebElement Action: fix parameter table
             var commands = GetCommands(doc, "SeleniumBrowserWebElementActionCommand");
             foreach (var cmd in commands)
             {
-                var act = cmd.Attribute("v_SeleniumElementAction").Value;
+                var act = cmd.Attribute("v_SeleniumElementAction")?.Value ?? string.Empty;
                 if (act.ToLower() == "wait for webelement to exist")
                 {
                     cmd.SetAttributeValue("v_SeleniumElementAction", "Wait For WebElement To Exists");
@@ -1555,7 +1885,7 @@ namespace taskt.Core.Script
 
             // UIAutomationUIElementActionCommand : UIElement Action name, v_WindowName to Attribute
             var cmds = GetCommands(doc, "UIAutomationUIElementActionCommand");
-            foreach(var cmd in cmds)
+            foreach (var cmd in cmds)
             {
                 var act = cmd.Attribute("v_AutomationType").Value.ToLower();
                 string newAct = act.ToLower();
@@ -1614,16 +1944,18 @@ namespace taskt.Core.Script
             // WebElementAction: Set Text (Encrypted Text param)
             cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
             {
+                var elemAction = el.Attribute("v_SeleniumElementAction")?.Value.ToLower() ?? string.Empty;
+
                 return (GetCommandName(el) == "SeleniumBrowserWebElementActionCommand") &&
-                        (el.Attribute("v_SeleniumElementAction").Value.ToLower() == "set text");
+                        (elemAction == "set text");
             }));
-            foreach(var cmd in cmds)
+            foreach (var cmd in cmds)
             {
                 (var table, _, _, _, _) = GetTable(cmd, "v_WebActionParameterTable");
                 var rows = table?.Elements()?.ToList() ?? new List<XElement>();
                 //var beforeRows = before?.Elements()?.ToList() ?? new List<XElement>();
 
-                foreach(var row in rows)
+                foreach (var row in rows)
                 {
                     if (row.Element("Parameter_x0020_Name").Value == "Encrypted Text")
                     {
@@ -2026,7 +2358,7 @@ namespace taskt.Core.Script
 
             // SendAdvancedKeyStrokesCommand strange element "v_KeyUpDefault"
             var cmds = GetCommands(doc, "SendAdvancedKeyStrokesCommand");
-            foreach(var cmd in cmds)
+            foreach (var cmd in cmds)
             {
                 var elem = cmd.Element("v_KeyUpDefault");
                 var attr = cmd.Attribute("v_KeyUpDefault");
@@ -2474,8 +2806,9 @@ namespace taskt.Core.Script
         private static void convertTo3_5_1_83(XDocument doc)
         {
             // ExcelSetRowValuesFromDataTableCommand, ExcelSetColumnValuesFromDataTableCommand v_WhenItemNotEnough
-            ChangeAttributeName(doc, 
-                new Func<XElement, bool>(el => {
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
                     switch (GetCommandName(el))
                     {
                         case "ExcelSetRowValuesFromDataTableCommand":
@@ -2484,12 +2817,13 @@ namespace taskt.Core.Script
                         default:
                             return false;
                     }
-                    
+
                 }), "v_IfDataTableNotEnough", "v_WhenItemNotEnough");
 
             // ExcelSetRowValuesFromDictionaryCommand, ExcelSetColumnValuesFromDictionaryCommand v_WhenItemNotEnough
-            ChangeAttributeName(doc, 
-                new Func<XElement, bool>(el => {
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
                     switch (GetCommandName(el))
                     {
                         case "ExcelSetRowValuesFromDictionaryCommand":
@@ -2501,8 +2835,9 @@ namespace taskt.Core.Script
                 }), "v_IfDictionaryNotEnough", "v_WhenItemNotEnough");
 
             // ExcelSetRowValuesFromListCommand, ExcelSetColumnValuesFromListCommand v_WhenItemNotEnough
-            ChangeAttributeName(doc, 
-                new Func<XElement, bool>(el => {
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
                     switch (GetCommandName(el))
                     {
                         case "ExcelSetRowValuesFromListCommand":
@@ -2570,7 +2905,7 @@ namespace taskt.Core.Script
                 new List<(string, Action<XAttribute>)>()
                 {
                     (
-                        "v_Option", 
+                        "v_Option",
                         new Action<XAttribute>(attr =>
                         {
                             if (attr.Value.ToLower() == "column name")
@@ -2725,7 +3060,7 @@ namespace taskt.Core.Script
                 }), "v_InputData", "v_Dictionary");
 
             // AddDictionaryItemCommand, CreateDictionaryCommand v_DictionaryName -> v_Dictionary
-            ChangeAttributeName(doc, 
+            ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
                     switch (GetCommandName(el))
@@ -3240,7 +3575,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc, "ReplaceDataTableValueCommand", "v_TargetType", "v_ValueType");
 
             // ReplaceDictionaryCommand, ReplaceListCommand v_NewValue
-            ChangeAttributeName(doc, 
+            ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
                     switch (GetCommandName(el))
@@ -3372,7 +3707,7 @@ namespace taskt.Core.Script
 
             // separate JSONPath
             var rmv = GetCommands(doc, "RemoveJSONObjectPropertyCommand");
-            foreach(var c in rmv)
+            foreach (var c in rmv)
             {
                 var attrPath = c.Attribute("v_JsonExtractor");
                 var attrProp = c.Attribute("v_PropertyName");
@@ -3384,7 +3719,7 @@ namespace taskt.Core.Script
                     var idx = path.LastIndexOf('.');
                     var newProp = path.Substring(idx + 1);
                     var newPath = path.Substring(0, idx);
-                    
+
                     if (attrProp != null)
                     {
                         attrProp.SetValue(newProp);
@@ -3408,7 +3743,7 @@ namespace taskt.Core.Script
         private static void convertTo3_5_2_0(XDocument doc)
         {
             var htmlCommands = GetCommands(doc, "ShowHTMLInputDialogCommand");
-            foreach(var cmd in htmlCommands)
+            foreach (var cmd in htmlCommands)
             {
                 var html = cmd.Attribute("v_InputHTML").Value;
                 html = html.Replace("window.external.Ok()", "chrome.webview.hostObjects.fm.OK()")
@@ -3536,8 +3871,8 @@ namespace taskt.Core.Script
                         default:
                             return false;
                     }
-                }), new List<(string, string)>() 
-                { 
+                }), new List<(string, string)>()
+                {
                     ("v_SearchMethod", "v_CompareMethod"),
                     ("v_UserVariableName", "v_Result"),
                 }
@@ -3590,7 +3925,7 @@ namespace taskt.Core.Script
             // TextGetIndexOf, TextGetLastIndexOf v_SearchStartIndex
             var idxCmds = GetCommands(doc, new Func<XElement, bool>(el =>
             {
-                switch (GetCommandName(el)) 
+                switch (GetCommandName(el))
                 {
                     case "TextGetIndexOfCommand":
                     case "TextGetLastIndexOfCommand":
@@ -3599,7 +3934,7 @@ namespace taskt.Core.Script
                         return false;
                 }
             }));
-            foreach(var cmd in idxCmds)
+            foreach (var cmd in idxCmds)
             {
                 if (cmd.Attribute("v_SearchStartPosition") == null)
                 {
@@ -3639,16 +3974,17 @@ namespace taskt.Core.Script
         private static void convertTo3_5_2_16(XDocument doc)
         {
             XNamespace xs = "http://www.w3.org/2001/XMLSchema";
-            int GetColumnsCount(XElement elem) 
+            int GetColumnsCount(XElement elem)
             {
                 return elem.Element(xs + "schema").Element(xs + "element").Element(xs + "complexType")
                                 .Element(xs + "choice").Element(xs + "element").Element(xs + "complexType")
                                 .Element(xs + "sequence").Elements(xs + "element").Count();
-            };
+            }
+            ;
 
             // Execute REAT API v_RESTParameters <-> v_AdvancedParameters
             var rest = GetCommands(doc, "HTTPExecuteRESTAPICommand");
-            
+
             foreach (var cmd in rest)
             {
                 var advParams = cmd.Element("v_AdvancedParameters");
@@ -3721,25 +4057,25 @@ namespace taskt.Core.Script
 
         private static void convertTo3_5_2_18(XDocument doc)
         {
-            // SeleniumBrowserGetWebBrowserInformationCommand Handles JSON Array -> SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand
-            ChangeToOtherCommand(doc, new Func<XElement, bool>(elem =>
-                {
-                    if ((GetCommandName(elem) == "SeleniumBrowserGetWebBrowserInformationCommand") &&
-                        (elem.Attribute("v_InfoType").Value.ToLower() == "handles json array"))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }), 
-                "SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand", "Get Window And Tab Handles As JSON",
-                new List<(string, string)>()
-                {
-                    ("v_applyToVariableName", "v_Result"),
-                }
-            );
+            //// SeleniumBrowserGetWebBrowserInformationCommand Handles JSON Array -> SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand
+            //ChangeToOtherCommand(doc, new Func<XElement, bool>(elem =>
+            //    {
+            //        if ((GetCommandName(elem) == "SeleniumBrowserGetWebBrowserInformationCommand") &&
+            //            (elem.Attribute("v_InfoType").Value.ToLower() == "handles json array"))
+            //        {
+            //            return true;
+            //        }
+            //        else
+            //        {
+            //            return false;
+            //        }
+            //    }),
+            //    "SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand", "Get Window And Tab Handles As JSON",
+            //    new List<(string, string)>()
+            //    {
+            //        ("v_applyToVariableName", "v_Result"),
+            //    }
+            //);
 
             // File Commands v_SourceFilePath -> v_TargetFilePath
             ChangeAttributeName(doc, new Func<XElement, bool>(elem =>
@@ -3862,7 +4198,7 @@ namespace taskt.Core.Script
             // Folder/GetFilesPathAsListCommand commands v_WaitForFolder -> v_WaitTimeForFolder
             ChangeAttributeName(doc, new Func<XElement, bool>(elem =>
                 {
-                    switch(GetCommandName(elem)) 
+                    switch (GetCommandName(elem))
                     {
                         case "CheckFolderExistsCommand":
                         case "CreateFolderCommand":
@@ -4045,7 +4381,7 @@ namespace taskt.Core.Script
                     }
                 })
             );
-            foreach (var cmd in copyMove) 
+            foreach (var cmd in copyMove)
             {
                 var attrDel = cmd.Attribute("v_DeleteExisting");
                 if (attrDel != null)
@@ -4153,7 +4489,7 @@ namespace taskt.Core.Script
                 }
             }
 
-            foreach(var cmd in fmts)
+            foreach (var cmd in fmts)
             {
                 var attrType = cmd.Attribute("v_FormatType");
                 if (attrType != null)
@@ -4368,6 +4704,1141 @@ namespace taskt.Core.Script
                 }), "v_applyToVariableName", "v_Result");
         }
 
+        private static void convertTo3_5_2_38(XDocument doc)
+        {
+            // ShowHTMLInputDialog v_WhenCancel
+            var commands = GetCommands(doc, "ShowHTMLInputDialogCommand");
+            foreach (var command in commands)
+            {
+                var wc = command.Attribute("v_WhenCancel");
+                if (wc == null)
+                {
+                    var er = command.Attribute("v_ErrorOnClose");
+                    var erv = er?.Value ?? "";
+                    string newValue;
+                    switch (erv.ToLower())
+                    {
+                        case "error on close":
+                            newValue = "Error";
+                            break;
+                        case "do not error on close":
+                            newValue = "Ignore";
+                            break;
+                        default:
+                            newValue = "";
+                            break;
+                    }
+                    command.SetAttributeValue("v_WhenCancel", newValue);
+                    if (er != null)
+                    {
+                        er.Remove();
+                    }
+                }
+            }
+
+            // ShowUserInputDialogCommand v_InputHeader -> v_DialogTitle, v_InputDirections -> v_Message
+            ChangeMultiAttributeNames(doc, "ShowUserInputDialogCommand",
+                new List<(string, string)>()
+                {
+                    ("v_InputHeader", "v_DialogTitle"),
+                    ("v_InputDirections", "v_Message"),
+                }
+            );
+        }
+
+        private static void convertTo3_5_2_39(XDocument doc)
+        {
+            void SeparateOneAll(XDocument x, string currentCommandName, string oneCommandName, string oneSelectionName, string allCommandName, string allSelectionName)
+            {
+                var cmds = GetCommands(x, currentCommandName);
+                var one = new List<XElement>();
+                var all = new List<XElement>();
+                foreach (var cmd in cmds)
+                {
+                    var matchAttr = cmd.Attribute("v_MatchMethod");
+                    switch (matchAttr?.Value.ToLower() ?? "")
+                    {
+                        case "all":
+                            matchAttr?.Remove();
+                            all.Add(cmd);
+                            break;
+                        default:
+                            one.Add(cmd);
+                            break;
+                    }
+                }
+                ChangeCommandNameProcess(one, oneCommandName, oneSelectionName);
+                ChangeCommandNameProcess(all, allCommandName, allSelectionName);
+            }
+
+            // ActivateWindowCommand -> ActivateOneWindowCommand, ActivateWindowsCommand
+            SeparateOneAll(doc, "ActivateWindowCommand", "ActivateOneWindowCommand", "Activate One Window", "ActivateWindowsCommand", "Activate Windows");
+
+            // CloseWindowCommand -> CloseOneWindowCommand, CloseWindowsCommand
+            SeparateOneAll(doc, "CloseWindowCommand", "CloseOneWindowCommand", "Close One Window", "CloseWindowsCommand", "Close Windows");
+
+            // MoveWindowCommand -> MoveOneWindowCommand, MoveWindowsCommand
+            SeparateOneAll(doc, "MoveWindowCommand", "MoveOneWindowCommand", "Move One Window", "MoveWindowsCommand", "Move Windows");
+
+            // ResizeWindowCommand -> ResizeOneWindowCommand, ResizeWindowsCommand
+            SeparateOneAll(doc, "ResizeWindowCommand", "ResizeOneWindowCommand", "Resize One Window", "ResizeWindowsCommand", "Resize Windows");
+
+            // SetWindowStateCommand -> SetOneWindowStateCommand, SetWindowsStateCommand
+            SeparateOneAll(doc, "SetWindowStateCommand", "SetOneWindowStateCommand", "Set One Window State", "SetWindowsStateCommand", "Set Windows State");
+
+            // GetProcessNameFromWindowNameCommand -> GetOneProcessNameFromOneWindowNameCommand
+            ChangeCommandName(doc, "GetProcessNameFromWindowNameCommand", "GetOneProcessNameFromOneWindowNameCommand", "Get One Process Name From One Window Name");
+
+            // GetWindowHandleFromWindowNameCommand -> GetOneWindowHandleFromOneWindowNameCommand
+            //ChangeCommandName(doc, "GetWindowHandleFromWindowNameCommand", "GetOneWindowHandleFromOneWindowNameCommand", "Get One Window Handle From One Window Name");
+            ChangeToOtherCommand(doc, "GetWindowHandleFromWindowNameCommand", "GetOneWindowHandleFromOneWindowNameCommand", "Get One Window Handle From One Window Name",
+                new List<(string, string)>()
+                {
+                    ("v_HandleResult", "v_Result"),
+                }
+            );
+
+            // GetWindowPositionCommand -> GetOneWindowPositionCommand
+            ChangeCommandName(doc, "GetWindowPositionCommand", "GetOneWindowPositionCommand", "Get One Window Position");
+
+            // GetWindowSizeCommand -> GetOneWindowSizeCommand
+            ChangeCommandName(doc, "GetWindowSizeCommand", "GetOneWindowSizeCommand", "Get One Window Size");
+
+            // GetWindowStateCommand -> GetOneWindowStateCommand
+            ChangeCommandName(doc, "GetWindowStateCommand", "GetOneWindowStateCommand", "Get One Window State");
+        }
+
+        private static void convertTo3_5_2_42(XDocument doc)
+        {
+            // TakeScreenshot v_ActivateWindowBeforeCapture -> v_ActivateBeforeAction
+            // v_WaitTimeBeforeCapture -> v_WaitTimeBetweenFindAndAction
+            var takes = GetCommands(doc, "TakeScreenshotCommand").ToList();
+            ChangeAttributeNameProcess(takes, "v_ActivateWindowBeforeCapture", "v_ActivateBeforeAction");
+            foreach (var cmd in takes)
+            {
+                var attr_wbc = cmd.Attribute("v_WaitTimeBeforeCapture");
+                if (attr_wbc != null)
+                {
+                    if (int.TryParse(attr_wbc.Value, out int wbc))
+                    {
+                        cmd.SetAttributeValue("v_WaitTimeBetweenFindAndAction", ((wbc / 1000.0)).ToString());
+                    }
+                    else
+                    {
+                        cmd.SetAttributeValue("v_WaitTimeBetweenFindAndAction", attr_wbc.Value);
+                    }
+                    attr_wbc.Remove();
+                }
+            }
+
+            // EnterKeys v_WaitTime -> v_WaitTimeAfterKeyEnter
+            ChangeAttributeName(doc, "EnterKeysCommand", "v_WaitTime", "v_WaitTimeAfterKeyEnter");
+
+            // SendAdvancedKeyStrokes, EnterShotcutKey v_WaitAfterKeyEnter -> v_WaitTimeAfterKeyEnter
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>((el) =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "SendAdvancedKeyStrokesCommand":
+                        case "EnterShortcutKeyCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_WaitAfterKeyEnter", "v_WaitTimeAfterKeyEnter");
+
+            // EnterKeys v_EncryptionOption values -> Yes/No
+            ChangeAttributeValue(doc, "EnterKeysCommand", "v_EncryptionOption", new Action<XAttribute>(attr =>
+            {
+                switch (attr.Value.ToLower())
+                {
+                    case "encrypted":
+                        attr.SetValue("Yes");
+                        break;
+                    case "not encrypted":
+                        attr.SetValue("No");
+                        break;
+                }
+            }));
+        }
+
+        private static void convertTo3_5_2_43(XDocument doc)
+        {
+            // CheckTextCommand, GetFilesPathAsListCommand, GetFoldersPathAsListCommand
+            // v_CompareMethod -> v_CheckMethod, v_TrimBeforeCompare -> v_TrimBeforeCheck
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "CheckTextCommand":
+                        case "GetFilesPathAsListCommand":
+                        case "GetFoldersPathAsListCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_CompareMethod", "v_CheckMethod"),
+                    ("v_TrimBeforeCompare", "v_TrimBeforeCheck"),
+                }
+            );
+
+            // CheckTextCommand v_userVariableName -> v_Text, v_applyToVariableName -> v_Result
+            ChangeMultiAttributeNames(doc, "CheckTextCommand",
+                new List<(string, string)>()
+                {
+                    ("v_userVariableName", "v_Text"),
+                    ("v_applyToVariableName", "v_Result"),
+                }
+            );
+
+            // many window commands, uiautomation commands, key commands, image command
+            // v_CompareMethod -> v_CheckMethod, v_MatchMethod -> v_SelectionMethod
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        // image
+                        case "TakeScreenshotCommand":
+                        // key
+                        case "EnterKeysCommand":
+                        case "EnterShortcutKeyCommand":
+                        case "SendAdvancedKeyStrokesCommand":
+                        // uiautomation (uielement)
+                        case "UIAutomationSearchUIElementAndWindowByXPathCommand":
+                        case "UIAutomationSearchUIElementAndWindowCommand":
+                        case "UIAutomationSearchUIElementFromWindowCommand":
+                        case "UIAutomationUIElementActionByXPathCommand":
+                        case "UIAutomationUIElementActionCommand":
+                        // get from window name
+                        case "GetOneProcessNameFromOneWindowNameCommand":
+                        case "GetOneWindowHandleFromOneWindowNameCommand":
+                        case "GetOneWindowPositionCommand":
+                        case "GetOneWindowSizeCommand":
+                        case "GetOneWindowStateCommand":
+                        // one window action
+                        case "ActivateOneWindowCommand":
+                        case "CloseOneWindowCommand":
+                        case "MoveOneWindowCommand":
+                        case "ResizeOneWindowCommand":
+                        case "SetOneWindowStateCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_CompareMethod", "v_CheckMethod"),
+                    ("v_MatchMethod", "v_SelectionMethod"),
+                }
+            );
+
+            // many window commands
+            // v_CompareMethod -> v_CheckMethod
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        // get from window name
+                        case "CheckWindowNameExistsCommand":
+                        case "GetProcessNamesFromWindowNamesAsDataTableCommand":
+                        case "GetProcessNamesFromWindowNamesAsListCommand":
+                        case "GetWindowHandlesFromWindowNamesAsDataTableCommand":
+                        case "GetWindowHandlesFromWindowNamesAsListCommand":
+                        case "GetWindowNamesCommand":
+                        case "GetWindowPositionsFromWindowNamesAsDataTableCommand":
+                        case "GetWindowPositionsFromWindowNamesAsListCommand":
+                        case "GetWindowSizesFromWindowNamesAsDataTableCommand":
+                        case "GetWindowSizesFromWindowNamesAsListCommand":
+                        case "GetWindowStatesFromWindowNamesAsDataTableCommand":
+                        case "GetWindowStatesFromWindowNamesAsListCommand":
+                        // multi window actions
+                        case "ActivateWindowsCommand":
+                        case "CloseWindowsCommand":
+                        case "MoveWindowsCommand":
+                        case "ResizeWindowsCommand":
+                        case "SetWindowsStateCommand":
+                        // one window name actions
+                        case "WaitForWindowToExistsCommand":
+                            return true;
+
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_CompareMethod", "v_CheckMethod"),
+                }
+            );
+
+            // CheckWindowNameExistsCommand, GetWindowNamesCommand
+            // v_UserVariableName -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "CheckWindowNameExistsCommand":
+                        case "GetWindowNamesCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_UserVariableName", "v_Result");
+        }
+
+        private static void convertTo3_5_2_44(XDocument doc)
+        {
+            // ClickUIElement v_ActivateWindow -> v_ActivateWindowBeforeAction
+            ChangeAttributeName(doc, "UIAutomationClickUIElementCommand", "v_ActivateWindow", "v_ActivateWindowBeforeAction");
+
+            // UIAutomationSetTextToUIElementCommand v_TextVariable -> v_TextToSet
+            ChangeAttributeName(doc, "UIAutomationSetTextToUIElementCommand", "v_TextVariable", "v_TextToSet");
+
+            // UIAutomationGetSelectedStateFromUIElementCommand, UIAutomationGetChildrenUIElementsInformationCommand v_ResultVariable -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationGetSelectedStateFromUIElementCommand":
+                    case "UIAutomationGetChildrenUIElementsInformationCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_ResultVariable", "v_Result");
+
+            // UIAutomationGetSelectionItemsFromUIElementCommand v_ListVariable -> v_Result
+            ChangeAttributeName(doc, "UIAutomationGetSelectionItemsFromUIElementCommand", "v_ListVariable", "v_Result");
+
+            // UIAutomationGetTextFromTableUIElementCommand, UIAutomationGetTextFromUIElementCommand v_TextVariable -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationGetTextFromTableUIElementCommand":
+                    case "UIAutomationGetTextFromUIElementCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_TextVariable", "v_Result");
+
+            // UIAutomationGetUIElementTreeXMLFromUIElementCommand v_XMLVariable -> v_Result
+            ChangeAttributeName(doc, "UIAutomationGetUIElementTreeXMLFromUIElementCommand", "v_XMLVariable", "v_Result");
+
+            // UIAutomationSearchUIElementFromTableUIElementCommand -> UIAutomationGetUIElementFromTableUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchUIElementFromTableUIElementCommand", "UIAutomationGetUIElementFromTableUIElementCommand", "Get UIElement From Table UIElement");
+            // UIAutomationSearchParentUIElementCommand -> UIAutomationGetParentUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchParentUIElementCommand", "UIAutomationGetParentUIElementCommand", "Get Parent UIElement");
+            // UIAutomationSearchUIElementFromWindowCommand -> UIAutomationGetWindowUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchUIElementFromWindowCommand", "UIAutomationGetWindowUIElementCommand", "Get Window UIElement");
+
+            // UIAutomationGetUIElementFromTableUIElementCommand, UIAutomationGetParentUIElementCommand, UIAutomationGetWindowUIElementCommand
+            // v_AutomationElementVariable -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>((el) =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationGetUIElementFromTableUIElementCommand":
+                    case "UIAutomationGetParentUIElementCommand":
+                    case "UIAutomationGetWindowUIElementCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_AutomationElementVariable", "v_Result");
+
+            // UIAutomationGetSelectionItemsFromUIElementCommand -> UIAutomationGetSelectionItemsValueFromUIElementCommand
+            ChangeCommandName(doc, "UIAutomationGetSelectionItemsFromUIElementCommand", "UIAutomationGetSelectionItemsValueFromUIElementCommand", "Get Selection Items Value From UIElement");
+        }
+
+        private static void convertTo3_5_2_45(XDocument doc)
+        {
+            // UIAutomationSearchChildUIElementCommand, UIAutomationGetChildrenUIElementsInformationCommand
+            // v_RootElement -> v_TargetElement
+            ChangeAttributeName(doc, new Func<XElement, bool>((el) =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationSearchChildUIElementCommand":
+                    case "UIAutomationGetChildrenUIElementsInformationCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_RootElement", "v_TargetElement");
+
+            // UIAutomationSearchChildUIElementCommand v_AutomationElementVariable -> v_Result
+            ChangeAttributeName(doc, "UIAutomationSearchChildUIElementCommand", "v_AutomationElementVariable", "v_Result");
+
+            // UIAutomationGetChildrenUIElementsInformationCommand -> UIAutomationSearchChildrenUIElementsInformationCommand
+            ChangeCommandName(doc, "UIAutomationGetChildrenUIElementsInformationCommand", "UIAutomationSearchChildrenUIElementsInformationCommand", "Search Children UIElements Information");
+
+            // UIAutomationSetSelectionStateToUIElementCommand -> UIAutomationSetSelectedStateToUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSetSelectionStateToUIElementCommand", "UIAutomationSetSelectedStateToUIElementCommand", "Set Selected State To UIElement");
+        }
+
+        private static void convertTo3_5_2_46(XDocument doc)
+        {
+            // UIAutomationCheckUIElementExistsByXPathCommand, UIAutomationCheckUIElementExistsCommand,
+            // UIAutomationSearchUIElementFromUIElementByXPathCommand, UIAutomationSearchUIElementFromUIElementCommand,
+            // UIAutomationWaitForUIElementToExistsByXPathCommand, UIAutomationWaitForUIElementToExistsCommand
+            // v_WaitTime -> v_WaitTimeForUIElement
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationCheckUIElementExistsByXPathCommand":
+                    case "UIAutomationCheckUIElementExistsCommand":
+                    case "UIAutomationSearchUIElementFromUIElementByXPathCommand":
+                    case "UIAutomationSearchUIElementFromUIElementCommand":
+                    case "UIAutomationWaitForUIElementToExistsByXPathCommand":
+                    case "UIAutomationWaitForUIElementToExistsCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_WaitTime", "v_WaitTimeForUIElement");
+
+            // UIAutomationSearchUIElementAndWindowByXPathCommand, UIAutomationSearchUIElementAndWindowCommand,
+            // UIAutomationUIElementActionByXPathCommand, UIAutomationUIElementActionCommand
+            // v_ElementWaitTime -> v_WaitTimeForUIElement
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationSearchUIElementAndWindowByXPathCommand":
+                    case "UIAutomationSearchUIElementAndWindowCommand":
+                    case "UIAutomationUIElementActionByXPathCommand":
+                    case "UIAutomationUIElementActionCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_ElementWaitTime", "v_WaitTimeForUIElement");
+
+            // UIAutomationSearchChildUIElementCommand v_Index -> v_TargetUIElementIndex
+            ChangeAttributeName(doc, "UIAutomationSearchChildUIElementCommand", "v_Index", "v_TargetUIElementIndex");
+
+            // UIAutomationSearchUIElementAndWindowByXPathCommand, UIAutomationSearchUIElementAndWindowCommand,
+            // UIAutomationSearchUIElementFromUIElementByXPathCommand, UIAutomationSearchUIElementFromUIElementCommand
+            // v_AutomationElementVariable -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationSearchUIElementAndWindowByXPathCommand":
+                    case "UIAutomationSearchUIElementAndWindowCommand":
+                    case "UIAutomationSearchUIElementFromUIElementByXPathCommand":
+                    case "UIAutomationSearchUIElementFromUIElementCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_AutomationElementVariable", "v_Result");
+
+            // ActivateOneWindowCommand, ActivateWindowsCommand, 
+            // CheckWindowNameExistsCommand,
+            // CloseOneWindowCommand, CloseWindowsCommand, 
+            // GetOneProcessNameFromOneWindowNameCommand, GetOneWindowHandleFromOneWindowNameCommand, 
+            // GetOneWindowPositionCommand, GetOneWindowSizeCommand, GetOneWindowStateCommand, 
+            // GetProcessNamesFromWindowNamesAsDataTableCommand, GetProcessNamesFromWindowNamesAsListCommand, 
+            // GetWindowHandlesFromWindowNamesAsDataTableCommand, GetWindowHandlesFromWindowNamesAsListCommand,
+            // GetWindowNamesCommand, 
+            // GetWindowPositionsFromWindowNamesAsDataTableCommand, GetWindowPositionsFromWindowNamesAsListCommand,
+            // GetWindowSizesFromWindowNamesAsDataTableCommand, GetWindowSizesFromWindowNamesAsListCommand,
+            // GetWindowStatesFromWindowNamesAsDataTableCommand, GetWindowStatesFromWindowNamesAsListCommand,
+            // MoveOneWindowCommand, MoveWindowsCommand,
+            // ResizeOneWindowCommand, ResizeWindowsCommand,
+            // SetOneWindowStateCommand, SetWindowsStateCommand,
+            // WaitForWindowToExistsCommand,
+            // UIAutomationSearchUIElementAndWindowByXPathCommand, UIAutomationSearchUIElementAndWindowCommand,
+            // UIAutomationUIElementActionByXPathCommand, UIAutomationUIElementActionCommand
+            // v_NameResult -> v_WindowNameResult, v_HandleResult -> v_WindowHandleResult
+            ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    // window commands
+                    case "ActivateOneWindowCommand":
+                    case "ActivateWindowsCommand":
+                    case "CheckWindowNameExistsCommand":
+                    case "CloseOneWindowCommand":
+                    case "CloseWindowsCommand":
+                    case "GetOneProcessNameFromOneWindowNameCommand":
+                    case "GetOneWindowHandleFromOneWindowNameCommand":
+                    case "GetOneWindowPositionCommand":
+                    case "GetOneWindowSizeCommand":
+                    case "GetOneWindowStateCommand":
+                    case "GetProcessNamesFromWindowNamesAsDataTableCommand":
+                    case "GetProcessNamesFromWindowNamesAsListCommand":
+                    case "GetWindowHandlesFromWindowNamesAsDataTableCommand":
+                    case "GetWindowHandlesFromWindowNamesAsListCommand":
+                    case "GetWindowNamesCommand":
+                    case "GetWindowPositionsFromWindowNamesAsDataTableCommand":
+                    case "GetWindowPositionsFromWindowNamesAsListCommand":
+                    case "GetWindowSizesFromWindowNamesAsDataTableCommand":
+                    case "GetWindowSizesFromWindowNamesAsListCommand":
+                    case "GetWindowStatesFromWindowNamesAsDataTableCommand":
+                    case "GetWindowStatesFromWindowNamesAsListCommand":
+                    case "MoveOneWindowCommand":
+                    case "MoveWindowsCommand":
+                    case "ResizeOneWindowCommand":
+                    case "ResizeWindowsCommand":
+                    case "SetOneWindowStateCommand":
+                    case "SetWindowsStateCommand":
+                    case "WaitForWindowToExistsCommand":
+                    // UIElement command
+                    case "UIAutomationSearchUIElementAndWindowByXPathCommand":
+                    case "UIAutomationSearchUIElementAndWindowCommand":
+                    case "UIAutomationUIElementActionByXPathCommand":
+                    case "UIAutomationUIElementActionCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), new List<(string, string)>()
+            {
+                ("v_NameResult", "v_WindowNameResult"),
+                ("v_HandleResult", "v_WindowHandleResult"),
+            });
+
+            // UIAutomationUIElementActionCommand v_UIASearchParameters -> v_SearchParameters
+            ChangeInnerTagName(doc, "UIAutomationUIElementActionCommand", "v_UIASearchParameters", "v_SearchParameters");
+
+            // UIAutomationSearchUIElementAndWindowByXPathCommand -> UIAutomationSearchUIElementFromWindowNameByXPathCommand
+            ChangeCommandName(doc, "UIAutomationSearchUIElementAndWindowByXPathCommand", "UIAutomationSearchUIElementFromWindowNameByXPathCommand", "Search UIElement From Window Name By XPath");
+
+            // UIAutomationSearchUIElementAndWindowCommand -> UIAutomationSearchUIElementFromWindowCommand
+            ChangeCommandName(doc, "UIAutomationSearchUIElementAndWindowCommand", "UIAutomationSearchUIElementFromWindowNameCommand", "Search UIElement From Window Name");
+
+            // GetOneWindowHandleFromOneWindowNameCommand, GetWindowHandlesFromWindowNamesAsListCommand
+            // v_Result -> v_WindowHandleResult
+            OverwriteAttributeValue(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "GetOneWindowHandleFromOneWindowNameCommand":
+                    case "GetWindowHandlesFromWindowNamesAsListCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_Result", "v_WindowHandleResult");
+
+            // GetWindowNameFromWindowHandleCommand, GetWindowNamesCommand
+            // v_Result -> v_WindowNameResult
+            OverwriteAttributeValue(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "GetWindowNameFromWindowHandleCommand":
+                    case "GetWindowNamesCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_Result", "v_WindowNameResult");
+        }
+
+        private static void convertTo3_5_2_47(XDocument doc)
+        {
+            // UIAutomationUIElementActionByXPathCommand v_UIASearchParameters -> v_SearchXPath
+            ChangeAttributeName(doc, "UIAutomationUIElementActionByXPathCommand", "v_UIASearchParameters", "v_SearchXPath");
+
+            // UIAutomationGetUIElementTreeXMLFromUIElementCommand -> UIAutomationGetUIElementsTreeXMLFromUIElementCommand
+            ChangeCommandName(doc, "UIAutomationGetUIElementTreeXMLFromUIElementCommand", "UIAutomationSearchUIElementsTreeXMLFromUIElementCommand", "Search UIElements Tree XML From UIElement");
+
+            // UIAutomationCheckUIElementExistsByXPathCommand, UIAutomationSearchUIElementFromUIElementByXPathCommand,
+            // UIAutomationWaitForUIElementToExistsByXPathCommand
+            // v_SearchXPath element to attribute
+            var checkUIElemXPath = GetCommands(doc, new Func<XElement, bool>(elem =>
+            {
+                switch (GetCommandName(elem))
+                {
+                    case "UIAutomationCheckUIElementExistsByXPathCommand":
+                    case "UIAutomationSearchUIElementFromUIElementByXPathCommand":
+                    case "UIAutomationWaitForUIElementToExistsByXPathCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }));
+            foreach (var command in checkUIElemXPath)
+            {
+                var xpathElem = command.Element("v_SearchXPath");
+                if (xpathElem != null)
+                {
+                    command.SetAttributeValue("v_SearchXPath", xpathElem.Value);
+                    xpathElem.Remove();
+                }
+            }
+        }
+
+        private static void convertTo3_5_2_51(XDocument doc)
+        {
+            // UIAutomationUIElementActionCommand -> UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand
+            ChangeCommandName(doc, "UIAutomationUIElementActionCommand", "UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand", "UIElement Action After Search UIElement From Window Name");
+
+            // UIAutomationUIElementActionByXPathCommand -> UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand
+            ChangeCommandName(doc, "UIAutomationUIElementActionByXPathCommand", "UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand", "UIElement Action After Search UIElement By XPath From Window Name");
+        }
+
+        private static void convertTo3_5_2_53(XDocument doc)
+        {
+            // UIAutomationGetWindowUIElementCommand -> UIAutomationGetWindowUIElementFromWindowNameCommand
+            ChangeCommandName(doc, "UIAutomationGetWindowUIElementCommand", "UIAutomationGetWindowUIElementFromWindowNameCommand", "Get Window UIElement From Window Name");
+        }
+
+        private static void convertTo3_5_2_55(XDocument doc)
+        {
+            // ExtractionFolderPathCommand
+            var exFolder = GetCommands(doc, "ExtractionFolderPathCommand");
+            foreach (var cmd in exFolder)
+            {
+                var attr = cmd.Attribute("v_Format");
+                var format = attr.Value.ToLower();
+                switch (format)
+                {
+                    case "folder":
+                        cmd.Attribute("v_Format").SetValue("Parent Folder");
+                        break;
+                    case "drivename":
+                        cmd.Attribute("v_Format").SetValue("Drive Name");
+                        break;
+                }
+            }
+        }
+
+        private static void convertTo3_5_2_56(XDocument doc)
+        {
+            // change attribute name
+            // SeleniumBrowserScrollToWebElementCommand v_WhenFailScroll -> v_WhenFailAction
+            ChangeAttributeName(doc, "SeleniumBrowserScrollToWebElementCommand", "v_WhenFailScroll", "v_WhenFailAction");
+
+            // SeleniumBrowserClearTextInWebElementCommand
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserClearTextInWebElementCommand", new List<(string, string)>()
+            {
+                ("v_ScrollToElement", "v_ScrollToWebElement"),
+                ("v_WhenClearNotSupported", "v_WhenFailAction"),
+            });
+
+            // SeleniumBrowserClickWebElementCommand
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserClickWebElementCommand", new List<(string, string)>()
+            {
+                ("v_ScrollToElement", "v_ScrollToWebElement"),
+                ("v_WhenFailClick", "v_WhenFailAction"),
+            });
+
+            // SeleniumBrowserSelectOptionForWebElementCommand
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserSelectOptionForWebElementCommand", new List<(string, string)>()
+            {
+                ("v_ScrollToElement", "v_ScrollToWebElement"),
+                ("v_WhenFailSelectAction", "v_WhenFailAction"),
+            });
+
+            //// SeleniumBrowserSendSpecialKeystrokesToWebElementCommand
+            //ChangeMultiAttributeNames(doc, "SeleniumBrowserSendSpecialKeystrokesToWebElementCommand", new List<(string, string)>()
+            //{
+            //    ("v_ScrollToElement", "v_ScrollToWebElement"),
+            //    ("v_WhenSetNotSupported", "v_WhenFailAction"),
+            //});
+
+            //// SeleniumBrowserSetTextToWebElementCommand
+            //ChangeMultiAttributeNames(doc, "SeleniumBrowserSetTextToWebElementCommand", new List<(string, string)>()
+            //{
+            //    ("v_ScrollToElement", "v_ScrollToWebElement"),
+            //    ("v_WhenSetNotSupported", "v_WhenFailAction"),
+            //});
+
+            // SeleniumBrowserSendSpecialKeystrokesToWebElementCommand
+            // SeleniumBrowserSetTextToWebElementCommand
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "SeleniumBrowserSendSpecialKeystrokesToWebElementCommand":
+                        case "SeleniumBrowserSetTextToWebElementCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_ScrollToElement", "v_ScrollToWebElement"),
+                    ("v_WhenSetNotSupported", "v_WhenFailAction"),
+                }
+            );
+
+            // SeleniumBrowserSwitchFrameToWebElementCommand
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserSwitchFrameToWebElementCommand", new List<(string, string)>()
+            {
+                ("v_ScrollToElement", "v_ScrollToWebElement"),
+                ("v_WhenFailSwitch", "v_WhenFailAction"),
+            });
+            // SeleniumBrowserSwitchFrameToWebElementCommand -> SeleniumBrowserSwitchToFrameWebElementCommand
+            ChangeCommandName(doc, "SeleniumBrowserSwitchFrameToWebElementCommand", "SeleniumBrowserSwitchToFrameWebElementCommand", "Switch To Frame WebElement");
+        }
+
+        private static void convertTo3_5_2_57(XDocument doc)
+        {
+            // SeleniumBrowserCreateWebBrowserInstanceCommand v_EngineType -> v_BrowserType
+            ChangeAttributeName(doc, "SeleniumBrowserCreateWebBrowserInstanceCommand", "v_EngineType", "v_BrowserType");
+
+            // SeleniumBrowserCheckBrowserInstanceExistsCommand, SeleniumBrowserGetWebBrowserInformationCommand
+            // v_applyToVariableName -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserCheckBrowserInstanceExistsCommand":
+                    case "SeleniumBrowserGetWebBrowserInformationCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_applyToVariableName", "v_Result");
+
+            // SeleniumBrowserSearchWebElementCommand, SeleniumBrowserSearchWebElementFromWebEelementCommand,
+            // SeleniumBrowserCheckWebElementExistsCommand, SeleniumBrowserWaitForWebElementToExistsCommand,
+            // SeleniumBrowserGetAWebElementValuesAsDataTableCommand, SeleniumBrowserGetAWebElementValuesAsDictionaryCommand,
+            // SeleniumBrowserGetAWebElementValuesAsListCommand, SeleniumBrowserGetTableValueAsDataTableCommand,
+            ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserSearchWebElementCommand":
+                    case "SeleniumBrowserSearchWebElementFromWebElementCommand":
+                    case "SeleniumBrowserCheckWebElementExistsCommand":
+                    case "SeleniumBrowserWaitForWebElementToExistsCommand":
+                    case "SeleniumBrowserGetAWebElementValuesAsDataTableCommand":
+                    case "SeleniumBrowserGetAWebElementValuesAsDictionaryCommand":
+                    case "SeleniumBrowserGetAWebElementValuesAsListCommand":
+                    case "SeleniumBrowserGetTableValueAsDataTableCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), new List<(string, string)>()
+            {
+                ("v_SeleniumSearchType", "v_SearchMethod"),
+                ("v_SeleniumSearchParameter", "v_SearchParameter"),
+                ("v_ElementIndex", "v_WebElementIndex"),
+                ("v_WaitTime", "v_WaitTimeForWebElement"),
+            });
+
+            // SeleniumBrowserWebElementActionCommand
+            // v_SeleniumSearchType -> v_SearchMethod, v_SeleniumSearchParameter -> v_SearchParameter
+            // v_SeleniumElementIndex -> v_WebElementIndex, v_SeleniumElementAction -> v_WebElementAction
+            // v_SeleniumElementAction -> v_WebElementAction, v_ScrollToElement -> v_ScrollToWebElement
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserWebElementActionCommand",
+                new List<(string, string)>()
+                {
+                    ("v_SeleniumSearchType", "v_SearchMethod"),
+                    ("v_SeleniumSearchParameter", "v_SearchParameter"),
+                    ("v_SeleniumElementIndex", "v_WebElementIndex"),
+                    ("v_SeleniumElementAction", "v_WebElementAction"),
+                    ("v_ScrollToElement", "v_ScrollToWebElement"),
+                    ("v_WaitTime", "v_WaitTimeForWebElement"),
+                }
+            );
+
+            // SeleniumBrowserGetAttributeFromWebElementCommand, SeleniumBrowserGetOptionsFromWebElementCommand
+            ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserGetAttributeFromWebElementCommand":
+                    case "SeleniumBrowserGetOptionsFromWebElementCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), new List<(string, string)>()
+            {
+                ("v_WhenNoAttribute", "v_WhenValueCanNotRetrieved"),
+                ("v_ScrollToElement", "v_ScrollToWebElement"),
+            });
+
+            // SeleniumBrowserGetHTMLFromWebElementCommand, SeleniumBrowserGetTextFromWebElementCommand
+            // v_ScrollToElement -> v_ScrollToWebElement
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserGetHTMLFromWebElementCommand":
+                    case "SeleniumBrowserGetTextFromWebElementCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_ScrollToElement", "v_ScrollToWebElement");
+
+            // SeleniumBrowserGetMatchedWebElementsCommand, SeleniumBrowserGetWebElementsCountCommand,
+            // SeleniumBrowserGetWebElementsValueAsDictionaryCommand, SeleniumBrowserGetWebElementsValueAsListCommand,
+            // SeleniumBrowserGetWebElementsValuesAsDataTableCommand, SeleniumBrowserGetWebElementsValueAsDataTableCommand
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "SeleniumBrowserGetMatchedWebElementsCommand":
+                        case "SeleniumBrowserGetWebElementsCountCommand":
+                        case "SeleniumBrowserGetWebElementsValueAsDictionaryCommand":
+                        case "SeleniumBrowserGetWebElementsValueAsListCommand":
+                        case "SeleniumBrowserGetWebElementsValuesAsDataTableCommand":
+                        case "SeleniumBrowserGetWebElementsValueAsDataTableCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_SeleniumSearchType", "v_SearchMethod"),
+                    ("v_SeleniumSearchParameter", "v_SearchParameter"),
+                    ("v_WaitTime", "v_WaitTimeForWebElement"),
+                }
+            );
+
+            // SeleniumBrowserGetAWebElementValuesAsDataTableCommand, SeleniumBrowserGetTableValueAsDataTableCommand,
+            // SeleniumBrowserGetWebElementsValueAsDataTableCommand, SeleniumBrowserGetWebElementsValuesAsDataTableCommand
+            // v_DataTableVariableName -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserGetAWebElementValuesAsDataTableCommand":
+                    case "SeleniumBrowserGetTableValueAsDataTableCommand":
+                    case "SeleniumBrowserGetWebElementsValueAsDataTableCommand":
+                    case "SeleniumBrowserGetWebElementsValuesAsDataTableCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_DataTableVariableName", "v_Result");
+
+            // SeleniumBrowserGetAWebElementValuesAsDictionaryCommand, SeleniumBrowserGetWebElementsValueAsDictionaryCommand
+            // v_DictionaryVariableName -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserGetAWebElementValuesAsDictionaryCommand":
+                    case "SeleniumBrowserGetWebElementsValueAsDictionaryCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_DictionaryVariableName", "v_Result");
+
+            // SeleniumBrowserGetAWebElementValuesAsListCommand, SeleniumBrowserGetWebElementsValueAsListCommand
+            // v_ListVariableName -> v_Result
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserGetAWebElementValuesAsListCommand":
+                    case "SeleniumBrowserGetWebElementsValueAsListCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_ListVariableName", "v_Result");
+        }
+
+        private static void convertTo3_5_2_59(XDocument doc)
+        {
+            // SeleniumAttachCreateWebBrowserInstanceCommand v_EngineType -> v_BrowserType
+            ChangeAttributeName(doc, "SeleniumAttachCreateWebBrowserInstanceCommand", "v_EngineType", "v_BrowserType");
+            // SeleniumAttachCreateWebBrowserInstanceCommand -> SeleniumBrowserAttachCreateWebBrowserInstanceCommand
+            ChangeCommandName(doc, "SeleniumAttachCreateWebBrowserInstanceCommand", "SeleniumBrowserAttachCreateWebBrowserInstanceCommand", "Attach Web Browser Instance");
+
+            // SeleniumBrowserCreateWebBrowserInstanceCommand v_Handle -> v_WindowHandleResult
+            ChangeAttributeName(doc, "SeleniumBrowserCreateWebBrowserInstanceCommand", "v_Handle", "v_WindowHandleResult");
+
+            // SeleniumBrowserExecuteScriptCommand v_userVariableName -> v_Result
+            ChangeAttributeName(doc, "SeleniumBrowserExecuteScriptCommand", "v_userVariableName", "v_Result");
+
+            // SeleniumBrowserExecuteScriptCommand -> SeleniumBrowserExecuteJavaScriptCommand
+            ChangeCommandName(doc, "SeleniumBrowserExecuteScriptCommand", "SeleniumBrowserExecuteJavaScriptCommand", "Execute JavaScript");
+        }
+
+        private static void convertTo3_5_2_60(XDocument doc)
+        {
+            // SeleniumBrowserExecuteJavaScriptCommand v_Args -> v_Arguments
+            ChangeAttributeName(doc, "SeleniumBrowserExecuteJavaScriptCommand", "v_Args", "v_Arguments");
+
+            // SeleniumBrowserExecuteJavaScriptCommand -> SeleniumBrowserExecuteJavaScriptFromFileCommand
+            ChangeToOtherCommand(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserExecuteJavaScriptCommand":
+                        var typeAttr = el.Attribute("v_CodeType");
+                        if (typeAttr != null)
+                        {
+                            var v = typeAttr.Value.ToLower();
+                            return (v == "file");
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                        
+                    default:
+                        return false;
+                }
+            }), "SeleniumBrowserExecuteJavaScriptFromFileCommand", "Execute JavaScript From File", 
+                new List<(string, string)>()
+                {
+                    ("v_ScriptCode", "v_FilePath"),
+                }
+            );
+
+            // SeleniumBrowserRefreshCommand -> SeleniumBrowserRefreshWebBrowserCommand
+            ChangeCommandName(doc, "SeleniumBrowserRefreshCommand", "SeleniumBrowserRefreshWebBrowserCommand", "Refresh Web Browser");
+
+            // SeleniumBrowserTakeScreenshotCommand -> SeleniumBrowserTakeScreenshotOfWebBrowserCommand
+            ChangeCommandName(doc, "SeleniumBrowserTakeScreenshotCommand", "SeleniumBrowserTakeScreenshotOfWebBrowserCommand", "Take Screenshot Of Web Browser");
+        }
+
+        private static void convertTo3_5_2_61(XDocument doc)
+        {
+            // SeleniumBrowserExecuteJavaScriptCommand -> SeleniumBrowserExecuteJavaScriptFromCodeCommand
+            ChangeCommandName(doc, "SeleniumBrowserExecuteJavaScriptCommand", "SeleniumBrowserExecuteJavaScriptFromCodeCommand", "Execute JavaScript From Code");
+
+            // SeleniumWebElementPositionCommand -> SeleniumBrowserGetWebElementPositionCommand
+            ChangeCommandName(doc, "SeleniumWebElementPositionCommand", "SeleniumBrowserGetWebElementPositionCommand", "Get WebElement Position");
+
+            // SeleniumWebElementSizeCommand -> SeleniumBrowserGetWebElementSizeCommand
+            ChangeCommandName(doc, "SeleniumWebElementSizeCommand", "SeleniumBrowserGetWebElementSizeCommand", "Get WebElement Size");
+
+            // SeleniumBrowserGetMatchedWebElementsCommand -> SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetMatchedWebElementsCommand", "SeleniumBrowserGetMatchedWebElementsHTMLAsListCommand", "Get Matched WebElements HTML As List");
+
+            // SeleniumBrowserGetTableValueAsDataTableCommand -> SeleniumBrowserGetTableValuesAsDataTableCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetTableValueAsDataTableCommand", "SeleniumBrowserGetTableValuesAsDataTableCommand", "Get Table Values As DataTable");
+
+            // SeleniumBrowserGetAWebElementValuesAsDictionaryCommand -> SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAWebElementValuesAsDictionaryCommand", "SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand", "Get One WebElement Values As Dictionary");
+
+            // SeleniumBrowserGetAWebElementValuesAsListCommand -> SeleniumBrowserGetOneWebElementValuesAsListCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAWebElementValuesAsListCommand", "SeleniumBrowserGetOneWebElementValuesAsListCommand", "Get One WebElement Values As List");
+
+            // SeleniumBrowserGetAWebElementValuesAsDataTableCommand -> SeleniumBrowserGetOneWebElementValuesAsDataTableCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAWebElementValuesAsDataTableCommand", "SeleniumBrowserGetOneWebElementValuesAsDataTableCommand", "Get One WebElement Values As DataTable");
+
+            // SeleniumBrowserGetWebBrowserInformationCommand -> new commands
+            var getBrowserInfo = GetCommands(doc, "SeleniumBrowserGetWebBrowserInformationCommand");
+            var getHTML = new List<XElement>();
+            var getJSONHandle = new List<XElement>();
+            foreach(var cmd in getBrowserInfo)
+            {
+                var attr = cmd.Attribute("v_InfoType");
+                if (attr != null)
+                {
+                    switch (attr.Value.ToLower())
+                    {
+                        case "html page source":
+                            getHTML.Add(cmd);
+                            break;
+                        case "handles json array":
+                            getJSONHandle.Add(cmd);
+                            break;
+                    }
+                }
+            }
+            // SeleniumBrowserGetWebBrowserInformationCommand -> SeleniumBrowserGetWebBrowserHTMLSourceCommand
+            ChangeToOtherCommandProcess(getHTML, "SeleniumBrowserGetWebBrowserHTMLSourceCommand", "Get Web Browser HTML Source", new List<(string, string)>());
+            // SeleniumBrowserGetWebBrowserInformationCommand -> SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand
+            ChangeToOtherCommandProcess(getJSONHandle, "SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand", "Get Window And Tab Handles As JSON", new List<(string, string)>());
+        }
+
+        private static void convertTo3_5_2_62(XDocument doc)
+        {
+            // SeleniumBrowserSwitchWebBrowserWindowAndTabCommand paremeters
+            ChangeMultiAttributeNames(doc, "SeleniumBrowserSwitchWebBrowserWindowAndTabCommand",
+                new List<(string, string)>()
+                {
+                    ("v_WindowMatchType", "v_CheckTarget"),
+                    ("v_MatchSpecification", "v_CheckMethod"),
+                    ("v_CaseSensitiveMatch", "v_CaseSensitive"),
+                    ("v_MatchParameter", "v_CheckText"),
+                }
+            );
+
+            // SeleniumBrowserSwitchWebBrowserWindowAndTabCommand v_CheckTarget value
+            ChangeAttributeValue(doc, "SeleniumBrowserSwitchWebBrowserWindowAndTabCommand", "v_CheckTarget",
+                new Action<XAttribute>(attr =>
+                {
+                    switch (attr.Value.ToLower())
+                    {
+                        case "window url":
+                            attr.SetValue("URL");
+                            break;
+                        case "window title":
+                            attr.SetValue("Page Title");
+                            break;
+                    }
+                })
+            );
+
+            // SeleniumBrowserSwitchWebBrowserWindowAndTabCommand v_CheckMethod value
+            ChangeAttributeValue(doc, "SeleniumBrowserSwitchWebBrowserWindowAndTabCommand", "v_CheckMethod",
+                new Action<XAttribute>(attr =>
+                {
+                    switch (attr.Value.ToLower())
+                    {
+                        case "contains match":
+                            attr.SetValue("Contains");
+                            break;
+                    }
+                })
+            );
+        }
+
+        private static void convertTo3_5_2_64(XDocument doc)
+        {
+            // add v_SelectionMethod in WebBrowser commands
+            var webCmds = GetCommands(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "SeleniumBrowserSearchWebElementFromWebElementCommand":
+                    case "SeleniumBrowserWaitForWebElementToExistsCommand":
+                    case "SeleniumBrowserWebElementActionCommand":
+                    case "SeleniumBrowserCheckWebElementExistsCommand":
+                    case "SeleniumBrowserGetTableValuesAsDataTableCommand":
+                    case "SeleniumBrowserSearchWebElementCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }));
+            foreach(var cmd in webCmds)
+            {
+                var indexAttr = cmd.Attribute("v_WebElementIndex");
+                if (indexAttr != null)
+                {
+                    if (!string.IsNullOrEmpty(indexAttr.Value))
+                    {
+                        cmd.SetAttributeValue("v_SelectionMethod", "Index");
+                    }
+                }
+            }
+            webCmds = null;
+
+            // add v_WindowSelectionMethod when it does not exists
+            var uiAction = GetCommands(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationSearchUIElementFromWindowNameCommand":
+                    case "UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }));
+            foreach (var cmd in uiAction)
+            {
+                var winSelAttr = cmd.Attribute("v_WindowSelectionMethod");
+                if (winSelAttr == null)
+                {
+                    var selAttr = cmd.Attribute("v_SelectionMethod");
+                    var winSelValue = selAttr.Value;
+                    selAttr.Remove();
+                    cmd.SetAttributeValue("v_WindowSelectionMethod", winSelValue);
+                }
+            }
+            uiAction = null;
+
+            // add v_SelectionMethod in UIAutomation commands
+            var uiCmds = GetCommands(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "UIAutomationUIElementActionAfterSearchUIElementFromWindowHandleCommand":
+                    case "UIAutomationUIElementActionAfterSearchUIElementFromWindowNameCommand":
+                    case "UIAutomationCheckUIElementExistsCommand":
+                    case "UIAutomationSearchChildUIElementCommand":
+                    case "UIAutomationSearchUIElementFromUIElementCommand":
+                    case "UIAutomationWaitForUIElementToExistsCommand":
+                    case "UIAutomationSearchUIElementFromWindowHandleCommand":
+                    case "UIAutomationSearchUIElementFromWindowNameCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }));
+            foreach (var cmd in uiCmds)
+            {
+                var indexAttr = cmd.Attribute("v_TargetUIElementIndex");
+                if (indexAttr != null)
+                {
+                    if (!string.IsNullOrEmpty(indexAttr.Value))
+                    {
+                        cmd.SetAttributeValue("v_SelectionMethod", "Index");
+                    }
+                }
+            }
+            uiCmds = null;
+        }
+
+        private static void convertTo3_5_2_65(XDocument doc)
+        {
+            // SeleniumBrowserWebElementActionCommand -> SeleniumBrowserWebElementActionAfterSearchWebElementCommand
+            ChangeCommandName(doc, "SeleniumBrowserWebElementActionCommand", "SeleniumBrowserWebElementActionAfterSearchWebElementCommand", "WebElement Action After Search WebElement");
+
+            // SeleniumBrowserWebElementActionAfterSearchWebElementCommand
+            // Get Matching WebElements -> Get Matching WebElements HTML As List
+            ChangeAttributeValue(doc, "SeleniumBrowserWebElementActionAfterSearchWebElementCommand", "v_WebElementAction",
+                new Action<XAttribute>(attr =>
+                {
+                    if (attr.Value.ToLower() == "get matching webelements")
+                    {
+                        attr.SetValue("Get Matching WebElements HTML As List");
+                    }
+                })
+            );
+        }
+
+        private static void convertTo3_5_2_66(XDocument doc)
+        {
+            // SeleniumBrowserCheckBrowserInstanceExistsCommand -> SeleniumBrowserCheckWebBrowserInstanceExistsCommand
+            ChangeCommandName(doc, "SeleniumBrowserCheckBrowserInstanceExistsCommand", "SeleniumBrowserCheckWebBrowserInstanceExistsCommand", "Check Web Browser Instance Exists");
+        }
+
+        private static void convertTo3_5_2_70(XDocument doc)
+        {
+            // ExcelGetWorksheetsCommand v_CompareMethod -> v_CheckMethod
+            ChangeAttributeName(doc, "ExcelGetWorksheetsCommand", "v_CompareMethod", "v_CheckMethod");
+
+            // ExcelGetWorksheetsCommand -> ExcelGetWorksheetNamesAsListCommand
+            ChangeCommandName(doc, "ExcelGetWorksheetsCommand", "ExcelGetWorksheetNamesAsListCommand", "Get Worksheet Names As List");
+        }
+
+        private static void convertTo3_5_2_71(XDocument doc)
+        {
+            // ConvertDictionaryToVisualizedTextCommand fix command name
+            ChangeCommandName(doc, "ConvertDictionaryToVisualizedTextCommand", "ConvertDictionaryToVisualizedTextCommand", "Convert Dictionary To Visualized Text");
+
+            // ConvertDictionaryToTextCommand fix command name
+            ChangeCommandName(doc, "ConvertDictionaryToTextCommand", "ConvertDictionaryToTextCommand", "Convert Dictionary To Text");
+        }
+
         /// <summary>
         /// get old, new current window keyword
         /// </summary>
@@ -4559,7 +6030,7 @@ namespace taskt.Core.Script
             XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
             foreach (var cmd in commands)
             {
-                XElement tableParams = cmd.Element(tableParameterName).Element(ns + "diffgram").Element("DocumentElement");
+                XElement tableParams = cmd.Element(tableParameterName)?.Element(ns + "diffgram")?.Element("DocumentElement") ?? null;
                 var table = tableParams?.Elements() ?? new List<XElement>();
                 foreach (XElement row in table)
                 {
@@ -4604,6 +6075,12 @@ namespace taskt.Core.Script
             XNamespace nsMsdata = "urn:schemas-microsoft-com:xml-msdata";
 
             var el = elem.Element(tableParameterName);
+            if (el == null)
+            {
+                // table not found
+                return (null, null, "", null, null);
+            }
+
             var elel = el.Element(nsXs + "schema").Element(nsXs + "element");
 
             // table name
@@ -4612,7 +6089,7 @@ namespace taskt.Core.Script
             {
                 rowName = elel.Attribute(nsMsdata + "MainDataTable")?.Value;
             }
-            
+
             // xs:sequence
             var seq = elel.Element(nsXs + "complexType").Element(nsXs + "choice").Element(nsXs + "element").Element(nsXs + "complexType").Element(nsXs + "sequence");
 
@@ -4759,9 +6236,13 @@ namespace taskt.Core.Script
         private static void ChangeTableColumnNames(XDocument doc, string commandName, string tableParameterName, List<(string currentColumnName, string newColumnName)> changes)
         {
             var cmds = GetCommands(doc, commandName);
-            foreach(var cmd in cmds)
+            foreach (var cmd in cmds)
             {
                 (var table, var before, _, _, var seq) = GetTable(cmd, tableParameterName);
+                if ((table == null) || (before == null))
+                {
+                    continue;
+                }
 
                 foreach (var e in seq)
                 {
@@ -4869,7 +6350,7 @@ namespace taskt.Core.Script
         /// <param name="attributePairs">(targetAttributeName, newAttributeName)</param>
         private static void ChangeMultiAttributeNamesProcess(List<XElement> commands, List<(string, string)> attributePairs)
         {
-            foreach((var targetAttribute, var newAttribute) in attributePairs)
+            foreach ((var targetAttribute, var newAttribute) in attributePairs)
             {
                 ChangeAttributeNameProcess(commands, targetAttribute, newAttribute);
             }
@@ -4915,7 +6396,7 @@ namespace taskt.Core.Script
             // attribute values
             if (preAttributeFunc != null)
             {
-                foreach((var attr, var func) in preAttributeFunc)
+                foreach ((var attr, var func) in preAttributeFunc)
                 {
                     ChangeAttributeValueProcess(commands, attr, func);
                 }
@@ -4957,6 +6438,116 @@ namespace taskt.Core.Script
         private static XDocument ChangeToOtherCommand(XDocument doc, string targetCommand, string newCommand, string newSelectionName, List<(string, string)> attributePairs, List<(string, Action<XAttribute>)> preAttributeFunc = null)
         {
             return ChangeToOtherCommand(doc, GetSearchCommandsFunc(targetCommand), newCommand, newSelectionName, attributePairs, preAttributeFunc);
+        }
+
+        /// <summary>
+        /// change tag name in commands
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="currentTagName"></param>
+        /// <param name="newTagName"></param>
+        private static void ChangeInnerTagNameProcess(List<XElement> commands, string currentTagName, string newTagName)
+        {
+            foreach (var cmd in commands)
+            {
+                var targetElement = cmd.Element(currentTagName);
+                if (targetElement != null)
+                {
+                    var newElement = new XElement(newTagName, targetElement.Attributes(), targetElement.Nodes());
+                    targetElement.ReplaceWith(newElement);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Change inner tag name in Commands
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="currentTagName"></param>
+        /// <param name="newTagName"></param>
+        /// <returns></returns>
+        private static XDocument ChangeInnerTagName(XDocument doc, Func<XElement, bool> searchFunc, string currentTagName, string newTagName)
+        {
+            var commands = doc.Descendants("ScriptCommand")
+                            .Where(searchFunc).ToList();
+            ChangeInnerTagNameProcess(commands, currentTagName, newTagName);
+            return doc;
+        }
+
+        /// <summary>
+        /// change inner tag name in commands
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="targetCommand"></param>
+        /// <param name="currentTagName"></param>
+        /// <param name="newTagName"></param>
+        /// <returns></returns>
+        private static XDocument ChangeInnerTagName(XDocument doc, string targetCommand, string currentTagName, string newTagName)
+        {
+            return ChangeInnerTagName(doc, GetSearchCommandsFunc(targetCommand), currentTagName, newTagName);
+        }
+
+        /// <summary>
+        /// overwrite attribute value with another existing attribute process
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="targetAttr"></param>
+        /// <param name="overwriteAttr"></param>
+        /// <param name="removeTargetAttr"></param>
+        private static void OverwriteAttributeValueProcess(List<XElement> commands, string targetAttr, string overwriteAttr, bool removeTargetAttr)
+        {
+            foreach (var cmd in commands)
+            {
+                var tAttr = cmd.Attribute(targetAttr);
+                if (tAttr != null)
+                {
+                    var oAttr = cmd.Attribute(overwriteAttr);
+                    if (oAttr != null)
+                    {
+                        oAttr.SetValue(tAttr.Value);
+                    }
+                    else
+                    {
+                        cmd.SetAttributeValue(overwriteAttr, tAttr.Value);
+                    }
+                    if (removeTargetAttr)
+                    {
+                        tAttr.Remove();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// overwrite attribute value with anothre existing attribute
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="targetAttribute"></param>
+        /// <param name="overwriteAttribute"></param>
+        /// <param name="removeTargetAttribute"></param>
+        /// <returns></returns>
+        private static XDocument OverwriteAttributeValue(XDocument doc, Func<XElement, bool> searchFunc, string targetAttribute, string overwriteAttribute, bool removeTargetAttribute = true)
+        {
+            var commands = doc.Descendants("ScriptCommand")
+                            .Where(searchFunc).ToList();
+            OverwriteAttributeValueProcess(commands, targetAttribute, overwriteAttribute, removeTargetAttribute);
+            return doc;
+        }
+
+        /// <summary>
+        /// overwrite attribute value with anothre existing attribute
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="targetCommand"></param>
+        /// <param name="targetAttribute"></param>
+        /// <param name="overwriteAttribute"></param>
+        /// <param name="removeTargetAttribute"></param>
+        /// <returns></returns>
+        private static XDocument OverwriteAttributeValue(XDocument doc, string targetCommand, string targetAttribute, string overwriteAttribute, bool removeTargetAttribute = true)
+        {
+            return OverwriteAttributeValue(doc, GetSearchCommandsFunc(targetCommand), targetAttribute, overwriteAttribute, removeTargetAttribute);
         }
     }
 }

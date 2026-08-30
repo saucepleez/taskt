@@ -1,0 +1,71 @@
+﻿using System;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
+
+namespace taskt.Core.Automation.Commands
+{
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Web Browser")]
+    [Attributes.ClassAttributes.SubGruop("Search WebElement")]
+    [Attributes.ClassAttributes.CommandSettings("Get WebElements Count")]
+    [Attributes.ClassAttributes.Description("This command allows you to count WebElements.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to count WebElements.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
+    public sealed class SeleniumBrowserGetWebElementsCountCommand : ASeleniumSearchMultiWebElementsFromWebDriverCommands
+    {
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_SearchMethod))]
+        //public string v_SearchMethod { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_SearchParameter))]
+        //public string v_SearchParameter { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyParameterOrder(7000)]
+        public override string v_Result { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_WaitTime))]
+        //public string v_WaitTimeForWebElement { get; set; }
+
+        public SeleniumBrowserGetWebElementsCountCommand()
+        {
+        }
+
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
+        {
+            //try
+            //{
+            //    (var _, var trgElem) = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElements(this, nameof(v_InstanceName), nameof(v_SearchMethod), nameof(v_SearchParameter), nameof(v_WaitTimeForWebElement), engine);
+
+            //    trgElem.Count.ToString().StoreInUserVariable(engine, v_Result);
+            //}
+            //catch
+            //{
+            //    "0".StoreInUserVariable(engine, v_Result);
+            //}
+
+            try
+            {
+                this.SearchMultiWebElementsAction(new Action<System.Collections.Generic.List<OpenQA.Selenium.IWebElement>>(elems =>
+                {
+                    elems.Count.StoreInUserVariable(engine, v_Result);
+                }), engine);
+            }
+            catch
+            {
+                0.StoreInUserVariable(engine, v_Result);
+            }
+        }
+    }
+}

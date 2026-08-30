@@ -1,0 +1,16 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserSearchWebElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+Interface "ISeleniumWebElementResultProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.SeleniumBrowserSearchWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumWebElementResultProperties
+@enduml

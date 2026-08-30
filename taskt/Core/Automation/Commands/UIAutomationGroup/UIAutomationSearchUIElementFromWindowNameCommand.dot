@@ -1,0 +1,75 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameCommand" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameCommand" [ label="UIAutomationSearchUIElementFromWindowNameCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands" [ label="ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IResultProperties" [ label="IResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands" [ label="ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementIndexProperties" [ label="IUIElementIndexProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands" [ label="ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IOneWindowNameProperties" [ label="IOneWindowNameProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSearchUIElementFromWindowSomethingByAnywayProperties" [ label="IUIElementSearchUIElementFromWindowSomethingByAnywayProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ISelectionMethodProperties" [ label="ISelectionMethodProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands" [ label="AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchParametersProperties" [ label="IUIElementDescendantsSearchParametersProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IWindowNameCoreProperties" [ label="IWindowNameCoreProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties" [ label="IWindowUIElementResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties" [ label="IUIElementChildrenSearchParametersProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties" [ label="IUIElementDescendantsSearchSomewayProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties" [ label="IFromWindowNameResultsProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleWindowName" [ label="ICanHandleWindowName", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties" [ label="ITextCheckProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement" [ label="ICanHandleUIElement", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties" [ label="IUIElementChildrenSearchSomewayProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IHaveDataTableElements" [ label="IHaveDataTableElements", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties" [ label="IFromWindowHandleResultsProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICheckProperties" [ label="ICheckProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties" [ label="IUIElementWindowResultsFromUIElementProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowNameCommand" -> "taskt.Core.Automation.Commands.IResultProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromWindowNameByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementIndexProperties";
+"taskt.Core.Automation.Commands.ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.IOneWindowNameProperties";
+"taskt.Core.Automation.Commands.ADescendantsSearchUIElementsFromWindowNameByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSearchUIElementFromWindowSomethingByAnywayProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementIndexProperties" -> "taskt.Core.Automation.Commands.ISelectionMethodProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementIndexProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchParametersProperties";
+"taskt.Core.Automation.Commands.IOneWindowNameProperties" -> "taskt.Core.Automation.Commands.IWindowNameCoreProperties";
+"taskt.Core.Automation.Commands.IOneWindowNameProperties" -> "taskt.Core.Automation.Commands.ISelectionMethodProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementSearchUIElementFromWindowSomethingByAnywayProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties";
+"taskt.Core.Automation.Commands.ISelectionMethodProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.UIAutomationGroup.AChildrenSearchUIElementsFromSomethingByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchParametersProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchParametersProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties";
+"taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties";
+"taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.ICanHandleWindowName";
+"taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchParametersProperties" -> "taskt.Core.Automation.Commands.IHaveDataTableElements";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties" -> "taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties";
+"taskt.Core.Automation.Commands.ICanHandleWindowName" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties" -> "taskt.Core.Automation.Commands.ICheckProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties";
+"taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ICheckProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties" -> "taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties";
+"taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties" -> "taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties";
+"taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

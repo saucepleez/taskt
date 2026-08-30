@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.SetJSONValueOfJSONArrayCommand" [ label="SetJSONValueOfJSONArrayCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands" [ label="AJSONSetValueOfJContainerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.SetJSONValueOfJSONObjectCommand" [ label="SetJSONValueOfJSONObjectCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.SetJSONValueOfJSONArrayCommand" -> "taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands";
+"taskt.Core.Automation.Commands.SetJSONValueOfJSONObjectCommand" -> "taskt.Core.Automation.Commands.AJSONSetValueOfJContainerCommands";
+}

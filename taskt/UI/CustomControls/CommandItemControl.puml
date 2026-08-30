@@ -1,0 +1,59 @@
+@startuml
+left to right direction
+package "taskt.UI.CustomControls"{
+class "CommandItemControl" {
+-CommandItemControl_Load() : void 
+-CommandItemControl_MouseEnter() : void 
+-CommandItemControl_MouseLeave() : void 
+-CommandItemControl_Enter() : void 
+-CommandItemControl_Leave() : void 
+-CommandItemControl_KeyPress() : void 
+-CommandItemControl_Paint() : void 
+#Dispose() : void 
+-InitializeComponent() : void 
++HelperType : UIAdditionalHelperType <<get>> <<set>> 
++DataSource : Object <<get>> <<set>> 
++FunctionalDescription : String <<get>> <<set>> 
++ImplementationDescription : String <<get>> <<set>> 
++DrawIcon : Image <<get>> <<set>> 
++CommandDisplay : String <<get>> <<set>> 
++CommandImage : Image <<get>> <<set>> 
+-commandDisplay : string
+-commandImage : System.Drawing.Image
+-isMouseOver : bool
+-mouseOverColor : System.Drawing.SolidBrush
+-normalColor : System.Drawing.SolidBrush
+-components : System.ComponentModel.IContainer
+}
+}
+
+package "System.Windows.Forms"{
+class "UserControl" {
++add_AutoSizeChanged() : void 
++remove_AutoSizeChanged() : void 
++add_AutoValidateChanged() : void 
++remove_AutoValidateChanged() : void 
++add_Load() : void 
++remove_Load() : void 
++add_TextChanged() : void 
++remove_TextChanged() : void 
++ValidateChildren() : Boolean
++ValidateChildren() : Boolean
+#OnCreateControl() : void 
+#OnLoad() : void 
+#OnResize() : void 
+#OnMouseDown() : void 
+#WndProc() : void 
++AutoSize : Boolean <<get>> <<set>> 
++AutoSizeMode : AutoSizeMode <<get>> <<set>> 
++AutoValidate : AutoValidate <<get>> <<set>> 
++BorderStyle : BorderStyle <<get>> <<set>> 
+#CreateParams : CreateParams <<get>> 
+#DefaultSize : Size <<get>> 
++Text : String <<get>> <<set>> 
+}
+}
+
+taskt.UI.CustomControls.CommandItemControl --|> System.Windows.Forms.UserControl
+taskt.UI.CustomControls.CommandItemControl --|> System.Windows.Forms.UserControl
+@enduml

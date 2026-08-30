@@ -1,0 +1,19 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands" [ label="ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands" [ label="ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsCommand" [ label="UIAutomationWaitForUIElementToExistsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsCommand" [ label="UIAutomationCheckUIElementExistsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementCommand" [ label="UIAutomationSearchUIElementFromUIElementCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromSomethingByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationWaitForUIElementToExistsCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationCheckUIElementExistsCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands";
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromUIElementCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchAnyUIElementFromUIElementByTreeWalkerCommands";
+}

@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand" [ label="UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands" [ label="AUIElementActionFromWindowSomethingByXPathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand" [ label="UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands";
+"taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands";
+}

@@ -1,0 +1,101 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "CompileCSharpFileCommand" <<sealed>> {
++RunCommand() : void 
++v_TargetFilePath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleFileName" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CompileCSharpCodeCommand" <<sealed>> {
++RunCommand() : void 
+-lnkShowCodeBuilderLink_Clicked() : void 
++v_Code : String <<get>> <<set>> 
++v_ReplaceScriptVariables : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileCopySameRenameFileCommands"{
+#CreateActionFunc() : Func
+#cmbExtensionOption_SelectionChange() : void 
++v_NewFileName : String <<get>> <<set>> 
++v_ExtensionOption : String <<get>> <<set>> 
++v_NewExtension : String <<get>> <<set>> 
++v_WhenFileNameSame : String <<get>> <<set>> 
++v_WhenNewFileExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetRandomFilePathCommand" {
++RunCommand() : void 
++v_TargetFolderPath : String <<get>> <<set>> 
++v_Extension : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_CheckFileDoesNotExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFileNumberedFileCommands"{
+#SearchNonExistentFileAction() : void 
++v_TargetFolderPath : String <<get>> <<set>> 
++v_BeforeFileCounter : String <<get>> <<set>> 
++v_Digits : String <<get>> <<set>> 
++v_AfterFileCounter : String <<get>> <<set>> 
++v_Extension : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_StartValue : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "LogDataCommand" <<sealed>> {
++RunCommand() : void 
++v_LogFile : String <<get>> <<set>> 
++v_LogText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CopyFileToSameFolderCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RenameFileCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetLastExistentNumberedFilePathCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetNonExistentFilePathCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+taskt.Core.Automation.Commands.CompileCSharpFileCommand ..|> taskt.Core.Automation.Commands.ICanHandleFileName
+taskt.Core.Automation.Commands.CompileCSharpCodeCommand ..|> taskt.Core.Automation.Commands.ICanHandleFileName
+taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands ..|> taskt.Core.Automation.Commands.ICanHandleFileName
+taskt.Core.Automation.Commands.GetRandomFilePathCommand ..|> taskt.Core.Automation.Commands.ICanHandleFileName
+taskt.Core.Automation.Commands.AFileNumberedFileCommands ..|> taskt.Core.Automation.Commands.ICanHandleFileName
+taskt.Core.Automation.Commands.LogDataCommand ..|> taskt.Core.Automation.Commands.ICanHandleFileName
+taskt.Core.Automation.Commands.CopyFileToSameFolderCommand --|> taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
+taskt.Core.Automation.Commands.RenameFileCommand --|> taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands
+taskt.Core.Automation.Commands.GetLastExistentNumberedFilePathCommand --|> taskt.Core.Automation.Commands.AFileNumberedFileCommands
+taskt.Core.Automation.Commands.GetNonExistentFilePathCommand --|> taskt.Core.Automation.Commands.AFileNumberedFileCommands
+@enduml

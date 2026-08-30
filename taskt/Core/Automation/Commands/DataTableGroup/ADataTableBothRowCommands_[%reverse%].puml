@@ -1,0 +1,29 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "SetDataTableRowValuesByDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_DataTable : String <<get>> <<set>> 
++v_RowName : String <<get>> <<set>> 
++v_SrcRowIndex : String <<get>> <<set>> 
++v_WhenColumnNotExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADataTableBothRowCommands"{
++v_DataTable : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SetDataTableRowValuesByDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_RowValues : String <<get>> <<set>> 
++v_WhenColumnNotExists : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.SetDataTableRowValuesByDataTableCommand --|> taskt.Core.Automation.Commands.ADataTableBothRowCommands
+taskt.Core.Automation.Commands.SetDataTableRowValuesByDictionaryCommand --|> taskt.Core.Automation.Commands.ADataTableBothRowCommands
+@enduml

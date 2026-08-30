@@ -1,0 +1,42 @@
+digraph "taskt.Core.Automation.Commands.CreateFolderCommand" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.CreateFolderCommand" [ label="CreateFolderCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands" [ label="AFolderExistsFolderPathPathResultCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleFolderName" [ label="ICanHandleFolderName", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands" [ label="AFolderExistsFolderPathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties" [ label="IFolderExistsFolderPathPathResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleFileOrFolderName" [ label="ICanHandleFileOrFolderName", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.AFolderFolderPathCommands" [ label="AFolderFolderPathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties" [ label="IFolderExistsFolderPathProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.IFolderPathProperties" [ label="IFolderPathProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleFolderPath" [ label="ICanHandleFolderPath", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath" [ label="ICanHandleFileOrFolderPath", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.CreateFolderCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands";
+"taskt.Core.Automation.Commands.CreateFolderCommand" -> "taskt.Core.Automation.Commands.ICanHandleFolderName";
+"taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands";
+"taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands" -> "taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties";
+"taskt.Core.Automation.Commands.ICanHandleFolderName" -> "taskt.Core.Automation.Commands.ICanHandleFileOrFolderName";
+"taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands" -> "taskt.Core.Automation.Commands.AFolderFolderPathCommands";
+"taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands" -> "taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties";
+"taskt.Core.Automation.Commands.IFolderExistsFolderPathPathResultProperties" -> "taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties";
+"taskt.Core.Automation.Commands.ICanHandleFileOrFolderName" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.AFolderFolderPathCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.AFolderFolderPathCommands" -> "taskt.Core.Automation.Commands.IFolderPathProperties";
+"taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties" -> "taskt.Core.Automation.Commands.IFolderPathProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.IFolderPathProperties" -> "taskt.Core.Automation.Commands.ICanHandleFolderPath";
+"taskt.Core.Automation.Commands.ICanHandleFolderPath" -> "taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath";
+"taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

@@ -1,0 +1,22 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "IDateTimeConvertProperties" {
++{abstract} v_DateTime : String <<get>> <<set>> <<abstract>> 
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleDateTime" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.IDateTimeConvertProperties --|> taskt.Core.Automation.Commands.ICanHandleDateTime
+taskt.Core.Automation.Commands.ICanHandleDateTime --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

@@ -1,0 +1,19 @@
+digraph "taskt.Core.IServerSettings" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.SafeServerSettings" [ label="SafeServerSettings", ];
+"taskt.Core.IServerSettings" [ label="IServerSettings", shape="ellipse", style="dashed", ];
+"taskt.Core.ServerSettings" [ label="ServerSettings", shape="parallelogram", style="bold", ];
+"taskt.Core.SafeHttpServerClientServerSettings" [ label="SafeHttpServerClientServerSettings", ];
+"taskt.Core.SafeWebSocketServerSettings" [ label="SafeWebSocketServerSettings", ];
+
+"taskt.Core.SafeServerSettings" -> "taskt.Core.IServerSettings";
+"taskt.Core.ServerSettings" -> "taskt.Core.IServerSettings";
+"taskt.Core.SafeHttpServerClientServerSettings" -> "taskt.Core.SafeServerSettings";
+"taskt.Core.SafeWebSocketServerSettings" -> "taskt.Core.SafeServerSettings";
+}

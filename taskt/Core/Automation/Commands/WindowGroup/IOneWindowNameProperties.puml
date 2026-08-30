@@ -1,0 +1,68 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "IOneWindowNameProperties" {
++{abstract} v_TargetWindowIndex : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowNameCoreProperties" {
++{abstract} v_WindowName : String <<get>> <<set>> <<abstract>> 
++{abstract} v_WaitTimeForWindow : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ISelectionMethodProperties" {
++{abstract} v_SelectionMethod : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WindowGroup"{
+Interface "IFromWindowNameResultsProperties" {
++{abstract} v_WindowHandleResult : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleWindowName" {
+}
+}
+
+package "taskt.Core.Automation.Commands.TextGroup"{
+Interface "ITextCheckProperties" {
++{abstract} v_CaseSensitive : String <<get>> <<set>> <<abstract>> 
++{abstract} v_TrimBeforeCheck : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands.WindowGroup"{
+Interface "IFromWindowHandleResultsProperties" {
++{abstract} v_WindowNameResult : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICheckProperties" {
++{abstract} v_CheckMethod : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+taskt.Core.Automation.Commands.IOneWindowNameProperties --|> taskt.Core.Automation.Commands.IWindowNameCoreProperties
+taskt.Core.Automation.Commands.IOneWindowNameProperties --|> taskt.Core.Automation.Commands.ISelectionMethodProperties
+taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.ICanHandleWindowName
+taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties
+taskt.Core.Automation.Commands.ISelectionMethodProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.ICanHandleWindowName --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties --|> taskt.Core.Automation.Commands.ICheckProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICheckProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

@@ -1,0 +1,76 @@
+@startuml
+left to right direction
+package "taskt.Core"{
+class "SafeFrmScriptBuilderClientSettings" {
++InsertCommandsInline : Boolean <<get>> <<set>> 
++ShowCommandSearchBar : Boolean <<get>> <<set>> 
+}
+}
+
+package "taskt.Core"{
+class "SafeClientSettings" {
++AntiIdleWhileOpen : Boolean <<get>> 
++RootFolder : String <<get>> 
++MinimizeToTray : Boolean <<get>> 
++AttendedTasksFolder : String <<get>> 
++StartupMode : String <<get>> 
++PreloadBuilderCommands : Boolean <<get>> 
++UseSlimActionBar : Boolean <<get>> 
++InsertCommandsInline : Boolean <<get>> 
++EnableSequenceDragDrop : Boolean <<get>> 
++InsertVariableAtCursor : Boolean <<get>> 
++InsertElseAutomatically : Boolean <<get>> 
++InsertCommentIfLoopAbove : Boolean <<get>> 
++GroupingBySubgroup : Boolean <<get>> 
++DontShowValidationMessage : Boolean <<get>> 
++ShowPoliteTextInDescription : Boolean <<get>> 
++ShowSampleUsageInDescription : Boolean <<get>> 
++ShowDefaultValueInDescription : Boolean <<get>> 
++ShowIndentLine : Boolean <<get>> 
++ShowScriptMiniMap : Boolean <<get>> 
++IndentWidth : Int32 <<get>> 
++DefaultBrowserInstanceName : String <<get>> 
++DefaultStopWatchInstanceName : String <<get>> 
++DefaultExcelInstanceName : String <<get>> 
++DefaultWordInstanceName : String <<get>> 
++DefaultDBInstanceName : String <<get>> 
++DefaultNLGInstanceName : String <<get>> 
++InstanceNameOrder : String <<get>> 
++DontShowDefaultInstanceWhenMultipleItemsExists : Boolean <<get>> 
++SearchTargetGroupName : Boolean <<get>> 
++SearchTargetSubGroupName : Boolean <<get>> 
++SearchGreedlyGroupName : Boolean <<get>> 
++SearchGreedlySubGroupName : Boolean <<get>> 
++ShowCommandSearchBar : Boolean <<get>> 
++HideNotifyAutomatically : Boolean <<get>> 
++RememberCommandEditorSizeAndPosition : Boolean <<get>> 
++RememberSupplementFormsForCommandEditorPosition : Boolean <<get>> 
++CheckForUpdateAtStartup : Boolean <<get>> 
++SkipBetaVersionUpdate : Boolean <<get>> 
++EnabledAutoSave : Boolean <<get>> 
++AutoSaveInterval : Int32 <<get>> 
++RemoveAutoSaveFileDays : Int32 <<get>> 
++RemoveRunWithtoutSavingFileDays : Int32 <<get>> 
++RemoveBeforeConvertedFileDays : Int32 <<get>> 
++SupportIECommand : Boolean <<get>> 
++ChangeItemsWithWheelWhenNotForcused : Boolean <<get>> 
++DisplayNumberBeforeParameterDescription : Boolean <<get>> 
++DisplayParameterOrderInDescription : Boolean <<get>> 
++GUIInspectMaxSiblings : Int32 <<get>> 
++GUIInspectMaxDepth : Int32 <<get>> 
++GUIInspectSearchTime : Int32 <<get>> 
++GUIInspectMouseInterval : Int32 <<get>> 
+#clientSettings : taskt.Core.ClientSettings
+}
+}
+
+package "taskt.Core"{
+class "SafeDocumentGenerationClientSettings" {
++ShowSampleUsageInDescription : Boolean <<get>> <<set>> 
++ShowDefaultValueInDescription : Boolean <<get>> <<set>> 
+}
+}
+
+taskt.Core.SafeFrmScriptBuilderClientSettings --|> taskt.Core.SafeClientSettings
+taskt.Core.SafeDocumentGenerationClientSettings --|> taskt.Core.SafeClientSettings
+@enduml

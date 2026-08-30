@@ -8,13 +8,13 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="845e75fc-4fe0-4ae1-9bf5-dbb6825bbbf9" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="and Click Button" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a7cdfa43-c3e0-4681-8598-3547bb4f31b4" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" />
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a7cdfa43-c3e0-4681-8598-3547bb4f31b4" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Search button1 as UIElement" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationSearchUIElementAndWindowCommand" CommandID="4946584c-c9fe-42e4-9416-88b7bafc70c4" CommandName="UIAutomationSearchUIElementAndWindowCommand" IsCommented="false" SelectionName="Search UIElement And Window" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_AutomationElementVariable="vElem" v_CompareMethod="" v_MatchMethod="" v_TargetWindowIndex="0" v_WaitTimeForWindow="60" v_ElementWaitTime="10">
+      <ScriptCommand xsi:type="UIAutomationSearchUIElementAndWindowCommand" CommandID="4946584c-c9fe-42e4-9416-88b7bafc70c4" CommandName="UIAutomationSearchUIElementAndWindowCommand" IsCommented="false" SelectionName="Search UIElement And Window" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_AutomationElementVariable="vElem" v_CheckMethod="" v_SelectionMethod="" v_TargetWindowIndex="0" v_WaitTimeForWindow="60" v_ElementWaitTime="10">
         <v_SearchParameters>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="SearchParameters082323.120541" msdata:UseCurrentLocale="true">
@@ -263,11 +263,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.6</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2024-10-03T22:35:57.9073638+09:00</LastRunTime>
     <RunTimes>6</RunTimes>
-    <Revision>6</Revision>
+    <Revision>7</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>

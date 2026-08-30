@@ -11,12 +11,39 @@ namespace taskt.UI.CustomControls
 {
     public class AutomationCommand
     {
+        /// <summary>
+        /// command class type
+        /// </summary>
         public Type CommandClass { get; set; }
+
+        /// <summary>
+        /// group name & selection name
+        /// </summary>
         public string FullName { get; set; }
+
+        /// <summary>
+        /// display command name (selection name)
+        /// </summary>
         public string ShortName { get; set; }
+        
+        /// <summary>
+        /// group name
+        /// </summary>
         public string DisplayGroup { get; set; }
+
+        /// <summary>
+        /// sub group name
+        /// </summary>
         public string DisplaySubGroup { get; set; }
+
+        /// <summary>
+        /// command instance
+        /// </summary>
         public ScriptCommand Command { get; set; }
+
+        /// <summary>
+        /// ui controls
+        /// </summary>
         public List<Control> UIControls { get; set; }
 
         public void RenderUIComponents(Forms.ScriptBuilder.CommandEditor.frmCommandEditor editorForm)
@@ -30,6 +57,7 @@ namespace taskt.UI.CustomControls
             if (Command.CustomRendering)
             {
                 var renderedControls = Command.Render(editorForm);
+                
 
                 if (renderedControls.Count == 0)
                 {
@@ -138,9 +166,7 @@ namespace taskt.UI.CustomControls
 
                 //if (ctrl is UIPictureBox)
                 //{
-
                 //    var typedControl = (UIPictureBox)InputControl;
-
                 //}
 
                 //Todo: helper for loading variables, move to attribute

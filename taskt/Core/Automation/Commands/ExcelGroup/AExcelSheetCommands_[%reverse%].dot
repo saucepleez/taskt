@@ -1,0 +1,23 @@
+digraph "taskt.Core.Automation.Commands.AExcelSheetCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ExcelCheckWorksheetExistsCommand" [ label="ExcelCheckWorksheetExistsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AExcelSheetCommands" [ label="AExcelSheetCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ExcelGetWorksheetInformationCommand" [ label="ExcelGetWorksheetInformationCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetWorksheetsCommand" [ label="ExcelGetWorksheetsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelDeleteWorksheetCommand" [ label="ExcelDeleteWorksheetCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelAddWorksheetCommand" [ label="ExcelAddWorksheetCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelActivateWorksheetCommand" [ label="ExcelActivateWorksheetCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.ExcelCheckWorksheetExistsCommand" -> "taskt.Core.Automation.Commands.AExcelSheetCommands";
+"taskt.Core.Automation.Commands.ExcelGetWorksheetInformationCommand" -> "taskt.Core.Automation.Commands.AExcelSheetCommands";
+"taskt.Core.Automation.Commands.ExcelGetWorksheetsCommand" -> "taskt.Core.Automation.Commands.AExcelSheetCommands";
+"taskt.Core.Automation.Commands.ExcelDeleteWorksheetCommand" -> "taskt.Core.Automation.Commands.AExcelSheetCommands";
+"taskt.Core.Automation.Commands.ExcelAddWorksheetCommand" -> "taskt.Core.Automation.Commands.AExcelSheetCommands";
+"taskt.Core.Automation.Commands.ExcelActivateWorksheetCommand" -> "taskt.Core.Automation.Commands.AExcelSheetCommands";
+}

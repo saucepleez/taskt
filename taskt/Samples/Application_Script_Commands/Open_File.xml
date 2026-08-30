@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="4e2f79bf-c04a-4984-b8fc-74512d3aea98" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Open File sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="b9e9835e-ec19-42b9-9f5d-318fc0ea6a66" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="open sample_text.txt in Resouces folder" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="OpenFileCommand" CommandID="76b70dad-82ce-411f-9b30-58a59231520d" CommandName="OpenFileCommand" IsCommented="false" SelectionName="Open File" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetFilePath="⦃Folder.SamplesPath⦄\Resources\sample_text.txt" v_WaitTimeForFile="10" v_ResultPath="" v_WaitTimeForOpen="2" v_WindowNameResult="" v_WindowHandleResult="" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.2.41</TasktVersion>
+    <Author />
+    <LastRunTime>2025-09-14T19:12:31.3152017+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <Revision>2</Revision>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables />
+</Script>

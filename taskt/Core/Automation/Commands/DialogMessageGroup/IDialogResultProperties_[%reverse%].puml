@@ -1,0 +1,94 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "IWaitDialogResultProperties" {
++{abstract} v_WhenCancel : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDialogResultProperties" {
++{abstract} v_DialogResult : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ShowMessageCommand" <<sealed>> {
++RunCommand() : void 
++v_Message : String <<get>> <<set>> 
++v_AutoCloseAfter : String <<get>> <<set>> 
++v_FontName : String <<get>> <<set>> 
++v_FontSize : String <<get>> <<set>> 
++v_DialogType : String <<get>> <<set>> 
++v_DialogTitle : String <<get>> <<set>> 
++v_WaitForAnswer : String <<get>> <<set>> 
++v_DialogResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AShowFileFolderDialogCommands"{
+#GetInitialDirectory() : String
+#ShowDialogProcess() : void 
++v_InitialDirectory : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_WhenCancel : String <<get>> <<set>> 
++v_DialogResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ShowHTMLInputDialogCommand" <<sealed>> {
++RunCommand() : void 
+-ShowHTMLBuilder() : void 
++v_InputHTML : String <<get>> <<set>> 
++v_DialogTitle : String <<get>> <<set>> 
++v_WhenCancel : String <<get>> <<set>> 
++v_DialogResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ShowUserInputDialogCommand" <<sealed>> {
++RunCommand() : void 
+-lnkAddInputParameter_Click() : void 
+-lnkUpInputParameter_Click() : void 
+-lnkDownInputParameter_Click() : void 
+-lnkDeleteInputParameter_Click() : void 
+-SwapUserInputParameterRows() : void 
++IsValidate() : Boolean
++BeforeValidate() : void 
++v_DialogTitle : String <<get>> <<set>> 
++v_Message : String <<get>> <<set>> 
++v_UserInputConfig : DataTable <<get>> <<set>> 
++v_DialogButtons : String <<get>> <<set>> 
++v_WhenCancel : String <<get>> <<set>> 
++v_DialogResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ShowFolderDialogCommand" <<sealed>> {
++RunCommand() : void 
++v_DialogType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ShowFileDialogCommand" <<sealed>> {
++RunCommand() : void 
+-{static} CheckFileterProperty() : Boolean
++v_DialogType : String <<get>> <<set>> 
++v_Filter : String <<get>> <<set>> 
++v_FilterIndex : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.IWaitDialogResultProperties --|> taskt.Core.Automation.Commands.IDialogResultProperties
+taskt.Core.Automation.Commands.ShowMessageCommand ..|> taskt.Core.Automation.Commands.IDialogResultProperties
+taskt.Core.Automation.Commands.AShowFileFolderDialogCommands ..|> taskt.Core.Automation.Commands.IWaitDialogResultProperties
+taskt.Core.Automation.Commands.ShowHTMLInputDialogCommand ..|> taskt.Core.Automation.Commands.IWaitDialogResultProperties
+taskt.Core.Automation.Commands.ShowUserInputDialogCommand ..|> taskt.Core.Automation.Commands.IWaitDialogResultProperties
+taskt.Core.Automation.Commands.ShowFolderDialogCommand --|> taskt.Core.Automation.Commands.AShowFileFolderDialogCommands
+taskt.Core.Automation.Commands.ShowFileDialogCommand --|> taskt.Core.Automation.Commands.AShowFileFolderDialogCommands
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "IHaveIfAdditionalCommands" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IHaveAdditionalCommands" {
+}
+}
+
+taskt.Core.Automation.Commands.IHaveIfAdditionalCommands --|> taskt.Core.Automation.Commands.IHaveAdditionalCommands
+@enduml

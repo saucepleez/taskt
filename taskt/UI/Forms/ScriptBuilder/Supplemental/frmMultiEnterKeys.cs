@@ -41,8 +41,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
                 EnterKeysCommand firstKeystroke = (EnterKeysCommand)keyCommands[0];
                 cmbWindowName.Text = firstKeystroke.v_WindowName;
-                cmbCompareMethod.Text = firstKeystroke.v_CompareMethod;
-                txtWaitTimeAfter.Text = firstKeystroke.v_WaitTime;
+                cmbCompareMethod.Text = firstKeystroke.v_CheckMethod;
+                txtWaitTimeAfter.Text = firstKeystroke.v_WaitTimeAfterKeyEnter;
 
                 string keystrokes = "";
                 foreach(var cmd in keyCommands)
@@ -82,10 +82,10 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             using (var fm = CreateVariableSelectForm())
             {
-                if ((fm.ShowDialog() == DialogResult.OK) && (fm.selectedItem != null))
+                if ((fm.ShowDialog() == DialogResult.OK) && (fm.SelectedItem != null))
                 {
                     //string variableName = appSetttings.EngineSettings.wrapVariableMarker((string)fm.selectedItem);
-                    string variableName = VariableNameControls.GetWrappedVariableName((string)fm.selectedItem, appSetttings);
+                    string variableName = VariableNameControls.GetWrappedVariableName((string)fm.SelectedItem, appSetttings);
                     if (appSetttings.ClientSettings.InsertVariableAtCursor)
                     {
                         string currentValue = cmbWindowName.Text;
@@ -124,9 +124,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             using(var fm = CreateVariableSelectForm())
             {
-                if ((fm.ShowDialog() == DialogResult.OK) && (fm.selectedItem != null))
+                if ((fm.ShowDialog() == DialogResult.OK) && (fm.SelectedItem != null))
                 {
-                    ConcatenateVariableName((string)fm.selectedItem, txtTextToSend, appSetttings);
+                    ConcatenateVariableName((string)fm.SelectedItem, txtTextToSend, appSetttings);
                 }
             }
         }
@@ -137,9 +137,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             using (var fm = CreateVariableSelectForm())
             {
-                if ((fm.ShowDialog() == DialogResult.OK) && (fm.selectedItem != null))
+                if ((fm.ShowDialog() == DialogResult.OK) && (fm.SelectedItem != null))
                 {
-                    ConcatenateVariableName((string)fm.selectedItem, txtWaitTimeAfter, appSetttings);
+                    ConcatenateVariableName((string)fm.SelectedItem, txtWaitTimeAfter, appSetttings);
                 }
             }
         }
@@ -196,9 +196,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             using (var fm = CreateVariableSelectForm())
             {
-                if ((fm.ShowDialog() == DialogResult.OK) && (fm.selectedItem != null))
+                if ((fm.ShowDialog() == DialogResult.OK) && (fm.SelectedItem != null))
                 {
-                    string variableName = VariableNameControls.GetWrappedVariableName((string)fm.selectedItem, appSetttings);
+                    string variableName = VariableNameControls.GetWrappedVariableName((string)fm.SelectedItem, appSetttings);
 
                     var ctrl = (Control)((CommandItemControl)sender).Tag;
                     if (ctrl is TextBox txt)
@@ -284,10 +284,10 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                     new EnterKeysCommand()
                     {
                         v_WindowName = cmbWindowName.Text,
-                        v_CompareMethod = cmbCompareMethod.Text,
+                        v_CheckMethod = cmbCompareMethod.Text,
                         v_TextToSend = s,
                         v_EncryptionOption = "",
-                        v_WaitTime = txtWaitTimeAfter.Text
+                        v_WaitTimeAfterKeyEnter = txtWaitTimeAfter.Text
                     }
                 );
             }
@@ -309,7 +309,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             string currentWindow = cmbWindowName.Text;
 
-            var windowNames = Core.Automation.Commands.WindowControls.GetAllWindowTitles();
+            var windowNames = EM_CanHandleWindowNameExtensionMethods.GetAllWindowNames();
 
             cmbWindowName.BeginUpdate();
             cmbWindowName.Items.Clear();

@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.IExcelRCValueTypeProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.IExcelRCValueTypeProperties" [ label="IExcelRCValueTypeProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExcelValueTypeProperties" [ label="IExcelValueTypeProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.IExcelRCValueTypeProperties" -> "taskt.Core.Automation.Commands.IExcelValueTypeProperties";
+"taskt.Core.Automation.Commands.IExcelValueTypeProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

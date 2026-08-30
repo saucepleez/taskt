@@ -48,20 +48,19 @@
             System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Keyword");
             System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Log");
             System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Parser");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("UIElement Inspect");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Variable");
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Automation Engine", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Variable");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Automation Engine", new System.Windows.Forms.TreeNode[] {
             treeNode9,
             treeNode10,
             treeNode11,
             treeNode12,
-            treeNode13,
-            treeNode14});
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Command Reference");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Documents", new System.Windows.Forms.TreeNode[] {
-            treeNode16});
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Command Editor");
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Command List");
+            treeNode13});
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Command Reference");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Documents", new System.Windows.Forms.TreeNode[] {
+            treeNode15});
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Command Editor");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Command List");
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("GUI Inspect Tool");
             System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Indent");
             System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Instance");
             System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Insert Command");
@@ -71,6 +70,7 @@
             System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("Validation");
             System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Variable");
             System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("Editor", new System.Windows.Forms.TreeNode[] {
+            treeNode17,
             treeNode18,
             treeNode19,
             treeNode20,
@@ -259,20 +259,20 @@
             treeNode11.Text = "Log";
             treeNode12.Name = "nodeParser";
             treeNode12.Text = "Parser";
-            treeNode13.Name = "nodeUIElementInspect";
-            treeNode13.Text = "UIElement Inspect";
-            treeNode14.Name = "nodeVariable";
-            treeNode14.Text = "Variable";
-            treeNode15.Name = "nodeAutomationEngine";
-            treeNode15.Text = "Automation Engine";
-            treeNode16.Name = "nodeCommandReference";
-            treeNode16.Text = "Command Reference";
-            treeNode17.Name = "nodeDocuments";
-            treeNode17.Text = "Documents";
-            treeNode18.Name = "nodeCommandEditor";
-            treeNode18.Text = "Command Editor";
-            treeNode19.Name = "nodeCommandList";
-            treeNode19.Text = "Command List";
+            treeNode13.Name = "nodeVariable";
+            treeNode13.Text = "Variable";
+            treeNode14.Name = "nodeAutomationEngine";
+            treeNode14.Text = "Automation Engine";
+            treeNode15.Name = "nodeCommandReference";
+            treeNode15.Text = "Command Reference";
+            treeNode16.Name = "nodeDocuments";
+            treeNode16.Text = "Documents";
+            treeNode17.Name = "nodeCommandEditor";
+            treeNode17.Text = "Command Editor";
+            treeNode18.Name = "nodeCommandList";
+            treeNode18.Text = "Command List";
+            treeNode19.Name = "nodeGUIInspectTool";
+            treeNode19.Text = "GUI Inspect Tool";
             treeNode20.Name = "nodeIndent";
             treeNode20.Text = "Indent";
             treeNode21.Name = "nodeInstance";
@@ -307,8 +307,8 @@
             treeNode35.Text = "VM";
             this.tvSettingsMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode8,
-            treeNode15,
-            treeNode17,
+            treeNode14,
+            treeNode16,
             treeNode28,
             treeNode31,
             treeNode33,
@@ -331,12 +331,12 @@
             // tmrGetSocketStatus
             // 
             this.tmrGetSocketStatus.Interval = 250;
-            this.tmrGetSocketStatus.Tick += new System.EventHandler(this.tmrGetSocketStatus_Tick);
+            //this.tmrGetSocketStatus.Tick += new System.EventHandler(this.tmrGetSocketStatus_Tick);
             // 
             // bgwMetrics
             // 
-            this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
-            this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
+            //this.bgwMetrics.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMetrics_DoWork);
+            //this.bgwMetrics.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwMetrics_RunWorkerCompleted);
             // 
             // frmNewSettings
             // 

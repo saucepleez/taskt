@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand" [ label="EnterKeysFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties" [ label="IEnterKeysProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.EnterKeysCommand" [ label="EnterKeysCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties";
+"taskt.Core.Automation.Commands.EnterKeysCommand" -> "taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties";
+}

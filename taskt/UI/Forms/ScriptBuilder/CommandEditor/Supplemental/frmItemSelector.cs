@@ -19,7 +19,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
     public partial class frmItemSelector : DialogLikeThemedForm
     {
-        public object selectedItem { get; private set; }
+        public object SelectedItem { get; private set; }
 
         private string[] bufferdItems;
 
@@ -29,29 +29,32 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             InitializeComponent();
             this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
         }
+
         public frmItemSelector(List<string> listItems) : this()
         {
             this.bufferdItems = listItems.ToArray();
         }
+
         public frmItemSelector(List<string> listItems, string title, string headerText) : this()
         {
             this.bufferdItems = listItems.ToArray();
             this.Text = title;
             this.lblHeader.Text = headerText;
         }
+
         private void frmVariableSelector_Load(object sender, EventArgs e)
         {
             SupplementFormsEvents.SupplementFormLoad(this);
-            lstVariables.BeginUpdate();
-            lstVariables.Items.AddRange(bufferdItems);
-            lstVariables.EndUpdate();
+            lstItems.BeginUpdate();
+            lstItems.Items.AddRange(bufferdItems);
+            lstItems.EndUpdate();
         }
         #endregion
 
         #region footer buttons event
         private void uiBtnOk_Click(object sender, EventArgs e)
         {
-            if (lstVariables.SelectedItem == null)
+            if (lstItems.SelectedItem == null)
             {
                 MessageBox.Show("There are no item(s) selected! Select an item and Ok or select Cancel");
                 return;
@@ -71,44 +74,56 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         {
             this.DialogResult = DialogResult.OK;
         }
+
         private void lstVariables_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.selectedItem = lstVariables.SelectedItem;
+            this.SelectedItem = lstItems.SelectedItem;
         }
         #endregion
 
         #region variable filter
         private void picSearch_Click(object sender, EventArgs e)
         {
-            BeginFilterVariableProcess();
+            BeginFilterItemsProcess();
         }
+
         private void picClear_Click(object sender, EventArgs e)
         {
             txtSearchBox.Text = "";
-            showAllVariables();
+            ShowAllItems();
         }
+
         private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true;
                 e.Handled = true;
-                BeginFilterVariableProcess();
+                BeginFilterItemsProcess();
             }
         }
-        private void BeginFilterVariableProcess()
+
+        /// <summary>
+        /// begin filter matched items process
+        /// </summary>
+        private void BeginFilterItemsProcess()
         {
             string keyword = txtSearchBox.Text.ToLower().Trim();
             if (keyword.Length > 0)
             {
-                FilterVariableProcess(keyword);
+                FilterItemsProcess(keyword);
             }
             else
             {
-                showAllVariables();
+                ShowAllItems();
             }
         }
-        private void FilterVariableProcess(string keyword)
+
+        /// <summary>
+        /// filter matched items process
+        /// </summary>
+        /// <param name="keyword"></param>
+        private void FilterItemsProcess(string keyword)
         {
             var matchedList = new List<string>();
             foreach (var item in bufferdItems)
@@ -118,22 +133,24 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                     matchedList.Add(item);
                 }
             }
-            lstVariables.BeginUpdate();
-            lstVariables.Items.Clear();
-            lstVariables.Items.AddRange(matchedList.ToArray());
-            lstVariables.EndUpdate();
-            lstVariables.Focus();
+            lstItems.BeginUpdate();
+            lstItems.Items.Clear();
+            lstItems.Items.AddRange(matchedList.ToArray());
+            lstItems.EndUpdate();
+            lstItems.Focus();
         }
-        private void showAllVariables()
+
+        /// <summary>
+        /// show all items in lstItems
+        /// </summary>
+        private void ShowAllItems()
         {
-            lstVariables.BeginUpdate();
-            lstVariables.Items.Clear();
-            lstVariables.Items.AddRange(bufferdItems);
-            lstVariables.EndUpdate();
-            lstVariables.Focus();
+            lstItems.BeginUpdate();
+            lstItems.Items.Clear();
+            lstItems.Items.AddRange(bufferdItems);
+            lstItems.EndUpdate();
+            lstItems.Focus();
         }
-
         #endregion
-
     }
 }

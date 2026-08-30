@@ -1,0 +1,249 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand" <<sealed>> {
++RunCommand() : void 
+-MatchMethodComboBox_SelectionChangeCommitted() : void 
++Refresh() : void 
++v_WindowName : String <<get>> <<set>> 
++v_CheckMethod : String <<get>> <<set>> 
++v_SelectionMethod : String <<get>> <<set>> 
++v_TargetWindowIndex : String <<get>> <<set>> 
++v_WaitTimeForWindow : String <<get>> <<set>> 
++v_CaseSensitive : String <<get>> <<set>> 
++v_TrimBeforeCheck : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "AUIElementActionFromWindowSomethingByXPathCommands"{
++v_WindowUIElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IOneWindowNameProperties" {
++{abstract} v_TargetWindowIndex : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "AUIElementActionFromSomethingByXPathCommands"{
++v_AutomationType : String <<get>> <<set>> 
++v_SearchXPath : String <<get>> <<set>> 
++v_UIAActionParameters : DataTable <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IWindowUIElementResultProperties" {
++{abstract} v_WindowUIElement : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowNameCoreProperties" {
++{abstract} v_WindowName : String <<get>> <<set>> <<abstract>> 
++{abstract} v_WaitTimeForWindow : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ISelectionMethodProperties" {
++{abstract} v_SelectionMethod : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "AUIElementActionSomewayCommands"{
+#UIElementActionProcess() : void 
++AfterShown() : void 
+#cmbActionType_SelectedItemChange() : void 
+#{static} AddDataTableRows() : void 
+#{static} SetComboBoxParameterProcess() : void 
+#{static} ApplyDGVCombBox() : void 
+#{static} CreateDGVComboBox() : DataGridViewComboBoxCell
++BeforeValidate() : void 
++{abstract} v_AutomationType : String <<get>> <<set>> <<abstract>> 
++{abstract} v_UIAActionParameters : DataTable <<get>> <<set>> <<abstract>> 
++v_WaitTimeForUIElement : String <<get>> <<set>> 
++v_MaxSiblings : String <<get>> <<set>> 
++v_MaxDepth : String <<get>> <<set>> 
++v_TargetUIElement : String <<get>> <<set>> 
++v_WindowNameResult : String <<get>> <<set>> 
++v_WindowHandleResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IUIElementChildrenSearchXPathProperties" {
++{abstract} v_SearchXPath : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IUIElementDescendantsSearchXPathProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "ICanHandleUIElement" {
+}
+}
+
+package "taskt.Core.Automation.Commands.WindowGroup"{
+Interface "IFromWindowNameResultsProperties" {
++{abstract} v_WindowHandleResult : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleWindowName" {
+}
+}
+
+package "taskt.Core.Automation.Commands.TextGroup"{
+Interface "ITextCheckProperties" {
++{abstract} v_CaseSensitive : String <<get>> <<set>> <<abstract>> 
++{abstract} v_TrimBeforeCheck : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ScriptCommand"{
++RunCommand() : void 
++RunCommand() : void 
++GetDisplayValue() : String
++Render() : List
++Render() : List
++AfterShown() : void 
++Refresh() : void 
++BeforeValidate() : void 
++IsValidate() : Boolean
++ConvertToIntermediate() : void 
++ConvertToIntermediate() : void 
++ConvertToRaw() : void 
++ConvertToRaw() : void 
++Clone() : ScriptCommand
++CheckMatched() : Boolean
++Replace() : Boolean
++AddInstance() : void 
++RemoveInstance() : void 
++CommandID : String <<get>> <<set>> 
++CommandName : String <<get>> <<set>> 
++IsCommented : Boolean <<get>> <<set>> 
++SelectionName : String <<get>> <<set>> 
++DefaultPause : Int32 <<get>> <<set>> 
++LineNumber : Int32 <<get>> <<set>> 
++PauseBeforeExeucution : Boolean <<get>> <<set>> 
++DisplayForeColor : Color <<get>> <<set>> 
++v_Comment : String <<get>> <<set>> 
++CommandEnabled : Boolean <<get>> <<set>> 
++IsValid : Boolean <<get>> <<protected set>>
++IsWarning : Boolean <<get>> <<protected set>>
++validationResult : String <<get>> <<protected set>>
++IsMatched : Boolean <<get>> <<protected set>>
++IsDontSavedCommand : Boolean <<get>> <<set>> 
++IsNewInsertedCommand : Boolean <<get>> <<set>> 
++CustomRendering : Boolean <<get>> <<set>> 
++ControlsList : Dictionary <<get>> 
++RenderedControls : List<System.Windows.Forms.Control>
+#_ControlsList : Dictionary<string, System.Windows.Forms.Control>
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IUIElementUIElementActionSomewayProperties" {
++{abstract} v_AutomationType : String <<get>> <<set>> <<abstract>> 
++{abstract} v_UIAActionParameters : DataTable <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IUIElementChildrenSearchSomewayProperties" {
++{abstract} v_WaitTimeForUIElement : String <<get>> <<set>> <<abstract>> 
++{abstract} v_MaxSiblings : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IUIElementDescendantsSearchSomewayProperties" {
++{abstract} v_MaxDepth : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WindowGroup"{
+Interface "IFromWindowHandleResultsProperties" {
++{abstract} v_WindowNameResult : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICheckProperties" {
++{abstract} v_CheckMethod : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IUIParameterProperties" {
++{abstract} ControlsList : Dictionary <<get>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICommandIDProperties" {
++{abstract} CommandID : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IHaveDataTableElements" {
++{abstract} BeforeValidate() : void <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IUIElementWindowResultsFromUIElementProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationUIElementActionAfterSearchUIElementByXPathFromWindowNameCommand ..|> taskt.Core.Automation.Commands.IOneWindowNameProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByXPathCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromWindowSomethingByXPathCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties
+taskt.Core.Automation.Commands.IOneWindowNameProperties --|> taskt.Core.Automation.Commands.IWindowNameCoreProperties
+taskt.Core.Automation.Commands.IOneWindowNameProperties --|> taskt.Core.Automation.Commands.ISelectionMethodProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByXPathCommands --|> taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByXPathCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchXPathProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionFromSomethingByXPathCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchXPathProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IWindowUIElementResultProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement
+taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.ICanHandleWindowName
+taskt.Core.Automation.Commands.IWindowNameCoreProperties --|> taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties
+taskt.Core.Automation.Commands.ISelectionMethodProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands --|> taskt.Core.Automation.Commands.ScriptCommand
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.AUIElementActionSomewayCommands ..|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchXPathProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchXPathProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchXPathProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchXPathProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.ICanHandleWindowName --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties --|> taskt.Core.Automation.Commands.ICheckProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.IUIParameterProperties
+taskt.Core.Automation.Commands.ScriptCommand ..|> taskt.Core.Automation.Commands.ICommandIDProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties --|> taskt.Core.Automation.Commands.IHaveDataTableElements
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementChildrenSearchSomewayProperties --|> taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementDescendantsSearchSomewayProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICheckProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementWindowResultsFromUIElementProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties --|> taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties
+taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

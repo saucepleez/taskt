@@ -1,0 +1,69 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+abstract class "AFolderExistsFolderBeforeAfterResultCommands"{
++v_BeforeFolderPathResult : String <<get>> <<set>> 
++v_AfterFolderPathResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IFolderExistsFolderPathBeforeAfterPathResultProperties" {
++{abstract} v_BeforeFolderPathResult : String <<get>> <<set>> <<abstract>> 
++{abstract} v_AfterFolderPathResult : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFolderCopyMoveFolderCommands"{
+#CreateActionFunc() : Func
++v_DestinationFolderPath : String <<get>> <<set>> 
++v_CreateDirectory : String <<get>> <<set>> 
++v_WhenDestinationIsSame : String <<get>> <<set>> 
++v_WhenDestinationExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFolderCopySameRenameFolderCommands"{
+#CreateActionFunc() : Func
++v_NewFolderName : String <<get>> <<set>> 
++v_WhenFolderNameSame : String <<get>> <<set>> 
++v_WhenDestinationExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CopyFolderCommand" <<sealed>> {
++RunCommand() : void 
++v_CopySubFolder : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "MoveFolderCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CopyFolderInSamLocationCommand" <<sealed>> {
++RunCommand() : void 
++v_CopySubFolder : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RenameFolderCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands ..|> taskt.Core.Automation.Commands.IFolderExistsFolderPathBeforeAfterPathResultProperties
+taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands --|> taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands
+taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands --|> taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands
+taskt.Core.Automation.Commands.CopyFolderCommand --|> taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands
+taskt.Core.Automation.Commands.MoveFolderCommand --|> taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands
+taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand --|> taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands
+taskt.Core.Automation.Commands.RenameFolderCommand --|> taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands
+@enduml

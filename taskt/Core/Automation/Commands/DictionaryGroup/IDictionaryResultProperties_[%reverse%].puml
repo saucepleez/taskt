@@ -1,0 +1,114 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "GetJSONValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryResultProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWindowAndTabTitlesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertColorCommand" <<sealed>> {
++RunCommand() : void 
+-cmbFormatSelectionChange() : void 
++AddInstance() : void 
++RemoveInstance() : void 
++v_Color : String <<get>> <<set>> 
++v_Format : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableColumnToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_KeyPrefix : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDataTableRowToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetColumnValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ExcelGetRowValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertJSONToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertListToDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_KeyType : String <<get>> <<set>> 
++v_Keys : String <<get>> <<set>> 
++v_KeysNotEnough : String <<get>> <<set>> 
++v_ListItemNotEnough : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebElementsValueAsDictionaryCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.GetJSONValuesAsDictionaryCommand ..|> taskt.Core.Automation.Commands.IDictionaryResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand ..|> taskt.Core.Automation.Commands.IDictionaryResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsDictionaryCommand ..|> taskt.Core.Automation.Commands.IDictionaryResultProperties
+taskt.Core.Automation.Commands.ConvertColorCommand ..|> taskt.Core.Automation.Commands.IDictionaryResultProperties
+taskt.Core.Automation.Commands.ConvertDataTableColumnToDictionaryCommand ..|> taskt.Core.Automation.Commands.IDictionaryResultProperties
+taskt.Core.Automation.Commands.ConvertDataTableRowToDictionaryCommand ..|> taskt.Core.Automation.Commands.IDictionaryResultProperties
+taskt.Core.Automation.Commands.ExcelGetColumnValuesAsDictionaryCommand ..|> taskt.Core.Automation.Commands.IDictionaryResultProperties
+taskt.Core.Automation.Commands.ExcelGetRowValuesAsDictionaryCommand ..|> taskt.Core.Automation.Commands.IDictionaryResultProperties
+taskt.Core.Automation.Commands.ConvertJSONToDictionaryCommand ..|> taskt.Core.Automation.Commands.IDictionaryResultProperties
+taskt.Core.Automation.Commands.ConvertListToDictionaryCommand ..|> taskt.Core.Automation.Commands.IDictionaryResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetOneWebElementValuesAsDictionaryCommand ..|> taskt.Core.Automation.Commands.IDictionaryResultProperties
+taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsValueAsDictionaryCommand ..|> taskt.Core.Automation.Commands.IDictionaryResultProperties
+@enduml

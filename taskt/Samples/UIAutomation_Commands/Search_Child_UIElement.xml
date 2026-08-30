@@ -2,25 +2,25 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="588e91a1-fd93-49c7-bbd8-6e4e58bbda1a" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Get Children Elements Information sample" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="588e91a1-fd93-49c7-bbd8-6e4e58bbda1a" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Search Child UIElement sample" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="52a713ba-7b13-48a8-bce7-d9f18918e649" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute UIAutomationTester" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a2efea5c-bb2b-4421-a35d-f61a462545db" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a2efea5c-bb2b-4421-a35d-f61a462545db" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" v_WindowName="" v_WindowHandle="" v_WaitTimeForExecute="2000" v_WaitTimeBeforeNext="2000" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="3e6e9f88-cbcb-4aad-85da-d4a736cd9268" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Get Window UIElement" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromWindowCommand" CommandID="5fc89837-7852-4a6e-ab64-3138839f124e" CommandName="UIAutomationSearchUIElementFromWindowCommand" IsCommented="false" SelectionName="Search UIElement From Window" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_AutomationElementVariable="vWin" v_CompareMethod="" v_MatchMethod="" v_TargetWindowIndex="0" v_WaitTimeForWindow="60" v_NameResult="" v_HandleResult="" />
+      <ScriptCommand xsi:type="UIAutomationGetWindowUIElementCommand" CommandID="5fc89837-7852-4a6e-ab64-3138839f124e" CommandName="UIAutomationGetWindowUIElementCommand" IsCommented="false" SelectionName="Get Window UIElement" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_CheckMethod="" v_WaitTimeForWindow="60" v_SelectionMethod="" v_TargetWindowIndex="0" v_Result="vWin" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="8f2cf2cd-f5fb-43fc-afd6-fff0102366a3" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Search groupBox1" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromUIElementCommand" CommandID="c3b9739a-efb1-4acf-8ed6-8da8406f6b97" CommandName="UIAutomationSearchUIElementFromUIElementCommand" IsCommented="false" SelectionName="Search UIElement From UIElement" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vWin⦄" v_AutomationElementVariable="vElem" v_WaitTime="10">
+      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromUIElementCommand" CommandID="c3b9739a-efb1-4acf-8ed6-8da8406f6b97" CommandName="UIAutomationSearchUIElementFromUIElementCommand" IsCommented="false" SelectionName="Search UIElement From UIElement" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_WaitTimeForUIElement="10" v_TargetElement="⦃vWin⦄" v_Result="vElem">
         <v_SearchParameters>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="SearchParameters100624.112357" msdata:UseCurrentLocale="true">
@@ -262,7 +262,7 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="746afec7-1c4d-4203-92c6-b941fc3e8303" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Search checkBox3 in groupBox1" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationSearchChildUIElementCommand" CommandID="a9612694-30b1-4010-94ef-351520cab34e" CommandName="UIAutomationSearchChildUIElementCommand" IsCommented="false" SelectionName="Search Child UIElement" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_RootElement="⦃vElem⦄" v_Index="0" v_AutomationElementVariable="vCheck">
+      <ScriptCommand xsi:type="UIAutomationSearchChildUIElementCommand" CommandID="a9612694-30b1-4010-94ef-351520cab34e" CommandName="UIAutomationSearchChildUIElementCommand" IsCommented="false" SelectionName="Search Child UIElement" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vElem⦄" v_TargetUIElementIndex="0" v_Result="vCheck">
         <v_SearchParameters>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="SearchParameters100624.112430" msdata:UseCurrentLocale="true">
@@ -294,7 +294,7 @@
                 <ParameterValue></ParameterValue>
               </SearchParameters100624.112430>
               <SearchParameters100624.112430 diffgr:id="SearchParameters100624.1124303" msdata:rowOrder="2" diffgr:hasChanges="modified">
-                <Enabled></Enabled>
+                <Enabled>False</Enabled>
                 <ParameterName>AutomationId</ParameterName>
                 <ParameterValue>checkBox1</ParameterValue>
               </SearchParameters100624.112430>
@@ -401,6 +401,7 @@
                 <ParameterValue></ParameterValue>
               </SearchParameters100624.112430>
               <SearchParameters100624.112430 diffgr:id="SearchParameters100624.1124303" msdata:rowOrder="2">
+                <Enabled>False</Enabled>
                 <ParameterName>AutomationId</ParameterName>
                 <ParameterValue>checkBox1</ParameterValue>
               </SearchParameters100624.112430>
@@ -500,13 +501,13 @@
       </ScriptCommand>
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationClickUIElementCommand" CommandID="3bfa76ef-94ca-4557-80d1-2865c9700bf0" CommandName="UIAutomationClickUIElementCommand" IsCommented="false" SelectionName="Click UIElement" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vCheck⦄" v_ClickType="Left Click" v_XOffset="0" v_YOffset="0" v_ActivateWindow="" />
+      <ScriptCommand xsi:type="UIAutomationClickUIElementCommand" CommandID="3bfa76ef-94ca-4557-80d1-2865c9700bf0" CommandName="UIAutomationClickUIElementCommand" IsCommented="false" SelectionName="Click UIElement" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vCheck⦄" v_ActivateWindowBeforeAction="" v_ClickType="Left Click" v_XOffset="0" v_YOffset="0" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="76173026-0351-40cc-9be5-0f36077fd61f" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Search checkBox2 in groupBox1" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationSearchChildUIElementCommand" CommandID="2da2c008-ba7f-48e6-85ea-b0ec43cf859f" CommandName="UIAutomationSearchChildUIElementCommand" IsCommented="false" SelectionName="Search Child UIElement" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_RootElement="⦃vElem⦄" v_Index="1" v_AutomationElementVariable="vCheck">
+      <ScriptCommand xsi:type="UIAutomationSearchChildUIElementCommand" CommandID="2da2c008-ba7f-48e6-85ea-b0ec43cf859f" CommandName="UIAutomationSearchChildUIElementCommand" IsCommented="false" SelectionName="Search Child UIElement" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vElem⦄" v_TargetUIElementIndex="1" v_Result="vCheck">
         <v_SearchParameters>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="SearchParameters100624.112430" msdata:UseCurrentLocale="true">
@@ -538,7 +539,7 @@
                 <ParameterValue></ParameterValue>
               </SearchParameters100624.112430>
               <SearchParameters100624.112430 diffgr:id="SearchParameters100624.1124303" msdata:rowOrder="2" diffgr:hasChanges="modified">
-                <Enabled></Enabled>
+                <Enabled>False</Enabled>
                 <ParameterName>AutomationId</ParameterName>
                 <ParameterValue>checkBox1</ParameterValue>
               </SearchParameters100624.112430>
@@ -645,6 +646,7 @@
                 <ParameterValue></ParameterValue>
               </SearchParameters100624.112430>
               <SearchParameters100624.112430 diffgr:id="SearchParameters100624.1124303" msdata:rowOrder="2">
+                <Enabled>False</Enabled>
                 <ParameterName>AutomationId</ParameterName>
                 <ParameterValue>checkBox1</ParameterValue>
               </SearchParameters100624.112430>
@@ -744,7 +746,7 @@
       </ScriptCommand>
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationClickUIElementCommand" CommandID="938b7211-ad13-433a-be16-c60b9d8f6300" CommandName="UIAutomationClickUIElementCommand" IsCommented="false" SelectionName="Click UIElement" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vCheck⦄" v_ClickType="Left Click" v_XOffset="0" v_YOffset="0" v_ActivateWindow="" />
+      <ScriptCommand xsi:type="UIAutomationClickUIElementCommand" CommandID="938b7211-ad13-433a-be16-c60b9d8f6300" CommandName="UIAutomationClickUIElementCommand" IsCommented="false" SelectionName="Click UIElement" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vCheck⦄" v_ActivateWindowBeforeAction="" v_ClickType="Left Click" v_XOffset="0" v_YOffset="0" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="CommentCommand" CommandID="3dd30015-4fa5-4a60-b249-fdd5655af882" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" v_Comment="Search Child UIElement command is useful" CommandEnabled="true" />
@@ -754,11 +756,11 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.6</TasktVersion>
+    <TasktVersion>3.5.2.47</TasktVersion>
     <Author />
     <LastRunTime>2024-10-06T11:30:38.6425997+09:00</LastRunTime>
     <RunTimes>8</RunTimes>
-    <Revision>14</Revision>
+    <Revision>18</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>

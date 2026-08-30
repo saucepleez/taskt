@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties" [ label="IUIElementCoreProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement" [ label="ICanHandleUIElement", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ICanHandleUIElement";
+"taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementCoreProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

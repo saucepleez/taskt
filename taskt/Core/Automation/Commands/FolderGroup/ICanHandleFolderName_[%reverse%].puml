@@ -1,0 +1,42 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+abstract class "AFolderCopySameRenameFolderCommands"{
+#CreateActionFunc() : Func
++v_NewFolderName : String <<get>> <<set>> 
++v_WhenFolderNameSame : String <<get>> <<set>> 
++v_WhenDestinationExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleFolderName" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CreateFolderCommand" <<sealed>> {
++RunCommand() : void 
++v_NewFolderName : String <<get>> <<set>> 
++v_WhenFolderExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CopyFolderInSamLocationCommand" <<sealed>> {
++RunCommand() : void 
++v_CopySubFolder : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "RenameFolderCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands ..|> taskt.Core.Automation.Commands.ICanHandleFolderName
+taskt.Core.Automation.Commands.CreateFolderCommand ..|> taskt.Core.Automation.Commands.ICanHandleFolderName
+taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand --|> taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands
+taskt.Core.Automation.Commands.RenameFolderCommand --|> taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands
+@enduml

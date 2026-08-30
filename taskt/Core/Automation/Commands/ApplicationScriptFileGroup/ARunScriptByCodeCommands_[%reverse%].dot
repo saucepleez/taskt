@@ -1,0 +1,17 @@
+digraph "taskt.Core.Automation.Commands.ARunScriptByCodeCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.RunPowerShellScriptByCodeCommand" [ label="RunPowerShellScriptByCodeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ARunScriptByCodeCommands" [ label="ARunScriptByCodeCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.RunJavaScriptByCodeCommand" [ label="RunJavaScriptByCodeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.RunBatchScriptByCodeCommand" [ label="RunBatchScriptByCodeCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.RunPowerShellScriptByCodeCommand" -> "taskt.Core.Automation.Commands.ARunScriptByCodeCommands";
+"taskt.Core.Automation.Commands.RunJavaScriptByCodeCommand" -> "taskt.Core.Automation.Commands.ARunScriptByCodeCommands";
+"taskt.Core.Automation.Commands.RunBatchScriptByCodeCommand" -> "taskt.Core.Automation.Commands.ARunScriptByCodeCommands";
+}

@@ -1,0 +1,30 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowPositionProperties" {
++{abstract} v_WhenWindowIsMinimized : String <<get>> <<set>> <<abstract>> 
++{abstract} v_WhenWindowIsMaximized : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IPositionProperties" {
++{abstract} v_XPosition : String <<get>> <<set>> <<abstract>> 
++{abstract} v_YPosition : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IWindowRECTProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.IWindowPositionProperties --|> taskt.Core.Automation.Commands.IPositionProperties
+taskt.Core.Automation.Commands.IWindowPositionProperties --|> taskt.Core.Automation.Commands.IWindowRECTProperties
+taskt.Core.Automation.Commands.IPositionProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

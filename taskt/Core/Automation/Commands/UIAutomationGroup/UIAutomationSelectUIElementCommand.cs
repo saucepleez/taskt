@@ -1,0 +1,78 @@
+﻿using System;
+using System.Windows.Automation;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
+
+namespace taskt.Core.Automation.Commands
+{
+    [Serializable]
+    [Attributes.ClassAttributes.Group("UIAutomation")]
+    [Attributes.ClassAttributes.SubGruop("UIElement Action")]
+    [Attributes.ClassAttributes.CommandSettings("Select UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to Select UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Select UIElement.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
+    public sealed class UIAutomationSelectUIElementCommand : AUIElementActionCommands
+    {
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
+        //public string v_TargetElement { get; set; }
+
+        public UIAutomationSelectUIElementCommand()
+        {
+        }
+
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
+        {
+            //var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
+
+            //if (targetElement.TryGetCurrentPattern(TogglePattern.Pattern, out object checkPtn))
+            //{
+            //    TogglePattern ptn = (TogglePattern)checkPtn;
+            //    switch (ptn.Current.ToggleState)
+            //    {
+            //        case ToggleState.Off:
+            //        case ToggleState.Indeterminate:
+            //            do
+            //            {
+            //                ptn.Toggle();
+            //            } while (ptn.Current.ToggleState != ToggleState.On);
+            //            break;
+            //    }
+            //}
+            //else if (targetElement.TryGetCurrentPattern(SelectionItemPattern.Pattern, out checkPtn))
+            //{
+            //    ((SelectionItemPattern)checkPtn).Select();
+            //}
+
+            this.UIElementActionAndWait(engine,
+                new Action<AutomationElement, IntPtr>((targetElement, whnd) =>
+                {
+                    if (targetElement.TryGetCurrentPattern(TogglePattern.Pattern, out object checkPtn))
+                    {
+                        TogglePattern ptn = (TogglePattern)checkPtn;
+                        switch (ptn.Current.ToggleState)
+                        {
+                            case ToggleState.Off:
+                            case ToggleState.Indeterminate:
+                                do
+                                {
+                                    ptn.Toggle();
+                                } while (ptn.Current.ToggleState != ToggleState.On);
+                                break;
+                        }
+                    }
+                    else if (targetElement.TryGetCurrentPattern(SelectionItemPattern.Pattern, out checkPtn))
+                    {
+                        ((SelectionItemPattern)checkPtn).Select();
+                    }
+                    else
+                    {
+                        this.ActionNotSupportedProcess("Select", engine);
+                    }
+                })
+            );
+        }
+    }
+}

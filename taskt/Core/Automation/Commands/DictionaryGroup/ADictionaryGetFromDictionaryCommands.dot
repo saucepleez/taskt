@@ -1,0 +1,30 @@
+digraph "taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands" [ label="ADictionaryGetFromDictionaryCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands" [ label="ADictionaryInputDictionaryCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IDictionaryGetFromDictionaryProperties" [ label="IDictionaryGetFromDictionaryProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.IDictionaryProperties" [ label="IDictionaryProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IResultProperties" [ label="IResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleDictionary" [ label="ICanHandleDictionary", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands" -> "taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands";
+"taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands" -> "taskt.Core.Automation.Commands.IDictionaryGetFromDictionaryProperties";
+"taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.ADictionaryInputDictionaryCommands" -> "taskt.Core.Automation.Commands.IDictionaryProperties";
+"taskt.Core.Automation.Commands.IDictionaryGetFromDictionaryProperties" -> "taskt.Core.Automation.Commands.IResultProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.IDictionaryProperties" -> "taskt.Core.Automation.Commands.ICanHandleDictionary";
+"taskt.Core.Automation.Commands.IDictionaryProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ICanHandleDictionary" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

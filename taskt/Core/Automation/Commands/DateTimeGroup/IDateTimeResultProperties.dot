@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.IDateTimeResultProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.IDateTimeResultProperties" [ label="IDateTimeResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleDateTime" [ label="ICanHandleDateTime", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.IDateTimeResultProperties" -> "taskt.Core.Automation.Commands.ICanHandleDateTime";
+"taskt.Core.Automation.Commands.ICanHandleDateTime" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

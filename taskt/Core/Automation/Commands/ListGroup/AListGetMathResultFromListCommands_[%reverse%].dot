@@ -1,0 +1,23 @@
+digraph "taskt.Core.Automation.Commands.AListGetMathResultFromListCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.GetAverageFromListCommand" [ label="GetAverageFromListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AListGetMathResultFromListCommands" [ label="AListGetMathResultFromListCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetMaxFromListCommand" [ label="GetMaxFromListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetMedianFromListCommand" [ label="GetMedianFromListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetMinFromListCommand" [ label="GetMinFromListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetSumFromListCommand" [ label="GetSumFromListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetVarianceFromListCommand" [ label="GetVarianceFromListCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.GetAverageFromListCommand" -> "taskt.Core.Automation.Commands.AListGetMathResultFromListCommands";
+"taskt.Core.Automation.Commands.GetMaxFromListCommand" -> "taskt.Core.Automation.Commands.AListGetMathResultFromListCommands";
+"taskt.Core.Automation.Commands.GetMedianFromListCommand" -> "taskt.Core.Automation.Commands.AListGetMathResultFromListCommands";
+"taskt.Core.Automation.Commands.GetMinFromListCommand" -> "taskt.Core.Automation.Commands.AListGetMathResultFromListCommands";
+"taskt.Core.Automation.Commands.GetSumFromListCommand" -> "taskt.Core.Automation.Commands.AListGetMathResultFromListCommands";
+"taskt.Core.Automation.Commands.GetVarianceFromListCommand" -> "taskt.Core.Automation.Commands.AListGetMathResultFromListCommands";
+}

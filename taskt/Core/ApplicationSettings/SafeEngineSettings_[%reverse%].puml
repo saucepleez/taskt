@@ -1,0 +1,46 @@
+@startuml
+left to right direction
+package "taskt.Core"{
+class "SafeAutomationEngineInstanceEngineSettings" {
++VariableStartMarker : String <<get>> <<set>> 
++VariableEndMarker : String <<get>> <<set>> 
++DelayBetweenCommands : Int32 <<get>> <<set>> 
++AutoCalcVariables : Boolean <<get>> <<set>> 
+}
+}
+
+package "taskt.Core"{
+class "SafeEngineSettings" {
++ShowDebugWindow : Boolean <<get>> 
++AutoCloseDebugWindow : Boolean <<get>> 
++EnableDiagnosticLogging : Boolean <<get>> 
++ShowAdvancedDebugOutput : Boolean <<get>> 
++CreateMissingVariablesDuringExecution : Boolean <<get>> 
++TrackExecutionMetrics : Boolean <<get>> 
++VariableStartMarker : String <<get>> <<set>> 
++VariableEndMarker : String <<get>> <<set>> 
++CancellationKey : Keys <<get>> 
++DelayBetweenCommands : Int32 <<get>> <<set>> 
++OverrideExistingAppInstances : Boolean <<get>> 
++AutoCloseMessagesOnServerExecution : Boolean <<get>> 
++AutoCloseDebugWindowOnServerExecution : Boolean <<get>> 
++AutoCalcVariables : Boolean <<get>> <<set>> 
++CurrentWindowKeyword : String <<get>> 
++DesktopKeyword : String <<get>> 
++AllWindowsKeyword : String <<get>> 
++CurrentWindowPositionKeyword : String <<get>> 
++CurrentWindowXPositionKeyword : String <<get>> 
++CurrentWindowYPositionKeyword : String <<get>> 
++CurrentWorksheetKeyword : String <<get>> 
++NextWorksheetKeyword : String <<get>> 
++PreviousWorksheetKeyword : String <<get>> 
++ExportIntermediateXML : Boolean <<get>> 
++UseNewParser : Boolean <<get>> 
++IgnoreFirstVariableMarkerInOutputParameter : Boolean <<get>> 
++MaxFileCounter : Int32 <<get>> 
+#engineSettings : taskt.Core.EngineSettings
+}
+}
+
+taskt.Core.SafeAutomationEngineInstanceEngineSettings --|> taskt.Core.SafeEngineSettings
+@enduml

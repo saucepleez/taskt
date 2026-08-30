@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using OpenQA.Selenium;
+using taskt.Core.Automation.Commands.UIAutomationGroup;
 
 namespace taskt.Core.Script
 {
@@ -107,7 +108,7 @@ namespace taskt.Core.Script
                 case "INDEX":
                     return CurrentPosition.ToString();
                 default:
-                    if (requiredProperty == "")
+                    if (requiredProperty == string.Empty)
                     {
                         var dataRow = myDT.Rows[CurrentPosition];
                         return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);
@@ -145,7 +146,7 @@ namespace taskt.Core.Script
                 case "INDEX":
                     return CurrentPosition.ToString();
                 default:
-                    if (requiredProperty == "")
+                    if (requiredProperty == string.Empty)
                     {
                         return (trgDic.Values.ToArray())[CurrentPosition];
                     }
@@ -210,7 +211,7 @@ namespace taskt.Core.Script
                 case "TYPE":
                     return "AUTOMATIONELEMENT";
                 default:
-                    return "Name: " + element.Current.Name + ", LocalizedControlType: " + element.Current.LocalizedControlType + ", ControlType: " + taskt.Core.Automation.Commands.UIElementControls.GetControlTypeText(element.Current.ControlType);
+                    return $"Name: {element.Current.Name}, LocalizedControlType: {element.Current.LocalizedControlType}, ControlType: {EM_CanHandleUIElementExtentionMethods.GetControlTypeText(element)}";
             }
         }
         private string GetDisplayValue(DateTime dt, string requiredProperty)
@@ -296,7 +297,7 @@ namespace taskt.Core.Script
                 case "ID":
                     return mail.MessageId;
                 default:
-                    string mes = "";
+                    string mes = string.Empty;
                     if (mail.TextBody != null)
                     {
                         mes = mail.TextBody;
@@ -305,7 +306,7 @@ namespace taskt.Core.Script
                     {
                         mes = mail.HtmlBody;
                     }
-                    return "Subject: " + mail.Subject + ", Message: " + ((mes.Length > 100) ? mes.Substring(0, 100) : mes);
+                    return $"Subject: {mail.Subject}, Message: {((mes.Length > 100) ? mes.Substring(0, 100) : mes)}";
             }
         }
         private string GetDisplayValue(List<MimeKit.MimeMessage> mails, string requiredProperty)
@@ -325,7 +326,7 @@ namespace taskt.Core.Script
                 case "TYPE":
                     return "MAILKIT_EMAILLIST";
                 default:
-                    return "Index: " + CurrentPosition + ", " + GetDisplayValue(mails[CurrentPosition], "");
+                    return $"Index: {CurrentPosition}, " + GetDisplayValue(mails[CurrentPosition], "");
             }
         }
 

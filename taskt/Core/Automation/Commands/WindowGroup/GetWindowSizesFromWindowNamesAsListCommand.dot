@@ -1,0 +1,53 @@
+digraph "taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand" [ label="GetWindowSizesFromWindowNamesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands" [ label="GetFromWindowNamesAsListCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IWindowSizeProperties" [ label="IWindowSizeProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.AWindowNamesCommands" [ label="AWindowNamesCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleList" [ label="ICanHandleList", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ISizeProperties" [ label="ISizeProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IWindowRECTProperties" [ label="IWindowRECTProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.AWindowNameCoreCommands" [ label="AWindowNameCoreCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IWindowNamesProperties" [ label="IWindowNamesProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.IWindowNameCoreProperties" [ label="IWindowNameCoreProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties" [ label="IFromWindowNameResultsProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleWindowName" [ label="ICanHandleWindowName", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties" [ label="ITextCheckProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties" [ label="IFromWindowHandleResultsProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICheckProperties" [ label="ICheckProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands";
+"taskt.Core.Automation.Commands.GetWindowSizesFromWindowNamesAsListCommand" -> "taskt.Core.Automation.Commands.IWindowSizeProperties";
+"taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands" -> "taskt.Core.Automation.Commands.AWindowNamesCommands";
+"taskt.Core.Automation.Commands.GetFromWindowNamesAsListCommands" -> "taskt.Core.Automation.Commands.ICanHandleList";
+"taskt.Core.Automation.Commands.IWindowSizeProperties" -> "taskt.Core.Automation.Commands.ISizeProperties";
+"taskt.Core.Automation.Commands.IWindowSizeProperties" -> "taskt.Core.Automation.Commands.IWindowRECTProperties";
+"taskt.Core.Automation.Commands.AWindowNamesCommands" -> "taskt.Core.Automation.Commands.AWindowNameCoreCommands";
+"taskt.Core.Automation.Commands.AWindowNamesCommands" -> "taskt.Core.Automation.Commands.IWindowNamesProperties";
+"taskt.Core.Automation.Commands.AWindowNamesCommands" -> "taskt.Core.Automation.Commands.ICanHandleList";
+"taskt.Core.Automation.Commands.ICanHandleList" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ISizeProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.AWindowNameCoreCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.AWindowNameCoreCommands" -> "taskt.Core.Automation.Commands.IWindowNameCoreProperties";
+"taskt.Core.Automation.Commands.IWindowNamesProperties" -> "taskt.Core.Automation.Commands.IWindowNameCoreProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties";
+"taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.ICanHandleWindowName";
+"taskt.Core.Automation.Commands.IWindowNameCoreProperties" -> "taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties";
+"taskt.Core.Automation.Commands.WindowGroup.IFromWindowNameResultsProperties" -> "taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties";
+"taskt.Core.Automation.Commands.ICanHandleWindowName" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.TextGroup.ITextCheckProperties" -> "taskt.Core.Automation.Commands.ICheckProperties";
+"taskt.Core.Automation.Commands.WindowGroup.IFromWindowHandleResultsProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ICheckProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

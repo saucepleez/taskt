@@ -1,0 +1,15 @@
+digraph "taskt.Core.SafeClientSettings" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.SafeFrmScriptBuilderClientSettings" [ label="SafeFrmScriptBuilderClientSettings", ];
+"taskt.Core.SafeClientSettings" [ label="SafeClientSettings", ];
+"taskt.Core.SafeDocumentGenerationClientSettings" [ label="SafeDocumentGenerationClientSettings", ];
+
+"taskt.Core.SafeFrmScriptBuilderClientSettings" -> "taskt.Core.SafeClientSettings";
+"taskt.Core.SafeDocumentGenerationClientSettings" -> "taskt.Core.SafeClientSettings";
+}

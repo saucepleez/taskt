@@ -1,0 +1,28 @@
+@startuml
+left to right direction
+package "taskt.Core"{
+class "SafeApplicationSettings" {
++GetClientSettings() : SafeClientSettings
++GetEngineSettings() : SafeEngineSettings
++GetServerSettings() : SafeServerSettings
++GetLocalListenerSettings() : SafeLocalListenerSettings
++Clone() : SafeApplicationSettings
++ClientSettings : IClientSettings <<get>> <<private set>>
++EngineSettings : IEngineSettings <<get>> <<private set>>
++ServerSettings : IServerSettings <<get>> <<private set>>
++ListenerSettings : ILocalListenerSettings <<get>> <<private set>>
+#applicationSettings : taskt.Core.ApplicationSettings
+}
+}
+
+package "taskt.Core"{
+Interface "IApplicationSettings" {
++{abstract} EngineSettings : IEngineSettings <<get>> <<abstract>> 
++{abstract} ClientSettings : IClientSettings <<get>> <<abstract>> 
++{abstract} ServerSettings : IServerSettings <<get>> <<abstract>> 
++{abstract} ListenerSettings : ILocalListenerSettings <<get>> <<abstract>> 
+}
+}
+
+taskt.Core.SafeApplicationSettings ..|> taskt.Core.IApplicationSettings
+@enduml

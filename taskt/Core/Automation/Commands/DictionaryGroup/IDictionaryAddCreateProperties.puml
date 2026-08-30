@@ -1,0 +1,29 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryAddCreateProperties" {
++{abstract} v_ColumnNameDataTable : DataTable <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IDictionaryProperties" {
++{abstract} v_Dictionary : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleDictionary" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.IDictionaryAddCreateProperties --|> taskt.Core.Automation.Commands.IDictionaryProperties
+taskt.Core.Automation.Commands.IDictionaryProperties --|> taskt.Core.Automation.Commands.ICanHandleDictionary
+taskt.Core.Automation.Commands.IDictionaryProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.ICanHandleDictionary --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

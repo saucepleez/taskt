@@ -1,0 +1,15 @@
+digraph "taskt.Core.Automation.Commands.AFileCopyMoveFileCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.CopyFileCommand" [ label="CopyFileCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AFileCopyMoveFileCommands" [ label="AFileCopyMoveFileCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.MoveFileCommand" [ label="MoveFileCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.CopyFileCommand" -> "taskt.Core.Automation.Commands.AFileCopyMoveFileCommands";
+"taskt.Core.Automation.Commands.MoveFileCommand" -> "taskt.Core.Automation.Commands.AFileCopyMoveFileCommands";
+}

@@ -1,0 +1,15 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "IDialogResultProperties" {
++{abstract} v_DialogResult : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.IDialogResultProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

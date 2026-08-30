@@ -1,0 +1,62 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Engine"{
+class "AutomationEngineInstance" {
++add_ReportProgressEvent() : void 
++remove_ReportProgressEvent() : void 
++add_ScriptFinishedEvent() : void 
++remove_ScriptFinishedEvent() : void 
++add_LineNumberChangedEvent() : void 
++remove_LineNumberChangedEvent() : void 
++ExecuteScriptAsync() : void 
++ExecuteScriptAsync() : void 
++ExecuteScriptXML() : void 
++ExecuteScript() : void 
++ExecuteCommand() : void 
++AddAppInstance() : void 
++GetAppInstance() : Object
++RemoveAppInstance() : void 
++GetNewAppInstanceName() : String
++CancelScript() : void 
++PauseScript() : void 
++ResumeScript() : void 
++ReportProgress() : void 
++ScriptFinished() : void 
++LineNumberChanged() : void 
++GetEngineContextAsJSON() : String
++WriteLog() : void 
++GetAutomationEngineInstanceEngineSettings() : SafeAutomationEngineInstanceEngineSettings
++VariableList : List <<get>> <<set>> 
++AppInstances : Dictionary <<get>> <<set>> 
++PreloadedTasks : Dictionary <<get>> <<set>> 
++WhenErrorOccursBehavior : WhenErrorOccurs <<get>> <<set>> 
++ErrorsOccured : List <<get>> <<set>> 
++IsCancellationPending : Boolean <<get>> <<set>> 
++CurrentLoopCancelled : Boolean <<get>> <<set>> 
++CurrentLoopContinuing : Boolean <<get>> <<set>> 
+-IsScriptPaused : Boolean <<get>> <<private set>>
++tasktEngineUI : frmScriptEngine <<get>> <<set>> 
+-sw : Stopwatch <<get>> <<private set>>
++CurrentStatus : EngineStatus <<get>> <<set>> 
++engineSettings : IEngineSettings <<get>> <<set>> 
++serverSettings : IServerSettings <<get>> <<set>> 
++DataTables : List <<get>> <<set>> 
++FileName : String <<get>> <<set>> 
++taskModel : Task <<get>> <<set>> 
++serverExecution : Boolean <<get>> <<set>> 
++ServiceResponses : List <<get>> <<set>> 
++AutoCalculateVariables : Boolean <<get>> <<set>> 
++TasktResult : String <<get>> <<set>> 
++ErrorHandler : taskt.Core.Automation.Commands.ErrorHandlingCommand
+-engineLogger : Serilog.Core.Logger
+}
+}
+
+package "taskt.Core.Automation.Engine"{
+Interface "IAppInstancesProperties" {
++{abstract} AppInstances : Dictionary <<get>> <<set>> <<abstract>> 
+}
+}
+
+taskt.Core.Automation.Engine.AutomationEngineInstance ..|> taskt.Core.Automation.Engine.IAppInstancesProperties
+@enduml

@@ -1,0 +1,59 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+abstract class "AListGetMathResultFromListCommands"{
++v_Result : String <<get>> <<set>> 
++v_WhenValueIsNotNumeric : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IListGetMathResultFromListProperties" {
++{abstract} v_WhenValueIsNotNumeric : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetAverageFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetMaxFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetMedianFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetMinFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetSumFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetVarianceFromListCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+taskt.Core.Automation.Commands.AListGetMathResultFromListCommands ..|> taskt.Core.Automation.Commands.IListGetMathResultFromListProperties
+taskt.Core.Automation.Commands.GetAverageFromListCommand --|> taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
+taskt.Core.Automation.Commands.GetMaxFromListCommand --|> taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
+taskt.Core.Automation.Commands.GetMedianFromListCommand --|> taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
+taskt.Core.Automation.Commands.GetMinFromListCommand --|> taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
+taskt.Core.Automation.Commands.GetSumFromListCommand --|> taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
+taskt.Core.Automation.Commands.GetVarianceFromListCommand --|> taskt.Core.Automation.Commands.AListGetMathResultFromListCommands
+@enduml

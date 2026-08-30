@@ -19,10 +19,12 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                     case SearchReplaceMode.Search:
                         searchTab.SelectedIndex = 0;
                         txtSearchKeyword.Focus();
+                        txtSearchKeyword.Select();
                         break;
                     case SearchReplaceMode.Replace:
                         searchTab.SelectedIndex = 1;
                         txtReplaceSearch.Focus();
+                        txtReplaceSearch.Select();
                         break;
                 }
             }
@@ -258,11 +260,11 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                     {
                         string head = targetTextBox.Text.Substring(0, targetTextBox.SelectionStart);
                         string tail = targetTextBox.Text.Substring(targetTextBox.SelectionStart);
-                        targetTextBox.Text = head + settings.EngineSettings.VariableStartMarker + fm.selectedItem.ToString() + settings.EngineSettings.VariableEndMarker + tail;
+                        targetTextBox.Text = head + settings.EngineSettings.VariableStartMarker + fm.SelectedItem.ToString() + settings.EngineSettings.VariableEndMarker + tail;
                     }
                     else
                     {
-                        targetTextBox.Text += settings.EngineSettings.VariableStartMarker + fm.selectedItem.ToString() + settings.EngineSettings.VariableEndMarker;
+                        targetTextBox.Text += settings.EngineSettings.VariableStartMarker + fm.SelectedItem.ToString() + settings.EngineSettings.VariableEndMarker;
                     }
                 }
                 this.TopMost = true;

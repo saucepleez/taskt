@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using taskt.Core;
 using taskt.Core.IO;
@@ -10,26 +11,48 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
     public partial class frmNewSettings : DialogLikeThemedForm
     {
-        Core.ApplicationSettings newAppSettings;
-        ScriptBuilder.frmScriptBuilder scriptBuilderForm;
+        /// <summary>
+        /// new settings
+        /// </summary>
+        ApplicationSettings newAppSettings;
 
+        /// <summary>
+        /// parent scriptBuilderForm
+        /// </summary>
+        readonly frmScriptBuilder scriptBuilderForm;
+
+        /// <summary>
+        /// previous selected settings page name
+        /// </summary>
         private string prevPage = "";
 
         // Metric
-        private Label lblMetrics = null;
-        private TreeView tvExecutionTimes = null;
-        private Button btnClearMetrics = null;
+        //private Label lblMetrics = null;
+        //private TreeView tvExecutionTimes = null;
+        //private Button btnClearMetrics = null;
+
+        // bgwMetricEvents
+        private DoWorkEventHandler bgwMetricsDoWorkEvent = null;
+        private RunWorkerCompletedEventHandler bgwMetricsRunWorkerCompletedEvent = null;
 
         // Local Listener
-        private Button btnStartListening = null;
-        private Button btnStopListening = null;
-        private Label lblListeningState = null;
+        //private Button btnStartListening = null;
+        //private Button btnStopListening = null;
+        //private Label lblListeningState = null;
 
         // Server
-        private Label lblSocketState = null;
-        private Label lblSocketException = null;
+        //private Label lblSocketState = null;
+        //private Label lblSocketException = null;
 
-        private string[] keysList;
+        // tmrGetSocketStatus Events
+        private EventHandler tmrGetScoketStatusTickEvent = null;
+        private EventHandler tcpListenerListenStartEvent = null;
+        private EventHandler tcpListenerListenStopEvent = null;
+
+        /// <summary>
+        /// keyboard keys list
+        /// </summary>
+        private readonly string[] keysList;
 
         private enum FontSize
         {
@@ -40,7 +63,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         }
 
         #region form events
-        public frmNewSettings(ScriptBuilder.frmScriptBuilder fm)
+        public frmNewSettings(frmScriptBuilder fm)
         {
             InitializeComponent();
             this.scriptBuilderForm = fm;
@@ -61,8 +84,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             newAppSettings = ApplicationSettings.GetOrCreateApplicationSettings(App.Taskt_Settings_File_Path);
 
             // Network -> Server
-            Core.Server.LocalTCPListener.ListeningStarted += AutomationTCPListener_ListeningStarted;
-            Core.Server.LocalTCPListener.ListeningStopped += AutomationTCPListener_ListeningStopped;
+            //Core.Server.LocalTCPListener.ListeningStarted += AutomationTCPListener_ListeningStarted;
+            //Core.Server.LocalTCPListener.ListeningStopped += AutomationTCPListener_ListeningStopped;
 
             tvSettingsMenu.ExpandAll();
 
@@ -100,7 +123,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             flowLayoutSettings.SuspendLayout();
 
-            string newPage = rootNode.Text + " - " + tvSettingsMenu.SelectedNode.Text;
+            string newPage = $"{rootNode.Text} - {tvSettingsMenu.SelectedNode.Text}";
 
             switch (newPage)
             {
@@ -138,9 +161,6 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 case "Automation Engine - Parser":
                     showAutomationEngineParserSettings();
                     break;
-                case "Automation Engine - UIElement Inspect":
-                    showAutomationUIElementInspect();
-                    break;
                 case "Automation Engine - Variable":
                     showAutomationEngineVariableSettings();
                     break;
@@ -154,6 +174,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                     break;
                 case "Editor - Command List":
                     showEditorCommandListSettings();
+                    break;
+                case "Editor - GUI Inspect Tool":
+                    showEditorGUIInspectToolSettings();
                     break;
                 case "Editor - Indent":
                     showEditorIndentSettings();
@@ -215,19 +238,44 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 switch (prevPage)
                 {
                     case "Application - Script Metric":
-                        lblMetrics = null;
-                        tvExecutionTimes = null;
-                        btnClearMetrics = null;
+                        //lblMetrics = null;
+                        //tvExecutionTimes = null;
+                        //btnClearMetrics = null;
+                        if (bgwMetricsDoWorkEvent != null)
+                        {
+                            bgwMetrics.DoWork -= bgwMetricsDoWorkEvent;
+                            bgwMetricsDoWorkEvent = null;
+                        }
+                        if (bgwMetricsRunWorkerCompletedEvent != null)
+                        {
+                            bgwMetrics.RunWorkerCompleted -= bgwMetricsRunWorkerCompletedEvent;
+                            bgwMetricsRunWorkerCompletedEvent = null;
+                        }
                         break;
 
                     case "Network - Local Listener":
-                        btnStartListening = null;
-                        btnStopListening = null;
+                        //btnStartListening = null;
+                        //btnStopListening = null;
                         break;
 
                     case "Network - Server":
-                        lblSocketState = null;
-                        lblSocketException = null;
+                        //lblSocketState = null;
+                        //lblSocketException = null;
+                        if (tmrGetScoketStatusTickEvent != null)
+                        {
+                            tmrGetSocketStatus.Tick -= tmrGetScoketStatusTickEvent;
+                            tmrGetScoketStatusTickEvent = null;
+                        }
+                        if (tcpListenerListenStartEvent != null)
+                        {
+                            Core.Server.LocalTCPListener.ListeningStarted -= tcpListenerListenStartEvent;
+                            tcpListenerListenStartEvent = null;
+                        }
+                        if (tcpListenerListenStopEvent != null)
+                        {
+                            Core.Server.LocalTCPListener.ListeningStopped -= tcpListenerListenStopEvent;
+                            tcpListenerListenStopEvent = null;
+                        }
                         break;
                 }
             }
@@ -239,165 +287,453 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         #region Application
         private void showApplicationStartUpSetting()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitie", "Start Up", FontSize.Large, true);
-            createCheckBox("chkAntiIdle", "Anti-Idle (while app is open)", newAppSettings.ClientSettings, "AntiIdleWhileOpen", true);
-            CheckBox chkPre = createCheckBox("chkPreLoadCommands", "Load Commands at Startup (Reduces Flicker)", newAppSettings.ClientSettings, "PreloadBuilderCommands", true);
+            CreateLabel("lblTitie", "Start Up", FontSize.Large, true);
+            CreateCheckBox("chkAntiIdle", "Anti-Idle (while app is open)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.AntiIdleWhileOpen), true);
+            var chkPre = CreateCheckBox("chkPreLoadCommands", "Load Commands at Startup (Reduces Flicker)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.PreloadBuilderCommands), true);
             chkPre.Visible = false;
-            createLabel("lblStartMode", "Start Mode:", FontSize.Normal, false);
-            ComboBox cmbStart = createComboBox("cmbStartMode", new string[] { "Builder Mode","Attended Task Mode"}, 200, newAppSettings.ClientSettings, "StartupMode", true);
-            cmbStart.SelectionChangeCommitted += (sender, e) => cmbStartUpMode_SelectionChangeCommitted(sender, e);
+            CreateLabel("lblStartMode", "Start Mode:", FontSize.Normal, false);
+            var cmbStart = CreateComboBox("cmbStartMode", new string[] { "Builder Mode","Attended Task Mode"}, 200, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.StartupMode), true);
+            cmbStart.SelectionChangeCommitted += (sender, e) =>
+            {
+                newAppSettings.GetClientSettings().StartupMode = ((ComboBox)sender).Text;
+            };
+            //cmbStart.SelectionChangeCommitted += (sender, e) => cmbStartUpMode_SelectionChangeCommitted(sender, e);
 
-            Button btnAttended = createButton("btnLunchAttended", "Launch Attended Mode", 240, true);
-            btnAttended.Click += (sender, e) => btnLaunchAttendedMode_Click(sender, e);
+            //Button btnAttended = CreateButton("btnLunchAttended", "Launch Attended Mode", 240, true);
+            //btnAttended.Click += (sender, e) => btnLaunchAttendedMode_Click(sender, e);
+            //btnAttended.Click += (sender, e) =>
+            //{
+            //    if (MessageBox.Show("Close Settings form to launch Attended Mode.\nIf you have changed the settings, click the 'OK' button to save the changes.\nLaunch Attended Mode now ?", "Settings", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            //    {
+            //        scriptBuilderForm.ShowAttendedModeFormProcess();
+            //        this.Close();
+            //    }
+            //};
+            CreateButton("btnLunchAttended", "Launch Attended Mode", 240, new Action<object, EventArgs>((sender, e) =>
+            {
+                if (MessageBox.Show("Close Settings form to launch Attended Mode.\nIf you have changed the settings, click the 'OK' button to save the changes.\nLaunch Attended Mode now ?", "Settings", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    scriptBuilderForm.ShowAttendedModeFormProcess();
+                    this.Close();
+                }
+            }), true);
         }
 
         private void showApplicationFolderSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Folder", FontSize.Large, true);
+            CreateLabel("lblTitle", "Folder", FontSize.Large, true);
             
-            createLabel("lblRootFolder", "taskt Root Folder", FontSize.Small, true);
-            TextBox txtAppFolder = createTextBox("txtAppFolderPath", 440, newAppSettings.ClientSettings, "RootFolder", false);
-            Button rootButton = createButton("btnSelectRootFolder", "...", 42, true);
-            rootButton.Click += (sender, e) => btnSelectRootFolder_Click(sender, e, txtAppFolder);
+            CreateLabel("lblRootFolder", "taskt Root Folder", FontSize.Small, true);
+            //TextBox txtAppFolder = CreateTextBox("txtAppFolderPath", 440, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RootFolder), false);
+            CreateTextBox("txtAppFolderPath", 440, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RootFolder), false);
+            CreateButton("btnSelectRootFolder", "...", 42, new Action<object, EventArgs>((sender, e) =>
+            {
+                string currentFolerPath = newAppSettings.ClientSettings.RootFolder;
 
-            createLabel("lblTaskFolder", "Attended Tasks Folder (Default Folder for saving Script Files)", FontSize.Small, true);
-            TextBox txtTasksFolder = createTextBox("txtAttendedTasksFolder", 440, newAppSettings.ClientSettings, "AttendedTasksFolder", false);
-            Button tasksFolder = createButton("btnSelectTasksFolder", "...", 42, true);
-            tasksFolder.Click += (sender, e) => btnSelectAttendedTaskFolder_Click(sender, e, txtTasksFolder);
+                // prompt user to confirm they want to select a new folder
+                var updateFolderRequest =
+                    MessageBox.Show(
+                        "Would you like to change the default root folder that taskt uses to store tasks and information? \r\n\r\n" +
+                        $"Current Root Folder: {currentFolerPath}",
+                        "Change Default Root Folder",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                // if user does not want to update folder then exit
+                if (updateFolderRequest == DialogResult.No)
+                {
+                    return;
+                }
+
+                // user folder browser to let user select top level folder
+                using (var fbd = new FolderBrowserDialog())
+                {
+                    // check if user selected a folder
+                    if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                    {
+                        // create references to old and new root folders
+                        var oldRootFolder = currentFolerPath;
+                        var newRootFolder = Path.Combine(fbd.SelectedPath, "taskt");
+
+                        // ask user to confirm
+                        var confirmNewFolderSelection =
+                            MessageBox.Show(
+                                "Please confirm the changes below:\r\n\r\n" +
+                                $"Old Root Folder: {oldRootFolder}\r\n\r\n" +
+                                "New Root Folder: " + newRootFolder,
+                                "Change Default Root Folder",
+                                MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+                        // handle if user decides to cancel
+                        if (confirmNewFolderSelection == DialogResult.Cancel)
+                        {
+                            return;
+                        }
+
+                        // ask if we should migrate the data
+                        var migrateCopyData =
+                            MessageBox.Show(
+                                "Would you like to attempt to move the data from the old folder to the new folder?  Please note, depending on how many files you have, this could take a few minutes.",
+                                "Migrate Data?",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                        // check if user wants to migrate data
+                        if (migrateCopyData == DialogResult.Yes)
+                        {
+                            try
+                            {
+                                // find and copy files
+                                foreach (string dirPath in Directory.GetDirectories(oldRootFolder, "*", SearchOption.AllDirectories))
+                                {
+                                    Directory.CreateDirectory(dirPath.Replace(oldRootFolder, newRootFolder));
+                                }
+                                foreach (string newPath in Directory.GetFiles(oldRootFolder, "*.*", SearchOption.AllDirectories))
+                                {
+                                    File.Copy(newPath, newPath.Replace(oldRootFolder, newRootFolder), true);
+                                }
+
+                                MessageBox.Show("Data Migration Complete", "Data Migration Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            }
+                            catch (Exception ex)
+                            {
+                                // handle any unexpected errors
+                                MessageBox.Show($"An Error Occured during Data Migration Copy: {ex}");
+                            }
+                        }
+
+                        // update textbox which will be updated once user selects "Ok"
+                        newAppSettings.GetClientSettings().RootFolder = newRootFolder;
+                    }
+                }
+            }), true);
+            //Button rootButton = CreateButton("btnSelectRootFolder", "...", 42, true);
+            //rootButton.Click += (sender, e) => btnSelectRootFolder_Click(sender, e, txtAppFolder);
+
+            CreateLabel("lblTaskFolder", "Attended Tasks Folder (Default Folder for saving Script Files)", FontSize.Small, true);
+            var txtTasksFolder = CreateTextBox("txtAttendedTasksFolder", 440, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.AttendedTasksFolder), false);
+            CreateButton("btnSelectTasktFolder", "...", 42, new Action<object, EventArgs>((sender, e) =>
+            {
+                using (var fbd = new FolderBrowserDialog())
+                {
+                    if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                    {
+                        var checkPaths = new List<(string, string)>
+                    {
+                        (Folders.GetAutoSaveFolderPath(), Folders.AUTOSAVE_FOLDER_NAME),
+                        (Folders.GetRunWithoutSavingFolderPath(), Folders.RUN_WITHOUT_SAVING_FOLDER_NAME),
+                        (Folders.GetBeforeConvertedFolderPath(), Folders.BEFORE_CONVERTED_FOLDER_NAME),
+                        (Folders.GetResourcesFolderPath(), Folders.RESOURCES_FOLDER_NAME),
+                        (Folders.GetSamplesFolderPath(), Folders.SAMPLES_FOLDER_NAME),
+                        (Folders.GetUpdateWorkingFolderPath(), Folders.UPDATE_FOLDER_NAME),
+                    };
+
+                        var newAttendedTaskFolder = Path.Combine(fbd.SelectedPath);
+
+                        var newFullPath = Path.GetFullPath(newAttendedTaskFolder);
+
+                        foreach ((var path, var folderName) in checkPaths)
+                        {
+                            if (newFullPath == path)
+                            {
+                                MessageBox.Show($"Selected folder is in the same location as the '{folderName}' folder");
+                            }
+                        }
+
+                        txtTasksFolder.Text = newAttendedTaskFolder;
+                    }
+                }
+            }), true);
+            //Button tasksFolder = CreateButton("btnSelectTasksFolder", "...", 42, true);
+            //tasksFolder.Click += (sender, e) => btnSelectAttendedTaskFolder_Click(sender, e, txtTasksFolder);
         }
         private void showApplicationDebugSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Debug", FontSize.Large, true);
+            CreateLabel("lblTitle", "Debug", FontSize.Large, true);
 
-            createCheckBox("chkShowDebug", "Show Debug Window when Script Execute", newAppSettings.EngineSettings, "ShowDebugWindow", true);
-            createCheckBox("chkAutoCloseDebugWindow", "Automatically Close Debug Window", newAppSettings.EngineSettings, "AutoCloseDebugWindow", true);
-            createCheckBox("chkShowAdvancedDebug", "Show Advanced Debug Logs During Execution", newAppSettings.EngineSettings, "ShowAdvancedDebugOutput", true);
+            CreateCheckBox("chkShowDebug", "Show Debug Window when Script Execute", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.ShowDebugWindow), true);
+            CreateCheckBox("chkAutoCloseDebugWindow", "Automatically Close Debug Window", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.AutoCloseDebugWindow), true);
+            CreateCheckBox("chkShowAdvancedDebug", "Show Advanced Debug Logs During Execution", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.ShowAdvancedDebugOutput), true);
         }
         private void showApplicationMetricSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Script Metric", FontSize.Large, true);
+            CreateLabel("lblTitle", "Script Metric", FontSize.Large, true);
 
-            createCheckBox("chkTrackMetrics", "Track Execution Metrics", newAppSettings.EngineSettings, "TrackExecutionMetrics", true);
+            CreateCheckBox("chkTrackMetrics", "Track Execution Metrics", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.TrackExecutionMetrics), true);
 
-            createLabel("lblTitleMetrics", "Script Execution Metrics (Last 10 per Script)", FontSize.Small, true);
-            lblMetrics = createLabel("lblMetrics", "Getting Metrics...", FontSize.Normal, true);
+            CreateLabel("lblTitleMetrics", "Script Execution Metrics (Last 10 per Script)", FontSize.Small, true);
+            var lblMetrics = CreateLabel("lblMetrics", "Getting Metrics...", FontSize.Normal, true);
 
-            TreeView tv = new TreeView();
-            tv.Name = "tvExecutionTimes";
-            tv.Size = new Size(500, 120);
-            tv.Font = new Font("Segoe UI", 12);
-            flowLayoutSettings.Controls.Add(tv);
+            var tvExecutionTimes = new TreeView
+            {
+                Name = "tvExecutionTimes",
+                Size = new Size(500, 120),
+                Font = new Font("Segoe UI", 12)
+            };
+            flowLayoutSettings.Controls.Add(tvExecutionTimes);
 
-            tvExecutionTimes = tv;
+            //btnClearMetrics = CreateButton("btnClearMetrics", "Clear Metrics", 200, true);
+            //btnClearMetrics.Click += (sender, e) => btnClearMetrics_Click(sender, e);
+            var btnClearMetrics = CreateButton("btnClearMetrics", "Clear Metrics", 200, new Action<object, EventArgs>((sender, e) =>
+            {
+                new Metrics().ClearExecutionMetrics();
+                bgwMetrics.RunWorkerAsync();
+            }), true);
 
-            btnClearMetrics = createButton("btnClearMetrics", "Clear Metrics", 200, true);
-            btnClearMetrics.Click += (sender, e) => btnClearMetrics_Click(sender, e);
+            // set bgwMetrics events
+            bgwMetricsDoWorkEvent = (sender, e) =>
+            {
+                e.Result = new Metrics().ExecutionMetricsSummary();
+            };
+            bgwMetricsRunWorkerCompletedEvent = (sender, e) =>
+            {
+                //if ((lblMetrics == null) || (tvExecutionTimes == null) || (btnClearMetrics == null))
+                //{
+                //    return;
+                //}
+
+                if (e.Error != null)
+                {
+                    if (e.Error is FileNotFoundException)
+                    {
+                        lblMetrics.Text = "Metrics Unavailable - Metrics are only available after running tasks which will generate metrics logs";
+                    }
+                    else
+                    {
+                        lblMetrics.Text = $"Metrics Unavailable: {e.Error}";
+                    }
+                }
+                else
+                {
+                    var metricsSummary = (List<ExecutionMetric>)(e.Result);
+
+                    if (metricsSummary.Count == 0)
+                    {
+                        lblMetrics.Text = "No Metrics Found";
+                        lblMetrics.Show();
+                        tvExecutionTimes.Hide();
+                        btnClearMetrics.Hide();
+                    }
+                    else
+                    {
+                        lblMetrics.Hide();
+                        tvExecutionTimes.Show();
+                        btnClearMetrics.Show();
+                    }
+
+                    foreach (var metric in metricsSummary)
+                    {
+                        var rootNode = new TreeNode
+                        {
+                            Text = $"{metric.FileName} [{metric.AverageExecutionTime} avg.]"
+                        };
+
+                        foreach (var metricItem in metric.ExecutionData)
+                        {
+                            var subNode = new TreeNode
+                            {
+                                Text = $" - {metricItem.LoggedOn.ToString("MM/dd/yy hh:mm")} {metricItem.ExecutionTime}"
+                            };
+                            rootNode.Nodes.Add(subNode);
+                        }
+
+                        tvExecutionTimes.Nodes.Add(rootNode);
+                    }
+                }
+            };
+            bgwMetrics.DoWork += bgwMetricsDoWorkEvent;
+            bgwMetrics.RunWorkerCompleted += bgwMetricsRunWorkerCompletedEvent;
 
             //get metrics
             bgwMetrics.RunWorkerAsync();
         }
         private void showApplicationOtherSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Other", FontSize.Large, true);
+            CreateLabel("lblTitle", "Other", FontSize.Large, true);
 
-            createCheckBox("chkMinimizeToTary", "Minimize to System Tray", newAppSettings.ClientSettings, "MinimizeToTray", true);
+            CreateCheckBox("chkMinimizeToTary", "Minimize to System Tray", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.MinimizeToTray), true);
 
-            createLabel("lblResourceTitle", "Resources Folder", FontSize.NormalBold, true);
-            createLabel("lblResource", "If you want to update the WebDriver (chromedriver.exe etc),\nopen the Resources folder and overwrite the file.", FontSize.Small, true);
-            Button btnRes = createButton("btnOpenResources", "Open 'Resources' Folder", 280, true);
-            btnRes.Click += (sender, e) => btnShowRecoures_Click(sender, e);
+            CreateLabel("lblResourceTitle", "Resources Folder", FontSize.NormalBold, true);
+            CreateLabel("lblResource", "If you want to update the WebDriver (chromedriver.exe etc),\nopen the Resources folder and overwrite the file.", FontSize.Small, true);
 
-            createLabel("lblWebDriverTitle", "Check WebDrivers", FontSize.Normal, true);            
+            //Button btnRes = CreateButton("btnOpenResources", "Open 'Resources' Folder", 280, true);
+            //btnRes.Click += (sender, e) => btnShowRecoures_Click(sender, e);
+
+            CreateButton("btnOpenResources", "Open 'Resources' Folder", 280, new Action<object, EventArgs>((sender, e) =>
+            {
+                var myAssembly = System.Reflection.Assembly.GetEntryAssembly();
+                var path = Path.Combine(Path.GetDirectoryName(myAssembly.Location), "Resources");
+                System.Diagnostics.Process.Start(path);
+            }), true);
+
+            CreateLabel("lblWebDriverTitle", "Check WebDrivers", FontSize.Normal, true);            
 
             // get WebDrivers version
             var versions = GetWebDriverVersions();
 
-            createLabel("lblChromeDriver", "Chrome Driver Version Result: " + versions["chrome"], FontSize.Small, true);
-            Button btnChrome = createButton("btnChrome", "Chrome Driver", 280, true);
+            CreateLabel("lblChromeDriver", "Chrome Driver Version Result: " + versions["chrome"], FontSize.Small, true);
 
-            createLabel("lblEdgeDriver", "Edge Driver Version Result: " + versions["edge"], FontSize.Small, true);
-            Button btnEdge = createButton("btnEdge", "Edge Driver", 280, true);
+            //Button btnChrome = CreateButton("btnChrome", "Chrome Driver", 280, true);
+            //btnChrome.Click += (sender, e) => btnChromeDriver_Click(sender, e);
+            CreateButton("btnChrome", "Chrome Driver", 280, new Action<object, EventArgs>((sender, e) =>
+            {
+                System.Diagnostics.Process.Start(MyURLs.ChromeDriverURL);
+            }), true);
 
-            createLabel("lblGeckoDriver", "geckodriver Version Result: " + versions["gecko"], FontSize.Small, true);
-            Button btnGecko = createButton("btnGecko", "geckodriver (Firefox)", 280, true);
+            CreateLabel("lblEdgeDriver", "Edge Driver Version Result: " + versions["edge"], FontSize.Small, true);
+            //Button btnEdge = CreateButton("btnEdge", "Edge Driver", 280, true);
+            //btnEdge.Click += (sender, e) => btnEdgeDriver_Click(sender, e);
+            CreateButton("btnEdge", "Edge Driver", 280, new Action<object, EventArgs>((sender, e) =>
+            {
+                System.Diagnostics.Process.Start(MyURLs.EdgeDriverURL);
+            }), true);
 
-            createLabel("lblIEDriver", "IE Driver Version Result: " + versions["ie"], FontSize.Small, true);
-            Button btnIE = createButton("btnIE", "IE Driver", 280, true);
+            CreateLabel("lblGeckoDriver", "geckodriver Version Result: " + versions["gecko"], FontSize.Small, true);
+            //Button btnGecko = CreateButton("btnGecko", "geckodriver (Firefox)", 280, true);
+            //btnGecko.Click += (sender, e) => btnGeckoDriver_Click(sender, e);
+            CreateButton("btnGecko", "geckodriver (Firefox)", 280, new Action<object, EventArgs>((sender, e) =>
+            {
+                System.Diagnostics.Process.Start(MyURLs.GeckoDriverURL);
+            }), true);
 
-            btnChrome.Click += (sender, e) => btnChromeDriver_Click(sender, e);
-            btnEdge.Click += (sender, e) => btnEdgeDriver_Click(sender, e);
-            btnGecko.Click += (sender, e) => btnGeckoDriver_Click(sender, e);
-            btnIE.Click += (sender, e) => btnIEDriver_Click(sender, e);
+            CreateLabel("lblIEDriver", "IE Driver Version Result: " + versions["ie"], FontSize.Small, true);
+            //Button btnIE = CreateButton("btnIE", "IE Driver", 280, true);
+            //btnIE.Click += (sender, e) => btnIEDriver_Click(sender, e);
+            CreateButton("btnIE", "IE Driver", 280, new Action<object, EventArgs>((sender, e) =>
+            {
+                System.Diagnostics.Process.Start(MyURLs.IEDriverURL);
+            }), true);
         }
         private void showApplicationScriptFileSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Script File", FontSize.Large, true);
+            CreateLabel("lblTitle", "Script File", FontSize.Large, true);
 
-            createLabel("lblIntermediateTitle", "Intermediate Script File", FontSize.NormalBold, true);
-            createCheckBox("lblScriptIntermediate", "Export Intermediate Script File", newAppSettings.EngineSettings, "ExportIntermediateXML", true);
+            CreateLabel("lblIntermediateTitle", "Intermediate Script File", FontSize.NormalBold, true);
+            CreateCheckBox("lblScriptIntermediate", "Export Intermediate Script File", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.ExportIntermediateXML), true);
 
-            createLabel("lblAutoSaveTitle", "Auto Save Script File", FontSize.NormalBold, true);
-            createCheckBox("lblEnabledAutoSave", "Enable Auto Save Script File", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.EnabledAutoSave), true);
-            createLabel("lblAutoSaveInterval", "Auto Save Interval");
-            createTextBox("txtAutoSaveInterval", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.AutoSaveInterval));
-            createLabel("lblAutoSaveIntervalMin", "minute(s) [1-120]", FontSize.Normal, true);
+            CreateLabel("lblAutoSaveTitle", "Auto Save Script File", FontSize.NormalBold, true);
+            CreateCheckBox("lblEnabledAutoSave", "Enable Auto Save Script File", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.EnabledAutoSave), true);
+            CreateLabel("lblAutoSaveInterval", "Auto Save Interval");
+            CreateTextBox("txtAutoSaveInterval", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.AutoSaveInterval));
+            CreateLabel("lblAutoSaveIntervalMin", "minute(s) [1-120]", FontSize.Normal, true);
 
-            createLabel("lblRemoveOldAutoSaveScriptFile", "Delete Auto Saved Script Files that are more than ");
-            createTextBox("txtRemoveOldAutoSaveScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveAutoSaveFileDays), false);
-            createLabel("lblRemoveOldAutoSaveScriptFile2", " days old", FontSize.Normal, true);
+            CreateLabel("lblRemoveOldAutoSaveScriptFile", "Delete Auto Saved Script Files that are more than ");
+            CreateTextBox("txtRemoveOldAutoSaveScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveAutoSaveFileDays), false);
+            CreateLabel("lblRemoveOldAutoSaveScriptFile2", " days old", FontSize.Normal, true);
 
-            var showAutoSave = createButton("btnShowAutoSaveFolder", "Show 'AutoSave' Folder", 250, true);
-            showAutoSave.Click += btnShowAutoSaveFolder_Click;
+            //var showAutoSave = CreateButton("btnShowAutoSaveFolder", "Show 'AutoSave' Folder", 250, true);
+            //showAutoSave.Click += btnShowAutoSaveFolder_Click;
+            CreateButton("btnShowAutoSaveFolder", "Show 'AutoSave' Folder", 250, new Action<object, EventArgs>((sender, e) =>
+            {
+                System.Diagnostics.Process.Start(Folders.GetAutoSaveFolderPath());
+            }), true);
 
-            createLabel("lblRunWithoutSavingTitle", "Run Without Saving Script File", FontSize.NormalBold, true);
-            createLabel("lblRemoveOldRunwoSavingScriptFile", "Delete 'Run without Saving' Script Files that are more than ");
-            createTextBox("txtRemoveOldRunwoSavingScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveRunWithtoutSavingFileDays), false);
-            createLabel("lblRemoveOldRunwoSavingScriptFile2", " days old", FontSize.Normal, true);
+            CreateLabel("lblRunWithoutSavingTitle", "Run Without Saving Script File", FontSize.NormalBold, true);
+            CreateLabel("lblRemoveOldRunwoSavingScriptFile", "Delete 'Run without Saving' Script Files that are more than ");
+            CreateTextBox("txtRemoveOldRunwoSavingScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveRunWithtoutSavingFileDays), false);
+            CreateLabel("lblRemoveOldRunwoSavingScriptFile2", " days old", FontSize.Normal, true);
 
-            var showRunWithout = createButton("btnShowRunWithoutFolder", "Show 'RunWithoutSaving' Folder", 250, true);
-            showRunWithout.Click += btnShowRunWithoutSavingFolder_Click;
+            //var showRunWithout = CreateButton("btnShowRunWithoutFolder", "Show 'RunWithoutSaving' Folder", 250, true);
+            //showRunWithout.Click += btnShowRunWithoutSavingFolder_Click;
+            CreateButton("btnShowRunWithoutFolder", "Show 'RunWithoutSaving' Folder", 250, new Action<object, EventArgs>((sender, e) =>
+            {
+                System.Diagnostics.Process.Start(Folders.GetRunWithoutSavingFolderPath());
+            }), true);
 
-            createLabel("lblRunBeforeConvertedTitle", "Before Converted Script File", FontSize.NormalBold, true);
-            createLabel("lblRemoveOldBeforeConvertedScriptFile", "Delete 'Before Converted' Script Files that are more than ");
-            createTextBox("txtRemoveOldBeforeConvertedScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveBeforeConvertedFileDays), false);
-            createLabel("lblRemoveOldBeforeConvertedScriptFile2", " days old", FontSize.Normal, true);
+            CreateLabel("lblRunBeforeConvertedTitle", "Before Converted Script File", FontSize.NormalBold, true);
+            CreateLabel("lblRemoveOldBeforeConvertedScriptFile", "Delete 'Before Converted' Script Files that are more than ");
+            CreateTextBox("txtRemoveOldBeforeConvertedScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveBeforeConvertedFileDays), false);
+            CreateLabel("lblRemoveOldBeforeConvertedScriptFile2", " days old", FontSize.Normal, true);
 
-            var showBeforeConverted = createButton("btnShowBeforeConvertedFolder", "Show 'BeforeConverted' Folder", 250, true);
-            showBeforeConverted.Click += btnShowBeforeConvertedFolder_Click;
+            //var showBeforeConverted = CreateButton("btnShowBeforeConvertedFolder", "Show 'BeforeConverted' Folder", 250, true);
+            //showBeforeConverted.Click += btnShowBeforeConvertedFolder_Click;
+            CreateButton("btnShowBeforeConvertedFolder", "Show 'BeforeConverted' Folder", 250, new Action<object, EventArgs>((sender, e) =>
+            {
+                System.Diagnostics.Process.Start(Folders.GetBeforeConvertedFolderPath());
+            }), true);
 
             // NOTE: scrollbar trap (why?)
-            createLabel("lblFooterA", "", FontSize.NormalBold, true);
-            createLabel("lblFooterB", "", FontSize.NormalBold, true);
+            CreateLabel("lblFooterA", "", FontSize.NormalBold, true);
+            CreateLabel("lblFooterB", "", FontSize.NormalBold, true);
         }
         private void showApplicationSettingsFile()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Settings File", FontSize.Large, true);
+            CreateLabel("lblTitle", "Settings File", FontSize.Large, true);
 
-            createLabel("lblImport", "Import Settings", FontSize.NormalBold, true);
-            Button btnImport = createButton("btnImport", "Import", 200, true);
-            btnImport.Click += (sender, e) => btnImportSettings_Click(sender, e);
+            CreateLabel("lblImport", "Import Settings", FontSize.NormalBold, true);
+            //Button btnImport = CreateButton("btnImport", "Import", 200, true);
+            //btnImport.Click += (sender, e) => btnImportSettings_Click(sender, e);
+            CreateButton("btnImport", "Import", 200, new Action<object, EventArgs>((sender, e) =>
+            {
+                using (var frm = new OpenFileDialog())
+                {
+                    frm.Filter = "taskt Settings (*.xml)|*.xml|All Files(*.*)|*.*";
+                    frm.Title = "Import Settings";
+                    frm.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    if (frm.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            newAppSettings = ApplicationSettings.Open(frm.FileName);
+                            MessageBox.Show("Imported", "taskt", MessageBoxButtons.OK);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Fail import", "taskt", MessageBoxButtons.OK);
+                        }
+                    }
+                }
+            }), true);
 
-            createLabel("lblExport", "Export Settings", FontSize.NormalBold, true);
-            Button btnExport = createButton("btnExport", "Export", 200, true);
-            btnExport.Click += (sender, e) => btnExportSettings_Click(sender, e);
+            CreateLabel("lblExport", "Export Settings", FontSize.NormalBold, true);
+            //Button btnExport = CreateButton("btnExport", "Export", 200, true);
+            //btnExport.Click += (sender, e) => btnExportSettings_Click(sender, e);
+            CreateButton("btnExport", "Export", 200, new Action<object, EventArgs>((sender, e) =>
+            {
+                using (var frm = new SaveFileDialog())
+                {
+                    frm.Filter = "taskt Settings (*.xml)|*.xml|All Files(*.*)|*.*";
+                    frm.Title = "Import Settings";
+                    frm.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    if (frm.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            newAppSettings.Save(frm.FileName);
+                            MessageBox.Show("Exported", "taskt", MessageBoxButtons.OK);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Fail export", "taskt", MessageBoxButtons.OK);
+                        }
+                    }
+                }
+            }), true);
 
-            createLabel("lblLoadDefault", "Load Default Settings", FontSize.NormalBold, true);
-            Button btnLoadDefault = createButton("btnLoadDefault", "Load Default", 200, true);
-            btnLoadDefault.Click += (sender, e) => btnLoadDefaultSettings_Click(sender, e);
+            CreateLabel("lblLoadDefault", "Load Default Settings", FontSize.NormalBold, true);
+            //Button btnLoadDefault = CreateButton("btnLoadDefault", "Load Default", 200, true);
+            //btnLoadDefault.Click += (sender, e) => btnLoadDefaultSettings_Click(sender, e);
+            CreateButton("btnLoadDefault", "Load Default", 200, new Action<object, EventArgs>((sender, e) =>
+            {
+                if (MessageBox.Show("Are you sure to Load Default Settings?", "taskt", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    newAppSettings = new ApplicationSettings();
+                    MessageBox.Show("Load Default Settings", "taskt", MessageBoxButtons.OK);
+                }
+            }), true);
         }
 
         #endregion
@@ -405,210 +741,250 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         #region Automation Engine
         private void showAutomationEngineParserSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Parser", FontSize.Large, true);
+            CreateLabel("lblTitle", "Parser", FontSize.Large, true);
 
-            createLabel("lblStartMarker", "Start Marker:", FontSize.Normal, false);
-            TextBox txtStart = createTextBox("txtStartMarker", 40, newAppSettings.EngineSettings, "VariableStartMarker", false);
-            createLabel("lblEndMarker", "End Marker:", FontSize.Normal, false);
-            TextBox txtEnd = createTextBox("txtEndMarker", 40, newAppSettings.EngineSettings, "VariableEndMarker", true);
-            Label lblNotice = createLabel("lblMarkerNotice", "If Start Maker and End Marker are the same,\nthe variable may not expand properly.", FontSize.Small, false);
+            CreateLabel("lblStartMarker", "Start Marker:", FontSize.Normal, false);
+            var txtStart = CreateTextBox("txtStartMarker", 40, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.VariableStartMarker), false);
+            CreateLabel("lblEndMarker", "End Marker:", FontSize.Normal, false);
+            var txtEnd = CreateTextBox("txtEndMarker", 40, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.VariableEndMarker), true);
+            var lblNotice = CreateLabel("lblMarkerNotice", "If Start Maker and End Marker are the same,\nthe variable may not expand properly.", FontSize.Small, false);
             lblNotice.Padding = new Padding(0, 4, 0, 0);
-            Label lblExample = createLabel("lblVariableExample", newAppSettings.EngineSettings.VariableStartMarker + "VariableName" + newAppSettings.EngineSettings.VariableEndMarker, FontSize.NormalBold, true);
+            var lblExample = CreateLabel("lblVariableExample", newAppSettings.EngineSettings.VariableStartMarker + "VariableName" + newAppSettings.EngineSettings.VariableEndMarker, FontSize.NormalBold, true);
 
-            txtStart.TextChanged += (sender, e) => VariableMarker_TextChanged(sender, e, txtStart, txtEnd, lblExample);
-            txtEnd.TextChanged += (sender, e) => VariableMarker_TextChanged(sender, e, txtStart, txtEnd, lblExample);
+            //txtStart.TextChanged += (sender, e) => VariableMarker_TextChanged(sender, e, txtStart, txtEnd, lblExample);
+            //txtEnd.TextChanged += (sender, e) => VariableMarker_TextChanged(sender, e, txtStart, txtEnd, lblExample);
 
-            createCheckBox("chkCalculateAutomatically", "Calculate Automatically", newAppSettings.EngineSettings, "AutoCalcVariables", true);
+            txtStart.TextChanged += (sender, e) =>
+            {
+                lblExample.Text = $"{txtStart.Text}VariableName{txtEnd.Text}";
+            };
+            txtEnd.TextChanged += (sender, e) =>
+            {
+                lblExample.Text = $"{txtStart.Text}VariableName{txtEnd.Text}";
+            };
 
-            createCheckBox("chkUserNewParser", "Use New Parser (beta)", newAppSettings.EngineSettings, "UseNewParser", true);
-            createCheckBox("chkIgnoreFirstMarker", "Ignore First Variable Marker In Output Parameter (Check is strongly recommended)", newAppSettings.EngineSettings, "IgnoreFirstVariableMarkerInOutputParameter", true);
+            CreateCheckBox("chkCalculateAutomatically", "Calculate Automatically", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.AutoCalcVariables), true);
+
+            CreateCheckBox("chkUserNewParser", "Use New Parser (beta)", newAppSettings.EngineSettings, "UseNewParser", true);
+            CreateCheckBox("chkIgnoreFirstMarker", "Ignore First Variable Marker In Output Parameter (Check is strongly recommended)", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.IgnoreFirstVariableMarkerInOutputParameter), true);
         }
 
-        private void showAutomationUIElementInspect()
-        {
-            removeSettingControls();
+        //private void showAutomationUIElementInspect()
+        //{
+        //    removeSettingControls();
 
-            createLabel("lblTitle", "UIElement Inspcet (beta)", FontSize.Large, true);
+        //    createLabel("lblTitle", "UIElement Inspcet (beta)", FontSize.Large, true);
 
-            createLabel("lblDepath", "Depath of Nodes: ");
-            var txtDepath = createTextBox("txtDepath", 120, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.MaxUIElementInpectDepth), true);
+        //    createLabel("lblDepath", "Depath of Nodes: ");
+        //    var txtDepath = createTextBox("txtDepath", 120, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.MaxUIElementInpectDepth), true);
 
-            createLabel("lblSibling", "Number of Sibling Nodes: ");
-            var txtSibling = createTextBox("txtSibling", 120, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.MaxUIElementInspectSiblingNodes), true);
+        //    createLabel("lblSibling", "Number of Sibling Nodes: ");
+        //    var txtSibling = createTextBox("txtSibling", 120, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.MaxUIElementInspectSiblingNodes), true);
 
-            txtDepath.Enabled = false;
-            txtSibling.Enabled = false;
-        }
+        //    txtDepath.Enabled = false;
+        //    txtSibling.Enabled = false;
+        //}
 
         private void showAutomationEngineKeywordSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Keyword", FontSize.Large, true);
+            CreateLabel("lblTitle", "Keyword", FontSize.Large, true);
 
-            createLabel("lblAttention", "IMPORTANT", FontSize.NormalBold, true);
-            createLabel("lblAttentionText", "These keywords are no longer supported.\rPlease use System Variables from now on.", FontSize.Normal, true);
+            CreateLabel("lblAttention", "IMPORTANT", FontSize.NormalBold, true);
+            CreateLabel("lblAttentionText", "These keywords are no longer supported.\rPlease use System Variables from now on.", FontSize.Normal, true);
 
-            createLabel("lblWindowKeyword", "Window Keyword", FontSize.NormalBold, true);
+            CreateLabel("lblWindowKeyword", "Window Keyword", FontSize.NormalBold, true);
 
-            createLabel("lblCurrentWindow", "Current Window Keyword : Currently Window.CurrentWindowName", FontSize.Small, true);
-            createTextBox("txtCurrentWindow", 400, newAppSettings.EngineSettings, "CurrentWindowKeyword", true);
+            CreateLabel("lblCurrentWindow", "Current Window Keyword : Currently Window.CurrentWindowName", FontSize.Small, true);
+            CreateTextBox("txtCurrentWindow", 400, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.CurrentWindowKeyword), true);
 
-            createLabel("lblExcelKeyword", "Excel Keyword", FontSize.NormalBold, true);
-            createLabel("lblCurrentSheet", "Current Worksheet Keyword : Currently Excel.CurrentWorksheet", FontSize.Small, true);
-            createTextBox("txtCurrentSheet", 400, newAppSettings.EngineSettings, "CurrentWorksheetKeyword", true);
-            createLabel("lblNextSheet", "Next Worksheet Keyword : Currently Excel.NextWorksheet", FontSize.Small, true);
-            createTextBox("txtNextSheet", 400, newAppSettings.EngineSettings, "NextWorksheetKeyword", true);
-            createLabel("lblPreviousSheet", "Previous Worksheet Keyword : Currently Excel.PreviousWorksheet", FontSize.Small, true);
-            createTextBox("txtPreviousSheet", 400, newAppSettings.EngineSettings, "PreviousWorksheetKeyword", true);
+            CreateLabel("lblExcelKeyword", "Excel Keyword", FontSize.NormalBold, true);
+            CreateLabel("lblCurrentSheet", "Current Worksheet Keyword : Currently Excel.CurrentWorksheet", FontSize.Small, true);
+            CreateTextBox("txtCurrentSheet", 400, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.CurrentWorksheetKeyword), true);
+            CreateLabel("lblNextSheet", "Next Worksheet Keyword : Currently Excel.NextWorksheet", FontSize.Small, true);
+            CreateTextBox("txtNextSheet", 400, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.NextWorksheetKeyword), true);
+            CreateLabel("lblPreviousSheet", "Previous Worksheet Keyword : Currently Excel.PreviousWorksheet", FontSize.Small, true);
+            CreateTextBox("txtPreviousSheet", 400, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.PreviousWorksheetKeyword), true);
         }
 
         private void showAutomationEngineEngineSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Engine", FontSize.Large, true);
+            CreateLabel("lblTitle", "Engine", FontSize.Large, true);
 
-            createCheckBox("chkOverrideAppInstance", "Override App Instances", newAppSettings.EngineSettings, "OverrideExistingAppInstances", true);
+            CreateCheckBox("chkOverrideAppInstance", "Override App Instances", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.OverrideExistingAppInstances), true);
 
-            createLabel("lblCommandDelay", "Default delay between executing commands (ms):", FontSize.Normal, false);
-            createTextBox("txtCommandDelay", 80, newAppSettings.EngineSettings, "DelayBetweenCommands", true);
+            CreateLabel("lblCommandDelay", "Default delay between executing commands (ms):", FontSize.Normal, false);
+            CreateTextBox("txtCommandDelay", 80, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.DelayBetweenCommands), true);
 
-            createLabel("lblCancelKey", "End Script Hotkey:", FontSize.Normal, false);
-            ComboBox cmb =createComboBox("cmbCancellationKey", keysList, 240, newAppSettings.EngineSettings, "CancellationKey", true);
-            cmb.SelectionChangeCommitted += (sender, e) => cmdCancellationButton_SelectionChangeCommitted(sender, e);
+            CreateLabel("lblCancelKey", "End Script Hotkey:", FontSize.Normal, false);
+            var cmb =CreateComboBox("cmbCancellationKey", keysList, 240, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.CancellationKey), true);
+            //cmb.SelectionChangeCommitted += (sender, e) => cmdCancellationButton_SelectionChangeCommitted(sender, e);
+            cmb.SelectionChangeCommitted += (sender, e) =>
+            {
+                var key = (Keys)Enum.Parse(typeof(Keys), cmb.Text);
+                newAppSettings.GetEngineSettings().CancellationKey = key;
+            };
         }
         private void showAutomationEngineVariableSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Variable", FontSize.Large, true);
+            CreateLabel("lblTitle", "Variable", FontSize.Large, true);
 
-            createCheckBox("chkCreateMissingVariable", "Create Missing Variables During Execution", newAppSettings.EngineSettings, "CreateMissingVariablesDuringExecution", true);
+            CreateCheckBox("chkCreateMissingVariable", "Create Missing Variables During Execution", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.CreateMissingVariablesDuringExecution), true);
         }
         private void showAutomationEngineLogSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Log", FontSize.Large, true);
+            CreateLabel("lblTitle", "Log", FontSize.Large, true);
 
-            createCheckBox("chkEnableLogging", "Enable Diagnostic Logging", newAppSettings.EngineSettings, "EnableDiagnosticLogging", true);
+            CreateCheckBox("chkEnableLogging", "Enable Diagnostic Logging", newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.EnableDiagnosticLogging), true);
         }
         #endregion
 
         #region Documents
         private void showDocumentsCommandReferenceSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Command Reference", FontSize.Large, true);
+            CreateLabel("lblTitle", "Command Reference", FontSize.Large, true);
 
-            Button btn = createButton("btnCreateCommandRef", "Create Command Reference", 300, true);
-            btn.Click += (sender, e) => btnCreateCommandReference_Click(sender, e);
+            //var btn = CreateButton("btnCreateCommandRef", "Create Command Reference", 300, true);
+            //btn.Click += (sender, e) => btnCreateCommandReference_Click(sender, e);
+            CreateButton("btnCreateCommandRef", "Create Command Reference", 300, new Action<object, EventArgs>((sender, e) =>
+            {
+                var docsRoot = DocumentationGeneration.GenerateMarkdownFiles();
+                System.Diagnostics.Process.Start(docsRoot);
+            }));
         }
         #endregion
 
         #region Editor
         private void showEditorMenuBarSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Menu Bar", FontSize.Large, true);
+            CreateLabel("lblTitle", "Menu Bar", FontSize.Large, true);
 
-            createCheckBox("chkUseSlimBar", "Use Slim Menu Bar (required restart)", newAppSettings.ClientSettings, "UseSlimActionBar", true);
-            createCheckBox("chkShowCommandSearch", "Show Command Search Box when taskt is started (required restart)", newAppSettings.ClientSettings, "ShowCommandSearchBar", true);
+            CreateCheckBox("chkUseSlimBar", "Use Slim Menu Bar (required restart)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.UseSlimActionBar), true);
+            CreateCheckBox("chkShowCommandSearch", "Show Command Search Box when taskt is started (required restart)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ShowCommandSearchBar), true);
         }
         private void showEditorCommandListSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Command List", FontSize.Large, true);
+            CreateLabel("lblTitle", "Command List", FontSize.Large, true);
 
-            createLabel("lblGrouping", "Command List", FontSize.NormalBold, true);
-            createCheckBox("chkGroupBySubgroup", "Gruoping by subgroup (Restart required)", newAppSettings.ClientSettings, "GroupingBySubgroup", true);
-            createCheckBox("chkSupportIECommands", "Support IE Commands (Restart required)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.SupportIECommand), true);
+            CreateLabel("lblGrouping", "Command List", FontSize.NormalBold, true);
+            CreateCheckBox("chkGroupBySubgroup", "Gruoping by subgroup (Restart required)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.GroupingBySubgroup), true);
+            CreateCheckBox("chkSupportIECommands", "Support IE Commands (Restart required)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.SupportIECommand), true);
 
-            createLabel("lblSearch", "Command Search", FontSize.NormalBold, true);
+            CreateLabel("lblSearch", "Command Search", FontSize.NormalBold, true);
 
-            createCheckBox("chkMakeGroupNameSearchTarget", "Make Group Name a Search Target", newAppSettings.ClientSettings, "SearchTargetGroupName", true);
-            createCheckBox("chkGreedlyGroupName", "Show All Commands if Group Name Matches", newAppSettings.ClientSettings, "SearchGreedlyGroupName", true);
-            createCheckBox("chkMakeSubGroupNameSearchTarget", "Make SubGroup Name a Search Target", newAppSettings.ClientSettings, "SearchTargetSubGroupName", true);
-            createCheckBox("chkGreedlySubGroupName", "Show All Commands if SubGroup Name Matches", newAppSettings.ClientSettings, "SearchGreedlySubGroupName", true);
+            CreateCheckBox("chkMakeGroupNameSearchTarget", "Make Group Name a Search Target", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.SearchTargetGroupName), true);
+            CreateCheckBox("chkGreedlyGroupName", "Show All Commands if Group Name Matches", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.SearchGreedlyGroupName), true);
+            CreateCheckBox("chkMakeSubGroupNameSearchTarget", "Make SubGroup Name a Search Target", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.SearchTargetSubGroupName), true);
+            CreateCheckBox("chkGreedlySubGroupName", "Show All Commands if SubGroup Name Matches", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.SearchGreedlySubGroupName), true);
         }
+
+        private void showEditorGUIInspectToolSettings()
+        {
+            RemoveSettingControls();
+            CreateLabel("lblTitle", "GUI Inspect Tool", FontSize.Large, true);
+
+            CreateLabel("lblSearchSettings", "Search Settings", FontSize.NormalBold, true);
+            CreateLabel("lblMaxSiblings", "Max Siblings", FontSize.Normal, false);
+            CreateTextBox("txtMaxSiblings", 60, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.GUIInspectMaxSiblings), true);
+            CreateLabel("lblMaxDepth", "Max Depth", FontSize.Normal, false);
+            CreateTextBox("txtMaxDepth", 60, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.GUIInspectMaxDepth), true);
+            CreateLabel("lblSearchTime", "Max Wait Time to Search", FontSize.Normal, false);
+            CreateTextBox("txtSearchTime", 60, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.GUIInspectSearchTime), true);
+            CreateLabel("lblMouseMoveInterval", "Mouse Cursor Mode Interval (ms). Specify 500 or more", FontSize.Normal, false);
+            CreateTextBox("txtMouseMoveInterval", 60, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.GUIInspectMouseInterval), true);
+        }
+
         private void showEditorInstanceSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Instance", FontSize.Large, true);
+            CreateLabel("lblTitle", "Instance", FontSize.Large, true);
 
-            createLabel("lblSortHeader", "Instance Sort", FontSize.NormalBold, true);
-            createLabel("lblSortOrder", "Instance Name Sort Order:", FontSize.Normal, false);
-            ComboBox cmbSort = createComboBox("cmbSortOrder", new string[] { "Creation Frequently", "By Name", "Frequency Of Use", "No Sorting" }, 240, newAppSettings.ClientSettings, "InstanceNameOrder", true);
+            CreateLabel("lblSortHeader", "Instance Sort", FontSize.NormalBold, true);
+            CreateLabel("lblSortOrder", "Instance Name Sort Order:", FontSize.Normal, false);
+            var cmbSort = CreateComboBox("cmbSortOrder", new string[] { "Creation Frequently", "By Name", "Frequency Of Use", "No Sorting" }, 240, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.InstanceNameOrder), true);
             cmbSort.Text = newAppSettings.ClientSettings.InstanceNameOrder;
-            cmbSort.SelectionChangeCommitted += (sender, e) => cmbInstanceSortOrder_SelectionChangeCommitted(sender, e);
+            //cmbSort.SelectionChangeCommitted += (sender, e) => cmbInstanceSortOrder_SelectionChangeCommitted(sender, e);
+            cmbSort.SelectionChangeCommitted += (sender, e) =>
+            {
+                newAppSettings.GetClientSettings().InstanceNameOrder = cmbSort.Text;
+            };
 
-            createLabel("lblDefaultInstance", "Default Instance Name", FontSize.NormalBold, true);
-            createLabel("lblDefaultDatabase", "Default Database Instance Name", FontSize.Small, true);
-            createTextBox("txtDefaultDatabase", 400, newAppSettings.ClientSettings, "DefaultDBInstanceName", true);
-            createLabel("lblDefaultExcel", "Default Excel Instance Name", FontSize.Small, true);
-            createTextBox("txtDefaultExcel", 400, newAppSettings.ClientSettings, "DefaultExcelInstanceName", true);
-            createLabel("lblDefaultNLG", "Default NLG Instance Name", FontSize.Small, true);
-            createTextBox("txtDefaultNLG", 400, newAppSettings.ClientSettings, "DefaultNLGInstanceName", true);
-            createLabel("lblDefaultStopWatch", "Default StopWatch Instance Name", FontSize.Small, true);
-            createTextBox("txtDefaultStopWatch", 400, newAppSettings.ClientSettings, "DefaultStopWatchInstanceName", true);
-            createLabel("lblDefaultWebBrowser", "Default WebBrowser Instance Name", FontSize.Small, true);
-            createTextBox("txtDefaultWebBrowser", 400, newAppSettings.ClientSettings, "DefaultBrowserInstanceName", true);
-            createLabel("lblDefaultWord", "Default Word Instance Name", FontSize.Small, true);
-            createTextBox("txtDefaultWord", 400, newAppSettings.ClientSettings, "DefaultWordInstanceName", true);
+            CreateLabel("lblDefaultInstance", "Default Instance Name", FontSize.NormalBold, true);
+            CreateLabel("lblDefaultDatabase", "Default Database Instance Name", FontSize.Small, true);
+            CreateTextBox("txtDefaultDatabase", 400, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DefaultDBInstanceName), true);
+            CreateLabel("lblDefaultExcel", "Default Excel Instance Name", FontSize.Small, true);
+            CreateTextBox("txtDefaultExcel", 400, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DefaultExcelInstanceName), true);
+            CreateLabel("lblDefaultNLG", "Default NLG Instance Name", FontSize.Small, true);
+            CreateTextBox("txtDefaultNLG", 400, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DefaultNLGInstanceName), true);
+            CreateLabel("lblDefaultStopWatch", "Default StopWatch Instance Name", FontSize.Small, true);
+            CreateTextBox("txtDefaultStopWatch", 400, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DefaultStopWatchInstanceName), true);
+            CreateLabel("lblDefaultWebBrowser", "Default WebBrowser Instance Name", FontSize.Small, true);
+            CreateTextBox("txtDefaultWebBrowser", 400, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DefaultBrowserInstanceName), true);
+            CreateLabel("lblDefaultWord", "Default Word Instance Name", FontSize.Small, true);
+            CreateTextBox("txtDefaultWord", 400, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DefaultWordInstanceName), true);
 
-            createCheckBox("chkDontShowDefaultInstance", "Don't Show Default Instance When Multiple Instance Exists (partial support)", newAppSettings.ClientSettings, "DontShowDefaultInstanceWhenMultipleItemsExists", true);
+            CreateCheckBox("chkDontShowDefaultInstance", "Don't Show Default Instance When Multiple Instance Exists (partial support)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DontShowDefaultInstanceWhenMultipleItemsExists), true);
         }
         private void showEditorInsertCommandSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Insert Command", FontSize.Large, true);
+            CreateLabel("lblTitle", "Insert Command", FontSize.Large, true);
 
-            createCheckBox("chkInsertCommandsInline", "New Commands Insert Below Selected Command", newAppSettings.ClientSettings, "InsertCommandsInline", true);
-            createCheckBox("chkSequenceDragDrop", "Allow Drag and Drop into Sequence Commands", newAppSettings.ClientSettings, "EnableSequenceDragDrop", true);
-            createCheckBox("chkInsertElse", "Insert Else when BeginIf command inserted", newAppSettings.ClientSettings, "InsertElseAutomatically", true);
-            createCheckBox("chkInsertCommentIfLoop", "Insert Comment above If, Loop, Try", newAppSettings.ClientSettings, "InsertCommentIfLoopAbove", true);
+            CreateCheckBox("chkInsertCommandsInline", "New Commands Insert Below Selected Command", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.InsertCommandsInline), true);
+            CreateCheckBox("chkSequenceDragDrop", "Allow Drag and Drop into Sequence Commands", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.EnableSequenceDragDrop), true);
+            CreateCheckBox("chkInsertElse", "Insert Else when BeginIf command inserted", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.InsertElseAutomatically), true);
+            CreateCheckBox("chkInsertCommentIfLoop", "Insert Comment above If, Loop, Try", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.InsertCommentIfLoopAbove), true);
         }
         private void showEditorMiniMapSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Mini Map", FontSize.Large, true);
+            CreateLabel("lblTitle", "Mini Map", FontSize.Large, true);
 
-            createCheckBox("chkShowMiniMap", "Show Script Mini Map (beta)", newAppSettings.ClientSettings, "ShowScriptMiniMap", true);
+            CreateCheckBox("chkShowMiniMap", "Show Script Mini Map (beta)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ShowScriptMiniMap), true);
         }
         private void showEditorIndentSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Indent", FontSize.Large, true);
+            CreateLabel("lblTitle", "Indent", FontSize.Large, true);
 
-            createCheckBox("chkShowIndentLine", "Show Indent Line", newAppSettings.ClientSettings, "ShowIndentLine", true);
-            createLabel("lblIndentWidth", "Indent Width (1 to 32):", FontSize.Normal, false);
-            createTextBox("txtIndentWidth", 60, newAppSettings.ClientSettings, "IndentWidth", true);
+            CreateCheckBox("chkShowIndentLine", "Show Indent Line", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ShowIndentLine), true);
+            CreateLabel("lblIndentWidth", "Indent Width (1 to 32):", FontSize.Normal, false);
+            CreateTextBox("txtIndentWidth", 60, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.IndentWidth), true);
         }
         private void showEditorVariableSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Variable", FontSize.Large, true);
+            CreateLabel("lblTitle", "Variable", FontSize.Large, true);
 
-            createCheckBox("chkInsertVariablePosition", "Insert variable at cursor position(Textbox / Combobox)", newAppSettings.ClientSettings, "InsertVariableAtCursor", true);
+            CreateCheckBox("chkInsertVariablePosition", "Insert variable at cursor position(Textbox / Combobox)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.InsertVariableAtCursor), true);
         }
         private void showEditorValidationSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Validation", FontSize.Large, true);
+            CreateLabel("lblTitle", "Validation", FontSize.Large, true);
 
-            createCheckBox("chkSilentValidation", "Don't show Script Command Validation Message", newAppSettings.ClientSettings, "DontShowValidationMessage", true);
+            CreateCheckBox("chkSilentValidation", "Don't show Script Command Validation Message", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DontShowValidationMessage), true);
         }
         //private void showEditorCommandSearchSettings()
         //{
@@ -620,134 +996,309 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         //}
         private void showEditorStatusBarSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Status Bar", FontSize.Large, true);
+            CreateLabel("lblTitle", "Status Bar", FontSize.Large, true);
 
-            createCheckBox("chkHideNotifyAutomatically", "Hide Status Bar Automatically (reqired restart)", newAppSettings.ClientSettings, "HideNotifyAutomatically", true);
+            CreateCheckBox("chkHideNotifyAutomatically", "Hide Status Bar Automatically (reqired restart)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.HideNotifyAutomatically), true);
         }
         private void showEditorCommandEditorSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Command Editor", FontSize.Large, true);
+            CreateLabel("lblTitle", "Command Editor", FontSize.Large, true);
 
-            createCheckBox("chkRememberCommandEditorSizeAndPosition", "Remember Command Editor Size and Position", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RememberCommandEditorSizeAndPosition), true);
-            createCheckBox("chkRememberSupplementFormsForCommandEditorPosition", "Remember the Position of the Supplemental Forms for Command Editor", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RememberSupplementFormsForCommandEditorPosition), true);
-            createCheckBox("chkPoliteTextInDescription", "Try Polite Text In Description (beta)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ShowPoliteTextInDescription), true);
-            createCheckBox("chkShowSampleUsegeInDescription", "Show Sample Usage In Description", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ShowSampleUsageInDescription), true);
-            createCheckBox("chkShowDefaultValueInDescription", "Show Default Value In Description If Optional", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ShowDefaultValueInDescription), true);
-            createCheckBox("chkChangeItemsWheelNotFocused", "Change Items with Mouse Wheel when NOT Forcused", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ChangeItemsWithWheelWhenNotForcused), true);
-            createCheckBox("chkDisplayParameterNumBeforeDescription", "Display Parameter Number Before Description", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DisplayNumberBeforeParameterDescription), true);
+            CreateCheckBox("chkRememberCommandEditorSizeAndPosition", "Remember Command Editor Size and Position", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RememberCommandEditorSizeAndPosition), true);
+            CreateCheckBox("chkRememberSupplementFormsForCommandEditorPosition", "Remember the Position of the Supplemental Forms for Command Editor", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RememberSupplementFormsForCommandEditorPosition), true);
+            CreateCheckBox("chkPoliteTextInDescription", "Try Polite Text In Description (beta)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ShowPoliteTextInDescription), true);
+            CreateCheckBox("chkShowSampleUsegeInDescription", "Show Sample Usage In Description", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ShowSampleUsageInDescription), true);
+            CreateCheckBox("chkShowDefaultValueInDescription", "Show Default Value In Description If Optional", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ShowDefaultValueInDescription), true);
+            CreateCheckBox("chkChangeItemsWheelNotFocused", "Change Items with Mouse Wheel when NOT Forcused", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ChangeItemsWithWheelWhenNotForcused), true);
+            CreateCheckBox("chkDisplayParameterNumBeforeDescription", "Display Parameter Number Before Description", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.DisplayNumberBeforeParameterDescription), true);
         }
         #endregion
 
         #region Network
         private void showNetworkLocalListerSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Local Listener (Beta)", FontSize.Large, true);
+            CreateLabel("lblTitle", "Local Listener (Beta)", FontSize.Large, true);
 
-            createLabel("lbmMessage", "Enable this functionality to allow this computer to accept script execution requests from \nother taskt or REST-capable clients.", FontSize.Small, true);
+            CreateLabel("lbmMessage", "Enable this functionality to allow this computer to accept script execution requests from \nother taskt or REST-capable clients.", FontSize.Small, true);
 
-            createCheckBox("chkAutoStartListener", "Start Listening on Startup", newAppSettings.ListenerSettings, "StartListenerOnStartup", true);
-            createCheckBox("chkEnableListening", "Local Listening Enabled", newAppSettings.ListenerSettings, "LocalListeningEnabled", true);
+            CreateCheckBox("chkAutoStartListener", "Start Listening on Startup", newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.StartListenerOnStartup), true);
+            CreateCheckBox("chkEnableListening", "Local Listening Enabled", newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.LocalListeningEnabled), true);
 
-            createLabel("lblListeningPort", "Listening Port:", FontSize.Normal, false);
-            TextBox txtListeningPort = createTextBox("txtListeningPort", 120, newAppSettings.ListenerSettings, "ListeningPort", true);
+            CreateLabel("lblListeningPort", "Listening Port:", FontSize.Normal, false);
+            var txtListeningPort = CreateTextBox("txtListeningPort", 120, newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.ListeningPort), true);
 
-            createCheckBox("chkRequireListenerKey", "Require Authentication Key", newAppSettings.ListenerSettings, "RequireListenerAuthenticationKey", true);
-            createLabel("lblAuthenicationKey", "Authentication Key", FontSize.Small, true);
-            TextBox txtAuthKey = createTextBox("txtAuthenicationKey", 480, newAppSettings, "ListenerSettings.AuthKey", true);
-            Button btnRegenerateAuthKey = createButton("btnRegenerateAuthKey", "Regenerate", 140, true);
+            CreateCheckBox("chkRequireListenerKey", "Require Authentication Key", newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.RequireListenerAuthenticationKey), true);
+            CreateLabel("lblAuthenicationKey", "Authentication Key", FontSize.Small, true);
+            var txtAuthKey = CreateTextBox("txtAuthenicationKey", 480, newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.AuthKey), true);
+            //Button btnRegenerateAuthKey = CreateButton("btnRegenerateAuthKey", "Regenerate", 140, true);
+            //btnRegenerateAuthKey.Click += (sender, e) => btnRegenerateAuthKey_Clicked(sender, e, txtAuthKey);
+            CreateButton("btnRegenerateAuthKey", "Regenerate", 140, new Action<object, EventArgs>((sender, e) =>
+            {
+                newAppSettings.GetLocalListenerSettings().AuthKey = Guid.NewGuid().ToString();
+                txtAuthKey.Text = newAppSettings.ListenerSettings.AuthKey;
+            }));
 
-            btnRegenerateAuthKey.Click += (sender, e) => btnRegenerateAuthKey_Clicked(sender, e, txtAuthKey);
-
-            createCheckBox("chkEnableWhitelit", "Enable IP Verification (Seperate with comma)", newAppSettings.ListenerSettings, "EnableWhitelist", true);
-            TextBox txtWhite = createTextBox("txtWhitelist", 480, newAppSettings.ListenerSettings, "IPWhiteList", true);
+            CreateCheckBox("chkEnableWhitelit", "Enable IP Verification (Seperate with comma)", newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.EnableWhitelist), true);
+            var txtWhite = CreateTextBox("txtWhitelist", 480, newAppSettings.ListenerSettings, nameof(newAppSettings.ListenerSettings.IPWhiteList), true);
             txtWhite.Multiline = true;
             txtWhite.ScrollBars = ScrollBars.Vertical;
             txtWhite.Height = 80;
 
-            btnStartListening = createButton("btnStartListening", "Start Listening", 140, false);
-            btnStopListening = createButton("btnEndListening", "Stop Listening", 140, true);
+            //btnStartListening = CreateButton("btnStartListening", "Start Listening", 140, false);
+            //btnStartListening.Click += (sender, e) => btnStartListening_Click(sender, e, txtListeningPort);
+            //var btnStartListening = CreateButton("btnStartListening", "Start Listening", 140, new Action<object, EventArgs>((sender, e) =>
+            //{
+            //    if (int.TryParse(txtListeningPort.Text, out var portNumber))
+            //    {
+            //        DisableListenerButtons();
+            //        Core.Server.LocalTCPListener.StartListening(portNumber);
+            //    }
+            //}));
+            var btnStartListening = CreateButton("btnStartListening", "Start Listening", 140);
+            
+            //btnStopListening = CreateButton("btnEndListening", "Stop Listening", 140, true);
+            //btnStopListening.Click += (sender, e) => btnStopListening_Click(sender, e);
+            //var btnStopListening = CreateButton("btnEndListening", "Stop Listening", 140, new Action<object, EventArgs>((sender, e) =>
+            //{
+            //    DisableListenerButtons();
+            //    Core.Server.LocalTCPListener.StopAutomationListener();
+            //}));
+            var btnStopListening = CreateButton("btnEndListening", "Stop Listening", 140);
 
-            btnStartListening.Click += (sender, e) => btnStartListening_Click(sender, e, txtListeningPort);
-            btnStopListening.Click += (sender, e) => btnStopListening_Click(sender, e);
+            var lblListeningState = CreateLabel("lblListeningState", "Listening on {}", FontSize.Large, true);
 
-            lblListeningState = createLabel("lblListeningState", "Listening on {}", FontSize.Large, true);
+            // set button event
+            btnStartListening.Click += (sender, e) =>
+            {
+                if (int.TryParse(txtListeningPort.Text, out var portNumber))
+                {
+                    DisableListenerButtons();
+                    Core.Server.LocalTCPListener.StartListening(portNumber);
+                }
+            };
+            btnStopListening.Click += (sender, e) =>
+            {
+                DisableListenerButtons();
+                Core.Server.LocalTCPListener.StopAutomationListener();
+            };
+
+            // set tcp listener event
+            tcpListenerListenStartEvent = (sender, e) =>
+            {
+                if (this.InvokeRequired)
+                {
+                    var stoppedDelegate = new AutomationTCPListener_StoppedDelegate(tcpListenerListenStartEvent);
+                    Invoke(stoppedDelegate, new object[] { sender, e });
+                }
+                else
+                {
+                    SetupListeningUI();
+                }
+            };
+            tcpListenerListenStopEvent = (sender, e) =>
+            {
+                if (this.InvokeRequired)
+                {
+                    var startedDelegate = new AutomationTCPListener_StoppedDelegate(tcpListenerListenStopEvent);
+                    Invoke(startedDelegate, new object[] { sender, e });
+                }
+                else
+                {
+                    SetupListeningUI();
+                }
+            };
 
             SetupListeningUI();
+
+            // 
+            void DisableListenerButtons()
+            {
+                //if ((btnStartListening == null) || (btnStopListening == null))
+                //{
+                //    return;
+                //}
+                btnStartListening.Enabled = false;
+                btnStopListening.Enabled = false;
+            }
+
+            void SetupListeningUI()
+            {
+                //if ((btnStartListening == null) || (btnStopListening == null) || (lblListeningState == null))
+                //{
+                //    return;
+                //}
+
+                if (Core.Server.LocalTCPListener.IsListening)
+                {
+                    lblListeningState.Text = $"Client is Listening at Endpoint '{Core.Server.LocalTCPListener.GetListeningAddress()}'.";
+                    btnStartListening.Enabled = false;
+                    btnStopListening.Enabled = true;
+                }
+                else
+                {
+                    lblListeningState.Text = $"Client is Not Listening!";
+                    btnStartListening.Enabled = true;
+                    btnStopListening.Enabled = false;
+                }
+                lblListeningState.Show();
+            }
         }
         private void showNetworkServerSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Server", FontSize.Large, true);
+            CreateLabel("lblTitle", "Server", FontSize.Large, true);
 
-            createLabel("lblMessage", "Enable this functionality to connect to a local instance of taskt server for workforce \nmanagement. After testing the connection, the client will be assigned a new GUID \nwhich must be approved by an administrator in the server.", FontSize.Small, true);
+            CreateLabel("lblMessage", "Enable this functionality to connect to a local instance of taskt server for workforce \nmanagement. After testing the connection, the client will be assigned a new GUID \nwhich must be approved by an administrator in the server.", FontSize.Small, true);
 
-            createCheckBox("chkServerEnabled", "Server Connection Enabled", newAppSettings.ServerSettings, "ServerConnectionEnabled", true);
-            createCheckBox("chkAutomaticallyConnect", "Check In On Startup", newAppSettings.ServerSettings, "ConnectToServerOnStartup", true);
+            CreateCheckBox("chkServerEnabled", "Server Connection Enabled", newAppSettings.ServerSettings, nameof(newAppSettings.ServerSettings.ServerConnectionEnabled), true);
+            CreateCheckBox("chkAutomaticallyConnect", "Check In On Startup", newAppSettings.ServerSettings, nameof(newAppSettings.ServerSettings.ConnectToServerOnStartup), true);
 
-            createLabel("lblServerURL", "HTTPS Server URL", FontSize.NormalBold, true);
-            createLabel("lblServerURLex", "Enter the location of the taskt server (ex. https://localhost:60281", FontSize.Normal, true);
-            TextBox txtAddress = createTextBox("txtHttpsAddress", 480, newAppSettings.ServerSettings, "HTTPServerURL", true);
-            Button btnTestConnection = createButton("btnTestConnection", "Test Connection", 240, true);
+            CreateLabel("lblServerURL", "HTTPS Server URL", FontSize.NormalBold, true);
+            CreateLabel("lblServerURLex", "Enter the location of the taskt server (ex. https://localhost:60281", FontSize.Normal, true);
+            var txtAddress = CreateTextBox("txtHttpsAddress", 480, newAppSettings.ServerSettings, nameof(newAppSettings.ServerSettings.HTTPServerURL), true);
+            //var btnTestConnection = CreateButton("btnTestConnection", "Test Connection", 240, true);
+            //btnTestConnection.Click += (sender, e) => btnTestConnection_Click(sender, e, txtAddress);
+            CreateButton("btnTestConnection", "Test Connection", 240, new Action<object, EventArgs>((sender, e) =>
+            {
+                var successfulConnection = Core.Server.HttpServerClient.TestConnection(txtAddress.Text);
 
-            createLabel("lblClientGUID", "Client GUID", FontSize.NormalBold, true);
-            createLabel("lblClientGUIDex", "Indicates the GUID the client will use when connecting to taskt server", FontSize.Normal, true);
-            createTextBox("txtGUID", 480, newAppSettings.ServerSettings, "HTTPGuid", true);
-            Button btnPublishTask = createButton("btnPublishTask", "Publish Task", 240, true);
+                if (successfulConnection)
+                {
+                    var pulledNewGUID = Core.Server.HttpServerClient.GetGuid();
 
-            lblSocketState = createLabel("lblSocketState", "Socket Status", FontSize.Large, true);
-            lblSocketException = createLabel("lblSocketException", "Socket Exception", FontSize.Normal, true);
+                    if (pulledNewGUID)
+                    {
+                        newAppSettings = ApplicationSettings.GetOrCreateApplicationSettings(App.Taskt_Settings_File_Path);
 
-            btnTestConnection.Click += (sender, e) => btnTestConnection_Click(sender, e, txtAddress);
-            btnPublishTask.Click += (sender, e) => btnPublishTask_Click(sender, e);
+                        txtAddress.Text = newAppSettings.ServerSettings.HTTPGuid.ToString();
+                        MessageBox.Show("Connected Successfully!\nGUID will be reloaded automatically the next time settings is loaded!", "Taskt", MessageBoxButtons.OK);
+                    }
+                    MessageBox.Show("Connected Successfully!", "Taskt", MessageBoxButtons.OK);
+                }
+                else
+                {
+                    MessageBox.Show("Unable To Connect!", "Taskt", MessageBoxButtons.OK);
+                }
+            }));
+            
+            CreateLabel("lblClientGUID", "Client GUID", FontSize.NormalBold, true);
+            CreateLabel("lblClientGUIDex", "Indicates the GUID the client will use when connecting to taskt server", FontSize.Normal, true);
+            CreateTextBox("txtGUID", 480, newAppSettings.ServerSettings, nameof(newAppSettings.ServerSettings.HTTPGuid), true);
+            //var btnPublishTask = CreateButton("btnPublishTask", "Publish Task", 240, true);
+            //btnPublishTask.Click += (sender, e) => btnPublishTask_Click(sender, e);
+            CreateButton("btnPublishTask", "Publish Task", 240, new Action<object, EventArgs>((sender, e) =>
+            {
+                if (File.Exists(scriptBuilderForm.ScriptFilePath))
+                {
+                    Core.Server.HttpServerClient.PublishScript(scriptBuilderForm.ScriptFilePath, Core.Server.PublishedScript.PublishType.ServerReference);
+                }
+                else
+                {
+                    MessageBox.Show("Please open the task in order to publish it.", "Taskt", MessageBoxButtons.OK);
+                }
+            }));
+            
+            var lblSocketState = CreateLabel("lblSocketState", "Socket Status", FontSize.Large, true);
+            var lblSocketException = CreateLabel("lblSocketException", "Socket Exception", FontSize.Normal, true);
+
+            // set timer event
+            tmrGetScoketStatusTickEvent = (sender, e) =>
+            {
+                if ((lblSocketState == null) || (lblSocketException == null))
+                {
+                    return;
+                }
+                lblSocketState.Text = $"Socket Status: {Core.Server.SocketClient.GetSocketState()}";
+                if (Core.Server.SocketClient.connectionException != string.Empty)
+                {
+                    lblSocketException.Show();
+                    lblSocketException.Text = Core.Server.SocketClient.connectionException;
+                }
+                else
+                {
+                    lblSocketException.Hide();
+                }
+            };
+            tmrGetSocketStatus.Tick += tmrGetScoketStatusTickEvent;
         }
         #endregion
 
         #region Update
         private void showUpdateCheckUpdateSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Check Update", FontSize.Large, true);
+            CreateLabel("lblTitle", "Check Update", FontSize.Large, true);
 
-            Button btn = createButton("btnCheckUpdate", "Check For Updates", 200, true);
-            btn.Click += (sender, e) => btnCheckUpdate_Click(sender, e);
+            //Button btn = CreateButton("btnCheckUpdate", "Check For Updates", 200, true);
+            //btn.Click += (sender, e) => btnCheckUpdate_Click(sender, e);
 
-            createCheckBox("chkUpdate", "Check for update at startup", newAppSettings.ClientSettings, "CheckForUpdateAtStartup", true);
-            createCheckBox("chkSkipBeta", "Skip Beta version", newAppSettings.ClientSettings, "SkipBetaVersionUpdate", true);
+            CreateButton("btnCheckUpdate", "Check For Updates", 200, new Action<object, EventArgs>((sender, e) =>
+            {
+                Core.Update.ApplicationUpdate.ShowUpdateResultSync(newAppSettings.ClientSettings.SkipBetaVersionUpdate, false);
+            }));
+            
+            CreateCheckBox("chkUpdate", "Check for update at startup", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.CheckForUpdateAtStartup), true);
+            CreateCheckBox("chkSkipBeta", "Skip Beta version", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.SkipBetaVersionUpdate), true);
         }
         #endregion
 
         #region VM
         private void showVMDisplayManagerSettings()
         {
-            removeSettingControls();
+            RemoveSettingControls();
 
-            createLabel("lblTitle", "Display Manager", FontSize.Large, true);
+            CreateLabel("lblTitle", "Display Manager", FontSize.Large, true);
 
-            Button btn = createButton("btnDisplayManager", "Launch Display Manager", 200, true);
-            btn.Click += (sender, e) => btnLaunchDisplayManager_Click(sender, e);
+            //Button btn = CreateButton("btnDisplayManager", "Launch Display Manager", 200, true);
+            //btn.Click += (sender, e) => btnLaunchDisplayManager_Click(sender, e);
+
+            CreateButton("btnDisplayManager", "Launch Display Manager", 200, new Action<object, EventArgs>((sender, e) =>
+            {
+                if (MessageBox.Show("Close Settings form to launch Display Manager.\nIf you have changed the settings, click the 'OK' button to save the changes.\nLaunch Display Manager now ?", "Settings", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    var displayManager = new frmDisplayManager();
+                    displayManager.Show();
+                    this.Close();
+                }
+            }));
         }
         #endregion
 
         #region Create Controls
-        private void removeSettingControls()
+
+        /// <summary>
+        /// remove cotrols for setting value parameters
+        /// </summary>
+        private void RemoveSettingControls()
         {
             flowLayoutSettings.Controls.Clear();
         }
-        private Label createLabel(string name, string text, FontSize fontSize = FontSize.Normal, bool isBreak = false)
-        {
-            Label lbl = new Label();
-            lbl.Name = name;
-            lbl.Text = text;
 
-            lbl.AutoSize = true;
+        /// <summary>
+        /// create Label
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="text"></param>
+        /// <param name="fontSize"></param>
+        /// <param name="isBreak"></param>
+        /// <returns></returns>
+        private Label CreateLabel(string name, string text, FontSize fontSize = FontSize.Normal, bool isBreak = false)
+        {
+            var lbl = new Label
+            {
+                Name = name,
+                Text = text,
+
+                AutoSize = true
+            };
 
             switch (fontSize)
             {
@@ -778,13 +1329,24 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             return lbl;
         }
 
-        private TextBox createTextBox(string name, int width, object source, string memberName, bool isBreak = false)
+        /// <summary>
+        /// create textbox
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="width"></param>
+        /// <param name="source"></param>
+        /// <param name="memberName"></param>
+        /// <param name="isBreak"></param>
+        /// <returns></returns>
+        private TextBox CreateTextBox(string name, int width, object source, string memberName, bool isBreak = false)
         {
-            TextBox txt = new TextBox();
-            txt.Name = name;
-            txt.Width = width;
-            txt.Height = 29;
-            txt.Font = new Font("Segoe UI", 12);
+            var txt = new TextBox
+            {
+                Name = name,
+                Width = width,
+                Height = 29,
+                Font = new Font("Segoe UI", 12)
+            };
 
             txt.DataBindings.Add("Text", source, memberName, false, DataSourceUpdateMode.OnPropertyChanged);
 
@@ -794,14 +1356,25 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             return txt;
         }
 
-        private CheckBox createCheckBox(string name, string text, object source, string memberName, bool isBreak = false)
+        /// <summary>
+        /// create checkbox
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="text"></param>
+        /// <param name="source"></param>
+        /// <param name="memberName"></param>
+        /// <param name="isBreak"></param>
+        /// <returns></returns>
+        private CheckBox CreateCheckBox(string name, string text, object source, string memberName, bool isBreak = false)
         {
-            CheckBox chk = new CheckBox();
-            chk.Name = name;
-            chk.AutoSize = true;
-            chk.Text = text;
-            chk.Font = new Font("Segoe UI Semilight", (Single)11.25);
-            chk.ForeColor = Color.SteelBlue;
+            var chk = new CheckBox
+            {
+                Name = name,
+                AutoSize = true,
+                Text = text,
+                Font = new Font("Segoe UI Semilight", (Single)11.25),
+                ForeColor = Color.SteelBlue
+            };
 
             chk.DataBindings.Add("Checked", source, memberName, false, DataSourceUpdateMode.OnPropertyChanged);
 
@@ -811,12 +1384,24 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             return chk;
         }
 
-        private ComboBox createComboBox(string name, string[] items, int width, object source, string memberName, bool isBreak = false)
+        /// <summary>
+        /// create combobox
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="items"></param>
+        /// <param name="width"></param>
+        /// <param name="source"></param>
+        /// <param name="memberName"></param>
+        /// <param name="isBreak"></param>
+        /// <returns></returns>
+        private ComboBox CreateComboBox(string name, string[] items, int width, object source, string memberName, bool isBreak = false)
         {
-            ComboBox cmb = new ComboBox();
-            cmb.Name = name;
-            cmb.Font = new Font("Segoe UI", 12);
-            cmb.DropDownStyle = ComboBoxStyle.DropDownList;
+            var cmb = new ComboBox
+            {
+                Name = name,
+                Font = new Font("Segoe UI", 12),
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
 
             cmb.BeginUpdate();
             cmb.Items.AddRange(items);
@@ -830,459 +1415,468 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             return cmb;
         }
-        private Button createButton(string name, string text, int width, bool isBreak = false)
+
+        /// <summary>
+        /// create button
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="text"></param>
+        /// <param name="width"></param>
+        /// <param name="isBreak"></param>
+        /// <returns></returns>
+        private Button CreateButton(string name, string text, int width, bool isBreak = false)
         {
-            Button btn = new Button();
-            btn.Name = name;
-            btn.Text = text;
-            btn.Width = width;
-            btn.Height = 29;
-            btn.Font = new Font("Segoe UI", (Single)9.75);
+            var btn = new Button
+            {
+                Name = name,
+                Text = text,
+                Width = width,
+                Height = 29,
+                Font = new Font("Segoe UI", (Single)9.75)
+            };
 
             flowLayoutSettings.Controls.Add(btn);
             flowLayoutSettings.SetFlowBreak(btn, isBreak);
 
             return btn;
         }
+
+        /// <summary>
+        /// create button, attach click event
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="text"></param>
+        /// <param name="width"></param>
+        /// <param name="clickEvent"></param>
+        /// <param name="isBreak"></param>
+        /// <returns></returns>
+        private Button CreateButton(string name, string text, int width, Action<object, EventArgs> clickEvent, bool isBreak = false)
+        {
+            var btn = CreateButton(name, text, width, isBreak);
+            btn.Click += new EventHandler(clickEvent);
+            return btn;
+        }
         #endregion
 
         #region StartUp Events
-        private void btnLaunchAttendedMode_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Close Settings form to launch Attended Mode.\nIf you have changed the settings, click the 'OK' button to save the changes.\nLaunch Attended Mode now ?", "Settings", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                scriptBuilderForm.ShowAttendedModeFormProcess();
-                this.Close();
-            }
-        }
-        private void cmbStartUpMode_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            //newAppSettings.ClientSettings.StartupMode = ((ComboBox)sender).Text;
-            newAppSettings.GetClientSettings().StartupMode = ((ComboBox)sender).Text;
-        }
+        //private void btnLaunchAttendedMode_Click(object sender, EventArgs e)
+        //{
+        //    if (MessageBox.Show("Close Settings form to launch Attended Mode.\nIf you have changed the settings, click the 'OK' button to save the changes.\nLaunch Attended Mode now ?", "Settings", MessageBoxButtons.YesNo) == DialogResult.Yes)
+        //    {
+        //        scriptBuilderForm.ShowAttendedModeFormProcess();
+        //        this.Close();
+        //    }
+        //}
+        //private void cmbStartUpMode_SelectionChangeCommitted(object sender, EventArgs e)
+        //{
+        //    newAppSettings.GetClientSettings().StartupMode = ((ComboBox)sender).Text;
+        //}
         #endregion
 
         #region Folder Events
-        private void btnSelectRootFolder_Click(object sender, EventArgs e, TextBox txt)
-        {
-            string currentFolerPath = newAppSettings.ClientSettings.RootFolder;
+        //private void btnSelectRootFolder_Click(object sender, EventArgs e, TextBox txt)
+        //{
+        //    string currentFolerPath = newAppSettings.ClientSettings.RootFolder;
 
-            //prompt user to confirm they want to select a new folder
-            var updateFolderRequest = 
-                MessageBox.Show(
-                    "Would you like to change the default root folder that taskt uses to store tasks and information? " + Environment.NewLine + Environment.NewLine +
-                    "Current Root Folder: " + currentFolerPath, 
-                    "Change Default Root Folder", 
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        //    // prompt user to confirm they want to select a new folder
+        //    var updateFolderRequest = 
+        //        MessageBox.Show(
+        //            "Would you like to change the default root folder that taskt uses to store tasks and information? " + Environment.NewLine + Environment.NewLine +
+        //            "Current Root Folder: " + currentFolerPath, 
+        //            "Change Default Root Folder", 
+        //            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            //if user does not want to update folder then exit
-            if (updateFolderRequest == DialogResult.No)
-            {
-                return;
-            }
+        //    // if user does not want to update folder then exit
+        //    if (updateFolderRequest == DialogResult.No)
+        //    {
+        //        return;
+        //    }
 
-            //user folder browser to let user select top level folder
-            using (var fbd = new FolderBrowserDialog())
-            {
-                //check if user selected a folder
-                if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                {
-                    //create references to old and new root folders
-                    var oldRootFolder = currentFolerPath;
-                    var newRootFolder = System.IO.Path.Combine(fbd.SelectedPath, "taskt");
+        //    // user folder browser to let user select top level folder
+        //    using (var fbd = new FolderBrowserDialog())
+        //    {
+        //        // check if user selected a folder
+        //        if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+        //        {
+        //            // create references to old and new root folders
+        //            var oldRootFolder = currentFolerPath;
+        //            var newRootFolder = System.IO.Path.Combine(fbd.SelectedPath, "taskt");
 
-                    //ask user to confirm
-                    var confirmNewFolderSelection = 
-                        MessageBox.Show(
-                            "Please confirm the changes below:" + Environment.NewLine + Environment.NewLine +
-                            "Old Root Folder: " + oldRootFolder + Environment.NewLine + Environment.NewLine +
-                            "New Root Folder: " + newRootFolder, 
-                            "Change Default Root Folder", 
-                            MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+        //            // ask user to confirm
+        //            var confirmNewFolderSelection = 
+        //                MessageBox.Show(
+        //                    "Please confirm the changes below:" + Environment.NewLine + Environment.NewLine +
+        //                    "Old Root Folder: " + oldRootFolder + Environment.NewLine + Environment.NewLine +
+        //                    "New Root Folder: " + newRootFolder, 
+        //                    "Change Default Root Folder", 
+        //                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
 
-                    //handle if user decides to cancel
-                    if (confirmNewFolderSelection == DialogResult.Cancel)
-                    {
-                        return;
-                    }
+        //            // handle if user decides to cancel
+        //            if (confirmNewFolderSelection == DialogResult.Cancel)
+        //            {
+        //                return;
+        //            }
 
-                    //ask if we should migrate the data
-                    var migrateCopyData = 
-                        MessageBox.Show(
-                            "Would you like to attempt to move the data from the old folder to the new folder?  Please note, depending on how many files you have, this could take a few minutes.", 
-                            "Migrate Data?", 
-                            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        //            // ask if we should migrate the data
+        //            var migrateCopyData = 
+        //                MessageBox.Show(
+        //                    "Would you like to attempt to move the data from the old folder to the new folder?  Please note, depending on how many files you have, this could take a few minutes.", 
+        //                    "Migrate Data?", 
+        //                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                    //check if user wants to migrate data
-                    if (migrateCopyData == DialogResult.Yes)
-                    {
-                        try
-                        {
-                            //find and copy files
-                            foreach (string dirPath in System.IO.Directory.GetDirectories(oldRootFolder, "*", System.IO.SearchOption.AllDirectories))
-                            {
-                                System.IO.Directory.CreateDirectory(dirPath.Replace(oldRootFolder, newRootFolder));
-                            }
-                            foreach (string newPath in System.IO.Directory.GetFiles(oldRootFolder, "*.*", System.IO.SearchOption.AllDirectories))
-                            {
-                                System.IO.File.Copy(newPath, newPath.Replace(oldRootFolder, newRootFolder), true);
-                            }
+        //            // check if user wants to migrate data
+        //            if (migrateCopyData == DialogResult.Yes)
+        //            {
+        //                try
+        //                {
+        //                    // find and copy files
+        //                    foreach (string dirPath in System.IO.Directory.GetDirectories(oldRootFolder, "*", System.IO.SearchOption.AllDirectories))
+        //                    {
+        //                        System.IO.Directory.CreateDirectory(dirPath.Replace(oldRootFolder, newRootFolder));
+        //                    }
+        //                    foreach (string newPath in System.IO.Directory.GetFiles(oldRootFolder, "*.*", System.IO.SearchOption.AllDirectories))
+        //                    {
+        //                        System.IO.File.Copy(newPath, newPath.Replace(oldRootFolder, newRootFolder), true);
+        //                    }
 
-                            MessageBox.Show("Data Migration Complete", "Data Migration Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //                    MessageBox.Show("Data Migration Complete", "Data Migration Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        }
-                        catch (Exception ex)
-                        {
-                            //handle any unexpected errors
-                            MessageBox.Show("An Error Occured during Data Migration Copy: " + ex.ToString());
-                        }
-                    }
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    // handle any unexpected errors
+        //                    MessageBox.Show("An Error Occured during Data Migration Copy: " + ex.ToString());
+        //                }
+        //            }
 
-                    //update textbox which will be updated once user selects "Ok"
-                    //newAppSettings.ClientSettings.RootFolder = newRootFolder;
-                    newAppSettings.GetClientSettings().RootFolder = newRootFolder;
-                }
-            }
-        }
+        //            // update textbox which will be updated once user selects "Ok"
+        //            newAppSettings.GetClientSettings().RootFolder = newRootFolder;
+        //        }
+        //    }
+        //}
 
-        private void btnSelectAttendedTaskFolder_Click(object sender, EventArgs e, TextBox txt)
-        {
-            using (var fbd = new FolderBrowserDialog())
-            {
-                if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                {
-                    var checkPaths = new List<(string, string)>
-                    {
-                        (Folders.GetAutoSaveFolderPath(), Folders.AUTOSAVE_FOLDER_NAME),
-                        (Folders.GetRunWithoutSavingFolderPath(), Folders.RUN_WITHOUT_SAVING_FOLDER_NAME),
-                        (Folders.GetBeforeConvertedFolderPath(), Folders.BEFORE_CONVERTED_FOLDER_NAME),
-                        (Folders.GetResourcesFolderPath(), Folders.RESOURCES_FOLDER_NAME),
-                        (Folders.GetSamplesFolderPath(), Folders.SAMPLES_FOLDER_NAME),
-                        (Folders.GetUpdateWorkingFolderPath(), Folders.UPDATE_FOLDER_NAME),
-                    };
+        //private void btnSelectAttendedTaskFolder_Click(object sender, EventArgs e, TextBox txt)
+        //{
+        //    using (var fbd = new FolderBrowserDialog())
+        //    {
+        //        if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+        //        {
+        //            var checkPaths = new List<(string, string)>
+        //            {
+        //                (Folders.GetAutoSaveFolderPath(), Folders.AUTOSAVE_FOLDER_NAME),
+        //                (Folders.GetRunWithoutSavingFolderPath(), Folders.RUN_WITHOUT_SAVING_FOLDER_NAME),
+        //                (Folders.GetBeforeConvertedFolderPath(), Folders.BEFORE_CONVERTED_FOLDER_NAME),
+        //                (Folders.GetResourcesFolderPath(), Folders.RESOURCES_FOLDER_NAME),
+        //                (Folders.GetSamplesFolderPath(), Folders.SAMPLES_FOLDER_NAME),
+        //                (Folders.GetUpdateWorkingFolderPath(), Folders.UPDATE_FOLDER_NAME),
+        //            };
 
-                    var newAttendedTaskFolder = System.IO.Path.Combine(fbd.SelectedPath);
+        //            var newAttendedTaskFolder = System.IO.Path.Combine(fbd.SelectedPath);
 
-                    var newFullPath = System.IO.Path.GetFullPath(newAttendedTaskFolder);
+        //            var newFullPath = System.IO.Path.GetFullPath(newAttendedTaskFolder);
                     
-                    ////if (newFullPath == Core.Script.Script.GetAutoSaveFolderPath())
-                    //if (newFullPath == Folders.GetAutoSaveFolderPath())
-                    //{
-                    //    MessageBox.Show($"Selected folder is in the same location as the '{Folders.AUTOSAVE_FOLDER_NAME}' folder");
-                    //    return;
-                    //}
-                    ////if (newFullPath == Core.Script.Script.GetRunWithoutSavingFolderPath())
-                    //if (newFullPath == Folders.GetRunWithoutSavingFolderPath())
-                    //{
-                    //    MessageBox.Show($"Selected folder is in the same location as the '{Folders.RUN_WITHOUT_SAVING_FOLDER_NAME}' folder");
-                    //    return;
-                    //}
-                    //if (newFullPath == Folders.GetBeforeConvertedFolderPath())
-                    //{
-                    //    MessageBox.Show($"Selected folder is in the same location as the '{Folders.BEFORE_CONVERTED_FOLDER_NAME}' folder");
-                    //    return;
-                    //}
+        //            foreach((var path, var folderName) in checkPaths)
+        //            {
+        //                if (newFullPath == path)
+        //                {
+        //                    MessageBox.Show($"Selected folder is in the same location as the '{folderName}' folder");
+        //                }
+        //            }
 
-                    foreach((var path, var folderName) in checkPaths)
-                    {
-                        if (newFullPath == path)
-                        {
-                            MessageBox.Show($"Selected folder is in the same location as the '{folderName}' folder");
-                        }
-                    }
-
-                    txt.Text = newAttendedTaskFolder;
-                }
-            }
-        }
+        //            txt.Text = newAttendedTaskFolder;
+        //        }
+        //    }
+        //}
         #endregion
 
         #region Parser Events
-        private void VariableMarker_TextChanged(object sender,EventArgs e, TextBox startMarker, TextBox endMaker, Label exampleLabel)
-        {
-            exampleLabel.Text = startMarker.Text + "VariableName" + endMaker.Text;
-        }
+        //private void VariableMarker_TextChanged(object sender,EventArgs e, TextBox startMarker, TextBox endMaker, Label exampleLabel)
+        //{
+        //    exampleLabel.Text = $"{startMarker.Text}VariableName{endMaker.Text}";
+        //}
         #endregion
 
         #region Network Events
-        private void btnTestConnection_Click(object sender, EventArgs e, TextBox txtAddress)
-        {
-            var successfulConnection = Core.Server.HttpServerClient.TestConnection(txtAddress.Text);
+        //private void btnTestConnection_Click(object sender, EventArgs e, TextBox txtAddress)
+        //{
+        //    var successfulConnection = Core.Server.HttpServerClient.TestConnection(txtAddress.Text);
 
-            if (successfulConnection)
-            {
-                var pulledNewGUID = Core.Server.HttpServerClient.GetGuid();
+        //    if (successfulConnection)
+        //    {
+        //        var pulledNewGUID = Core.Server.HttpServerClient.GetGuid();
 
-                if (pulledNewGUID)
-                {
-                    //newAppSettings = new Core.ApplicationSettings();
-                    //newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
-                    newAppSettings = ApplicationSettings.GetOrCreateApplicationSettings(App.Taskt_Settings_File_Path);
+        //        if (pulledNewGUID)
+        //        {
+        //            newAppSettings = ApplicationSettings.GetOrCreateApplicationSettings(App.Taskt_Settings_File_Path);
 
-                    txtAddress.Text = newAppSettings.ServerSettings.HTTPGuid.ToString();
-                    MessageBox.Show("Connected Successfully!\nGUID will be reloaded automatically the next time settings is loaded!", "Taskt", MessageBoxButtons.OK);
-                }
-                MessageBox.Show("Connected Successfully!", "Taskt", MessageBoxButtons.OK);
-            }
-            else
-            {
-                MessageBox.Show("Unable To Connect!", "Taskt", MessageBoxButtons.OK);
-            }
-        }
-        private void btnPublishTask_Click(object sender, EventArgs e)
-        {
-            if (System.IO.File.Exists(scriptBuilderForm.ScriptFilePath))
-            {
-                Core.Server.HttpServerClient.PublishScript(scriptBuilderForm.ScriptFilePath, Core.Server.PublishedScript.PublishType.ServerReference);
-            }
-            else
-            {
-                MessageBox.Show("Please open the task in order to publish it.", "Taskt", MessageBoxButtons.OK);
-            }
-        }
-        private void tmrGetSocketStatus_Tick(object sender, EventArgs e)
-        {
-            if ((lblSocketState == null) || (lblSocketException == null))
-            {
-                return;
-            }
-            lblSocketState.Text = "Socket Status: " + Core.Server.SocketClient.GetSocketState();
-            if (Core.Server.SocketClient.connectionException != string.Empty)
-            {
-                lblSocketException.Show();
-                lblSocketException.Text = Core.Server.SocketClient.connectionException;
-            }
-            else
-            {
-                lblSocketException.Hide();
-            }
-        }
-        private void btnStartListening_Click(object sender, EventArgs e, TextBox txtPort)
-        {
-            if (int.TryParse(txtPort.Text, out var portNumber))
-            {
-                DisableListenerButtons();
-                Core.Server.LocalTCPListener.StartListening(portNumber);
-            }
-        }
-        private void btnStopListening_Click(object sender, EventArgs e)
-        {
-            DisableListenerButtons();
-            Core.Server.LocalTCPListener.StopAutomationListener();
-        }
-        private void DisableListenerButtons()
-        {
-            if ((btnStartListening == null) || (btnStopListening == null))
-            {
-                return;
-            }
-            btnStartListening.Enabled = false;
-            btnStopListening.Enabled = false;
-        }
-        private void SetupListeningUI()
-        {
-            if ((btnStartListening == null) || (btnStopListening == null) || (lblListeningState == null))
-            {
-                return;
-            }
+        //            txtAddress.Text = newAppSettings.ServerSettings.HTTPGuid.ToString();
+        //            MessageBox.Show("Connected Successfully!\nGUID will be reloaded automatically the next time settings is loaded!", "Taskt", MessageBoxButtons.OK);
+        //        }
+        //        MessageBox.Show("Connected Successfully!", "Taskt", MessageBoxButtons.OK);
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Unable To Connect!", "Taskt", MessageBoxButtons.OK);
+        //    }
+        //}
+        //private void btnPublishTask_Click(object sender, EventArgs e)
+        //{
+        //    if (System.IO.File.Exists(scriptBuilderForm.ScriptFilePath))
+        //    {
+        //        Core.Server.HttpServerClient.PublishScript(scriptBuilderForm.ScriptFilePath, Core.Server.PublishedScript.PublishType.ServerReference);
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Please open the task in order to publish it.", "Taskt", MessageBoxButtons.OK);
+        //    }
+        //}
+        //private void tmrGetSocketStatus_Tick(object sender, EventArgs e)
+        //{
+        //    if ((lblSocketState == null) || (lblSocketException == null))
+        //    {
+        //        return;
+        //    }
+        //    lblSocketState.Text = $"Socket Status: {Core.Server.SocketClient.GetSocketState()}";
+        //    if (Core.Server.SocketClient.connectionException != string.Empty)
+        //    {
+        //        lblSocketException.Show();
+        //        lblSocketException.Text = Core.Server.SocketClient.connectionException;
+        //    }
+        //    else
+        //    {
+        //        lblSocketException.Hide();
+        //    }
+        //}
+        //private void btnStartListening_Click(object sender, EventArgs e, TextBox txtPort)
+        //{
+        //    if (int.TryParse(txtPort.Text, out var portNumber))
+        //    {
+        //        DisableListenerButtons();
+        //        Core.Server.LocalTCPListener.StartListening(portNumber);
+        //    }
+        //}
+        //private void btnStopListening_Click(object sender, EventArgs e)
+        //{
+        //    DisableListenerButtons();
+        //    Core.Server.LocalTCPListener.StopAutomationListener();
+        //}
+        //private void DisableListenerButtons()
+        //{
+        //    if ((btnStartListening == null) || (btnStopListening == null))
+        //    {
+        //        return;
+        //    }
+        //    btnStartListening.Enabled = false;
+        //    btnStopListening.Enabled = false;
+        //}
+        //private void SetupListeningUI()
+        //{
+        //    if ((btnStartListening == null) || (btnStopListening == null) || (lblListeningState == null))
+        //    {
+        //        return;
+        //    }
 
-            if (Core.Server.LocalTCPListener.IsListening)
-            {
-                lblListeningState.Text = $"Client is Listening at Endpoint '{Core.Server.LocalTCPListener.GetListeningAddress()}'.";
-                btnStartListening.Enabled = false;
-                btnStopListening.Enabled = true;
-            }
-            else
-            {
-                lblListeningState.Text = $"Client is Not Listening!";
-                btnStartListening.Enabled = true;
-                btnStopListening.Enabled = false;
-            }
-            lblListeningState.Show();
-        }
+        //    if (Core.Server.LocalTCPListener.IsListening)
+        //    {
+        //        lblListeningState.Text = $"Client is Listening at Endpoint '{Core.Server.LocalTCPListener.GetListeningAddress()}'.";
+        //        btnStartListening.Enabled = false;
+        //        btnStopListening.Enabled = true;
+        //    }
+        //    else
+        //    {
+        //        lblListeningState.Text = $"Client is Not Listening!";
+        //        btnStartListening.Enabled = true;
+        //        btnStopListening.Enabled = false;
+        //    }
+        //    lblListeningState.Show();
+        //}
         #endregion
 
         #region LocalListener Events
         public delegate void AutomationTCPListener_StartedDelegate(object sender, EventArgs e);
         public delegate void AutomationTCPListener_StoppedDelegate(object sender, EventArgs e);
-        private void AutomationTCPListener_ListeningStopped(object sender, EventArgs e)
-        {
-            if (this.InvokeRequired)
-            {
-                var stoppedDelegate = new AutomationTCPListener_StoppedDelegate(AutomationTCPListener_ListeningStopped);
-                Invoke(stoppedDelegate, new object[] { sender, e });
-            }
-            else
-            {
-                SetupListeningUI();
-            }
-        }
-        private void AutomationTCPListener_ListeningStarted(object sender, EventArgs e)
-        {
-            if (this.InvokeRequired)
-            {
-                var startedDelegate = new AutomationTCPListener_StoppedDelegate(AutomationTCPListener_ListeningStarted);
-                Invoke(startedDelegate, new object[] { sender, e });
-            }
-            else
-            {
-                SetupListeningUI();
-            }
-        }
+        //private void AutomationTCPListener_ListeningStopped(object sender, EventArgs e)
+        //{
+        //    if (this.InvokeRequired)
+        //    {
+        //        var stoppedDelegate = new AutomationTCPListener_StoppedDelegate(AutomationTCPListener_ListeningStopped);
+        //        Invoke(stoppedDelegate, new object[] { sender, e });
+        //    }
+        //    else
+        //    {
+        //        SetupListeningUI();
+        //    }
+        //}
+        //private void AutomationTCPListener_ListeningStarted(object sender, EventArgs e)
+        //{
+        //    if (this.InvokeRequired)
+        //    {
+        //        var startedDelegate = new AutomationTCPListener_StoppedDelegate(AutomationTCPListener_ListeningStarted);
+        //        Invoke(startedDelegate, new object[] { sender, e });
+        //    }
+        //    else
+        //    {
+        //        SetupListeningUI();
+        //    }
+        //}
         
-        private void btnRegenerateAuthKey_Clicked(object sender, EventArgs e, TextBox txtAuth)
-        {
-            //newAppSettings.ListenerSettings.AuthKey = Guid.NewGuid().ToString();
-            newAppSettings.GetLocalListenerSettings().AuthKey = Guid.NewGuid().ToString();
-            txtAuth.Text = newAppSettings.ListenerSettings.AuthKey;
-        }
+        //private void btnRegenerateAuthKey_Clicked(object sender, EventArgs e, TextBox txtAuth)
+        //{
+        //    newAppSettings.GetLocalListenerSettings().AuthKey = Guid.NewGuid().ToString();
+        //    txtAuth.Text = newAppSettings.ListenerSettings.AuthKey;
+        //}
 
         #endregion
 
         #region Metrics Events
-        private void btnClearMetrics_Click(object sender, EventArgs e)
-        {
-            new Core.Metrics().ClearExecutionMetrics();
-            bgwMetrics.RunWorkerAsync();
-        }
-        private void bgwMetrics_DoWork(object sender, DoWorkEventArgs e)
-        {
-            e.Result = new Core.Metrics().ExecutionMetricsSummary();
-        }
-        private void bgwMetrics_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if ((lblMetrics == null) || (tvExecutionTimes == null) || (btnClearMetrics == null))
-            {
-                return;
-            }
+        //private void btnClearMetrics_Click(object sender, EventArgs e)
+        //{
+        //    new Core.Metrics().ClearExecutionMetrics();
+        //    bgwMetrics.RunWorkerAsync();
+        //}
+        //private void bgwMetrics_DoWork(object sender, DoWorkEventArgs e)
+        //{
+        //    e.Result = new Metrics().ExecutionMetricsSummary();
+        //}
+        //private void bgwMetrics_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        //{
+        //    if ((lblMetrics == null) || (tvExecutionTimes == null) || (btnClearMetrics == null))
+        //    {
+        //        return;
+        //    }
 
-            if (e.Error != null)
-            {
-                if (e.Error is System.IO.FileNotFoundException)
-                {
-                    lblMetrics.Text = "Metrics Unavailable - Metrics are only available after running tasks which will generate metrics logs";
-                }
-                else
-                {
-                    lblMetrics.Text = "Metrics Unavailable: " + e.Error.ToString();
-                }
-            }
-            else
-            {
-                var metricsSummary = (List<Core.ExecutionMetric>)(e.Result);
+        //    if (e.Error != null)
+        //    {
+        //        if (e.Error is FileNotFoundException)
+        //        {
+        //            lblMetrics.Text = "Metrics Unavailable - Metrics are only available after running tasks which will generate metrics logs";
+        //        }
+        //        else
+        //        {
+        //            lblMetrics.Text = $"Metrics Unavailable: {e.Error}";
+        //        }
+        //    }
+        //    else
+        //    {
+        //        var metricsSummary = (List<ExecutionMetric>)(e.Result);
 
-                if (metricsSummary.Count == 0)
-                {
-                    lblMetrics.Text = "No Metrics Found";
-                    lblMetrics.Show();
-                    tvExecutionTimes.Hide();
-                    btnClearMetrics.Hide();
-                }
-                else
-                {
-                    lblMetrics.Hide();
-                    tvExecutionTimes.Show();
-                    btnClearMetrics.Show();
-                }
+        //        if (metricsSummary.Count == 0)
+        //        {
+        //            lblMetrics.Text = "No Metrics Found";
+        //            lblMetrics.Show();
+        //            tvExecutionTimes.Hide();
+        //            btnClearMetrics.Hide();
+        //        }
+        //        else
+        //        {
+        //            lblMetrics.Hide();
+        //            tvExecutionTimes.Show();
+        //            btnClearMetrics.Show();
+        //        }
 
-                foreach (var metric in metricsSummary)
-                {
-                    var rootNode = new TreeNode();
-                    rootNode.Text = metric.FileName + " [" + metric.AverageExecutionTime + " avg.]";
+        //        foreach (var metric in metricsSummary)
+        //        {
+        //            var rootNode = new TreeNode
+        //            {
+        //                Text = $"{metric.FileName} [{metric.AverageExecutionTime} avg.]"
+        //            };
 
-                    foreach (var metricItem in metric.ExecutionData)
-                    {
-                        var subNode = new TreeNode();
-                        subNode.Text = string.Join(" - ", metricItem.LoggedOn.ToString("MM/dd/yy hh:mm"), metricItem.ExecutionTime);
-                        rootNode.Nodes.Add(subNode);
-                    }
+        //            foreach (var metricItem in metric.ExecutionData)
+        //            {
+        //                var subNode = new TreeNode
+        //                {
+        //                    Text = $" - {metricItem.LoggedOn.ToString("MM/dd/yy hh:mm")} {metricItem.ExecutionTime}"
+        //                };
+        //                rootNode.Nodes.Add(subNode);
+        //            }
 
-                    tvExecutionTimes.Nodes.Add(rootNode);
-                }
-            }
-        }
+        //            tvExecutionTimes.Nodes.Add(rootNode);
+        //        }
+        //    }
+        //}
         #endregion
 
         #region Update Events
-        private void btnCheckUpdate_Click(object sender, EventArgs e)
-        {
-            Core.Update.ApplicationUpdate.ShowUpdateResultSync(newAppSettings.ClientSettings.SkipBetaVersionUpdate, false);
-        }
+        //private void btnCheckUpdate_Click(object sender, EventArgs e)
+        //{
+        //    Core.Update.ApplicationUpdate.ShowUpdateResultSync(newAppSettings.ClientSettings.SkipBetaVersionUpdate, false);
+        //}
         #endregion
 
         #region VM Events
-        private void btnLaunchDisplayManager_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Close Settings form to launch Display Manager.\nIf you have changed the settings, click the 'OK' button to save the changes.\nLaunch Display Manager now ?", "Settings", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                var displayManager = new frmDisplayManager();
-                displayManager.Show();
-                this.Close();
-            }   
-        }
+        //private void btnLaunchDisplayManager_Click(object sender, EventArgs e)
+        //{
+        //    if (MessageBox.Show("Close Settings form to launch Display Manager.\nIf you have changed the settings, click the 'OK' button to save the changes.\nLaunch Display Manager now ?", "Settings", MessageBoxButtons.YesNo) == DialogResult.Yes)
+        //    {
+        //        var displayManager = new frmDisplayManager();
+        //        displayManager.Show();
+        //        this.Close();
+        //    }
+        //}
         #endregion
 
         #region Documents Events
-        private void btnCreateCommandReference_Click(object sender, EventArgs e)
-        {
-            //Core.DocumentationGeneration docGeneration = new Core.DocumentationGeneration();
-            //var docsRoot = docGeneration.GenerateMarkdownFiles();
-            var docsRoot = Core.DocumentationGeneration.GenerateMarkdownFiles();
-            System.Diagnostics.Process.Start(docsRoot);
-        }
+        //private void btnCreateCommandReference_Click(object sender, EventArgs e)
+        //{
+        //    var docsRoot = DocumentationGeneration.GenerateMarkdownFiles();
+        //    System.Diagnostics.Process.Start(docsRoot);
+        //}
         #endregion
 
         #region Engine Events
-        private void cmdCancellationButton_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            Keys key = (Keys)Enum.Parse(typeof(Keys), ((ComboBox)sender).Text);
-            //newAppSettings.EngineSettings.CancellationKey = key;
-            newAppSettings.GetEngineSettings().CancellationKey = key;
-        }
+        //private void cmdCancellationButton_SelectionChangeCommitted(object sender, EventArgs e)
+        //{
+        //    var key = (Keys)Enum.Parse(typeof(Keys), ((ComboBox)sender).Text);
+        //    newAppSettings.GetEngineSettings().CancellationKey = key;
+        //}
         #endregion
 
         #region Editor Events
-        private void cmbInstanceSortOrder_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            //newAppSettings.ClientSettings.InstanceNameOrder = ((ComboBox)sender).Text;
-            newAppSettings.GetClientSettings().InstanceNameOrder = ((ComboBox)sender).Text;
-        }
+        //private void cmbInstanceSortOrder_SelectionChangeCommitted(object sender, EventArgs e)
+        //{
+        //    newAppSettings.GetClientSettings().InstanceNameOrder = ((ComboBox)sender).Text;
+        //}
         #endregion
 
         #region Application Events
-        private void btnShowRecoures_Click(object sender, EventArgs e)
-        {
-            var myAssembly = System.Reflection.Assembly.GetEntryAssembly();
-            string path = System.IO.Path.GetDirectoryName(myAssembly.Location) + "\\Resources";
-            System.Diagnostics.Process.Start(path);
-        }
+        //private void btnShowRecoures_Click(object sender, EventArgs e)
+        //{
+        //    var myAssembly = System.Reflection.Assembly.GetEntryAssembly();
+        //    string path = System.IO.Path.GetDirectoryName(myAssembly.Location) + "\\Resources";
+        //    System.Diagnostics.Process.Start(path);
+        //}
 
-        private void btnChromeDriver_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start(Core.MyURLs.ChromeDriverURL);
-        }
+        //private void btnChromeDriver_Click(object sender, EventArgs e)
+        //{
+        //    System.Diagnostics.Process.Start(MyURLs.ChromeDriverURL);
+        //}
 
-        private void btnEdgeDriver_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start(Core.MyURLs.EdgeDriverURL);
-        }
+        //private void btnEdgeDriver_Click(object sender, EventArgs e)
+        //{
+        //    System.Diagnostics.Process.Start(MyURLs.EdgeDriverURL);
+        //}
 
-        private void btnGeckoDriver_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start(Core.MyURLs.GeckoDriverURL);
-        }
+        //private void btnGeckoDriver_Click(object sender, EventArgs e)
+        //{
+        //    System.Diagnostics.Process.Start(MyURLs.GeckoDriverURL);
+        //}
 
-        private void btnIEDriver_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start(Core.MyURLs.IEDriverURL);
-        }
+        //private void btnIEDriver_Click(object sender, EventArgs e)
+        //{
+        //    System.Diagnostics.Process.Start(MyURLs.IEDriverURL);
+        //}
 
+        /// <summary>
+        /// get webdrivers versions
+        /// </summary>
+        /// <returns></returns>
         private static Dictionary<string, string> GetWebDriverVersions()
         {
             var myAssembly = System.Reflection.Assembly.GetEntryAssembly();
-            string resourcePath = System.IO.Path.GetDirectoryName(myAssembly.Location) + "\\Resources";
+            //string resourcePath = Path.GetDirectoryName(myAssembly.Location) + "\\Resources";
+            var resourcePath = Path.Combine(Path.GetDirectoryName(myAssembly.Location), "Resources");
 
-            System.Diagnostics.Process p = new System.Diagnostics.Process();
+            var p = new System.Diagnostics.Process();
             p.StartInfo.FileName = Environment.GetEnvironmentVariable("ComSpec");
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardOutput = true;
@@ -1311,91 +1905,91 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             p.Close();
 
-            Dictionary<string, string> ret = new Dictionary<string, string>()
+            var ret = new Dictionary<string, string>()
             {
-                { "chrome", ParseWebDriverVersion(chromeVersion)},
-                { "edge", ParseWebDriverVersion(edgeVersion)},
-                { "gecko", ParseWebDriverVersion(geckoVersion)},
-                { "ie", ParseWebDriverVersion(ieVersion)},
+                { "chrome", ExtractWebDriverVersion(chromeVersion)},
+                { "edge", ExtractWebDriverVersion(edgeVersion)},
+                { "gecko", ExtractWebDriverVersion(geckoVersion)},
+                { "ie", ExtractWebDriverVersion(ieVersion)},
             };
 
             return ret;
         }
 
-        private static string ParseWebDriverVersion(string v)
+        /// <summary>
+        /// extract webdriver version from version text
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        private static string ExtractWebDriverVersion(string v)
         {
             int idx = v.IndexOf('(');
             return v.Substring(0, idx);
         }
 
-        private void btnImportSettings_Click(object sender, EventArgs e)
-        {
-            using (var frm = new OpenFileDialog())
-            {
-                frm.Filter = "taskt Settings (*.xml)|*.xml|All Files(*.*)|*.*";
-                frm.Title = "Import Settings";
-                frm.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                if (frm.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        newAppSettings = Core.ApplicationSettings.Open(frm.FileName);
-                        MessageBox.Show("Imported", "taskt", MessageBoxButtons.OK);
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Fail import", "taskt", MessageBoxButtons.OK);
-                    }
-                }
-            }
-        }
-        private void btnExportSettings_Click(object sender, EventArgs e)
-        {
-            using (var frm = new SaveFileDialog())
-            {
-                frm.Filter = "taskt Settings (*.xml)|*.xml|All Files(*.*)|*.*";
-                frm.Title = "Import Settings";
-                frm.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                if (frm.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        //Core.ApplicationSettings.SaveAs(newAppSettings, frm.FileName);
-                        //Core.ApplicationSettings.Save(newAppSettings, frm.FileName);
-                        newAppSettings.Save(frm.FileName);
-                        MessageBox.Show("Exported", "taskt", MessageBoxButtons.OK);
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Fail export", "taskt", MessageBoxButtons.OK);
-                    }
-                }
-            }
-        }
-        private void btnLoadDefaultSettings_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Are you sure to Load Default Settings?", "taskt", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                newAppSettings = new taskt.Core.ApplicationSettings();
-                MessageBox.Show("Load Default Settings", "taskt", MessageBoxButtons.OK);
-            }
-        }
-        private void btnShowAutoSaveFolder_Click(object sender, EventArgs e)
-        {
-            //System.Diagnostics.Process.Start(Core.Script.Script.GetAutoSaveFolderPath());
-            System.Diagnostics.Process.Start(Core.IO.Folders.GetAutoSaveFolderPath());
-        }
-        private void btnShowRunWithoutSavingFolder_Click(object sender, EventArgs e)
-        {
-            //System.Diagnostics.Process.Start(Core.Script.Script.GetRunWithoutSavingFolderPath());
-            System.Diagnostics.Process.Start(Core.IO.Folders.GetRunWithoutSavingFolderPath());
-        }
+        //private void btnImportSettings_Click(object sender, EventArgs e)
+        //{
+        //    using (var frm = new OpenFileDialog())
+        //    {
+        //        frm.Filter = "taskt Settings (*.xml)|*.xml|All Files(*.*)|*.*";
+        //        frm.Title = "Import Settings";
+        //        frm.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        //        if (frm.ShowDialog() == DialogResult.OK)
+        //        {
+        //            try
+        //            {
+        //                newAppSettings = ApplicationSettings.Open(frm.FileName);
+        //                MessageBox.Show("Imported", "taskt", MessageBoxButtons.OK);
+        //            }
+        //            catch
+        //            {
+        //                MessageBox.Show("Fail import", "taskt", MessageBoxButtons.OK);
+        //            }
+        //        }
+        //    }
+        //}
+        //private void btnExportSettings_Click(object sender, EventArgs e)
+        //{
+        //    using (var frm = new SaveFileDialog())
+        //    {
+        //        frm.Filter = "taskt Settings (*.xml)|*.xml|All Files(*.*)|*.*";
+        //        frm.Title = "Import Settings";
+        //        frm.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        //        if (frm.ShowDialog() == DialogResult.OK)
+        //        {
+        //            try
+        //            {
+        //                newAppSettings.Save(frm.FileName);
+        //                MessageBox.Show("Exported", "taskt", MessageBoxButtons.OK);
+        //            }
+        //            catch
+        //            {
+        //                MessageBox.Show("Fail export", "taskt", MessageBoxButtons.OK);
+        //            }
+        //        }
+        //    }
+        //}
+        //private void btnLoadDefaultSettings_Click(object sender, EventArgs e)
+        //{
+        //    if (MessageBox.Show("Are you sure to Load Default Settings?", "taskt", MessageBoxButtons.YesNo) == DialogResult.Yes)
+        //    {
+        //        newAppSettings = new ApplicationSettings();
+        //        MessageBox.Show("Load Default Settings", "taskt", MessageBoxButtons.OK);
+        //    }
+        //}
+        //private void btnShowAutoSaveFolder_Click(object sender, EventArgs e)
+        //{
+        //    System.Diagnostics.Process.Start(Folders.GetAutoSaveFolderPath());
+        //}
+        //private void btnShowRunWithoutSavingFolder_Click(object sender, EventArgs e)
+        //{
+        //    System.Diagnostics.Process.Start(Folders.GetRunWithoutSavingFolderPath());
+        //}
 
-        private void btnShowBeforeConvertedFolder_Click(object sender, EventArgs e)
-        {
-            //System.Diagnostics.Process.Start(Core.Script.Script.GetBeforeConvertedFolderPath());
-            System.Diagnostics.Process.Start(Core.IO.Folders.GetBeforeConvertedFolderPath());
-        }
+        //private void btnShowBeforeConvertedFolder_Click(object sender, EventArgs e)
+        //{
+        //    System.Diagnostics.Process.Start(Folders.GetBeforeConvertedFolderPath());
+        //}
         #endregion
     }
 }

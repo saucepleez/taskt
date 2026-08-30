@@ -1,0 +1,13 @@
+digraph "taskt.Core.Automation.Attributes.ClassAttributes.Group" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Attributes.ClassAttributes.Group" [ label="Group", shape="parallelogram", style="bold", ];
+"System.Attribute" [ label="Attribute", ];
+
+"taskt.Core.Automation.Attributes.ClassAttributes.Group" -> "System.Attribute";
+}

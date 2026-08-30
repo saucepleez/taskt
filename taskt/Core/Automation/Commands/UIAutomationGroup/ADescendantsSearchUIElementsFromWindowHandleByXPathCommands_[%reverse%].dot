@@ -1,0 +1,13 @@
+digraph "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleByXPathCommand" [ label="UIAutomationSearchUIElementFromWindowHandleByXPathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands" [ label="ADescendantsSearchUIElementsFromWindowHandleByXPathCommands", style="dashed", ];
+
+"taskt.Core.Automation.Commands.UIAutomationSearchUIElementFromWindowHandleByXPathCommand" -> "taskt.Core.Automation.Commands.UIAutomationGroup.ADescendantsSearchUIElementsFromWindowHandleByXPathCommands";
+}

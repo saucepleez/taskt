@@ -1,168 +1,201 @@
-﻿using System;
-using System.Data;
-using System.Drawing;
-using System.Windows.Forms;
-using taskt.Core.Automation.Commands;
-using taskt.Core.Automation.User32;
+﻿//using System;
+//using System.Data;
+//using System.Drawing;
+//using System.Windows.Forms;
+//using taskt.Core.Automation.Commands;
+//using taskt.Core.Automation.Engine;
+//using taskt.Core.Automation.User32;
+//using taskt.Core.Script;
 
-/*
- * NOTE: not using ?
- */
-namespace taskt.UI.Forms.ScriptBuilder.Supplemental
-{
-    public partial class frmThickAppElementRecorder : UIForm
-    {
-        
-        public frmThickAppElementRecorder()
-        {
-            InitializeComponent();
-        }
+///*
+// * NOTE: not using ?
+// */
+//namespace taskt.UI.Forms.ScriptBuilder.Supplemental
+//{
+//    public partial class frmThickAppElementRecorder : UIForm
+//    {
+//        /// <summary>
+//        /// for execute script commands
+//        /// </summary>
+//        private AutomationEngineInstance engine;
 
-        public DataTable searchParameters;
-        public string LastItemClicked;
-        private void frmThickAppElementRecorder_Load(object sender, EventArgs e)
-        {
-            //create data source from windows
-            //cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
-            cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowControls.GetAllWindowTitles().ToArray());
-        }
+//        public DataTable searchParameters;
 
-        private void pbRecord_Click(object sender, EventArgs e)
-        {
-            // this.WindowState = FormWindowState.Minimized;
+//        public string LastItemClicked;
 
-            if (!chkStopOnClick.Checked)
-            {
-                lblDescription.Text = $"Recording.  Press F2 to stop recording!";
-                MoveFormToBottomRight(this);
-                this.TopMost = true;
-            }
-            else
-            {
-                this.WindowState = FormWindowState.Minimized;
-            }
+//        public frmThickAppElementRecorder()
+//        {
+//            InitializeComponent();
+//        }
+
+//        private void frmThickAppElementRecorder_Load(object sender, EventArgs e)
+//        {
+//            engine = new AutomationEngineInstance();
+
+//            // create data source from windows
+//            //cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
+//            //cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowControls.GetAllWindowTitles().ToArray());
+//            cboWindowTitle.Items.AddRange(EM_CanHandleWindowNameExtensionMethods.GetAllWindowNames().ToArray());
+//        }
+
+//        private void pbRecord_Click(object sender, EventArgs e)
+//        {
+//            // this.WindowState = FormWindowState.Minimized;
+
+//            if (!chkStopOnClick.Checked)
+//            {
+//                lblDescription.Text = $"Recording.  Press F2 to stop recording!";
+//                MoveFormToBottomRight(this);
+//                this.TopMost = true;
+//            }
+//            else
+//            {
+//                this.WindowState = FormWindowState.Minimized;
+//            }
          
-            this.Size = new Size(540, 140);
+//            this.Size = new Size(540, 140);
 
-            this.searchParameters = new DataTable();
-            this.searchParameters.Columns.Add("Enabled");
-            this.searchParameters.Columns.Add("Parameter Name");
-            this.searchParameters.Columns.Add("Parameter Value");
-            this.searchParameters.TableName = DateTime.Now.ToString("UIASearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+//            this.searchParameters = new DataTable();
+//            this.searchParameters.Columns.Add("Enabled");
+//            this.searchParameters.Columns.Add("Parameter Name");
+//            this.searchParameters.Columns.Add("Parameter Value");
+//            this.searchParameters.TableName = DateTime.Now.ToString("UIASearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
 
-            //clear all
-            searchParameters.Rows.Clear();
+//            //clear all
+//            searchParameters.Rows.Clear();
 
-            //get window name and find window
-            string windowName = cboWindowTitle.Text;
-            //IntPtr hWnd = User32Functions.FindWindow(windowName);
-            try
-            {
-                IntPtr hWnd = WindowControls.FindWindowHandle(windowName, "exact match", new Core.Automation.Engine.AutomationEngineInstance());
-                WindowControls.ActivateWindow(hWnd);
-                //User32Functions.SetWindowPosition(hWnd, 0, 0);
-                WindowControls.SetWindowPosition(hWnd, 0, 0);
+//            //get window name and find window
+//            string windowName = cboWindowTitle.Text;
+//            //IntPtr hWnd = User32Functions.FindWindow(windowName);
+//            try
+//            {
+//                //IntPtr hWnd = WindowControls.FindWindowHandle(windowName, "exact match", new Core.Automation.Engine.AutomationEngineInstance());
+//                //WindowControls.ActivateWindow(hWnd);
 
-                //start global hook and wait for left mouse down event
-                User32Functions.GlobalHook.StartEngineCancellationHook(Keys.F2);
-                User32Functions.GlobalHook.HookStopped += GlobalHook_HookStopped;
-                User32Functions.GlobalHook.StartElementCaptureHook(chkStopOnClick.Checked);
-                User32Functions.GlobalHook.MouseEvent += GlobalHook_MouseEvent;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+//                using (var whnd = new InnerScriptVariable(engine))
+//                {
+//                    // activate window
+//                    var actWin = new ActivateOneWindowCommand()
+//                    {
+//                        v_WindowName = windowName,
+//                        v_CaseSensitive = "Exact Match",
+//                        v_WindowHandleResult = whnd.VariableName,
+//                    };
+//                    actWin.RunCommand(engine);
 
-            ////check if window is found
-            //if (hWnd != IntPtr.Zero)
-            //{
-            //    //set window state and move to 0,0
-            //    User32Functions.SetWindowState(hWnd, User32Functions.WindowState.SW_SHOWNORMAL);
-            //    User32Functions.SetForegroundWindow(hWnd);
-            //    User32Functions.SetWindowPosition(hWnd, 0, 0);
+//                    //User32Functions.SetWindowPosition(hWnd, 0, 0);
+//                    //WindowControls.SetWindowPosition(hWnd, 0, 0);
 
-            //    //start global hook and wait for left mouse down event
-            //    User32Functions.GlobalHook.StartEngineCancellationHook(Keys.F2);
-            //    User32Functions.GlobalHook.HookStopped += GlobalHook_HookStopped;
-            //    User32Functions.GlobalHook.StartElementCaptureHook(chkStopOnClick.Checked);
-            //    User32Functions.GlobalHook.MouseEvent += GlobalHook_MouseEvent;
-            //}
-        }
+//                    var setPos = new MoveWindowByWindowHandleCommand()
+//                    {
+//                        v_WindowHandle = whnd.VariableValue.ToString(),
+//                        v_XPosition = "0",
+//                        v_YPosition = "0",
+//                    };
+//                    setPos.RunCommand(engine);
+//                }
 
-        private void GlobalHook_HookStopped(object sender, EventArgs e)
-        {
-            GlobalHook_MouseEvent(null, null);
-            this.Close();
-        }
+//                //start global hook and wait for left mouse down event
+//                User32Functions.GlobalHook.StartEngineCancellationHook(Keys.F2);
+//                User32Functions.GlobalHook.HookStopped += GlobalHook_HookStopped;
+//                User32Functions.GlobalHook.StartElementCaptureHook(chkStopOnClick.Checked);
+//                User32Functions.GlobalHook.MouseEvent += GlobalHook_MouseEvent;
+//            }
+//            catch (Exception ex)
+//            {
+//                MessageBox.Show(ex.Message);
+//            }
 
-        private void GlobalHook_MouseEvent(object sender, MouseCoordinateEventArgs e)
-        {
-            //mouse down has occured
+//            ////check if window is found
+//            //if (hWnd != IntPtr.Zero)
+//            //{
+//            //    //set window state and move to 0,0
+//            //    User32Functions.SetWindowState(hWnd, User32Functions.WindowState.SW_SHOWNORMAL);
+//            //    User32Functions.SetForegroundWindow(hWnd);
+//            //    User32Functions.SetWindowPosition(hWnd, 0, 0);
 
-            //invoke UIA
-            try
-            {
-                System.Windows.Automation.AutomationElement element = System.Windows.Automation.AutomationElement.FromPoint(e.MouseCoordinates);
-                System.Windows.Automation.AutomationElement.AutomationElementInformation elementProperties = element.Current;
+//            //    //start global hook and wait for left mouse down event
+//            //    User32Functions.GlobalHook.StartEngineCancellationHook(Keys.F2);
+//            //    User32Functions.GlobalHook.HookStopped += GlobalHook_HookStopped;
+//            //    User32Functions.GlobalHook.StartElementCaptureHook(chkStopOnClick.Checked);
+//            //    User32Functions.GlobalHook.MouseEvent += GlobalHook_MouseEvent;
+//            //}
+//        }
 
-                LastItemClicked = $"[Name:{element.Current.Name}].[ID:{element.Current.AutomationId.ToString()}].[Class:{element.Current.ClassName}]";
-                lblSubHeader.Text = LastItemClicked;
+//        private void GlobalHook_HookStopped(object sender, EventArgs e)
+//        {
+//            GlobalHook_MouseEvent(null, null);
+//            this.Close();
+//        }
 
-                searchParameters.Rows.Clear();
+//        private void GlobalHook_MouseEvent(object sender, MouseCoordinateEventArgs e)
+//        {
+//            //mouse down has occured
 
-                //get properties from class via reflection
-                System.Reflection.PropertyInfo[] properties = typeof(System.Windows.Automation.AutomationElement.AutomationElementInformation).GetProperties();
-                Array.Sort(properties, (x, y) => String.Compare(x.Name, y.Name));
+//            //invoke UIA
+//            try
+//            {
+//                System.Windows.Automation.AutomationElement element = System.Windows.Automation.AutomationElement.FromPoint(e.MouseCoordinates);
+//                System.Windows.Automation.AutomationElement.AutomationElementInformation elementProperties = element.Current;
 
-                //loop through each property and get value from the element
-                foreach (System.Reflection.PropertyInfo property in properties)
-                {
-                    try
-                    {         
-                        var propName = property.Name;
-                        var propValue = property.GetValue(elementProperties, null);
+//                LastItemClicked = $"[Name:{element.Current.Name}].[ID:{element.Current.AutomationId.ToString()}].[Class:{element.Current.ClassName}]";
+//                lblSubHeader.Text = LastItemClicked;
 
-                        //if property is a basic type then display
-                        if ((propValue is string) || (propValue is bool) || (propValue is int) || (propValue is double))
-                        {
-                            searchParameters.Rows.Add(false, propName, propValue);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error Iterating over properties in window: " + ex.ToString());
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                lblDescription.Text = "Error cloning element. Please Try Again.";
-                //MessageBox.Show("Error in recording, please try again! " + ex.ToString());
-            }
+//                searchParameters.Rows.Clear();
 
-            if (chkStopOnClick.Checked)
-            {
-                this.Close();     
-            }
-        }
+//                //get properties from class via reflection
+//                System.Reflection.PropertyInfo[] properties = typeof(System.Windows.Automation.AutomationElement.AutomationElementInformation).GetProperties();
+//                Array.Sort(properties, (x, y) => String.Compare(x.Name, y.Name));
 
-        private void pbRefresh_Click(object sender, EventArgs e)
-        {
-            //handle window refresh requests
-            //cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
-            cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowControls.GetAllWindowTitles().ToArray());
-        }
+//                //loop through each property and get value from the element
+//                foreach (System.Reflection.PropertyInfo property in properties)
+//                {
+//                    try
+//                    {         
+//                        var propName = property.Name;
+//                        var propValue = property.GetValue(elementProperties, null);
 
-        //private void uiBtnOk_Click(object sender, EventArgs e)
-        //{       
-        //    this.DialogResult = DialogResult.OK;
-        //}
+//                        //if property is a basic type then display
+//                        if ((propValue is string) || (propValue is bool) || (propValue is int) || (propValue is double))
+//                        {
+//                            searchParameters.Rows.Add(false, propName, propValue);
+//                        }
+//                    }
+//                    catch (Exception ex)
+//                    {
+//                        MessageBox.Show("Error Iterating over properties in window: " + ex.ToString());
+//                    }
+//                }
+//            }
+//            catch (Exception)
+//            {
+//                lblDescription.Text = "Error cloning element. Please Try Again.";
+//                //MessageBox.Show("Error in recording, please try again! " + ex.ToString());
+//            }
 
-        //private void uiBtnCancel_Click(object sender, EventArgs e)
-        //{
-        //    this.DialogResult = DialogResult.Cancel;
-        //}
-    }
+//            if (chkStopOnClick.Checked)
+//            {
+//                this.Close();     
+//            }
+//        }
 
-}
+//        private void pbRefresh_Click(object sender, EventArgs e)
+//        {
+//            //handle window refresh requests
+//            //cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
+//            //cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowControls.GetAllWindowTitles().ToArray());
+//            cboWindowTitle.Items.AddRange(EM_CanHandleWindowNameExtensionMethods.GetAllWindowNames().ToArray());
+//        }
+
+//        //private void uiBtnOk_Click(object sender, EventArgs e)
+//        //{       
+//        //    this.DialogResult = DialogResult.OK;
+//        //}
+
+//        //private void uiBtnCancel_Click(object sender, EventArgs e)
+//        //{
+//        //    this.DialogResult = DialogResult.Cancel;
+//        //}
+//    }
+
+//}

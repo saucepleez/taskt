@@ -40,8 +40,9 @@
             this.webBrowserHTML.DefaultBackgroundColor = System.Drawing.Color.White;
             this.webBrowserHTML.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webBrowserHTML.Location = new System.Drawing.Point(0, 0);
+            this.webBrowserHTML.Margin = new System.Windows.Forms.Padding(4);
             this.webBrowserHTML.Name = "webBrowserHTML";
-            this.webBrowserHTML.Size = new System.Drawing.Size(784, 561);
+            this.webBrowserHTML.Size = new System.Drawing.Size(1045, 701);
             this.webBrowserHTML.TabIndex = 0;
             this.webBrowserHTML.ZoomFactor = 1D;
             this.webBrowserHTML.NavigationStarting += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs>(this.webBrowserHTML_NavigationStarting);
@@ -49,12 +50,14 @@
             // 
             // frmHTMLDisplayForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(1045, 701);
             this.Controls.Add(this.webBrowserHTML);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmHTMLDisplayForm";
             this.Text = "taskt - input window";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmHTMLDisplayForm_FormClosing);

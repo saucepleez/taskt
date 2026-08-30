@@ -259,8 +259,10 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+# ignore for sharp rpa?
 /sharpRPA/sharpRPA2.licenseheader
 
-#Custom Files
-taskt/latest.json
-taskt/Properties/AssemblyInfo.cs
+# ignore png files (puml, dot)
+taskt/**/*.png
+!taskt/Recources/*.png

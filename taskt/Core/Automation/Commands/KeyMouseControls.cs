@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
         /// wait after key enter
         /// </summary>
         [PropertyVirtualProperty(nameof(WaitControls), nameof(WaitControls.v_WaitTime))]
+        [PropertyDescription("Wait Time for After Key Enter")]
         [Remarks("When the Wait Time is less than **100** is specified, it will be **100**")]
         [PropertyIsOptional(true, "500")]
         [PropertyFirstValue("500")]

@@ -1,0 +1,40 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "SendAdvancedKeyStrokesFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++AfterShown() : void 
++IsValidate() : Boolean
++BeforeValidate() : void 
++v_KeyActions : DataTable <<get>> <<set>> 
++v_KeyUpDefault : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.KeyMouseGroup"{
+Interface "ISendAdvancedKeyStrokesProperties" {
++{abstract} v_KeyActions : DataTable <<get>> <<set>> <<abstract>> 
++{abstract} v_KeyUpDefault : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SendAdvancedKeyStrokesCommand" <<sealed>> {
++RunCommand() : void 
++AfterShown() : void 
++IsValidate() : Boolean
++BeforeValidate() : void 
++v_KeyActions : DataTable <<get>> <<set>> 
++v_KeyUpDefault : String <<get>> <<set>> 
++v_WaitTimeAfterKeyEnter : String <<get>> <<set>> 
++v_ActivateCurrentWindow : String <<get>> <<set>> 
++v_ActivateBeforeAction : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties
+taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand ..|> taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties
+@enduml

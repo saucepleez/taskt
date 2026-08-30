@@ -1,0 +1,42 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForUIElement : String <<get>> <<set>> 
++v_MaxSiblings : String <<get>> <<set>> 
++v_MaxDepth : String <<get>> <<set>> 
++v_WindowHandleResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IGetUIElementsXMLTreeFromSomethingProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForUIElement : String <<get>> <<set>> 
++v_MaxSiblings : String <<get>> <<set>> 
++v_MaxDepth : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationSearchUIElementsTreeXMLFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForUIElement : String <<get>> <<set>> 
++v_MaxSiblings : String <<get>> <<set>> 
++v_MaxDepth : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowHandleCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromWindowNameCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties
+taskt.Core.Automation.Commands.UIAutomationSearchUIElementsTreeXMLFromUIElementCommand ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IGetUIElementsXMLTreeFromSomethingProperties
+@enduml

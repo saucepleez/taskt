@@ -1,0 +1,13 @@
+digraph "taskt.Core.Script.ScriptVariable" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Script.InnerScriptVariable" [ label="InnerScriptVariable", ];
+"taskt.Core.Script.ScriptVariable" [ label="ScriptVariable", ];
+
+"taskt.Core.Script.InnerScriptVariable" -> "taskt.Core.Script.ScriptVariable";
+}

@@ -475,7 +475,7 @@ namespace taskt.Core
             switch (variableName)
             {
                 case "taskt.EngineContext":
-                    result = engine.GetEngineContext();
+                    result = engine.GetEngineContextAsJSON();
                     return true;
 
                 //    case "File.CurrentScriptFile":
@@ -808,7 +808,7 @@ namespace taskt.Core
                 switch (potentialVariable)
                 {
                     case "taskt.EngineContext":
-                        varCheck.VariableValue = engine.GetEngineContext();
+                        varCheck.VariableValue = engine.GetEngineContextAsJSON();
                         break;
 
                     //case "File.CurrentScriptFile":

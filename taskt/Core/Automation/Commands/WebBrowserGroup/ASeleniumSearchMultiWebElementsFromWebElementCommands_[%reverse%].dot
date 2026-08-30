@@ -1,0 +1,19 @@
+digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands" [ label="ASeleniumSearchWebElementFromWebElementCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands" [ label="ASeleniumSearchMultiWebElementsFromWebElementCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand" [ label="SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsCountFromWebElementCommand" [ label="SeleniumBrowserGetWebElementsCountFromWebElementCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsFromWebElementCommand" [ label="SeleniumBrowserCheckWebElementExistsFromWebElementCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetMatchedWebElementsHTMLAsListFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWebElementsCountFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchMultiWebElementsFromWebElementCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserCheckWebElementExistsFromWebElementCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumSearchWebElementFromWebElementCommands";
+}

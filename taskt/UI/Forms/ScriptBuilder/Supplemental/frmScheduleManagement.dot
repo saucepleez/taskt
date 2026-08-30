@@ -1,0 +1,16 @@
+digraph "taskt.UI.Forms.ScriptBuilder.Supplemental.frmScheduleManagement" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmScheduleManagement" [ label="frmScheduleManagement", ];
+"taskt.UI.Forms.UIForm" [ label="UIForm", ];
+"System.Windows.Forms.Form" [ label="Form", ];
+
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmScheduleManagement" -> "taskt.UI.Forms.UIForm";
+"taskt.UI.Forms.ScriptBuilder.Supplemental.frmScheduleManagement" -> "taskt.UI.Forms.UIForm";
+"taskt.UI.Forms.UIForm" -> "System.Windows.Forms.Form";
+}

@@ -196,7 +196,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void guiInspectToolToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fm = new CommandEditor.Supplemental.frmGUIInspect();
+            var fm = new CommandEditor.Supplemental.frmGUIInspectTool();
             fm.Show();
         }
 

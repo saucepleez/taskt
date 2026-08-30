@@ -1,0 +1,36 @@
+digraph "taskt.Core.Automation.Commands.SetDataTableColumnValuesByDataTableCommand" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.SetDataTableColumnValuesByDataTableCommand" [ label="SetDataTableColumnValuesByDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ADataTableBothColumnCommands" [ label="ADataTableBothColumnCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ADataTableColumnCommands" [ label="ADataTableColumnCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ADataTableInputDataTableCommands" [ label="ADataTableInputDataTableCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IDataTableColumnProperties" [ label="IDataTableColumnProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.IDataTableProperties" [ label="IDataTableProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IDataTableColumnPositionProperties" [ label="IDataTableColumnPositionProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleDataTable" [ label="ICanHandleDataTable", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.SetDataTableColumnValuesByDataTableCommand" -> "taskt.Core.Automation.Commands.ADataTableBothColumnCommands";
+"taskt.Core.Automation.Commands.ADataTableBothColumnCommands" -> "taskt.Core.Automation.Commands.ADataTableColumnCommands";
+"taskt.Core.Automation.Commands.ADataTableColumnCommands" -> "taskt.Core.Automation.Commands.ADataTableInputDataTableCommands";
+"taskt.Core.Automation.Commands.ADataTableColumnCommands" -> "taskt.Core.Automation.Commands.IDataTableColumnProperties";
+"taskt.Core.Automation.Commands.ADataTableInputDataTableCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.ADataTableInputDataTableCommands" -> "taskt.Core.Automation.Commands.IDataTableProperties";
+"taskt.Core.Automation.Commands.IDataTableColumnProperties" -> "taskt.Core.Automation.Commands.IDataTableProperties";
+"taskt.Core.Automation.Commands.IDataTableColumnProperties" -> "taskt.Core.Automation.Commands.IDataTableColumnPositionProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.IDataTableProperties" -> "taskt.Core.Automation.Commands.ICanHandleDataTable";
+"taskt.Core.Automation.Commands.IDataTableProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.IDataTableColumnPositionProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ICanHandleDataTable" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

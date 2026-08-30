@@ -1,0 +1,31 @@
+digraph "taskt.Core.Automation.Commands.CheckValidListIndex" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.CheckValidListIndex" [ label="CheckValidListIndex", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AListIndexCommands" [ label="AListIndexCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AListInputListCommands" [ label="AListInputListCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IListIndexProperties" [ label="IListIndexProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.IListProperties" [ label="IListProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleList" [ label="ICanHandleList", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.CheckValidListIndex" -> "taskt.Core.Automation.Commands.AListIndexCommands";
+"taskt.Core.Automation.Commands.AListIndexCommands" -> "taskt.Core.Automation.Commands.AListInputListCommands";
+"taskt.Core.Automation.Commands.AListIndexCommands" -> "taskt.Core.Automation.Commands.IListIndexProperties";
+"taskt.Core.Automation.Commands.AListInputListCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.AListInputListCommands" -> "taskt.Core.Automation.Commands.IListProperties";
+"taskt.Core.Automation.Commands.IListIndexProperties" -> "taskt.Core.Automation.Commands.IListProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.IListProperties" -> "taskt.Core.Automation.Commands.ICanHandleList";
+"taskt.Core.Automation.Commands.IListProperties" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.ICanHandleList" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

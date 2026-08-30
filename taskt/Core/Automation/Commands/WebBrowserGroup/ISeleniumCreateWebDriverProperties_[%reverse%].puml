@@ -1,0 +1,48 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumCreateWebDriverCommands"{
+#CreateWebDriverService() : DriverService
+#CreateWebDriverService() : DriverService
++v_InstanceName : String <<get>> <<set>> 
++v_BrowserType : String <<get>> <<set>> 
++v_WebDriverPath : String <<get>> <<set>> 
++v_HideTerminalWindow : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+Interface "ISeleniumCreateWebDriverProperties" {
++{abstract} v_BrowserType : String <<get>> <<set>> <<abstract>> 
++{abstract} v_WebDriverPath : String <<get>> <<set>> <<abstract>> 
++{abstract} v_HideTerminalWindow : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserAttachCreateWebBrowserInstanceCommand" <<sealed>> {
++RunCommand() : void 
++v_DebuggerAddress : String <<get>> <<set>> 
++v_DebuggerPort : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserCreateWebBrowserInstanceCommand" <<sealed>> {
++RunCommand() : void 
++AfterShown() : void 
++v_BrowserType : String <<get>> <<set>> 
++v_BrowserWindowOption : String <<get>> <<set>> 
++v_ProfileFolder : String <<get>> <<set>> 
++v_HeadlessMode : String <<get>> <<set>> 
++v_SeleniumOptions : String <<get>> <<set>> 
++v_WindowHandleResult : String <<get>> <<set>> 
++v_BrowserPath : String <<get>> <<set>> 
++v_TemporaryProfileFolder : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumCreateWebDriverProperties
+taskt.Core.Automation.Commands.SeleniumBrowserAttachCreateWebBrowserInstanceCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands
+taskt.Core.Automation.Commands.SeleniumBrowserCreateWebBrowserInstanceCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumCreateWebDriverCommands
+@enduml

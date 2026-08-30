@@ -1,0 +1,42 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "IFolderExistsFolderPathBeforeAfterPathResultProperties" {
++{abstract} v_BeforeFolderPathResult : String <<get>> <<set>> <<abstract>> 
++{abstract} v_AfterFolderPathResult : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IFolderExistsFolderPathProperties" {
++{abstract} v_WaitTimeForFolder : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IFolderPathProperties" {
++{abstract} v_TargetFolderPath : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleFolderPath" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "ICanHandleFileOrFolderPath" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.IFolderExistsFolderPathBeforeAfterPathResultProperties --|> taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties
+taskt.Core.Automation.Commands.IFolderExistsFolderPathProperties --|> taskt.Core.Automation.Commands.IFolderPathProperties
+taskt.Core.Automation.Commands.IFolderPathProperties --|> taskt.Core.Automation.Commands.ICanHandleFolderPath
+taskt.Core.Automation.Commands.ICanHandleFolderPath --|> taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath
+taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

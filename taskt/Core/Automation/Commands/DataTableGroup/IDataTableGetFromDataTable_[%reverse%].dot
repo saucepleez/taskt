@@ -1,0 +1,33 @@
+digraph "taskt.Core.Automation.Commands.IDataTableGetFromDataTable" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands" [ label="ADataTableGetFromDataTableCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IDataTableGetFromDataTable" [ label="IDataTableGetFromDataTable", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ConvertDataTableToVisualizedTextCommand" [ label="ConvertDataTableToVisualizedTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableToTextCommand" [ label="ConvertDataTableToTextCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsDataTableCommand" [ label="BeginLoopForDataTableColumnAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsListCommand" [ label="BeginLoopForDataTableColumnAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDataTableCommand" [ label="BeginLoopForDataTableRowAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDictionaryCommand" [ label="BeginLoopForDataTableRowAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ConvertDataTableToJSONCommand" [ label="ConvertDataTableToJSONCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetDataTableColumnCountCommand" [ label="GetDataTableColumnCountCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetDataTableColumnListCommand" [ label="GetDataTableColumnListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetDataTableRowCountCommand" [ label="GetDataTableRowCountCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands" -> "taskt.Core.Automation.Commands.IDataTableGetFromDataTable";
+"taskt.Core.Automation.Commands.ConvertDataTableToVisualizedTextCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands";
+"taskt.Core.Automation.Commands.ConvertDataTableToTextCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands";
+"taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsDataTableCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands";
+"taskt.Core.Automation.Commands.BeginLoopForDataTableColumnAsListCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands";
+"taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDataTableCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands";
+"taskt.Core.Automation.Commands.BeginLoopForDataTableRowAsDictionaryCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands";
+"taskt.Core.Automation.Commands.ConvertDataTableToJSONCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands";
+"taskt.Core.Automation.Commands.GetDataTableColumnCountCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands";
+"taskt.Core.Automation.Commands.GetDataTableColumnListCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands";
+"taskt.Core.Automation.Commands.GetDataTableRowCountCommand" -> "taskt.Core.Automation.Commands.ADataTableGetFromDataTableCommands";
+}

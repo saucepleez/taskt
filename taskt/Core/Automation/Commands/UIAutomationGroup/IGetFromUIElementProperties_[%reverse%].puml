@@ -1,0 +1,152 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+abstract class "AGetFromUIElementCommands"{
++v_WhenValueCanNotRetrieved : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IGetFromUIElementProperties" {
++{abstract} v_WhenValueCanNotRetrieved : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetTextsFromTableUIElementAsDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetWindowUIElementFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetTableInformationFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_InformationType : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_ContainsHeader : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetScrollBarInformationFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_InformationType : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetWindowHandleFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowHandleResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetWindowNameFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_WindowNameResult : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetPropertyValueFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_PropertyName : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_WhenValueCanNotRetrieved : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetUIElementPositionCommand" <<sealed>> {
++RunCommand() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_PositionBase : String <<get>> <<set>> 
++v_CoordinateReference : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetUIElementSizeCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetSelectedStateFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetUIElementFromTableUIElementCommand" <<sealed>> {
++RunCommand() : void 
+-{static} GetInRangeUIElement() : AutomationElement
++v_Row : String <<get>> <<set>> 
++v_Column : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetSelectionItemsValueFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ExpandWhenItemsNotFound : String <<get>> <<set>> 
++v_WaitTimeAfterExpand : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetTextFromTableUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Row : String <<get>> <<set>> 
++v_Column : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetTextFromUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "UIAutomationGetParentUIElementCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands ..|> taskt.Core.Automation.Commands.UIAutomationGroup.IGetFromUIElementProperties
+taskt.Core.Automation.Commands.UIAutomationGetTextsFromTableUIElementAsDataTableCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetWindowUIElementFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetTableInformationFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetScrollBarInformationFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetWindowHandleFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetWindowNameFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetPropertyValueFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetUIElementPositionCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetUIElementSizeCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetSelectedStateFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetUIElementFromTableUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetSelectionItemsValueFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetTextFromTableUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetTextFromUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+taskt.Core.Automation.Commands.UIAutomationGetParentUIElementCommand --|> taskt.Core.Automation.Commands.UIAutomationGroup.AGetFromUIElementCommands
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands.UIAutomationGroup"{
+Interface "IUIElementUIElementActionSomewayProperties" {
++{abstract} v_AutomationType : String <<get>> <<set>> <<abstract>> 
++{abstract} v_UIAActionParameters : DataTable <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IHaveDataTableElements" {
++{abstract} BeforeValidate() : void <<abstract>> 
+}
+}
+
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+taskt.Core.Automation.Commands.UIAutomationGroup.IUIElementUIElementActionSomewayProperties --|> taskt.Core.Automation.Commands.IHaveDataTableElements
+@enduml

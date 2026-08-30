@@ -1,0 +1,21 @@
+digraph "taskt.Core.Automation.Commands.AExcelRCLocationCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.ExcelGoToCellRCCommand" [ label="ExcelGoToCellRCCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AExcelRCLocationCommands" [ label="AExcelRCLocationCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AExcelRCLocationActionCommands" [ label="AExcelRCLocationActionCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ExcelCheckCellValueExistsRCCommand" [ label="ExcelCheckCellValueExistsRCCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelGetCellRCCommand" [ label="ExcelGetCellRCCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelSetCellRCCommand" [ label="ExcelSetCellRCCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.ExcelGoToCellRCCommand" -> "taskt.Core.Automation.Commands.AExcelRCLocationCommands";
+"taskt.Core.Automation.Commands.AExcelRCLocationActionCommands" -> "taskt.Core.Automation.Commands.AExcelRCLocationCommands";
+"taskt.Core.Automation.Commands.ExcelCheckCellValueExistsRCCommand" -> "taskt.Core.Automation.Commands.AExcelRCLocationActionCommands";
+"taskt.Core.Automation.Commands.ExcelGetCellRCCommand" -> "taskt.Core.Automation.Commands.AExcelRCLocationActionCommands";
+"taskt.Core.Automation.Commands.ExcelSetCellRCCommand" -> "taskt.Core.Automation.Commands.AExcelRCLocationActionCommands";
+}

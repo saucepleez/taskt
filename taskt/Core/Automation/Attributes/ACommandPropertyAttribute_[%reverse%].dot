@@ -1,0 +1,97 @@
+digraph "taskt.Core.Automation.Attributes.PropertyAttributes.ACommandPropertyAttribute" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute" [ label="ASingleComamndPropertyAttribute", style="dashed", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.ACommandPropertyAttribute" [ label="ACommandPropertyAttribute", style="dashed", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute" [ label="AMultiCommandPropertyAttribute", style="dashed", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyParameterOrder" [ label="PropertyParameterOrder", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyVirtualProperty" [ label="PropertyVirtualProperty", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIntermediateConvert" [ label="PropertyIntermediateConvert", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.InputSpecification" [ label="InputSpecification", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.SampleUsage" [ label="SampleUsage", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDetailSampleUsageBehavior" [ label="PropertyDetailSampleUsageBehavior", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.Remarks" [ label="Remarks", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDescription" [ label="PropertyDescription", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription" [ label="PropertyShowSampleUsageInDescription", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel" [ label="PropertySecondaryLabel", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfoBehavior" [ label="PropertyAddtionalParameterInfoBehavior", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelperBehavior" [ label="PropertyUIHelperBehavior", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyCustomUIHelperBehavior" [ label="PropertyCustomUIHelperBehavior", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyAvailableSystemVariableBehavior" [ label="PropertyAvailableSystemVariableBehavior", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl" [ label="PropertyRecommendedUIControl", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType" [ label="PropertyInstanceType", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection" [ label="PropertyParameterDirection", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyControlIntoCommandField" [ label="PropertyControlIntoCommandField", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyValidationRule" [ label="PropertyValidationRule", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyValueRange" [ label="PropertyValueRange", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDisplayText" [ label="PropertyDisplayText", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional" [ label="PropertyIsOptional", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyFirstValue" [ label="PropertyFirstValue", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyTextBoxSetting" [ label="PropertyTextBoxSetting", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyFilePathSetting" [ label="PropertyFilePathSetting", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOptionBehavior" [ label="PropertyUISelectionOptionBehavior", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertySelectionValueSensitive" [ label="PropertySelectionValueSensitive", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertySelectionChangeEvent" [ label="PropertySelectionChangeEvent", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList" [ label="PropertyIsWindowNamesList", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList" [ label="PropertyIsVariablesList", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyComboBoxItemMethod" [ label="PropertyComboBoxItemMethod", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewSetting" [ label="PropertyDataGridViewSetting", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewInitMethod" [ label="PropertyDataGridViewInitMethod", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDetailSampleUsage" [ label="PropertyDetailSampleUsage", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo" [ label="PropertyAddtionalParameterInfo", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper" [ label="PropertyUIHelper", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyCustomUIHelper" [ label="PropertyCustomUIHelper", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyAvailableSystemVariable" [ label="PropertyAvailableSystemVariable", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption" [ label="PropertyUISelectionOption", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings" [ label="PropertyDataGridViewColumnSettings", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent" [ label="PropertyDataGridViewCellEditEvent", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ACommandPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ACommandPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyParameterOrder" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyVirtualProperty" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIntermediateConvert" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.InputSpecification" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.SampleUsage" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDetailSampleUsageBehavior" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.Remarks" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDescription" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfoBehavior" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelperBehavior" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyCustomUIHelperBehavior" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyAvailableSystemVariableBehavior" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyControlIntoCommandField" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyValidationRule" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyValueRange" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDisplayText" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyFirstValue" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyTextBoxSetting" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyFilePathSetting" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOptionBehavior" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertySelectionValueSensitive" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertySelectionChangeEvent" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyComboBoxItemMethod" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewSetting" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewInitMethod" -> "taskt.Core.Automation.Attributes.PropertyAttributes.ASingleComamndPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDetailSampleUsage" -> "taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo" -> "taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper" -> "taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyCustomUIHelper" -> "taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyAvailableSystemVariable" -> "taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption" -> "taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings" -> "taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute";
+"taskt.Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent" -> "taskt.Core.Automation.Attributes.PropertyAttributes.AMultiCommandPropertyAttribute";
+}

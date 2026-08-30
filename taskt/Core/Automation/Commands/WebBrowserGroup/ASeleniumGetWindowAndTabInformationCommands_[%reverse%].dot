@@ -1,0 +1,33 @@
+digraph "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabInformationsAsJSONCommand" [ label="SeleniumBrowserGetWindowAndTabInformationsAsJSONCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands" [ label="ASeleniumGetWindowAndTabInformationCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsJSONCommand" [ label="SeleniumBrowserGetWindowAndTabURLsAsJSONCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsJSONCommand" [ label="SeleniumBrowserGetWindowAndTabTitlesAsJSONCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand" [ label="SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabHandlesAsListCommand" [ label="SeleniumBrowserGetWindowAndTabHandlesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand" [ label="SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsDictionaryCommand" [ label="SeleniumBrowserGetWindowAndTabTitlesAsDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand" [ label="SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsListCommand" [ label="SeleniumBrowserGetWindowAndTabURLsAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsListCommand" [ label="SeleniumBrowserGetWindowAndTabTitlesAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabCountCommand" [ label="SeleniumBrowserGetWindowAndTabCountCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabInformationsAsJSONCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsJSONCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsJSONCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabHandlesAsListCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsDictionaryCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsDictionaryCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabInformationsAsDataTableCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabURLsAsListCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabTitlesAsListCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands";
+"taskt.Core.Automation.Commands.SeleniumBrowserGetWindowAndTabCountCommand" -> "taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumGetWindowAndTabInformationCommands";
+}

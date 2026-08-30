@@ -42,6 +42,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Ignore**", "Nothing To Do")]
         public static string v_ComboBoxHasErrorIgnore { get; }
 
+        /// <summary>
+        /// combobox has Error, Ignore, Set Empty
+        /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
+        [PropertyUISelectionOption("Set Emtpy")]
+        [PropertyDetailSampleUsage("**Set Empty**", "Set Empty Value")]
+        public static string v_ComboBoxHasErrorIgnoreSetEmpty { get; }
+
         #endregion
 
         /// <summary>

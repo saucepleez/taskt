@@ -1,0 +1,49 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "BeginMultiIfCommand" <<sealed>> {
++RunCommand() : void 
++Render() : List
+-IfConditionHelper_CellContentClick() : void 
+-CreateIfCondition() : void 
++GetDisplayValue() : String
++v_IfConditionsTable : DataTable <<get>> <<set>> 
+-ScriptVariables : List <<get>> <<private set>>
+-IfConditionHelper : System.Windows.Forms.DataGridView
+-appSetting : taskt.Core.SafeApplicationSettings
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IHaveIfAdditionalCommands" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "BeginIfCommand" <<sealed>> {
+-IfGridViewHelper_MouseEnter() : void 
++RunCommand() : void 
++Render() : List
+-linkWebBrowserInstanceSelector_Click() : void 
+-linkWindowNameSelector_Click() : void 
+-linkBooleanInstanceSelector_Click() : void 
+-ifAction_SelectionChangeCommitted() : void 
++GetDisplayValue() : String
++IsValidate() : Boolean
++ConvertToIntermediate() : void 
++ConvertToRaw() : void 
++BeforeValidate() : void 
++v_IfActionType : String <<get>> <<set>> 
++v_IfActionParameterTable : DataTable <<get>> <<set>> 
+-IfGridViewHelper : System.Windows.Forms.DataGridView
+-ActionDropdown : System.Windows.Forms.ComboBox
+-ParameterControls : List<System.Windows.Forms.Control>
+-lnkBrowserInstanceSelector : taskt.UI.CustomControls.CommandItemControl
+-lnkWindowNameSelector : taskt.UI.CustomControls.CommandItemControl
+-lnkBooleanSelector : taskt.UI.CustomControls.CommandItemControl
+}
+}
+
+taskt.Core.Automation.Commands.BeginMultiIfCommand ..|> taskt.Core.Automation.Commands.IHaveIfAdditionalCommands
+taskt.Core.Automation.Commands.BeginIfCommand ..|> taskt.Core.Automation.Commands.IHaveIfAdditionalCommands
+@enduml

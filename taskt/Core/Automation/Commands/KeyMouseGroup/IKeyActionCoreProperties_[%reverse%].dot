@@ -1,0 +1,29 @@
+digraph "taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties" [ label="IEnterKeysProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties" [ label="IKeyActionCoreProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties" [ label="IEnterShortcutKeyProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties" [ label="ISendAdvancedKeyStrokesProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand" [ label="EnterKeysFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.EnterKeysCommand" [ label="EnterKeysCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand" [ label="EnterShortcutKeyFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.EnterShortcutKeyCommand" [ label="EnterShortcutKeyCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand" [ label="SendAdvancedKeyStrokesFromWindowHandleCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand" [ label="SendAdvancedKeyStrokesCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties" -> "taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties";
+"taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties" -> "taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties";
+"taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties" -> "taskt.Core.Automation.Commands.KeyMouseGroup.IKeyActionCoreProperties";
+"taskt.Core.Automation.Commands.EnterKeysFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties";
+"taskt.Core.Automation.Commands.EnterKeysCommand" -> "taskt.Core.Automation.Commands.KeyMouseGroup.IEnterKeysProperties";
+"taskt.Core.Automation.Commands.EnterShortcutKeyFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties";
+"taskt.Core.Automation.Commands.EnterShortcutKeyCommand" -> "taskt.Core.Automation.Commands.KeyMouseGroup.IEnterShortcutKeyProperties";
+"taskt.Core.Automation.Commands.SendAdvancedKeyStrokesFromWindowHandleCommand" -> "taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties";
+"taskt.Core.Automation.Commands.SendAdvancedKeyStrokesCommand" -> "taskt.Core.Automation.Commands.KeyMouseGroup.ISendAdvancedKeyStrokesProperties";
+}

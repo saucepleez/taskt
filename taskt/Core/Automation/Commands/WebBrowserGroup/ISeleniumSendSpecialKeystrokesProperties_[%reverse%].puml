@@ -1,0 +1,56 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumWebElementActionAfterSearchWebElementCommands"{
+#SearchAndActionProcess() : void 
++AfterShown() : void 
+#cmbSeleniumAction_SelectionChangeCommitted() : void 
+-{static} AddDataTableRows() : void 
+-{static} AddDataTableRows() : void 
+-{static} ActionParameterProcess() : void 
+-{static} CreateComboBox() : DataGridViewComboBoxCell
++BeforeValidate() : void 
++v_WebElementAction : String <<get>> <<set>> 
++v_WebActionParameterTable : DataTable <<get>> <<set>> 
++v_WhenFailAction : String <<get>> <<set>> 
++v_ScrollToWebElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+Interface "ISeleniumSendSpecialKeystrokesProperties" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserSendSpecialKeystrokesToWebElementCommand" <<sealed>> {
++RunCommand() : void 
+-CreateSendKeyList() : List
++v_SendKey : String <<get>> <<set>> 
++v_ControlKey : String <<get>> <<set>> 
++v_ShiftKey : String <<get>> <<set>> 
++v_AltKey : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand" <<sealed>> {
++RunCommand() : void 
++GetDisplayValue() : String
++v_WebElement : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserWebElementActionAfterSearchWebElementCommand" <<sealed>> {
++RunCommand() : void 
++GetDisplayValue() : String
++v_InstanceName : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties
+taskt.Core.Automation.Commands.SeleniumBrowserSendSpecialKeystrokesToWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumSendSpecialKeystrokesProperties
+taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementFromWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands
+taskt.Core.Automation.Commands.SeleniumBrowserWebElementActionAfterSearchWebElementCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumWebElementActionAfterSearchWebElementCommands
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+left to right direction
+package "taskt.Core"{
+class "ApplicationSettings" <<sealed>> {
++Save() : void 
+-{static} SaveProcess() : void 
+-{static} SaveAs() : void 
++{static} GetOrCreateApplicationSettings() : ApplicationSettings
+-{static} GetOrCreateApplicationSettingsProcess() : ApplicationSettings
++{static} Open() : ApplicationSettings
++GetClientSettings() : ClientSettings
++GetEngineSettings() : EngineSettings
++GetServerSettings() : ServerSettings
++GetLocalListenerSettings() : LocalListenerSettings
++Clone() : ApplicationSettings
++ServerSettings : IServerSettings <<get>> <<set>> 
++EngineSettings : IEngineSettings <<get>> <<set>> 
++ClientSettings : IClientSettings <<get>> <<set>> 
++ListenerSettings : ILocalListenerSettings <<get>> <<set>> 
+}
+}
+
+package "taskt.Core"{
+Interface "IApplicationSettings" {
++{abstract} EngineSettings : IEngineSettings <<get>> <<abstract>> 
++{abstract} ClientSettings : IClientSettings <<get>> <<abstract>> 
++{abstract} ServerSettings : IServerSettings <<get>> <<abstract>> 
++{abstract} ListenerSettings : ILocalListenerSettings <<get>> <<abstract>> 
+}
+}
+
+taskt.Core.ApplicationSettings ..|> taskt.Core.IApplicationSettings
+@enduml

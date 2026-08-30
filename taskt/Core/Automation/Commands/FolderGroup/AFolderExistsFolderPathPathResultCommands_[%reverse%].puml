@@ -1,0 +1,63 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "OpenFolderCommand" <<sealed>> {
++RunCommand() : void 
++v_WaitTimeForOpen : String <<get>> <<set>> 
++v_WindowNameResult : String <<get>> <<set>> 
++v_WindowHandleResult : String <<get>> <<set>> 
++v_WaitTimeForFolder : String <<get>> <<set>> 
+-ExplorerProcessName : string
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "AFolderExistsFolderPathPathResultCommands"{
++v_ResultPath : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetRandomFolderPathCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_CheckFolderDoesNotExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "WaitForFolderToExistCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CheckFolderExistsCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_WaitTimeForFolder : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "CreateFolderCommand" <<sealed>> {
++RunCommand() : void 
++v_NewFolderName : String <<get>> <<set>> 
++v_WhenFolderExists : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "DeleteFolderCommand" <<sealed>> {
++RunCommand() : void 
++v_MoveToRecycleBin : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.OpenFolderCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
+taskt.Core.Automation.Commands.GetRandomFolderPathCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
+taskt.Core.Automation.Commands.WaitForFolderToExistCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
+taskt.Core.Automation.Commands.CheckFolderExistsCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
+taskt.Core.Automation.Commands.CreateFolderCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
+taskt.Core.Automation.Commands.DeleteFolderCommand --|> taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands
+@enduml

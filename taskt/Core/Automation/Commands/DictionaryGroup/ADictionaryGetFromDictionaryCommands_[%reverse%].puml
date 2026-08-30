@@ -1,0 +1,79 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToVisualizedTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+abstract class "ADictionaryGetFromDictionaryCommands"{
++{abstract} v_Result : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
++v_ExportHeader : String <<get>> <<set>> 
++v_ExportIndex : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "JoinDictionaryValuesAsTextCommand" <<sealed>> {
++RunCommand() : void 
++v_Separator : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
++v_BeforeText : String <<get>> <<set>> 
++v_AfterText : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToDataTableCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "ConvertDictionaryToJSONCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDictionaryKeysListCommand" <<sealed>> {
++RunCommand() : void 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "GetDictionaryKeyFromValueCommand" <<sealed>> {
++RunCommand() : void 
++v_Value : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.ConvertDictionaryToVisualizedTextCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.ConvertDictionaryToTextCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.JoinDictionaryValuesAsTextCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.ConvertDictionaryToDataTableCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.ConvertDictionaryToListCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.ConvertDictionaryToJSONCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.GetDictionaryKeysListCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+taskt.Core.Automation.Commands.GetDictionaryKeyFromValueCommand --|> taskt.Core.Automation.Commands.ADictionaryGetFromDictionaryCommands
+@enduml

@@ -8,10 +8,10 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="6de23cad-8dc3-449d-a81f-9b33f8ed7a78" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Check Empty" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="a40302a0-63d5-4d33-8c65-2d855d385be5" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="hello" v_CompareMethod="Not Empty" v_CheckParameter="" v_applyToVariableName="vResult" v_CaseSensitive="" v_TrimBeforeCompare="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="a40302a0-63d5-4d33-8c65-2d855d385be5" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="hello" v_CheckMethod="Not Empty" v_CheckParameter="" v_Result="vResult" v_CaseSensitive="" v_TrimBeforeCheck="" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="51538d59-b7ba-4317-9162-49dead56a859" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="hello" v_CompareMethod="Is Empty" v_CheckParameter="" v_applyToVariableName="vResult2" v_CaseSensitive="" v_TrimBeforeCompare="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="51538d59-b7ba-4317-9162-49dead56a859" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="hello" v_CheckMethod="Is Empty" v_CheckParameter="" v_Result="vResult2" v_CaseSensitive="" v_TrimBeforeCheck="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="1f351e63-fa94-40ee-b474-bb8567596266" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Has Value: ⦃vResult⦄&#xD;&#xA;Is Empty: ⦃vResult2⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
@@ -20,10 +20,10 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="5118f0b6-7518-4518-ab5b-6a9b5a8621ac" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Check number" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="6d6502fe-5611-4086-a4be-1ca8f7406079" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="1234" v_CompareMethod="Is Number" v_CheckParameter="" v_applyToVariableName="vResult" v_CaseSensitive="" v_TrimBeforeCompare="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="6d6502fe-5611-4086-a4be-1ca8f7406079" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="1234" v_CheckMethod="Is Number" v_CheckParameter="" v_Result="vResult" v_CaseSensitive="" v_TrimBeforeCheck="" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="45159265-05ac-4ce1-8619-04a48a29efee" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="1234" v_CompareMethod="Is Not Number" v_CheckParameter="" v_applyToVariableName="vResult2" v_CaseSensitive="" v_TrimBeforeCompare="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="45159265-05ac-4ce1-8619-04a48a29efee" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="1234" v_CheckMethod="Is Not Number" v_CheckParameter="" v_Result="vResult2" v_CaseSensitive="" v_TrimBeforeCheck="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="cbcb6940-7b9f-40f9-83ad-ef11af8cadf8" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Number: ⦃vResult⦄&#xD;&#xA;Not Number: ⦃vResult2⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
@@ -35,10 +35,10 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="96b730bc-41d0-402d-ac3a-fb0ac4697539" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Is a Boolean checks True or False" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="9baba032-bdd3-4224-b90d-ffaecda0017e" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="true" v_CompareMethod="Is Boolean" v_CheckParameter="" v_applyToVariableName="vResult" v_CaseSensitive="" v_TrimBeforeCompare="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="9baba032-bdd3-4224-b90d-ffaecda0017e" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="true" v_CheckMethod="Is Boolean" v_CheckParameter="" v_Result="vResult" v_CaseSensitive="" v_TrimBeforeCheck="" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="5ae787d8-f3fd-4a89-9b5d-5e00fc78ecd9" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="true" v_CompareMethod="Is Not Boolean" v_CheckParameter="" v_applyToVariableName="vResult2" v_CaseSensitive="" v_TrimBeforeCompare="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="5ae787d8-f3fd-4a89-9b5d-5e00fc78ecd9" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="true" v_CheckMethod="Is Not Boolean" v_CheckParameter="" v_Result="vResult2" v_CaseSensitive="" v_TrimBeforeCheck="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="39b39516-fb54-4d1a-a82f-9ee8f11cfd43" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Boolean: ⦃vResult⦄&#xD;&#xA;Not Boolean: ⦃vResult2⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
@@ -50,21 +50,21 @@
       <ScriptCommand xsi:type="CommentCommand" CommandID="bd9f852f-3d41-463c-a3f8-c924b60af96f" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" v_Comment="Is a Boolean Loose checks True, False, Yes, No, 1, 0, t, and f." CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="53429806-ba7b-462f-b924-debf93bc39b1" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="yes" v_CompareMethod="Is Boolean Loose" v_CheckParameter="" v_applyToVariableName="vResult" v_CaseSensitive="" v_TrimBeforeCompare="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="53429806-ba7b-462f-b924-debf93bc39b1" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="yes" v_CheckMethod="Is Boolean Loose" v_CheckParameter="" v_Result="vResult" v_CaseSensitive="" v_TrimBeforeCheck="" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CheckTextCommand" CommandID="a4b84121-5818-4b4e-8e2f-5114ee2a816c" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="yes" v_CompareMethod="Is Not Boolean Loose" v_CheckParameter="" v_applyToVariableName="vResult2" v_CaseSensitive="" v_TrimBeforeCompare="" />
+      <ScriptCommand xsi:type="CheckTextCommand" CommandID="a4b84121-5818-4b4e-8e2f-5114ee2a816c" CommandName="CheckTextCommand" IsCommented="false" SelectionName="Check Text" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_Text="yes" v_CheckMethod="Is Not Boolean Loose" v_CheckParameter="" v_Result="vResult2" v_CaseSensitive="" v_TrimBeforeCheck="" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="ShowMessageCommand" CommandID="8a598f88-0d64-4966-8578-ce08731f4347" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Boolean: ⦃vResult⦄&#xD;&#xA;Not Boolean: ⦃vResult2⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" />
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.2.25</TasktVersion>
+    <TasktVersion>3.5.2.43</TasktVersion>
     <Author />
     <LastRunTime>2024-12-01T11:43:29.163279+09:00</LastRunTime>
     <RunTimes>6</RunTimes>
-    <Revision>9</Revision>
+    <Revision>10</Revision>
     <ScriptVersion>0.0.0</ScriptVersion>
     <Description />
   </Info>

@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using taskt.Core;
+using taskt.Core.Automation.Commands;
 
 namespace taskt
 {
@@ -33,6 +35,16 @@ namespace taskt
         /// application settings
         /// </summary>
         public static SafeApplicationSettings Taskt_Settings { get; private set; }
+
+        /// <summary>
+        /// all commands info, etc
+        /// </summary>
+        public static List<ScriptCommandInformation> AllCommandsInfo { get; private set; }
+
+        static App()
+        {
+            AllCommandsInfo = ScriptCommandInformation.CreateScriptCommandInformations();
+        }
 
         /// <summary>
         /// update location, version info

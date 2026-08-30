@@ -1,0 +1,16 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands"{
+Interface "IDataTableColumnPositionProperties" {
++{abstract} v_ColumnType : String <<get>> <<set>> <<abstract>> 
++{abstract} v_ColumnIndex : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+Interface "IExpandableProperties" {
+}
+}
+
+taskt.Core.Automation.Commands.IDataTableColumnPositionProperties --|> taskt.Core.Automation.Commands.IExpandableProperties
+@enduml

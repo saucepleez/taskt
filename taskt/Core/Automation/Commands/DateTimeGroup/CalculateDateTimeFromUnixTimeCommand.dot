@@ -1,0 +1,30 @@
+digraph "taskt.Core.Automation.Commands.CalculateDateTimeFromUnixTimeCommand" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.CalculateDateTimeFromUnixTimeCommand" [ label="CalculateDateTimeFromUnixTimeCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ACalculateDateTimeCommands" [ label="ACalculateDateTimeCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ADateTimeConvertCommands" [ label="ADateTimeConvertCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IDateTimeResultProperties" [ label="IDateTimeResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.IDateTimeConvertProperties" [ label="IDateTimeConvertProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleDateTime" [ label="ICanHandleDateTime", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.CalculateDateTimeFromUnixTimeCommand" -> "taskt.Core.Automation.Commands.ACalculateDateTimeCommands";
+"taskt.Core.Automation.Commands.ACalculateDateTimeCommands" -> "taskt.Core.Automation.Commands.ADateTimeConvertCommands";
+"taskt.Core.Automation.Commands.ACalculateDateTimeCommands" -> "taskt.Core.Automation.Commands.IDateTimeResultProperties";
+"taskt.Core.Automation.Commands.ADateTimeConvertCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.ADateTimeConvertCommands" -> "taskt.Core.Automation.Commands.IDateTimeConvertProperties";
+"taskt.Core.Automation.Commands.IDateTimeResultProperties" -> "taskt.Core.Automation.Commands.ICanHandleDateTime";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.IDateTimeConvertProperties" -> "taskt.Core.Automation.Commands.ICanHandleDateTime";
+"taskt.Core.Automation.Commands.ICanHandleDateTime" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

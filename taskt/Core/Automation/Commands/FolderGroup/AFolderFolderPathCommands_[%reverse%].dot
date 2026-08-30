@@ -1,0 +1,57 @@
+digraph "taskt.Core.Automation.Commands.AFolderFolderPathCommands" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands" [ label="AFolderExistsFolderPathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AFolderFolderPathCommands" [ label="AFolderFolderPathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.CreateFolderByPathCommand" [ label="CreateFolderByPathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExtractionFolderPathCommand" [ label="ExtractionFolderPathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetRandomFilePathCommand" [ label="GetRandomFilePathCommand", ];
+"taskt.Core.Automation.Commands.AFileNumberedFileCommands" [ label="AFileNumberedFileCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands" [ label="AFolderExistsFolderBeforeAfterResultCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands" [ label="AFolderExistsFolderPathPathResultCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.GetFilesPathAsListCommand" [ label="GetFilesPathAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetFoldersPathAsListCommand" [ label="GetFoldersPathAsListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetLastExistentNumberedFilePathCommand" [ label="GetLastExistentNumberedFilePathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetNonExistentFilePathCommand" [ label="GetNonExistentFilePathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands" [ label="AFolderCopyMoveFolderCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands" [ label="AFolderCopySameRenameFolderCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.OpenFolderCommand" [ label="OpenFolderCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.GetRandomFolderPathCommand" [ label="GetRandomFolderPathCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.WaitForFolderToExistCommand" [ label="WaitForFolderToExistCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CheckFolderExistsCommand" [ label="CheckFolderExistsCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CreateFolderCommand" [ label="CreateFolderCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.DeleteFolderCommand" [ label="DeleteFolderCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CopyFolderCommand" [ label="CopyFolderCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.MoveFolderCommand" [ label="MoveFolderCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand" [ label="CopyFolderInSamLocationCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.RenameFolderCommand" [ label="RenameFolderCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands" -> "taskt.Core.Automation.Commands.AFolderFolderPathCommands";
+"taskt.Core.Automation.Commands.CreateFolderByPathCommand" -> "taskt.Core.Automation.Commands.AFolderFolderPathCommands";
+"taskt.Core.Automation.Commands.ExtractionFolderPathCommand" -> "taskt.Core.Automation.Commands.AFolderFolderPathCommands";
+"taskt.Core.Automation.Commands.GetRandomFilePathCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands";
+"taskt.Core.Automation.Commands.AFileNumberedFileCommands" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands";
+"taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands";
+"taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands";
+"taskt.Core.Automation.Commands.GetFilesPathAsListCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands";
+"taskt.Core.Automation.Commands.GetFoldersPathAsListCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathCommands";
+"taskt.Core.Automation.Commands.GetLastExistentNumberedFilePathCommand" -> "taskt.Core.Automation.Commands.AFileNumberedFileCommands";
+"taskt.Core.Automation.Commands.GetNonExistentFilePathCommand" -> "taskt.Core.Automation.Commands.AFileNumberedFileCommands";
+"taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands" -> "taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands";
+"taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands" -> "taskt.Core.Automation.Commands.AFolderExistsFolderBeforeAfterResultCommands";
+"taskt.Core.Automation.Commands.OpenFolderCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands";
+"taskt.Core.Automation.Commands.GetRandomFolderPathCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands";
+"taskt.Core.Automation.Commands.WaitForFolderToExistCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands";
+"taskt.Core.Automation.Commands.CheckFolderExistsCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands";
+"taskt.Core.Automation.Commands.CreateFolderCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands";
+"taskt.Core.Automation.Commands.DeleteFolderCommand" -> "taskt.Core.Automation.Commands.AFolderExistsFolderPathPathResultCommands";
+"taskt.Core.Automation.Commands.CopyFolderCommand" -> "taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands";
+"taskt.Core.Automation.Commands.MoveFolderCommand" -> "taskt.Core.Automation.Commands.AFolderCopyMoveFolderCommands";
+"taskt.Core.Automation.Commands.CopyFolderInSamLocationCommand" -> "taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands";
+"taskt.Core.Automation.Commands.RenameFolderCommand" -> "taskt.Core.Automation.Commands.AFolderCopySameRenameFolderCommands";
+}

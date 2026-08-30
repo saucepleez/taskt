@@ -1,0 +1,15 @@
+digraph "taskt.Core.SafeWebSocketServerSettings" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.SafeWebSocketServerSettings" [ label="SafeWebSocketServerSettings", ];
+"taskt.Core.SafeServerSettings" [ label="SafeServerSettings", ];
+"taskt.Core.IServerSettings" [ label="IServerSettings", shape="ellipse", style="dashed", ];
+
+"taskt.Core.SafeWebSocketServerSettings" -> "taskt.Core.SafeServerSettings";
+"taskt.Core.SafeServerSettings" -> "taskt.Core.IServerSettings";
+}

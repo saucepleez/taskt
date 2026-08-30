@@ -1,0 +1,69 @@
+@startuml
+left to right direction
+package "taskt.Core"{
+class "SafeEngineSettings" {
++ShowDebugWindow : Boolean <<get>> 
++AutoCloseDebugWindow : Boolean <<get>> 
++EnableDiagnosticLogging : Boolean <<get>> 
++ShowAdvancedDebugOutput : Boolean <<get>> 
++CreateMissingVariablesDuringExecution : Boolean <<get>> 
++TrackExecutionMetrics : Boolean <<get>> 
++VariableStartMarker : String <<get>> <<set>> 
++VariableEndMarker : String <<get>> <<set>> 
++CancellationKey : Keys <<get>> 
++DelayBetweenCommands : Int32 <<get>> <<set>> 
++OverrideExistingAppInstances : Boolean <<get>> 
++AutoCloseMessagesOnServerExecution : Boolean <<get>> 
++AutoCloseDebugWindowOnServerExecution : Boolean <<get>> 
++AutoCalcVariables : Boolean <<get>> <<set>> 
++CurrentWindowKeyword : String <<get>> 
++DesktopKeyword : String <<get>> 
++AllWindowsKeyword : String <<get>> 
++CurrentWindowPositionKeyword : String <<get>> 
++CurrentWindowXPositionKeyword : String <<get>> 
++CurrentWindowYPositionKeyword : String <<get>> 
++CurrentWorksheetKeyword : String <<get>> 
++NextWorksheetKeyword : String <<get>> 
++PreviousWorksheetKeyword : String <<get>> 
++ExportIntermediateXML : Boolean <<get>> 
++UseNewParser : Boolean <<get>> 
++IgnoreFirstVariableMarkerInOutputParameter : Boolean <<get>> 
++MaxFileCounter : Int32 <<get>> 
+#engineSettings : taskt.Core.EngineSettings
+}
+}
+
+package "taskt.Core"{
+Interface "IEngineSettings" {
++{abstract} ShowDebugWindow : Boolean <<get>> <<abstract>> 
++{abstract} AutoCloseDebugWindow : Boolean <<get>> <<abstract>> 
++{abstract} EnableDiagnosticLogging : Boolean <<get>> <<abstract>> 
++{abstract} ShowAdvancedDebugOutput : Boolean <<get>> <<abstract>> 
++{abstract} CreateMissingVariablesDuringExecution : Boolean <<get>> <<abstract>> 
++{abstract} TrackExecutionMetrics : Boolean <<get>> <<abstract>> 
++{abstract} VariableStartMarker : String <<get>> <<abstract>> 
++{abstract} VariableEndMarker : String <<get>> <<abstract>> 
++{abstract} CancellationKey : Keys <<get>> <<abstract>> 
++{abstract} DelayBetweenCommands : Int32 <<get>> <<abstract>> 
++{abstract} OverrideExistingAppInstances : Boolean <<get>> <<abstract>> 
++{abstract} AutoCloseMessagesOnServerExecution : Boolean <<get>> <<abstract>> 
++{abstract} AutoCloseDebugWindowOnServerExecution : Boolean <<get>> <<abstract>> 
++{abstract} AutoCalcVariables : Boolean <<get>> <<set>> <<abstract>> 
++{abstract} CurrentWindowKeyword : String <<get>> <<abstract>> 
++{abstract} DesktopKeyword : String <<get>> <<abstract>> 
++{abstract} AllWindowsKeyword : String <<get>> <<abstract>> 
++{abstract} CurrentWindowPositionKeyword : String <<get>> <<abstract>> 
++{abstract} CurrentWindowXPositionKeyword : String <<get>> <<abstract>> 
++{abstract} CurrentWindowYPositionKeyword : String <<get>> <<abstract>> 
++{abstract} CurrentWorksheetKeyword : String <<get>> <<abstract>> 
++{abstract} NextWorksheetKeyword : String <<get>> <<abstract>> 
++{abstract} PreviousWorksheetKeyword : String <<get>> <<abstract>> 
++{abstract} ExportIntermediateXML : Boolean <<get>> <<abstract>> 
++{abstract} UseNewParser : Boolean <<get>> <<abstract>> 
++{abstract} IgnoreFirstVariableMarkerInOutputParameter : Boolean <<get>> <<abstract>> 
++{abstract} MaxFileCounter : Int32 <<get>> <<abstract>> 
+}
+}
+
+taskt.Core.SafeEngineSettings ..|> taskt.Core.IEngineSettings
+@enduml

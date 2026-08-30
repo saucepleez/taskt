@@ -1,0 +1,42 @@
+﻿using System;
+using taskt.Core.Automation.Commands.WebBrowserGroup;
+
+namespace taskt.Core.Automation.Commands
+{
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Web Browser")]
+    [Attributes.ClassAttributes.SubGruop("Web Browser Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Refresh Web Browser")]
+    [Attributes.ClassAttributes.Description("This command allows you to refresh a Selenium web browser session.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to simulate a browser refresh click in the web browser session.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
+    public sealed class SeleniumBrowserRefreshWebBrowserCommand : ASeleniumWebDriverActionCommands
+    {
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
+
+        public SeleniumBrowserRefreshWebBrowserCommand()
+        {
+            //this.CommandName = "SeleniumBrowserRefreshCommand";
+            //this.SelectionName = "Refresh";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
+        }
+
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
+        {
+            //var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
+
+            //seleniumInstance.Navigate().Refresh();
+
+            this.WebDriverAction(new Action<OpenQA.Selenium.IWebDriver>(seleniumInstance =>
+            {
+                seleniumInstance.Navigate().Refresh();
+            }), engine);
+        }
+    }
+}

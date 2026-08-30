@@ -1,0 +1,13 @@
+digraph "taskt.Core.Automation.Engine.ScriptFinishedEventArgs" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Engine.ScriptFinishedEventArgs" [ label="ScriptFinishedEventArgs", ];
+"EventArgs" [ label="EventArgs", ];
+
+"taskt.Core.Automation.Engine.ScriptFinishedEventArgs" -> "EventArgs";
+}

@@ -1,0 +1,33 @@
+digraph "taskt.Core.Automation.Commands.IExcelRangeSetProperties" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.IExcelColumnRangeSetProperties" [ label="IExcelColumnRangeSetProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExcelRangeSetProperties" [ label="IExcelRangeSetProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExcelColumnRowRangeSetProperties" [ label="IExcelColumnRowRangeSetProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExcelRowRangeSetProperties" [ label="IExcelRowRangeSetProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands" [ label="AExcelColumnRangeSetCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AExcelRowRangeSetCommands" [ label="AExcelRowRangeSetCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDataTableCommand" [ label="ExcelSetColumnValuesFromDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDictionaryCommand" [ label="ExcelSetColumnValuesFromDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelSetColumnValuesFromListCommand" [ label="ExcelSetColumnValuesFromListCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelSetRowValuesFromDataTableCommand" [ label="ExcelSetRowValuesFromDataTableCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelSetRowValuesFromDictionaryCommand" [ label="ExcelSetRowValuesFromDictionaryCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.ExcelSetRowValuesFromListCommand" [ label="ExcelSetRowValuesFromListCommand", shape="parallelogram", style="bold", ];
+
+"taskt.Core.Automation.Commands.IExcelColumnRangeSetProperties" -> "taskt.Core.Automation.Commands.IExcelRangeSetProperties";
+"taskt.Core.Automation.Commands.IExcelColumnRowRangeSetProperties" -> "taskt.Core.Automation.Commands.IExcelRangeSetProperties";
+"taskt.Core.Automation.Commands.IExcelRowRangeSetProperties" -> "taskt.Core.Automation.Commands.IExcelRangeSetProperties";
+"taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands" -> "taskt.Core.Automation.Commands.IExcelColumnRangeSetProperties";
+"taskt.Core.Automation.Commands.AExcelRowRangeSetCommands" -> "taskt.Core.Automation.Commands.IExcelRowRangeSetProperties";
+"taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDataTableCommand" -> "taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands";
+"taskt.Core.Automation.Commands.ExcelSetColumnValuesFromDictionaryCommand" -> "taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands";
+"taskt.Core.Automation.Commands.ExcelSetColumnValuesFromListCommand" -> "taskt.Core.Automation.Commands.AExcelColumnRangeSetCommands";
+"taskt.Core.Automation.Commands.ExcelSetRowValuesFromDataTableCommand" -> "taskt.Core.Automation.Commands.AExcelRowRangeSetCommands";
+"taskt.Core.Automation.Commands.ExcelSetRowValuesFromDictionaryCommand" -> "taskt.Core.Automation.Commands.AExcelRowRangeSetCommands";
+"taskt.Core.Automation.Commands.ExcelSetRowValuesFromListCommand" -> "taskt.Core.Automation.Commands.AExcelRowRangeSetCommands";
+}

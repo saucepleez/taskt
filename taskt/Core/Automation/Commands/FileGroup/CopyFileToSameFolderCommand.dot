@@ -1,0 +1,44 @@
+digraph "taskt.Core.Automation.Commands.CopyFileToSameFolderCommand" {
+    rankdir="TB";
+    node [
+        shape="box",
+        fontname="Meiryo UI",
+        fontsize="12pt"
+    ];
+
+"taskt.Core.Automation.Commands.CopyFileToSameFolderCommand" [ label="CopyFileToSameFolderCommand", shape="parallelogram", style="bold", ];
+"taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands" [ label="AFileCopySameRenameFileCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands" [ label="AFileExistsFilePathBeforeAfterResultCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleFileName" [ label="ICanHandleFileName", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.AFileExistsFilePathCommands" [ label="AFileExistsFilePathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IFileExistsFilePathBeforeAfterPathResultProperties" [ label="IFileExistsFilePathBeforeAfterPathResultProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleFileOrFolderName" [ label="ICanHandleFileOrFolderName", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.AFileFilePathCommands" [ label="AFileFilePathCommands", style="dashed", ];
+"taskt.Core.Automation.Commands.IFileExistsFilePathProperties" [ label="IFileExistsFilePathProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IExpandableProperties" [ label="IExpandableProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ScriptCommand" [ label="ScriptCommand", style="dashed", ];
+"taskt.Core.Automation.Commands.IFilePathProperties" [ label="IFilePathProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.IUIParameterProperties" [ label="IUIParameterProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICommandIDProperties" [ label="ICommandIDProperties", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleFilePath" [ label="ICanHandleFilePath", shape="ellipse", style="dashed", ];
+"taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath" [ label="ICanHandleFileOrFolderPath", shape="ellipse", style="dashed", ];
+
+"taskt.Core.Automation.Commands.CopyFileToSameFolderCommand" -> "taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands";
+"taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands" -> "taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands";
+"taskt.Core.Automation.Commands.AFileCopySameRenameFileCommands" -> "taskt.Core.Automation.Commands.ICanHandleFileName";
+"taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands" -> "taskt.Core.Automation.Commands.AFileExistsFilePathCommands";
+"taskt.Core.Automation.Commands.AFileExistsFilePathBeforeAfterResultCommands" -> "taskt.Core.Automation.Commands.IFileExistsFilePathBeforeAfterPathResultProperties";
+"taskt.Core.Automation.Commands.ICanHandleFileName" -> "taskt.Core.Automation.Commands.ICanHandleFileOrFolderName";
+"taskt.Core.Automation.Commands.AFileExistsFilePathCommands" -> "taskt.Core.Automation.Commands.AFileFilePathCommands";
+"taskt.Core.Automation.Commands.AFileExistsFilePathCommands" -> "taskt.Core.Automation.Commands.IFileExistsFilePathProperties";
+"taskt.Core.Automation.Commands.IFileExistsFilePathBeforeAfterPathResultProperties" -> "taskt.Core.Automation.Commands.IFileExistsFilePathProperties";
+"taskt.Core.Automation.Commands.ICanHandleFileOrFolderName" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+"taskt.Core.Automation.Commands.AFileFilePathCommands" -> "taskt.Core.Automation.Commands.ScriptCommand";
+"taskt.Core.Automation.Commands.AFileFilePathCommands" -> "taskt.Core.Automation.Commands.IFilePathProperties";
+"taskt.Core.Automation.Commands.IFileExistsFilePathProperties" -> "taskt.Core.Automation.Commands.IFilePathProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.IUIParameterProperties";
+"taskt.Core.Automation.Commands.ScriptCommand" -> "taskt.Core.Automation.Commands.ICommandIDProperties";
+"taskt.Core.Automation.Commands.IFilePathProperties" -> "taskt.Core.Automation.Commands.ICanHandleFilePath";
+"taskt.Core.Automation.Commands.ICanHandleFilePath" -> "taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath";
+"taskt.Core.Automation.Commands.ICanHandleFileOrFolderPath" -> "taskt.Core.Automation.Commands.IExpandableProperties";
+}

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Search Children UIElements Tree XML From UIElement sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a7cdfa43-c3e0-4681-8598-3547bb4f31b4" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_ApplicationPath="⦃Folder.SamplesPath⦄\Resources\UIAutomationTester.exe" v_Arguments="" v_WaitForExit="" v_StartedProcessName="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Get UIAutomationTester window as UIElement" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationGetWindowUIElementFromWindowNameCommand" CommandID="be605cdc-25fa-4680-84ad-ac75afc86c91" CommandName="UIAutomationGetWindowUIElementFromWindowNameCommand" IsCommented="false" SelectionName="Get Window UIElement From Window Name" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_CheckMethod="" v_WaitTimeForWindow="60" v_SelectionMethod="" v_TargetWindowIndex="0" v_Result="vWin" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="0d8ca64a-47ee-4ae4-bcfa-188fef1ebff7" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Get Children UIElements" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationSearchChildrenUIElementsTreeXMLFromUIElementCommand" CommandID="ea0deeb5-3e44-4eee-a17c-bc818774836c" CommandName="UIAutomationSearchChildrenUIElementsTreeXMLFromUIElementCommand" IsCommented="false" SelectionName="Search Children UIElements Tree XML From UIElement" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vWin⦄" v_WindowNameResult="" v_WindowHandleResult="" v_Result="vTree" v_WaitTimeForUIElement="10" v_MaxSiblings="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="50960d20-1626-46cb-83ea-70e4a6fe6adf" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vTree⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" v_DialogType="" v_DialogTitle="ShowMessage Comamnd" v_WaitForAnswer="Yes" v_DialogResult="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Search groupBox1 as UIElement" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationSearchChildUIElementFromUIElementByXPathCommand" CommandID="7a0b3898-ce6d-4669-9f9d-1edde5c8421a" CommandName="UIAutomationSearchChildUIElementFromUIElementByXPathCommand" IsCommented="false" SelectionName="Search Child UIElement From UIElement By XPath" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_SearchXPath="/Group[@Name=&quot;groupBox1&quot;]" v_WaitTimeForUIElement="10" v_MaxSiblings="" v_WindowNameResult="" v_WindowHandleResult="" v_TargetElement="⦃vWin⦄" v_Result="vElem" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="702a0791-68eb-43eb-8521-47ee2e49af7f" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Get Children UIElements" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationSearchChildrenUIElementsTreeXMLFromUIElementCommand" CommandID="cabab5f2-3837-4452-a699-9730adf0a1ff" CommandName="UIAutomationSearchChildrenUIElementsTreeXMLFromUIElementCommand" IsCommented="false" SelectionName="Search Children UIElements Tree XML From UIElement" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vElem⦄" v_WindowNameResult="" v_WindowHandleResult="" v_Result="vTree" v_WaitTimeForUIElement="10" v_MaxSiblings="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="b80076f0-e368-4282-85a9-24a1e75a9021" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vTree⦄" v_AutoCloseAfter="0" v_FontName="" v_FontSize="" v_DialogType="" v_DialogTitle="ShowMessage Comamnd" v_WaitForAnswer="Yes" v_DialogResult="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="10c32b5f-1029-4a66-bcc4-0944d0c10e5b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" v_Comment="Search Children UIElements Tree XML From UIElement command is" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="0e910113-b444-42e5-aa3a-3769beb4ad6d" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" v_Comment="searchs only Child UIElements" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" v_Comment="Please exit UIAutomationTester after execution" CommandEnabled="true" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.2.54</TasktVersion>
+    <Author />
+    <LastRunTime>2026-01-12T20:57:22.9633597+09:00</LastRunTime>
+    <RunTimes>38</RunTimes>
+    <Revision>20</Revision>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vElem</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vTree</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vWin</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

@@ -1,0 +1,88 @@
+@startuml
+left to right direction
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+Interface "ISeleniumExecuteJavaScriptProperties" {
++{abstract} v_Arguments : String <<get>> <<set>> <<abstract>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+Interface "ICanExecuteJavaScriptToWebDriver" {
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserRemoveWebElementCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebBrowserSizeCommand" <<sealed>> {
++RunCommand() : void 
++v_Width : String <<get>> <<set>> 
++v_Height : String <<get>> <<set>> 
++v_SizeType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserGetWebBrowserPositionCommand" <<sealed>> {
++RunCommand() : void 
+-GetPosition() : ValueTuple
+-StoreXYProcess() : void 
++v_XPosition : String <<get>> <<set>> 
++v_YPosition : String <<get>> <<set>> 
++v_PositionType : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserClickWebElementCommand" <<sealed>> {
++RunCommand() : void 
+-cmdClickType_SelectinChange() : void 
++v_ClickType : String <<get>> <<set>> 
++v_XOffset : String <<get>> <<set>> 
++v_YOffset : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserScrollToWebElementCommand" <<sealed>> {
++RunCommand() : void 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserExecuteJavaScriptFromCodeCommand" <<sealed>> {
++RunCommand() : void 
++v_ScriptCode : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands.WebBrowserGroup"{
+abstract class "ASeleniumExecuteJavaScriptCommands"{
+#ExecuteJavaScriptProcess() : void 
++v_Arguments : String <<get>> <<set>> 
++v_Result : String <<get>> <<set>> 
+}
+}
+
+package "taskt.Core.Automation.Commands"{
+class "SeleniumBrowserExecuteJavaScriptFromFileCommand" <<sealed>> {
++RunCommand() : void 
++v_FilePath : String <<get>> <<set>> 
+}
+}
+
+taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumExecuteJavaScriptProperties --|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver
+taskt.Core.Automation.Commands.SeleniumBrowserRemoveWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver
+taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserSizeCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver
+taskt.Core.Automation.Commands.SeleniumBrowserGetWebBrowserPositionCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver
+taskt.Core.Automation.Commands.SeleniumBrowserClickWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver
+taskt.Core.Automation.Commands.SeleniumBrowserScrollToWebElementCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver
+taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromCodeCommand ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ICanExecuteJavaScriptToWebDriver
+taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands ..|> taskt.Core.Automation.Commands.WebBrowserGroup.ISeleniumExecuteJavaScriptProperties
+taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromFileCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands
+taskt.Core.Automation.Commands.SeleniumBrowserExecuteJavaScriptFromCodeCommand --|> taskt.Core.Automation.Commands.WebBrowserGroup.ASeleniumExecuteJavaScriptCommands
+@enduml
